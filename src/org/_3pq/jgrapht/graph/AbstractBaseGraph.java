@@ -421,18 +421,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
 
     /**
-     * Returns a string of the parenthesized pair (V, E) representing this
-     * G=(V,E) graph. 'V' is the string representation of the vertex set, and
-     * 'E' is the string representation of the edge set.
-     *
-     * @return a string representation of this graph.
-     */
-    public String toString(  ) {
-        return toStringFromSets( vertexSet(  ), edgeSet(  ) );
-    }
-
-
-    /**
      * @see Graph#vertexSet()
      */
     public Set vertexSet(  ) {
