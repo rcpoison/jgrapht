@@ -43,19 +43,19 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 
 /**
- * This utility class is a container of {@link org._3pq.jgrapht.EdgeFactory}
- * classes.
+ * This utility class is a container of various {@link
+ * org._3pq.jgrapht.EdgeFactory} classes.
  * 
  * <p>
  * Classes included here do not have substantial logic. They are grouped
- * together  in this container in order to avoid clutter.
+ * together in this container in order to avoid clutter.
  * </p>
  *
  * @author Barak Naveh
  *
  * @since Jul 16, 2003
  */
-public class EdgeFactories {
+public final class EdgeFactories {
     private EdgeFactories(  ) {} // ensure non-instantiability.
 
     /**

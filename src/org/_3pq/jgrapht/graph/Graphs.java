@@ -70,7 +70,7 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * @see org._3pq.jgrapht.GraphFactory
  * @since Jul 31, 2003
  */
-public class Graphs {
+public final class Graphs {
     private Graphs(  ) {} // ensure non-instantiability.
 
     /**

@@ -100,11 +100,13 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
 
     /**
-     * Creates a new JGraphModelAdapter object.
+     * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
-     * @param g
-     * @param defaultVertexAttributes
-     * @param defaultEdgeAttributes
+     * @param g the JGraphT graph for which JGraph model adapter to be created.
+     * @param defaultVertexAttributes default map of JGraph attributes to
+     *        format vertices.
+     * @param defaultEdgeAttributes default map of JGraph attributes to format
+     *        edges.
      */
     public JGraphModelAdapter( ListenableGraph g, Map defaultVertexAttributes,
         Map defaultEdgeAttributes ) {
@@ -298,9 +300,9 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     /**
      * Creates and returns a map of attributes to be used as defaults for edge
-     * attributes.
+     * attributes, depending on the specified graph.
      *
-     * @param g
+     * @param g the graph for which default edge attributes to be created.
      *
      * @return a map of attributes to be used as default for edge attributes.
      */

@@ -49,7 +49,6 @@ import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.alg.AbstractGraphIterator;
 import org._3pq.jgrapht.alg.AlgUtils.DirectedSpecifics;
 import org._3pq.jgrapht.alg.AlgUtils.SimpleStack;
 import org._3pq.jgrapht.alg.AlgUtils.Specifics;

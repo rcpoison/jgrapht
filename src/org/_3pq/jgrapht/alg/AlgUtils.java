@@ -51,7 +51,7 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @since Jul 31, 2003
  */
-public class AlgUtils {
+public final class AlgUtils {
     private AlgUtils(  ) {} // ensure non-instantiability.
 
     /**
@@ -111,7 +111,9 @@ public class AlgUtils {
          *
          * @param vertex the vertex whose outgoing edges are to be returned.
          *
-         * @return
+         * @return the edges outgoing from the specified vertex in case of
+         *         directed graph, and the edge touching the specified vertex
+         *         in case of undirected graph.
          */
         public abstract List edgesOf( Object vertex );
     }
@@ -130,7 +132,7 @@ public class AlgUtils {
         /**
          * Creates a new DirectedSpecifics object.
          *
-         * @param g
+         * @param g the graph for which this specifics object to be created.
          */
         public DirectedSpecifics( DirectedGraph g ) {
             m_graph = g;
@@ -181,16 +183,6 @@ public class AlgUtils {
         public Object remove(  ) {
             return m_elementList.removeLast(  );
         }
-
-
-        /**
-         * .
-         *
-         * @param o
-         */
-        public void removeVisited( Object o ) {
-            m_elementList.remove( o );
-        }
     }
 
 
@@ -207,7 +199,7 @@ public class AlgUtils {
         /**
          * Creates a new DirectedSpecifics object.
          *
-         * @param g
+         * @param g the graph for which this specifics object to be created.
          */
         public UndirectedSpecifics( UndirectedGraph g ) {
             m_graph = g;
