@@ -17,7 +17,6 @@
 */
 package org._3pq.jgrapht.experimental.heap;
 
-import java.util.*;
 
 public class HeapVertex implements HeapElement, Comparable {
 
