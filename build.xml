@@ -18,6 +18,7 @@
     <!-- Initialization. -->
     <target name="init" description="Initializes required settings.">
         <tstamp />
+        <echo>JAVA_HOME=${java.home}</echo>
         <property name="jgrapht.name" value="jgrapht" />
         <property name="jgrapht.version" value="0.4.1" />
         <property name="builddir" value="${basedir}/build" />
@@ -69,12 +70,14 @@
         </javac>
     </target>
 
+
     <!-- Generate the JGraphT runtime jar -->
     <target name="jar" depends="compile" 
                            description="Creates the runtime jar.">
         <jar jarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.jar"
              basedir="${builddir}" />
     </target>
+
 
     <!-- Run all JUnit tests -->
     <target name="test" depends="compile"
@@ -94,6 +97,7 @@
         </junit>
     </target>
 
+
     <!-- Generate the JGraphT JavaDoc HTML pages -->
     <target name="javadoc" depends="init" 
                            description="Creates the Javadocs.">
@@ -112,6 +116,7 @@
 	            <include name="org/_3pq/jgrapht/edge"/>
 	            <include name="org/_3pq/jgrapht/ext"/>
 	            <include name="org/_3pq/jgrapht/graph"/>
+	            <include name="org/_3pq/jgrapht/traverse"/>
             </packageset>
         </javadoc>
     </target>
@@ -305,7 +310,6 @@
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.zip" />
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.tar.gz" />
-        <echo>${java.home}</echo>
 	</target>
 
 
