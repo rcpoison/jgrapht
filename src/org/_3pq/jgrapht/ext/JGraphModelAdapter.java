@@ -51,14 +51,6 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.undo.UndoableEdit;
 
-import com.jgraph.graph.ConnectionSet;
-import com.jgraph.graph.DefaultEdge;
-import com.jgraph.graph.DefaultGraphCell;
-import com.jgraph.graph.DefaultGraphModel;
-import com.jgraph.graph.DefaultPort;
-import com.jgraph.graph.GraphConstants;
-import com.jgraph.graph.ParentMap;
-
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -66,6 +58,14 @@ import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
+
+import org.jgraph.graph.ConnectionSet;
+import org.jgraph.graph.DefaultEdge;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.DefaultPort;
+import org.jgraph.graph.GraphConstants;
+import org.jgraph.graph.ParentMap;
 
 /**
  * An adapter that reflects a JGraphT graph as a JGraph graph. This adapter is
@@ -201,7 +201,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     /**
      * Applies the specified attributes to the model, as in {@link
-     * com.jgraph.graph.GraphModel#edit} method. All other parameters should
+     * org.jgraph.graph.GraphModel#edit} method. All other parameters should
      * be <code>null</code>. This is a degenerated version of the method
      * originally intended in the interface. It is recommended that you don't
      * use it. Use {@link #edit(Map)} instead.
@@ -213,7 +213,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      *
      * @throws IllegalArgumentException if any of the must-be-null is not null.
      *
-     * @see com.jgraph.graph.GraphModel#edit
+     * @see org.jgraph.graph.GraphModel#edit
      */
     public void edit( Map attributes, ConnectionSet cs, ParentMap pm,
         UndoableEdit[] edits ) {
@@ -228,7 +228,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     /**
      * Applies the specified attributes to the model, as in {@link
-     * com.jgraph.graph.GraphModel#edit} method.
+     * org.jgraph.graph.GraphModel#edit} method.
      *
      * @param attributes the attributes to be applied to the model.
      */

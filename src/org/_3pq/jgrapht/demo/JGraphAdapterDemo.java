@@ -47,13 +47,13 @@ import java.util.Map;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
-import com.jgraph.JGraph;
-import com.jgraph.graph.DefaultGraphCell;
-import com.jgraph.graph.GraphConstants;
-
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.ext.JGraphModelAdapter;
 import org._3pq.jgrapht.graph.ListenableDirectedGraph;
+
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.GraphConstants;
 
 /**
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
