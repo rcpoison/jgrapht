@@ -43,17 +43,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.geom.Rectangle2D;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.ext.JGraphModelAdapter;
 import org._3pq.jgrapht.graph.ListenableDirectedGraph;
-
 import org.jgraph.JGraph;
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphConstants;
 
@@ -153,7 +150,7 @@ public class JGraphAdapterDemo extends JApplet {
 
     private void positionVertexAt( Object vertex, int x, int y ) {
         DefaultGraphCell cell   = m_jgAdapter.getVertexCell( vertex );
-        Map              attr   = cell.getAttributes(  );
+        AttributeMap     attr   = cell.getAttributes(  );
         Rectangle2D      bounds = GraphConstants.getBounds( attr );
 
         Rectangle2D      newBounds =
@@ -162,7 +159,7 @@ public class JGraphAdapterDemo extends JApplet {
 
         GraphConstants.setBounds( attr, newBounds );
 
-        Map cellAttr = new HashMap(  );
+        AttributeMap cellAttr = new AttributeMap(  );
         cellAttr.put( cell, attr );
         m_jgAdapter.edit( cellAttr );
     }
