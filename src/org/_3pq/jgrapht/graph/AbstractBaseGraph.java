@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -----------------
- * DefaultGraph.java
- * -----------------
+/* ----------------------
+ * AbstractBaseGraph.java
+ * ----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -59,18 +59,17 @@ import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedElement;
 
 /**
- * DefaultGraph is the most general implementation of the <code>Graph</code>
+ * The most general implementation of the {@link org._3pq.jgrapht.Graph}
  * interface. Its subclasses add various restrictions to get more specific
  * graphs. The decision whether it is directed or undirected is decided at
  * construction time and cannot be later modified (see constructor for
  * details).
  *
  * @author Barak Naveh
- * @version 1.0
  *
- * @see org._3pq.jgrapht.Graph
+ * @since Jul 24, 2003
  */
-public abstract class DefaultGraph extends AbstractGraph implements Graph,
+public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     Cloneable, Serializable {
     private static final String LOOPS_NOT_ALLOWED = "loops not allowed";
 
@@ -105,7 +104,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
      * @throws IllegalArgumentException if the edge factory produces
      *         incompatible edges.
      */
-    public DefaultGraph( EdgeFactory ef, boolean multipleEdgesAllowed,
+    public AbstractBaseGraph( EdgeFactory ef, boolean multipleEdgesAllowed,
         boolean loopsAllowed ) {
         if( ef == null ) {
             throw new NullPointerException(  );
@@ -290,7 +289,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
      */
     public Object clone(  ) {
         try {
-            DefaultGraph newGraph = (DefaultGraph) super.clone(  );
+            AbstractBaseGraph newGraph = (AbstractBaseGraph) super.clone(  );
 
             newGraph.m_vertexMap            = new HashMap(  );
             newGraph.m_edgeSet              = new HashSet(  );
@@ -748,7 +747,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
         /**
-         * @see DefaultGraph#addEdgeToTouchingVertices(Edge)
+         * @see AbstractBaseGraph#addEdgeToTouchingVertices(Edge)
          */
         public void addEdgeToTouchingVertices( Edge e ) {
             Object source = e.getSource(  );
@@ -815,7 +814,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
         /**
-         * @see DefaultGraph#removeEdgeFromTouchingVertices(Edge)
+         * @see AbstractBaseGraph#removeEdgeFromTouchingVertices(Edge)
          */
         public void removeEdgeFromTouchingVertices( Edge e ) {
             Object source = e.getSource(  );
@@ -988,7 +987,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
         /**
-         * @see DefaultGraph#addEdgeToTouchingVertices(Edge)
+         * @see AbstractBaseGraph#addEdgeToTouchingVertices(Edge)
          */
         public void addEdgeToTouchingVertices( Edge e ) {
             Object source = e.getSource(  );
@@ -1071,7 +1070,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
         /**
-         * @see DefaultGraph#removeEdgeFromTouchingVertices(Edge)
+         * @see AbstractBaseGraph#removeEdgeFromTouchingVertices(Edge)
          */
         public void removeEdgeFromTouchingVertices( Edge e ) {
             Object source = e.getSource(  );

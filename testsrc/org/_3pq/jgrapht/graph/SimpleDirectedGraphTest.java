@@ -43,7 +43,6 @@ import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.GraphFactory;
 
 /**
  * A unit test for simple directed graph.
@@ -347,12 +346,11 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
 
 
     private void init(  ) {
-        GraphFactory gf = GraphFactory.getFactory(  );
-        m_gEmpty     = gf.createSimpleDirectedGraph(  );
-        m_g1         = gf.createSimpleDirectedGraph(  );
-        m_g2         = gf.createSimpleDirectedGraph(  );
-        m_g3         = gf.createSimpleDirectedGraph(  );
-        m_g4         = gf.createSimpleDirectedGraph(  );
+        m_gEmpty     = new SimpleDirectedGraph(  );
+        m_g1         = new SimpleDirectedGraph(  );
+        m_g2         = new SimpleDirectedGraph(  );
+        m_g3         = new SimpleDirectedGraph(  );
+        m_g4         = new SimpleDirectedGraph(  );
 
         m_eFactory     = m_g1.getEdgeFactory(  );
         m_eLoop        = (DirectedEdge) m_eFactory.createEdge( m_v1, m_v1 );

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
- * DirectedWeightedGraph.java
- * --------------------------
+/* -------------------------
+ * DefaultDirectedGraph.java
+ * -------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,16 +33,38 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 05-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.graph;
+
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.edge.EdgeFactories;
 
 /**
- * A directed and weighted graph.
- *
- * @author Barak Naveh
- *
- * @since Jul 24, 2003
+ * A directed graph. A directed graph is a non-simple directed graph in which
+ * multiple edges between any two vertices are <i>not</i> permitted, but loops
+ * are.
+ * 
+ * <p>
+ * prefixed 'Default' to avoid name collision with the DirectedGraph interface.
+ * </p>
  */
-public interface DirectedWeightedGraph extends DirectedGraph, WeightedGraph {}
+public class DefaultDirectedGraph extends AbstractBaseGraph
+    implements DirectedGraph {
+    /**
+     * @see AbstractBaseGraph
+     */
+    public DefaultDirectedGraph(  ) {
+        this( new EdgeFactories.DirectedEdgeFactory(  ) );
+    }
+
+
+    /**
+     * @see AbstractBaseGraph
+     */
+    public DefaultDirectedGraph( EdgeFactory ef ) {
+        super( ef, false, true );
+    }
+}

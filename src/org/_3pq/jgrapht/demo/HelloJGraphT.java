@@ -42,8 +42,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org._3pq.jgrapht.graph.SimpleGraph;
 
 /**
  * A simple introduction to using JGraphT.
@@ -79,9 +80,7 @@ public class HelloJGraphT {
      * @return a graph based on URL objects.
      */
     private static DirectedGraph createHrefGraph(  ) {
-        GraphFactory  gf = GraphFactory.getFactory(  );
-
-        DirectedGraph g = gf.createDirectedGraph(  );
+        DirectedGraph g = new DefaultDirectedGraph(  );
 
         try {
             URL amazon = new URL( "http://www.amazon.com" );
@@ -111,9 +110,7 @@ public class HelloJGraphT {
      * @return a graph based on String objects.
      */
     private static UndirectedGraph createStringGraph(  ) {
-        GraphFactory    gf = GraphFactory.getFactory(  );
-
-        UndirectedGraph g = gf.createSimpleGraph(  );
+        UndirectedGraph g = new SimpleGraph(  );
 
         String          v1 = "v1";
         String          v2 = "v2";

@@ -41,7 +41,7 @@ package org._3pq.jgrapht.alg;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.GraphFactory;
+import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 
 /**
  * Tests for the {@link DepthFirstIteratorTest} class.
@@ -55,8 +55,7 @@ public class DepthFirstIteratorTest extends TestCase {
      * .
      */
     public void testDirectedGraph(  ) {
-        GraphFactory  graphFactory = GraphFactory.getFactory(  );
-        DirectedGraph graph = graphFactory.createDirectedGraph(  );
+        DirectedGraph graph = new DefaultDirectedGraph(  );
 
         //        
         String v1 = "1";

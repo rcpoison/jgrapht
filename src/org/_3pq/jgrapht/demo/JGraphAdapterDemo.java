@@ -51,9 +51,9 @@ import com.jgraph.JGraph;
 import com.jgraph.graph.DefaultGraphCell;
 import com.jgraph.graph.GraphConstants;
 
-import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.ext.JGraphModelAdapter;
+import org._3pq.jgrapht.graph.ListenableDirectedGraph;
 
 /**
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
@@ -74,9 +74,7 @@ public class JGraphAdapterDemo extends JApplet {
      */
     public void init(  ) {
         // create a JGraphT graph
-        GraphFactory    gf = GraphFactory.getFactory(  );
-        ListenableGraph g =
-            gf.createListenableGraph( gf.createDirectedGraph(  ) );
+        ListenableGraph g = new ListenableDirectedGraph(  );
 
         // create a visualization using JGraph, via an adapter
         m_jgAdapter = new JGraphModelAdapter( g );

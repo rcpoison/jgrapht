@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------------
- * UndirectedWeightedGraph.java
- * ----------------------------
+/* -----------------------
+ * WeightedMultigraph.java
+ * -----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,16 +33,36 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 05-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.graph;
+
+import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.edge.EdgeFactories;
 
 /**
- * An undirected weighted graph.
- *
- * @author Barak Naveh
- *
- * @since Jul 24, 2003
+ * A weighted multigraph. A weighted multigraph is a non-simple undirected
+ * graph in which no loops are permitted, but multiple edges between any two
+ * vertices are. The edges of a weighted multigraph have weights. If you're
+ * unsure about multigraphs, see: <a
+ * href="http://mathworld.wolfram.com/Multigraph.html">
+ * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public interface UndirectedWeightedGraph extends UndirectedGraph, WeightedGraph {}
+public class WeightedMultigraph extends Multigraph implements WeightedGraph {
+    /**
+     * @see AbstractBaseGraph
+     */
+    public WeightedMultigraph( EdgeFactory ef ) {
+        super( ef );
+    }
+
+
+    /**
+     * @see AbstractBaseGraph
+     */
+    public WeightedMultigraph(  ) {
+        this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
+    }
+}

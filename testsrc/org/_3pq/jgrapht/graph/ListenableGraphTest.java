@@ -41,7 +41,6 @@ package org._3pq.jgrapht.graph;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.VertexSetListener;
@@ -72,7 +71,7 @@ public class ListenableGraphTest extends TestCase {
     public void testGraphListener(  ) {
         init(  );
 
-        ListenableGraph g        = createEmptyListenableGraph(  );
+        ListenableGraph g        = new ListenableUndirectedGraph(  );
         GraphListener   listener = new MyGraphListner(  );
         g.addGraphListener( listener );
 
@@ -130,7 +129,7 @@ public class ListenableGraphTest extends TestCase {
     public void testVertexSetListener(  ) {
         init(  );
 
-        ListenableGraph   g        = createEmptyListenableGraph(  );
+        ListenableGraph   g        = new ListenableUndirectedGraph(  );
         VertexSetListener listener = new MyGraphListner(  );
         g.addVertexSetListener( listener );
 
@@ -179,13 +178,6 @@ public class ListenableGraphTest extends TestCase {
         assertEquals( null, m_lastAddedVertex );
         assertEquals( null, m_lastRemovedEdge );
         assertEquals( null, m_lastRemovedVertex );
-    }
-
-
-    private ListenableGraph createEmptyListenableGraph(  ) {
-        GraphFactory gf = GraphFactory.getFactory(  );
-
-        return gf.createListenableGraph( gf.createSimpleGraph(  ) );
     }
 
 
