@@ -184,8 +184,9 @@ public class GraphFactory {
     /**
      * Creates a new multigraph. A multigraph is a non-simple undirected graph
      * in which no loops are permitted, but multiple edges between any two
-     * vertices are. If you're unsure about multigraphs, see: <br>
-     * {@link http://mathworld.wolfram.com/Multigraph.html}.
+     * vertices are. If you're unsure about multigraphs, see: <a
+     * href="http://mathworld.wolfram.com/Multigraph.html">
+     * http://mathworld.wolfram.com/Multigraph.html</a>.
      *
      * @return a new multigraph.
      */
@@ -199,8 +200,9 @@ public class GraphFactory {
     /**
      * Creates a new pseudograph. A pseudograph is a non-simple undirected
      * graph in which both graph loops and multiple edges are permitted. If
-     * you're unsure about pseudographs, see: <br>
-     * {@link http://mathworld.wolfram.com/Pseudograph.html}.
+     * you're unsure about pseudographs, see: <a
+     * href="http://mathworld.wolfram.com/Pseudograph.html">
+     * http://mathworld.wolfram.com/Pseudograph.html</a>.
      *
      * @return a new pseudograph.
      */
@@ -244,8 +246,9 @@ public class GraphFactory {
     /**
      * Creates a new simple graph. A simple graph is an undirected graph for
      * which at most one edge connects any two vertices, and loops are not
-     * permitted.  If you're unsure about simple graphs, see: <br>
-     * {@link http://mathworld.wolfram.com/SimpleGraph.html}.
+     * permitted.  If you're unsure about simple graphs, see: <a
+     * href="http://mathworld.wolfram.com/SimpleGraph.html">
+     * http://mathworld.wolfram.com/SimpleGraph.html</a>.
      *
      * @return a new simple graph.
      */
@@ -413,8 +416,9 @@ public class GraphFactory {
      * Creates a new weighted multigraph. A weighted multigraph is a non-simple
      * undirected graph in which no loops are permitted, but multiple edges
      * between any two vertices are. The edges of a weighted multigraph have
-     * weights. If you're unsure about multigraphs, see: <br>
-     * {@link http://mathworld.wolfram.com/Multigraph.html}.
+     * weights. If you're unsure about multigraphs, see: <a
+     * href="http://mathworld.wolfram.com/Multigraph.html">
+     * http://mathworld.wolfram.com/Multigraph.html</a>.
      *
      * @return a new weighted multigraph.
      */
@@ -429,8 +433,9 @@ public class GraphFactory {
      * Creates a new weighted pseudograph. A weighted pseudograph is a
      * non-simple undirected graph in which both graph loops and multiple
      * edges are permitted. The edges of a weighted pseudograph have weights.
-     * If you're unsure about pseudographs, see: <br>
-     * {@link http://mathworld.wolfram.com/Pseudograph.html}.
+     * If you're unsure about pseudographs, see: <a
+     * href="http://mathworld.wolfram.com/Pseudograph.html">
+     * http://mathworld.wolfram.com/Pseudograph.html</a>.
      *
      * @return a new weighted pseudograph.
      */

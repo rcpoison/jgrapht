@@ -48,7 +48,7 @@ package org._3pq.jgrapht;
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.VertexSetListener;
+ * @see org._3pq.jgrapht.VertexSetListener
  * @since Jul 18, 2003
  */
 public interface GraphListener extends VertexSetListener {

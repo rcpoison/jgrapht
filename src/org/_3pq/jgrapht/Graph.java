@@ -47,12 +47,14 @@ import java.util.Set;
  * graph object <tt>G(V,E)</tt> contains a set <tt>V</tt> of vertices and a
  * set <tt>E</tt> of edges. Each edge e=(v1,v2) in E connects vertex v1 to
  * vertex v2. for more information about graphs and their related definitions
- * see {@link http://mathworld.wolfram.com/Graph.html}.
+ * see <a href="http://mathworld.wolfram.com/Graph.html">
+ * http://mathworld.wolfram.com/Graph.html</a>.
  * 
  * <p>
- * This library is generally follows the terminology found at:<br>
- * {@link http://mathworld.wolfram.com/topics/GraphTheory.html}. Implementation
- * of this interface can provide simple-graphs, multigraphs, pseudographs etc.
+ * This library is generally follows the terminology found at: <a
+ * href="http://mathworld.wolfram.com/topics/GraphTheory.html">
+ * http://mathworld.wolfram.com/topics/GraphTheory.html</a>. Implementation of
+ * this interface can provide simple-graphs, multigraphs, pseudographs etc.
  * The <code>GraphFactory</code> should be used to creates concrete graph
  * instances.
  * </p>
@@ -123,8 +125,8 @@ public interface Graph {
 
 
     /**
-     * Adds all of the specified edges to this graph - USE WITH CARE! (please
-     * read on carefully). The behavior of this operation is undefined if the
+     * Adds all of the specified edges to this graph - please read on carefully
+     * and USE WITH CARE!. The behavior of this operation is undefined if the
      * specified vertex collection is modified while the operation is in
      * progress. This method will generally invoke the {@link #addEdge(Edge)}
      * method, which carries a warning. Please see that warning and make sure
@@ -203,8 +205,8 @@ public interface Graph {
 
 
     /**
-     * Adds the specified edge to this graph - USE WITH CARE! (please read on
-     * carefully). More formally, adds the specified edge, <code>e</code>, to
+     * Adds the specified edge to this graph - please read on carefully and USE
+     * WITH CARE!. More formally, adds the specified edge, <code>e</code>, to
      * this graph if this graph contains no edge <code>e2</code> such that
      * <code>e2.equals(e)</code>. If this graph already contains such edge,
      * the call leaves this graph unchanged and returns <tt>false</tt>. If the
@@ -212,9 +214,9 @@ public interface Graph {
      * 
      * <p>
      * Some graphs do not allow edge-multiplicity. In such cases, if the graph
-     * already contains an edge going from the source vertex of the specified edge to the
-     * target vertex of the specified edge,  this method does not change the graph and
-     * returns <code>false</code>.
+     * already contains an edge going from the source vertex of the specified
+     * edge to the target vertex of the specified edge,  this method does not
+     * change the graph and returns <code>false</code>.
      * </p>
      * 
      * <p>

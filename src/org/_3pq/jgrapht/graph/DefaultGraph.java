@@ -212,7 +212,7 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
     /**
-     * @see WeightedGraph#addEdge(Object, Object, double)
+     * @see org._3pq.jgrapht.WeightedGraph#addEdge(Object, Object, double)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
         Edge e = addEdge( sourceVertex, targetVertex );

@@ -43,8 +43,9 @@ package org._3pq.jgrapht;
  * undirected graphs.
  * 
  * <p>
- * See {@link http://mathworld.wolfram.com/Graph.html} for more on undirected
- * and on directed graphs.
+ * See <a href="http://mathworld.wolfram.com/Graph.html">
+ * http://mathworld.wolfram.com/Graph.html</a> for more on undirected and on
+ * directed graphs.
  * </p>
  *
  * @author Barak Naveh

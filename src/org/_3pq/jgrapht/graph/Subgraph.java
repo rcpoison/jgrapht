@@ -103,7 +103,7 @@ import org._3pq.jgrapht.WeightedElement;
  *
  * @see Graph
  * @see java.util.Set
- * @see org._3pq.jgrapht.GraphFactory#listenableGraph(Graph)
+ * @see org._3pq.jgrapht.GraphFactory#createListenableGraph(Graph)
  * @since Jul 18, 2003
  */
 public class Subgraph extends AbstractGraph {
@@ -291,7 +291,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see WeightedGraph#addEdge(Object, Object, double)
+     * @see org._3pq.jgrapht.WeightedGraph#addEdge(Object, Object, double)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
         Edge e = addEdge( sourceVertex, targetVertex );

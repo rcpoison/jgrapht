@@ -102,7 +102,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
 
 
     /**
-     * @see graphs.GraphDelegator#addEdge(Object, Object, double)
+     * @see GraphDelegator#addEdge(Object, Object, double)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );

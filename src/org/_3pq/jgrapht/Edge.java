@@ -71,7 +71,7 @@ public interface Edge extends Cloneable {
      * @return a shallow copy of this edge.
      *
      * @see Cloneable
-     * @see Object#clone()
+     * @see java.lang.Object#clone()
      */
     public Object clone(  );
 

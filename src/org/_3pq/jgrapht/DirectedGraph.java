@@ -45,8 +45,9 @@ import java.util.List;
  * directed graphs.
  * 
  * <p>
- * See {@link http://mathworld.wolfram.com/DirectedGraph.html} for more on
- * directed graphs.
+ * See <a href="http://mathworld.wolfram.com/DirectedGraph.html">
+ * http://mathworld.wolfram.com/DirectedGraph.html</a> for more on directed
+ * graphs.
  * </p>
  *
  * @author Barak Naveh
@@ -57,7 +58,8 @@ public interface DirectedGraph extends Graph {
     /**
      * Returns the "in degree" of the specified vertex. An in degree of a
      * vertex in a directed graph is the number of inward directed edges from
-     * that vertex. See {@link http://mathworld.wolfram.com/Indegree.html}.
+     * that vertex. See <a href="http://mathworld.wolfram.com/Indegree.html">
+     * http://mathworld.wolfram.com/Indegree.html</a>.
      *
      * @param vertex vertex whose degree is to be calculated.
      *
@@ -80,7 +82,8 @@ public interface DirectedGraph extends Graph {
     /**
      * Returns the "out degree" of the specified vertex. An out degree of a
      * vertex in a directed graph is the number of outward directed edges from
-     * that vertex. See {@link http://mathworld.wolfram.com/Outdegree.html}.
+     * that vertex. See <a href="http://mathworld.wolfram.com/Outdegree.html">
+     * http://mathworld.wolfram.com/Outdegree.html</a>.
      *
      * @param vertex vertex whose degree is to be calculated.
      *
