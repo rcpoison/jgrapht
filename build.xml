@@ -42,6 +42,7 @@
  * 03-Sep-2003 : Added etags support (JVS);
  * 24-Feb-2004 : Removed duplicates and cleaned code (BN);
  * 06-Mar-2004 : Added tasks for building a release by CVS tag (BN);
+ * 13-Oct-2004 : Added task for building experimental package (MB);
  *
  */
 -->
@@ -97,6 +98,7 @@
         <!-- Directories -->
         <property name="build.dir"        value="${basedir}/build" />
         <property name="testbuild.dir"    value="${basedir}/testbuild" />
+        <property name="expbuild.dir"     value="${basedir}/expbuild" />
         <property name="distrib.dir"      value="${basedir}/distribution"/>
         <property name="src.dir"          value="${basedir}/src"/>
         <property name="testsrc.dir"      value="${basedir}/testsrc"/>
@@ -161,6 +163,21 @@
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+        </javac>
+    </target>
+
+
+    <!-- Compile the experimental classes -->
+    <target name="exp.compile" depends="compile"
+                           description="Compiles the experimental JGraphT source code.">
+
+        <!-- create a build directory -->
+        <mkdir dir="${expbuild.dir}" />
+
+        <!-- compile the source -->
+        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" target="1.3">
+            <classpath refid="testbuild.classpath" />
+            <include name="org/_3pq/jgrapht/experimental/**/*.java"/>
         </javac>
     </target>
 
@@ -376,6 +393,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             description="Cleans all outputs from previous builds">
         <delete dir="${distrib.dir}" />
         <delete dir="${build.dir}" />
+        <delete dir="${expbuild.dir}" />
         <delete dir="${testbuild.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
