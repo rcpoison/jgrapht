@@ -38,6 +38,8 @@
  */
 package org._3pq.jgrapht.graph;
 
+import java.util.Iterator;
+
 import org._3pq.jgrapht.DirectedEdge;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
@@ -158,6 +160,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
 
         assertFalse( m_g1.addVertex( m_v1 ) );
         assertTrue( m_g1.addVertex( m_v2 ) );
+        assertEquals( 2, m_g1.vertexSet(  ).size(  ) );
     }
 
 
@@ -223,7 +226,20 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
      * .
      */
     public void testEdgesOf(  ) {
-        init(  ); //TODO Implement edgesOf().
+        init(  );
+
+        assertEquals( m_g4.edgesOf( m_v1 ).size(  ), 2 );
+        assertEquals( m_g3.edgesOf( m_v1 ).size(  ), 4 );
+
+        Iterator iter  = m_g3.edgesOf( m_v1 ).iterator(  );
+        int      count = 0;
+
+        while( iter.hasNext(  ) ) {
+            iter.next(  );
+            count++;
+        }
+
+        assertEquals( count, 4 );
     }
 
 
@@ -317,7 +333,14 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
      * Class to test for boolean removeEdge(Edge)
      */
     public void testRemoveEdgeEdge(  ) {
-        init(  ); //TODO Implement removeEdge().
+        init(  );
+
+        assertEquals( m_g4.edgeSet(  ).size(  ), 4 );
+        m_g4.removeEdge( m_v1, m_v2 );
+        assertEquals( m_g4.edgeSet(  ).size(  ), 3 );
+        assertFalse( m_g4.removeEdge( m_eLoop ) );
+        assertTrue( m_g4.removeEdge( m_g4.getEdge( m_v2, m_v3 ) ) );
+        assertEquals( m_g4.edgeSet(  ).size(  ), 2 );
     }
 
 
@@ -333,7 +356,20 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
      * .
      */
     public void testRemoveVertex(  ) {
-        init(  ); //TODO Implement removeVertex().
+        init(  );
+        assertEquals( 4, m_g4.vertexSet(  ).size(  ) );
+        assertTrue( m_g4.removeVertex( m_v1 ) );
+        assertEquals( 3, m_g4.vertexSet(  ).size(  ) );
+
+        assertEquals( 2, m_g4.edgeSet(  ).size(  ) );
+        assertFalse( m_g4.removeVertex( m_v1 ) );
+        assertTrue( m_g4.removeVertex( m_v2 ) );
+        assertEquals( 1, m_g4.edgeSet(  ).size(  ) );
+        assertTrue( m_g4.removeVertex( m_v3 ) );
+        assertEquals( 0, m_g4.edgeSet(  ).size(  ) );
+        assertEquals( 1, m_g4.vertexSet(  ).size(  ) );
+        assertTrue( m_g4.removeVertex( m_v4 ) );
+        assertEquals( 0, m_g4.vertexSet(  ).size(  ) );
     }
 
 
