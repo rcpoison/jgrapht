@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 26-Jul-2003 : Added support for user-definable GraphFactory (BN);
+ * 27-Jul-2003 : Added accessors for edge-factory factory (BN);
  *
  */
 package org._3pq.jgrapht;
@@ -69,6 +70,28 @@ import org._3pq.jgrapht.graph.UnmodifiableGraph;
 public abstract class GraphFactory {
     private static GraphFactory s_factory = null;
     private EdgeFactoryFactory  m_eff = new EdgeFactoryFactory(  );
+
+    /**
+     * Returns the factory that produces the edge-factories for all the graphs
+     * created by this factory.
+     *
+     * @return the factory that produces the edge-factories.
+     */
+    public EdgeFactoryFactory getEdgeFactoryFactory(  ) {
+        return m_eff;
+    }
+
+
+    /**
+     * Sets the factory that produces the edge-factories for all the graphs
+     * created by this factory.
+     *
+     * @param eff factory that produces the edge-factories to be set.
+     */
+    public void setEff( EdgeFactoryFactory eff ) {
+        m_eff = eff;
+    }
+
 
     /**
      * Installs the specified graph factory as the globally used graph factory
