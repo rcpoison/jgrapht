@@ -67,9 +67,10 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
-	<property name="latest.version.name"  value="0.5.2" />
+	<property name="latest.version.name"  value="0.5.3" />
 	
     <!-- CVS tags and their respective version names -->
+    <property name="ver_0_5_3.name"       value="0.5.3" />
     <property name="ver_0_5_2.name"       value="0.5.2" />
 
     <!-- Initialization. -->
