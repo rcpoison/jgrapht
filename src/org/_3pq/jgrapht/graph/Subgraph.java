@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@
 /* -------------
  * Subgraph.java
  * -------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   -
@@ -38,6 +38,7 @@
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
  * 07-Feb-2004 : Enabled serialization (BN);
+ * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -71,12 +72,11 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * 
  * <p>
  * If the base graph is a {@link org._3pq.jgrapht.ListenableGraph}, the
- * subgraph becomes a "live-window" on the the base graph and guarantees the
- * subgraph property. If an edge or a vertex is removed from the base graph,
- * it is automatically removed from the subgraph. Subgraph listeners are
- * informed on such removal only if it results in a cascaded removal from the
- * subgraph. If edges or vertices are added to the base graph, the subgraph
- * remains unaffected.
+ * subgraph listens on the base graph and guarantees the subgraph property. If
+ * an edge or a vertex is removed from the base graph, it is automatically
+ * removed from the subgraph. Subgraph listeners are informed on such removal
+ * only if it results in a cascaded removal from the subgraph. If edges or
+ * vertices are added to the base graph, the subgraph remains unaffected.
  * </p>
  * 
  * <p>
@@ -94,24 +94,19 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * </p>
  * 
  * <p>
- * PERFORMANCE NOTE: The intention of Subgraph is to provide a "window" on a
- * base graph, so that changes made to vertex instances or to edge instances
- * in the subgraph are immediately reflected in the base graph, and vice
- * versa. For that to happen, vertices and edges of the subgraph must be
- * reference-equal (and not only value-equal) to their respective ones in the
- * base graph. By default, this class verifies that this reference-equality is
- * maintained, but at a performance cost. You can avoid this cost by setting
- * the verifyIntegrity flag off. However, you must <i>exercise care</i> and
- * make sure that all vertices or edges you add to the subgraph are
- * reference-equal to the ones contained in the base graph.
- * </p>
- * 
- * <p>
- * At the time of writing, there is no easy and performance-friendly way to
- * programmatically ensure the reference-equality requirement: there is a
- * design flaw in the <code>java.util.Set</code> interface in that it provides
- * no way of obtaining a reference to an object already contained in a Set. If
- * fixed in the future the verifyIntegrity flag could be eliminated.
+ * A subgraph may provide a "live-window" on a base graph, so that changes made
+ * to its vertices or edges are immediately reflected in the base graph, and
+ * vice versa. For that to happen, vertices and edges added to the subgraph
+ * must be <i>identical</i> (that is, reference-equal and not only
+ * value-equal) to their respective ones in the base graph. Previous versions
+ * of this class enforced such identity, at a severe performance cost.
+ * Currently it is no longer enforced. If you want to achieve a "live-window"
+ * functionality, your safest tactics would be to NOT override the
+ * <code>equals()</code>methods of your vertices and edges. If you use a class
+ * that has already overridden the <code>equals()</code> method, such as
+ * <code>String</code>, than you can use a wrapper around it, or else use it
+ * directly but exercise a great care to avoid having different-but-equal
+ * instances in the subgraph and the base graph.
  * </p>
  *
  * @author Barak Naveh
@@ -121,8 +116,6 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * @since Jul 18, 2003
  */
 public class Subgraph extends AbstractGraph implements Serializable {
-    private static final String REF_NOT_EQUAL_TO_BASE =
-        "value-equal but not reference equal to base graph";
     private static final String NO_SUCH_EDGE_IN_BASE =
         "no such edge in base graph";
     private static final String NO_SUCH_VERTEX_IN_BASE =
@@ -173,8 +166,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
             List baseEdges = m_base.getAllEdges( sourceVertex, targetVertex );
 
-            for( Iterator iter = baseEdges.iterator(  ); iter.hasNext(  ); ) {
-                Edge e = (Edge) iter.next(  );
+            for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
+                Edge e = (Edge) i.next(  );
 
                 if( m_edgeSet.contains( e ) ) { // add if subgraph also contains it
                     edges.add( e );
@@ -211,14 +204,12 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
     /**
      * Sets the the check integrity flag.
-     * 
-     * <p>
-     * WARNING: See discussion in the class description.
-     * </p>
      *
      * @param verifyIntegrity
      *
      * @see Subgraph
+     * @deprecated method will be deleted in future versions. verifyIntegrity
+     *             flag has no effect now.
      */
     public void setVerifyIntegrity( boolean verifyIntegrity ) {
         m_verifyIntegrity = verifyIntegrity;
@@ -229,6 +220,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * Returns the value of the verifyIntegrity flag.
      *
      * @return the value of the verifyIntegrity flag.
+     *
+     * @deprecated method will be deleted in future versions.
      */
     public boolean isVerifyIntegrity(  ) {
         return m_verifyIntegrity;
@@ -248,8 +241,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
         List edges = m_base.getAllEdges( sourceVertex, targetVertex );
 
-        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
+        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
 
             if( !containsEdge( e ) ) {
                 m_edgeSet.add( e );
@@ -263,8 +256,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
 
     /**
-     * Adds the specified edge to this subgraph. See performance discussion in
-     * the class description.
+     * Adds the specified edge to this subgraph.
      *
      * @param e the edge to be added.
      *
@@ -288,7 +280,6 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
         assertVertexExist( e.getSource(  ) );
         assertVertexExist( e.getTarget(  ) );
-        assertBaseContainsEdgeInstance( e );
 
         if( containsEdge( e ) ) {
             return false;
@@ -302,8 +293,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
 
     /**
-     * Adds the specified vertex to this subgraph. See performance discussion
-     * in the class description.
+     * Adds the specified vertex to this subgraph.
      *
      * @param v the vertex to be added.
      *
@@ -324,8 +314,6 @@ public class Subgraph extends AbstractGraph implements Serializable {
         if( !m_base.containsVertex( v ) ) {
             throw new IllegalArgumentException( NO_SUCH_VERTEX_IN_BASE );
         }
-
-        assertBaseContainsVertexInstance( v );
 
         if( containsVertex( v ) ) {
             return false;
@@ -383,8 +371,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         ArrayList edges     = new ArrayList(  );
         List      baseEdges = m_base.edgesOf( vertex );
 
-        for( Iterator iter = baseEdges.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
+        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
 
             if( containsEdge( e ) ) {
                 edges.add( e );
@@ -428,10 +416,6 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
 
     /**
-     * NOTE: We allow to remove an edge by the specified "value-equal" edge
-     * that denotes it, which is not necessarily "reference-equal" to the edge
-     * to be removed.
-     *
      * @see org._3pq.jgrapht.Graph#removeEdge(Edge)
      */
     public boolean removeEdge( Edge e ) {
@@ -450,10 +434,6 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
 
     /**
-     * NOTE: We allow to remove a vertex by the specified "value-equal" vertex
-     * that denotes it, which is not necessarily "reference-equal" to the
-     * vertex to be removed.
-     *
      * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
@@ -486,8 +466,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         boolean containsVertices;
         boolean edgeIncluded;
 
-        for( Iterator iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
-            e     = (Edge) iter.next(  );
+        for( Iterator i = edgeSet.iterator(  ); i.hasNext(  ); ) {
+            e     = (Edge) i.next(  );
 
             containsVertices =
                 containsVertex( e.getSource(  ) )
@@ -506,53 +486,12 @@ public class Subgraph extends AbstractGraph implements Serializable {
     private void addVerticesUsingFilter( Set vertexSet, Set filter ) {
         Object v;
 
-        for( Iterator iter = vertexSet.iterator(  ); iter.hasNext(  ); ) {
-            v = iter.next(  );
+        for( Iterator i = vertexSet.iterator(  ); i.hasNext(  ); ) {
+            v = i.next(  );
 
             // note the use of short circuit evaluation            
             if( filter == null || filter.contains( v ) ) {
                 addVertex( v );
-            }
-        }
-    }
-
-
-    private void assertBaseContainsEdgeInstance( Edge e ) {
-        if( !m_verifyIntegrity ) {
-            return;
-        }
-
-        List baseEdges = m_base.getAllEdges( e.getSource(  ), e.getTarget(  ) );
-
-        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
-            Edge baseEdge = (Edge) i.next(  );
-
-            if( e.equals( baseEdge ) ) {
-                if( e != baseEdge ) {
-                    throw new IllegalArgumentException( REF_NOT_EQUAL_TO_BASE );
-                }
-
-                return;
-            }
-        }
-    }
-
-
-    private void assertBaseContainsVertexInstance( Object v ) {
-        if( !m_verifyIntegrity ) {
-            return;
-        }
-
-        for( Iterator iter = m_base.vertexSet(  ).iterator(  );
-                iter.hasNext(  ); ) {
-            Object baseVertex = iter.next(  );
-
-            if( v.equals( baseVertex ) ) {
-                if( v != baseVertex ) {
-                    throw new IllegalArgumentException( REF_NOT_EQUAL_TO_BASE );
-                }
-
-                return;
             }
         }
     }
