@@ -40,9 +40,12 @@
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EnhancedTestCase;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
+import org._3pq.jgrapht.event.EdgeTraversalEvent;
+import org._3pq.jgrapht.event.TraversalListener;
+import org._3pq.jgrapht.event.VertexTraversalEvent;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 
 /**
@@ -131,9 +134,10 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
         private int m_numComponentVertices = 0;
 
         /**
-         * @see TraversalListener#connectedComponentFinished()
+         * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentFinished(  ) {
+        public void connectedComponentFinished( 
+            ConnectedComponentTraversalEvent e ) {
             switch( m_componentNumber ) {
                 case 1:
                     assertEquals( getExpectedStr1(  ), m_result.toString(  ) );
@@ -158,25 +162,26 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
 
 
         /**
-         * @see TraversalListener#connectedComponentStarted()
+         * @see TraversalListener#connectedComponentStarted(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentStarted(  ) {
+        public void connectedComponentStarted( 
+            ConnectedComponentTraversalEvent e ) {
             m_componentNumber++;
         }
 
 
         /**
-         * @see TraversalListener#edgeVisited(Edge)
+         * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
          */
-        public void edgeVisited( Edge edge ) {
+        public void edgeTraversed( EdgeTraversalEvent e ) {
             // to be tested...
         }
 
 
         /**
-         * @see TraversalListener#vertexVisited(Object)
+         * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
          */
-        public void vertexVisited( Object vertex ) {
+        public void vertexTraversed( VertexTraversalEvent e ) {
             m_numComponentVertices++;
         }
     }

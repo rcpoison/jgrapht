@@ -47,11 +47,13 @@ import java.util.Map;
 import java.util.Set;
 
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
+import org._3pq.jgrapht.event.TraversalListenerAdapter;
+import org._3pq.jgrapht.event.VertexTraversalEvent;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
-import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
 
 /**
  * Allows obtaining various connectivity aspects of a graph. The <i>inspected
@@ -156,17 +158,17 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see GraphListener#edgeAdded(EdgeEvent)
+     * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
-    public void edgeAdded( EdgeEvent e ) {
+    public void edgeAdded( GraphEdgeChangeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
     /**
-     * @see GraphListener#edgeRemoved(EdgeEvent)
+     * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
      */
-    public void edgeRemoved( EdgeEvent e ) {
+    public void edgeRemoved( GraphEdgeChangeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
@@ -195,17 +197,17 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(VertexEvent)
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
-    public void vertexAdded( VertexEvent e ) {
+    public void vertexAdded( GraphVertexChangeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(VertexEvent)
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
-    public void vertexRemoved( VertexEvent e ) {
+    public void vertexRemoved( GraphVertexChangeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
@@ -248,27 +250,30 @@ public class ConnectivityInspector implements GraphListener {
         private Set m_currentConnectedSet;
 
         /**
-         * @see org._3pq.jgrapht.TraversalListener#connectedComponentFinished()
+         * @see TraversalListenerAdapter#connectedComponentFinished(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentFinished(  ) {
+        public void connectedComponentFinished( 
+            ConnectedComponentTraversalEvent e ) {
             m_connectedSets.add( m_currentConnectedSet );
         }
 
 
         /**
-         * @see org._3pq.jgrapht.TraversalListener#connectedComponentStarted()
+         * @see TraversalListenerAdapter#connectedComponentStarted(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentStarted(  ) {
+        public void connectedComponentStarted( 
+            ConnectedComponentTraversalEvent e ) {
             m_currentConnectedSet = new HashSet(  );
         }
 
 
         /**
-         * @see org._3pq.jgrapht.TraversalListener#vertexVisited(Object)
+         * @see TraversalListenerAdapter#vertexTraversed(Object)
          */
-        public void vertexVisited( Object vertex ) {
-            m_currentConnectedSet.add( vertex );
-            m_vertexToConnectedSet.put( vertex, m_currentConnectedSet );
+        public void vertexTraversed( VertexTraversalEvent e ) {
+            Object v = e.getVertex(  );
+            m_currentConnectedSet.add( v );
+            m_vertexToConnectedSet.put( v, m_currentConnectedSet );
         }
     }
 }

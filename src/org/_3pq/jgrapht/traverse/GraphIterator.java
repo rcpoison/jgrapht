@@ -34,12 +34,14 @@
  * Changes
  * -------
  * 31-Jul-2003 : Initial revision (BN);
+ * 11-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
 
 import java.util.Iterator;
 
+import org._3pq.jgrapht.event.TraversalListener;
 
 /**
  * A graph iterator.
@@ -57,6 +59,31 @@ public interface GraphIterator extends Iterator {
      *         otherwise <code>false</code>.
      */
     public boolean isCrossComponentTraversal(  );
+
+
+    /**
+     * Sets a value the <code>reuseEvents</code> flag. If the
+     * <code>reuseEvents</code> flag is set to <code>true</code> this class
+     * will reuse previously fired events and will not create a new object for
+     * each event. This option increases performance but should be used with
+     * care, especially in multithreaded environment.
+     *
+     * @param reuseEvents whether to reuse previously fired event objects
+     *        instead of creating a new event object for each event.
+     */
+    public void setReuseEvents( boolean reuseEvents );
+
+
+    /**
+     * Tests whether the <code>reuseEvents</code> flag is set. If the flag is
+     * set to <code>true</code> this class will reuse previously fired events
+     * and will not create a new object for each event. This option increases
+     * performance but should be used with care, especially in multithreaded
+     * environment.
+     *
+     * @return the value of the <code>reuseEvents</code> flag.
+     */
+    public boolean isReuseEvents(  );
 
 
     /**

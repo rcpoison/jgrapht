@@ -43,9 +43,9 @@ import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.event.VertexSetListener;
 
 /**
@@ -200,33 +200,33 @@ public class ListenableGraphTest extends TestCase {
      */
     private class MyGraphListner implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(EdgeEvent)
+         * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded( EdgeEvent e ) {
+        public void edgeAdded( GraphEdgeChangeEvent e ) {
             m_lastAddedEdge = e.getEdge(  );
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(EdgeEvent)
+         * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved( EdgeEvent e ) {
+        public void edgeRemoved( GraphEdgeChangeEvent e ) {
             m_lastRemovedEdge = e.getEdge(  );
         }
 
 
         /**
-         * @see VertexSetListener#vertexAdded(VertexEvent)
+         * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
-        public void vertexAdded( VertexEvent e ) {
+        public void vertexAdded( GraphVertexChangeEvent e ) {
             m_lastAddedVertex = e.getVertex(  );
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(VertexEvent)
+         * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
-        public void vertexRemoved( VertexEvent e ) {
+        public void vertexRemoved( GraphVertexChangeEvent e ) {
             m_lastRemovedVertex = e.getVertex(  );
         }
     }

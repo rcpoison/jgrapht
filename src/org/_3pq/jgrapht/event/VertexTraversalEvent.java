@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -----------------------------
- * TraversalListenerAdapter.java
- * -----------------------------
+/* -------------------------
+ * VertexTraversalEvent.java
+ * -------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,42 +33,41 @@
  *
  * Changes
  * -------
- * 06-Aug-2003 : Initial revision (BN);
+ * 11-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.Edge;
+import java.util.EventObject;
 
 /**
- * An empty do-nothing implementation of the {@link TraversalListener}
- * interface used for subclasses.
+ * A traversal event for a graph vertex.
  *
  * @author Barak Naveh
  *
- * @since Aug 6, 2003
+ * @since Aug 11, 2003
  */
-public class TraversalListenerAdapter implements TraversalListener {
-    /**
-     * @see TraversalListener#connectedComponentFinished()
-     */
-    public void connectedComponentFinished(  ) {}
-
+public class VertexTraversalEvent extends EventObject {
+    /** The traversed vertex. */
+    protected Object m_vertex;
 
     /**
-     * @see TraversalListener#connectedComponentStarted()
+     * Creates a new VertexTraversalEvent.
+     *
+     * @param eventSource the source of the event.
+     * @param vertex the traversed vertex.
      */
-    public void connectedComponentStarted(  ) {}
-
+    public VertexTraversalEvent( Object eventSource, Object vertex ) {
+        super( eventSource );
+        m_vertex = vertex;
+    }
 
     /**
-     * @see TraversalListener#edgeVisited(Edge)
+     * Returns the traversed vertex.
+     *
+     * @return the traversed vertex.
      */
-    public void edgeVisited( Edge edge ) {}
-
-
-    /**
-     * @see TraversalListener#vertexVisited(Object)
-     */
-    public void vertexVisited( Object vertex ) {}
+    public Object getVertex(  ) {
+        return m_vertex;
+    }
 }

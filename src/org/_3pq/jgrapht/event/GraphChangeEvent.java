@@ -38,16 +38,18 @@
  */
 package org._3pq.jgrapht.event;
 
+import java.util.EventObject;
+
 /**
- * An event which indicates that a graph has changed. This class is a root
- * event class for all graph events.
+ * An event which indicates that a graph has changed. This class is a root for
+ * graph change events.
  *
  * @author Barak Naveh
  *
  * @since Aug 10, 2003
  */
-public class GraphChangeEvent extends java.util.EventObject {
-    /** The type of this event. */
+public class GraphChangeEvent extends EventObject {
+    /** The type of graph change this event indicates. */
     protected int m_type;
 
     /**

@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -41,7 +42,10 @@ package org._3pq.jgrapht.traverse;
 import java.util.ArrayList;
 import java.util.List;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
+import org._3pq.jgrapht.event.EdgeTraversalEvent;
+import org._3pq.jgrapht.event.TraversalListener;
+import org._3pq.jgrapht.event.VertexTraversalEvent;
 
 /**
  * An empty implementation of a graph iterator to minimize the effort required
@@ -54,6 +58,7 @@ import org._3pq.jgrapht.Edge;
 public abstract class AbstractGraphIterator implements GraphIterator {
     private List    m_traversalListeners      = new ArrayList(  );
     private boolean m_crossComponentTraversal = true;
+    private boolean m_reuseEvents             = false;
 
     /**
      * Sets the cross component traversal flag - indicates whether to traverse
@@ -68,7 +73,7 @@ public abstract class AbstractGraphIterator implements GraphIterator {
 
 
     /**
-     * Test whether this iterator is set to traverse the grpah across connected
+     * Test whether this iterator is set to traverse the graph across connected
      * components.
      *
      * @return <code>true</code> if traverses across connected components,
@@ -76,6 +81,22 @@ public abstract class AbstractGraphIterator implements GraphIterator {
      */
     public boolean isCrossComponentTraversal(  ) {
         return m_crossComponentTraversal;
+    }
+
+
+    /**
+     * @see GraphIterator#setReuseEvents(boolean)
+     */
+    public void setReuseEvents( boolean reuseEvents ) {
+        m_reuseEvents = reuseEvents;
+    }
+
+
+    /**
+     * @see GraphIterator#isReuseEvents()
+     */
+    public boolean isReuseEvents(  ) {
+        return m_reuseEvents;
     }
 
 
@@ -114,14 +135,17 @@ public abstract class AbstractGraphIterator implements GraphIterator {
     /**
      * Informs all listeners that the traversal of the current connected
      * component finished.
+     *
+     * @param e the connected component finished event.
      */
-    protected void fireConnectedComponentFinished(  ) {
+    protected void fireConnectedComponentFinished( 
+        ConnectedComponentTraversalEvent e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
                 (TraversalListener) m_traversalListeners.get( i );
-            l.connectedComponentFinished(  );
+            l.connectedComponentFinished( e );
         }
     }
 
@@ -129,46 +153,49 @@ public abstract class AbstractGraphIterator implements GraphIterator {
     /**
      * Informs all listeners that a traversal of a new connected component has
      * started.
+     *
+     * @param e the connected component started event.
      */
-    protected void fireConnectedComponentStarted(  ) {
+    protected void fireConnectedComponentStarted( 
+        ConnectedComponentTraversalEvent e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
                 (TraversalListener) m_traversalListeners.get( i );
-            l.connectedComponentStarted(  );
+            l.connectedComponentStarted( e );
         }
     }
 
 
     /**
-     * Informs all listeners that a the specifed edge was visited.
+     * Informs all listeners that a the specified edge was visited.
      *
-     * @param edge the visited edge.
+     * @param e the edge traversal event.
      */
-    protected void fireEdgeVisited( Edge edge ) {
+    protected void fireEdgeTraversed( EdgeTraversalEvent e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
                 (TraversalListener) m_traversalListeners.get( i );
-            l.edgeVisited( edge );
+            l.edgeTraversed( e );
         }
     }
 
 
     /**
-     * Informs all listeners that a the specifed vertex was visited.
+     * Informs all listeners that a the specified vertex was visited.
      *
-     * @param vertex the visited vertex.
+     * @param e the vertex traversal event.
      */
-    protected void fireVertexVisited( Object vertex ) {
+    protected void fireVertexTraversed( VertexTraversalEvent e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
                 (TraversalListener) m_traversalListeners.get( i );
-            l.vertexVisited( vertex );
+            l.vertexTraversed( e );
         }
     }
 }

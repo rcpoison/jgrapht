@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------
- * VertexSetListener.java
- * ----------------------
+/* -----------------------
+ * EdgeTraversalEvent.java
+ * -----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,38 +33,43 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
- * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Aug-2003 : Initial revision (BN);
  *
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventListener;
+import java.util.EventObject;
+
+import org._3pq.jgrapht.Edge;
 
 /**
- * A listener that is notified when the graph's vertex set changes. It should
- * be used when <i>only</i> notifications on edge-set changes are of interest.
- * If all graph  notifications are of interest better use
- * <code>GraphListener</code>.
+ * A traversal event for a graph edge.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.event.GraphListener
- * @since Jul 18, 2003
+ * @since Aug 11, 2003
  */
-public interface VertexSetListener extends EventListener {
-    /**
-     * Notifies that a vertex has been added to the graph.
-     *
-     * @param e the vertex event.
-     */
-    public void vertexAdded( GraphVertexChangeEvent e );
-
+public class EdgeTraversalEvent extends EventObject {
+    /** The traversed edge. */
+    protected Edge m_edge;
 
     /**
-     * Notifies that a vertex has been removed from the graph.
+     * Creates a new EdgeTraversalEvent.
      *
-     * @param e the vertex event.
+     * @param eventSource the source of the event.
+     * @param edge the traversed edge.
      */
-    public void vertexRemoved( GraphVertexChangeEvent e );
+    public EdgeTraversalEvent( Object eventSource, Edge edge ) {
+        super( eventSource );
+        m_edge = edge;
+    }
+
+    /**
+     * Returns the traversed edge.
+     *
+     * @return the traversed edge.
+     */
+    public Edge getEdge(  ) {
+        return m_edge;
+    }
 }

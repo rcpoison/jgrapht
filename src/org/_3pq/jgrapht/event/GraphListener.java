@@ -39,7 +39,6 @@
  */
 package org._3pq.jgrapht.event;
 
-
 /**
  * A listener that is notified when the graph changes.
  * 
@@ -59,13 +58,13 @@ public interface GraphListener extends VertexSetListener {
      *
      * @param e the edge event.
      */
-    public void edgeAdded( EdgeEvent e );
+    public void edgeAdded( GraphEdgeChangeEvent e );
 
 
     /**
      * Notifies that an edge has been removed from the graph.
      *
-     * @param  e the edge event.
+     * @param e the edge event.
      */
-    public void edgeRemoved( EdgeEvent e );
+    public void edgeRemoved( GraphEdgeChangeEvent e );
 }

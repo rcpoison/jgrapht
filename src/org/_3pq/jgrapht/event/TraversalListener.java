@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------------
- * VertexSetListener.java
+ * TraversalListener.java
  * ----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -34,37 +34,53 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
- * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventListener;
-
 /**
- * A listener that is notified when the graph's vertex set changes. It should
- * be used when <i>only</i> notifications on edge-set changes are of interest.
- * If all graph  notifications are of interest better use
- * <code>GraphListener</code>.
+ * A listener on graph iterator or on a graph traverser.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.event.GraphListener
- * @since Jul 18, 2003
+ * @since Jul 19, 2003
  */
-public interface VertexSetListener extends EventListener {
+public interface TraversalListener {
     /**
-     * Notifies that a vertex has been added to the graph.
+     * Called to inform listeners that the traversal of the current connected
+     * component has finished.
      *
-     * @param e the vertex event.
+     * @param e the traversal event.
      */
-    public void vertexAdded( GraphVertexChangeEvent e );
+    public void connectedComponentFinished( ConnectedComponentTraversalEvent e );
 
 
     /**
-     * Notifies that a vertex has been removed from the graph.
+     * Called to inform listeners that a traversal of a new connected component
+     * has started.
      *
-     * @param e the vertex event.
+     * @param e the traversal event.
      */
-    public void vertexRemoved( GraphVertexChangeEvent e );
+    public void connectedComponentStarted( ConnectedComponentTraversalEvent e );
+
+
+    /**
+     * Called to inform the listener that the specified edge have been visited
+     * during the graph traversal. Depending on the traversal algorithm, edge
+     * might be visited more than once.
+     *
+     * @param e the edge traversal event.
+     */
+    public void edgeTraversed( EdgeTraversalEvent e );
+
+
+    /**
+     * Called to inform the listener that the specified vertex have been
+     * visited during the graph traversal. Depending on the traversal
+     * algorithm, vertex might be visited more than once.
+     *
+     * @param e the vertex traversal event.
+     */
+    public void vertexTraversed( VertexTraversalEvent e );
 }

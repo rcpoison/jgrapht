@@ -53,9 +53,9 @@ import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedElement;
-import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 
 /**
  * A subgraph is a graph that has a subset of vertices and subset of edges with
@@ -562,17 +562,17 @@ public class Subgraph extends AbstractGraph {
      */
     private class BaseGraphListener implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(EdgeEvent)
+         * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded( EdgeEvent e ) {
+        public void edgeAdded( GraphEdgeChangeEvent e ) {
             // we don't care
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(EdgeEvent)
+         * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved( EdgeEvent e ) {
+        public void edgeRemoved( GraphEdgeChangeEvent e ) {
             Edge edge = e.getEdge(  );
 
             if( m_edgeSet.contains( edge ) ) {
@@ -582,17 +582,17 @@ public class Subgraph extends AbstractGraph {
 
 
         /**
-         * @see VertexSetListener#vertexAdded(VertexEvent)
+         * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
-        public void vertexAdded( VertexEvent e ) {
+        public void vertexAdded( GraphVertexChangeEvent e ) {
             // we don't care
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(VertexEvent)
+         * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
-        public void vertexRemoved( VertexEvent e ) {
+        public void vertexRemoved( GraphVertexChangeEvent e ) {
             Object vertex = e.getVertex(  );
 
             if( m_vertexSet.contains( vertex ) ) {

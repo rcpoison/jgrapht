@@ -48,9 +48,9 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.event.VertexSetListener;
 
 /**
@@ -302,8 +302,9 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param edge the edge that was added.
      */
     protected void fireEdgeAdded( Edge edge ) {
-        EdgeEvent e   = createEdgeEvent( EdgeEvent.EDGE_ADDED, edge );
-        int       len = m_graphListeners.size(  );
+        GraphEdgeChangeEvent e =
+            createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_ADDED, edge );
+        int                  len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
@@ -319,8 +320,9 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param edge the edge that was removed.
      */
     protected void fireEdgeRemoved( Edge edge ) {
-        EdgeEvent e   = createEdgeEvent( EdgeEvent.EDGE_REMOVED, edge );
-        int       len = m_graphListeners.size(  );
+        GraphEdgeChangeEvent e =
+            createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_REMOVED, edge );
+        int                  len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
@@ -336,8 +338,10 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param vertex the vertex that was added.
      */
     protected void fireVertexAdded( Object vertex ) {
-        VertexEvent e   = createVertexEvent( VertexEvent.VERTEX_ADDED, vertex );
-        int         len;
+        GraphVertexChangeEvent e =
+            createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_ADDED,
+                vertex );
+        int                    len;
 
         len = m_vertexSetListeners.size(  );
 
@@ -364,8 +368,10 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param vertex the vertex that was removed.
      */
     protected void fireVertexRemoved( Object vertex ) {
-        VertexEvent e = createVertexEvent( VertexEvent.VERTEX_REMOVED, vertex );
-        int         len;
+        GraphVertexChangeEvent e =
+            createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_REMOVED,
+                vertex );
+        int                    len;
 
         len = m_vertexSetListeners.size(  );
 
@@ -393,7 +399,8 @@ public class DefaultListenableGraph extends GraphDelegator
     }
 
 
-    private EdgeEvent createEdgeEvent( int eventType, Edge edge ) {
+    private GraphEdgeChangeEvent createGraphEdgeChangeEvent( int eventType,
+        Edge edge ) {
         if( m_reuseEvents ) {
             m_reuseableEdgeEvent.setType( eventType );
             m_reuseableEdgeEvent.setEdge( edge );
@@ -401,12 +408,13 @@ public class DefaultListenableGraph extends GraphDelegator
             return m_reuseableEdgeEvent;
         }
         else {
-            return new EdgeEvent( this, eventType, edge );
+            return new GraphEdgeChangeEvent( this, eventType, edge );
         }
     }
 
 
-    private VertexEvent createVertexEvent( int eventType, Object vertex ) {
+    private GraphVertexChangeEvent createGraphVertexChangeEvent( 
+        int eventType, Object vertex ) {
         if( m_reuseEvents ) {
             m_reuseableVertexEvent.setType( eventType );
             m_reuseableVertexEvent.setVertex( vertex );
@@ -414,7 +422,7 @@ public class DefaultListenableGraph extends GraphDelegator
             return m_reuseableVertexEvent;
         }
         else {
-            return new VertexEvent( this, eventType, vertex );
+            return new GraphVertexChangeEvent( this, eventType, vertex );
         }
     }
 
@@ -425,9 +433,9 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @since Aug 10, 2003
      */
-    private static class FlyweightEdgeEvent extends EdgeEvent {
+    private static class FlyweightEdgeEvent extends GraphEdgeChangeEvent {
         /**
-         * @see EdgeEvent#EdgeEvent(Object, int, Edge)
+         * @see GraphEdgeChangeEvent#GraphEdgeChangeEvent(Object, int, Edge)
          */
         public FlyweightEdgeEvent( Object eventSource, int type, Edge e ) {
             super( eventSource, type, e );
@@ -461,9 +469,10 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @since Aug 10, 2003
      */
-    private static class FlyweightVertexEvent extends VertexEvent {
+    private static class FlyweightVertexEvent extends GraphVertexChangeEvent {
         /**
-         * @see VertexEvent#VertexEvent(Object, int, Object)
+         * @see GraphVertexChangeEvent#GraphVertexChangeEvent(Object, int,
+         *      Object)
          */
         public FlyweightVertexEvent( Object eventSource, int type, Object vertex ) {
             super( eventSource, type, vertex );

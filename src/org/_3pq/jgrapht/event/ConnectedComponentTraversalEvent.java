@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------
- * VertexSetListener.java
- * ----------------------
+/* -------------------------------------
+ * ConnectedComponentTraversalEvent.java
+ * -------------------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,38 +33,47 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
- * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Aug-2003 : Initial revision (BN);
  *
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventListener;
+import java.util.EventObject;
 
 /**
- * A listener that is notified when the graph's vertex set changes. It should
- * be used when <i>only</i> notifications on edge-set changes are of interest.
- * If all graph  notifications are of interest better use
- * <code>GraphListener</code>.
+ * A traversal event with respect to a connected component.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.event.GraphListener
- * @since Jul 18, 2003
+ * @since Aug 11, 2003
  */
-public interface VertexSetListener extends EventListener {
-    /**
-     * Notifies that a vertex has been added to the graph.
-     *
-     * @param e the vertex event.
-     */
-    public void vertexAdded( GraphVertexChangeEvent e );
+public class ConnectedComponentTraversalEvent extends EventObject {
+    /** Connected component traversal started event. */
+    public static final int CONNECTED_COMPONENT_STARTED = 31;
 
+    /** Connected component traversal finished event. */
+    public static final int CONNECTED_COMPONENT_FINISHED = 32;
+
+    /** The type of this event. */
+    private int m_type;
 
     /**
-     * Notifies that a vertex has been removed from the graph.
+     * Creates a new ConnectedComponentTraversalEvent.
      *
-     * @param e the vertex event.
+     * @param eventSource the source of the event.
+     * @param type the type of event.
      */
-    public void vertexRemoved( GraphVertexChangeEvent e );
+    public ConnectedComponentTraversalEvent( Object eventSource, int type ) {
+        super( eventSource );
+        m_type = type;
+    }
+
+    /**
+     * Returns the event type.
+     *
+     * @return the event type.
+     */
+    public int getType(  ) {
+        return m_type;
+    }
 }

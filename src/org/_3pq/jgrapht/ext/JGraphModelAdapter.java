@@ -62,9 +62,9 @@ import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 
 /**
  * An adapter that reflects a JGraphT graph as a JGraph graph. This adapter is
@@ -390,33 +390,33 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      */
     private class MyGraphListener implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(EdgeEvent)
+         * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded( EdgeEvent e ) {
+        public void edgeAdded( GraphEdgeChangeEvent e ) {
             addJGraphTEdge( e.getEdge(  ) );
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(EdgeEvent)
+         * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved( EdgeEvent e ) {
+        public void edgeRemoved( GraphEdgeChangeEvent e ) {
             removeJGraphTEdge( e.getEdge(  ) );
         }
 
 
         /**
-         * @see VertexSetListener#vertexAdded(VertexEvent)
+         * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
-        public void vertexAdded( VertexEvent e ) {
+        public void vertexAdded( GraphVertexChangeEvent e ) {
             addJGraphTVertex( e.getVertex(  ) );
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(VertexEvent)
+         * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
-        public void vertexRemoved( VertexEvent e ) {
+        public void vertexRemoved( GraphVertexChangeEvent e ) {
             removeJGraphTVertex( e.getVertex(  ) );
         }
     }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------
- * EdgeEvent.java
- * --------------
+/* -------------------------
+ * GraphEdgeChangeEvent.java
+ * -------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -51,7 +51,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Aug 10, 2003
  */
-public class EdgeEvent extends GraphChangeEvent {
+public class GraphEdgeChangeEvent extends GraphChangeEvent {
     /**
      * Before edge added event. This event is fired before an edge is added to
      * a graph.
@@ -79,13 +79,13 @@ public class EdgeEvent extends GraphChangeEvent {
     protected Edge m_edge;
 
     /**
-     * Constructor for EdgeEvent.
+     * Constructor for GraphEdgeChangeEvent.
      *
      * @param eventSource the source of this event.
      * @param type the event type of this event.
      * @param e the edge that this event is related to.
      */
-    public EdgeEvent( Object eventSource, int type, Edge e ) {
+    public GraphEdgeChangeEvent( Object eventSource, int type, Edge e ) {
         super( eventSource, type );
         m_edge = e;
     }

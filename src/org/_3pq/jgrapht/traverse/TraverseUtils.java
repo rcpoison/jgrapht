@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -------------------------
- * BreadthFirstIterator.java
- * -------------------------
+/* ------------------
+ * TraverseUtils.java
+ * ------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,7 +34,8 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 31-Jul-2003 : Initial revision (BN);
+ * 11-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -50,6 +51,9 @@ import java.util.Set;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
+import org._3pq.jgrapht.event.EdgeTraversalEvent;
+import org._3pq.jgrapht.event.VertexTraversalEvent;
 
 /**
  * A collection of utilities used for implementing algorithms.
@@ -246,11 +250,21 @@ public final class TraverseUtils {
         private static final int CCS_WITHIN_COMPONENT = 2;
         private static final int CCS_AFTER_COMPONENT  = 3;
 
+        //
+        private final ConnectedComponentTraversalEvent m_ccFinishedEvent =
+            new ConnectedComponentTraversalEvent( this,
+                ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_FINISHED );
+        private final ConnectedComponentTraversalEvent m_ccStartedEvent =
+            new ConnectedComponentTraversalEvent( this,
+                ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED );
+
         // todo: support ConcurrentModificationException if graph modified during iteration. 
-        private Iterator        m_vertexIterator = null;
-        private Set             m_seen      = new HashSet(  );
-        private SimpleContainer m_pending;
-        private Specifics       m_specifics;
+        private FlyweightEdgeEvent   m_reuseableEdgeEvent;
+        private FlyweightVertexEvent m_reuseableVertexEvent;
+        private Iterator             m_vertexIterator = null;
+        private Set                  m_seen           = new HashSet(  );
+        private SimpleContainer      m_pending;
+        private Specifics            m_specifics;
 
         /** the connected component state */
         private int m_state = CCS_BEFORE_COMPONENT;
@@ -287,6 +301,9 @@ public final class TraverseUtils {
             m_vertexIterator = g.vertexSet(  ).iterator(  );
             setCrossComponentTraversal( startVertex == null );
 
+            m_reuseableEdgeEvent       = new FlyweightEdgeEvent( this, null );
+            m_reuseableVertexEvent     = new FlyweightVertexEvent( this, null );
+
             if( startVertex == null ) {
                 // pick a start vertex if graph not empty 
                 if( m_vertexIterator.hasNext(  ) ) {
@@ -312,7 +329,7 @@ public final class TraverseUtils {
             if( m_pending.isEmpty(  ) ) {
                 if( m_state == CCS_WITHIN_COMPONENT ) {
                     m_state = CCS_AFTER_COMPONENT;
-                    fireConnectedComponentFinished(  );
+                    fireConnectedComponentFinished( m_ccFinishedEvent );
                 }
 
                 if( isCrossComponentTraversal(  ) ) {
@@ -347,11 +364,11 @@ public final class TraverseUtils {
             if( hasNext(  ) ) {
                 if( m_state == CCS_BEFORE_COMPONENT ) {
                     m_state = CCS_WITHIN_COMPONENT;
-                    fireConnectedComponentStarted(  );
+                    fireConnectedComponentStarted( m_ccStartedEvent );
                 }
 
                 Object nextVertex = m_pending.remove(  );
-                fireVertexVisited( nextVertex );
+                fireVertexTraversed( createVertexTraversalEvent( nextVertex ) );
 
                 addUnseenChildrenOf( nextVertex );
 
@@ -368,7 +385,7 @@ public final class TraverseUtils {
 
             for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
                 Edge e = (Edge) iter.next(  );
-                fireEdgeVisited( e );
+                fireEdgeTraversed( createEdgeTraversalEvent( e ) );
 
                 Object v = e.oppositeVertex( vertex );
 
@@ -377,6 +394,82 @@ public final class TraverseUtils {
                     m_pending.add( v );
                 }
             }
+        }
+
+
+        private EdgeTraversalEvent createEdgeTraversalEvent( Edge edge ) {
+            if( isReuseEvents(  ) ) {
+                m_reuseableEdgeEvent.setEdge( edge );
+
+                return m_reuseableEdgeEvent;
+            }
+            else {
+                return new EdgeTraversalEvent( this, edge );
+            }
+        }
+
+
+        private VertexTraversalEvent createVertexTraversalEvent( Object vertex ) {
+            if( isReuseEvents(  ) ) {
+                m_reuseableVertexEvent.setVertex( vertex );
+
+                return m_reuseableVertexEvent;
+            }
+            else {
+                return new VertexTraversalEvent( this, vertex );
+            }
+        }
+    }
+
+
+    /**
+     * A reuseable edge event.
+     *
+     * @author Barak Naveh
+     *
+     * @since Aug 11, 2003
+     */
+    private static class FlyweightEdgeEvent extends EdgeTraversalEvent {
+        /**
+         * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
+         */
+        public FlyweightEdgeEvent( Object eventSource, Edge edge ) {
+            super( eventSource, edge );
+        }
+
+        /**
+         * Sets the edge of this event.
+         *
+         * @param edge the edge to be set.
+         */
+        protected void setEdge( Edge edge ) {
+            m_edge = edge;
+        }
+    }
+
+
+    /**
+     * A reuseable vertex event.
+     *
+     * @author Barak Naveh
+     *
+     * @since Aug 11, 2003
+     */
+    private static class FlyweightVertexEvent extends VertexTraversalEvent {
+        /**
+         * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
+         */
+        public FlyweightVertexEvent( Object eventSource, Object vertex ) {
+            super( eventSource, vertex );
+        }
+
+        /**
+         * Sets the vertex of this event.
+         *
+         * @param vertex the vertex to be set.
+         */
+        protected void setVertex( Object vertex ) {
+            m_vertex = vertex;
         }
     }
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
- * VertexEvent.java
- * ----------------
+/* ---------------------------
+ * GraphVertexChangeEvent.java
+ * ---------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -49,7 +49,7 @@ package org._3pq.jgrapht.event;
  *
  * @since Aug 10, 2003
  */
-public class VertexEvent extends GraphChangeEvent {
+public class GraphVertexChangeEvent extends GraphChangeEvent {
     /**
      * Before vertex added event. This event is fired before a vertex is added
      * to a graph.
@@ -78,13 +78,13 @@ public class VertexEvent extends GraphChangeEvent {
     protected Object m_vertex;
 
     /**
-     * Creates a new VertexEvent object.
+     * Creates a new GraphVertexChangeEvent object.
      *
      * @param eventSource the source of the event.
      * @param type the type of the event.
      * @param vertex the vertex that the event is related to.
      */
-    public VertexEvent( Object eventSource, int type, Object vertex ) {
+    public GraphVertexChangeEvent( Object eventSource, int type, Object vertex ) {
         super( eventSource, type );
         m_vertex = vertex;
     }
