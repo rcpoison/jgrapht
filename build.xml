@@ -135,7 +135,13 @@
                            haltonerror="true" haltonfailure="true">
             <classpath refid="test.classpath"/>
             <formatter type="brief" usefile="no" />
-            <test name="org._3pq.jgrapht.AllTests" />
+            <batchtest>
+                <fileset dir="${basedir}/testsrc">
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/Abstract*Test.java"/>
+                    <exclude name="**/Default*Test.java"/>
+                </fileset>
+            </batchtest>
         </junit>
     </target>
 
