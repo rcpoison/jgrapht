@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -46,9 +46,11 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 
+import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.ext.JGraphModelAdapter;
-import org._3pq.jgrapht.graph.ListenableDirectedGraph;
+import org._3pq.jgrapht.graph.DefaultListenableGraph;
+import org._3pq.jgrapht.graph.DirectedMultigraph;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.AttributeMap;
@@ -59,23 +61,43 @@ import org.jgraph.graph.GraphConstants;
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
  *
  * @author Barak Naveh
- *
  * @since Aug 3, 2003
  */
 public class JGraphAdapterDemo extends JApplet {
     private static final long      serialVersionUID = 3256444702936019250L;
-    private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
-    private static final Dimension DEFAULT_SIZE     = new Dimension( 530, 320 );
+    private static final Color     DEFAULT_BG_COLOR =
+        Color.decode( "#FAFBFF" );
+    private static final Dimension DEFAULT_SIZE     =
+        new Dimension( 530, 320 );
 
-    // 
+    //
     private JGraphModelAdapter m_jgAdapter;
+
+    /**
+     * An alternative starting point for this demo, to also allow running this
+     * applet as an application.
+     *
+     * @param args ignored.
+     */
+    public static void main( String[] args ) {
+        JGraphAdapterDemo applet = new JGraphAdapterDemo();
+        applet.init();
+
+        JFrame frame = new JFrame();
+        frame.getContentPane().add( applet );
+        frame.setTitle( "JGraphT Adapter to JGraph Demo" );
+        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+        frame.pack();
+        frame.setVisible( true );
+    }
+
 
     /**
      * {@inheritDoc}
      */
-    public void init(  ) {
+    public void init() {
         // create a JGraphT graph
-        ListenableGraph g = new ListenableDirectedGraph(  );
+        ListenableGraph g = new ListenableDirectedMultigraph();
 
         // create a visualization using JGraph, via an adapter
         m_jgAdapter = new JGraphModelAdapter( g );
@@ -83,7 +105,7 @@ public class JGraphAdapterDemo extends JApplet {
         JGraph jgraph = new JGraph( m_jgAdapter );
 
         adjustDisplaySettings( jgraph );
-        getContentPane(  ).add( jgraph );
+        getContentPane().add( jgraph );
         resize( DEFAULT_SIZE );
 
         Object v1 = "v1";
@@ -112,25 +134,6 @@ public class JGraphAdapterDemo extends JApplet {
     }
 
 
-    /**
-     * An alternative starting point for this demo, to also allow running this
-     * applet as an application.
-     *
-     * @param args ignored.
-     */
-    public static void main( String[] args ) {
-        JGraphAdapterDemo applet = new JGraphAdapterDemo(  );
-        applet.init(  );
-
-        JFrame frame = new JFrame(  );
-        frame.getContentPane(  ).add( applet );
-        frame.setTitle( "JGraphT Adapter to JGraph Demo" );
-        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        frame.pack(  );
-        frame.setVisible( true );
-    }
-
-
     private void adjustDisplaySettings( JGraph jg ) {
         jg.setPreferredSize( DEFAULT_SIZE );
 
@@ -140,7 +143,7 @@ public class JGraphAdapterDemo extends JApplet {
         try {
             colorStr = getParameter( "bgcolor" );
         }
-        catch( Exception e ) {}
+        catch( Exception e ) { }
 
         if( colorStr != null ) {
             c = Color.decode( colorStr );
@@ -152,17 +155,31 @@ public class JGraphAdapterDemo extends JApplet {
 
     private void positionVertexAt( Object vertex, int x, int y ) {
         DefaultGraphCell cell   = m_jgAdapter.getVertexCell( vertex );
-        AttributeMap     attr   = cell.getAttributes(  );
+        AttributeMap     attr   = cell.getAttributes();
         Rectangle2D      bounds = GraphConstants.getBounds( attr );
 
-        Rectangle2D      newBounds =
-            new Rectangle2D.Double( x, y, bounds.getWidth(  ),
-                bounds.getHeight(  ) );
+        Rectangle2D newBounds =
+            new Rectangle2D.Double( x, y, bounds.getWidth(),
+                bounds.getHeight() );
 
         GraphConstants.setBounds( attr, newBounds );
 
-        AttributeMap cellAttr = new AttributeMap(  );
+        AttributeMap cellAttr = new AttributeMap();
         cellAttr.put( cell, attr );
-        m_jgAdapter.edit( cellAttr );
+        m_jgAdapter.edit( cellAttr, null, null, null );
+    }
+
+    /**
+     * a listenable directed multigraph that allows loops and parallel edges.
+     */
+    private static class ListenableDirectedMultigraph
+        extends DefaultListenableGraph implements DirectedGraph {
+        private static final long serialVersionUID = 1L;
+
+        ListenableDirectedMultigraph() {
+            super( new DirectedMultigraph() );
+        }
     }
 }
+
+//~ Formatting done by Jalopy - www.triemax.com ~//
