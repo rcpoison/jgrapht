@@ -48,6 +48,7 @@ import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.util.VertexDegreeComparator;
 import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.graph.Subgraph;
+import org._3pq.jgrapht.graph.UndirectedSubgraph;
 
 /**
  * A greedy approximation algorithm for Vertex Cover on a specified graph.
@@ -88,7 +89,7 @@ public class VertexCoverGreedyAlgorithm implements VertexCoverAlgorithm {
         Set cover = new HashSet(  );
 
         // G' <-- G
-        Subgraph g = new Subgraph( m_graph, null, null );
+        Subgraph g = new UndirectedSubgraph( m_graph, null, null );
 
         // compare vertices in descending order of degree
         VertexDegreeComparator comp = new VertexDegreeComparator( g );
