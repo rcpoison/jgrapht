@@ -39,6 +39,8 @@
  */
 package org._3pq.jgrapht;
 
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
+
 /**
  * A collection of utilities to assist the working with graphs.
  *
@@ -163,5 +165,34 @@ public final class GraphHelper {
         modified |= destination.addAllEdges( source.edgeSet(  ) );
 
         return modified;
+    }
+
+
+    /**
+     * Returns an undirected view of the specified graph. If the specified
+     * graph is directed, returns an undirected view of it. If the specified
+     * graph is undirected, just returns it.
+     *
+     * @param g the graph for which an undirected view to be returned.
+     *
+     * @return an undirected view of the specified graph, if it is directed, or
+     *         or the specified graph itself if it is undirected.
+     *
+     * @throws IllegalArgumentException if the graph is neigher DirectedGraph
+     *         nor UndirectedGraph.
+     *
+     * @see AsUndirectedGraph
+     */
+    public static UndirectedGraph undirectedGraph( Graph g ) {
+        if( g instanceof DirectedGraph ) {
+            return new AsUndirectedGraph( (DirectedGraph) g );
+        }
+        else if( g instanceof UndirectedGraph ) {
+            return (UndirectedGraph) g;
+        }
+        else {
+            throw new IllegalArgumentException( 
+                "Graph must be either DirectedGraph or UndirectedGraph" );
+        }
     }
 }
