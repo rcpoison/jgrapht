@@ -32,7 +32,7 @@
  *
  * Changes
  * -------
- * 2-Sept-2003 : Initial revision (JVS);
+ * 2-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -56,7 +56,7 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  *
  * @author John V. Sichi
  *
- * @since Sept 2, 2003
+ * @since Sep 2, 2003
  */
 public class ClosestFirstIterator extends XXFirstIterator {
     /** Priority queue of fringe vertices (refined alias for super.m_pending). */
@@ -107,14 +107,13 @@ public class ClosestFirstIterator extends XXFirstIterator {
      * has already been visited, then it is truly the minimum spanning tree
      * edge; otherwise, it is the best candidate seen so far.
      *
-     * @param vertex the spanned vertex
+     * @param vertex the spanned vertex.
      *
      * @return the spanning tree edge, or null if the vertex either has not
-     *         been seen yet or is the start vertex
+     *         been seen yet or is the start vertex.
      */
     public Edge getSpanningTreeEdge( Object vertex ) {
-        ClosestFirstQueueEntry entry =
-            (ClosestFirstQueueEntry) getSeenData( vertex );
+        QueueEntry entry = (QueueEntry) getSeenData( vertex );
 
         if( entry == null ) {
             return null;
@@ -132,8 +131,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
      * @param edge the edge via which the vertex was re-encountered
      */
     protected void encounterVertexAgain( Object vertex, Edge edge ) {
-        ClosestFirstQueueEntry entry =
-            (ClosestFirstQueueEntry) getSeenData( vertex );
+        QueueEntry entry = (QueueEntry) getSeenData( vertex );
 
         if( entry.m_frozen ) {
             // no improvement for this vertex possible
@@ -153,23 +151,22 @@ public class ClosestFirstIterator extends XXFirstIterator {
      * Override superclass.  The first time we see a vertex, make up a new
      * queue entry for it.  Superclass will add this to the queue for us.
      *
-     * @param vertex a vertex which has just been encountered
-     * @param edge the edge via which the vertex was encountered
+     * @param vertex a vertex which has just been encountered.
+     * @param edge the edge via which the vertex was encountered.
      *
-     * @return the new queue entry
+     * @return the new queue entry.
      */
     protected Object newSeenData( Object vertex, Edge edge ) {
         double shortestPathLength;
 
-        if( edge != null ) {
-            shortestPathLength = calculatePathLength( vertex, edge );
-        }
-        else {
+        if( edge == null ) {
             shortestPathLength = 0;
         }
+        else {
+            shortestPathLength = calculatePathLength( vertex, edge );
+        }
 
-        ClosestFirstQueueEntry entry =
-            new ClosestFirstQueueEntry( shortestPathLength );
+        QueueEntry entry = new QueueEntry( shortestPathLength );
         entry.m_vertex               = vertex;
         entry.m_spanningTreeEdge     = edge;
 
@@ -189,17 +186,16 @@ public class ClosestFirstIterator extends XXFirstIterator {
      * Determine path length to a vertex via an edge, using the path length for
      * the opposite vertex.
      *
-     * @param vertex the vertex for which to calculate the path length
-     * @param edge the edge via which the path is being extended
+     * @param vertex the vertex for which to calculate the path length.
+     * @param edge the edge via which the path is being extended.
      *
-     * @return calculated path length
+     * @return calculated path length.
      */
     private double calculatePathLength( Object vertex, Edge edge ) {
         assertNonNegativeEdge( edge );
 
-        Object                 otherVertex = edge.oppositeVertex( vertex );
-        ClosestFirstQueueEntry otherEntry =
-            (ClosestFirstQueueEntry) getSeenData( otherVertex );
+        Object     otherVertex = edge.oppositeVertex( vertex );
+        QueueEntry otherEntry = (QueueEntry) getSeenData( otherVertex );
 
         return otherEntry.getShortestPathLength(  ) + edge.getWeight(  );
     }
@@ -231,7 +227,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
          * @param obj
          */
         public void add( Object obj ) {
-            ClosestFirstQueueEntry newEntry = (ClosestFirstQueueEntry) obj;
+            QueueEntry newEntry = (QueueEntry) obj;
             m_heap.insert( newEntry, newEntry.getShortestPathLength(  ) );
         }
 
@@ -242,8 +238,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
          * @return
          */
         public Object remove(  ) {
-            ClosestFirstQueueEntry entry =
-                (ClosestFirstQueueEntry) m_heap.removeMin(  );
+            QueueEntry entry = (QueueEntry) m_heap.removeMin(  );
             entry.m_frozen = true;
 
             return entry.m_vertex;
@@ -254,7 +249,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    private static class ClosestFirstQueueEntry extends FibonacciHeap.Node {
+    private static class QueueEntry extends FibonacciHeap.Node {
         /** Best spanning tree edge to vertex seen so far. */
         Edge m_spanningTreeEdge;
 
@@ -264,7 +259,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
         /** True once m_spanningTreeEdge is guaranteed to be the true minimum. */
         boolean m_frozen;
 
-        ClosestFirstQueueEntry( double key ) {
+        QueueEntry( double key ) {
             super( key );
         }
 

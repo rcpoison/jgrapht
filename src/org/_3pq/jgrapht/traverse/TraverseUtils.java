@@ -433,11 +433,11 @@ final class TraverseUtils {
 
                 Object v = e.oppositeVertex( vertex );
 
-                if( !m_seen.containsKey( v ) ) {
-                    encounterVertex( v, e );
+                if( m_seen.containsKey( v ) ) {
+                    encounterVertexAgain( v, e );
                 }
                 else {
-                    encounterVertexAgain( v, e );
+                    encounterVertex( v, e );
                 }
             }
         }
