@@ -48,8 +48,18 @@ import org._3pq.jgrapht.UndirectedGraph;
  * @see org._3pq.jgrapht.graph.Subgraph
  */
 public class UndirectedSubgraph extends Subgraph implements UndirectedGraph {
+    private static final long serialVersionUID = 3256728359772631350L;
+
     /**
-     * @see Subgraph#Subgraph(Graph, Set, Set)
+     * Creates a new undirected subgraph.
+     *
+     * @param base the base (backing) graph on which the subgraph will be
+     *        based.
+     * @param vertexSubset vertices to include in the subgraph. If
+     *        <code>null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If
+     *        <code>null</code> then all the edges whose vertices found in the
+     *        graph are included.
      */
     public UndirectedSubgraph( UndirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -43,12 +43,14 @@ import org._3pq.jgrapht.DirectedGraph;
 /**
  * A directed graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
  *
- * @see DefaultListenableGraph
+ * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableDirectedGraph extends DefaultListenableGraph
     implements DirectedGraph {
+    private static final long serialVersionUID = 3257571698126368824L;
+
     /**
-     * Creates a new ListenableDirectedGraph object.
+     * Creates a new listenable directed graph.
      */
     public ListenableDirectedGraph(  ) {
         this( new DefaultDirectedGraph(  ) );
@@ -56,7 +58,9 @@ public class ListenableDirectedGraph extends DefaultListenableGraph
 
 
     /**
-     * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
+     * Creates a new listenable directed graph.
+     *
+     * @param base the backing graph.
      */
     public ListenableDirectedGraph( DirectedGraph base ) {
         super( base );

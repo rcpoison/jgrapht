@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -45,12 +45,14 @@ import org._3pq.jgrapht.WeightedGraph;
  * A directed weighted graph which is also {@link
  * org._3pq.jgrapht.ListenableGraph}.
  *
- * @see DefaultListenableGraph
+ * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableDirectedWeightedGraph extends ListenableDirectedGraph
     implements WeightedGraph {
+    private static final long serialVersionUID = 3977582476627621938L;
+
     /**
-     * Creates a new ListenableDirectedWeightedGraph object.
+     * Creates a new listenable directed weighted graph.
      */
     public ListenableDirectedWeightedGraph(  ) {
         this( new DefaultDirectedWeightedGraph(  ) );
@@ -58,7 +60,9 @@ public class ListenableDirectedWeightedGraph extends ListenableDirectedGraph
 
 
     /**
-     * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
+     * Creates a new listenable directed weighted graph.
+     *
+     * @param base the backing graph.
      */
     public ListenableDirectedWeightedGraph( WeightedGraph base ) {
         super( (DirectedGraph) base );

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -43,12 +43,14 @@ import org._3pq.jgrapht.UndirectedGraph;
 /**
  * An undirected graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
  *
- * @see DefaultListenableGraph
+ * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableUndirectedGraph extends DefaultListenableGraph
     implements UndirectedGraph {
+    private static final long serialVersionUID = 3256999969193145905L;
+
     /**
-     * Creates a new ListenableUndirectedGraph object.
+     * Creates a new listenable undirected simple graph.
      */
     public ListenableUndirectedGraph(  ) {
         this( new SimpleGraph(  ) );
@@ -56,7 +58,9 @@ public class ListenableUndirectedGraph extends DefaultListenableGraph
 
 
     /**
-     * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
+     * Creates a new listenable undirected graph.
+     *
+     * @param base the backing graph.
      */
     public ListenableUndirectedGraph( UndirectedGraph base ) {
         super( base );

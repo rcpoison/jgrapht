@@ -50,8 +50,18 @@ import org._3pq.jgrapht.WeightedGraph;
  */
 public class UndirectedWeightedSubgraph extends UndirectedSubgraph
     implements WeightedGraph {
+    private static final long serialVersionUID = 3689346615735236409L;
+
     /**
-     * @see Subgraph#Subgraph(Graph, Set, Set)
+     * Creates a new undirected weighted subgraph.
+     *
+     * @param base the base (backing) graph on which the subgraph will be
+     *        based.
+     * @param vertexSubset vertices to include in the subgraph. If
+     *        <code>null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If
+     *        <code>null</code> then all the edges whose vertices found in the
+     *        graph are included.
      */
     public UndirectedWeightedSubgraph( WeightedGraph base, Set vertexSubset,
         Set edgeSubset ) {
