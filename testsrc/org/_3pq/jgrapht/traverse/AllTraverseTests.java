@@ -58,6 +58,7 @@ public class AllTraverseTests {
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( BreadthFirstIteratorTest.class ) );
         suite.addTest( new TestSuite( DepthFirstIteratorTest.class ) );
+        suite.addTest( new TestSuite( IgnoreDirectionTest.class ) );
         suite.addTest( new TestSuite( SimpleQueueTest.class ) );
         suite.addTest( new TestSuite( SimpleStackTest.class ) );
 

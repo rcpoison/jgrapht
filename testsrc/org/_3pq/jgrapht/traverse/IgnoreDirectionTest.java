@@ -22,19 +22,17 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
- * DepthFirstIteratorTest.java
+ * IgnoreDirectionTest.java
  * ---------------------------
- * (C) Copyright 2003, by Liviu Rau and Contributors.
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
- * Original Author:  Liviu Rau
- * Contributor(s):   Barak Naveh
+ * Original Author:  John V. Sichi
  *
  * $Id$
  *
  * Changes
  * -------
- * 30-Jul-2003 : Initial revision (LR);
- * 06-Aug-2003 : Test traversal listener & extract a shared superclass (BN);
+ * 8-Aug-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -42,25 +40,27 @@ package org._3pq.jgrapht.traverse;
 import org._3pq.jgrapht.Graph;
 
 /**
- * Tests for the {@link DepthFirstIteratorTest} class.
+ * Tests for the ignoreDirection parameter to XXFirstIterator.
  *
- * @author Liviu Rau
+ * @author John V. Sichi
  *
- * @since Jul 30, 2003
+ * @since Aug 8, 2003
  */
-public class DepthFirstIteratorTest extends AbstractGraphIteratorTest {
+public class IgnoreDirectionTest extends AbstractGraphIteratorTest {
     String getExpectedStr1(  ) {
-        return "1,3,6,5,7,9,4,8,2";
+        return "4,9,7,8,5,6,1,3,2";
     }
 
 
     String getExpectedStr2(  ) {
-        return "1,3,6,5,7,9,4,8,2,orphan";
+        return "4,9,7,8,5,6,1,3,2,orphan";
     }
 
 
     AbstractGraphIterator createIterator( Graph g, Object vertex,
         boolean crossComponent ) {
-        return new DepthFirstIterator( g, vertex, crossComponent, false );
+        // ignore the passed in vertex and always start from v4, since that's
+        // the only vertex without out-edges
+        return new DepthFirstIterator( g, "4", crossComponent, true );
     }
 }

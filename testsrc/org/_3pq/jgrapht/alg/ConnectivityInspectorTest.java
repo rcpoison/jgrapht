@@ -42,6 +42,7 @@ import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.graph.Pseudograph;
+import org._3pq.jgrapht.graph.ListenableDirectedGraph;
 
 /**
  * .
@@ -124,4 +125,23 @@ public class ConnectivityInspectorTest extends TestCase {
         inspector = new ConnectivityInspector( g );
         assertEquals( inspector.isGraphConnected(  ), false );
     }
+
+    public void testDirectedGraph( ) {
+        ListenableDirectedGraph g = new ListenableDirectedGraph( );
+        g.addVertex( m_v1 );
+        g.addVertex( m_v2 );
+        g.addVertex( m_v3 );
+
+        g.addEdge( m_v1, m_v2 );
+        
+        ConnectivityInspector inspector = new ConnectivityInspector( g );
+        g.addGraphListener(inspector);
+
+        assertEquals( inspector.isGraphConnected(), false);
+
+        g.addEdge( m_v1, m_v3 );
+
+        assertEquals( inspector.isGraphConnected(), true);
+    }
+    
 }

@@ -47,14 +47,17 @@ import java.util.Set;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.GraphListener;
-import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
 
 /**
- * Allows obtaining various connectivity aspects of an undirected graph. The
+ * Allows obtaining various connectivity aspects of a graph. The
  * <i>inspected graph</i> is specified at construction time and cannot be
- * modified.
+ * modified.  Currently, the inspector supports connected components
+ * for an undirected graph and weakly connected components for a directed
+ * graph.  (TODO:  implement Tarjan's algorithm for strongly connected
+ * component discovery.)
  * 
  * <p>
  * The inspector methods work in a lazy fashion: no computation is performed
@@ -80,14 +83,14 @@ import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
 public class ConnectivityInspector implements GraphListener {
     List                    m_connectedSets;
     Map                     m_vertexToConnectedSet;
-    private UndirectedGraph m_graph;
+    private Graph m_graph;
 
     /**
      * Creates a connectivity inspector for the specified graph.
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public ConnectivityInspector( UndirectedGraph g ) {
+    public ConnectivityInspector( Graph g ) {
         init(  );
         m_graph = g;
     }
@@ -122,7 +125,7 @@ public class ConnectivityInspector implements GraphListener {
             connectedSet = new HashSet(  );
 
             BreadthFirstIterator i =
-                new BreadthFirstIterator( m_graph, vertex, false );
+                new BreadthFirstIterator( m_graph, vertex, false, true );
 
             while( i.hasNext(  ) ) {
                 connectedSet.add( i.next(  ) );
@@ -136,14 +139,14 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * Retuns a list of <code>Set</code>s, where each set contains all vertices
+     * Returns a list of <code>Set</code>s, where each set contains all vertices
      * that are in the same maximally connected component. All graph vertices
      * occur in exactly one set.  For more on maximally connected component,
      * see <a
      * href="http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html">
      * http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html</a>.
      *
-     * @return Retuns a list of <code>Set</code>s, where each set contains all
+     * @return Returns a list of <code>Set</code>s, where each set contains all
      *         vertices that are in the same maximally connected component.
      */
     public List connectedSets(  ) {
@@ -169,7 +172,8 @@ public class ConnectivityInspector implements GraphListener {
 
     /**
      * Tests if there is a path from the specified source vertex to the
-     * specified target vertices.
+     * specified target vertices.  For a directed graph, direction is ignored
+     * for this interpretation of path.
      *
      * @param sourceVertex one end of the path.
      * @param targetVertex another end of the path.
@@ -213,10 +217,8 @@ public class ConnectivityInspector implements GraphListener {
             Set vertexSet = m_graph.vertexSet(  );
 
             if( vertexSet.size(  ) > 0 ) {
-                Object startVertex = vertexSet.iterator(  ).next(  );
-
                 BreadthFirstIterator i =
-                    new BreadthFirstIterator( m_graph, startVertex, true );
+                    new BreadthFirstIterator( m_graph, null, true, true );
                 i.addTraversalListener( new MyTraversalListener(  ) );
 
                 while( i.hasNext(  ) ) {

@@ -62,7 +62,7 @@ public class BreadthFirstIterator extends XXFirstIterator {
      *        connected components.
      */
     public BreadthFirstIterator( Graph g, boolean crossComponentTraversal ) {
-        this( g, null, crossComponentTraversal );
+        this( g, null, crossComponentTraversal, false );
     }
 
 
@@ -76,9 +76,13 @@ public class BreadthFirstIterator extends XXFirstIterator {
      * @param startVertex the vertex iteration to be started.
      * @param crossComponentTraversal whether to traverse the graph across
      *        connected components.
+     * @param ignoreEdgeDirection if true, traversal ignores edge direction;
+     *        if false, traversal follows outgoing edges only if g
+     *        is directed
      */
     public BreadthFirstIterator( Graph g, Object startVertex,
-        boolean crossComponentTraversal ) {
-        super( g, startVertex, crossComponentTraversal, new SimpleQueue(  ) );
+        boolean crossComponentTraversal, boolean ignoreEdgeDirection ) {
+        super( g, startVertex, crossComponentTraversal, new SimpleQueue(  ),
+               ignoreEdgeDirection );
     }
 }

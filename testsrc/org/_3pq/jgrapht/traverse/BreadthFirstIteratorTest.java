@@ -61,6 +61,6 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest {
 
     AbstractGraphIterator createIterator( Graph g, Object vertex,
         boolean crossComponent ) {
-        return new BreadthFirstIterator( g, vertex, crossComponent );
+        return new BreadthFirstIterator( g, vertex, crossComponent, false );
     }
 }

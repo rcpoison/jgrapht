@@ -63,7 +63,7 @@ public class DepthFirstIterator extends XXFirstIterator {
      *        connected components.
      */
     public DepthFirstIterator( Graph g, boolean crossComponentTraversal ) {
-        this( g, null, crossComponentTraversal );
+        this( g, null, crossComponentTraversal, false );
     }
 
 
@@ -77,9 +77,13 @@ public class DepthFirstIterator extends XXFirstIterator {
      * @param startVertex the vertex iteration to be started.
      * @param crossComponentTraversal whether to traverse the graph across
      *        connected components.
+     * @param ignoreEdgeDirection if true, traversal ignores edge direction;
+     *        if false, traversal follows outgoing edges only if g
+     *        is directed
      */
     public DepthFirstIterator( Graph g, Object startVertex,
-        boolean crossComponentTraversal ) {
-        super( g, startVertex, crossComponentTraversal, new SimpleStack(  ) );
+        boolean crossComponentTraversal, boolean ignoreEdgeDirection ) {
+        super( g, startVertex, crossComponentTraversal, new SimpleStack(  ),
+               ignoreEdgeDirection );
     }
 }
