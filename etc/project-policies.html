@@ -24,9 +24,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ---------------------
+/* ~~~~~~~~~~~~~~~~~~~~~
  * project-policies.html
- * ---------------------
+ * ~~~~~~~~~~~~~~~~~~~~~
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -35,8 +35,9 @@
  * $Id$
  *
  * Changes
- * -------
+ * ~~~~~~~
  * 28-Jul-2003 : Initial revision (BN);
+ * 30-Jul-2003 : Added "pro-finishing", "must-compile". W3C Clean HTML (BN);
  *
  */
 -->
@@ -166,8 +167,8 @@ welcome the changes others introduce to your code and try to judge them in an
 It is important since JGraphT is a class library, and not a closed product. 
 Our users will look into the code very often. If we confuse them with many coding 
 styles they will hate us and underestimate our professionalism. If we give them 
-one consistent look, they will greatly appreciate us (even if they might not 
-like our specific styling).</p>
+one consistent look, they will love us (even if our styling will differ from 
+their taste). As a general rule, watch existing classes and do alike.</p>
 
 <p>2.2.&nbsp; <i>Automated tools</i>. The "Jalopy" and "Checkstyle" tools are used and greatly 
 help to achieve one consistent look -- it is strongly recommended that you use 
@@ -178,13 +179,21 @@ You can find more about them in the &quot;etc&quot; folder of JGraphT. </p>
 its name suggests and should not have unrelated side effects. Try to make things 
 expected as an alternative to referring users to the documentation. Ideally, 
 users should be able to do an &quot;auto-complete&quot; programming with JGraphT. Ideally, 
-they would not need to read the documentation at all. </p>
+they would not need to read the documentation. </p>
 <p>2.4.&nbsp; <i>&quot;Simplicity is gold&quot;</i>. Your code should be <b>as simple as possible</b> 
-(especially APIs). &quot;Simple&quot; does not mean stupid. If you need to do clever 
+(especially the public API for our users). &quot;Simple&quot; does not mean stupid. If you need to do clever 
 things, do clever things. However, don't do clever if you can do simple! </p>
 
 
-<h3>3.&nbsp; Member’s dos and don’ts</h3>
+<p>2.5&nbsp; <i>&nbsp;Professional finishing</i>. Your release-ready code should 
+not raise compiler warnings (to the extent possible). It should include a 
+complete Javadoc in a way that execution of&nbsp; <code>'ant javadoc'</code>&nbsp; 
+will output no complains 
+concerning it. If the code has external influences (e.g., additional libraries, 
+variations to ANT script) please make sure they are taken care of.</p>
+
+
+<h3>3.&nbsp; Member's dos and don'ts</h3>
 
 <p>3.1.&nbsp; JGraphT is a nice project of nice people. It is a strictly <b>no-flame project</b>! A flame incident, whether 
 against other members or against JGraphT users, will result in an immediate removal 
@@ -204,8 +213,13 @@ is done in order to allow new members to receive feedback on their code before
 committing, hence prevent creating CVS mess on "startup mistakes".</p>
 
 
-<p>3.4.&nbsp; Lastly, the members in the JGraphT project may be of different levels of experience and 
-proficiency. If you are a "wizard", be kind to and patient with the "newbies" – 
+<p>
+3.4&nbsp; Member should not commit to CVS a code that does not compile. The code 
+should be compatible with JDK1.3 or above.</p>
+
+
+<p>3.5.&nbsp; Lastly, the members in the JGraphT project may be of different levels of experience and 
+proficiency. If you are a "wizard", be kind to and patient with the "newbies" - 
 you've also been a newbie once. If you are a less experienced developer, learn 
 to appreciate 
 the inputs from the "wizards" - these can be important and valuable contributions for your 
@@ -215,7 +229,7 @@ own professional growth.
 
 <p>
 <br>
-That’s all there is to it!
+That's all there is to it!
 </p>
 
 
