@@ -258,7 +258,8 @@ public final class TraverseUtils {
             new ConnectedComponentTraversalEvent( this,
                 ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED );
 
-        // todo: support ConcurrentModificationException if graph modified during iteration. 
+        // todo: support ConcurrentModificationException if graph modified 
+        // during iteration. 
         private FlyweightEdgeEvent   m_reuseableEdgeEvent;
         private FlyweightVertexEvent m_reuseableVertexEvent;
         private Iterator             m_vertexIterator = null;
