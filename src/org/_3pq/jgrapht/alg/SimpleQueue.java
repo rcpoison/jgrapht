@@ -16,7 +16,7 @@ import java.util.LinkedList;
  *
  * @since Jul 19, 2003
  */
-class SimpleQueue {
+public class SimpleQueue {
     private LinkedList m_elementList = new LinkedList(  );
 
     /**
