@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------------
+/* ------------------------------------------
  * VertexCoverApproximationAlgorithmTest.java
- * ------------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * ------------------------------------------
+ * (C) Copyright 2003, by Linda Buisman and Contributors.
  *
  * Original Author:  Linda Buisman
  * Contributor(s):   -
@@ -36,79 +36,99 @@
  * 06-Nov-2003 : Initial revision (LB);
  *
  */
- 
 package org._3pq.jgrapht.experimental.alg;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.Vector;
 
-import org._3pq.jgrapht.graph.Pseudograph;
-import org._3pq.jgrapht.experimental.alg.VertexCoverAlgorithm;
-import org._3pq.jgrapht.experimental.alg.VertexCoverApproximationAlgorithm;
-import org._3pq.jgrapht.experimental.alg.VertexCoverGreedyAlgorithm;
-
 import junit.framework.TestCase;
 
-public class VertexCoverAlgorithmTest extends TestCase {
-	
-	private Pseudograph graph;
-	private final int TEST_GRAPH_SIZE = 200;
-	
-	
-	public void testVertexCoverGreedy() {
-		create();
-		VertexCoverAlgorithm greedy = new VertexCoverGreedyAlgorithm(graph);
-		assertTrue(isSolution(greedy.vertexCover()));
-	}
-	
-	public void testVertexCoverApproximation() {
-		create();
-		VertexCoverAlgorithm approx = new VertexCoverApproximationAlgorithm(graph);
-		assertTrue(isSolution(approx.vertexCover()));
-	}
-	
-	/**
-	 * Create a random graph of TEST_GRAPH_SIZE nodes.
-	 */
-	private void create() {
-		graph = new Pseudograph();
-		for (int i = 0; i < TEST_GRAPH_SIZE; i++) {
-			graph.addVertex(new Integer(i));
-		}
-		Vector vertices = new Vector(graph.vertexSet());
-		// join every vertex with a random number of other vertices
-		for (int sourceVertexIndex = 0; sourceVertexIndex < TEST_GRAPH_SIZE; sourceVertexIndex++) {
-			int numEdgesToCreate = (int) Math.random()*TEST_GRAPH_SIZE/2 + 1;
-			for (int j = 0; j < numEdgesToCreate; j++) {
-				// find a random vertex to join to
-				int destVertexIndex = (int) Math.floor(Math.random()*TEST_GRAPH_SIZE);
-				graph.addEdge(vertices.get(sourceVertexIndex), vertices.get(destVertexIndex));
-			}
-		}
-	}
+import org._3pq.jgrapht.graph.Pseudograph;
 
-	/**
-	 * Checks whether possibleSolution really covers every edge of the graph.
-	 * Uses the definition of Vertex Cover - removes every edge that is
-	 * incident on a vertex in possibleSolution, so if there are no edges left
-	 * they are all covered by vertices in possibleSolution.
-	 */
-	private boolean isSolution(Collection possibleSolution) {
-		Set edgesToCover = new HashSet(graph.edgeSet());
-		for (Iterator iVertices = possibleSolution.iterator();
-			 iVertices.hasNext();
-			 ) {
-			edgesToCover.removeAll(new ArrayList(graph.edgesOf(iVertices.next())));
-		}
-		if (edgesToCover.size() == 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
+/**
+ * Tests the vertex cover algorithms.
+ *
+ * @author Linda Buisman
+ *
+ * @since Nov 6, 2003
+ */
+public class VertexCoverAlgorithmTest extends TestCase {
+    private static final int TEST_GRAPH_SIZE = 200;
+
+    /**
+     * .
+     */
+    public void testVertexCoverApproximation(  ) {
+        Pseudograph          g = createRandomGraph(  );
+
+        VertexCoverAlgorithm approx =
+            new VertexCoverApproximationAlgorithm( g );
+        assertTrue( isCover( approx.findCover(  ), g ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testVertexCoverGreedy(  ) {
+        Pseudograph          g = createRandomGraph(  );
+
+        VertexCoverAlgorithm greedy = new VertexCoverGreedyAlgorithm( g );
+        assertTrue( isCover( greedy.findCover(  ), g ) );
+    }
+
+
+    /**
+     * Checks if the specified vertex set covers every edge of the graph. Uses
+     * the definition of Vertex Cover - removes every edge that is incident on
+     * a vertex in vertexSet. If no edges are left, vertexSet is a vertex
+     * cover for the specified graph.
+     * 
+     * @param vertexSet the vertices to be tested for covering the graph.
+     * @param g the graph to be covered.
+     *
+     * @return
+     */
+    private boolean isCover( Set vertexSet, Pseudograph g ) {
+        Set uncoveredEdges = new HashSet( g.edgeSet(  ) );
+
+        for( Iterator i = vertexSet.iterator(  ); i.hasNext(  ); ) {
+            uncoveredEdges.removeAll( g.edgesOf( i.next(  ) ) );
+        }
+
+        return uncoveredEdges.size(  ) == 0;
+    }
+
+
+    /**
+     * Create a random graph of TEST_GRAPH_SIZE nodes.
+     *
+     * @return
+     */
+    private Pseudograph createRandomGraph(  ) {
+        Pseudograph g = new Pseudograph(  );
+
+        for( int i = 0; i < TEST_GRAPH_SIZE; i++ ) {
+            g.addVertex( new Integer( i ) );
+        }
+
+        Vector vertices = new Vector( g.vertexSet(  ) );
+
+        // join every vertex with a random number of other vertices
+        for( int source = 0; source < TEST_GRAPH_SIZE; source++ ) {
+            int numEdgesToCreate =
+                (int) Math.random(  ) * TEST_GRAPH_SIZE / 2 + 1;
+
+            for( int j = 0; j < numEdgesToCreate; j++ ) {
+                // find a random vertex to join to
+                int target =
+                    (int) Math.floor( Math.random(  ) * TEST_GRAPH_SIZE );
+                g.addEdge( vertices.get( source ), vertices.get( target ) );
+            }
+        }
+
+        return g;
+    }
 }

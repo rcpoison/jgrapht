@@ -21,12 +21,13 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
+/* -------------------------------
  * VertexCoverGreedyAlgorithm.java
- * --------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * -------------------------------
+ * (C) Copyright 2003, by Linda Buisman and Contributors.
  *
  * Original Author:  Linda Buisman
+ * Contributor(s):   -
  *
  * $Id$
  *
@@ -37,59 +38,73 @@
  */
 package org._3pq.jgrapht.experimental.alg;
 
-import org._3pq.jgrapht.experimental.alg.util.*;
-import org._3pq.jgrapht.graph.Pseudograph;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-/**
- * Implements a greedy approximation algorithm for Vertex Cover on 
- * {@link org._3pq.jgrapht.graph.Pseudograph}s.
- * 
- * @author Linda Buisman
- */
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.alg.util.VertexDegreeComparator;
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
+import org._3pq.jgrapht.graph.Subgraph;
 
+/**
+ * A greedy approximation algorithm for Vertex Cover on a specified graph.
+ *
+ * @author Linda Buisman
+ *
+ * @since Nov 6, 2003
+ */
 public class VertexCoverGreedyAlgorithm implements VertexCoverAlgorithm {
-	
-	private	Pseudograph graph;
-	
-	/**
-	 * Creates an instance of VertexCoverGreedyAlgorithm for 
-	 * <code>Pseudograph</code>s.
-	 * @param graph the graph to cover
-	 */	
-	public VertexCoverGreedyAlgorithm(Pseudograph graph) {
-		this.graph = graph;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public Collection vertexCover() {
-		// C <-- Ø
-		Set currentCover = new HashSet();
-		// G' <-- G
-		Pseudograph graphToCover = (Pseudograph) graph.clone();
-		// while G' != Ø
-		while (graphToCover.edgeSet().size() > 0) {
-			// v <-- vertex with maximum degree in G'
-			// sort vertices in descending order of degree
-			Set originalVertexSet = graphToCover.vertexSet();
-			VertexComparator comp = new VertexComparator(graphToCover, false);
-			List sortedVertexList = new ArrayList(originalVertexSet);
-			Collections.sort(sortedVertexList, comp);
-			Object v = sortedVertexList.get(0);
-			// C <-- C U {v}
-			currentCover.add(v);
-			// remove from G' every edge incident on v, and v itself
-			graphToCover.removeAllEdges(
-				new ArrayList(graphToCover.edgesOf(v)));
-			} // end while
-		return currentCover;
-	}	
+    private UndirectedGraph m_graph;
+
+    /**
+     * Creates an instance of VertexCoverGreedyAlgorithm for the specified
+     * graph.
+     *
+     * @param g the graph for which the algorithm to be applied.
+     *
+     * @throws IllegalArgumentException if the graph is neigher DirectedGraph
+     *         nor UndirectedGraph.
+     */
+    public VertexCoverGreedyAlgorithm( Graph g ) {
+        if( g instanceof DirectedGraph ) {
+            m_graph = new AsUndirectedGraph( (DirectedGraph) g );
+        }
+        else if( g instanceof UndirectedGraph ) {
+            m_graph = (UndirectedGraph) g;
+        }
+        else {
+            throw new IllegalArgumentException( "Unrecognized graph" );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Set findCover(  ) {
+        // C <-- Ø
+        Set cover = new HashSet(  );
+
+        // G' <-- G
+        Subgraph g = new Subgraph( m_graph, null, null );
+
+        // compare vertices in descending order of degree
+        VertexDegreeComparator comp = new VertexDegreeComparator( g );
+
+        // while G' != Ø
+        while( g.edgeSet(  ).size(  ) > 0 ) {
+            // v <-- vertex with maximum degree in G'
+            Object v = Collections.max( g.vertexSet(  ), comp );
+
+            // C <-- C U {v}
+            cover.add( v );
+
+            // remove from G' every edge incident on v, and v itself
+            g.removeVertex( v );
+        }
+
+        return cover;
+    }
 }
