@@ -129,7 +129,9 @@ public final class PerformanceDemo {
         try {
             System.in.read(  );
         }
-         catch( IOException e ) {}
+         catch( IOException e ) {
+             e.printStackTrace();
+         }
 
         System.out.println( "done." );
     }

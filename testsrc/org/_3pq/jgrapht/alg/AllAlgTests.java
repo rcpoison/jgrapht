@@ -46,7 +46,9 @@ import junit.framework.TestSuite;
  *
  * @author Barak Naveh
  */
-public class AllAlgTests {
+public final class AllAlgTests {
+    private AllAlgTests(  ) {} // ensure non-instantiability.
+
     /**
      * .
      *
