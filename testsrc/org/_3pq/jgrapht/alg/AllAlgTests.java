@@ -60,6 +60,7 @@ public final class AllAlgTests {
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
         suite.addTest( new TestSuite( DijkstraShortestPathTest.class ) );
+        suite.addTest( new TestSuite( VertexCoversTest.class ) );
 
         //$JUnit-END$
         return suite;
