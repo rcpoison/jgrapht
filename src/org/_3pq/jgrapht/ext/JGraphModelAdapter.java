@@ -111,9 +111,9 @@ import org.jgraph.graph.Port;
  * @since Aug 2, 2003
  */
 /*
- * FUTURE WORK: Now that the adapter supports JGraph dangling edges, it is 
- * possible, with a little effort, to eliminate the "known bugs" above. Some 
- * todo and fixme marks in the code indicate where the possible imporovements 
+ * FUTURE WORK: Now that the adapter supports JGraph dangling edges, it is
+ * possible, with a little effort, to eliminate the "known bugs" above. Some
+ * todo and fixme marks in the code indicate where the possible improvements
  * could be made to realize that.
  */
 public class JGraphModelAdapter extends DefaultGraphModel {
@@ -174,8 +174,8 @@ public class JGraphModelAdapter extends DefaultGraphModel {
     /** Maps JGraph vertices to JGraphT vertices */
     private final Map m_cellToVertex = new HashMap();
 
-    private final AttributeMap m_defaultEdgeAttributes;
-    private final AttributeMap m_defaultVertexAttributes;
+    private AttributeMap m_defaultEdgeAttributes;
+    private AttributeMap m_defaultVertexAttributes;
 
     /** Maps JGraphT edges to JGraph edges */
     private final Map m_edgeToCell = new HashMap();
@@ -241,10 +241,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
             throw new IllegalArgumentException( "null is NOT permitted" );
         }
 
-        m_jtGraph                 = new ShieldedGraph( jGraphTGraph );
-        m_defaultVertexAttributes = defaultVertexAttributes;
-        m_defaultEdgeAttributes   = defaultEdgeAttributes;
-        m_cellFactory             = cellFactory;
+        m_jtGraph = new ShieldedGraph( jGraphTGraph );
+        setDefaultVertexAttributes( defaultVertexAttributes );
+        setDefaultEdgeAttributes( defaultEdgeAttributes );
+        m_cellFactory = cellFactory;
 
         if( jGraphTGraph instanceof ListenableGraph ) {
             ListenableGraph g = ( ListenableGraph )jGraphTGraph;
@@ -340,6 +340,28 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
 
     /**
+     * Returns the default edge attributes used for creating new JGraph edges.
+     *
+     * @return the default edge attributes used for creating new JGraph edges.
+     */
+    public AttributeMap getDefaultEdgeAttributes() {
+        return m_defaultEdgeAttributes;
+    }
+
+
+    /**
+     * Returns the default vertex attributes used for creating new JGraph
+     * vertices.
+     *
+     * @return the default vertex attributes used for creating new JGraph
+     *         vertices.
+     */
+    public AttributeMap getDefaultVertexAttributes() {
+        return m_defaultVertexAttributes;
+    }
+
+
+    /**
      * Returns the JGraph edge cell that corresponds to the specified JGraphT
      * edge. If no corresponding cell found, returns <code>null</code>.
      *
@@ -385,6 +407,27 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         else {
             return ( DefaultPort )vertexCell.getChildAt( 0 );
         }
+    }
+
+
+    /**
+     * Sets the default edge attributes used for creating new JGraph edges.
+     *
+     * @param defaultEdgeAttributes the default edge attributes to set.
+     */
+    public void setDefaultEdgeAttributes( AttributeMap defaultEdgeAttributes ) {
+        m_defaultEdgeAttributes = defaultEdgeAttributes;
+    }
+
+
+    /**
+     * Sets the default vertex attributes used for creating new JGraph vertices.
+     *
+     * @param defaultVertexAttributes the default vertex attributes to set.
+     */
+    public void setDefaultVertexAttributes(
+            AttributeMap defaultVertexAttributes ) {
+        m_defaultVertexAttributes = defaultVertexAttributes;
     }
 
 
@@ -672,7 +715,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     private AttributeMap createEdgeAttributeMap( DefaultEdge edgeCell ) {
         AttributeMap attrs = new AttributeMap();
-        attrs.put( edgeCell, m_defaultEdgeAttributes.clone() );
+        attrs.put( edgeCell, getDefaultEdgeAttributes().clone() );
 
         return attrs;
     }
@@ -680,7 +723,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     private AttributeMap createVertexAttributeMap( GraphCell vertexCell ) {
         AttributeMap attrs = new AttributeMap();
-        attrs.put( vertexCell, m_defaultVertexAttributes.clone() );
+        attrs.put( vertexCell, getDefaultVertexAttributes().clone() );
 
         return attrs;
     }
