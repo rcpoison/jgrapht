@@ -47,12 +47,11 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.VertexFactory;
 
 /**
- * WheelGraphGenerator generates a <a
- * href="http://mathworld.wolfram.com/WheelGraph.html">wheel graph</a> of any
- * size. Reminding a bicycle wheel, a wheel graph has a hub vertex in the
- * center and a rim of vertices around it that are connected to each other (as
- * a ring). The rim vertices are also connected to the hub with edges that are
- * called "spokes".
+ * Generates a <a href="http://mathworld.wolfram.com/WheelGraph.html">wheel
+ * graph</a> of any size. Reminding a bicycle wheel, a wheel graph has a hub
+ * vertex in the center and a rim of vertices around it that are connected to
+ * each other (as a ring). The rim vertices are also connected to the hub with
+ * edges that are called "spokes".
  *
  * @author John V. Sichi
  *
