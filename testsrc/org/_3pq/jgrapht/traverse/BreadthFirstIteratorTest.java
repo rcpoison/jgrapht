@@ -46,7 +46,7 @@ import org._3pq.jgrapht.Graph;
  * 
  * <p>
  * NOTE: This test uses hard-coded expected ordering isn't really guaranteed by
- * the specification of the algorithm. This could cause false faliurs if the
+ * the specification of the algorithm. This could cause false failures if the
  * traversal implementation changes.
  * </p>
  *
@@ -65,8 +65,10 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest {
     }
 
 
-    AbstractGraphIterator createIterator( Graph g, Object vertex,
-        boolean crossComponent ) {
-        return new BreadthFirstIterator( g, vertex, crossComponent, false );
+    AbstractGraphIterator createIterator( Graph g, Object vertex ) {
+        AbstractGraphIterator i = new BreadthFirstIterator( g, vertex, false );
+        i.setCrossComponentTraversal( true );
+
+        return i;
     }
 }

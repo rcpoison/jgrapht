@@ -98,7 +98,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
         graph.addEdge( v8, v2 );
         graph.addEdge( v9, v4 );
 
-        AbstractGraphIterator iterator = createIterator( graph, v1, true );
+        AbstractGraphIterator iterator = createIterator( graph, v1 );
         iterator.addTraversalListener( new MyTraversalListener(  ) );
 
         while( iterator.hasNext(  ) ) {
@@ -119,8 +119,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
     abstract String getExpectedStr2(  );
 
 
-    abstract AbstractGraphIterator createIterator( Graph g, Object vertex,
-        boolean crossComponent );
+    abstract AbstractGraphIterator createIterator( Graph g, Object startVertex );
 
     /**
      * Internal traversal listener.

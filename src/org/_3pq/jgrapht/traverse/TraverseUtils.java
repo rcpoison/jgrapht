@@ -28,6 +28,7 @@
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   Liviu Rau
+ *                   John V. Sichi
  *
  * $Id$
  *
@@ -49,7 +50,6 @@ import java.util.Set;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
 
 /**
  * A collection of utilities used for implementing algorithms.
@@ -61,8 +61,7 @@ import org._3pq.jgrapht.UndirectedGraph;
 public final class TraverseUtils {
     private TraverseUtils(  ) {} // ensure non-instantiability.
 
-    static Specifics createGraphSpecifics(
-        Graph g, boolean ignoreEdgeDirection ) {
+    static Specifics createGraphSpecifics( Graph g, boolean ignoreEdgeDirection ) {
         if( !ignoreEdgeDirection && ( g instanceof DirectedGraph ) ) {
             return new DirectedSpecifics( (DirectedGraph) g );
         }
@@ -215,8 +214,8 @@ public final class TraverseUtils {
 
 
     /**
-     * An implementation of {@link TraverseUtils.Specifics} in which
-     * edge direction (if any) is ignored.
+     * An implementation of {@link TraverseUtils.Specifics} in which edge
+     * direction (if any) is ignored.
      */
     static class UndirectedSpecifics extends Specifics {
         private Graph m_graph;
@@ -264,32 +263,29 @@ public final class TraverseUtils {
          *
          * @param g the graph to be iterated.
          * @param startVertex the vertex iteration to be started.
-         * @param crossComponentTraversal whether to traverse the graph across
-         *        connected components.
          * @param pendingVerticesContainer
-         * @param ignoreEdgeDirection if true, traversal ignores edge direction;
-         *        if false, traversal follows outgoing edges only if g
-         *        is directed
+         * @param ignoreEdgeDirection if true, traversal ignores edge
+         *        direction; if false, traversal follows outgoing edges only
+         *        if g is directed
          *
          * @throws NullPointerException
          * @throws IllegalArgumentException
          */
         public XXFirstIterator( Graph g, Object startVertex,
-            boolean crossComponentTraversal,
             SimpleContainer pendingVerticesContainer,
             boolean ignoreEdgeDirection ) {
             super(  );
-
-            m_pending = pendingVerticesContainer;
 
             if( g == null ) {
                 throw new NullPointerException( "graph must not be null" );
             }
 
-            m_specifics          = TraverseUtils.createGraphSpecifics(
-                g, ignoreEdgeDirection );
-            m_vertexIterator     = g.vertexSet(  ).iterator(  );
-            setCrossComponentTraversal( crossComponentTraversal );
+            m_pending     = pendingVerticesContainer;
+
+            m_specifics =
+                TraverseUtils.createGraphSpecifics( g, ignoreEdgeDirection );
+            m_vertexIterator = g.vertexSet(  ).iterator(  );
+            setCrossComponentTraversal( startVertex == null );
 
             if( startVertex == null ) {
                 // pick a start vertex if graph not empty 

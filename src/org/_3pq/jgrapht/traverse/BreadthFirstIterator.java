@@ -58,31 +58,27 @@ public class BreadthFirstIterator extends XXFirstIterator {
      * Creates a new breadth-first iterator for the specified graph.
      *
      * @param g the graph to be iterated.
-     * @param crossComponentTraversal whether to traverse the graph across
-     *        connected components.
      */
-    public BreadthFirstIterator( Graph g, boolean crossComponentTraversal ) {
-        this( g, null, crossComponentTraversal, false );
+    public BreadthFirstIterator( Graph g ) {
+        this( g, null, false );
     }
 
 
     /**
      * Creates a new breadth-first iterator for the specified graph. Iteration
-     * will start at the specified start vertex. If the specified start vertex
-     * is <code>null</code>, Iteration will start at an arbitrary graph
-     * vertex.
+     * will start at the specified start vertex and will be limited to the
+     * connected component that includes that vertex. If the specified start
+     * vertex is <code>null</code>, iteration will start at an arbitrary
+     * vertex and will not be limited, that is, will be able to traverse all
+     * the graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
-     * @param crossComponentTraversal whether to traverse the graph across
-     *        connected components.
-     * @param ignoreEdgeDirection if true, traversal ignores edge direction;
-     *        if false, traversal follows outgoing edges only if g
-     *        is directed
+     * @param ignoreEdgeDirection if true, traversal ignores edge direction; if
+     *        false, traversal follows outgoing edges only if g is directed
      */
     public BreadthFirstIterator( Graph g, Object startVertex,
-        boolean crossComponentTraversal, boolean ignoreEdgeDirection ) {
-        super( g, startVertex, crossComponentTraversal, new SimpleQueue(  ),
-               ignoreEdgeDirection );
+        boolean ignoreEdgeDirection ) {
+        super( g, startVertex, new SimpleQueue(  ), ignoreEdgeDirection );
     }
 }

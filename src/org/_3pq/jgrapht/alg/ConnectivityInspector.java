@@ -46,18 +46,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
 
 /**
- * Allows obtaining various connectivity aspects of a graph. The
- * <i>inspected graph</i> is specified at construction time and cannot be
- * modified.  Currently, the inspector supports connected components
- * for an undirected graph and weakly connected components for a directed
- * graph.  (TODO:  implement Tarjan's algorithm for strongly connected
- * component discovery.)
+ * Allows obtaining various connectivity aspects of a graph. The <i>inspected
+ * graph</i> is specified at construction time and cannot be modified.
+ * Currently, the inspector supports connected components for an undirected
+ * graph and weakly connected components for a directed graph.  (TODO:
+ * implement Tarjan's algorithm for strongly connected component discovery.)
  * 
  * <p>
  * The inspector methods work in a lazy fashion: no computation is performed
@@ -81,8 +80,8 @@ import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
  * @since Aug 6, 2003
  */
 public class ConnectivityInspector implements GraphListener {
-    List                    m_connectedSets;
-    Map                     m_vertexToConnectedSet;
+    List          m_connectedSets;
+    Map           m_vertexToConnectedSet;
     private Graph m_graph;
 
     /**
@@ -125,7 +124,7 @@ public class ConnectivityInspector implements GraphListener {
             connectedSet = new HashSet(  );
 
             BreadthFirstIterator i =
-                new BreadthFirstIterator( m_graph, vertex, false, true );
+                new BreadthFirstIterator( m_graph, vertex, true );
 
             while( i.hasNext(  ) ) {
                 connectedSet.add( i.next(  ) );
@@ -139,10 +138,10 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * Returns a list of <code>Set</code>s, where each set contains all vertices
-     * that are in the same maximally connected component. All graph vertices
-     * occur in exactly one set.  For more on maximally connected component,
-     * see <a
+     * Returns a list of <code>Set</code>s, where each set contains all
+     * vertices that are in the same maximally connected component. All graph
+     * vertices occur in exactly one set.  For more on maximally connected
+     * component, see <a
      * href="http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html">
      * http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html</a>.
      *
@@ -158,7 +157,7 @@ public class ConnectivityInspector implements GraphListener {
      * @see org._3pq.jgrapht.GraphListener#edgeAdded(Edge)
      */
     public void edgeAdded( Edge e ) {
-        init(  ); // for now invalidate cached results, but need to amend them. 
+        init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
@@ -166,14 +165,19 @@ public class ConnectivityInspector implements GraphListener {
      * @see org._3pq.jgrapht.GraphListener#edgeRemoved(Edge)
      */
     public void edgeRemoved( Edge e ) {
-        init(  ); // for now invalidate cached results, but need to amend them. 
+        init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
     /**
      * Tests if there is a path from the specified source vertex to the
-     * specified target vertices.  For a directed graph, direction is ignored
+     * specified target vertices. For a directed graph, direction is ignored
      * for this interpretation of path.
+     * 
+     * <p>
+     * TODO: BEFORE RELEASE: Ignoring edge direction for directed graph can be
+     * confusing. For directed graphs, consider Dijkstra's algorithm.
+     * </p>
      *
      * @param sourceVertex one end of the path.
      * @param targetVertex another end of the path.
@@ -192,7 +196,7 @@ public class ConnectivityInspector implements GraphListener {
      * @see org._3pq.jgrapht.VertexSetListener#vertexAdded(Object)
      */
     public void vertexAdded( Object v ) {
-        init(  ); // for now invalidate cached results, but need to amend them. 
+        init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
@@ -200,7 +204,7 @@ public class ConnectivityInspector implements GraphListener {
      * @see org._3pq.jgrapht.VertexSetListener#vertexRemoved(Object)
      */
     public void vertexRemoved( Object v ) {
-        init(  ); // for now invalidate cached results, but need to amend them. 
+        init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
@@ -218,7 +222,7 @@ public class ConnectivityInspector implements GraphListener {
 
             if( vertexSet.size(  ) > 0 ) {
                 BreadthFirstIterator i =
-                    new BreadthFirstIterator( m_graph, null, true, true );
+                    new BreadthFirstIterator( m_graph, null, true );
                 i.addTraversalListener( new MyTraversalListener(  ) );
 
                 while( i.hasNext(  ) ) {
