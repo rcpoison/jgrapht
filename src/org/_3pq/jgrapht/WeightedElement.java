@@ -46,6 +46,9 @@ package org._3pq.jgrapht;
  * @since Jul 15, 2003
  */
 public interface WeightedElement {
+    /** The default weight for a weighted element. */
+    public static double DEFAULT_WEIGHT = 1.0;
+
     /**
      * Sets the weight of this element.
      *

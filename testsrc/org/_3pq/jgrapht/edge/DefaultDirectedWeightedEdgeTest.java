@@ -39,6 +39,7 @@
 package org._3pq.jgrapht.edge;
 
 import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.WeightedElement;
 
 /**
  * Tests for the {@link DefaultDirectedWeightedEdge} class.
@@ -66,7 +67,7 @@ public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
         DefaultDirectedWeightedEdge e5 =
             new DefaultDirectedWeightedEdge( m_source1, m_target1, 2.0 );
         assertFalse( e5.equals( e1 ) );
-        e5.setWeight( DirectedWeightedEdge.DEFAULT_EDGE_WEIGHT );
+        e5.setWeight( WeightedElement.DEFAULT_WEIGHT );
         assertTrue( e5.equals( e1 ) );
     }
 

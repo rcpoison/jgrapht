@@ -38,6 +38,8 @@
  */
 package org._3pq.jgrapht.edge;
 
+import org._3pq.jgrapht.WeightedElement;
+
 /**
  * A default implementation of DirectedWeightedEdge.
  *
@@ -46,8 +48,8 @@ package org._3pq.jgrapht.edge;
  * @since Jul 14, 2003
  */
 public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
-    implements DirectedWeightedEdge {
-    private double m_weight = DEFAULT_EDGE_WEIGHT;
+    implements WeightedElement {
+    private double m_weight = WeightedElement.DEFAULT_WEIGHT;
 
     /**
      * @see #DefaultDirectedWeightedEdge(Object, Object, double)
@@ -90,8 +92,8 @@ public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
      * @see org._3pq.jgrapht.DirectedEdge#equals(Object)
      */
     public boolean equals( Object o ) {
-        if( o instanceof DirectedWeightedEdge ) {
-            DirectedWeightedEdge e = (DirectedWeightedEdge) o;
+        if( o instanceof WeightedElement ) {
+            WeightedElement e = (WeightedElement) o;
 
             return super.equals( o ) && this.getWeight(  ) == e.getWeight(  );
         }
