@@ -303,7 +303,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         }
          catch( CloneNotSupportedException e ) {
             e.printStackTrace(  );
-            throw new RuntimeException( e );
+            throw new RuntimeException(  );
         }
     }
 
