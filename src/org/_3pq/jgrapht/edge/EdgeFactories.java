@@ -35,9 +35,12 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 04-Aug-2003 : Renamed from EdgeFactoryFactory & made utility class (BN);
- *
+ * 03-Nov-2003 : Made edge factories serializable (BN). 
+ * 
  */
 package org._3pq.jgrapht.edge;
+
+import java.io.Serializable;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
@@ -65,7 +68,7 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class DirectedEdgeFactory implements EdgeFactory {
+    public static class DirectedEdgeFactory extends AbstractEdgeFactory {
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -82,7 +85,7 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class DirectedWeightedEdgeFactory implements EdgeFactory {
+    public static class DirectedWeightedEdgeFactory extends AbstractEdgeFactory {
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -99,7 +102,7 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class UndirectedEdgeFactory implements EdgeFactory {
+    public static class UndirectedEdgeFactory extends AbstractEdgeFactory {
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -116,7 +119,8 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class UndirectedWeightedEdgeFactory implements EdgeFactory {
+    public static class UndirectedWeightedEdgeFactory
+        extends AbstractEdgeFactory {
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -124,4 +128,15 @@ public final class EdgeFactories {
             return new UndirectedWeightedEdge( source, target );
         }
     }
+
+
+    /**
+     * A base class for edge factories.
+     *
+     * @author Barak Naveh
+     *
+     * @since Nov 3, 2003
+     */
+    abstract static class AbstractEdgeFactory implements EdgeFactory,
+        Serializable {}
 }
