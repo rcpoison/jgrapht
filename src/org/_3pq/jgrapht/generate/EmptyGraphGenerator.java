@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -59,16 +59,19 @@ public class EmptyGraphGenerator implements GraphGenerator {
      * Construct a new EmptyGraphGenerator.
      *
      * @param size number of vertices to be generated
+     *
+     * @throws IllegalArgumentException if the specified size is negative.
      */
     public EmptyGraphGenerator( int size ) {
-        if (size < 0) {
-            throw new IllegalArgumentException("must be non-negative");
+        if( size < 0 ) {
+            throw new IllegalArgumentException( "must be non-negative" );
         }
+
         m_size = size;
     }
 
     /**
-     * @see GraphGenerator#generateGraph
+     * {@inheritDoc}
      */
     public void generateGraph( Graph target, VertexFactory vertexFactory,
         Map resultMap ) {
