@@ -20,7 +20,7 @@
         <tstamp />
         <echo>JAVA_HOME=${java.home}</echo>
         <property name="jgrapht.name" value="jgrapht" />
-        <property name="jgrapht.version" value="0.4.1" />
+        <property name="jgrapht.version" value="0.5.0" />
         <property name="builddir" value="${basedir}/build" />
         <property name="testbuilddir" value="${basedir}/testbuild" />
         <property name="junit.jar" value="${basedir}/lib/junit.jar"/>
