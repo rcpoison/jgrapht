@@ -1,0 +1,254 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<!--
+/* ==========================================
+ * JGraphT : a free Java graph-theory library
+ * ==========================================
+ *
+ * Project Info:  http://jgrapht.sourceforge.net/
+ * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ *
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ */
+/* ---------------------
+ * project-policies.html
+ * ---------------------
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
+ *
+ * Original Author:  Barak Naveh
+ * Contributor(s):   -
+ *
+ * $Id$
+ *
+ * Changes
+ * -------
+ * 28-Jul-2003 : Initial revision (BN);
+ *
+ */
+-->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Barak Naveh">
+  <meta name="keywords" content="JGraphT, graph, theory, graph-theory, free, java, LGPL, open-source">
+  <title>Welcome to JGraphT</title>
+  
+<style type="text/css">
+<!--
+body {
+	font-family:Verdana;
+	text-align:left;
+	color:#000011;
+	background-color:#FAFBFF;
+}
+a {
+	COLOR: #336699; 
+	TEXT-DECORATION: underline;
+}
+a:visited {
+	color: #663366; 
+	TEXT-DECORATION: underline;
+}
+a:hover {
+	color: #FF9900; 
+	TEXT-DECORATION: underline;
+}
+code {
+	font-family:Courier New;
+	font-size:medium;
+}
+
+ul {
+	list-style:disc;
+}
+li {
+	list-style:disc;
+	margin-left:1em;
+	margin-right:1em;
+	line-height: 150%;
+}
+
+ol {
+	list-style:decimal;
+}
+
+p {
+	margin-left:1em;
+	margin-right:1em;
+	line-height: 140%;
+}
+
+h1 {
+	background-color:#7AA1E6;
+	border-left:1px solid #245BCB; 
+	border-right:1px solid #245BCB; 
+	border-top:1px solid #245BCB; 
+	border-bottom:1px solid #245BCB; 
+	color:#FFFFFF;
+	text-align:center;
+}
+ 
+h2 {
+	border-left:0px solid Black; 
+	border-right:0px solid Black; 
+	border-top:0px solid Black; 
+	border-bottom:2px solid #7AA1E6; 
+	margin-top:50;
+	color:#25507C;
+}
+ 
+h3 {
+	border-left:0px solid Black; 
+	border-right:0px solid Black; 
+	border-top:0px solid Black; 
+	border-bottom:2px solid #7AA1E6; 
+	margin-top:30;
+	color:#25507C;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+//-->
+  </style>  
+  
+</head>
+<body>
+<h1><font size="7"><font color="#CC3399">J</font>Graph<font color="#FFCC00">T</font> </font>Project Policies</h1>
+
+
+
+<br>
+<p>
+The intent of these policies is to direct the JGraphT development in an orderly 
+fashion. These are by no means "hard-rules" and they can be changed. If you have 
+suggestions of how to do things better, please send them over. However, until 
+any such suggestions are accepted you are expected to conform to these policies.
+</p>
+
+<h3>1.&nbsp; Credits & Ego</h3>
+
+<p>
+1.1.&nbsp; You must retain the original authorship of files even if you rewrote them 
+ground-up and did not use any of the original. You probably built on mistakes of 
+the original author/s and they still deserve the credits for their pioneering 
+work.
+</p>
+ 
+
+<p>1.2.&nbsp; Fixing bugs in someone else's code or adding little features does not 
+entitle you co-authorship. However, if you made substantial contribution you may 
+add your name at the end of the author list. </p>
+<p>1.3.&nbsp; Expect your code to change and evolve. None of us do everything right the 
+first time even if we're great programmers, which of course we are :). Please 
+welcome the changes others introduce to your code and try to judge them in an 
+&quot;ego-neutral&quot; manner. </p>
+ 
+
+<h3>2.&nbsp; Coding Conventions</h3>
+
+<p>2.1.&nbsp; <i>"One consistent look"</i>. The code of JGraphT should have one consistent look. 
+It is important since JGraphT is a class library, and not a closed product. 
+Our users will look into the code very often. If we confuse them with many coding 
+styles they will hate us and underestimate our professionalism. If we give them 
+one consistent look, they will greatly appreciate us (even if they might not 
+like our specific styling).</p>
+
+<p>2.2.&nbsp; <i>Automated tools</i>. The "Jalopy" and "Checkstyle" tools are used and greatly 
+help to achieve one consistent look -- it is strongly recommended that you use 
+them. The both have plugins for various IDEs. 
+You can find more about them in the &quot;etc&quot; folder of JGraphT. </p>
+
+<p>2.3.&nbsp; <i>&quot;Principle of least surprise&quot;</i> should be practiced. A method should do what 
+its name suggests and should not have unrelated side effects. Try to make things 
+expected as an alternative to referring users to the documentation. Ideally, 
+users should be able to do an &quot;auto-complete&quot; programming with JGraphT. Ideally, 
+they would not need to read the documentation at all. </p>
+<p>2.4.&nbsp; <i>&quot;Simplicity is gold&quot;</i>. Your code should be <b>as simple as possible</b> 
+(especially APIs). &quot;Simple&quot; does not mean stupid. If you need to do clever 
+things, do clever things. However, don't do clever if you can do simple! </p>
+
+
+<h3>3.&nbsp; Member’s dos and don’ts</h3>
+
+<p>3.1.&nbsp; JGraphT is a nice project of nice people. It is a strictly <b>no-flame project</b>! A flame incident, whether 
+against other members or against JGraphT users, will result in an immediate removal 
+of the involved member from the JGraphT team. The authorship credits of such member 
+might be renamed to "unascribed".
+</p>
+
+
+<p>3.2.&nbsp; Members should not modify the JGraphT project website - this task is done 
+by the project admin.
+
+</p>
+
+<p>
+3.3.&nbsp; New members should NOT commit changes to CVS before reviewed by other members. This 
+is done in order to allow new members to receive feedback on their code before 
+committing, hence prevent creating CVS mess on "startup mistakes".</p>
+
+
+<p>3.4.&nbsp; Lastly, the members in the JGraphT project may be of different levels of experience and 
+proficiency. If you are a "wizard", be kind to and patient with the "newbies" – 
+you've also been a newbie once. If you are a less experienced developer, learn 
+to appreciate 
+the inputs from the "wizards" - these can be important and valuable contributions for your 
+own professional growth.
+</p>
+
+
+<p>
+<br>
+That’s all there is to it!
+</p>
+
+
+<p>
+Regards,<br/>
+Barak Naveh<br/>
+JGraphT Project Lead</p>
+
+
+
+<p>
+<br/>
+</p>
+
+
+
+<hr noshade size="2" style="background-color:#7AA1E6;color:#7AA1E6;border-width: thin none none;">
+<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%">
+  <tr>
+    <td width="10%"align="left"><a href="http://validator.w3.org/check/referer"><img
+          src="http://www.w3.org/Icons/valid-html401" border="0"
+          alt="Valid HTML 4.01!" height="31" width="88"/></a></td>
+          
+    <td width="80%"align="center"><small>
+		  &copy; Copyright 2003, by Barak Naveh and Contributors. All rights reserved.</small></td>
+	    
+	<td width="10%" align="right"><a href="http://sourceforge.net"><img 
+    	  src="http://sourceforge.net/sflogo.php?group_id=YOUR_GROUP_ID_GOES_HERE&amp;type=1" 
+    	  width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></td>
+  </tr>
+</table>
+<br/>
+
+
+</body>
+</html>
