@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -24,7 +24,7 @@
 /* -----------------------
  * GraphGeneratorTest.java
  * -----------------------
- * (C) Copyright 2003, by John V. Sichi and Contributors.
+ * (C) Copyright 2003-2004, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -55,10 +55,11 @@ import org._3pq.jgrapht.graph.DefaultDirectedGraph;
  * .
  *
  * @author John V. Sichi
+ *
  * @since Sep 17, 2003
  */
 public class GraphGeneratorTest extends TestCase {
-    private static final int SIZE = 10;
+    private static final int SIZE            = 10;
     private VertexFactory    m_vertexFactory =
         new VertexFactory(  ) {
             private int m_i;
@@ -67,38 +68,6 @@ public class GraphGeneratorTest extends TestCase {
                 return new Integer( ++m_i );
             }
         };
-
-    /**
-     * .
-     */
-    public void testRingGraphGenerator(  ) {
-        GraphGenerator gen       = new RingGraphGenerator( SIZE );
-        DirectedGraph  g         = new DefaultDirectedGraph(  );
-        Map            resultMap = new HashMap(  );
-        gen.generateGraph( g, m_vertexFactory, resultMap );
-        assertEquals( SIZE, g.vertexSet(  ).size(  ) );
-        assertEquals( SIZE, g.edgeSet(  ).size(  ) );
-
-        Object startVertex = g.vertexSet(  ).iterator(  ).next(  );
-        assertEquals( 1, g.outDegreeOf( startVertex ) );
-
-        Object nextVertex = startVertex;
-        Set    seen = new HashSet(  );
-
-        for( int i = 0; i < SIZE; ++i ) {
-            Edge nextEdge = (Edge) g.outgoingEdgesOf( nextVertex ).get( 0 );
-            nextVertex = nextEdge.getTarget(  );
-            assertEquals( 1, g.inDegreeOf( nextVertex ) );
-            assertEquals( 1, g.outDegreeOf( nextVertex ) );
-            assertTrue( !seen.contains( nextVertex ) );
-            seen.add( nextVertex );
-        }
-
-        // do you ever get the feeling you're going in circles?
-        assertTrue( nextVertex == startVertex );
-        assertTrue( resultMap.isEmpty(  ) );
-    }
-
 
     /**
      * .
@@ -150,6 +119,38 @@ public class GraphGeneratorTest extends TestCase {
             assertEquals( 1, g.inDegreeOf( vertex ) );
             assertEquals( 1, g.outDegreeOf( vertex ) );
         }
+    }
+
+
+    /**
+     * .
+     */
+    public void testRingGraphGenerator(  ) {
+        GraphGenerator gen       = new RingGraphGenerator( SIZE );
+        DirectedGraph  g         = new DefaultDirectedGraph(  );
+        Map            resultMap = new HashMap(  );
+        gen.generateGraph( g, m_vertexFactory, resultMap );
+        assertEquals( SIZE, g.vertexSet(  ).size(  ) );
+        assertEquals( SIZE, g.edgeSet(  ).size(  ) );
+
+        Object startVertex = g.vertexSet(  ).iterator(  ).next(  );
+        assertEquals( 1, g.outDegreeOf( startVertex ) );
+
+        Object nextVertex = startVertex;
+        Set    seen = new HashSet(  );
+
+        for( int i = 0; i < SIZE; ++i ) {
+            Edge nextEdge = (Edge) g.outgoingEdgesOf( nextVertex ).get( 0 );
+            nextVertex = nextEdge.getTarget(  );
+            assertEquals( 1, g.inDegreeOf( nextVertex ) );
+            assertEquals( 1, g.outDegreeOf( nextVertex ) );
+            assertTrue( !seen.contains( nextVertex ) );
+            seen.add( nextVertex );
+        }
+
+        // do you ever get the feeling you're going in circles?
+        assertTrue( nextVertex == startVertex );
+        assertTrue( resultMap.isEmpty(  ) );
     }
 
     // TODO:  testWheelGraphGenerator
