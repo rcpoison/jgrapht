@@ -184,6 +184,29 @@ version. These items have one of the following statuses<font color="#7AA1E6">*</
 <p>Automatic graph layout when visualizing via the JGraph adapter. Employ the 
 ready-made JGraph layouts to a achieve a quick and automatic way to take a given 
 graph and visualize it. <i>(proposed BN)</i></p>
+
+
+
+<p>Integration with GraphViz</p>
+
+
+
+<p>GraphViz is a nice tool for automated layout. <b>Discussion: </b>The Java 
+port (grappa) <br>
+looks pretty useless since it doesn't even do layout, but another <br>
+possible integration method is to generate files in their format (dot) <br>
+and exec GraphViz . For a live display rather than a static image, <br>
+you'd have to tell GraphViz to produce dot output, and then parse it for <br>
+the location info. <i>(proposed JVS)<br>
+</i>As a first lame integration, it's enough that we generate the dot files and 
+automatically post them against a GraphViz server (like the demo at
+<a href="http://odur.let.rug.nl/~vannoord/fsademo/">
+http://odur.let.rug.nl/~vannoord/fsademo/</a>). This will keep us platform 
+independent and will allow users to see their graphs (however, only in browser). 
+<i> (proposed BN)</i></p>
+
+
+
 <p>&nbsp;</p>
 <p></p>
 
@@ -193,9 +216,19 @@ graph and visualize it. <i>(proposed BN)</i></p>
 
 
 
-<p>Graph trigger listeners and graph assertions. <i>(proposed JVS)</i></p>
+<p>Graph trigger listeners and graph assertions. <b>Discussion:</b> 
+GraphTriggerListener extends GraphListener, receives &quot;before&quot; events, and can 
+throw (unchecked) exceptions to abort the action. Graph assertions are 
+implementations of GraphTriggerListener which enforce graph properties. an 
+AbstractGraphAssertion class will isolate the exception handling from the 
+logical checks, and make it easy to use composites. Methods of that class will 
+redirect to a testing method that will return boolean flag to indicate an 
+approved operation. Example: the AbstractGraphAssertion receives the 'beforeVertexAdded(v)' 
+call, and tests the approveAddVertex(v) method - if true it returns, if false 
+throws some assertion exception. The approveAddVertex(v) is, of course, 
+polymorphic. <i>(proposed JVS+BN)</i></p>
 
-<p>Automatic JUnit execution in ANT build script. <i>(proposed JVS)</i></p>
+<p>Automatic JUnit execution in ANT build script. <i>(committed)</i></p>
 
 
 
@@ -209,11 +242,11 @@ graph and visualize it. <i>(proposed BN)</i></p>
 
 
 <p>More rigorous unit tests for basic graphs. Basic graphs are the 
-non-delegating graphs, which are based on the AbstractBaseGraphclass and are the 
+non-delegating graphs, which are based on the AbstractBaseGraph class and are the 
 very core of JGraphT. <i>(proposed BN)</i></p>
 
 <p>Graph connectivity predicates and iteration of connected components of 
-undirected graphs. <i>(proposed BN)</i></p>
+undirected graphs. <i>(committed)</i></p>
 
 <p>&nbsp;</p>
 
@@ -230,6 +263,8 @@ Class naming is the same as in 'src', only suffixed with 'Test'. <i>(committed)<
 <p>Refactoring of inner classes of GraphFactory. <i>(committed)</i></p>
 
 <p>JGraph adapter <i>(committed)</i></p>
+
+<p>&nbsp;</p>
 
 <h3>Version 0.4.0&nbsp; (released)</h3>
 
