@@ -50,7 +50,7 @@ public class DirectedWeightedEdge extends DirectedEdge {
     private double m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
-     * @see #DirectedWeightedEdge(Object, Object, double)
+     * @see DirectedEdge#DirectedWeightedEdge(Object, Object, double)
      */
     public DirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );

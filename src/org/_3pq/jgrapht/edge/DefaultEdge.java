@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -----------------
- * DefaulltEdge.java
- * -----------------
+/* ----------------
+ * DefaultEdge.java
+ * ----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -42,26 +42,24 @@ package org._3pq.jgrapht.edge;
 import org._3pq.jgrapht.Edge;
 
 /**
- * Deprecated - use {@link com.jgraph.graph.DefaultEdge} instead (the one with
- * no double 'l' typo). This class will be deleted next version.
+ * A skeletal implementation of the <tt>Edge</tt> interface, to minimize the
+ * effort required to implement the interface.
  *
  * @author Barak Naveh
  *
  * @since Jul 14, 2003
- * @deprecated use {@link com.jgraph.graph.DefaultEdge} instead (the one with
- *             no double 'l' typo).
  */
-public class DefaulltEdge implements Edge, Cloneable {
+public class DefaultEdge implements Edge, Cloneable {
     private Object m_source;
     private Object m_target;
 
     /**
-     * Constructor for DefaulltEdge.
+     * Constructor for DefaultEdge.
      *
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      */
-    public DefaulltEdge( Object sourceVertex, Object targetVertex ) {
+    public DefaultEdge( Object sourceVertex, Object targetVertex ) {
         m_source     = sourceVertex;
         m_target     = targetVertex;
     }

@@ -44,7 +44,7 @@ import junit.framework.TestCase;
 import org._3pq.jgrapht.Edge;
 
 /**
- * Tests for the {@link org._3pq.jgrapht.edge.DefaulltEdge} class.
+ * Tests for the {@link org._3pq.jgrapht.edge.DefaultEdge} class.
  *
  * @author Barak Naveh
  *
