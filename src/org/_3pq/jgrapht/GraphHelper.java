@@ -68,6 +68,9 @@ public final class GraphHelper {
         Object targetVertex, double weight ) {
         EdgeFactory ef = g.getEdgeFactory(  );
         Edge        e = ef.createEdge( sourceVertex, targetVertex );
+
+        // we first create the edge and set the weight to make sure that 
+        // listeners will see the correct weight upon addEdge.
         e.setWeight( weight );
 
         return g.addEdge( e ) ? e : null;
@@ -90,6 +93,50 @@ public final class GraphHelper {
         g.addVertex( e.getTarget(  ) );
 
         return g.addEdge( e );
+    }
+
+
+    /**
+     * Adds the specified source and target vertices to the graph, if not
+     * already included, and creates a new edge and adds it to the specified
+     * graph similarly to the {@link Graph#addEdge(Object, Object)} method.
+     *
+     * @param g the graph for which the specified edge to be added.
+     * @param sourceVertex source vertex of the edge.
+     * @param targetVertex target vertex of the edge.
+     *
+     * @return The newly created edge if added to the graph, otherwise
+     *         <code>null</code>.
+     */
+    public static Edge addEdgeWithVertices( Graph g, Object sourceVertex,
+        Object targetVertex ) {
+        g.addVertex( sourceVertex );
+        g.addVertex( targetVertex );
+
+        return g.addEdge( sourceVertex, targetVertex );
+    }
+
+
+    /**
+     * Adds the specified source and target vertices to the graph, if not
+     * already included, and creates a new weighted edge and adds it to the
+     * specified graph similarly to the {@link Graph#addEdge(Object, Object)}
+     * method.
+     *
+     * @param g the graph for which the specified edge to be added.
+     * @param sourceVertex source vertex of the edge.
+     * @param targetVertex target vertex of the edge.
+     * @param weight weight of the edge.
+     *
+     * @return The newly created edge if added to the graph, otherwise
+     *         <code>null</code>.
+     */
+    public static Edge addEdgeWithVertices( Graph g, Object sourceVertex,
+        Object targetVertex, double weight ) {
+        g.addVertex( sourceVertex );
+        g.addVertex( targetVertex );
+
+        return addEdge( g, sourceVertex, targetVertex, weight );
     }
 
 
