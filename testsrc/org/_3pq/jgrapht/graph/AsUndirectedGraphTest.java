@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------------
+/* --------------------------
  * AsUndirectedGraphTest.java
- * ----------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * --------------------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -40,13 +40,10 @@ package org._3pq.jgrapht.graph;
 
 import java.util.List;
 
-import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
-import org._3pq.jgrapht.graph.AsUndirectedGraph;
+import org._3pq.jgrapht.UndirectedGraph;
 
 /**
  * A unit test for the AsDirectedGraph view.
@@ -57,7 +54,6 @@ public class AsUndirectedGraphTest extends EnhancedTestCase {
     private Edge  m_loop;
     private DirectedGraph m_directed;
     private UndirectedGraph m_undirected;
-    private EdgeFactory   m_eFactory;
     private String        m_v1 = "v1";
     private String        m_v2 = "v2";
     private String        m_v3 = "v3";
@@ -73,8 +69,6 @@ public class AsUndirectedGraphTest extends EnhancedTestCase {
     protected void setUp(  ) {
         m_directed         = new DefaultDirectedGraph(  );
         m_undirected       = new AsUndirectedGraph( m_directed );
-
-        m_eFactory     = m_directed.getEdgeFactory(  );
 
         m_directed.addVertex( m_v1 );
         m_directed.addVertex( m_v2 );
