@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -527,10 +527,13 @@ public class JGraphModelAdapter extends DefaultGraphModel {
                 // For consistency, we remove the edge from the JGraph too.
                 internalRemoveCell( jEdge );
                 System.err.println(
-                    "Warning: a parallel edge was deleted because "
-                    + "the underlying JGraphT forbids parallel edges. "
-                    + "If you need parallel edges, use a suitable "
-                    + "underlying JGraphT instead." );
+                    "Warning: an edge was deleted because the underlying "
+                    + "JGraphT graph refused to create it. "
+                    + "This situation can happen when a constraint of the "
+                    + "underlying graph is violated, e.g., an attempt to add "
+                    + "a parallel edge or a self-loop to a graph that forbids "
+                    + "them. To avoid this message, make sure to use a "
+                    + "suitable underlying JGraphT graph." );
             }
         }
     }
