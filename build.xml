@@ -39,15 +39,16 @@
  * 15-Aug-2003 : Added checkstyle task (JVS);
  * 15-Aug-2003 : Used JUnit batch test feature (JVS);
  * 15-Aug-2003 : Added jalopy task (JVS);
- * 03-Sep-2003 : Add etags support (JVS);
+ * 03-Sep-2003 : Added etags support (JVS);
  * 24-Feb-2004 : Removed duplicates and cleaned code (BN);
+ * 06-Mar-2004 : Added tasks for building a release by CVS tag (BN);
  *
  */
 -->
 
 <!--
 /**
- * An ANT build file for JGraphT (use Ant 1.5.1 and above).
+ * An ANT build file for JGraphT (use Ant 1.6.0 and above).
  * Before running this script, make sure that the libraries used by JGraphT are
  * found under ./lib directory. This script will create directories ./build 
  * and ./testbuild for generated classfiles. These can be removed at any time 
@@ -66,12 +67,25 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
+	<property name="latest.version.name"  value="0.5.2" />
+	
+    <!-- CVS tags and their respective version names -->
+    <property name="ver_0_5_2.name"       value="0.5.2" />
+
     <!-- Initialization. -->
-    <target name="init" description="Initializes required settings.">
-        <tstamp />
-        <echo>JAVA_HOME=${java.home}</echo>
-        <property name="project.name"     value="jgrapht" />
-        <property name="project.version"  value="0.5.2" />
+	<target name="init.local" unless="cvstag">
+        <property name="project.version"  value="${latest.version.name}-local" />
+        <property name="checkout.dir"     value="checkout" />
+	</target>
+	
+	<target name="init.cvs" if="cvstag">
+        <property name="project.version"  value="${cvstag}.name" />
+        <property name="checkout.dir"     value="${cvstag}" />
+	</target>
+
+    <target name="init" depends="init.local,init.cvs">
+        <echo level="info">JAVA_HOME=${java.home}</echo>
+    	<property name="project.name"     value="jgrapht" />
         <property name="project.prefix"   value="${project.name}-${project.version}" />
 
         <!-- Directories -->
@@ -106,7 +120,6 @@
         <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
         <property name="jalopy.settings"  value="${etc.dir}/jalopy-settings.xml"/>
 
-
         <!-- Classpath for building functional sources. -->
         <path id="build.classpath">
             <pathelement location="${junit.jar}"/>
@@ -129,7 +142,7 @@
     </target>
 
 
-    <!-- Compile the JGraphT classes -->
+    <!-- Compile the classes -->
     <target name="compile" depends="init"
                            description="Compiles the JGraphT source code.">
 
@@ -145,8 +158,8 @@
     </target>
 
 
-    <!-- Generate the JGraphT runtime jar -->
-    <target name="jar" depends="compile" description="Creates the runtime jar.">
+    <!-- Generate the runtime jar -->
+    <target name="jar" depends="compile">
         <jar jarfile="${project.jar}" basedir="${build.dir}">
             <manifest>
                 <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
@@ -172,6 +185,11 @@
     <!-- Run all JUnit tests -->
     <target name="test" depends="test.compile"
                         description="Builds and runs all JUnit tests.">
+        <echo level="info">
+If you get a junit task failure, you need to add the junit.jar to
+the classpath, possibly by copying it into the ANT_HOME/lib folder.
+See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
+        </echo>
         <junit printsummary="no" fork="yes" 
                            haltonerror="true" haltonfailure="true">
             <classpath refid="test.classpath"/>
@@ -248,9 +266,8 @@
     </target>
 
 
-    <!-- Creates the distribution directory of JGraphT -->
-    <!-- Helper target that is called from zip and targz targets -->
-	<target name="create.distribution">
+    <!-- Prepares a distribution directory of JGraphT -->
+	<target name="prepare.distribution" depends="jar,javadoc">
 	
         <!-- make a temporary distribution directory -->
         <mkdir dir="${distrib.dir}" />
@@ -310,11 +327,8 @@
     </target>
 	
 
-    <!-- Make .zip distribution for JGraphT -->
-    <target name="zip" depends="jar"
-    				   description="Creates a .zip distribution.">
-
-		<antcall target="create.distribution" />
+    <!-- Packages a .zip distribution for JGraphT -->
+    <target name="zip" depends="prepare.distribution">
 
         <!-- convert end-of-line characters in text files to PC style -->
         <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
@@ -325,18 +339,12 @@
         <zip zipfile="${project.zip}">
              <zipfileset dir="${distrib.dir}" prefix="${project.prefix}" />
         </zip>
-
-        <!-- delete the temporary distribution directory -->
-        <delete dir="${distrib.dir}" />
     </target>
 
 
-    <!-- Make .tar.gz distribution for JGraphT -->
-    <target name="targz" depends="jar"
-                         description="Creates a tar.gz distribution.">
+    <!-- Packages a .tar.gz distribution for JGraphT -->
+    <target name="targz" depends="prepare.distribution">
 
-		<antcall target="create.distribution" />
-        
         <!-- convert end-of-line characters in text files to Unix style -->
         <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
@@ -348,9 +356,6 @@
         </tar>
         <gzip zipfile="${project.tar.gz}" src="${project.tar}" />
         <delete file="${project.tar}" />
-
-        <!-- delete the temporary distribution directory -->
-        <delete dir="${distrib.dir}" />
     </target>
     
 
@@ -367,19 +372,16 @@
 	</target>
 
 
-	<!-- Clean unnecessary outputs from this build -->    
-	<target name="postclean" depends="init"
-			description="Cleans unnecessary outputs from this build">
+    <!-- ALL -->
+    <target name="all" depends="clean,compile,test,zip,targz"
+            description="Cleans, compiles, tests and creates distribution files (.zip and .tar.gz).">
+            
+		<!-- Clean unnecessary outputs from this build -->    
+        <delete dir="${distrib.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
-	</target>
-
-
-    <!-- ALL -->
-    <target name="all" 
-            depends="clean,compile,test,javadoc,zip,targz,postclean"
-            description="Cleans, compiles and tests JGraphT, builds the jar, generates Javadocs and creates distribution files (.zip and .tar.gz).">
     </target>
+
 
     <!-- generate Emacs tags -->
     <fileset dir="${basedir}" id="fileset.taggable">
@@ -391,7 +393,7 @@
             description="Generates TAGS file for Emacs">
         <property name="file.taggable.tmp" 
             location="${basedir}/taggedfiles"/>
-        <antcall target="tags.find_taggable_files"/>
+        <antcall target="etags.find_taggable_files"/>
         <exec dir="${basedir}" executable="ctags">
             <arg line="-e"/>
             <arg line="-L taggedfiles"/>
@@ -399,8 +401,8 @@
         <delete file="${file.taggable.tmp}" quiet="true"/>
     </target>
 
-    <!-- Helper for etags target -->
-    <target name="tags.find_taggable_files">
+    <!-- Internal helper for etags target -->
+    <target name="etags.find_taggable_files">
         <concat destfile="${file.taggable.tmp}">replaceme</concat>
         <pathconvert property="files.taggable" 
           pathsep="${line.separator}"
@@ -412,5 +414,46 @@
         <fixcrlf srcDir="${basedir}" includes="taggedfiles"
           eol="lf" eof="remove" />
     </target>
+
+
+	<!-- Creates a release according to a user-defined CVS tag -->
+	<target name="release" depends="init,checkout,cvstag.missing" if="cvstag"
+	        description="Checks out and builds a release according to a CVS tag">
+	        
+	    <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
+
+        <ant dir="${checkout.dir}" antfile="${build.file.name}" 
+             target="all" inheritall="false" inheritrefs="false">
+        	<property name="cvstag" value="${cvstag}"/>
+        </ant>
+	</target>
+
+
+	<!-- Checks out a snapshot according to a user-defined CVS tag -->
+	<target name="checkout" depends="init,cvstag.missing" if="cvstag"
+	        description="Checks out a snapshot from CVS according to a tag">
+	    <echo level="info">Checking out files of CVS tag: ${cvstag}</echo>
+	    
+        <property name="project.cvsroot" 
+                  value=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/jgrapht" />
+		<property name="cvspass" value=".cvspass" />
+
+        <delete dir="${checkout.dir}" />
+		<mkdir  dir="${checkout.dir}" />
+
+		<echo file="${cvspass}" append="false">${project.cvsroot} A
+        </echo>
+
+        <cvs command="checkout" cvsroot="${project.cvsroot}" package="."
+             tag="${cvstag}" dest="${checkout.dir}" passfile="${cvspass}" />
+       
+        <delete file="${cvspass}" />      
+	</target>
+
+
+	<!-- Outputs an error message if CVS tag is unspecified -->
+	<target name="cvstag.missing" unless="cvstag">
+		<echo level="error">Variable $${cvstag} must be specified for selected target.</echo>
+	</target>
 
 </project>
