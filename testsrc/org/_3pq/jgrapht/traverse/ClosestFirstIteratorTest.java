@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ---------------------------
+/* -----------------------------
  * ClosestFirstIteratorTest.java
- * ---------------------------
+ * -----------------------------
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 03-Sept-2003 : Initial revision (JVS);
+ * 03-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -45,7 +45,7 @@ import org._3pq.jgrapht.DirectedGraph;
  *
  * @author John V. Sichi
  *
- * @since Sept 3, 2003
+ * @since Sep 3, 2003
  */
 public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest {
     // NOTE:  the edge weights make the result deterministic
