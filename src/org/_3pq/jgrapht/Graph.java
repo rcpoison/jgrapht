@@ -126,9 +126,9 @@ public interface Graph {
     /**
      * Adds all of the specified edges to this graph. The behavior of this
      * operation is undefined if the specified vertex collection is modified
-     * while the operation is in progress. This method will generally invoke
-     * the {@link #addEdge(Edge)} method, which has a warning. It is
-     * recommended that you read and understand that warning.
+     * while the operation is in progress. This method will invoke the {@link
+     * #addEdge(Edge)} method, which has a warning. It is recommended that you
+     * read and understand that warning.
      *
      * @param edges the edges to be added to this graph.
      *
@@ -146,7 +146,8 @@ public interface Graph {
     /**
      * Adds all of the specified vertices to this graph. The behavior of this
      * operation is undefined if the specified vertex collection is modified
-     * while the operation is in progress.
+     * while the operation is in progress. This method will invoke the {@link
+     * #addVertex(Object)} method.
      *
      * @param vertices the vertices to be added to this graph.
      *
@@ -339,7 +340,8 @@ public interface Graph {
     /**
      * Removes all the edges in this graph that are also contained in the
      * specified edge collection.  After this call returns, this graph will
-     * contain no edges in common with the specified edges.
+     * contain no edges in common with the specified edges. This method will
+     * invoke the {@link #removeEdge(Edge)} method.
      *
      * @param edges edges to be removed from this graph.
      *
@@ -359,7 +361,9 @@ public interface Graph {
      * specified target vertex, and returns a list of all removed edges.
      * Returns <code>null</code> if any of the specified vertices does exist
      * in the graph. If both vertices exist but no edge found, returns an
-     * empty list.
+     * empty list. This method will either invoke the {@link
+     * #removeEdge(Edge)} method, or the {@link #removeEdge(Object, Object)}
+     * method.
      *
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
@@ -372,7 +376,8 @@ public interface Graph {
     /**
      * Removes all the vertices in this graph that are also contained in the
      * specified vertex collection.  After this call returns, this graph will
-     * contain no vertices in common with the specified vertices.
+     * contain no vertices in common with the specified vertices. This method
+     * will invoke the {@link #removeVertex(Object)} method.
      *
      * @param vertices vertices to be removed from this graph.
      *
