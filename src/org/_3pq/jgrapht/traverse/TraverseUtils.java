@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -380,7 +380,7 @@ final class TraverseUtils {
          *
          * @return data associated when vertex was first seen
          */
-        protected Object getSeenData( Object vertex ) {
+        Object getSeenData( Object vertex ) {
             return m_seen.get( vertex );
         }
 
@@ -392,7 +392,7 @@ final class TraverseUtils {
          * @param vertex the vertex re-encountered
          * @param edge the edge via which the vertex was re-encountered
          */
-        protected void encounterVertexAgain( Object vertex, Edge edge ) {}
+        void encounterVertexAgain( Object vertex, Edge edge ) {}
 
 
         /**
@@ -405,7 +405,7 @@ final class TraverseUtils {
          *
          * @return the data to associate with this vertex
          */
-        protected Object newSeenData( Object vertex, Edge edge ) {
+        Object newSeenData( Object vertex, Edge edge ) {
             return vertex;
         }
 
