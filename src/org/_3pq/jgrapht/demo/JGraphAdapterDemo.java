@@ -53,7 +53,7 @@ import com.jgraph.graph.GraphConstants;
 
 import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.jgraph.JGraphModelAdapter;
+import org._3pq.jgrapht.ext.JGraphModelAdapter;
 
 /**
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
