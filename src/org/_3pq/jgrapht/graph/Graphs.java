@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 31-Jul-2003 : Initial revision (BN);
+ * 31-Jul-2003 : Refactored out from GraphFactory (LR + BN);
  *
  */
 package org._3pq.jgrapht.graph;
