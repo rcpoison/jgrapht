@@ -5,8 +5,8 @@
             <version>14</version>
         </compliance>
         <style>
-            <description>Sun Java Coding Convention</description>
-            <name>Sun</name>
+            <description>JGraphT Coding Convention</description>
+            <name>JGraphT</name>
         </style>
     </general>
     <inspector>
@@ -228,7 +228,7 @@
             <use>false</use>
         </footer>
         <header>
-            <keys>(C)</keys>
+            <keys>(C) Copyright</keys>
             <smartMode>0</smartMode>
             <text>/* ==========================================| * JGraphT : a free Java graph-theory library| * ==========================================| *| * Project Info:  http://jgrapht.sourceforge.net/| * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)| *| * (C) Copyright 2003-2004, by Barak Naveh and Contributors.| *| * This library is free software; you can redistribute it and/or modify it| * under the terms of the GNU Lesser General Public License as published by| * the Free Software Foundation; either version 2.1 of the License, or| * (at your option) any later version.| *| * This library is distributed in the hope that it will be useful, but| * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY| * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public| * License for more details.| *| * You should have received a copy of the GNU Lesser General Public License| * along with this library; if not, write to the Free Software Foundation, Inc.,| * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.| */</text>
             <use>true</use>
