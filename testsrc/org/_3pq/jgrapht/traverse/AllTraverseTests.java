@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -62,8 +62,6 @@ public final class AllTraverseTests {
         suite.addTest( new TestSuite( DepthFirstIteratorTest.class ) );
         suite.addTest( new TestSuite( ClosestFirstIteratorTest.class ) );
         suite.addTest( new TestSuite( IgnoreDirectionTest.class ) );
-        suite.addTest( new TestSuite( SimpleQueueTest.class ) );
-        suite.addTest( new TestSuite( SimpleStackTest.class ) );
 
         //$JUnit-END$
         return suite;
