@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -51,8 +51,12 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
 public class WeightedMultigraph extends Multigraph implements WeightedGraph {
+    private static final long serialVersionUID = 3544671793370640696L;
+
     /**
-     * @see AbstractBaseGraph
+     * Creates a new weighted multigraph with the specified edge factory.
+     *
+     * @param ef the edge factory of the new graph.
      */
     public WeightedMultigraph( EdgeFactory ef ) {
         super( ef );
@@ -60,7 +64,7 @@ public class WeightedMultigraph extends Multigraph implements WeightedGraph {
 
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new weighted multigraph.
      */
     public WeightedMultigraph(  ) {
         this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -47,8 +47,12 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * which edges are assigned weights.
  */
 public class SimpleWeightedGraph extends SimpleGraph implements WeightedGraph {
+    private static final long serialVersionUID = 3906088949100655922L;
+
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple weighted graph with the specified edge factory.
+     *
+     * @param ef the edge factory of the new graph.
      */
     public SimpleWeightedGraph( EdgeFactory ef ) {
         super( ef );
@@ -56,7 +60,7 @@ public class SimpleWeightedGraph extends SimpleGraph implements WeightedGraph {
 
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple weighted graph.
      */
     public SimpleWeightedGraph(  ) {
         this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -47,8 +47,14 @@ import org._3pq.jgrapht.UndirectedGraph;
  */
 public class UnmodifiableUndirectedGraph extends UnmodifiableGraph
     implements UndirectedGraph {
+    private static final long serialVersionUID = 3258134639355704624L;
+
     /**
-     * @see UnmodifiableGraph#UnmodifiableGraph(Graph)
+     * Creates a new unmodifiable undirected graph based on the specified
+     * backing graph.
+     *
+     * @param g the backing graph on which an unmodifiable graph is to be
+     *        created.
      */
     public UnmodifiableUndirectedGraph( UndirectedGraph g ) {
         super( g );

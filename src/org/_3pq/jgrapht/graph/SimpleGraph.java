@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -50,8 +50,12 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * http://mathworld.wolfram.com/SimpleGraph.html</a>.
  */
 public class SimpleGraph extends AbstractBaseGraph implements UndirectedGraph {
+    private static final long serialVersionUID = 3545796589454112304L;
+
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple graph with the specified edge factory.
+     *
+     * @param ef the edge factory of the new graph.
      */
     public SimpleGraph( EdgeFactory ef ) {
         super( ef, false, false );
@@ -59,7 +63,7 @@ public class SimpleGraph extends AbstractBaseGraph implements UndirectedGraph {
 
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple graph.
      */
     public SimpleGraph(  ) {
         this( new EdgeFactories.UndirectedEdgeFactory(  ) );

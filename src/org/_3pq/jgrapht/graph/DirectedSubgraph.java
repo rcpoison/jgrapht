@@ -48,8 +48,18 @@ import org._3pq.jgrapht.DirectedGraph;
  * @see Subgraph
  */
 public class DirectedSubgraph extends Subgraph implements DirectedGraph {
+    private static final long serialVersionUID = 3616445700507054133L;
+
     /**
-     * @see Subgraph#Subgraph(Graph, Set, Set)
+     * Creates a new directed subgraph.
+     *
+     * @param base the base (backing) graph on which the subgraph will be
+     *        based.
+     * @param vertexSubset vertices to include in the subgraph. If
+     *        <code>null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If
+     *        <code>null</code> then all the edges whose vertices found in the
+     *        graph are included.
      */
     public DirectedSubgraph( DirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {
