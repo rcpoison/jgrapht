@@ -56,7 +56,7 @@ public class DefaultDirectedGraph extends AbstractBaseGraph
     private static final long serialVersionUID = 3544953246956466230L;
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new directed graph.
      */
     public DefaultDirectedGraph(  ) {
         this( new EdgeFactories.DirectedEdgeFactory(  ) );

@@ -50,9 +50,11 @@ public class SimpleDirectedWeightedGraph extends SimpleDirectedGraph
     implements WeightedGraph {
     private static final long serialVersionUID = 3904960841681220919L;
 
-
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple directed weighted graph with the specified edge
+     * factory.
+     *
+     * @param ef the edge factory of the new graph.
      */
     public SimpleDirectedWeightedGraph( EdgeFactory ef ) {
         super( ef );
@@ -60,7 +62,7 @@ public class SimpleDirectedWeightedGraph extends SimpleDirectedGraph
 
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple directed weighted graph.
      */
     public SimpleDirectedWeightedGraph(  ) {
         this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
