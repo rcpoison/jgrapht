@@ -124,13 +124,11 @@ public interface Graph {
 
 
     /**
-     * Adds all of the specified edges to this graph - please read on carefully
-     * and USE WITH CARE!. The behavior of this operation is undefined if the
-     * specified vertex collection is modified while the operation is in
-     * progress. This method will generally invoke the {@link #addEdge(Edge)}
-     * method, which carries a warning. Please see that warning and make sure
-     * you understand it well before you use. If in doubt, don't use this
-     * method.
+     * Adds all of the specified edges to this graph. The behavior of this
+     * operation is undefined if the specified vertex collection is modified
+     * while the operation is in progress. This method will generally invoke
+     * the {@link #addEdge(Edge)} method, which has a warning. It is
+     * recommended that you read and understand that warning.
      *
      * @param edges the edges to be added to this graph.
      *
@@ -204,12 +202,13 @@ public interface Graph {
 
 
     /**
-     * Adds the specified edge to this graph - please read on carefully and USE
-     * WITH CARE!. More formally, adds the specified edge, <code>e</code>, to
-     * this graph if this graph contains no edge <code>e2</code> such that
-     * <code>e2.equals(e)</code>. If this graph already contains such edge,
-     * the call leaves this graph unchanged and returns <tt>false</tt>. If the
-     * edge was added to the graph, returns <code>true</code>.
+     * Adds the specified edge to this graph (prefer using {@link
+     * #addEdge(Object, Object)}). More formally, adds the specified edge,
+     * <code>e</code>, to this graph if this graph contains no edge
+     * <code>e2</code> such that <code>e2.equals(e)</code>. If this graph
+     * already contains such edge, the call leaves this graph unchanged and
+     * returns <tt>false</tt>. If the edge was added to the graph, returns
+     * <code>true</code>.
      * 
      * <p>
      * Some graphs do not allow edge-multiplicity. In such cases, if the graph
@@ -227,12 +226,11 @@ public interface Graph {
      * </p>
      * 
      * <p>
-     * Using this method is generally NOT RECOMMENDED - if in doubt don't use.
-     * It allows trickery such as adding the same edge instance into two
-     * graphs. Changing a property of the edge, such as weight, in one graph
-     * will be reflected in the other graph. Such behavior is generally
-     * <i>not</i> desired for edges (although it <i>is</i> desired for
-     * vertices).
+     * USE WITH CARE: This method allows trickery such as adding the same edge
+     * instance into two graphs. Changing a property of the edge, such as
+     * weight, in one graph will be reflected in the other graph. Such
+     * behavior is generally <i>not</i> desired for edges. A safe alternative
+     * would be to use {@link #addEdge(Object, Object)} instead.
      * </p>
      *
      * @param e edge to be added to this graph.
@@ -336,43 +334,6 @@ public interface Graph {
      * @return a list of all edges touching the specified vertex.
      */
     public List edgesOf( Object vertex );
-
-
-    /**
-     * Compares the specified object with this graph object for equality.
-     * 
-     * <p>
-     * In general, two graphs are equal if they are of the same class and their
-     * vertex set and edge set are equal respectively. Thus, it is NOT CHEAP
-     * to have "value comparison" in place of the default <tt>Object</tt>'s
-     * "reference comparison". Any class that overrides the
-     * <tt>Object.equals</tt> method must also override the
-     * <tt>Object.hashCode</tt> method in order to satisfy the general
-     * contract for the <tt>Object.hashCode</tt>method. In particular,
-     * <tt>o1.equals(o2)</tt> must imply
-     * <tt>o1.hashCode()==o2.hashCode()</tt>. This results in a
-     * <tt>hashCode()</tt> method that is also NON-CHEAP, which, in turn,
-     * makes it inefficient to aggregate graphs into <tt>Set</tt>s,
-     * <tt>List</tt>s, <tt>HashMap</tt>s, etc.
-     * </p>
-     * 
-     * <p>
-     * The simplest and perhaps the better course of action is to rely on
-     * <tt>Object.equals</tt> and to write a local code for graph comparison
-     * if such is needed.  Programmers who wish, in spite of the above, to
-     * override the <tt>Object.equals</tt> should exercise care and be aware
-     * of the performance consequences.
-     * </p>
-     *
-     * @see Object#equals(java.lang.Object)
-     */
-    public boolean equals( Object o );
-
-
-    /**
-     * @see #equals(Object)
-     */
-    public int hashCode(  );
 
 
     /**
