@@ -43,6 +43,12 @@ import org._3pq.jgrapht.Graph;
 
 /**
  * Tests for the {@link BreadthFirstIterator} class.
+ * 
+ * <p>
+ * NOTE: This test uses hard-coded expected ordering isn't really guaranteed by
+ * the specification of the algorithm. This could cause false faliurs if the
+ * traversal implementation changes.
+ * </p>
  *
  * @author Liviu Rau
  *
