@@ -440,6 +440,16 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
 
 
     /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString(  ) {
+        // TODO: write a real javadoc
+        return "(" + vertexSet(  ).toString(  ) + ", "
+        + edgeSet(  ).toString(  ) + ")";
+    }
+
+
+    /**
      * @see Graph#vertexSet()
      */
     public Set vertexSet(  ) {
@@ -452,20 +462,20 @@ public abstract class DefaultGraph extends AbstractGraph implements Graph,
     }
 
 
+    private void addAllEdgeClones( Set edgeSet ) {
+        for( Iterator iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
+            Edge e = (Edge) iter.next(  );
+            addEdge( (Edge) e.clone(  ) );
+        }
+    }
+
+
     private void assertCompatibleWithEdgeFactory( Edge e ) {
         if( e == null ) {
             throw new NullPointerException(  );
         }
         else if( !m_factoryEdgeClass.isInstance( e ) ) {
             throw new ClassCastException( "incompatible edge class" );
-        }
-    }
-
-
-    private void addAllEdgeClones( Set edgeSet ) {
-        for( Iterator iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
-            addEdge( (Edge) e.clone(  ) );
         }
     }
 
