@@ -62,14 +62,13 @@ import org._3pq.jgrapht.WeightedGraph;
  * </p>
  *
  * @author Barak Naveh
- * @version 1.0
  *
  * @see GraphListener
  * @see VertexSetListener
  * @since Jul 20, 2003
  */
 public class DefaultListenableGraph extends GraphDelegator
-    implements ListenableGraph {
+    implements ListenableGraph, Cloneable {
     private ArrayList m_graphListeners     = new ArrayList(  );
     private ArrayList m_vertexSetListeners = new ArrayList(  );
 
@@ -78,10 +77,18 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param g the backing graph.
      *
+     * @throws IllegalArgumentException
+     *
      * @see DefaultListenableGraph
      */
     public DefaultListenableGraph( Graph g ) {
         super( g );
+
+        // the following restriction could be relaxed in the future.
+        if( g instanceof ListenableGraph ) {
+            throw new IllegalArgumentException( 
+                "base graph cannot be listenable" );
+        }
     }
 
     /**
@@ -158,6 +165,25 @@ public class DefaultListenableGraph extends GraphDelegator
     public void addVertexSetListener( VertexSetListener l ) {
         if( !m_vertexSetListeners.contains( l ) ) {
             m_vertexSetListeners.add( l );
+        }
+    }
+
+
+    /**
+     * @see java.lang.Object#clone()
+     */
+    public Object clone(  ) {
+        try {
+            DefaultListenableGraph g = (DefaultListenableGraph) super.clone(  );
+            g.m_graphListeners         = (ArrayList) m_graphListeners.clone(  );
+            g.m_vertexSetListeners     = (ArrayList) m_vertexSetListeners.clone(  );
+
+            return g;
+        }
+         catch( CloneNotSupportedException e ) {
+            // should never get here since we're Cloneable
+            e.printStackTrace(  );
+            throw new RuntimeException( "internal error" );
         }
     }
 
