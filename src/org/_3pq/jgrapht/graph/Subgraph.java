@@ -47,15 +47,11 @@ import java.util.List;
 import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.DirectedWeightedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.UndirectedWeightedGraph;
 import org._3pq.jgrapht.WeightedElement;
 
 /**
@@ -128,7 +124,7 @@ public class Subgraph extends AbstractGraph {
     private boolean         m_verifyIntegrity       = true;
 
     /**
-     * Constructor for Subgraph.
+     * Creates a new Subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be
      *        based.
@@ -138,56 +134,8 @@ public class Subgraph extends AbstractGraph {
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public Subgraph( Graph base, Set vertexSubset, Set edgeSubset ) {
-        this( GraphFactory.getFactory(  ).createListenableGraph( base ),
-            vertexSubset, edgeSubset, 0 );
-    }
-
-
-    /**
-     * @see #Subgraph(Graph, Set, Set)
-     */
-    public Subgraph( DirectedGraph base, Set vertexSubset, Set edgeSubset ) {
-        this( GraphFactory.getFactory(  ).createListenableGraph( base ),
-            vertexSubset, edgeSubset, 0 );
-    }
-
-
-    /**
-     * @see #Subgraph(Graph, Set, Set)
-     */
-    public Subgraph( DirectedWeightedGraph base, Set vertexSubset,
-        Set edgeSubset ) {
-        this( GraphFactory.getFactory(  ).createListenableGraph( base ),
-            vertexSubset, edgeSubset, 0 );
-    }
-
-
-    /**
-     * @see #Subgraph(Graph, Set, Set)
-     */
-    public Subgraph( UndirectedGraph base, Set vertexSubset, Set edgeSubset ) {
-        this( GraphFactory.getFactory(  ).createListenableGraph( base ),
-            vertexSubset, edgeSubset, 0 );
-    }
-
-
-    /**
-     * @see #Subgraph(Graph, Set, Set)
-     */
-    public Subgraph( UndirectedWeightedGraph base, Set vertexSubset,
-        Set edgeSubset ) {
-        this( GraphFactory.getFactory(  ).createListenableGraph( base ),
-            vertexSubset, edgeSubset, 0 );
-    }
-
-
-    /**
-     * @see #Subgraph(Graph, Set, Set)
-     */
-    Subgraph( ListenableGraph base, Set vertexSubset, Set edgeSubset, int dummy ) {
-        // dummy is to distinguish this constructor.
-        if( dummy == 1 ) {} // avoid compiler complaint on unused param.
+    public Subgraph( ListenableGraph base, Set vertexSubset, Set edgeSubset ) {
+        super(  );
 
         m_base = base;
         m_base.addGraphListener( new BaseGraphListener(  ) );

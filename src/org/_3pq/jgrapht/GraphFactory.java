@@ -68,8 +68,10 @@ import org._3pq.jgrapht.graph.UnmodifiableGraph;
  * @since Jul 19, 2003
  */
 public abstract class GraphFactory {
+    private static final String BASE_GRAPH_MUST_BE_LISTENABLE =
+        "base graph must be listenable";
     private static GraphFactory s_factory = null;
-    private EdgeFactoryFactory  m_eff = new EdgeFactoryFactory(  );
+    private EdgeFactoryFactory  m_eff     = new EdgeFactoryFactory(  );
 
     /**
      * Returns the factory that produces the edge-factories for all the graphs
@@ -366,7 +368,8 @@ public abstract class GraphFactory {
      *
      * @see Subgraph
      */
-    public Graph createSubgraph( Graph base, Set vertexSubset, Set edgeSubset ) {
+    public Graph createSubgraph( ListenableGraph base, Set vertexSubset,
+        Set edgeSubset ) {
         return new Subgraph( base, vertexSubset, edgeSubset );
     }
 
@@ -376,7 +379,12 @@ public abstract class GraphFactory {
      */
     public DirectedGraph createSubgraph( DirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {
-        return new SubgraphDirected( base, vertexSubset, edgeSubset );
+        if( base instanceof ListenableGraph ) {
+            return new SubgraphDirected( base, vertexSubset, edgeSubset );
+        }
+        else {
+            throw new IllegalArgumentException( BASE_GRAPH_MUST_BE_LISTENABLE );
+        }
     }
 
 
@@ -385,7 +393,12 @@ public abstract class GraphFactory {
      */
     public DirectedWeightedGraph createSubgraph( DirectedWeightedGraph base,
         Set vertexSubset, Set edgeSubset ) {
-        return new SubgraphDirectedWeighted( base, vertexSubset, edgeSubset );
+        if( base instanceof ListenableGraph ) {
+            return new SubgraphDirectedWeighted( base, vertexSubset, edgeSubset );
+        }
+        else {
+            throw new IllegalArgumentException( BASE_GRAPH_MUST_BE_LISTENABLE );
+        }
     }
 
 
@@ -394,7 +407,12 @@ public abstract class GraphFactory {
      */
     public UndirectedGraph createSubgraph( UndirectedGraph base,
         Set vertexSubset, Set edgeSubset ) {
-        return new SubgraphUndirected( base, vertexSubset, edgeSubset );
+        if( base instanceof ListenableGraph ) {
+            return new SubgraphUndirected( base, vertexSubset, edgeSubset );
+        }
+        else {
+            throw new IllegalArgumentException( BASE_GRAPH_MUST_BE_LISTENABLE );
+        }
     }
 
 
@@ -403,7 +421,13 @@ public abstract class GraphFactory {
      */
     public UndirectedWeightedGraph createSubgraph( 
         UndirectedWeightedGraph base, Set vertexSubset, Set edgeSubset ) {
-        return new SubgraphUndirectedWeighted( base, vertexSubset, edgeSubset );
+        if( base instanceof ListenableGraph ) {
+            return new SubgraphUndirectedWeighted( base, vertexSubset,
+                edgeSubset );
+        }
+        else {
+            throw new IllegalArgumentException( BASE_GRAPH_MUST_BE_LISTENABLE );
+        }
     }
 
 
@@ -661,7 +685,7 @@ public abstract class GraphFactory {
          */
         public SubgraphDirected( DirectedGraph base, Set vertexSubset,
             Set edgeSubset ) {
-            super( base, vertexSubset, edgeSubset );
+            super( (ListenableGraph) base, vertexSubset, edgeSubset );
         }
     }
 
@@ -685,7 +709,7 @@ public abstract class GraphFactory {
          */
         public SubgraphUndirected( UndirectedGraph base, Set vertexSubset,
             Set edgeSubset ) {
-            super( base, vertexSubset, edgeSubset );
+            super( (ListenableGraph) base, vertexSubset, edgeSubset );
         }
     }
 
