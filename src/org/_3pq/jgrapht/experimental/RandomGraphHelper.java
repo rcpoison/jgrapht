@@ -36,7 +36,8 @@
  * 13-Sep-2004 : Initial revision (MB);
  *
  */
-package org._3pq.jgrapht.generate;
+// package org._3pq.jgrapht.generate;
+package org._3pq.jgrapht.experimental;
 
 import java.util.List;
 import java.util.Random;

@@ -36,13 +36,15 @@
  * 13-Sep-2004 : Initial revision (MB);
  *
  */
-package org._3pq.jgrapht.generate;
+// package org._3pq.jgrapht.generate;
+package org._3pq.jgrapht.experimental;
 
 import java.util.Arrays;
 import java.util.Map;
 
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.generate.GraphGenerator;
 
 /**
  * PartiteRandomGraphGenerator generates a <a
