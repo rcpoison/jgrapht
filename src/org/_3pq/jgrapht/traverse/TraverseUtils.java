@@ -56,13 +56,13 @@ import org._3pq.jgrapht.event.EdgeTraversalEvent;
 import org._3pq.jgrapht.event.VertexTraversalEvent;
 
 /**
- * A collection of utilities used for implementing algorithms.
+ * A collection of utilities used for implementing traversal algorithms.
  *
  * @author Barak Naveh
  *
  * @since Jul 31, 2003
  */
-public final class TraverseUtils {
+final class TraverseUtils {
     private TraverseUtils(  ) {} // ensure non-instantiability.
 
     static Specifics createGraphSpecifics( Graph g ) {
