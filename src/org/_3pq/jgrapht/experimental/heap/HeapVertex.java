@@ -25,7 +25,8 @@ package org._3pq.jgrapht.experimental.heap;
 
 /**
  * .
- * @author  Barak Naveh
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
 public class HeapVertex implements HeapElement, Comparable {
@@ -45,7 +46,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * Creates a new HeapVertex object.
      *
-     * @param vertex  
+     * @param vertex
      */
     public HeapVertex( Object vertex ) {
         _vertex = vertex;
@@ -54,7 +55,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @param add  
+     * @param add
      */
     public void setAdditional( Object add ) {
         _additional = add;
@@ -64,7 +65,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @return  
+     * @return
      */
     public Object getAdditional(  ) {
         return _additional;
@@ -74,7 +75,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @param peer  
+     * @param peer
      */
     public void setPeer( ElementPeer peer ) {
         _p = peer;
@@ -84,7 +85,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @return  
+     * @return
      */
     public ElementPeer getPeer(  ) {
         return _p;
@@ -94,7 +95,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @param prio  
+     * @param prio
      */
     public void setPriority( double prio ) {
         _priority = prio;
@@ -104,7 +105,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @return  
+     * @return
      */
     public double getPriority(  ) {
         return _priority;
@@ -114,7 +115,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @return  
+     * @return
      */
     public Object getVertex(  ) {
         return _vertex;
@@ -124,9 +125,9 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @param o  
+     * @param o
      *
-     * @return  
+     * @return
      */
     public int compareTo( Object o ) {
         HeapVertex other = (HeapVertex) o;
@@ -146,7 +147,7 @@ public class HeapVertex implements HeapElement, Comparable {
     /**
      * .
      *
-     * @return  
+     * @return
      */
     public String toString(  ) {
         if( _vertex != this ) {
