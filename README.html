@@ -39,6 +39,7 @@
  * 28-Jul-2003 : Initial revision (BN);
  * 05-Aug-2003 : Version 0.4.1 notes (BN);
  * 14-Aug-2003 : Version 0.5.0 notes (BN);
+ * 27-Aug-2003 : Upgrading versions (BN);
  *
  */
 -->
@@ -218,6 +219,28 @@ can use it, please send it to me and I will add it to that package. </p>
 
 
 
+<h2>Upgrading Versions</h2>
+<p>
+To help upgrading, JGraphT maintains a one-version-backwards 
+compatibility. While this property is not promised, it generally holds. You 
+can upgrade via:</p>
+
+<ul>
+  <li>
+<p><b>The safe way</b> : compile your app with the JGraphT version that immediately 
+follows your existing version and follow the deprecation notes, if exist. Then 
+move to the next version, and on, until you're current. </p>
+  </li>
+  
+  <li>
+<p><b>The fast way</b> : go to the latest JGraphT right away - if it works, you're 
+done.</p>
+  </li>
+</ul>
+
+
+
+
 <h2>Documentation</h2>
 <p>A local copy of the Javadoc HTML files is included in this distribution.
 The latest version of these files is also available on-line at
@@ -316,7 +339,7 @@ hierarchy and added more unit-tests.</li>
 
 
 <h2>Contributors</h2>
-<p>Many thanks to the developers
+<p>Many thanks to developers
 <a href="http://sourceforge.net/users/perfecthash/">John V Sichi</a> and
 <a href="http://sourceforge.net/users/liviu_aurelian/">Liviu Rau</a> that have 
 made important contributions to JGraphT.</p>
