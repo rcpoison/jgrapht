@@ -39,7 +39,6 @@ package org._3pq.jgrapht.demo;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.HeadlessException;
 import java.awt.Rectangle;
 
 import java.util.HashMap;
@@ -52,7 +51,6 @@ import com.jgraph.JGraph;
 import com.jgraph.graph.DefaultGraphCell;
 import com.jgraph.graph.GraphConstants;
 
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.GraphFactory;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.jgraph.JGraphModelAdapter;
@@ -65,40 +63,31 @@ import org._3pq.jgrapht.jgraph.JGraphModelAdapter;
  * @since Aug 3, 2003
  */
 public class JGraphAdapterDemo extends JApplet {
-    private static final Color     BG_COLOR = Color.decode( "#FAFBFF" );
-    private static final Dimension SIZE = new Dimension( 530, 320 );
+    private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
+    private static final Dimension DEFAULT_SIZE = new Dimension( 530, 320 );
 
-    //
-    private JGraphModelAdapter m_jGraphModel;
-    private ListenableGraph    m_graph;
-
-    /**
-     * Constructor for VisualizationDemo.
-     *
-     * @throws HeadlessException
-     */
-    public JGraphAdapterDemo(  ) throws HeadlessException {
-        super(  );
-
-        GraphFactory gf = GraphFactory.getFactory(  );
-        m_graph           = gf.createListenableGraph( gf.createDirectedGraph(  ) );
-        m_jGraphModel     = new JGraphModelAdapter( m_graph );
-
-        JGraph jgraph     = new JGraph( m_jGraphModel );
-
-        jgraph.setBackground( BG_COLOR );
-        jgraph.setPreferredSize( SIZE );
-        getContentPane(  ).add( jgraph );
-    }
+    // 
+    private JGraphModelAdapter m_jgAdapter;
 
     /**
      * @see java.applet.Applet#init().
      */
     public void init(  ) {
-        resize( SIZE );
+        // create a JGraphT graph
+        GraphFactory    gf = GraphFactory.getFactory(  );
+        ListenableGraph g =
+            gf.createListenableGraph( gf.createDirectedGraph(  ) );
 
-        // add some sample data
-        Graph g = m_graph;
+        // create a visualization using JGraph, via an adapter
+        m_jgAdapter = new JGraphModelAdapter( g );
+
+        JGraph jgraph = new JGraph( m_jgAdapter );
+
+        adjustDisplaySettings( jgraph );
+        getContentPane(  ).add( jgraph );
+        resize( DEFAULT_SIZE );
+
+        // add some sample data (graph manipulated via JGraphT)
         g.addVertex( "v1" );
         g.addVertex( "v2" );
         g.addVertex( "v3" );
@@ -109,17 +98,19 @@ public class JGraphAdapterDemo extends JApplet {
         g.addEdge( "v3", "v1" );
         g.addEdge( "v4", "v3" );
 
-        // position the vertices
+        // position vertices nicely within JGraph component
         positionVertexAt( "v1", 130, 40 );
         positionVertexAt( "v2", 60, 200 );
         positionVertexAt( "v3", 310, 230 );
         positionVertexAt( "v4", 380, 70 );
+
+        // that's all there is to it!...
     }
 
 
     /**
-     * An alternative starting point for the demo (other than the Applet
-     * starting point).
+     * An alternative starting point for this demo, to also allow running this
+     * applet as an application.
      *
      * @param args ignored.
      */
@@ -136,8 +127,27 @@ public class JGraphAdapterDemo extends JApplet {
     }
 
 
+    private void adjustDisplaySettings( JGraph jg ) {
+        jg.setPreferredSize( DEFAULT_SIZE );
+
+        Color  c        = DEFAULT_BG_COLOR;
+        String colorStr = null;
+
+        try {
+            colorStr = getParameter( "bgcolor" );
+        }
+         catch( Exception e ) {}
+
+        if( colorStr != null ) {
+            c = Color.decode( colorStr );
+        }
+
+        jg.setBackground( c );
+    }
+
+
     private void positionVertexAt( Object vertex, int x, int y ) {
-        DefaultGraphCell cell = m_jGraphModel.getVertexCell( vertex );
+        DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );
         Map              attr = cell.getAttributes(  );
         Rectangle        b    = GraphConstants.getBounds( attr );
 
@@ -145,6 +155,6 @@ public class JGraphAdapterDemo extends JApplet {
 
         Map cellAttr = new HashMap(  );
         cellAttr.put( cell, attr );
-        m_jGraphModel.edit( cellAttr );
+        m_jgAdapter.edit( cellAttr );
     }
 }
