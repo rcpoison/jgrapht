@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -261,13 +261,24 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
-        boolean modified = super.removeVertex( v );
+        if( containsVertex( v ) ) {
+            List touchingEdgesList = edgesOf( v );
 
-        if( modified ) {
+            // cannot iterate over list - will cause ConcurrentModificationException
+            Edge[] touchingEdges = new Edge[ touchingEdgesList.size(  ) ];
+            touchingEdgesList.toArray( touchingEdges );
+
+            removeAllEdges( touchingEdges );
+
+            super.removeVertex( v ); // remove the vertex itself
+
             fireVertexRemoved( v );
+            
+            return true;
         }
-
-        return modified;
+        else {
+            return false;
+        }
     }
 
 
