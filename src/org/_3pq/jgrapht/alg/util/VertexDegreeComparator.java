@@ -38,10 +38,7 @@
  */
 package org._3pq.jgrapht.alg.util;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.graph.AsUndirectedGraph;
 
 /**
  * Compares two vertices based on their degree.
@@ -72,36 +69,23 @@ public class VertexDegreeComparator implements java.util.Comparator {
      *
      * @param g graph with respect to which the degree is calculated.
      */
-    public VertexDegreeComparator( Graph g ) {
+    public VertexDegreeComparator( UndirectedGraph g ) {
         this( g, true );
     }
 
 
     /**
      * Creates a comparator for comparing the degrees of vertices in the
-     * specified graph. If the specified graph is directed, the directions are
-     * ignored and the graph is regarded to as undirected.
+     * specified graph.
      *
      * @param g graph with respect to which the degree is calculated.
      * @param ascendingOrder true - compares in ascending order of degrees
      *        (lowest first), false - compares in descending order of degrees
      *        (highest first).
-     *
-     * @throws IllegalArgumentException if the graph is neigher instance of
-     *         DirectedGraph nor of UndirectedGraph.
      */
-    public VertexDegreeComparator( Graph g, boolean ascendingOrder ) {
-        if( g instanceof DirectedGraph ) {
-            m_graph = new AsUndirectedGraph( (DirectedGraph) g );
-        }
-        else if( g instanceof UndirectedGraph ) {
-            m_graph = (UndirectedGraph) g;
-        }
-        else {
-            throw new IllegalArgumentException( "Unrecognized graph" );
-        }
-
-        m_ascendingOrder = ascendingOrder;
+    public VertexDegreeComparator( UndirectedGraph g, boolean ascendingOrder ) {
+        m_graph              = g;
+        m_ascendingOrder     = ascendingOrder;
     }
 
     /**
