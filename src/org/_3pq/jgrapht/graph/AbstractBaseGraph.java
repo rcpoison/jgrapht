@@ -475,7 +475,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private abstract class Specifics {
+    private abstract class Specifics implements Serializable {
         /**
          * .
          *
