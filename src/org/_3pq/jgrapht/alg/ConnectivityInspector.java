@@ -46,16 +46,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org._3pq.jgrapht.event.TraversalListenerAdapter;
 import org._3pq.jgrapht.event.VertexTraversalEvent;
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 
 /**
@@ -101,6 +101,7 @@ public class ConnectivityInspector implements GraphListener {
         init(  );
         m_graph = g;
     }
+
 
     /**
      * Creates a connectivity inspector for the specified directed graph.

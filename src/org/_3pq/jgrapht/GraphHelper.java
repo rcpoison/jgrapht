@@ -98,8 +98,8 @@ public final class GraphHelper {
      * graph to the specified destination graph. First all vertices of the
      * source graph are added to the destination graph. Then every edge of the
      * source graph is cloned and the clone is added to the destination graph.
-     * This method returns <code>true</code> if the destination graph has
-     * been modified as a result of this operation, otherwise it returns
+     * This method returns <code>true</code> if the destination graph has been
+     * modified as a result of this operation, otherwise it returns
      * <code>false</code>.
      * 
      * <p>

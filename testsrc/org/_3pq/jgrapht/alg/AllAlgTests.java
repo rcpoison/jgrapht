@@ -41,7 +41,6 @@ package org._3pq.jgrapht.alg;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-
 /**
  * .
  *
@@ -58,7 +57,7 @@ public class AllAlgTests {
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
-        
+
         //$JUnit-END$
         return suite;
     }

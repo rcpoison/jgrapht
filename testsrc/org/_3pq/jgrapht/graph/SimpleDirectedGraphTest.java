@@ -54,11 +54,11 @@ import org._3pq.jgrapht.EnhancedTestCase;
  */
 public class SimpleDirectedGraphTest extends EnhancedTestCase {
     DirectedGraph         m_gEmpty;
-    private Edge  m_eLoop;
     private DirectedGraph m_g1;
     private DirectedGraph m_g2;
     private DirectedGraph m_g3;
     private DirectedGraph m_g4;
+    private Edge          m_eLoop;
     private EdgeFactory   m_eFactory;
     private String        m_v1 = "v1";
     private String        m_v2 = "v2";

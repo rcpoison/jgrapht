@@ -293,9 +293,8 @@ public final class TraverseUtils {
 
             m_pending     = pendingVerticesContainer;
 
-            m_specifics =
-                TraverseUtils.createGraphSpecifics( g );
-            m_vertexIterator = g.vertexSet(  ).iterator(  );
+            m_specifics          = TraverseUtils.createGraphSpecifics( g );
+            m_vertexIterator     = g.vertexSet(  ).iterator(  );
             setCrossComponentTraversal( startVertex == null );
 
             m_reuseableEdgeEvent       = new FlyweightEdgeEvent( this, null );

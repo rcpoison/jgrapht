@@ -37,6 +37,8 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 15-Aug-2003 : Used wildcards instead of enumerating files(JVS);
  * 15-Aug-2003 : Added checkstyle task (JVS);
+ * 15-Aug-2003 : Used JUnit batch test feature (JVS);
+ * 15-Aug-2003 : Added jalopy task (JVS);
  *
  */
 -->
@@ -121,9 +123,9 @@
     </target>
 
 
-    <!-- Run all JUnit tests -->
-    <target name="test" depends="compile"
-                           description="Builds and runs all JUnit tests.">
+    <!-- Build all JUnit tests -->
+    <target name="test.compile" depends="compile"
+                           description="Builds all JUnit tests.">
         <!-- create a test build directory -->
         <mkdir dir="${testbuilddir}" />
 
@@ -131,6 +133,11 @@
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>
         </javac>
+    </target>
+
+    <!-- Run all JUnit tests -->
+    <target name="test" depends="test.compile"
+                           description="Builds and runs all JUnit tests.">
         <junit printsummary="no" fork="yes" 
                            haltonerror="true" haltonfailure="true">
             <classpath refid="test.classpath"/>
@@ -157,6 +164,27 @@
                 <include name="testsrc/**/*.java"/>
             </fileset>
         </checkstyle>
+    </target>
+
+    <!-- Run jalopy on source code -->
+    <!-- NOTE:  requires manual installation of .jars in lib/jalopy -->
+    <target name="jalopy" depends="compile"
+                           description="Runs jalopy on all source code.">
+        <taskdef name="jalopy" 
+                 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+            <classpath>
+                <fileset dir="${basedir}/lib/jalopy">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </taskdef>
+        <jalopy backup="true" convention="${basedir}/etc/jalopy-settings.xml"
+                classpathref="testbuild.classpath" history="FILE">
+            <fileset dir="${basedir}">
+                <include name="src/**/*.java"/>
+                <include name="testsrc/**/*.java"/>
+            </fileset>
+        </jalopy>
     </target>
 
     <!-- Generate the JGraphT JavaDoc HTML pages -->
