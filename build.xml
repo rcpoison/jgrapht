@@ -166,10 +166,14 @@
         </checkstyle>
     </target>
 
-    <!-- Run jalopy on source code -->
-    <!-- NOTE:  requires manual installation of .jars in lib/jalopy -->
+    <!-- Run jalopy on source code                                         -->
+    <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
+    <!-- WARNING:                                                          -->
+    <!--   to workaround a bug in jalopy you need to edit your ant/bin/ant -->
+	<!--   or ant/bin/ant.bat script and add the -server option when it    -->
+	<!--   runs java. this prevents jalopy from eating memory.             -->
     <target name="jalopy" depends="compile"
-                           description="Runs jalopy on all source code.">
+            description="Runs jalopy on all source code (see WARNING comment).">
         <taskdef name="jalopy" 
                  classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
             <classpath>
