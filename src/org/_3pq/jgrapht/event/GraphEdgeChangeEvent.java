@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -52,6 +52,8 @@ import org._3pq.jgrapht.Edge;
  * @since Aug 10, 2003
  */
 public class GraphEdgeChangeEvent extends GraphChangeEvent {
+    private static final long serialVersionUID = 3618134563335844662L;
+
     /**
      * Before edge added event. This event is fired before an edge is added to
      * a graph.

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,8 @@ package org._3pq.jgrapht.event;
  * @since Aug 10, 2003
  */
 public class GraphVertexChangeEvent extends GraphChangeEvent {
+    private static final long serialVersionUID = 3690189962679104053L;
+
     /**
      * Before vertex added event. This event is fired before a vertex is added
      * to a graph.
