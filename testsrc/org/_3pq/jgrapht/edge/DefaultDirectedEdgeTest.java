@@ -59,13 +59,6 @@ public class DefaultDirectedEdgeTest extends TestCase {
     String              m_target2 = "t2";
 
     /**
-     * @see TestCase#TestCase(java.lang.String)
-     */
-    public DefaultDirectedEdgeTest( String name ) {
-        super( name );
-    }
-
-    /**
      * .
      */
     public void testClone(  ) {

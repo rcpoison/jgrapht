@@ -58,7 +58,7 @@ public final class AllEdgeTests {
      * @return a test suite for all edge tests.
      */
     public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "TestSuite for all edge test" );
+        TestSuite suite = new TestSuite( "TestSuite for all edge tests" );
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( DefaultDirectedEdgeTest.class ) );

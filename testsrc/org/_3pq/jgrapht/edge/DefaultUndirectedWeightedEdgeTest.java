@@ -50,12 +50,6 @@ import org._3pq.jgrapht.edge.UndirectedWeightedEdge;
  * @since Jul 24, 2003
  */
 public class DefaultUndirectedWeightedEdgeTest extends DefaultUndirectedEdgeTest {
-    /**
-     * @see junit.framework.TestCase#TestCase(java.lang.String)
-     */
-    public DefaultUndirectedWeightedEdgeTest( String name ) {
-        super( name );
-    }
 
     /**
      * Tests the equals() method.

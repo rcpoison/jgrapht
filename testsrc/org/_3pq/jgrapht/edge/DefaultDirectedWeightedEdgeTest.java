@@ -51,13 +51,6 @@ import org._3pq.jgrapht.edge.DirectedWeightedEdge;
  */
 public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
     /**
-     * @see junit.framework.TestCase#TestCase(java.lang.String)
-     */
-    public DefaultDirectedWeightedEdgeTest( String name ) {
-        super( name );
-    }
-
-    /**
      * Tests the equals() method.
      */
     public void testEqualsObject(  ) {

@@ -60,13 +60,6 @@ public class DefaultUndirectedEdgeTest extends TestCase {
     UndirectedEdge m_e3;
 
     /**
-     * @see TestCase#TestCase(java.lang.String)
-     */
-    public DefaultUndirectedEdgeTest( String name ) {
-        super( name );
-    }
-
-    /**
      * .
      */
     public void testClone(  ) {
