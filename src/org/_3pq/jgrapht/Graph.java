@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -312,8 +312,8 @@ public interface Graph {
 
 
     /**
-     * Returns a list of all edges touching the specified vertex. If not edges
-     * are  touching the specified vertex returns an empty list.
+     * Returns a list of all edges touching the specified vertex. If no edges
+     * are touching the specified vertex returns an empty list.
      *
      * @param vertex the vertex for which a list of touching edges to be
      *        returned.
