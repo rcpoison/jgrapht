@@ -45,6 +45,7 @@ import junit.framework.TestSuite;
 
 import org._3pq.jgrapht.alg.AllAlgTests;
 import org._3pq.jgrapht.edge.AllEdgeTests;
+import org._3pq.jgrapht.graph.AllGraphTests;
 
 /**
  * Runs all unit tests of the JGraphT library.
@@ -67,6 +68,7 @@ public final class AllTests {
             new ExpandableTestSuite( "All tests of JGraphT" );
 
         suite.addTestSuit( (TestSuite) AllEdgeTests.suite(  ) );
+        suite.addTestSuit( (TestSuite) AllGraphTests.suite(  ) );
         suite.addTestSuit( (TestSuite) AllAlgTests.suite(  ) );
 
         return suite;
