@@ -99,8 +99,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @throws NullPointerException if the specified edge factory is
      *         <code>null</code>.
-     * @throws IllegalArgumentException if the edge factory produces
-     *         incompatible edges.
      */
     public AbstractBaseGraph( EdgeFactory ef, boolean allowMultipleEdges,
         boolean allowLoops ) {
@@ -114,16 +112,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         m_allowingLoops             = allowLoops;
         m_allowingMultipleEdges     = allowMultipleEdges;
 
-        if( this instanceof DirectedGraph ) {
-            m_specifics = new DirectedSpecifics(  );
-        }
-        else if( this instanceof UndirectedGraph ) {
-            m_specifics = new UndirectedSpecifics(  );
-        }
-        else {
-            throw new IllegalArgumentException( 
-                "graph is incompatible with edge factory" );
-        }
+        setSpecifics(  );
 
         Edge e = ef.createEdge( new Object(  ), new Object(  ) );
         m_factoryEdgeClass = e.getClass(  );
@@ -275,10 +264,13 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         try {
             AbstractBaseGraph newGraph = (AbstractBaseGraph) super.clone(  );
 
-            newGraph.m_vertexMap            = new HashMap(  );
-            newGraph.m_edgeSet              = new HashSet(  );
-            newGraph.m_factoryEdgeClass     = this.m_factoryEdgeClass;
-            newGraph.m_edgeFactory          = this.m_edgeFactory;
+            newGraph.m_vertexMap                 = new HashMap(  );
+            newGraph.m_edgeSet                   = new HashSet(  );
+            newGraph.m_factoryEdgeClass          = this.m_factoryEdgeClass;
+            newGraph.m_edgeFactory               = this.m_edgeFactory;
+            newGraph.m_unmodifiableEdgeSet       = null;
+            newGraph.m_unmodifiableVertexSet     = null;
+            newGraph.setSpecifics(  );
 
             newGraph.addAllVertices( this.vertexSet(  ) );
             newGraph.addAllEdgeClones( this.edgeSet(  ) );
@@ -444,6 +436,20 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         }
 
         return m_unmodifiableVertexSet;
+    }
+
+
+    private void setSpecifics(  ) {
+        if( this instanceof DirectedGraph ) {
+            m_specifics = new DirectedSpecifics(  );
+        }
+        else if( this instanceof UndirectedGraph ) {
+            m_specifics = new UndirectedSpecifics(  );
+        }
+        else {
+            throw new IllegalArgumentException( 
+                "graph is incompatible with edge factory" );
+        }
     }
 
 
