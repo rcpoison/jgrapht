@@ -195,7 +195,7 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see VertexSetListener#vertexAdded(VertexEvent)
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(VertexEvent)
      */
     public void vertexAdded( VertexEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
@@ -203,7 +203,7 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see VertexSetListener#vertexRemoved(VertexEvent)
+     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(VertexEvent)
      */
     public void vertexRemoved( VertexEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
