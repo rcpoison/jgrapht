@@ -39,10 +39,10 @@
 package org._3pq.jgrapht.alg;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.GraphIterator;
 
 /**
  * An empty implementation of a graph iterator to minimize the effort required
@@ -52,7 +52,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Jul 19, 2003
  */
-public abstract class AbstractGraphIterator implements Iterator {
+public abstract class AbstractGraphIterator implements GraphIterator {
     private List    m_traversalListeners      = new ArrayList(  );
     private boolean m_crossComponentTraversal = true;
 
