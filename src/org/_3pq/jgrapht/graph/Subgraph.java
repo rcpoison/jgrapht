@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -37,9 +37,12 @@
  * 26-Jul-2003 : Accurate constructors to avoid casting problems (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
+ * 07-Feb-2004 : Enabled serialization (BN);
  *
  */
 package org._3pq.jgrapht.graph;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -117,7 +120,7 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * @see java.util.Set
  * @since Jul 18, 2003
  */
-public class Subgraph extends AbstractGraph {
+public class Subgraph extends AbstractGraph implements Serializable {
     private static final String REF_NOT_EQUAL_TO_BASE =
         "value-equal but not reference equal to base graph";
     private static final String NO_SUCH_EDGE_IN_BASE =
@@ -561,7 +564,7 @@ public class Subgraph extends AbstractGraph {
      *
      * @since Jul 20, 2003
      */
-    private class BaseGraphListener implements GraphListener {
+    private class BaseGraphListener implements GraphListener, Serializable {
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
