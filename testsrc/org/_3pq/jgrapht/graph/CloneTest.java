@@ -38,9 +38,7 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.edge.*;
 
 /**
  * A unit test for a cloning bug, adapted from a forum entry from Linda
