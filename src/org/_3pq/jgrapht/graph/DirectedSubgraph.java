@@ -41,7 +41,6 @@ package org._3pq.jgrapht.graph;
 import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.ListenableGraph;
 
 /**
  * A directed graph that is a subgraph on other graph.
@@ -54,6 +53,6 @@ public class DirectedSubgraph extends Subgraph implements DirectedGraph {
      */
     public DirectedSubgraph( DirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {
-        super( (ListenableGraph) base, vertexSubset, edgeSubset );
+        super( base, vertexSubset, edgeSubset );
     }
 }

@@ -40,7 +40,6 @@ package org._3pq.jgrapht.graph;
 
 import java.util.Set;
 
-import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 
 /**
@@ -54,6 +53,6 @@ public class UndirectedSubgraph extends Subgraph implements UndirectedGraph {
      */
     public UndirectedSubgraph( UndirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {
-        super( (ListenableGraph) base, vertexSubset, edgeSubset );
+        super( base, vertexSubset, edgeSubset );
     }
 }
