@@ -51,13 +51,13 @@ import org._3pq.jgrapht.UndirectedGraph;
  * @author John V. Sichi
  */
 public class AsUndirectedGraphTest extends EnhancedTestCase {
-    private Edge  m_loop;
-    private DirectedGraph m_directed;
+    private DirectedGraph   m_directed;
+    private Edge            m_loop;
+    private String          m_v1         = "v1";
+    private String          m_v2         = "v2";
+    private String          m_v3         = "v3";
+    private String          m_v4         = "v4";
     private UndirectedGraph m_undirected;
-    private String        m_v1 = "v1";
-    private String        m_v2 = "v2";
-    private String        m_v3 = "v3";
-    private String        m_v4 = "v4";
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -66,9 +66,98 @@ public class AsUndirectedGraphTest extends EnhancedTestCase {
         super( name );
     }
 
+    /**
+     * .
+     */
+    public void testAddEdge(  ) {
+        try {
+            m_undirected.addEdge( m_v3, m_v4 );
+            assertFalse(  );
+        }
+         catch( UnsupportedOperationException e ) {
+            assertTrue(  );
+        }
+    }
+
+
+    /**
+     * .
+     */
+    public void testAddVertex(  ) {
+        String v5 = "v5";
+
+        m_undirected.addVertex( v5 );
+        assertEquals( true, m_undirected.containsVertex( v5 ) );
+        assertEquals( true, m_directed.containsVertex( v5 ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testDegreeOf(  ) {
+        assertEquals( 1, m_undirected.degreeOf( m_v1 ) );
+        assertEquals( 3, m_undirected.degreeOf( m_v2 ) );
+        assertEquals( 1, m_undirected.degreeOf( m_v3 ) );
+        assertEquals( 3, m_undirected.degreeOf( m_v4 ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testGetAllEdges(  ) {
+        List edges = m_undirected.getAllEdges( m_v3, m_v2 );
+        assertEquals( 1, edges.size(  ) );
+        assertEquals( m_directed.getEdge( m_v2, m_v3 ),
+            edges.iterator(  ).next(  ) );
+
+        edges = m_undirected.getAllEdges( m_v4, m_v4 );
+        assertEquals( 1, edges.size(  ) );
+        assertEquals( m_loop, edges.iterator(  ).next(  ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testGetEdge(  ) {
+        assertEquals( m_directed.getEdge( m_v1, m_v2 ),
+            m_undirected.getEdge( m_v1, m_v2 ) );
+        assertEquals( m_directed.getEdge( m_v1, m_v2 ),
+            m_undirected.getEdge( m_v2, m_v1 ) );
+
+        assertEquals( m_directed.getEdge( m_v4, m_v4 ),
+            m_undirected.getEdge( m_v4, m_v4 ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testRemoveEdge(  ) {
+        m_undirected.removeEdge( m_loop );
+        assertEquals( false, m_undirected.containsEdge( m_loop ) );
+        assertEquals( false, m_directed.containsEdge( m_loop ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testRemoveVertex(  ) {
+        m_undirected.removeVertex( m_v4 );
+        assertEquals( false, m_undirected.containsVertex( m_v4 ) );
+        assertEquals( false, m_directed.containsVertex( m_v4 ) );
+    }
+
+
+    /**
+     * .
+     */
     protected void setUp(  ) {
-        m_directed         = new DefaultDirectedGraph(  );
-        m_undirected       = new AsUndirectedGraph( m_directed );
+        m_directed       = new DefaultDirectedGraph(  );
+        m_undirected     = new AsUndirectedGraph( m_directed );
 
         m_directed.addVertex( m_v1 );
         m_directed.addVertex( m_v2 );
@@ -79,69 +168,4 @@ public class AsUndirectedGraphTest extends EnhancedTestCase {
         m_directed.addEdge( m_v2, m_v4 );
         m_loop = m_directed.addEdge( m_v4, m_v4 );
     }
-    
-    public void testDegreeOf(  ) {
-        assertEquals( 1, m_undirected.degreeOf( m_v1 ) );
-        assertEquals( 3, m_undirected.degreeOf( m_v2 ) );
-        assertEquals( 1, m_undirected.degreeOf( m_v3 ) );
-        assertEquals( 3, m_undirected.degreeOf( m_v4 ) );
-    }
-    
-    public void testGetEdge(  ) {
-        assertEquals(
-            m_directed.getEdge( m_v1, m_v2 ),
-            m_undirected.getEdge( m_v1, m_v2 ));
-        assertEquals(
-            m_directed.getEdge( m_v1, m_v2 ),
-            m_undirected.getEdge( m_v2, m_v1 ));
-
-        assertEquals(
-            m_directed.getEdge( m_v4, m_v4 ),
-            m_undirected.getEdge( m_v4, m_v4 ));
-    }
-
-    public void testGetAllEdges(  ) {
-        List edges = m_undirected.getAllEdges( m_v3, m_v2 );
-        assertEquals(1, edges.size() );
-        assertEquals(
-            m_directed.getEdge( m_v2, m_v3 ),
-            edges.iterator(  ).next(  ) );
-
-        edges = m_undirected.getAllEdges( m_v4, m_v4 );
-        assertEquals(1, edges.size() );
-        assertEquals(
-            m_loop,
-            edges.iterator(  ).next(  ) );
-    }
-
-    public void testAddEdge(  ) {
-        try {
-            m_undirected.addEdge( m_v3, m_v4 );
-            assertFalse(  );
-        }
-        catch ( UnsupportedOperationException e ) {
-            assertTrue(  );
-        }
-    }
-
-    public void testAddVertex(  ) {
-        String v5 = "v5";
-        
-        m_undirected.addVertex( v5 );
-        assertEquals( true, m_undirected.containsVertex( v5 ) );
-        assertEquals( true, m_directed.containsVertex( v5 ) );
-    }
-    
-    public void testRemoveVertex(  ) {
-        m_undirected.removeVertex( m_v4 );
-        assertEquals( false, m_undirected.containsVertex( m_v4 ) );
-        assertEquals( false, m_directed.containsVertex( m_v4 ) );
-    }
-    
-    public void testRemoveEdge(  ) {
-        m_undirected.removeEdge( m_loop );
-        assertEquals( false, m_undirected.containsEdge( m_loop ) );
-        assertEquals( false, m_directed.containsEdge( m_loop ) );
-    }
-    
 }
