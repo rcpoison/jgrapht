@@ -100,7 +100,7 @@
         <property name="project.zip"      value="${basedir}/${project.zip.name}" />
         <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
         <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
-        <property name="checkstyle.jar"   value="${lib.dir}/checkstyle-all-3.1.jar"/>
+        <property name="checkstyle.jar"   value="${lib.dir}/checkstyle-all-3.3.jar"/>
         <property name="build.file"       value="${basedir}/${build.file.name}"/>
         <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
         <property name="jalopy.settings"  value="${etc.dir}/jalopy-settings.xml"/>
@@ -189,9 +189,13 @@
         <taskdef resource="checkstyletask.properties" 
         		 classpath="${checkstyle.jar}"/>
         <checkstyle config="${checkstyle.settings}">
-            <fileset dir="${basedir}">
-                <include name="src/**/*.java"/>
-                <include name="testsrc/**/*.java"/>
+            <fileset dir="${src.dir}">
+                <include name="**/*.java"/>
+		        <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+            </fileset>
+            <fileset dir="${testsrc.dir}">
+                <include name="**/*.java"/>
+		        <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
             </fileset>
         </checkstyle>
     </target>
