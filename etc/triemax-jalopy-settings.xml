@@ -253,9 +253,9 @@
               <xdoclet></xdoclet>
             </custom>
             <group>true</group>
-            <innerSpacing>2</innerSpacing>
+            <innerSpacing>1</innerSpacing>
             <removeMisused>true</removeMisused>
-            <sort>false</sort>
+            <sort>true</sort>
             <sortAttributes>false</sortAttributes>
             <spelling>true</spelling>
           </tags>
