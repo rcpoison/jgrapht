@@ -234,7 +234,10 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *
      * @param vertex a vertex which has already been seen.
      *
-     * @return data associated with the seen vertex.
+     * @return data associated with the seen vertex or <code>null</code> if no
+     *         data was associated with the vertex. A <code>null</code> return
+     *         can also indicate that the vertex was explicitly associated
+     *         with <code>null</code>.
      */
     protected Object getSeenData( Object vertex ) {
         return m_seen.get( vertex );
@@ -257,7 +260,10 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @param vertex a vertex which has been seen.
      * @param data data to be associated with the seen vertex.
      *
-     * @return
+     * @return previous value associated with specified vertex or
+     *         <code>null</code> if no data was associated with the vertex. A
+     *         <code>null</code> return can also indicate that the vertex was
+     *         explicitly associated with <code>null</code>.
      */
     protected Object putSeenData( Object vertex, Object data ) {
         return m_seen.put( vertex, data );
