@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   John V. Sichi
  *
  * $Id$
  *
@@ -179,8 +179,8 @@ public class ConnectivityInspector implements GraphListener {
      * for this interpretation of path.
      * 
      * <p>
-     * TODO: BEFORE RELEASE: Ignoring edge direction for directed graph can be
-     * confusing. For directed graphs, consider Dijkstra's algorithm.
+     * Note: Future versions of this method might not ignore edge directions
+     * for directed graphs.
      * </p>
      *
      * @param sourceVertex one end of the path.
@@ -190,6 +190,10 @@ public class ConnectivityInspector implements GraphListener {
      *         vertex to the target vertex.
      */
     public boolean pathExists( Object sourceVertex, Object targetVertex ) {
+        /*
+         * TODO: Ignoring edge direction for directed graph may be
+         * confusing. For directed graphs, consider Dijkstra's algorithm.
+         */
         Set sourceSet = connectedSetOf( sourceVertex );
 
         return sourceSet.contains( targetVertex );
