@@ -6,7 +6,7 @@
  */
 package org._3pq.jgrapht.alg;
 
-import org._3pq.jgrapht.alg.SimpleQueue;
+import org._3pq.jgrapht.alg.AlgUtils.SimpleQueue;
 
 import junit.framework.TestCase;
 

@@ -49,9 +49,9 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.alg.AbstractGraphIterator;
-import org._3pq.jgrapht.alg.DirectedSpecifics;
-import org._3pq.jgrapht.alg.Specifics;
-import org._3pq.jgrapht.alg.UndirectedSpecifics;
+import org._3pq.jgrapht.alg.AlgUtils.DirectedSpecifics;
+import org._3pq.jgrapht.alg.AlgUtils.Specifics;
+import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
 
 /**
  * A breadth-first iterator for a directed and an undirected graph. For this

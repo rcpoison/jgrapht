@@ -24,10 +24,10 @@
 /* -------------------------
  * BreadthFirstIterator.java
  * -------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
- * Original Author:  Barak Naveh
- * Contributor(s):   Liviu Rau
+ * Original Author:  Liviu Rau
+ * Contributor(s):   -
  *
  * $Id$
  *
@@ -48,8 +48,9 @@ import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.alg.AbstractGraphIterator;
 import org._3pq.jgrapht.alg.AlgUtils.DirectedSpecifics;
-import org._3pq.jgrapht.alg.AlgUtils.SimpleQueue;
+import org._3pq.jgrapht.alg.AlgUtils.SimpleStack;
 import org._3pq.jgrapht.alg.AlgUtils.Specifics;
 import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
 
@@ -63,11 +64,10 @@ import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
  *
  * @since Jul 19, 2003
  */
-public class BreadthFirstIterator extends AbstractGraphIterator {
+public class DepthFirstIterator extends AbstractGraphIterator {
     // todo: support ConcurrentModificationException if graph modified during iteration. 
-    private Iterator    m_vertexIterator = null;
-    private Set         m_seen      = new HashSet(  );
-    private SimpleQueue m_queue     = new SimpleQueue(  );
+    private Set         m_visited   = new HashSet(  );
+    private SimpleStack m_stack     = new SimpleStack(  );
     private Specifics   m_specifics;
 
     /**
@@ -76,7 +76,7 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      * @param g the directed graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public BreadthFirstIterator( DirectedGraph g, Object startVertex ) {
+    public DepthFirstIterator( DirectedGraph g, Object startVertex ) {
         super(  );
         init( g, startVertex );
         m_specifics = new DirectedSpecifics( g );
@@ -89,7 +89,7 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      * @param g the undirected graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public BreadthFirstIterator( UndirectedGraph g, Object startVertex ) {
+    public DepthFirstIterator( UndirectedGraph g, Object startVertex ) {
         super(  );
         init( g, startVertex );
         m_specifics = new UndirectedSpecifics( g );
@@ -99,28 +99,7 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      * @see java.util.Iterator#hasNext()
      */
     public boolean hasNext(  ) {
-        if( m_queue.isEmpty(  ) ) {
-            if( isCrossComponentTraversal(  ) ) {
-                while( m_vertexIterator.hasNext(  ) ) {
-                    Object v = m_vertexIterator.next(  );
-
-                    if( !m_seen.contains( v ) ) {
-                        m_seen.add( v );
-                        m_queue.add( v );
-
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return true;
-        }
+        return !m_stack.isEmpty(  ) && isCrossComponentTraversal(  );
     }
 
 
@@ -129,10 +108,13 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      */
     public Object next(  ) {
         if( hasNext(  ) ) {
-            Object nextVertex = m_queue.remove(  );
+            Object nextVertex = m_stack.remove(  );
             fireVertexVisited( nextVertex );
 
-            enqueueUnseenChildrenOf( nextVertex );
+            List edges = m_specifics.edgesOf( nextVertex );
+            collectChildren( nextVertex, edges );
+            m_visited.add( nextVertex );
+            m_stack.removeVisited( nextVertex );
 
             return nextVertex;
         }
@@ -142,18 +124,15 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
     }
 
 
-    private void enqueueUnseenChildrenOf( Object vertex ) {
-        List edges = m_specifics.edgesOf( vertex );
-
+    private void collectChildren( Object nextVertex, List edges ) {
         for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
             Edge e = (Edge) iter.next(  );
             fireEdgeVisited( e );
 
-            Object v = e.oppositeVertex( vertex );
+            Object v = e.oppositeVertex( nextVertex );
 
-            if( !m_seen.contains( v ) ) {
-                m_seen.add( v );
-                m_queue.add( v );
+            if( !m_visited.contains( v ) ) {
+                m_stack.add( v );
             }
         }
     }
@@ -168,8 +147,7 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
             throw new IllegalArgumentException( "start vertex not in graph" );
         }
 
-        m_seen.add( startVertex );
-        m_queue.add( startVertex );
-        m_vertexIterator = g.vertexSet(  ).iterator(  );
+        m_stack.add( startVertex );
+        m_visited.add( startVertex );
     }
 }
