@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
+/* ------------------
  * CycleDetector.java
- * --------------------------
+ * ------------------
  * (C) Copyright 2004, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
@@ -76,7 +76,7 @@ import org._3pq.jgrapht.traverse.DepthFirstIterator;
  */
 public class CycleDetector {
     /** Graph on which cycle detection is being performed. */
-    private Graph m_graph;
+    Graph m_graph;
 
     /**
      * Creates a cycle detector for the specified graph.  Currently only
@@ -97,7 +97,7 @@ public class CycleDetector {
         try {
             execute( null, null );
         }
-         catch( CycleDetectedException ex ) {
+        catch( CycleDetectedException ex ) {
             return true;
         }
 
@@ -116,7 +116,7 @@ public class CycleDetector {
         try {
             execute( null, v );
         }
-         catch( CycleDetectedException ex ) {
+        catch( CycleDetectedException ex ) {
             return true;
         }
 
@@ -166,7 +166,9 @@ public class CycleDetector {
      * Exception thrown internally when a cycle is detected during a yes/no
      * cycle test.  Must be caught by top-level detection method.
      */
-    private class CycleDetectedException extends RuntimeException {}
+    private static class CycleDetectedException extends RuntimeException {
+        private static final long serialVersionUID = 3834305137802950712L;
+    }
 
 
     /**
@@ -184,10 +186,7 @@ public class CycleDetector {
         }
 
         /**
-         * .
-         *
-         * @param vertex  
-         * @param edge  
+         * {@inheritDoc}
          */
         protected void encounterVertexAgain( Object vertex, Edge edge ) {
             super.encounterVertexAgain( vertex, edge );
@@ -208,9 +207,7 @@ public class CycleDetector {
 
 
         /**
-         * .
-         *
-         * @return  
+         * {@inheritDoc}
          */
         protected Object provideNextVertex(  ) {
             Object v = super.provideNextVertex(  );
