@@ -36,6 +36,7 @@
  * 02-Aug-2003 : Initial revision (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 06-Nov-2003 : Allowed non-listenable underlying JGraphT graph (BN);
+ * 12-Dec-2003 : Added CellFactory support (BN);
  *
  */
 package org._3pq.jgrapht.ext;
@@ -93,6 +94,7 @@ import org.jgraph.graph.ParentMap;
  * @since Aug 2, 2003
  */
 public class JGraphModelAdapter extends DefaultGraphModel {
+    private CellFactory   m_cellFactory;
     private GraphListener m_graphListener;
     private Map           m_defaultEdgeAttributes   = new HashMap(  );
     private Map           m_defaultVertexAttributes = new HashMap(  );
@@ -113,13 +115,30 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
      * @param g the JGraphT graph for which JGraph model adapter to be created.
-     * @param defaultVertexAttributes default map of JGraph attributes to
-     *        format vertices.
-     * @param defaultEdgeAttributes default map of JGraph attributes to format
-     *        edges.
+     * @param defaultVertexAttributes a default map of JGraph attributes to
+     *        format vertices, or <code>null</code> to use internal defaults.
+     * @param defaultEdgeAttributes a default map of JGraph attributes to
+     *        format edges, or <code>null</code> to use internal defaults.
      */
     public JGraphModelAdapter( Graph g, Map defaultVertexAttributes,
         Map defaultEdgeAttributes ) {
+        this( g, defaultVertexAttributes, defaultEdgeAttributes, null );
+    }
+
+
+    /**
+     * Constructs a new JGraph model adapter for the specified JGraphT graph.
+     *
+     * @param g the JGraphT graph for which JGraph model adapter to be created.
+     * @param defaultVertexAttributes a default map of JGraph attributes to
+     *        format vertices, or <code>null</code> to use internal defaults.
+     * @param defaultEdgeAttributes a default map of JGraph attributes to
+     *        format edges, or <code>null</code> to use internal defaults.
+     * @param cellFactory a {@link CellFactory} to be used to create the JGraph
+     *        cells, or <code>null</code> to use internal default factory.
+     */
+    public JGraphModelAdapter( Graph g, Map defaultVertexAttributes,
+        Map defaultEdgeAttributes, CellFactory cellFactory ) {
         super(  );
 
         if( defaultVertexAttributes == null ) {
@@ -134,6 +153,13 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         }
         else {
             m_defaultEdgeAttributes = defaultEdgeAttributes;
+        }
+
+        if( cellFactory == null ) {
+            m_cellFactory = new DefaultCellFactory(  );
+        }
+        else {
+            m_cellFactory = cellFactory;
         }
 
         if( g instanceof ListenableGraph ) {
@@ -274,7 +300,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @param e a JGraphT edge to be reflected by this graph model.
      */
     protected void addJGraphTEdge( Edge e ) {
-        DefaultEdge edgeCell = new DefaultEdge( e );
+        DefaultEdge edgeCell = m_cellFactory.createEdgeCell( e );
         m_edgeCells.put( e, edgeCell );
 
         ConnectionSet cs = new ConnectionSet(  );
@@ -295,7 +321,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @param v a JGraphT vertex to be reflected by this graph model.
      */
     protected void addJGraphTVertex( Object v ) {
-        DefaultGraphCell vertexCell = new DefaultGraphCell( v );
+        DefaultGraphCell vertexCell = m_cellFactory.createVertexCell( v );
         vertexCell.add( new DefaultPort(  ) );
 
         m_vertexCells.put( v, vertexCell );
@@ -387,6 +413,59 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         Object[]         cells = { vertexCell, vertexCell.getChildAt( 0 ) };
         super.remove( cells );
     }
+
+    /**
+     * Creates the JGraph cells that reflect the respective JGraphT elements.
+     *
+     * @author Barak Naveh
+     *
+     * @since Dec 12, 2003
+     */
+    public interface CellFactory {
+        /**
+         * Creates an edge cell that contains its respective JGraphT edge.
+         *
+         * @param e a JGraphT edge to be contained.
+         *
+         * @return an edge cell that contains its respective JGraphT edge.
+         */
+        public DefaultEdge createEdgeCell( Edge e );
+
+
+        /**
+         * Creates a vertex cell that contains its respective JGraphT vertex.
+         *
+         * @param v a JGraphT vertex to be contained.
+         *
+         * @return a vertex cell that contains its respective JGraphT vertex.
+         */
+        public DefaultGraphCell createVertexCell( Object v );
+    }
+
+    /**
+     * A simple default cell factory.
+     *
+     * @author Barak Naveh
+     *
+     * @since Dec 12, 2003
+     */
+    public class DefaultCellFactory implements CellFactory {
+        /**
+         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(Edge)
+         */
+        public DefaultEdge createEdgeCell( Edge e ) {
+            return new DefaultEdge( e );
+        }
+
+
+        /**
+         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createVertexCell(Object)
+         */
+        public DefaultGraphCell createVertexCell( Object v ) {
+            return new DefaultGraphCell( v );
+        }
+    }
+
 
     /**
      * A listener on the underlying JGraphT graph. This listener is used to
