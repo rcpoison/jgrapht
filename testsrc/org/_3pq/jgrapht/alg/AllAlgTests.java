@@ -42,7 +42,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * .
+ * A TestSuite for all tests in this package.
  *
  * @author Barak Naveh
  */
@@ -50,12 +50,12 @@ public final class AllAlgTests {
     private AllAlgTests(  ) {} // ensure non-instantiability.
 
     /**
-     * .
+     * Creates a test suite for all tests in this package.
      *
-     * @return
+     * @return a test suite for all tests in this package.
      */
     public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
+        TestSuite suite = new TestSuite(  );
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );

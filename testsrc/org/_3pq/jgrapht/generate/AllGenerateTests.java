@@ -50,13 +50,12 @@ public final class AllGenerateTests {
     private AllGenerateTests(  ) {} // ensure non-instantiability.
 
     /**
-     * Creates a test suite for all 'generate' tests.
+     * Creates a test suite for all tests in this package.
      *
-     * @return a test suite for all 'generate' tests.
+     * @return a test suite for all tests in this package.
      */
     public static Test suite(  ) {
-        TestSuite suite =
-            new TestSuite( "Tests for org._3pq.jgrapht.generate." );
+        TestSuite suite = new TestSuite(  );
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( GraphGeneratorTest.class ) );

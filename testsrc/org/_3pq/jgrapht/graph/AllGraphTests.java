@@ -42,7 +42,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * A TestSuite for all graph tests.
+ * A TestSuite for all tests in this package.
  *
  * @author Barak Naveh
  *
@@ -52,12 +52,12 @@ public final class AllGraphTests {
     private AllGraphTests(  ) {} // ensure non-instantiability.
 
     /**
-     * Creates a test suite for all graph tests.
+     * Creates a test suite for all tests in this package.
      *
-     * @return a test suite for all graph tests.
+     * @return a test suite for all tests in this package.
      */
     public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "TestSuite for all graph tests" );
+        TestSuite suite = new TestSuite(  );
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( DefaultDirectedGraphTest.class ) );
