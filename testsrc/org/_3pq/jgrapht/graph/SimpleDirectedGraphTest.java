@@ -21,16 +21,32 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-package org._3pq.jgrapht;
+/* ----------------------------
+ * SimpleDirectedGraphTest.java
+ * ----------------------------
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
+ *
+ * Original Author:  Barak Naveh
+ * Contributor(s):   -
+ *
+ * $Id$
+ *
+ * Changes
+ * -------
+ * 25-Jul-2003 : Initial revision (BN);
+ *
+ */
+package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.DirectedEdge;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.EnhancedTestCase;
 import org._3pq.jgrapht.GraphFactory;
 
 /**
- * .
+ * A unit test for simple directed graph.
  *
  * @author Barak Naveh
  *
