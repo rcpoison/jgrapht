@@ -50,7 +50,7 @@ public class UndirectedWeightedEdge extends UndirectedEdge {
     private double m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
-     * @see UndirectedEdge#DefaultEdge(Object, Object)
+     * @see UndirectedEdge#UndirectedEdge(Object, Object)
      */
     public UndirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
