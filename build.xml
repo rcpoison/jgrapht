@@ -5,41 +5,59 @@
 
 <!-- For Ant 1.5.1 -->
 <!-- To run this script, you need to make sure the libraries used by -->
-<!-- JGraphT are copied to the ../lib directory  -->
+<!-- JGraphT are copied to the lib directory  -->
 
-<!-- This script will create temporary directories ../build and -->
-<!-- ../distribution, as working areas.  A ../javadoc directory will -->
+<!-- This script will create directories ./build and ./testbuild for -->
+<!-- generated classfiles.  These can be removed at any time via the -->
+<!-- clean target.  A temporary ./distribution directory will be created -->
+<!-- when building a distribution.  A javadoc directory will -->
 <!-- be created for the Javadoc HTML pages. -->
 
-<project name="jgrapht" default="all" basedir="..">
+<project name="jgrapht" default="all" basedir=".">
 
     <!-- Initialization. -->
-    <target name="init" description="Initialize required settings.">
+    <target name="init" description="Initializes required settings.">
         <tstamp />
         <property name="jgrapht.name" value="jgrapht" />
         <property name="jgrapht.version" value="0.4.1" />
         <property name="builddir" value="${basedir}/build" />
+        <property name="testbuilddir" value="${basedir}/testbuild" />
         <property name="junit.jar" value="${basedir}/lib/junit.jar"/>
         <property name="jgraph.jar" value="${basedir}/lib/jgraph.jar"/>
-        <property name="ant.buildfile" value="${basedir}/ant/build.xml"/>
+        <property name="ant.buildfile" value="${basedir}/build.xml"/>
         <property name="distribution" value="${basedir}/distribution"/>
 
+        <!-- Classpath for building functional sources. -->
         <path id="build.classpath">
             <pathelement location="${junit.jar}"/>
             <pathelement location="${jgraph.jar}"/>
+        </path>
+        <property name="build.classpath" refid="build.classpath"/>
+
+        <!-- Classpath for building tests. -->
+        <path id="testbuild.classpath">
+            <pathelement path="${build.classpath}"/>
+            <pathelement location="${builddir}"/>
+        </path>
+        <property name="testbuild.classpath" refid="testbuild.classpath"/>
+
+        <!-- Classpath for running tests. -->
+        <path id="test.classpath">
+            <pathelement path="${testbuild.classpath}"/>
+            <pathelement location="${testbuilddir}"/>
         </path>
     </target>
 
 
     <!-- Compile the JGraphT classes -->
     <target name="compile" depends="init"
-            description="Compile the JGraphT source code.">
+            description="Compiles the JGraphT source code.">
 
-        <!-- create a temp build directory -->
-        <mkdir dir="${basedir}/build" />
+        <!-- create a build directory -->
+        <mkdir dir="${builddir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${basedir}/src" destdir="${basedir}/build" target="1.3">
+        <javac srcdir="${basedir}/src" destdir="${builddir}" target="1.3">
             <classpath refid="build.classpath" />
             <include name="org/_3pq/jgrapht/*"/>
             <include name="org/_3pq/jgrapht/alg/*"/>
@@ -47,16 +65,34 @@
             <include name="org/_3pq/jgrapht/edge/*"/>
             <include name="org/_3pq/jgrapht/ext/*"/>
             <include name="org/_3pq/jgrapht/graph/*"/>
+            <include name="org/_3pq/jgrapht/traverse/*"/>
         </javac>
-
-        <!-- make the jar -->
-        <jar jarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.jar"
-             basedir="${basedir}/build" />
-
-        <!-- delete the temp directory -->
-        <delete dir="${basedir}/build" />
     </target>
 
+    <!-- Generate the JGraphT runtime jar -->
+    <target name="jar" depends="compile" 
+                           description="Creates the runtime jar.">
+        <jar jarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.jar"
+             basedir="${builddir}" />
+    </target>
+
+    <!-- Run all JUnit tests -->
+    <target name="test" depends="compile"
+                           description="Builds and runs all JUnit tests.">
+        <!-- create a test build directory -->
+        <mkdir dir="${testbuilddir}" />
+
+        <javac srcdir="${basedir}/testsrc" destdir="${testbuilddir}">
+            <classpath refid="testbuild.classpath" />
+            <include name="org/_3pq/jgrapht/**"/>
+        </javac>
+        <junit printsummary="no" fork="yes" 
+                           haltonerror="true" haltonfailure="true">
+            <classpath refid="test.classpath"/>
+            <formatter type="brief" usefile="no" />
+            <test name="org._3pq.jgrapht.AllTests" />
+        </junit>
+    </target>
 
     <!-- Generate the JGraphT JavaDoc HTML pages -->
     <target name="javadoc" depends="init" 
@@ -82,7 +118,7 @@
 
 
     <!-- Make .zip distribution for JGraphT -->
-    <target name="zip" depends="compile"
+    <target name="zip" depends="jar"
     				   description="Creates a .zip distribution.">
 
         <!-- make a temporary distribution directory -->
@@ -113,6 +149,8 @@
 	            <include name="org/_3pq/jgrapht/ext/package.html"/>
 	            <include name="org/_3pq/jgrapht/graph/*.java"/>
 	            <include name="org/_3pq/jgrapht/graph/package.html"/>
+	            <include name="org/_3pq/jgrapht/traverse/*.java"/>
+	            <include name="org/_3pq/jgrapht/traverse/package.html"/>
             </fileset>
         </copy>
 
@@ -133,7 +171,7 @@
         </copy>
 
         <!-- add ant build file (this file) -->
-        <copy file="${ant.buildfile}" tofile="${distribution}/ant/build.xml" />
+        <copy file="${ant.buildfile}" tofile="${distribution}/build.xml" />
 
         <!-- add etc files -->
         <copy todir="${distribution}/etc">
@@ -167,7 +205,7 @@
 
 
     <!-- Make .tar.gz distribution for JGraphT -->
-    <target name="targz" depends="compile"
+    <target name="targz" depends="jar"
                          description="Creates a tar.gz distribution.">
 
         <!-- make a temporary distribution directory -->
@@ -198,6 +236,8 @@
 	            <include name="org/_3pq/jgrapht/ext/package.html"/>
 	            <include name="org/_3pq/jgrapht/graph/*.java"/>
 	            <include name="org/_3pq/jgrapht/graph/package.html"/>
+	            <include name="org/_3pq/jgrapht/traverse/*.java"/>
+	            <include name="org/_3pq/jgrapht/traverse/package.html"/>
             </fileset>
         </copy>
 
@@ -218,7 +258,7 @@
         </copy>
 
         <!-- add ant build file (this file) -->
-        <copy file="${ant.buildfile}" tofile="${distribution}/ant/build.xml" />
+        <copy file="${ant.buildfile}" tofile="${distribution}/build.xml" />
 
         <!-- add etc files -->
         <copy todir="${distribution}/etc">
@@ -257,9 +297,10 @@
 	<!-- Clean outputs from previous build -->    
 	<target name="clean"
 			depends="init"
-			description="Clean all outputs from previous builds">
+			description="Cleans all outputs from previous builds">
         <delete dir="${distribution}" />
-        <delete dir="${basedir}/build" />
+        <delete dir="${builddir}" />
+        <delete dir="${testbuilddir}" />
         <delete dir="${basedir}/javadoc" />
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.zip" />
@@ -271,7 +312,7 @@
 	<!-- Clean unnecessary outputs from this build -->    
 	<target name="postclean"
 			depends="init"
-			description="Clean unnecessary outputs from this build">
+			description="Cleans unnecessary outputs from this build">
         <delete dir="${basedir}/javadoc" />
         <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
 	</target>
@@ -279,8 +320,8 @@
 
     <!-- ALL -->
     <target name="all" 
-            depends="clean,compile,javadoc,zip,targz,postclean"
-            description="Cleans, compiles JGraphT, builds the jar, generates Javadocs and creates distribution files (.zip and .tar.gz).">
+            depends="clean,compile,test,javadoc,zip,targz,postclean"
+            description="Cleans, compiles and tests JGraphT, builds the jar, generates Javadocs and creates distribution files (.zip and .tar.gz).">
     </target>
 
 </project>
