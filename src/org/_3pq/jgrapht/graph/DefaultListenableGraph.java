@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -36,6 +36,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 04-Aug-2003 : Strong refs to listeners instead of weak refs (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 07-Mar-2004 : Fixed unnecessary clone bug #819075 (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -208,8 +209,8 @@ public class DefaultListenableGraph extends GraphDelegator
     public Object clone(  ) {
         try {
             DefaultListenableGraph g = (DefaultListenableGraph) super.clone(  );
-            g.m_graphListeners         = (ArrayList) m_graphListeners.clone(  );
-            g.m_vertexSetListeners     = (ArrayList) m_vertexSetListeners.clone(  );
+            g.m_graphListeners         = new ArrayList(  );
+            g.m_vertexSetListeners     = new ArrayList(  );
 
             return g;
         }
@@ -273,7 +274,7 @@ public class DefaultListenableGraph extends GraphDelegator
             super.removeVertex( v ); // remove the vertex itself
 
             fireVertexRemoved( v );
-            
+
             return true;
         }
         else {
