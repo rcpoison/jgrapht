@@ -22,45 +22,55 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
- * AllAlgTests.java
+ * GraphGenerator.java
  * ----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
- * Original Author:  Barak Naveh
+ * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
  * $Id$
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 16-Sept-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.alg.generator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.Map;
+
+import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.VertexFactory;
 
 /**
- * .
+ * EmptyGraphGenerator generates an <a
+ * href="http://mathworld.wolfram.com/EmptyGraph.html">empty graph</a> of any
+ * degree.
  *
- * @author Barak Naveh
+ * @author John V. Sichi
+ *
+ * @since Sept 16, 2003
  */
-public class AllAlgTests {
+public class EmptyGraphGenerator implements GraphGenerator {
+    private int m_degree;
+
     /**
-     * .
+     * Construct a new EmptyGraphGenerator.
      *
-     * @return
+     * @param degree number of vertices to be generated
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
+    public EmptyGraphGenerator( int degree ) {
+        m_degree = degree;
+    }
 
-        //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
-        suite.addTest( new TestSuite( DijkstraShortestPathTest.class ) );
-        suite.addTest( new TestSuite( GraphGeneratorTest.class ) );
-
-        //$JUnit-END$
-        return suite;
+    /**
+     * @see GraphGenerator#generateGraph
+     */
+    public void generateGraph( Graph target, VertexFactory vertexFactory,
+        Map resultMap ) {
+        for( int i = 0; i < m_degree; ++i ) {
+            target.addVertex( vertexFactory.createVertex(  ) );
+        }
     }
 }

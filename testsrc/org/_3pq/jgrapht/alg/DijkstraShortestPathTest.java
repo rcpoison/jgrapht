@@ -58,12 +58,33 @@ public class DijkstraShortestPathTest extends TestCase {
     static final String V3    = "v3";
     static final String V4    = "v4";
     static final String V5    = "v5";
-    Edge                       m_e12;
-    Edge                       m_e13;
-    Edge                       m_e15;
-    Edge                       m_e24;
-    Edge                       m_e34;
-    Edge                       m_e45;
+    Edge                m_e12;
+    Edge                m_e13;
+    Edge                m_e15;
+    Edge                m_e24;
+    Edge                m_e34;
+    Edge                m_e45;
+
+    /**
+     * .
+     */
+    public void testPathBetween(  ) {
+        List  path;
+        Graph g = create(  );
+
+        path = DijkstraShortestPath.findPathBetween( g, V1, V2 );
+        assertEquals( Arrays.asList( new Edge[] { m_e12 } ), path );
+
+        path = DijkstraShortestPath.findPathBetween( g, V1, V4 );
+        assertEquals( Arrays.asList( new Edge[] { m_e12, m_e24 } ), path );
+
+        path = DijkstraShortestPath.findPathBetween( g, V1, V5 );
+        assertEquals( Arrays.asList( new Edge[] { m_e12, m_e24, m_e45 } ), path );
+
+        path = DijkstraShortestPath.findPathBetween( g, V3, V4 );
+        assertEquals( Arrays.asList( new Edge[] { m_e13, m_e12, m_e24 } ), path );
+    }
+
 
     private Graph create(  ) {
         Graph g = new SimpleWeightedGraph(  );
@@ -93,26 +114,5 @@ public class DijkstraShortestPathTest extends TestCase {
         m_e15.setWeight( 100 );
 
         return g;
-    }
-
-
-    /**
-     * .
-     */
-    public void testPathBetween(  ) {
-        List  path;
-        Graph g = create(  );
-
-        path = DijkstraShortestPath.findPathBetween( g, V1, V2 );
-        assertEquals( Arrays.asList( new Edge[] { m_e12 } ), path );
-
-        path = DijkstraShortestPath.findPathBetween( g, V1, V4 );
-        assertEquals( Arrays.asList( new Edge[] { m_e12, m_e24 } ), path );
-
-        path = DijkstraShortestPath.findPathBetween( g, V1, V5 );
-        assertEquals( Arrays.asList( new Edge[] { m_e12, m_e24, m_e45 } ), path );
-
-        path = DijkstraShortestPath.findPathBetween( g, V3, V4 );
-        assertEquals( Arrays.asList( new Edge[] { m_e13, m_e12, m_e24 } ), path );
     }
 }

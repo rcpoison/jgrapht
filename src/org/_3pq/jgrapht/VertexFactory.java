@@ -22,45 +22,36 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
- * AllAlgTests.java
+ * VertexFactory.java
  * ----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
- * Original Author:  Barak Naveh
+ * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
  * $Id$
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 16-Sept-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
-
-import junit.framework.Test;
-import junit.framework.TestSuite;
+package org._3pq.jgrapht;
 
 /**
- * .
+ * A vertex factory used by graph algorithms for creating new vertices.
+ * Normally, vertices are constructed by user code and added to a graph
+ * explicitly, but algorithms which generate new vertices require a factory.
  *
- * @author Barak Naveh
+ * @author John V. Sichi
+ *
+ * @since Sept 16, 2003
  */
-public class AllAlgTests {
+public interface VertexFactory {
     /**
-     * .
+     * Creates a new vertex.
      *
-     * @return
+     * @return the new vertex
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
-
-        //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
-        suite.addTest( new TestSuite( DijkstraShortestPathTest.class ) );
-        suite.addTest( new TestSuite( GraphGeneratorTest.class ) );
-
-        //$JUnit-END$
-        return suite;
-    }
+    public Object createVertex(  );
 }

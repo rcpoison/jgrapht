@@ -265,7 +265,7 @@ final class TraverseUtils {
         private Iterator             m_vertexIterator = null;
         private Map                  m_seen           = new HashMap(  );
         private SimpleContainer      m_pending;
-        private Specifics m_specifics;
+        private Specifics            m_specifics;
 
         /** the connected component state */
         private int m_state = CCS_BEFORE_COMPONENT;
