@@ -110,6 +110,12 @@ import org.jgraph.graph.Port;
  * @author Barak Naveh
  * @since Aug 2, 2003
  */
+/*
+ * FUTURE WORK: Now that the adapter supports JGraph dangling edges, it is 
+ * possible, with a little effort, to eliminate the "known bugs" above. Some 
+ * todo and fixme marks in the code indicate where the possible imporovements 
+ * could be made to realize that.
+ */
 public class JGraphModelAdapter extends DefaultGraphModel {
     private static final long serialVersionUID = 3256722883706302515L;
 
