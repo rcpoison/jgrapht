@@ -39,6 +39,8 @@
  */
 package org._3pq.jgrapht.edge;
 
+import java.io.Serializable;
+
 import org._3pq.jgrapht.Edge;
 
 /**
@@ -49,7 +51,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Jul 14, 2003
  */
-public class DefaultEdge implements Edge, Cloneable {
+public class DefaultEdge implements Edge, Cloneable, Serializable {
     private Object m_source;
     private Object m_target;
 
