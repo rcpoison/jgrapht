@@ -79,7 +79,7 @@ public class VisioExporter {
             }
         };
 
-    private VertexNameProvider m_vertexNamingPolicy;
+    private VertexNameProvider m_vertexNameProvider;
 
     /**
      * Creates a new VisioExporter object with the specified naming policy.
@@ -88,7 +88,7 @@ public class VisioExporter {
      *        the Visio shapes.
      */
     public VisioExporter( VertexNameProvider vertexNameProvider ) {
-        m_vertexNamingPolicy = vertexNameProvider;
+        m_vertexNameProvider = vertexNameProvider;
     }
 
 
@@ -122,9 +122,9 @@ public class VisioExporter {
 
     private void exportEdge( PrintStream out, Edge edge ) {
         String sourceName =
-            m_vertexNamingPolicy.getVertexName( edge.getSource(  ) );
+            m_vertexNameProvider.getVertexName( edge.getSource(  ) );
         String targetName =
-            m_vertexNamingPolicy.getVertexName( edge.getTarget(  ) );
+            m_vertexNameProvider.getVertexName( edge.getTarget(  ) );
 
         out.print( "Link," );
 
@@ -143,7 +143,7 @@ public class VisioExporter {
 
 
     private void exportVertex( PrintStream out, Object vertex ) {
-        String name = m_vertexNamingPolicy.getVertexName( vertex );
+        String name = m_vertexNameProvider.getVertexName( vertex );
 
         out.print( "Shape," );
         out.print( name );
