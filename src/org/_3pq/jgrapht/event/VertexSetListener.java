@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------
- * ListenableGraph.java
- * --------------------
+/* ----------------------
+ * VertexSetListener.java
+ * ----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -37,50 +37,34 @@
  * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexSetListener;
+import java.util.EventListener;
 
 /**
- * A graph that supports listeners on structural change events.
+ * A listener that is notified when the graph's vertex set changes. It should
+ * be used when <i>only</i> notifications on edge-set changes are of interest.
+ * If all graph  notifications are of interest better use
+ * <code>GraphListener</code>.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.event.GraphListener
- * @see org._3pq.jgrapht.event.VertexSetListener
- * @since Jul 20, 2003
+ * @see org._3pq.jgrapht.GraphListener
+ * @since Jul 18, 2003
  */
-public interface ListenableGraph extends Graph {
+public interface VertexSetListener extends EventListener {
     /**
-     * Adds the specified graph listener to this graph, if not already present.
+     * Notifies that a vertex has been added to the graph.
      *
-     * @param l the listener to be added.
+     * @param e the vertex event.
      */
-    public void addGraphListener( GraphListener l );
-
-
-    /**
-     * Adds the specified vertex set listener to this graph, if not already
-     * present.
-     *
-     * @param l the listener to be added.
-     */
-    public void addVertexSetListener( VertexSetListener l );
+    public void vertexAdded( VertexEvent e );
 
 
     /**
-     * Removes the specified graph listener from this graph, if present.
+     * Notifies that a vertex has been removed from the graph.
      *
-     * @param l he listener to be removed.
+     * @param e the vertex event.
      */
-    public void removeGraphListener( GraphListener l );
-
-
-    /**
-     * Removes the specified vertex set listener from this graph, if present.
-     *
-     * @param l the listener to be removed.
-     */
-    public void removeVertexSetListener( VertexSetListener l );
+    public void vertexRemoved( VertexEvent e );
 }

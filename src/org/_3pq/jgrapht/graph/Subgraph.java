@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 26-Jul-2003 : Accurate constructors to avoid casting problems (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -49,10 +50,12 @@ import java.util.Set;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedElement;
+import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphListener;
+import org._3pq.jgrapht.event.VertexEvent;
 
 /**
  * A subgraph is a graph that has a subset of vertices and subset of edges with
@@ -559,37 +562,41 @@ public class Subgraph extends AbstractGraph {
      */
     private class BaseGraphListener implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(Edge)
+         * @see GraphListener#edgeAdded(EdgeEvent)
          */
-        public void edgeAdded( Edge e ) {
+        public void edgeAdded( EdgeEvent e ) {
             // we don't care
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(Edge)
+         * @see GraphListener#edgeRemoved(EdgeEvent)
          */
-        public void edgeRemoved( Edge e ) {
-            if( m_edgeSet.contains( e ) ) {
-                removeEdge( e );
+        public void edgeRemoved( EdgeEvent e ) {
+            Edge edge = e.getEdge(  );
+
+            if( m_edgeSet.contains( edge ) ) {
+                removeEdge( edge );
             }
         }
 
 
         /**
-         * @see VertexSetListener#vertexAdded(Object)
+         * @see VertexSetListener#vertexAdded(VertexEvent)
          */
-        public void vertexAdded( Object v ) {
+        public void vertexAdded( VertexEvent e ) {
             // we don't care
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(Object)
+         * @see VertexSetListener#vertexRemoved(VertexEvent)
          */
-        public void vertexRemoved( Object v ) {
-            if( m_vertexSet.contains( v ) ) {
-                removeVertex( v );
+        public void vertexRemoved( VertexEvent e ) {
+            Object vertex = e.getVertex(  );
+
+            if( m_vertexSet.contains( vertex ) ) {
+                removeVertex( vertex );
             }
         }
     }

@@ -35,18 +35,23 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 04-Aug-2003 : Strong refs to listeners instead of weak refs (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import java.util.ArrayList;
+import java.util.EventListener;
+import java.util.List;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.VertexSetListener;
 import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphListener;
+import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.VertexSetListener;
 
 /**
  * A graph backed by the the graph specified at the constructor, which can be
@@ -69,27 +74,76 @@ import org._3pq.jgrapht.WeightedGraph;
  */
 public class DefaultListenableGraph extends GraphDelegator
     implements ListenableGraph, Cloneable {
-    private ArrayList m_graphListeners     = new ArrayList(  );
-    private ArrayList m_vertexSetListeners = new ArrayList(  );
+    private ArrayList            m_graphListeners       = new ArrayList(  );
+    private ArrayList            m_vertexSetListeners   = new ArrayList(  );
+    private FlyweightEdgeEvent   m_reuseableEdgeEvent;
+    private FlyweightVertexEvent m_reuseableVertexEvent;
+    private boolean              m_reuseEvents;
 
     /**
-     * Constructor for DefaultListenableGraph.
+     * Creates a new listenable graph.
      *
      * @param g the backing graph.
-     *
-     * @throws IllegalArgumentException
-     *
-     * @see DefaultListenableGraph
      */
     public DefaultListenableGraph( Graph g ) {
-        super( g );
+        this( g, false );
+    }
 
-        // the following restriction could be relaxed in the future.
+
+    /**
+     * Creates a new listenable graph. If the <code>reuseEvents</code> flag is
+     * set to <code>true</code> this class will reuse previously fired events
+     * and will not create a new object for each event. This option increases
+     * performance but should be used with care, especially in multithreaded
+     * environment.
+     *
+     * @param g the backing graph.
+     * @param reuseEvents whether to reuse previously fired event objects
+     *        instead of creating a new event object for each event.
+     *
+     * @throws IllegalArgumentException if the backing graph is already a
+     *         listenable graph.
+     */
+    public DefaultListenableGraph( Graph g, boolean reuseEvents ) {
+        super( g );
+        m_reuseEvents              = reuseEvents;
+        m_reuseableEdgeEvent       = new FlyweightEdgeEvent( this, -1, null );
+        m_reuseableVertexEvent     = new FlyweightVertexEvent( this, -1, null );
+
+        // the following restriction could be probably relaxed in the future.
         if( g instanceof ListenableGraph ) {
             throw new IllegalArgumentException( 
                 "base graph cannot be listenable" );
         }
     }
+
+    /**
+     * If the <code>reuseEvents</code> flag is set to <code>true</code> this
+     * class will reuse previously fired events and will not create a new
+     * object for each event. This option increases performance but should be
+     * used with care, especially in multithreaded environment.
+     *
+     * @param reuseEvents whether to reuse previously fired event objects
+     *        instead of creating a new event object for each event.
+     */
+    public void setReuseEvents( boolean reuseEvents ) {
+        m_reuseEvents = reuseEvents;
+    }
+
+
+    /**
+     * Tests whether the <code>reuseEvents</code> flag is set. If the flag is
+     * set to <code>true</code> this class will reuse previously fired events
+     * and will not create a new object for each event. This option increases
+     * performance but should be used with care, especially in multithreaded
+     * environment.
+     *
+     * @return the value of the <code>reuseEvents</code> flag.
+     */
+    public boolean isReuseEvents(  ) {
+        return m_reuseEvents;
+    }
+
 
     /**
      * @see WeightedGraph#addEdge(Object, Object, double)
@@ -139,9 +193,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addGraphListener(GraphListener)
      */
     public void addGraphListener( GraphListener l ) {
-        if( !m_graphListeners.contains( l ) ) {
-            m_graphListeners.add( l );
-        }
+        addToListenerList( m_graphListeners, l );
     }
 
 
@@ -163,9 +215,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addVertexSetListener(VertexSetListener)
      */
     public void addVertexSetListener( VertexSetListener l ) {
-        if( !m_vertexSetListeners.contains( l ) ) {
-            m_vertexSetListeners.add( l );
-        }
+        addToListenerList( m_vertexSetListeners, l );
     }
 
 
@@ -252,12 +302,13 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param edge the edge that was added.
      */
     protected void fireEdgeAdded( Edge edge ) {
-        int len = m_graphListeners.size(  );
+        EdgeEvent e   = createEdgeEvent( EdgeEvent.EDGE_ADDED, edge );
+        int       len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            l.edgeAdded( edge );
+            l.edgeAdded( e );
         }
     }
 
@@ -268,12 +319,13 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param edge the edge that was removed.
      */
     protected void fireEdgeRemoved( Edge edge ) {
-        int len = m_graphListeners.size(  );
+        EdgeEvent e   = createEdgeEvent( EdgeEvent.EDGE_REMOVED, edge );
+        int       len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            l.edgeRemoved( edge );
+            l.edgeRemoved( e );
         }
     }
 
@@ -284,7 +336,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param vertex the vertex that was added.
      */
     protected void fireVertexAdded( Object vertex ) {
-        int len;
+        VertexEvent e   = createVertexEvent( VertexEvent.VERTEX_ADDED, vertex );
+        int         len;
 
         len = m_vertexSetListeners.size(  );
 
@@ -292,7 +345,7 @@ public class DefaultListenableGraph extends GraphDelegator
             VertexSetListener l =
                 (VertexSetListener) m_vertexSetListeners.get( i );
 
-            l.vertexAdded( vertex );
+            l.vertexAdded( e );
         }
 
         len = m_graphListeners.size(  );
@@ -300,7 +353,7 @@ public class DefaultListenableGraph extends GraphDelegator
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            l.vertexAdded( vertex );
+            l.vertexAdded( e );
         }
     }
 
@@ -311,7 +364,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @param vertex the vertex that was removed.
      */
     protected void fireVertexRemoved( Object vertex ) {
-        int len;
+        VertexEvent e = createVertexEvent( VertexEvent.VERTEX_REMOVED, vertex );
+        int         len;
 
         len = m_vertexSetListeners.size(  );
 
@@ -319,7 +373,7 @@ public class DefaultListenableGraph extends GraphDelegator
             VertexSetListener l =
                 (VertexSetListener) m_vertexSetListeners.get( i );
 
-            l.vertexRemoved( vertex );
+            l.vertexRemoved( e );
         }
 
         len = m_graphListeners.size(  );
@@ -327,7 +381,111 @@ public class DefaultListenableGraph extends GraphDelegator
         for( int i = 0; i < len; i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            l.vertexRemoved( vertex );
+            l.vertexRemoved( e );
+        }
+    }
+
+
+    private void addToListenerList( List list, EventListener l ) {
+        if( !list.contains( l ) ) {
+            list.add( l );
+        }
+    }
+
+
+    private EdgeEvent createEdgeEvent( int eventType, Edge edge ) {
+        if( m_reuseEvents ) {
+            m_reuseableEdgeEvent.setType( eventType );
+            m_reuseableEdgeEvent.setEdge( edge );
+
+            return m_reuseableEdgeEvent;
+        }
+        else {
+            return new EdgeEvent( this, eventType, edge );
+        }
+    }
+
+
+    private VertexEvent createVertexEvent( int eventType, Object vertex ) {
+        if( m_reuseEvents ) {
+            m_reuseableVertexEvent.setType( eventType );
+            m_reuseableVertexEvent.setVertex( vertex );
+
+            return m_reuseableVertexEvent;
+        }
+        else {
+            return new VertexEvent( this, eventType, vertex );
+        }
+    }
+
+    /**
+     * A reuseable edge event.
+     *
+     * @author Barak Naveh
+     *
+     * @since Aug 10, 2003
+     */
+    private static class FlyweightEdgeEvent extends EdgeEvent {
+        /**
+         * @see EdgeEvent#EdgeEvent(Object, int, Edge)
+         */
+        public FlyweightEdgeEvent( Object eventSource, int type, Edge e ) {
+            super( eventSource, type, e );
+        }
+
+        /**
+         * Sets the edge of this event.
+         *
+         * @param e the edge to be set.
+         */
+        protected void setEdge( Edge e ) {
+            m_edge = e;
+        }
+
+
+        /**
+         * Set the event type of this event.
+         *
+         * @param type the type to be set.
+         */
+        protected void setType( int type ) {
+            m_type = type;
+        }
+    }
+
+
+    /**
+     * A reuseable vertex event.
+     *
+     * @author Barak Naveh
+     *
+     * @since Aug 10, 2003
+     */
+    private static class FlyweightVertexEvent extends VertexEvent {
+        /**
+         * @see VertexEvent#VertexEvent(Object, int, Object)
+         */
+        public FlyweightVertexEvent( Object eventSource, int type, Object vertex ) {
+            super( eventSource, type, vertex );
+        }
+
+        /**
+         * Set the event type of this event.
+         *
+         * @param type type to be set.
+         */
+        protected void setType( int type ) {
+            m_type = type;
+        }
+
+
+        /**
+         * Sets the vertex of this event.
+         *
+         * @param vertex the vertex to be set.
+         */
+        protected void setVertex( Object vertex ) {
+            m_vertex = vertex;
         }
     }
 }

@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 06-Aug-2003 : Initial revision (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -45,9 +46,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.GraphListener;
+import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphListener;
+import org._3pq.jgrapht.event.VertexEvent;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
 
@@ -65,10 +67,10 @@ import org._3pq.jgrapht.traverse.TraversalListenerAdapter;
  * </p>
  * 
  * <p>
- * The inspector is also a {@link org._3pq.jgrapht.GraphListener}. If added as
- * a listener to the inspected graph, the inspector will amend internal cached
- * results instead of recomputing them. It is efficient when a few
- * modifications are applied to a large graph. If many modifications are
+ * The inspector is also a {@link org._3pq.jgrapht.event.GraphListener}. If
+ * added as a listener to the inspected graph, the inspector will amend
+ * internal cached results instead of recomputing them. It is efficient when a
+ * few modifications are applied to a large graph. If many modifications are
  * expected it will not be efficient due to added overhead on graph update
  * operations. If inspector is added as listener to a graph other than the one
  * it inspects, results are undefined.
@@ -154,17 +156,17 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see org._3pq.jgrapht.GraphListener#edgeAdded(Edge)
+     * @see GraphListener#edgeAdded(EdgeEvent)
      */
-    public void edgeAdded( Edge e ) {
+    public void edgeAdded( EdgeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
     /**
-     * @see org._3pq.jgrapht.GraphListener#edgeRemoved(Edge)
+     * @see GraphListener#edgeRemoved(EdgeEvent)
      */
-    public void edgeRemoved( Edge e ) {
+    public void edgeRemoved( EdgeEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
@@ -193,17 +195,17 @@ public class ConnectivityInspector implements GraphListener {
 
 
     /**
-     * @see org._3pq.jgrapht.VertexSetListener#vertexAdded(Object)
+     * @see VertexSetListener#vertexAdded(VertexEvent)
      */
-    public void vertexAdded( Object v ) {
+    public void vertexAdded( VertexEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 
 
     /**
-     * @see org._3pq.jgrapht.VertexSetListener#vertexRemoved(Object)
+     * @see VertexSetListener#vertexRemoved(VertexEvent)
      */
-    public void vertexRemoved( Object v ) {
+    public void vertexRemoved( VertexEvent e ) {
         init(  ); // for now invalidate cached results, in the future need to amend them. 
     }
 

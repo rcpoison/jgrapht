@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 03-Aug-2003 : Initial revision (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,9 +42,11 @@ package org._3pq.jgrapht.graph;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.VertexSetListener;
+import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphListener;
+import org._3pq.jgrapht.event.VertexEvent;
+import org._3pq.jgrapht.event.VertexSetListener;
 
 /**
  * Unit test for {@link ListenableGraph} class.
@@ -197,34 +200,34 @@ public class ListenableGraphTest extends TestCase {
      */
     private class MyGraphListner implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(Edge)
+         * @see GraphListener#edgeAdded(EdgeEvent)
          */
-        public void edgeAdded( Edge e ) {
-            m_lastAddedEdge = e;
+        public void edgeAdded( EdgeEvent e ) {
+            m_lastAddedEdge = e.getEdge(  );
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(Edge)
+         * @see GraphListener#edgeRemoved(EdgeEvent)
          */
-        public void edgeRemoved( Edge e ) {
-            m_lastRemovedEdge = e;
+        public void edgeRemoved( EdgeEvent e ) {
+            m_lastRemovedEdge = e.getEdge(  );
         }
 
 
         /**
-         * @see VertexSetListener#vertexAdded(Object)
+         * @see VertexSetListener#vertexAdded(VertexEvent)
          */
-        public void vertexAdded( Object v ) {
-            m_lastAddedVertex = v;
+        public void vertexAdded( VertexEvent e ) {
+            m_lastAddedVertex = e.getVertex(  );
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(Object)
+         * @see VertexSetListener#vertexRemoved(VertexEvent)
          */
-        public void vertexRemoved( Object v ) {
-            m_lastRemovedVertex = v;
+        public void vertexRemoved( VertexEvent e ) {
+            m_lastRemovedVertex = e.getVertex(  );
         }
     }
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------
- * VertexSetListener.java
- * ----------------------
+/* ------------------
+ * GraphListener.java
+ * ------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,36 +34,38 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.event;
 
-import java.util.EventListener;
 
 /**
- * A listener that is notified when the graph's vertex set changes. It should
- * be used when <i>only</i> notifications on edge-set changes are of interest.
- * If all graph  notifications are of interest better use
- * <code>GraphListener</code>.
+ * A listener that is notified when the graph changes.
+ * 
+ * <p>
+ * If only notifications on vertex set changes are required it is more
+ * efficient to use the VertexSetListener.
+ * </p>
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.GraphListener
+ * @see org._3pq.jgrapht.VertexSetListener
  * @since Jul 18, 2003
  */
-public interface VertexSetListener extends EventListener {
+public interface GraphListener extends VertexSetListener {
     /**
-     * Notifies that the specifed vertex has been added to the graph.
+     * Notifies that an edge has been added to the graph.
      *
-     * @param v the vertex that has been added.
+     * @param e the edge event.
      */
-    public void vertexAdded( Object v );
+    public void edgeAdded( EdgeEvent e );
 
 
     /**
-     * Notifies that the specifed vertex has been removed from the graph.
+     * Notifies that an edge has been removed from the graph.
      *
-     * @param v the vertex that has been removed.
+     * @param  e the edge event.
      */
-    public void vertexRemoved( Object v );
+    public void edgeRemoved( EdgeEvent e );
 }

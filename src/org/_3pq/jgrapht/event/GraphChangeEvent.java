@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------
- * GraphListener.java
- * ------------------
+/* ---------------------
+ * GraphChangeEvent.java
+ * ---------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,37 +33,40 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.event;
 
 /**
- * A listener that is notified when the graph changes.
- * 
- * <p>
- * If only notifications on vertex set changes are required it is more
- * efficient to use the VertexSetListener.
- * </p>
+ * An event which indicates that a graph has changed. This class is a root
+ * event class for all graph events.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.VertexSetListener
- * @since Jul 18, 2003
+ * @since Aug 10, 2003
  */
-public interface GraphListener extends VertexSetListener {
-    /**
-     * Notifies that the specified edge has been added to the graph.
-     *
-     * @param e the edge that has been added.
-     */
-    public void edgeAdded( Edge e );
-
+public class GraphChangeEvent extends java.util.EventObject {
+    /** The type of this event. */
+    protected int m_type;
 
     /**
-     * Notifies that the specifed edge has been removed from the graph.
+     * Creates a new graph change event.
      *
-     * @param e the edge that has been removed.
+     * @param eventSource the source of the event.
+     * @param type the type of event.
      */
-    public void edgeRemoved( Edge e );
+    public GraphChangeEvent( Object eventSource, int type ) {
+        super( eventSource );
+        m_type = type;
+    }
+
+    /**
+     * Returns the event type.
+     *
+     * @return the event type.
+     */
+    public int getType(  ) {
+        return m_type;
+    }
 }

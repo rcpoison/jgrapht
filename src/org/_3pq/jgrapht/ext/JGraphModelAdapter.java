@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 02-Aug-2003 : Initial revision (BN);
+ * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
 package org._3pq.jgrapht.ext;
@@ -60,8 +61,10 @@ import com.jgraph.graph.ParentMap;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.GraphListener;
 import org._3pq.jgrapht.ListenableGraph;
+import org._3pq.jgrapht.event.EdgeEvent;
+import org._3pq.jgrapht.event.GraphListener;
+import org._3pq.jgrapht.event.VertexEvent;
 
 /**
  * An adapter that reflects a JGraphT graph as a JGraph graph. This adapter is
@@ -387,34 +390,34 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      */
     private class MyGraphListener implements GraphListener {
         /**
-         * @see GraphListener#edgeAdded(Edge)
+         * @see GraphListener#edgeAdded(EdgeEvent)
          */
-        public void edgeAdded( Edge e ) {
-            addJGraphTEdge( e );
+        public void edgeAdded( EdgeEvent e ) {
+            addJGraphTEdge( e.getEdge(  ) );
         }
 
 
         /**
-         * @see GraphListener#edgeRemoved(Edge)
+         * @see GraphListener#edgeRemoved(EdgeEvent)
          */
-        public void edgeRemoved( Edge e ) {
-            removeJGraphTEdge( e );
+        public void edgeRemoved( EdgeEvent e ) {
+            removeJGraphTEdge( e.getEdge(  ) );
         }
 
 
         /**
-         * @see VertexSetListener#vertexAdded(java.lang.Object)
+         * @see VertexSetListener#vertexAdded(VertexEvent)
          */
-        public void vertexAdded( Object v ) {
-            addJGraphTVertex( v );
+        public void vertexAdded( VertexEvent e ) {
+            addJGraphTVertex( e.getVertex(  ) );
         }
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(java.lang.Object)
+         * @see VertexSetListener#vertexRemoved(VertexEvent)
          */
-        public void vertexRemoved( Object v ) {
-            removeJGraphTVertex( v );
+        public void vertexRemoved( VertexEvent e ) {
+            removeJGraphTVertex( e.getVertex(  ) );
         }
     }
 }
