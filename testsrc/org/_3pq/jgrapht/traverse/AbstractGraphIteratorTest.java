@@ -41,7 +41,6 @@ package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.EdgeTraversalEvent;
 import org._3pq.jgrapht.event.TraversalListener;
@@ -122,8 +121,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
     abstract String getExpectedStr2(  );
 
 
-    abstract AbstractGraphIterator createIterator(
-        DirectedGraph g, Object startVertex );
+    abstract AbstractGraphIterator createIterator( DirectedGraph g,
+        Object startVertex );
 
     /**
      * Internal traversal listener.

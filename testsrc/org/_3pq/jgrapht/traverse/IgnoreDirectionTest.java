@@ -27,17 +27,17 @@
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
+ * Contributor(s):   -
  *
  * $Id$
  *
  * Changes
  * -------
- * 8-Aug-2003 : Initial revision (JVS);
+ * 08-Aug-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.graph.AsUndirectedGraph;
@@ -69,9 +69,8 @@ public class IgnoreDirectionTest extends AbstractGraphIteratorTest {
     AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
         // ignore the passed in vertex and always start from v4, since that's
         // the only vertex without out-edges
-        UndirectedGraph undirectedView = new AsUndirectedGraph( g );
-        AbstractGraphIterator i = new DepthFirstIterator(
-            undirectedView, "4" );
+        UndirectedGraph       undirectedView = new AsUndirectedGraph( g );
+        AbstractGraphIterator i = new DepthFirstIterator( undirectedView, "4" );
         i.setCrossComponentTraversal( true );
 
         return i;

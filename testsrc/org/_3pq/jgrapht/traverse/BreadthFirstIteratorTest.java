@@ -39,7 +39,6 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.DirectedGraph;
 
 /**
