@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
+/* ------------------
  * VertexFactory.java
- * ----------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * ------------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 16-Sept-2003 : Initial revision (JVS);
+ * 16-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht;
@@ -45,7 +45,7 @@ package org._3pq.jgrapht;
  *
  * @author John V. Sichi
  *
- * @since Sept 16, 2003
+ * @since Sep 16, 2003
  */
 public interface VertexFactory {
     /**
