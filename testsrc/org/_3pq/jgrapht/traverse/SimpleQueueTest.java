@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------
- * SimpleStackTest.java
+ * SimpleQueueTest.java
  * --------------------
  * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
@@ -36,25 +36,25 @@
  * 30-Jul-2003 : Initial revision (LR);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import junit.framework.TestCase;
 
-import org._3pq.jgrapht.alg.AlgUtils.SimpleStack;
+import org._3pq.jgrapht.traverse.TraverseUtils.SimpleQueue;
 
 /**
- * Unit test for SimpleStack.
+ * Unit test for SimpleQueue.
  *
  * @author Liviu Rau
  */
-public class SimpleStackTest extends TestCase {
+public class SimpleQueueTest extends TestCase {
     /**
      * .
      */
     public void testAdd(  ) {
-        SimpleStack ss = new SimpleStack(  );
-        ss.add( new Object(  ) );
-        assertFalse( ss.isEmpty(  ) );
+        SimpleQueue sq = new SimpleQueue(  );
+        sq.add( new Object(  ) );
+        assertFalse( sq.isEmpty(  ) );
     }
 
 
@@ -62,8 +62,8 @@ public class SimpleStackTest extends TestCase {
      * .
      */
     public void testIsEmpty(  ) {
-        SimpleStack ss = new SimpleStack(  );
-        assertTrue( ss.isEmpty(  ) );
+        SimpleQueue sq = new SimpleQueue(  );
+        assertTrue( sq.isEmpty(  ) );
     }
 
 
@@ -71,13 +71,13 @@ public class SimpleStackTest extends TestCase {
      * .
      */
     public void testRemove(  ) {
-        SimpleStack ss = new SimpleStack(  );
+        SimpleQueue sq = new SimpleQueue(  );
         Object      o = new Object(  );
-        ss.add( o );
-        ss.add( "string" );
-        assertEquals( "string", ss.remove(  ) );
-        assertFalse( ss.isEmpty(  ) );
-        assertEquals( o, ss.remove(  ) );
-        assertTrue( ss.isEmpty(  ) );
+        sq.add( o );
+        sq.add( "string" );
+        assertEquals( o, sq.remove(  ) );
+        assertFalse( sq.isEmpty(  ) );
+        assertEquals( "string", sq.remove(  ) );
+        assertTrue( sq.isEmpty(  ) );
     }
 }

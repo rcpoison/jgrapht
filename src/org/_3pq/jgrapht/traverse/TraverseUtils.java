@@ -36,12 +36,13 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 
 /**
@@ -51,8 +52,20 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @since Jul 31, 2003
  */
-public final class AlgUtils {
-    private AlgUtils(  ) {} // ensure non-instantiability.
+public final class TraverseUtils {
+    private TraverseUtils(  ) {} // ensure non-instantiability.
+
+    static Specifics createGraphSpecifics( Graph g ) {
+        if( g instanceof DirectedGraph ) {
+            return new DirectedSpecifics( (DirectedGraph) g );
+        }
+        else if( g instanceof UndirectedGraph ) {
+            return new UndirectedSpecifics( (UndirectedGraph) g );
+        }
+        else {
+            throw new IllegalArgumentException( "Unsupported graph type" );
+        }
+    }
 
     /**
      * A simple queue structure.
@@ -61,7 +74,7 @@ public final class AlgUtils {
      *
      * @since Jul 29, 2003
      */
-    public static class SimpleQueue {
+    static class SimpleQueue {
         private LinkedList m_elementList = new LinkedList(  );
 
         /**
@@ -103,7 +116,7 @@ public final class AlgUtils {
      *
      * @since Jul 28, 2003
      */
-    public abstract static class Specifics {
+    abstract static class Specifics {
         /**
          * Returns the edges outgoing from the specified vertex in case of
          * directed graph, and the edge touching the specified vertex in case
@@ -120,13 +133,14 @@ public final class AlgUtils {
 
 
     /**
-     * An implementation of {@link AlgUtils.Specifics} for a directed graph.
+     * An implementation of {@link TraverseUtils.Specifics} for a directed
+     * graph.
      *
      * @author Barak Naveh
      *
      * @since Jul 28, 2003
      */
-    public static class DirectedSpecifics extends Specifics {
+    static class DirectedSpecifics extends Specifics {
         private DirectedGraph m_graph;
 
         /**
@@ -139,7 +153,7 @@ public final class AlgUtils {
         }
 
         /**
-         * @see AlgUtils.Specifics#edgesOf(Object)
+         * @see TraverseUtils.Specifics#edgesOf(Object)
          */
         public List edgesOf( Object vertex ) {
             return m_graph.outgoingEdgesOf( vertex );
@@ -152,7 +166,7 @@ public final class AlgUtils {
      *
      * @author Liviu Rau
      */
-    public static class SimpleStack {
+    static class SimpleStack {
         private LinkedList m_elementList = new LinkedList(  );
 
         /**
@@ -187,13 +201,14 @@ public final class AlgUtils {
 
 
     /**
-     * An implementation of {@link AlgUtils.Specifics} for an undirected graph.
+     * An implementation of {@link TraverseUtils.Specifics} for an undirected
+     * graph.
      *
      * @author Barak Naveh
      *
      * @since Jul 28, 2003
      */
-    public static class UndirectedSpecifics extends Specifics {
+    static class UndirectedSpecifics extends Specifics {
         private UndirectedGraph m_graph;
 
         /**
@@ -206,7 +221,7 @@ public final class AlgUtils {
         }
 
         /**
-         * @see AlgUtils.Specifics#edgesOf(Object)
+         * @see TraverseUtils.Specifics#edgesOf(Object)
          */
         public List edgesOf( Object vertex ) {
             return m_graph.edgesOf( vertex );

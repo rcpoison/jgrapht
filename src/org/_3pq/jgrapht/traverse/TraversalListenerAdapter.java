@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
- * AllAlgTests.java
- * ----------------
+/* -----------------------------
+ * TraversalListenerAdapter.java
+ * -----------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,34 +33,42 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 06-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
+import org._3pq.jgrapht.Edge;
 
 /**
- * .
+ * An empty do-nothing implementation of the {@link TraversalListener}
+ * interface used for subclasses.
  *
  * @author Barak Naveh
+ *
+ * @since Aug 6, 2003
  */
-public class AllAlgTests {
+public class TraversalListenerAdapter implements TraversalListener {
     /**
-     * .
-     *
-     * @return
+     * @see TraversalListener#connectedComponentFinished()
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
+    public void connectedComponentFinished(  ) {}
 
-        //$JUnit-BEGIN$
-        
-        // alg class tests should come here
-        
-        //$JUnit-END$
-        return suite;
-    }
+
+    /**
+     * @see TraversalListener#connectedComponentStarted()
+     */
+    public void connectedComponentStarted(  ) {}
+
+
+    /**
+     * @see TraversalListener#edgeVisited(Edge)
+     */
+    public void edgeVisited( Edge edge ) {}
+
+
+    /**
+     * @see TraversalListener#vertexVisited(Object)
+     */
+    public void vertexVisited( Object vertex ) {}
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -----------------------------
- * BreadthFirstIteratorTest.java
- * -----------------------------
+/* ---------------------------
+ * DepthFirstIteratorTest.java
+ * ---------------------------
  * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
  * Original Author:  Liviu Rau
@@ -36,28 +36,29 @@
  * 30-Jul-2003 : Initial revision (LR);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org._3pq.jgrapht.traverse.DepthFirstIterator;
 
 /**
- * Tests for the {@link BreadthFirstIterator} class.
+ * Tests for the {@link DepthFirstIteratorTest} class.
  *
  * @author Liviu Rau
  *
  * @since Jul 30, 2003
  */
-public class BreadthFirstIteratorTest extends TestCase {
+public class DepthFirstIteratorTest extends TestCase {
     /**
      * .
      */
     public void testDirectedGraph(  ) {
         DirectedGraph graph = new DefaultDirectedGraph(  );
 
-        //
+        //        
         String v1 = "1";
         String v2 = "2";
         String v3 = "3";
@@ -93,8 +94,8 @@ public class BreadthFirstIteratorTest extends TestCase {
         graph.addEdge( v8, v2 );
         graph.addEdge( v9, v4 );
 
-        BreadthFirstIterator iterator = new BreadthFirstIterator( graph, v1 );
-        StringBuffer         result = new StringBuffer(  );
+        DepthFirstIterator iterator = new DepthFirstIterator( graph, v1, true );
+        StringBuffer       result = new StringBuffer(  );
 
         while( iterator.hasNext(  ) ) {
             result.append( (String) iterator.next(  ) );
@@ -105,6 +106,6 @@ public class BreadthFirstIteratorTest extends TestCase {
         }
 
         String s = result.toString(  );
-        assertEquals( "1,2,3,4,5,6,7,8,9,orphan", s );
+        assertEquals( "1,3,6,5,7,9,4,8,2,orphan", s );
     }
 }

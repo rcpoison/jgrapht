@@ -24,20 +24,19 @@
 /* -------------------------
  * BreadthFirstIterator.java
  * -------------------------
- * (C) Copyright 2003, by Liviu Rau and Contributors.
+ * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
- * Original Author:  Liviu Rau
- * Contributor(s):   Barak Naveh
+ * Original Author:  Barak Naveh
+ * Contributor(s):   Liviu Rau
  *
  * $Id$
  *
  * Changes
  * -------
- * 29-Jul-2003 : Initial revision (LR);
- * 31-Jul-2003 : Fixed traversal across connected components (BN);
+ * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -45,69 +44,96 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.alg.AlgUtils.DirectedSpecifics;
-import org._3pq.jgrapht.alg.AlgUtils.SimpleStack;
-import org._3pq.jgrapht.alg.AlgUtils.Specifics;
-import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
+import org._3pq.jgrapht.traverse.TraverseUtils.SimpleQueue;
+import org._3pq.jgrapht.traverse.TraverseUtils.Specifics;
 
 /**
- * A depth-first iterator for a directed and an undirected graph. For this
+ * A breadth-first iterator for a directed and an undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The result
  * of such modifications are undefined.
  *
- * @author Liviu Rau
+ * @author Barak Naveh
  *
- * @since Jul 29, 2003
+ * @since Jul 19, 2003
  */
-public class DepthFirstIterator extends AbstractGraphIterator {
+public class BreadthFirstIterator extends AbstractGraphIterator {
     // todo: support ConcurrentModificationException if graph modified during iteration. 
     private Iterator    m_vertexIterator = null;
     private Set         m_seen      = new HashSet(  );
-    private SimpleStack m_stack     = new SimpleStack(  );
+    private SimpleQueue m_pending   = new SimpleQueue(  );
     private Specifics   m_specifics;
 
     /**
-     * Creates a new DepthFirstIterator object.
+     * Creates a new breadth-first iterator for the specified graph.
      *
-     * @param g the directed graph to be iterated.
-     * @param startVertex the vertex iteration to be started.
+     * @param g the graph to be iterated.
+     * @param crossComponentTraversal whether to traverse the graph across
+     *        connected components.
      */
-    public DepthFirstIterator( DirectedGraph g, Object startVertex ) {
-        super(  );
-        init( g, startVertex );
-        m_specifics = new DirectedSpecifics( g );
+    public BreadthFirstIterator( Graph g, boolean crossComponentTraversal ) {
+        this( g, null, crossComponentTraversal );
     }
 
 
     /**
-     * Creates a new DepthFirstIterator object.
+     * Creates a new breadth-first iterator for the specified graph. Iteration
+     * will start at the specified start vertex. If the specified start vertex
+     * is <code>null</code>, Iteration will start at an arbitrary graph
+     * vertex.
      *
-     * @param g the undirected graph to be iterated.
+     * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
+     * @param crossComponentTraversal whether to traverse the graph across
+     *        connected components.
+     *
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
      */
-    public DepthFirstIterator( UndirectedGraph g, Object startVertex ) {
+    public BreadthFirstIterator( Graph g, Object startVertex,
+        boolean crossComponentTraversal ) {
         super(  );
-        init( g, startVertex );
-        m_specifics = new UndirectedSpecifics( g );
+
+        if( g == null ) {
+            throw new NullPointerException( "graph must not be null" );
+        }
+
+        m_specifics          = TraverseUtils.createGraphSpecifics( g );
+        m_vertexIterator     = g.vertexSet(  ).iterator(  );
+        setCrossComponentTraversal( crossComponentTraversal );
+
+        if( startVertex == null ) {
+            // pick a start vertex if graph not empty 
+            if( m_vertexIterator.hasNext(  ) ) {
+                Object vStart = g.vertexSet(  ).iterator(  ).next(  );
+                m_seen.add( vStart );
+                m_pending.add( vStart );
+            }
+        }
+        else if( g.containsVertex( startVertex ) ) {
+            m_seen.add( startVertex );
+            m_pending.add( startVertex );
+        }
+        else {
+            throw new IllegalArgumentException( 
+                "graph must contain the start vertex" );
+        }
     }
 
     /**
      * @see java.util.Iterator#hasNext()
      */
     public boolean hasNext(  ) {
-        if( m_stack.isEmpty(  ) ) {
+        if( m_pending.isEmpty(  ) ) {
             if( isCrossComponentTraversal(  ) ) {
                 while( m_vertexIterator.hasNext(  ) ) {
                     Object v = m_vertexIterator.next(  );
 
                     if( !m_seen.contains( v ) ) {
                         m_seen.add( v );
-                        m_stack.add( v );
+                        m_pending.add( v );
 
                         return true;
                     }
@@ -130,10 +156,10 @@ public class DepthFirstIterator extends AbstractGraphIterator {
      */
     public Object next(  ) {
         if( hasNext(  ) ) {
-            Object nextVertex = m_stack.remove(  );
+            Object nextVertex = m_pending.remove(  );
             fireVertexVisited( nextVertex );
 
-            pushChildrenOf( nextVertex );
+            enqueueUnseenChildrenOf( nextVertex );
 
             return nextVertex;
         }
@@ -143,22 +169,7 @@ public class DepthFirstIterator extends AbstractGraphIterator {
     }
 
 
-    private void init( Graph g, Object startVertex ) {
-        if( startVertex == null || g == null ) {
-            throw new NullPointerException(  );
-        }
-
-        if( !g.containsVertex( startVertex ) ) {
-            throw new IllegalArgumentException( "start vertex not in graph" );
-        }
-
-        m_seen.add( startVertex );
-        m_stack.add( startVertex );
-        m_vertexIterator = g.vertexSet(  ).iterator(  );
-    }
-
-
-    private void pushChildrenOf( Object vertex ) {
+    private void enqueueUnseenChildrenOf( Object vertex ) {
         List edges = m_specifics.edgesOf( vertex );
 
         for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
@@ -169,7 +180,7 @@ public class DepthFirstIterator extends AbstractGraphIterator {
 
             if( !m_seen.contains( v ) ) {
                 m_seen.add( v );
-                m_stack.add( v );
+                m_pending.add( v );
             }
         }
     }

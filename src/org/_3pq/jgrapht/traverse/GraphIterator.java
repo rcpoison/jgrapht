@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
- * AllAlgTests.java
- * ----------------
+/* ------------------
+ * GraphIterator.java
+ * ------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,34 +33,52 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 31-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import java.util.Iterator;
 
 
 /**
- * .
+ * A graph iterator.
  *
  * @author Barak Naveh
+ *
+ * @since Jul 31, 2003
  */
-public class AllAlgTests {
+public interface GraphIterator extends Iterator {
     /**
-     * .
+     * Test whether this iterator is set to traverse the grpah across connected
+     * components.
      *
-     * @return
+     * @return <code>true</code> if traverses across connected components,
+     *         otherwise <code>false</code>.
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
+    public boolean isCrossComponentTraversal(  );
 
-        //$JUnit-BEGIN$
-        
-        // alg class tests should come here
-        
-        //$JUnit-END$
-        return suite;
-    }
+
+    /**
+     * Adds the specified traversal listener to this iterator.
+     *
+     * @param l the traversal listener to be added.
+     */
+    public void addTraversalListener( TraversalListener l );
+
+
+    /**
+     * Unsupported.
+     *
+     * @throws UnsupportedOperationException
+     */
+    public void remove(  );
+
+
+    /**
+     * Removes the specified traversal listener from this iterator.
+     *
+     * @param l the traversal listener to be removed.
+     */
+    public void removeTraversalListener( TraversalListener l );
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------
- * TraversalListener.java
- * ----------------------
+/* ----------------
+ * AllTraverseTests.java
+ * ----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -36,47 +36,32 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.traverse;
 
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
- * A listener on graph iterator or on a graph traverser.
+ * .
  *
  * @author Barak Naveh
- *
- * @since Jul 19, 2003
  */
-public interface TraversalListener {
+public class AllTraverseTests {
     /**
-     * Called to inform the listener that the traversal of the current
-     * connected component finished.
-     */
-    public void connectedComponentFinished(  );
-
-
-    /**
-     * Called to inform the listener that a traversal of a new connected
-     * component has started.
-     */
-    public void connectedComponentStarted(  );
-
-
-    /**
-     * Called to inform the listener that the specified edge have been visited
-     * during  the graph traversal. Depending on the traversal algorithm, edge
-     * might be visited more than once.
+     * .
      *
-     * @param edge the visited edge.
+     * @return
      */
-    public void edgeVisited( Edge edge );
+    public static Test suite(  ) {
+        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
 
+        //$JUnit-BEGIN$
+        suite.addTest( new TestSuite( BreadthFirstIteratorTest.class ) );
+        suite.addTest( new TestSuite( DepthFirstIteratorTest.class ) );
+        suite.addTest( new TestSuite( SimpleQueueTest.class ) );
+        suite.addTest( new TestSuite( SimpleStackTest.class ) );
 
-    /**
-     * Called to inform the listener that the specified vertex have been
-     * visited during the graph traversal. Depending on the traversal
-     * algorithm, vertex might be visited more than once.
-     *
-     * @param vertex the visited vertex.
-     */
-    public void vertexVisited( Object vertex );
+        //$JUnit-END$
+        return suite;
+    }
 }

@@ -46,6 +46,7 @@ import junit.framework.TestSuite;
 import org._3pq.jgrapht.alg.AllAlgTests;
 import org._3pq.jgrapht.edge.AllEdgeTests;
 import org._3pq.jgrapht.graph.AllGraphTests;
+import org._3pq.jgrapht.traverse.AllTraverseTests;
 
 /**
  * Runs all unit tests of the JGraphT library.
@@ -53,10 +54,7 @@ import org._3pq.jgrapht.graph.AllGraphTests;
  * @author Barak Naveh
  */
 public final class AllTests {
-    /*
-     * We don't want instances of this class.
-     */
-    private AllTests(  ) {}
+    private AllTests(  ) {} // ensure non-instantiability.
 
     /**
      * Creates a test suite that includes all JGraphT tests.
@@ -70,6 +68,7 @@ public final class AllTests {
         suite.addTestSuit( (TestSuite) AllEdgeTests.suite(  ) );
         suite.addTestSuit( (TestSuite) AllGraphTests.suite(  ) );
         suite.addTestSuit( (TestSuite) AllAlgTests.suite(  ) );
+        suite.addTestSuit( (TestSuite) AllTraverseTests.suite(  ) );
 
         return suite;
     }

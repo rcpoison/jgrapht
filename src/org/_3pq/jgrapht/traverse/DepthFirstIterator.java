@@ -24,19 +24,20 @@
 /* -------------------------
  * BreadthFirstIterator.java
  * -------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
- * Original Author:  Barak Naveh
- * Contributor(s):   Liviu Rau
+ * Original Author:  Liviu Rau
+ * Contributor(s):   Barak Naveh
  *
  * $Id$
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 29-Jul-2003 : Initial revision (LR);
+ * 31-Jul-2003 : Fixed traversal across connected components (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,69 +45,96 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.alg.AlgUtils.DirectedSpecifics;
-import org._3pq.jgrapht.alg.AlgUtils.SimpleQueue;
-import org._3pq.jgrapht.alg.AlgUtils.Specifics;
-import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
+import org._3pq.jgrapht.traverse.TraverseUtils.SimpleStack;
+import org._3pq.jgrapht.traverse.TraverseUtils.Specifics;
 
 /**
- * A breadth-first iterator for a directed and an undirected graph. For this
+ * A depth-first iterator for a directed and an undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The result
  * of such modifications are undefined.
  *
- * @author Barak Naveh
+ * @author Liviu Rau
  *
- * @since Jul 19, 2003
+ * @since Jul 29, 2003
  */
-public class BreadthFirstIterator extends AbstractGraphIterator {
+public class DepthFirstIterator extends AbstractGraphIterator {
     // todo: support ConcurrentModificationException if graph modified during iteration. 
     private Iterator    m_vertexIterator = null;
     private Set         m_seen      = new HashSet(  );
-    private SimpleQueue m_queue     = new SimpleQueue(  );
+    private SimpleStack m_pending   = new SimpleStack(  );
     private Specifics   m_specifics;
 
     /**
-     * Creates a new BreadthFirstIterator object.
+     * Creates a new depth-first iterator for the specified graph.
      *
-     * @param g the directed graph to be iterated.
-     * @param startVertex the vertex iteration to be started.
+     * @param g the graph to be iterated.
+     * @param crossComponentTraversal whether to traverse the graph across
+     *        connected components.
      */
-    public BreadthFirstIterator( DirectedGraph g, Object startVertex ) {
-        super(  );
-        init( g, startVertex );
-        m_specifics = new DirectedSpecifics( g );
+    public DepthFirstIterator( Graph g, boolean crossComponentTraversal ) {
+        this( g, null, crossComponentTraversal );
     }
 
 
     /**
-     * Creates a new BreadthFirstIterator object.
+     * Creates a new depth-first iterator for the specified graph. Iteration
+     * will start at the specified start vertex. If the specified start vertex
+     * is <code>null</code>, Iteration will start at an arbitrary graph
+     * vertex.
      *
-     * @param g the undirected graph to be iterated.
+     * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
+     * @param crossComponentTraversal whether to traverse the graph across
+     *        connected components.
+     *
+     * @throws NullPointerException
+     * @throws IllegalArgumentException
      */
-    public BreadthFirstIterator( UndirectedGraph g, Object startVertex ) {
+    public DepthFirstIterator( Graph g, Object startVertex,
+        boolean crossComponentTraversal ) {
         super(  );
-        init( g, startVertex );
-        m_specifics = new UndirectedSpecifics( g );
+
+        if( g == null ) {
+            throw new NullPointerException( "graph must not be null" );
+        }
+
+        m_specifics          = TraverseUtils.createGraphSpecifics( g );
+        m_vertexIterator     = g.vertexSet(  ).iterator(  );
+        setCrossComponentTraversal( crossComponentTraversal );
+
+        if( startVertex == null ) {
+            // pick a start vertex if graph not empty 
+            if( m_vertexIterator.hasNext(  ) ) {
+                Object vStart = g.vertexSet(  ).iterator(  ).next(  );
+                m_seen.add( vStart );
+                m_pending.add( vStart );
+            }
+        }
+        else if( g.containsVertex( startVertex ) ) {
+            m_seen.add( startVertex );
+            m_pending.add( startVertex );
+        }
+        else {
+            throw new IllegalArgumentException( 
+                "graph must contain the start vertex" );
+        }
     }
 
     /**
      * @see java.util.Iterator#hasNext()
      */
     public boolean hasNext(  ) {
-        if( m_queue.isEmpty(  ) ) {
+        if( m_pending.isEmpty(  ) ) {
             if( isCrossComponentTraversal(  ) ) {
                 while( m_vertexIterator.hasNext(  ) ) {
                     Object v = m_vertexIterator.next(  );
 
                     if( !m_seen.contains( v ) ) {
                         m_seen.add( v );
-                        m_queue.add( v );
+                        m_pending.add( v );
 
                         return true;
                     }
@@ -129,10 +157,10 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      */
     public Object next(  ) {
         if( hasNext(  ) ) {
-            Object nextVertex = m_queue.remove(  );
+            Object nextVertex = m_pending.remove(  );
             fireVertexVisited( nextVertex );
 
-            enqueueUnseenChildrenOf( nextVertex );
+            pushChildrenOf( nextVertex );
 
             return nextVertex;
         }
@@ -142,7 +170,7 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
     }
 
 
-    private void enqueueUnseenChildrenOf( Object vertex ) {
+    private void pushChildrenOf( Object vertex ) {
         List edges = m_specifics.edgesOf( vertex );
 
         for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
@@ -153,23 +181,8 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
 
             if( !m_seen.contains( v ) ) {
                 m_seen.add( v );
-                m_queue.add( v );
+                m_pending.add( v );
             }
         }
-    }
-
-
-    private void init( Graph g, Object startVertex ) {
-        if( startVertex == null || g == null ) {
-            throw new NullPointerException(  );
-        }
-
-        if( !g.containsVertex( startVertex ) ) {
-            throw new IllegalArgumentException( "start vertex not in graph" );
-        }
-
-        m_seen.add( startVertex );
-        m_queue.add( startVertex );
-        m_vertexIterator = g.vertexSet(  ).iterator(  );
     }
 }

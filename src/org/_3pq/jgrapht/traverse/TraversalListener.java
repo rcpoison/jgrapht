@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------
- * GraphIterator.java
- * ------------------
+/* ----------------------
+ * TraversalListener.java
+ * ----------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,52 +33,52 @@
  *
  * Changes
  * -------
- * 31-Jul-2003 : Initial revision (BN);
+ * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org._3pq.jgrapht.traverse;
 
-import java.util.Iterator;
+import org._3pq.jgrapht.Edge;
 
 
 /**
- * A graph iterator.
+ * A listener on graph iterator or on a graph traverser.
  *
  * @author Barak Naveh
  *
- * @since Jul 31, 2003
+ * @since Jul 19, 2003
  */
-public interface GraphIterator extends Iterator {
+public interface TraversalListener {
     /**
-     * Test whether this iterator is set to traverse the grpah across connected
-     * components.
-     *
-     * @return <code>true</code> if traverses across connected components,
-     *         otherwise <code>false</code>.
+     * Called to inform the listener that the traversal of the current
+     * connected component finished.
      */
-    public boolean isCrossComponentTraversal(  );
+    public void connectedComponentFinished(  );
 
 
     /**
-     * Adds the specified traversal listener to this iterator.
-     *
-     * @param l the traversal listener to be added.
+     * Called to inform the listener that a traversal of a new connected
+     * component has started.
      */
-    public void addTraversalListener( TraversalListener l );
+    public void connectedComponentStarted(  );
 
 
     /**
-     * Unsupported.
+     * Called to inform the listener that the specified edge have been visited
+     * during  the graph traversal. Depending on the traversal algorithm, edge
+     * might be visited more than once.
      *
-     * @throws UnsupportedOperationException
+     * @param edge the visited edge.
      */
-    public void remove(  );
+    public void edgeVisited( Edge edge );
 
 
     /**
-     * Removes the specified traversal listener from this iterator.
+     * Called to inform the listener that the specified vertex have been
+     * visited during the graph traversal. Depending on the traversal
+     * algorithm, vertex might be visited more than once.
      *
-     * @param l the traversal listener to be removed.
+     * @param vertex the visited vertex.
      */
-    public void removeTraversalListener( TraversalListener l );
+    public void vertexVisited( Object vertex );
 }

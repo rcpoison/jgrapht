@@ -36,14 +36,12 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.GraphIterator;
-import org._3pq.jgrapht.TraversalListener;
 
 /**
  * An empty implementation of a graph iterator to minimize the effort required
