@@ -49,10 +49,6 @@ import junit.framework.TestCase;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.VertexFactory;
-import org._3pq.jgrapht.generate.RingGraphGenerator;
-import org._3pq.jgrapht.generate.EmptyGraphGenerator;
-import org._3pq.jgrapht.generate.GraphGenerator;
-import org._3pq.jgrapht.generate.LinearGraphGenerator;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 
 /**

@@ -42,18 +42,21 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * .
+ * A TestSuite for all tests in this package.
  *
  * @author Barak Naveh
  */
-public class AllGenerateTests {
+public final class AllGenerateTests {
+    private AllGenerateTests(  ) {} // ensure non-instantiability.
+
     /**
-     * .
+     * Creates a test suite for all 'generate' tests.
      *
-     * @return
+     * @return a test suite for all 'generate' tests.
      */
     public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Tests for org._3pq.jgrapht.generate." );
+        TestSuite suite =
+            new TestSuite( "Tests for org._3pq.jgrapht.generate." );
 
         //$JUnit-BEGIN$
         suite.addTest( new TestSuite( GraphGeneratorTest.class ) );
