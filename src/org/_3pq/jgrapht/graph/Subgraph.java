@@ -454,9 +454,7 @@ public class Subgraph extends AbstractGraph {
      * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
-        // if not originally removed from base we remove touching edges.
-        // otherwise, base already removed them.
-        if( m_base.containsVertex( v ) ) {
+        if( containsVertex( v ) ) {
             removeAllEdges( edgesOf( v ) );
         }
 
@@ -575,9 +573,7 @@ public class Subgraph extends AbstractGraph {
         public void edgeRemoved( GraphEdgeChangeEvent e ) {
             Edge edge = e.getEdge(  );
 
-            if( m_edgeSet.contains( edge ) ) {
-                removeEdge( edge );
-            }
+            removeEdge( edge );
         }
 
 
@@ -595,9 +591,7 @@ public class Subgraph extends AbstractGraph {
         public void vertexRemoved( GraphVertexChangeEvent e ) {
             Object vertex = e.getVertex(  );
 
-            if( m_vertexSet.contains( vertex ) ) {
-                removeVertex( vertex );
-            }
+            removeVertex( vertex );
         }
     }
 }
