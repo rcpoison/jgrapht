@@ -37,13 +37,13 @@
  * 26-Jul-2003 : Added support for user-definable GraphFactory (BN);
  * 27-Jul-2003 : Added accessors for edge-factory factory (BN);
  * 31-Jul-2003 : Refactored out internal classes(LR + BN);
- *
+ * 04-Aug-2003 : Simplifications (BN);
+ * 
  */
 package org._3pq.jgrapht;
 
 import java.util.Set;
 
-import org._3pq.jgrapht.edge.EdgeFactoryFactory;
 import org._3pq.jgrapht.graph.DefaultListenableGraph;
 import org._3pq.jgrapht.graph.Graphs;
 import org._3pq.jgrapht.graph.Subgraph;
@@ -68,44 +68,15 @@ import org._3pq.jgrapht.graph.UnmodifiableGraph;
  *
  * @since Jul 19, 2003
  */
-public abstract class GraphFactory {
+public class GraphFactory {
     private static final String BASE_GRAPH_MUST_BE_LISTENABLE =
         "base graph must be listenable";
     private static GraphFactory s_factory = null;
-    private EdgeFactoryFactory  m_eff     = new EdgeFactoryFactory(  );
 
     /**
-     * Returns the factory that produces the edge-factories for all the graphs
-     * created by this factory.
-     *
-     * @return the factory that produces the edge-factories.
+     * Creates a new GraphFactory object.
      */
-    public EdgeFactoryFactory getEdgeFactoryFactory(  ) {
-        return m_eff;
-    }
-
-
-    /**
-     * Sets the factory that produces the edge-factories for all the graphs
-     * created by this factory.
-     *
-     * @param eff factory that produces the edge-factories to be set.
-     */
-    public void setEff( EdgeFactoryFactory eff ) {
-        m_eff = eff;
-    }
-
-
-    /**
-     * Installs the specified graph factory as the globally used graph factory
-     * of the JGraphT library.
-     *
-     * @param factory the new graph factory to be installed.
-     */
-    public static void setFactory( GraphFactory factory ) {
-        s_factory = factory;
-    }
-
+    protected GraphFactory(  ) {}
 
     /**
      * Returns the graph factory that is globally used by the JGraphT library.
@@ -114,8 +85,7 @@ public abstract class GraphFactory {
      */
     public static GraphFactory getFactory(  ) {
         if( s_factory == null ) {
-            s_factory = new GraphFactory(  ) {}
-            ;
+            s_factory = new GraphFactory(  );
         }
 
         return s_factory;
@@ -130,9 +100,7 @@ public abstract class GraphFactory {
      * @return a new directed graph.
      */
     public DirectedGraph createDirectedGraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedEdgeFactory(  );
-
-        return new Graphs.PlainDirectedGraph( ef );
+        return new Graphs.DefaultDirectedGraph(  );
     }
 
 
@@ -144,9 +112,7 @@ public abstract class GraphFactory {
      * @return a new directed multigraph.
      */
     public DirectedGraph createDirectedMultigraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedEdgeFactory(  );
-
-        return new Graphs.DirectedMultigraph( ef );
+        return new Graphs.DirectedMultigraph(  );
     }
 
 
@@ -159,9 +125,7 @@ public abstract class GraphFactory {
      * @return a new directed weighted graph.
      */
     public DirectedWeightedGraph createDirectedWeightedGraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedWeightedEdgeFactory(  );
-
-        return new Graphs.PlainDirectedWeightedGraph( ef );
+        return new Graphs.DefaultDirectedWeightedGraph(  );
     }
 
 
@@ -173,9 +137,7 @@ public abstract class GraphFactory {
      * @return a new directed weighted multigraph.
      */
     public DirectedWeightedGraph createDirectedWeightedMultigraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedWeightedEdgeFactory(  );
-
-        return new Graphs.DirectedWeightedMultigraph( ef );
+        return new Graphs.DirectedWeightedMultigraph(  );
     }
 
 
@@ -247,9 +209,7 @@ public abstract class GraphFactory {
      * @return a new multigraph.
      */
     public UndirectedGraph createMultigraph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedEdgeFactory(  );
-
-        return new Graphs.Multigraph( ef );
+        return new Graphs.Multigraph(  );
     }
 
 
@@ -263,9 +223,7 @@ public abstract class GraphFactory {
      * @return a new pseudograph.
      */
     public UndirectedGraph createPseudograph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedEdgeFactory(  );
-
-        return new Graphs.Pseudograph( ef );
+        return new Graphs.Pseudograph(  );
     }
 
 
@@ -277,9 +235,7 @@ public abstract class GraphFactory {
      * @return a new simple directed graph.
      */
     public DirectedGraph createSimpleDirectedGraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedEdgeFactory(  );
-
-        return new Graphs.SimpleDirectedGraph( ef );
+        return new Graphs.SimpleDirectedGraph(  );
     }
 
 
@@ -293,9 +249,7 @@ public abstract class GraphFactory {
      * @see WeightedElement
      */
     public DirectedWeightedGraph createSimpleDirectedWeightedGraph(  ) {
-        EdgeFactory ef = m_eff.createDirectedEdgeFactory(  );
-
-        return new Graphs.SimpleDirectedWeightedGraph( ef );
+        return new Graphs.SimpleDirectedWeightedGraph(  );
     }
 
 
@@ -309,9 +263,7 @@ public abstract class GraphFactory {
      * @return a new simple graph.
      */
     public UndirectedGraph createSimpleGraph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedEdgeFactory(  );
-
-        return new Graphs.SimpleGraph( ef );
+        return new Graphs.SimpleGraph(  );
     }
 
 
@@ -324,9 +276,7 @@ public abstract class GraphFactory {
      * @see #createSimpleGraph()
      */
     public UndirectedWeightedGraph createSimpleWeightedGraph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedWeightedEdgeFactory(  );
-
-        return new Graphs.SimpleWeightedGraph( ef );
+        return new Graphs.SimpleWeightedGraph(  );
     }
 
 
@@ -395,7 +345,8 @@ public abstract class GraphFactory {
     public DirectedWeightedGraph createSubgraph( DirectedWeightedGraph base,
         Set vertexSubset, Set edgeSubset ) {
         if( base instanceof ListenableGraph ) {
-            return new Graphs.SubgraphDirectedWeighted( base, vertexSubset, edgeSubset );
+            return new Graphs.SubgraphDirectedWeighted( base, vertexSubset,
+                edgeSubset );
         }
         else {
             throw new IllegalArgumentException( BASE_GRAPH_MUST_BE_LISTENABLE );
@@ -501,9 +452,7 @@ public abstract class GraphFactory {
      * @return a new weighted multigraph.
      */
     public UndirectedWeightedGraph createWeightedMultigraph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedWeightedEdgeFactory(  );
-
-        return new Graphs.WeightedMultigraph( ef );
+        return new Graphs.WeightedMultigraph(  );
     }
 
 
@@ -518,8 +467,6 @@ public abstract class GraphFactory {
      * @return a new weighted pseudograph.
      */
     public UndirectedWeightedGraph createWeightedPseudograph(  ) {
-        EdgeFactory ef = m_eff.createUndirectedWeightedEdgeFactory(  );
-
-        return new Graphs.WeightedPseudograph( ef );
+        return new Graphs.WeightedPseudograph(  );
     }
 }
