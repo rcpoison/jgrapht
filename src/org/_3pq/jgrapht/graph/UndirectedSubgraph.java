@@ -49,7 +49,7 @@ import org._3pq.jgrapht.UndirectedGraph;
  */
 public class UndirectedSubgraph extends Subgraph implements UndirectedGraph {
     /**
-     * @see Subgraph#Subgraph(ListenableGraph, Set, Set)
+     * @see Subgraph#Subgraph(Graph, Set, Set)
      */
     public UndirectedSubgraph( UndirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {

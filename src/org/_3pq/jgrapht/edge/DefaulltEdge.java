@@ -42,14 +42,14 @@ package org._3pq.jgrapht.edge;
 import org._3pq.jgrapht.Edge;
 
 /**
- * Deprecated - use {@link com.jgraph.graph.DefaultEdge} instead (the one with
- * no double 'l' typo). This class will be deleted next version.
+ * Deprecated - use {@link org._3pq.jgrapht.edge.DefaultEdge} instead (the one
+ * with no double 'l' typo). This class will be deleted next version.
  *
  * @author Barak Naveh
  *
  * @since Jul 14, 2003
- * @deprecated use {@link com.jgraph.graph.DefaultEdge} instead (the one with
- *             no double 'l' typo).
+ * @deprecated use {@link org._3pq.jgrapht.edge.DefaultEdge} instead (the one
+ *             with no double 'l' typo).
  */
 public class DefaulltEdge implements Edge, Cloneable {
     private Object m_source;

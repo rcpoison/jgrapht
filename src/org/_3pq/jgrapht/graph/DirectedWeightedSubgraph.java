@@ -51,7 +51,7 @@ import org._3pq.jgrapht.WeightedGraph;
 public class DirectedWeightedSubgraph extends DirectedSubgraph
     implements WeightedGraph {
     /**
-     * @see Subgraph#Subgraph(ListenableGraph, Set, Set)
+     * @see Subgraph#Subgraph(Graph, Set, Set)
      */
     public DirectedWeightedSubgraph( WeightedGraph base, Set vertexSubset,
         Set edgeSubset ) {
