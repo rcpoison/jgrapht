@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
+/* -------------------
  * GraphGenerator.java
- * ----------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * -------------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 16-Sept-2003 : Initial revision (JVS);
+ * 16-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.alg.generator;
@@ -48,11 +48,11 @@ import org._3pq.jgrapht.VertexFactory;
  *
  * @author John V. Sichi
  *
- * @since Sept 16, 2003
+ * @since Sep 16, 2003
  */
 public interface GraphGenerator {
     /**
-     * Generate a graph structure.  The topology of the generated graph is
+     * Generate a graph structure. The topology of the generated graph is
      * dependent on the implementation.  For graphs in which not all vertices
      * share the same automorphism equivalence class, the generator may
      * produce a labeling indicating the roles played by generated elements.

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
+/* -------------------
  * GraphGenerator.java
- * ----------------
+ * -------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  John V. Sichi
@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 16-Sept-2003 : Initial revision (JVS);
+ * 16-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.alg.generator;
@@ -48,12 +48,12 @@ import org._3pq.jgrapht.VertexFactory;
 
 /**
  * WheelGraphGenerator generates a <a
- * href="http://mathworld.wolfram.com/WheelGraph.html">cycle graph</a> of any
+ * href="http://mathworld.wolfram.com/WheelGraph.html">wheel graph</a> of any
  * degree.
  *
  * @author John V. Sichi
  *
- * @since Sept 16, 2003
+ * @since Sep 16, 2003
  */
 public class WheelGraphGenerator implements GraphGenerator {
     /** Role for the hub vertex. */
@@ -69,6 +69,9 @@ public class WheelGraphGenerator implements GraphGenerator {
      *        from rim to hub; else from hub to rim
      */
     public WheelGraphGenerator( int degree, boolean inwardSpokes ) {
+        if (degree < 0) {
+            throw new IllegalArgumentException("must be non-negative");
+        }
         m_degree           = degree;
         m_inwardSpokes     = inwardSpokes;
     }

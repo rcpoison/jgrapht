@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
+/* -------------------
  * GraphGenerator.java
- * ----------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * -------------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -33,7 +33,7 @@
  *
  * Changes
  * -------
- * 16-Sept-2003 : Initial revision (JVS);
+ * 16-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.alg.generator;
@@ -47,12 +47,13 @@ import org._3pq.jgrapht.VertexFactory;
 /**
  * CycleGraphGenerator generates a <a
  * href="http://mathworld.wolfram.com/CycleGraph.html">cycle graph</a> of any
- * degree.  For a directed graph, the generated edges are oriented
+ * degree. A cycle graph is a graph containing a single cycle through all the
+ * vertices. For a directed graph, the generated edges are oriented
  * consistently around the cycle.
  *
  * @author John V. Sichi
  *
- * @since Sept 16, 2003
+ * @since Sep 16, 2003
  */
 public class CycleGraphGenerator implements GraphGenerator {
     private int m_degree;
@@ -63,6 +64,9 @@ public class CycleGraphGenerator implements GraphGenerator {
      * @param degree number of vertices to be generated
      */
     public CycleGraphGenerator( int degree ) {
+        if (degree < 0) {
+            throw new IllegalArgumentException("must be non-negative");
+        }
         m_degree = degree;
     }
 
