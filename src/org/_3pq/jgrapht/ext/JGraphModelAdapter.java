@@ -118,6 +118,7 @@ import org.jgraph.graph.Port;
  * @since Aug 2, 2003
  */
 public class JGraphModelAdapter extends DefaultGraphModel {
+    private static final long  serialVersionUID          = 3256722883706302515L;
     final Set                  m_jEdgesBeingAdded        = new HashSet(  );
     final Set                  m_jEdgesBeingRemoved      = new HashSet(  );
     final Set                  m_jVerticesBeingAdded     = new HashSet(  );
@@ -674,6 +675,8 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @since Dec 12, 2003
      */
     public class DefaultCellFactory implements CellFactory, Serializable {
+        private static final long serialVersionUID = 3690194343461861173L;
+
         /**
          * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(org._3pq.jgrapht.Edge)
          */
@@ -705,6 +708,8 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * </p>
      */
     private class JGraphListener implements GraphModelListener, Serializable {
+        private static final long serialVersionUID = 3544673988098865209L;
+
         /**
          * This method is called for all JGraph changes.
          *
@@ -841,6 +846,8 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @since Aug 2, 2003
      */
     private class JGraphTListener implements GraphListener, Serializable {
+        private static final long serialVersionUID = 3616724963609360440L;
+
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
