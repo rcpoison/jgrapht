@@ -295,7 +295,7 @@
             </declaration>
             <modifier>
                 <enable>true</enable>
-                <order>public|protected|private|abstract|final|static|synchronized|transient|volatile|native|strictfp</order>
+                <order>public|protected|private|abstract|static|final|synchronized|transient|volatile|native|strictfp</order>
             </modifier>
         </sorting>
         <whitespace>
