@@ -63,14 +63,15 @@ import org.jgraph.graph.GraphConstants;
  * @since Aug 3, 2003
  */
 public class JGraphAdapterDemo extends JApplet {
+    private static final long      serialVersionUID = 3256444702936019250L;
     private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
-    private static final Dimension DEFAULT_SIZE = new Dimension( 530, 320 );
+    private static final Dimension DEFAULT_SIZE     = new Dimension( 530, 320 );
 
     // 
     private JGraphModelAdapter m_jgAdapter;
 
     /**
-     * @see java.applet.Applet#init().
+     * {@inheritDoc}
      */
     public void init(  ) {
         // create a JGraphT graph
@@ -126,7 +127,7 @@ public class JGraphAdapterDemo extends JApplet {
         frame.setTitle( "JGraphT Adapter to JGraph Demo" );
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         frame.pack(  );
-        frame.show(  );
+        frame.setVisible( true );
     }
 
 
@@ -139,7 +140,7 @@ public class JGraphAdapterDemo extends JApplet {
         try {
             colorStr = getParameter( "bgcolor" );
         }
-         catch( Exception e ) {}
+        catch( Exception e ) {}
 
         if( colorStr != null ) {
             c = Color.decode( colorStr );
