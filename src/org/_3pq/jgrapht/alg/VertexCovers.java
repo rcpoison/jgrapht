@@ -82,7 +82,7 @@ public class VertexCovers {
      *         graph.
      */
     public Set find2ApproximationCover( Graph g ) {
-        // C <-- ?
+        // C <-- {}
         Set cover = new HashSet(  );
 
         // G'=(V',E') <-- G(V,E)
@@ -127,7 +127,7 @@ public class VertexCovers {
      *         graph.
      */
     public Set findGreedyCover( UndirectedGraph g ) {
-        // C <-- ?
+        // C <-- {}
         Set cover = new HashSet(  );
 
         // G' <-- G
@@ -136,7 +136,7 @@ public class VertexCovers {
         // compare vertices in descending order of degree
         VertexDegreeComparator comp = new VertexDegreeComparator( sg );
 
-        // while G' != ?
+        // while G' != {}
         while( sg.edgeSet(  ).size(  ) > 0 ) {
             // v <-- vertex with maximum degree in G'
             Object v = Collections.max( sg.vertexSet(  ), comp );
