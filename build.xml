@@ -85,13 +85,14 @@
         <property name="javadoc.dir"      value="${basedir}/javadoc"/>
 
 		<!-- File names -->
-        <property name="project.jar.name" value="${project.prefix}.jar" />
-        <property name="project.tar.name" value="${project.prefix}.tar" />
+        <property name="project.jar.name"    value="${project.prefix}.jar" />
+        <property name="project.tar.name"    value="${project.prefix}.tar" />
         <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
-        <property name="project.zip.name" value="${project.prefix}.zip" />
-        <property name="build.file.name"  value="build.xml" />
-        <property name="junit.jar.name"   value="junit.jar" />
-        <property name="jgraph.jar.name"  value="jgraph.jar" />
+        <property name="project.zip.name"    value="${project.prefix}.zip" />
+        <property name="build.file.name"     value="build.xml" />
+        <property name="junit.jar.name"      value="junit.jar" />
+        <property name="jgraph.jar.name"     value="jgraph.jar" />
+        <property name="checkstyle.jar.name" value="checkstyle-all-3.3.jar" />
 
 		<!-- Files -->
         <property name="project.jar"      value="${basedir}/${project.jar.name}" />
@@ -100,7 +101,7 @@
         <property name="project.zip"      value="${basedir}/${project.zip.name}" />
         <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
         <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
-        <property name="checkstyle.jar"   value="${lib.dir}/checkstyle-all-3.3.jar"/>
+        <property name="checkstyle.jar"   value="${lib.dir}/${checkstyle.jar.name}"/>
         <property name="build.file"       value="${basedir}/${build.file.name}"/>
         <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
         <property name="jalopy.settings"  value="${etc.dir}/jalopy-settings.xml"/>
@@ -145,9 +146,13 @@
 
 
     <!-- Generate the JGraphT runtime jar -->
-    <target name="jar" depends="compile" 
-                       description="Creates the runtime jar.">
-        <jar jarfile="${project.jar}" basedir="${build.dir}" />
+    <target name="jar" depends="compile" description="Creates the runtime jar.">
+        <jar jarfile="${project.jar}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
+                <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
+            </manifest> 
+        </jar>
     </target>
 
 
@@ -226,8 +231,7 @@
     </target>
 
     <!-- Generate the JGraphT JavaDoc HTML pages -->
-    <target name="javadoc" depends="init" 
-                           description="Creates the Javadocs.">
+    <target name="javadoc" depends="init" description="Creates the Javadocs.">
         <delete dir="${javadoc.dir}" />
         <mkdir dir="${javadoc.dir}" />
         <javadoc destdir="${javadoc.dir}" 
@@ -281,9 +285,9 @@
         <!-- add lib files -->
         <copy todir="${distrib.dir}/lib">
             <fileset dir="${lib.dir}">
-                <include name="${junit.jar.name}"/>
-                <include name="${jgraph.jar.name}"/>
+                <include name="*.jar"/>
                 <include name="lib-readme.txt"/>
+                <exclude name="${checkstyle.jar.name}"/>
             </fileset>
         </copy>
 
