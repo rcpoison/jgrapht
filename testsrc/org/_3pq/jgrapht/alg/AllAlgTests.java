@@ -57,8 +57,7 @@ public class AllAlgTests {
         TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
 
         //$JUnit-BEGIN$
-        
-        // alg class tests should come here
+        suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
         
         //$JUnit-END$
         return suite;
