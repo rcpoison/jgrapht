@@ -120,7 +120,7 @@ public final class AlgUtils {
 
 
     /**
-     * An implementation of {@link Specifics} for a directed graph.
+     * An implementation of {@link AlgUtils.Specifics} for a directed graph.
      *
      * @author Barak Naveh
      *
@@ -139,7 +139,7 @@ public final class AlgUtils {
         }
 
         /**
-         * @see BreadthFirstIterator.Specifics#edgesOf(Object)
+         * @see AlgUtils.Specifics#edgesOf(Object)
          */
         public List edgesOf( Object vertex ) {
             return m_graph.outgoingEdgesOf( vertex );
@@ -187,7 +187,7 @@ public final class AlgUtils {
 
 
     /**
-     * An implementation of {@link Specifics} for an undirected graph.
+     * An implementation of {@link AlgUtils.Specifics} for an undirected graph.
      *
      * @author Barak Naveh
      *
@@ -206,7 +206,7 @@ public final class AlgUtils {
         }
 
         /**
-         * @see BreadthFirstIterator.Specifics#edgesOf(Object)
+         * @see AlgUtils.Specifics#edgesOf(Object)
          */
         public List edgesOf( Object vertex ) {
             return m_graph.edgesOf( vertex );

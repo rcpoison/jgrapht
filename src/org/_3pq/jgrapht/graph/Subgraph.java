@@ -100,9 +100,8 @@ import org._3pq.jgrapht.WeightedElement;
  *
  * @author Barak Naveh
  *
- * @see Graph
+ * @see org._3pq.jgrapht.Graph
  * @see java.util.Set
- * @see org._3pq.jgrapht.GraphFactory#createListenableGraph(Graph)
  * @since Jul 18, 2003
  */
 public class Subgraph extends AbstractGraph {
@@ -145,7 +144,7 @@ public class Subgraph extends AbstractGraph {
     }
 
     /**
-     * @see Graph#getAllEdges(Object, Object)
+     * @see org._3pq.jgrapht.Graph#getAllEdges(Object, Object)
      */
     public List getAllEdges( Object sourceVertex, Object targetVertex ) {
         List edges = null;
@@ -169,7 +168,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#getEdge(Object, Object)
+     * @see org._3pq.jgrapht.Graph#getEdge(Object, Object)
      */
     public Edge getEdge( Object sourceVertex, Object targetVertex ) {
         List edges = getAllEdges( sourceVertex, targetVertex );
@@ -184,7 +183,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#getEdgeFactory()
+     * @see org._3pq.jgrapht.Graph#getEdgeFactory()
      */
     public EdgeFactory getEdgeFactory(  ) {
         return m_base.getEdgeFactory(  );
@@ -218,7 +217,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#addEdge(Object, Object)
+     * @see org._3pq.jgrapht.Graph#addEdge(Object, Object)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex ) {
         assertVertexExist( sourceVertex );
@@ -257,7 +256,7 @@ public class Subgraph extends AbstractGraph {
      * @throws IllegalArgumentException
      *
      * @see Subgraph
-     * @see Graph#addEdge(Edge)
+     * @see org._3pq.jgrapht.Graph#addEdge(Edge)
      */
     public boolean addEdge( Edge e ) {
         if( e == null ) {
@@ -310,7 +309,7 @@ public class Subgraph extends AbstractGraph {
      * @throws IllegalArgumentException
      *
      * @see Subgraph
-     * @see Graph#addVertex(Object)
+     * @see org._3pq.jgrapht.Graph#addVertex(Object)
      */
     public boolean addVertex( Object v ) {
         if( v == null ) {
@@ -335,7 +334,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#containsEdge(Edge)
+     * @see org._3pq.jgrapht.Graph#containsEdge(Edge)
      */
     public boolean containsEdge( Edge e ) {
         return m_edgeSet.contains( e );
@@ -343,7 +342,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#containsVertex(Object)
+     * @see org._3pq.jgrapht.Graph#containsVertex(Object)
      */
     public boolean containsVertex( Object v ) {
         return m_vertexSet.contains( v );
@@ -359,7 +358,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#edgeSet()
+     * @see org._3pq.jgrapht.Graph#edgeSet()
      */
     public Set edgeSet(  ) {
         if( m_unmodifiableEdgeSet == null ) {
@@ -371,7 +370,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#edgesOf(Object)
+     * @see org._3pq.jgrapht.Graph#edgesOf(Object)
      */
     public List edgesOf( Object vertex ) {
         assertVertexExist( vertex );
@@ -428,7 +427,7 @@ public class Subgraph extends AbstractGraph {
      * that denotes it, which is not necessarily "reference-equal" to the edge
      * to be removed.
      *
-     * @see Graph#removeEdge(Edge)
+     * @see org._3pq.jgrapht.Graph#removeEdge(Edge)
      */
     public boolean removeEdge( Edge e ) {
         return m_edgeSet.remove( e );
@@ -436,7 +435,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#removeEdge(Object, Object)
+     * @see org._3pq.jgrapht.Graph#removeEdge(Object, Object)
      */
     public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
         Edge e = getEdge( sourceVertex, targetVertex );
@@ -450,7 +449,7 @@ public class Subgraph extends AbstractGraph {
      * that denotes it, which is not necessarily "reference-equal" to the
      * vertex to be removed.
      *
-     * @see Graph#removeVertex(Object)
+     * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
         // if not originally removed from base we remove touching edges.
@@ -464,7 +463,7 @@ public class Subgraph extends AbstractGraph {
 
 
     /**
-     * @see Graph#vertexSet()
+     * @see org._3pq.jgrapht.Graph#vertexSet()
      */
     public Set vertexSet(  ) {
         if( m_unmodifiableVertexSet == null ) {

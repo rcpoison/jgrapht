@@ -46,11 +46,11 @@ import org._3pq.jgrapht.UndirectedGraph;
 /**
  * An undirected graph that is a subgraph on other graph.
  *
- * @see Subgraph
+ * @see org._3pq.jgrapht.graph.Subgraph
  */
 public class UndirectedSubgraph extends Subgraph implements UndirectedGraph {
     /**
-     * @see Subgraph#Subgraph(Graph, Set, Set)
+     * @see Subgraph#Subgraph(ListenableGraph, Set, Set)
      */
     public UndirectedSubgraph( UndirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {

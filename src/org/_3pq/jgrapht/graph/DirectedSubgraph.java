@@ -50,7 +50,7 @@ import org._3pq.jgrapht.ListenableGraph;
  */
 public class DirectedSubgraph extends Subgraph implements DirectedGraph {
     /**
-     * @see Subgraph#Subgraph(Graph, Set, Set)
+     * @see Subgraph#Subgraph(ListenableGraph, Set, Set)
      */
     public DirectedSubgraph( DirectedGraph base, Set vertexSubset,
         Set edgeSubset ) {

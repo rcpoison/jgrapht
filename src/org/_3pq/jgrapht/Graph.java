@@ -55,8 +55,8 @@ import java.util.Set;
  * href="http://mathworld.wolfram.com/topics/GraphTheory.html">
  * http://mathworld.wolfram.com/topics/GraphTheory.html</a>. Implementation of
  * this interface can provide simple-graphs, multigraphs, pseudographs etc.
- * The <code>GraphFactory</code> should be used to creates concrete graph
- * instances.
+ * The package {@link org._3pq.jgrapht.graph} provides a gallery of abstract
+ * and  concrete graph implementations.
  * </p>
  * 
  * <p>
@@ -71,7 +71,6 @@ import java.util.Set;
  * @author Barak Naveh
  * @version 1.0, 14/07/2003
  *
- * @see org._3pq.jgrapht.GraphFactory
  * @since Jul 14, 2003
  */
 public interface Graph {
