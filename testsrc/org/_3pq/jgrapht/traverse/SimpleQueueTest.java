@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -40,7 +40,7 @@ package org._3pq.jgrapht.traverse;
 
 import junit.framework.TestCase;
 
-import org._3pq.jgrapht.traverse.TraverseUtils.SimpleQueue;
+import org._3pq.jgrapht.traverse.BreadthFirstIterator.SimpleQueue;
 
 /**
  * Unit test for SimpleQueue.

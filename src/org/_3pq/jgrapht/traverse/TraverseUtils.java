@@ -36,44 +36,45 @@
  * -------
  * 31-Jul-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
+ * 31-Jan-2004 : Put into end-of-life stage (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.EdgeTraversalEvent;
 import org._3pq.jgrapht.event.VertexTraversalEvent;
+import org._3pq.jgrapht.traverse.CrossComponentIterator.FlyweightEdgeEvent;
+import org._3pq.jgrapht.traverse.CrossComponentIterator.FlyweightVertexEvent;
 
 /**
  * A collection of utilities used for implementing traversal algorithms.
+ * 
+ * <p>
+ * TODO: Delete this utility class in next release.
+ * </p>
  *
  * @author Barak Naveh
  *
  * @since Jul 31, 2003
+ * @deprecated will be deleted in next release.
  */
 final class TraverseUtils {
     private TraverseUtils(  ) {} // ensure non-instantiability.
 
-    static Specifics createGraphSpecifics( Graph g ) {
-        if( g instanceof DirectedGraph ) {
-            return new DirectedSpecifics( (DirectedGraph) g );
-        }
-        else {
-            return new UndirectedSpecifics( g );
-        }
-    }
-
+    /**
+     * .
+     *
+     * @deprecated will be deleted in next release.
+     */
     static interface SimpleContainer {
         /**
          * Tests if this container is empty.
@@ -100,150 +101,10 @@ final class TraverseUtils {
     }
 
     /**
-     * <b>Note to users:</b> this queue implementation is a bit lame in terms
-     * of GC efficiency. If you need it to be improved either let us know or
-     * use the source...
-     */
-    static class SimpleQueue implements SimpleContainer {
-        private LinkedList m_elementList = new LinkedList(  );
-
-        /**
-         * Tests if this queue is empty.
-         *
-         * @return <code>true</code> if empty, otherwise <code>false</code>.
-         */
-        public boolean isEmpty(  ) {
-            return m_elementList.size(  ) == 0;
-        }
-
-
-        /**
-         * Adds the specified object to the tail of the queue.
-         *
-         * @param o the object to be added.
-         */
-        public void add( Object o ) {
-            m_elementList.addLast( o );
-        }
-
-
-        /**
-         * Remove the object at the head of the queue and return it.
-         *
-         * @return the object and the head of the queue.
-         */
-        public Object remove(  ) {
-            return m_elementList.removeFirst(  );
-        }
-    }
-
-
-    /**
-     * Provides unified interface for operations that are different in directed
-     * graphs and in undirected graphs.
-     */
-    abstract static class Specifics {
-        /**
-         * Returns the edges outgoing from the specified vertex in case of
-         * directed graph, and the edge touching the specified vertex in case
-         * of undirected graph.
-         *
-         * @param vertex the vertex whose outgoing edges are to be returned.
-         *
-         * @return the edges outgoing from the specified vertex in case of
-         *         directed graph, and the edge touching the specified vertex
-         *         in case of undirected graph.
-         */
-        public abstract List edgesOf( Object vertex );
-    }
-
-
-    /**
-     * An implementation of {@link TraverseUtils.Specifics} for a directed
-     * graph.
-     */
-    static class DirectedSpecifics extends Specifics {
-        private DirectedGraph m_graph;
-
-        /**
-         * Creates a new DirectedSpecifics object.
-         *
-         * @param g the graph for which this specifics object to be created.
-         */
-        public DirectedSpecifics( DirectedGraph g ) {
-            m_graph = g;
-        }
-
-        /**
-         * @see TraverseUtils.Specifics#edgesOf(Object)
-         */
-        public List edgesOf( Object vertex ) {
-            return m_graph.outgoingEdgesOf( vertex );
-        }
-    }
-
-
-    static class SimpleStack implements SimpleContainer {
-        private ArrayList m_elementList = new ArrayList(  );
-
-        /**
-         * Tests if this queue is empty.
-         *
-         * @return <code>true</code> if empty, otherwise <code>false</code>.
-         */
-        public boolean isEmpty(  ) {
-            return m_elementList.size(  ) == 0;
-        }
-
-
-        /**
-         * Adds the specified object to the tail of the queue.
-         *
-         * @param o the object to be added.
-         */
-        public void add( Object o ) {
-            m_elementList.add( o );
-        }
-
-
-        /**
-         * Remove the object at the head of the queue and return it.
-         *
-         * @return the object and the head of the queue.
-         */
-        public Object remove(  ) {
-            return m_elementList.remove( m_elementList.size(  ) - 1 );
-        }
-    }
-
-
-    /**
-     * An implementation of {@link TraverseUtils.Specifics} in which edge
-     * direction (if any) is ignored.
-     */
-    static class UndirectedSpecifics extends Specifics {
-        private Graph m_graph;
-
-        /**
-         * Creates a new UndirectedSpecifics object.
-         *
-         * @param g the graph for which this specifics object to be created.
-         */
-        public UndirectedSpecifics( Graph g ) {
-            m_graph = g;
-        }
-
-        /**
-         * @see TraverseUtils.Specifics#edgesOf(Object)
-         */
-        public List edgesOf( Object vertex ) {
-            return m_graph.edgesOf( vertex );
-        }
-    }
-
-
-    /**
      * A common superclass for BreadthFirstIterator and DepthFirstIterator.
+     *
+     * @deprecated use {@link org._3pq.jgrapht.traverse.CrossComponentIterator}
+     *             instead. will be deleted in next release.
      */
     static class XXFirstIterator extends AbstractGraphIterator {
         private static final int CCS_BEFORE_COMPONENT = 1;
@@ -257,15 +118,13 @@ final class TraverseUtils {
         private final ConnectedComponentTraversalEvent m_ccStartedEvent =
             new ConnectedComponentTraversalEvent( this,
                 ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED );
-
-        // todo: support ConcurrentModificationException if graph modified 
-        // during iteration. 
-        private FlyweightEdgeEvent   m_reuseableEdgeEvent;
-        private FlyweightVertexEvent m_reuseableVertexEvent;
-        private Iterator             m_vertexIterator = null;
-        private Map                  m_seen           = new HashMap(  );
-        private SimpleContainer      m_pending;
-        private Specifics            m_specifics;
+        private FlyweightEdgeEvent               m_reuseableEdgeEvent;
+        private FlyweightVertexEvent             m_reuseableVertexEvent;
+        private Iterator                         m_vertexIterator = null;
+        private Map                              m_seen           =
+            new HashMap(  );
+        private SimpleContainer                  m_pending;
+        private CrossComponentIterator.Specifics m_specifics;
 
         /** the connected component state */
         private int m_state = CCS_BEFORE_COMPONENT;
@@ -293,7 +152,7 @@ final class TraverseUtils {
 
             m_pending     = pendingVerticesContainer;
 
-            m_specifics          = TraverseUtils.createGraphSpecifics( g );
+            m_specifics          = CrossComponentIterator.createGraphSpecifics( g );
             m_vertexIterator     = g.vertexSet(  ).iterator(  );
             setCrossComponentTraversal( startVertex == null );
 
@@ -380,7 +239,7 @@ final class TraverseUtils {
          *
          * @return data associated when vertex was first seen
          */
-        Object getSeenData( Object vertex ) {
+        protected Object getSeenData( Object vertex ) {
             return m_seen.get( vertex );
         }
 
@@ -392,7 +251,7 @@ final class TraverseUtils {
          * @param vertex the vertex re-encountered
          * @param edge the edge via which the vertex was re-encountered
          */
-        void encounterVertexAgain( Object vertex, Edge edge ) {}
+        protected void encounterVertexAgain( Object vertex, Edge edge ) {}
 
 
         /**
@@ -405,7 +264,7 @@ final class TraverseUtils {
          *
          * @return the data to associate with this vertex
          */
-        Object newSeenData( Object vertex, Edge edge ) {
+        protected Object newSeenData( Object vertex, Edge edge ) {
             return vertex;
         }
 
@@ -464,58 +323,6 @@ final class TraverseUtils {
             else {
                 return new VertexTraversalEvent( this, vertex );
             }
-        }
-    }
-
-
-    /**
-     * A reuseable edge event.
-     *
-     * @author Barak Naveh
-     *
-     * @since Aug 11, 2003
-     */
-    private static class FlyweightEdgeEvent extends EdgeTraversalEvent {
-        /**
-         * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
-         */
-        public FlyweightEdgeEvent( Object eventSource, Edge edge ) {
-            super( eventSource, edge );
-        }
-
-        /**
-         * Sets the edge of this event.
-         *
-         * @param edge the edge to be set.
-         */
-        protected void setEdge( Edge edge ) {
-            m_edge = edge;
-        }
-    }
-
-
-    /**
-     * A reuseable vertex event.
-     *
-     * @author Barak Naveh
-     *
-     * @since Aug 11, 2003
-     */
-    private static class FlyweightVertexEvent extends VertexTraversalEvent {
-        /**
-         * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
-         */
-        public FlyweightVertexEvent( Object eventSource, Object vertex ) {
-            super( eventSource, vertex );
-        }
-
-        /**
-         * Sets the vertex of this event.
-         *
-         * @param vertex the vertex to be set.
-         */
-        protected void setVertex( Object vertex ) {
-            m_vertex = vertex;
         }
     }
 }

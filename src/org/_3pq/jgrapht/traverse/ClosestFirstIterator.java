@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -27,26 +27,27 @@
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
+ * Contributor(s):   Barak Naveh
  *
  * $Id$
  *
  * Changes
  * -------
- * 2-Sep-2003 : Initial revision (JVS);
+ * 02-Sep-2003 : Initial revision (JVS);
+ * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.traverse.TraverseUtils.XXFirstIterator;
 import org._3pq.jgrapht.util.FibonacciHeap;
 
 /**
  * A closest-first iterator for a directed or undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
- * Currently there are no means to ensure that, nor to fail-fast. The result
- * of such modifications is undefined.
+ * Currently there are no means to ensure that, nor to fail-fast. The results
+ * of such modifications are undefined.
  * 
  * <p>
  * The metric for <i>closest</i> here is the path length from a start vertex.
@@ -58,9 +59,9 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  *
  * @since Sep 2, 2003
  */
-public class ClosestFirstIterator extends XXFirstIterator {
-    /** Priority queue of fringe vertices (refined alias for super.m_pending). */
-    private ClosestFirstQueue m_queue;
+public class ClosestFirstIterator extends CrossComponentIterator {
+    /** Priority queue of fringe vertices. */
+    private FibonacciHeap m_heap = new FibonacciHeap(  );
 
     /**
      * Creates a new closest-first iterator for the specified graph.
@@ -84,20 +85,7 @@ public class ClosestFirstIterator extends XXFirstIterator {
      * @param startVertex the vertex iteration to be started.
      */
     public ClosestFirstIterator( Graph g, Object startVertex ) {
-        this( g, startVertex, new ClosestFirstQueue(  ) );
-    }
-
-
-    private ClosestFirstIterator( Graph g, Object startVertex,
-        ClosestFirstQueue queue ) {
-        super( g, startVertex, queue );
-
-        // REVIEW: This is a little dangerous since it relies on the fact that
-        // m_queue isn't accessed from any of the methods called from the
-        // superclass constructor.  It would be cleaner to change the
-        // superclass constructor to do nothing, and have the subclasses call
-        // an init() method once they're fully initialized.
-        m_queue = queue;
+        super( g, startVertex );
     }
 
     /**
@@ -124,6 +112,25 @@ public class ClosestFirstIterator extends XXFirstIterator {
 
 
     /**
+     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     */
+    protected boolean isConnectedComponentExhausted(  ) {
+        return m_heap.size(  ) == 0;
+    }
+
+
+    /**
+     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
+     *      org._3pq.jgrapht.Edge)
+     */
+    protected void encounterVertex( Object vertex, Edge edge ) {
+        QueueEntry entry = createSeenData( vertex, edge );
+        putSeenData( vertex, entry );
+        m_heap.insert( entry, entry.getShortestPathLength(  ) );
+    }
+
+
+    /**
      * Override superclass.  When we see a vertex again, we need to see if the
      * new edge provides a shorter path than the old edge.
      *
@@ -142,35 +149,19 @@ public class ClosestFirstIterator extends XXFirstIterator {
 
         if( candidatePathLength < entry.getShortestPathLength(  ) ) {
             entry.m_spanningTreeEdge = edge;
-            m_queue.m_heap.decreaseKey( entry, candidatePathLength );
+            m_heap.decreaseKey( entry, candidatePathLength );
         }
     }
 
 
     /**
-     * Override superclass.  The first time we see a vertex, make up a new
-     * queue entry for it.  Superclass will add this to the queue for us.
-     *
-     * @param vertex a vertex which has just been encountered.
-     * @param edge the edge via which the vertex was encountered.
-     *
-     * @return the new queue entry.
+     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected Object newSeenData( Object vertex, Edge edge ) {
-        double shortestPathLength;
+    protected Object provideNextVertex(  ) {
+        QueueEntry entry = (QueueEntry) m_heap.removeMin(  );
+        entry.m_frozen = true;
 
-        if( edge == null ) {
-            shortestPathLength = 0;
-        }
-        else {
-            shortestPathLength = calculatePathLength( vertex, edge );
-        }
-
-        QueueEntry entry = new QueueEntry( shortestPathLength );
-        entry.m_vertex               = vertex;
-        entry.m_spanningTreeEdge     = edge;
-
-        return entry;
+        return entry.m_vertex;
     }
 
 
@@ -200,51 +191,31 @@ public class ClosestFirstIterator extends XXFirstIterator {
         return otherEntry.getShortestPathLength(  ) + edge.getWeight(  );
     }
 
+
     /**
-     * Adapter from FibonnaciHeap to SimpleContainer.
+     * The first time we see a vertex, make up a new queue entry for it.
+     *
+     * @param vertex a vertex which has just been encountered.
+     * @param edge the edge via which the vertex was encountered.
+     *
+     * @return the new queue entry.
      */
-    private static class ClosestFirstQueue
-        implements TraverseUtils.SimpleContainer {
-        FibonacciHeap m_heap;
+    private QueueEntry createSeenData( Object vertex, Edge edge ) {
+        double shortestPathLength;
 
-        ClosestFirstQueue(  ) {
-            m_heap = new FibonacciHeap(  );
+        if( edge == null ) {
+            shortestPathLength = 0;
+        }
+        else {
+            shortestPathLength = calculatePathLength( vertex, edge );
         }
 
-        /**
-         * .
-         *
-         * @return
-         */
-        public boolean isEmpty(  ) {
-            return m_heap.size(  ) == 0;
-        }
+        QueueEntry entry = new QueueEntry( shortestPathLength );
+        entry.m_vertex               = vertex;
+        entry.m_spanningTreeEdge     = edge;
 
-
-        /**
-         * .
-         *
-         * @param obj
-         */
-        public void add( Object obj ) {
-            QueueEntry newEntry = (QueueEntry) obj;
-            m_heap.insert( newEntry, newEntry.getShortestPathLength(  ) );
-        }
-
-
-        /**
-         * .
-         *
-         * @return
-         */
-        public Object remove(  ) {
-            QueueEntry entry = (QueueEntry) m_heap.removeMin(  );
-            entry.m_frozen = true;
-
-            return entry.m_vertex;
-        }
+        return entry;
     }
-
 
     /**
      * Private data to associate with each entry in the priority queue.
