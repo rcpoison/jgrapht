@@ -1,11 +1,11 @@
-/* ==========================================
- * JGraphT : a free Java graph-theory library
- * ==========================================
+/* =======================================================================
+ * Lipidia : a simulator of a Lipid-World scenario for the origin of life.
+ * =======================================================================
  *
- * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Info:  http://lipidia.sourceforge.net/
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -53,7 +53,9 @@ import org._3pq.jgrapht.graph.SimpleGraph;
  *
  * @since Jul 27, 2003
  */
-public class HelloJGraphT {
+public final class HelloJGraphT {
+    private HelloJGraphT(  ) {} // ensure non-instantiability.
+
     /**
      * The starting point for the demo.
      *
