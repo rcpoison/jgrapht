@@ -34,14 +34,12 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 04-Aug-2003 : Strong refs to listeners instead of weak refs (BN);
  *
  */
 package org._3pq.jgrapht.graph;
 
-import java.lang.ref.WeakReference;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -72,10 +70,8 @@ import org._3pq.jgrapht.WeightedGraph;
  */
 public class DefaultListenableGraph extends GraphDelegator
     implements ListenableGraph {
-    private static int NOT_FOUND            = -1;
-    private ArrayList  m_graphListeners     = new ArrayList(  );
-    private ArrayList  m_staleListeners     = new ArrayList(  );
-    private ArrayList  m_vertexSetListeners = new ArrayList(  );
+    private ArrayList m_graphListeners     = new ArrayList(  );
+    private ArrayList m_vertexSetListeners = new ArrayList(  );
 
     /**
      * Constructor for DefaultListenableGraph.
@@ -136,8 +132,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addGraphListener(GraphListener)
      */
     public void addGraphListener( GraphListener l ) {
-        if( indexOfListener( l, m_graphListeners ) == NOT_FOUND ) {
-            m_graphListeners.add( new WeakListenerReference( l, m_graphListeners ) );
+        if( !m_graphListeners.contains( l ) ) {
+            m_graphListeners.add( l );
         }
     }
 
@@ -160,9 +156,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addVertexSetListener(VertexSetListener)
      */
     public void addVertexSetListener( VertexSetListener l ) {
-        if( indexOfListener( l, m_vertexSetListeners ) == NOT_FOUND ) {
-            m_vertexSetListeners.add( new WeakListenerReference( l,
-                    m_vertexSetListeners ) );
+        if( !m_vertexSetListeners.contains( l ) ) {
+            m_vertexSetListeners.add( l );
         }
     }
 
@@ -199,11 +194,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#removeGraphListener(GraphListener)
      */
     public void removeGraphListener( GraphListener l ) {
-        int i = indexOfListener( l, m_graphListeners );
-
-        if( i != NOT_FOUND ) {
-            m_graphListeners.remove( i );
-        }
+        m_graphListeners.remove( l );
     }
 
 
@@ -225,11 +216,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#removeVertexSetListener(VertexSetListener)
      */
     public void removeVertexSetListener( VertexSetListener l ) {
-        int i = indexOfListener( l, m_vertexSetListeners );
-
-        if( i != NOT_FOUND ) {
-            m_vertexSetListeners.remove( i );
-        }
+        m_vertexSetListeners.remove( l );
     }
 
 
@@ -242,15 +229,10 @@ public class DefaultListenableGraph extends GraphDelegator
         int len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            GraphListener l =
-                (GraphListener) getListener( m_graphListeners, i );
+            GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            if( l != null ) {
-                l.edgeAdded( edge );
-            }
+            l.edgeAdded( edge );
         }
-
-        removeStaleListeners(  );
     }
 
 
@@ -263,15 +245,10 @@ public class DefaultListenableGraph extends GraphDelegator
         int len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            GraphListener l =
-                (GraphListener) getListener( m_graphListeners, i );
+            GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            if( l != null ) {
-                l.edgeRemoved( edge );
-            }
+            l.edgeRemoved( edge );
         }
-
-        removeStaleListeners(  );
     }
 
 
@@ -286,25 +263,19 @@ public class DefaultListenableGraph extends GraphDelegator
         len = m_vertexSetListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            VertexSetListener l = getListener( m_vertexSetListeners, i );
+            VertexSetListener l =
+                (VertexSetListener) m_vertexSetListeners.get( i );
 
-            if( l != null ) {
-                l.vertexAdded( vertex );
-            }
+            l.vertexAdded( vertex );
         }
 
         len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            GraphListener l =
-                (GraphListener) getListener( m_graphListeners, i );
+            GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            if( l != null ) {
-                l.vertexAdded( vertex );
-            }
+            l.vertexAdded( vertex );
         }
-
-        removeStaleListeners(  );
     }
 
 
@@ -319,93 +290,18 @@ public class DefaultListenableGraph extends GraphDelegator
         len = m_vertexSetListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            VertexSetListener l = getListener( m_vertexSetListeners, i );
+            VertexSetListener l =
+                (VertexSetListener) m_vertexSetListeners.get( i );
 
-            if( l != null ) {
-                l.vertexRemoved( vertex );
-            }
+            l.vertexRemoved( vertex );
         }
 
         len = m_graphListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
-            GraphListener l =
-                (GraphListener) getListener( m_graphListeners, i );
+            GraphListener l = (GraphListener) m_graphListeners.get( i );
 
-            if( l != null ) {
-                l.vertexRemoved( vertex );
-            }
-        }
-
-        removeStaleListeners(  );
-    }
-
-
-    private VertexSetListener getListener( List listenerRefList, int index ) {
-        WeakListenerReference r =
-            (WeakListenerReference) listenerRefList.get( index );
-        VertexSetListener     l = (VertexSetListener) r.get(  );
-
-        if( l == null ) {
-            m_staleListeners.add( r );
-        }
-
-        return l;
-    }
-
-
-    private int indexOfListener( VertexSetListener listener, List list ) {
-        for( int i = 0; i < list.size(  ); i++ ) {
-            WeakListenerReference ref = (WeakListenerReference) list.get( i );
-
-            if( ref.get(  ) == listener ) {
-                return i;
-            }
-        }
-
-        return NOT_FOUND;
-    }
-
-
-    /**
-     * Remove listeners that became weakly reachable. This first implementation
-     * suffers from "busy idle" checks. Should do it properly some day.
-     */
-    private void removeStaleListeners(  ) {
-        int size = m_staleListeners.size(  );
-
-        if( size > 0 ) {
-            for( int i = 0; i < size; i++ ) {
-                WeakListenerReference ref =
-                    (WeakListenerReference) m_staleListeners.get( i );
-                ref.getContainingList(  ).remove( ref );
-            }
-
-            m_staleListeners.clear(  );
-        }
-    }
-
-    private static class WeakListenerReference extends WeakReference {
-        private List m_containingList;
-
-        /**
-         * Constructor for ListenerReference.
-         *
-         * @param l
-         * @param containingList
-         */
-        public WeakListenerReference( VertexSetListener l, List containingList ) {
-            super( l );
-            m_containingList = containingList;
-        }
-
-        /**
-         * .
-         *
-         * @return
-         */
-        public List getContainingList(  ) {
-            return m_containingList;
+            l.vertexRemoved( vertex );
         }
     }
 }
