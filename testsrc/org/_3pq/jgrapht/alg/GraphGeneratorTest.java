@@ -53,7 +53,6 @@ import org._3pq.jgrapht.alg.generator.CycleGraphGenerator;
 import org._3pq.jgrapht.alg.generator.EmptyGraphGenerator;
 import org._3pq.jgrapht.alg.generator.GraphGenerator;
 import org._3pq.jgrapht.alg.generator.LinearGraphGenerator;
-import org._3pq.jgrapht.alg.generator.WheelGraphGenerator;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 
 /**
