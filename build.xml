@@ -260,7 +260,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <mkdir dir="${javadoc.dir}" />
         <javadoc destdir="${javadoc.dir}" 
         		 access="protected" 
-                 windowtitle="JGraphT : a free Java graph-theory library"
+                 windowtitle="JGraphT : a free Java graph library"
                  overview="${src.dir}/overview.html">
             <classpath refid="build.classpath" />
             
