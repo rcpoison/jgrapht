@@ -63,6 +63,16 @@ public abstract class UndirectedConnectivity {
     }
 
     /**
+     * .
+     *
+     * @return
+     */
+    public UndirectedGraph getGraph(  ) {
+        return m_graph;
+    }
+
+
+    /**
      * Test if the graph is connected.
      *
      * @return
