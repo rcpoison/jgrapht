@@ -67,31 +67,31 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
-	<property name="latest.version.name"  value="0.5.3" />
-	
+    <property name="latest.version.name"  value="0.5.3" />
+    
     <!-- CVS tags and their respective version names -->
     <property name="ver_0_5_3.name"       value="0.5.3" />
     <property name="ver_0_5_2.name"       value="0.5.2" />
 
     <!-- Initialization. -->
-	<target name="init.local" unless="cvstag">
+    <target name="init.local" unless="cvstag">
         <property name="checkout.dir"     value="checkout" />
         <property name="project.version"  value="${latest.version.name}-local" />
-	</target>
-	
-	<target name="init.cvs" if="cvstag">
+    </target>
+    
+    <target name="init.cvs" if="cvstag">
         <property name="checkout.dir"     value="${cvstag}" />
-		<!-- A dereferencing heck to set project.version=${${cvstag}.name} -->
-		<!-- To be simplified if future Ant versions will support it directly -->
-	    <echo file="project.version.tmp">project.version=$${${cvstag}.name}</echo>
-	    <property file="project.version.tmp" />
-	    <delete file="project.version.tmp" />
-	    <!-- project.version now has the dereferenced value of ${${cvstag}.name} -->
-	</target>
+        <!-- A dereferencing heck to set project.version=${${cvstag}.name} -->
+        <!-- To be simplified if future Ant versions will support it directly -->
+        <echo file="project.version.tmp">project.version=$${${cvstag}.name}</echo>
+        <property file="project.version.tmp" />
+        <delete file="project.version.tmp" />
+        <!-- project.version now has the dereferenced value of ${${cvstag}.name} -->
+    </target>
 
     <target name="init" depends="init.local,init.cvs">
         <echo level="info">JAVA_HOME=${java.home}</echo>
-    	<property name="project.name"     value="jgrapht" />
+        <property name="project.name"     value="jgrapht" />
         <property name="project.prefix"   value="${project.name}-${project.version}" />
 
         <!-- Directories -->
@@ -104,7 +104,7 @@
         <property name="etc.dir"          value="${basedir}/etc"/>
         <property name="javadoc.dir"      value="${basedir}/javadoc"/>
 
-		<!-- File names -->
+        <!-- File names -->
         <property name="project.jar.name"    value="${project.prefix}.jar" />
         <property name="project.tar.name"    value="${project.prefix}.tar" />
         <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
@@ -115,7 +115,7 @@
         <property name="jgraph.jar.name"     value="jgraph.jar" />
         <property name="checkstyle.jar.name" value="checkstyle-all-3.3.jar" />
 
-		<!-- Files -->
+        <!-- Files -->
         <property name="project.jar"      value="${basedir}/${project.jar.name}" />
         <property name="project.tar"      value="${basedir}/${project.tar.name}" />
         <property name="project.tar.gz"   value="${basedir}/${project.tar.gz.name}" />
@@ -207,7 +207,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                     <exclude name="**/Default*Test.java"/>
-		            <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                    <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
                 </fileset>
             </batchtest>
         </junit>
@@ -218,15 +218,15 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <target name="checkstyle" depends="init"
                            description="Runs checkstyle on all source code.">
         <taskdef resource="checkstyletask.properties" 
-        		 classpath="${checkstyle.jar}"/>
+                 classpath="${checkstyle.jar}"/>
         <checkstyle config="${checkstyle.settings}">
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
-		        <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
             </fileset>
             <fileset dir="${testsrc.dir}">
                 <include name="**/*.java"/>
-		        <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
             </fileset>
         </checkstyle>
     </target>
@@ -235,8 +235,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
     <!-- WARNING:                                                          -->
     <!--   to workaround a bug in jalopy you need to edit your ant/bin/ant -->
-	<!--   or ant/bin/ant.bat script and add the -server option when it    -->
-	<!--   runs java. this prevents jalopy from eating memory.             -->
+    <!--   or ant/bin/ant.bat script and add the -server option when it    -->
+    <!--   runs java. this prevents jalopy from eating memory.             -->
     <target name="jalopy" depends="compile"
             description="Runs jalopy on all source code (see WARNING comment).">
         <taskdef name="jalopy" 
@@ -261,22 +261,22 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <delete dir="${javadoc.dir}" />
         <mkdir dir="${javadoc.dir}" />
         <javadoc destdir="${javadoc.dir}" 
-        		 access="protected" 
+                 access="protected" 
                  windowtitle="JGraphT : a free Java graph library"
                  overview="${src.dir}/overview.html">
             <classpath refid="build.classpath" />
             
             <packageset dir="${src.dir}" defaultexcludes="yes">
                 <include name="**"/>
-	            <exclude name="org/_3pq/jgrapht/experimental/**"/>
+                <exclude name="org/_3pq/jgrapht/experimental/**"/>
             </packageset>
         </javadoc>
     </target>
 
 
     <!-- Prepares a distribution directory of JGraphT -->
-	<target name="prepare.distribution" depends="jar,javadoc">
-	
+    <target name="prepare.distribution" depends="jar,javadoc">
+    
         <!-- make a temporary distribution directory -->
         <mkdir dir="${distrib.dir}" />
 
@@ -295,7 +295,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 <include name="overview.html"/>
                 <include name="**/*.java"/>
                 <include name="**/package.html"/>
-	            <exclude name="org/_3pq/jgrapht/experimental/**"/>
+                <exclude name="org/_3pq/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
@@ -333,7 +333,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             <fileset dir="${javadoc.dir}"/>
         </copy>
     </target>
-	
+    
 
     <!-- Packages a .zip distribution for JGraphT -->
     <target name="zip" depends="prepare.distribution">
@@ -371,9 +371,9 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     </target>
     
 
-	<!-- Clean outputs from previous build -->    
-	<target name="clean" depends="init"
-			description="Cleans all outputs from previous builds">
+    <!-- Clean outputs from previous build -->    
+    <target name="clean" depends="init"
+            description="Cleans all outputs from previous builds">
         <delete dir="${distrib.dir}" />
         <delete dir="${build.dir}" />
         <delete dir="${testbuild.dir}" />
@@ -381,14 +381,14 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <delete file="${project.jar}" />
         <delete file="${project.zip}" />
         <delete file="${project.tar.gz}" />
-	</target>
+    </target>
 
 
     <!-- ALL -->
     <target name="all" depends="clean,compile,test,zip,targz"
             description="Cleans, compiles, tests and creates distribution files (.zip and .tar.gz).">
             
-		<!-- Clean unnecessary outputs from this build -->    
+        <!-- Clean unnecessary outputs from this build -->    
         <delete dir="${distrib.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
@@ -428,44 +428,44 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     </target>
 
 
-	<!-- Creates a release according to a user-defined CVS tag -->
-	<target name="release" depends="init,checkout,cvstag.missing" if="cvstag"
-	        description="Checks out and builds a release according to a CVS tag">
-	        
-	    <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
+    <!-- Creates a release according to a user-defined CVS tag -->
+    <target name="release" depends="init,checkout,cvstag.missing" if="cvstag"
+            description="Checks out and builds a release according to a CVS tag">
+            
+        <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
         <ant dir="${checkout.dir}" antfile="${build.file.name}" 
              target="all" inheritall="false" inheritrefs="false">
-        	<property name="cvstag" value="${cvstag}"/>
+            <property name="cvstag" value="${cvstag}"/>
         </ant>
-	</target>
+    </target>
 
 
-	<!-- Checks out a snapshot according to a user-defined CVS tag -->
-	<target name="checkout" depends="init,cvstag.missing" if="cvstag"
-	        description="Checks out a snapshot from CVS according to a tag">
-	    <echo level="info">Checking out files of CVS tag: ${cvstag}</echo>
-	    
+    <!-- Checks out a snapshot according to a user-defined CVS tag -->
+    <target name="checkout" depends="init,cvstag.missing" if="cvstag"
+            description="Checks out a snapshot from CVS according to a tag">
+        <echo level="info">Checking out files of CVS tag: ${cvstag}</echo>
+        
         <property name="project.cvsroot" 
                   value=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/jgrapht" />
-		<property name="cvspass" value=".cvspass" />
+        <property name="cvspass" value=".cvspass" />
 
         <delete dir="${checkout.dir}" />
-		<mkdir  dir="${checkout.dir}" />
+        <mkdir  dir="${checkout.dir}" />
 
-		<echo file="${cvspass}" append="false">${project.cvsroot} A
+        <echo file="${cvspass}" append="false">${project.cvsroot} A
         </echo>
 
         <cvs command="checkout" cvsroot="${project.cvsroot}" package="."
              tag="${cvstag}" dest="${checkout.dir}" passfile="${cvspass}" />
        
         <delete file="${cvspass}" />      
-	</target>
+    </target>
 
 
-	<!-- Outputs an error message if CVS tag is unspecified -->
-	<target name="cvstag.missing" unless="cvstag">
-		<echo level="error">Variable $${cvstag} must be specified for selected target.</echo>
-	</target>
+    <!-- Outputs an error message if CVS tag is unspecified -->
+    <target name="cvstag.missing" unless="cvstag">
+        <echo level="error">Variable $${cvstag} must be specified for selected target.</echo>
+    </target>
 
 </project>
