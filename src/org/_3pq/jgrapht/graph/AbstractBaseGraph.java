@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   John V. Sichi
  *
  * $Id$
  *
@@ -36,6 +36,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : General edge refactoring (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
+ * 07-Feb-2004 : Enabled serialization (BN); 
  *
  */
 package org._3pq.jgrapht.graph;
@@ -114,7 +115,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         m_allowingLoops             = allowLoops;
         m_allowingMultipleEdges     = allowMultipleEdges;
 
-        setSpecifics(  );
+        m_specifics = createSpecifics(  );
 
         Edge e = ef.createEdge( new Object(  ), new Object(  ) );
         m_factoryEdgeClass = e.getClass(  );
@@ -276,7 +277,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             // NOTE:  it's important for this to happen in an object
             // method so that the new inner class instance gets associated with
             // the right outer class instance
-            newGraph.setSpecifics(  );
+            newGraph.m_specifics = newGraph.createSpecifics(  );
 
             GraphHelper.addGraph( newGraph, this );
 
@@ -444,20 +445,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     }
 
 
-    private void setSpecifics(  ) {
-        if( this instanceof DirectedGraph ) {
-            m_specifics = new DirectedSpecifics(  );
-        }
-        else if( this instanceof UndirectedGraph ) {
-            m_specifics = new UndirectedSpecifics(  );
-        }
-        else {
-            throw new IllegalArgumentException( 
-                "graph is incompatible with edge factory" );
-        }
-    }
-
-
     private boolean assertCompatibleWithEdgeFactory( Edge e ) {
         if( e == null ) {
             throw new NullPointerException(  );
@@ -470,14 +457,17 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     }
 
 
-    private boolean removeAllEdges( Edge[] edges ) {
-        boolean modified = false;
-
-        for( int i = 0; i < edges.length; i++ ) {
-            modified |= removeEdge( edges[ i ] );
+    private Specifics createSpecifics(  ) {
+        if( this instanceof DirectedGraph ) {
+            return new DirectedSpecifics(  );
         }
-
-        return modified;
+        else if( this instanceof UndirectedGraph ) {
+            return new UndirectedSpecifics(  );
+        }
+        else {
+            throw new IllegalArgumentException( 
+                "must be instance of either DirectedGraph or UndirectedGraph" );
+        }
     }
 
     /**
@@ -681,7 +671,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private class DirectedSpecifics extends Specifics {
+    private class DirectedSpecifics extends Specifics implements Serializable {
         private static final String NOT_IN_DIRECTED_GRAPH =
             "no such operation in a directed graph";
 
@@ -917,7 +907,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private class UndirectedSpecifics extends Specifics {
+    private class UndirectedSpecifics extends Specifics implements Serializable {
         private static final String NOT_IN_UNDIRECTED_GRAPH =
             "no such operation in an undirected graph";
 
