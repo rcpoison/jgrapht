@@ -1,0 +1,249 @@
+<!-- An ANT build file for JGraphT -->
+
+<!-- written by Barak Naveh, 24-Jul-2003 -->
+<!-- based on a nice script originally written by David Gilbert -->
+
+<!-- For Ant 1.5.1 -->
+<!-- To run this script, you need to make sure the libraries used by -->
+<!-- JGraphT are copied to the ../lib directory  -->
+
+<!-- This script will create temporary directories ../build and -->
+<!-- ../distribution, as working areas.  A ../javadoc directory will -->
+<!-- be created for the Javadoc HTML pages. -->
+
+<project name="jgrapht" default="all" basedir="..">
+
+    <!-- Initialization. -->
+    <target name="init" description="Initialize required settings.">
+        <tstamp />
+        <property name="jgrapht.name" value="jgrapht" />
+        <property name="jgrapht.version" value="0.4.0" />
+        <property name="builddir" value="${basedir}/build" />
+        <property name="junit.jar" value="${basedir}/lib/junit.jar"/>
+        <property name="ant.buildfile" value="${basedir}/ant/build.xml"/>
+        <property name="distribution" value="${basedir}/distribution"/>
+
+        <path id="build.classpath">
+            <pathelement location="${junit.jar}"/>
+        </path>
+    </target>
+
+
+    <!-- Compile the JGraphT classes -->
+    <target name="compile" depends="init"
+            description="Compile the JGraphT source code.">
+
+        <!-- create a temp build directory -->
+        <mkdir dir="${basedir}/build" />
+
+        <!-- compile the source -->
+        <javac srcdir="${basedir}/src" destdir="${basedir}/build">
+            <classpath refid="build.classpath" />
+            <include name="org/_3pq/jgrapht/*"/>
+            <include name="org/_3pq/jgrapht/demo/*"/>
+            <include name="org/_3pq/jgrapht/edge/*"/>
+            <include name="org/_3pq/jgrapht/graph/*"/>
+        </javac>
+
+        <!-- make the jar -->
+        <jar jarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.jar"
+             basedir="${basedir}/build" />
+
+        <!-- delete the temp directory -->
+        <delete dir="${basedir}/build" />
+    </target>
+
+
+    <!-- Generate the JGraphT JavaDoc HTML pages -->
+    <target name="javadoc" depends="init" 
+                           description="Creates the Javadocs.">
+        <delete dir="${basedir}/javadoc" />
+        <mkdir dir="${basedir}/javadoc" />
+        <javadoc destdir="${basedir}/javadoc" 
+                 windowtitle="JGraphT : a free Java graph-theory library"
+                 overview="${basedir}/src/overview.html">
+            <classpath refid="build.classpath" />
+            
+            <packageset dir="${basedir}/src" defaultexcludes="yes">
+                <include name="org/_3pq/jgrapht"/>
+	            <include name="org/_3pq/jgrapht/demo"/>
+	            <include name="org/_3pq/jgrapht/edge"/>
+	            <include name="org/_3pq/jgrapht/graph"/>
+            </packageset>
+        </javadoc>
+    </target>
+
+
+    <!-- Make .zip distribution for JGraphT -->
+    <target name="zip" depends="compile"
+    				   description="Creates a .zip distribution.">
+
+        <!-- make a temporary distribution directory -->
+        <mkdir dir="${distribution}" />
+
+        <!-- add README -->
+        <copy file="${basedir}/README.html" tofile="${distribution}/README.html" />
+
+        <!-- add license -->
+        <copy file="${basedir}/license-LGPL.txt" tofile="${distribution}/license-LGPL.txt" />
+
+        <!-- add runtime jar file -->
+        <copy file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" tofile="${distribution}/${jgrapht.name}-${jgrapht.version}.jar" />
+    
+        <!-- add source files -->
+        <copy todir="${distribution}/src">
+            <fileset dir="${basedir}/src">
+                <include name="overview.html"/>
+                <include name="org/_3pq/jgrapht/*.java"/>
+                <include name="org/_3pq/jgrapht/package.html"/>
+	            <include name="org/_3pq/jgrapht/demo/*.java"/>
+	            <include name="org/_3pq/jgrapht/demo/package.html"/>
+	            <include name="org/_3pq/jgrapht/edge/*.java"/>
+	            <include name="org/_3pq/jgrapht/edge/package.html"/>
+	            <include name="org/_3pq/jgrapht/edge/junit/*.java"/>
+	            <include name="org/_3pq/jgrapht/graph/*.java"/>
+	            <include name="org/_3pq/jgrapht/graph/package.html"/>
+	            <include name="org/_3pq/jgrapht/graph/junit/*.java"/>
+                <include name="org/_3pq/jgrapht/junit/*"/>
+            </fileset>
+        </copy>
+
+        <!-- add lib files -->
+        <copy file="${junit.jar}" tofile="${distribution}/lib/junit.jar" />
+
+        <!-- add ant build file (this file) -->
+        <copy file="${ant.buildfile}" tofile="${distribution}/ant/build.xml" />
+
+        <!-- add etc files -->
+        <copy todir="${distribution}/etc">
+            <fileset dir="${basedir}/etc">
+                <include name="checkstyle-settings.xml"/>
+                <include name="etc-readme.txt"/>
+                <include name="jalopy-settings.xml"/>
+            </fileset>
+        </copy>
+
+        <!-- add Javadoc files -->
+        <copy todir="${distribution}/javadoc">
+            <fileset dir="${basedir}/javadoc"/>
+        </copy>
+        
+        <!-- convert end-of-line characters in text files -->
+        <fixcrlf srcdir="${distribution}/src" eol="crlf" eof="remove" />
+        <fixcrlf srcdir="${distribution}/etc" eol="crlf" eof="remove" />
+
+        <!-- make the zip file -->
+        <zip zipfile="${basedir}/${jgrapht.name}-${jgrapht.version}.zip">
+             <zipfileset dir="${distribution}"
+                         prefix="${jgrapht.name}-${jgrapht.version}" />
+        </zip>
+
+        <!-- delete the temporary distribution directory -->
+        <delete dir="${basedir}/distribution" />
+
+    </target>
+
+
+    <!-- Make .tar.gz distribution for JGraphT -->
+    <target name="targz" depends="compile"
+                         description="Creates a tar.gz distribution.">
+
+        <!-- make a temporary distribution directory -->
+        <mkdir dir="${distribution}" />
+
+        <!-- add README -->
+        <copy file="${basedir}/README.html" tofile="${distribution}/README.html" />
+
+        <!-- add license -->
+        <copy file="${basedir}/license-LGPL.txt" tofile="${distribution}/license-LGPL.txt" />
+
+        <!-- add runtime jar file -->
+        <copy file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" tofile="${distribution}/${jgrapht.name}-${jgrapht.version}.jar" />
+    
+        <!-- add source files -->
+        <copy todir="${distribution}/src">
+            <fileset dir="${basedir}/src">
+                <include name="overview.html"/>
+                <include name="org/_3pq/jgrapht/*.java"/>
+                <include name="org/_3pq/jgrapht/package.html"/>
+	            <include name="org/_3pq/jgrapht/demo/*.java"/>
+	            <include name="org/_3pq/jgrapht/demo/package.html"/>
+	            <include name="org/_3pq/jgrapht/edge/*.java"/>
+	            <include name="org/_3pq/jgrapht/edge/package.html"/>
+	            <include name="org/_3pq/jgrapht/edge/junit/*.java"/>
+	            <include name="org/_3pq/jgrapht/graph/*.java"/>
+	            <include name="org/_3pq/jgrapht/graph/package.html"/>
+	            <include name="org/_3pq/jgrapht/graph/junit/*.java"/>
+                <include name="org/_3pq/jgrapht/junit/*"/>
+            </fileset>
+        </copy>
+
+        <!-- add lib files -->
+        <copy file="${junit.jar}" tofile="${distribution}/lib/junit.jar" />
+
+        <!-- add ant build file (this file) -->
+        <copy file="${ant.buildfile}" tofile="${distribution}/ant/build.xml" />
+
+        <!-- add etc files -->
+        <copy todir="${distribution}/etc">
+            <fileset dir="${basedir}/etc">
+                <include name="checkstyle-settings.xml"/>
+                <include name="etc-readme.txt"/>
+                <include name="jalopy-settings.xml"/>
+            </fileset>
+        </copy>
+
+        <!-- add Javadoc files -->
+        <copy todir="${distribution}/javadoc">
+            <fileset dir="${basedir}/javadoc"/>
+        </copy>
+        
+        <!-- convert end-of-line characters in text files -->
+        <fixcrlf srcdir="${distribution}/src" eol="lf" eof="remove" />
+        <fixcrlf srcdir="${distribution}/etc" eol="lf" eof="remove" />
+
+        <!-- make the tar.gz file -->
+        <tar tarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.tar">
+             <tarfileset dir="${distribution}"
+                         prefix="${jgrapht.name}-${jgrapht.version}" />
+        </tar>
+        <gzip zipfile="${basedir}/${jgrapht.name}-${jgrapht.version}.tar.gz"   
+              src="${basedir}/${jgrapht.name}-${jgrapht.version}.tar" />
+        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.tar" />
+
+        <!-- delete the temporary distribution directory -->
+        <delete dir="${distribution}" />
+
+    </target>
+    
+
+	<!-- Clean outputs from previous build -->    
+	<target name="clean"
+			depends="init"
+			description="Clean all outputs from previous builds">
+        <delete dir="${distribution}" />
+        <delete dir="${basedir}/build" />
+        <delete dir="${basedir}/javadoc" />
+        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
+        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.zip" />
+        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.tar.gz" />
+        <echo>${java.home}</echo>
+	</target>
+
+
+	<!-- Clean unnecessary outputs from this build -->    
+	<target name="postclean"
+			depends="init"
+			description="Clean unnecessary outputs from this build">
+        <delete dir="${basedir}/javadoc" />
+        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
+	</target>
+
+
+    <!-- ALL -->
+    <target name="all" 
+            depends="clean,compile,javadoc,zip,targz,postclean"
+            description="Cleans, compiles JGraphT, builds the jar, generates Javadocs and creates distribution files (.zip and .tar.gz).">
+    </target>
+
+</project>
