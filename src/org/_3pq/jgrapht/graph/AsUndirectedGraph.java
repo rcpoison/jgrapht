@@ -47,6 +47,7 @@ import java.util.List;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.edge.UndirectedEdge;
 
@@ -81,8 +82,8 @@ import org._3pq.jgrapht.edge.UndirectedEdge;
  *
  * @since Aug 14, 2003
  */
-public class AsUndirectedGraph extends GraphDelegator implements Serializable,
-    UndirectedGraph {
+public class AsUndirectedGraph extends DefaultListenableGraph
+    implements UndirectedGraph, ListenableGraph, Serializable {
     private static final String NO_EDGE_ADD =
         "this graph does not support edge addition";
     private static final String UNDIRECTED =
