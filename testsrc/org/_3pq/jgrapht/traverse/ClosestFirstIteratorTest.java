@@ -21,45 +21,48 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
- * AllAlgTests.java
- * ----------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+/* ---------------------------
+ * ClosestFirstIteratorTest.java
+ * ---------------------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
- * Original Author:  Barak Naveh
+ * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
  * $Id$
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 03-Sept-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org._3pq.jgrapht.traverse;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org._3pq.jgrapht.DirectedGraph;
 
 /**
- * .
+ * Tests for ClosestFirstIterator.
  *
- * @author Barak Naveh
+ * @author John V. Sichi
+ *
+ * @since Sept 3, 2003
  */
-public class AllAlgTests {
-    /**
-     * .
-     *
-     * @return
-     */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "Test for org._3pq.jgrapht" );
+public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest {
+    // NOTE:  the edge weights make the result deterministic
+    String getExpectedStr1(  ) {
+        return "1,2,3,5,6,7,9,4,8";
+    }
 
-        //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( ConnectivityInspectorTest.class ) );
-        suite.addTest( new TestSuite( DijkstraShortestPathTest.class ) );
 
-        //$JUnit-END$
-        return suite;
+    String getExpectedStr2(  ) {
+        return getExpectedStr1(  ) + ",orphan";
+    }
+
+
+    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
+        AbstractGraphIterator i = new ClosestFirstIterator( g, vertex );
+        i.setCrossComponentTraversal( true );
+
+        return i;
     }
 }

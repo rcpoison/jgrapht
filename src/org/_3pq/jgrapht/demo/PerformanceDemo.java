@@ -76,7 +76,7 @@ public final class PerformanceDemo {
      */
     public static void main( String[] args ) {
         long time = System.currentTimeMillis(  );
-        
+
         reportPerformanceFor( "starting at", time );
 
         Graph  g    = new Pseudograph(  );
@@ -106,7 +106,7 @@ public final class PerformanceDemo {
 
         reportPerformanceFor( "graph allocation", time );
 
-        time     = System.currentTimeMillis(  );
+        time = System.currentTimeMillis(  );
 
         for( Iterator i = new BreadthFirstIterator( g ); i.hasNext(  ); ) {
             i.next(  );
@@ -114,7 +114,7 @@ public final class PerformanceDemo {
 
         reportPerformanceFor( "breadth traversal", time );
 
-        time     = System.currentTimeMillis(  );
+        time = System.currentTimeMillis(  );
 
         for( Iterator i = new DepthFirstIterator( g ); i.hasNext(  ); ) {
             i.next(  );
@@ -137,10 +137,9 @@ public final class PerformanceDemo {
 
     private static void reportPerformanceFor( String msg, long refTime ) {
         double time = ( System.currentTimeMillis(  ) - refTime ) / 1000.0;
-        double mem = usedMemory(  ) / ( 1024.0 * 1024.0);
-        mem = Math.round(mem * 100) / 100.0;
-        System.out.println( msg + " (" + time + " sec, " + mem
-            + "MB)" );
+        double mem = usedMemory(  ) / ( 1024.0 * 1024.0 );
+        mem = Math.round( mem * 100 ) / 100.0;
+        System.out.println( msg + " (" + time + " sec, " + mem + "MB)" );
     }
 
 

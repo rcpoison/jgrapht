@@ -41,12 +41,12 @@
 package org._3pq.jgrapht.traverse;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
@@ -263,9 +263,9 @@ final class TraverseUtils {
         private FlyweightEdgeEvent   m_reuseableEdgeEvent;
         private FlyweightVertexEvent m_reuseableVertexEvent;
         private Iterator             m_vertexIterator = null;
-        private Set                  m_seen           = new HashSet(  );
+        private Map                  m_seen           = new HashMap(  );
         private SimpleContainer      m_pending;
-        private Specifics            m_specifics;
+        private Specifics m_specifics;
 
         /** the connected component state */
         private int m_state = CCS_BEFORE_COMPONENT;
@@ -304,13 +304,11 @@ final class TraverseUtils {
                 // pick a start vertex if graph not empty 
                 if( m_vertexIterator.hasNext(  ) ) {
                     Object vStart = m_vertexIterator.next(  );
-                    m_seen.add( vStart );
-                    m_pending.add( vStart );
+                    encounterVertex( vStart, null );
                 }
             }
             else if( g.containsVertex( startVertex ) ) {
-                m_seen.add( startVertex );
-                m_pending.add( startVertex );
+                encounterVertex( startVertex, null );
             }
             else {
                 throw new IllegalArgumentException( 
@@ -332,9 +330,8 @@ final class TraverseUtils {
                     while( m_vertexIterator.hasNext(  ) ) {
                         Object v = m_vertexIterator.next(  );
 
-                        if( !m_seen.contains( v ) ) {
-                            m_seen.add( v );
-                            m_pending.add( v );
+                        if( !m_seen.containsKey( v ) ) {
+                            encounterVertex( v, null );
                             m_state = CCS_BEFORE_COMPONENT;
 
                             return true;
@@ -376,6 +373,57 @@ final class TraverseUtils {
         }
 
 
+        /**
+         * Access the data stored by newSeenData.
+         *
+         * @param vertex a vertex which has already been seen
+         *
+         * @return data associated when vertex was first seen
+         */
+        protected Object getSeenData( Object vertex ) {
+            return m_seen.get( vertex );
+        }
+
+
+        /**
+         * Called whenever we re-encounter a vertex.  The default
+         * implementation does nothing.
+         *
+         * @param vertex the vertex re-encountered
+         * @param edge the edge via which the vertex was re-encountered
+         */
+        protected void encounterVertexAgain( Object vertex, Edge edge ) {}
+
+
+        /**
+         * Give subclasses a place to record private data associated with each
+         * vertex.  The default implementation just returns the vertex itself,
+         * causing m_seen to degenerate into a Set rather than a Map.
+         *
+         * @param vertex a vertex which has just been encountered
+         * @param edge the edge via which the vertex was encountered
+         *
+         * @return the data to associate with this vertex
+         */
+        protected Object newSeenData( Object vertex, Edge edge ) {
+            return vertex;
+        }
+
+
+        /**
+         * Update data structures the first time we see a vertex.
+         *
+         * @param vertex the vertex encountered
+         * @param edge the edge via which the vertex was encountered, or null
+         *        if the vertex is a starting point
+         */
+        private final void encounterVertex( Object vertex, Edge edge ) {
+            Object seenData = newSeenData( vertex, edge );
+            m_seen.put( vertex, seenData );
+            m_pending.add( seenData );
+        }
+
+
         private void addUnseenChildrenOf( Object vertex ) {
             List edges = m_specifics.edgesOf( vertex );
 
@@ -385,9 +433,11 @@ final class TraverseUtils {
 
                 Object v = e.oppositeVertex( vertex );
 
-                if( !m_seen.contains( v ) ) {
-                    m_seen.add( v );
-                    m_pending.add( v );
+                if( !m_seen.containsKey( v ) ) {
+                    encounterVertex( v, e );
+                }
+                else {
+                    encounterVertexAgain( v, e );
                 }
             }
         }

@@ -39,6 +39,7 @@
  * 15-Aug-2003 : Added checkstyle task (JVS);
  * 15-Aug-2003 : Used JUnit batch test feature (JVS);
  * 15-Aug-2003 : Added jalopy task (JVS);
+ * 3-Sept-2003 : Add etags support (JVS);
  *
  */
 -->
@@ -129,7 +130,8 @@
         <!-- create a test build directory -->
         <mkdir dir="${testbuilddir}" />
 
-        <javac srcdir="${basedir}/testsrc" destdir="${testbuilddir}">
+        <javac srcdir="${basedir}/testsrc" destdir="${testbuilddir}" 
+               target="1.3">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>
         </javac>
@@ -392,6 +394,38 @@
     <target name="all" 
             depends="clean,compile,test,javadoc,zip,targz,postclean"
             description="Cleans, compiles and tests JGraphT, builds the jar, generates Javadocs and creates distribution files (.zip and .tar.gz).">
+    </target>
+
+    <!-- generate Emacs tags -->
+    <fileset dir="${basedir}" id="fileset.taggable">
+        <include name="src/**/*.java"/>
+        <include name="testsrc/**/*.java"/>
+    </fileset>
+    <target name="etags" 
+            depends="init" 
+            description="Generates TAGS file for Emacs">
+        <property name="file.taggable.tmp" 
+            location="${basedir}/taggedfiles"/>
+        <antcall target="tags.find_taggable_files"/>
+        <exec dir="${basedir}" executable="ctags">
+            <arg line="-e"/>
+            <arg line="-L taggedfiles"/>
+        </exec>
+        <delete file="${file.taggable.tmp}" quiet="true"/>
+    </target>
+
+    <!-- Helper for etags target -->
+    <target name="tags.find_taggable_files">
+        <concat destfile="${file.taggable.tmp}">replaceme</concat>
+        <pathconvert property="files.taggable" 
+          pathsep="${line.separator}"
+          dirsep="/" refid="fileset.taggable" >
+          <map from="${basedir}" to="." />
+        </pathconvert>
+        <replace file="${file.taggable.tmp}" 
+          token="replaceme" value="${files.taggable}" />
+        <fixcrlf srcDir="${basedir}" includes="taggedfiles"
+          eol="lf" eof="remove" />
     </target>
 
 </project>

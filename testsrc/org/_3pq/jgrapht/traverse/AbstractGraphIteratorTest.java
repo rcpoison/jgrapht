@@ -45,7 +45,7 @@ import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.EdgeTraversalEvent;
 import org._3pq.jgrapht.event.TraversalListener;
 import org._3pq.jgrapht.event.VertexTraversalEvent;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org._3pq.jgrapht.graph.DefaultDirectedWeightedGraph;
 
 /**
  * A basis for testing {@link org._3pq.jgrapht.traverse.BreadthFirstIterator}
@@ -62,7 +62,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
      * .
      */
     public void testDirectedGraph(  ) {
-        DirectedGraph graph = new DefaultDirectedGraph(  );
+        DirectedGraph graph = new DefaultDirectedWeightedGraph(  );
 
         //
         String v1 = "1";
@@ -87,15 +87,18 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
 
         graph.addVertex( "orphan" );
 
+        // NOTE:  set weights on some of the edges to test traversals like
+        // ClosestFirstIterator where it matters.  For other traversals, it
+        // will be ignored.  Rely on the default edge weight being 1.
         graph.addEdge( v1, v2 );
-        graph.addEdge( v1, v3 );
-        graph.addEdge( v2, v4 );
+        graph.addEdge( v1, v3 ).setWeight( 100 );
+        graph.addEdge( v2, v4 ).setWeight( 1000 );
         graph.addEdge( v3, v5 );
-        graph.addEdge( v3, v6 );
+        graph.addEdge( v3, v6 ).setWeight( 100 );
         graph.addEdge( v5, v6 );
-        graph.addEdge( v5, v7 );
+        graph.addEdge( v5, v7 ).setWeight( 200 );
         graph.addEdge( v6, v1 );
-        graph.addEdge( v7, v8 );
+        graph.addEdge( v7, v8 ).setWeight( 100 );
         graph.addEdge( v7, v9 );
         graph.addEdge( v8, v2 );
         graph.addEdge( v9, v4 );
