@@ -671,7 +671,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private class DirectedSpecifics extends Specifics implements Serializable {
+    private class DirectedSpecifics extends Specifics {
         private static final String NOT_IN_DIRECTED_GRAPH =
             "no such operation in a directed graph";
 
@@ -907,7 +907,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private class UndirectedSpecifics extends Specifics implements Serializable {
+    private class UndirectedSpecifics extends Specifics {
         private static final String NOT_IN_UNDIRECTED_GRAPH =
             "no such operation in an undirected graph";
 
