@@ -40,6 +40,7 @@
  * 05-Aug-2003 : Version 0.4.1 notes (BN);
  * 14-Aug-2003 : Version 0.5.0 notes (BN);
  * 27-Aug-2003 : Upgrading versions (BN);
+ * 06-Nov-2003 : Version 0.5.1 notes (BN);
  *
  */
 -->
@@ -133,9 +134,9 @@ table {
 <body>
 <h1><font size="2"><br>
 </font><font size="7"><font color="#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>&nbsp; 
-0.5.0<br>
+0.5.1<br>
 <font size="3">&nbsp;</font></h1>
-&nbsp;<p>Released: August 14, 2003</p>
+&nbsp;<p>Released: November 7, 2003</p>
 
 <p>Written by Barak Naveh (<a href="mailto:barak_naveh@users.sourceforge.net">barak_naveh@users.sourceforge.net</a>) and Contributors.</p>
 
@@ -150,7 +151,7 @@ table {
 objects and algorithms. It runs on Java 2 Platform (JDK 1.3 or later).</p>
 
 <p>JGraphT is licensed under the terms of the GNU Lesser General
-Public License (LGPL). A copy of the license is included in the download.</p>
+Public License (LGPL). A copy of the <a href="license-LGPL.txt">license</a> is included in the download.</p>
 
 <p>Please note that JGraphT is distributed WITHOUT ANY WARRANTY;
 without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
@@ -222,14 +223,15 @@ can use it, please send it to me and I will add it to that package. </p>
 <h2>Upgrading Versions</h2>
 <p>
 To help upgrading, JGraphT maintains a one-version-backwards 
-compatibility. While this property is not promised, it generally holds. You 
-can upgrade via:</p>
+compatibility. While this compatibility is not a hard promise, it generally 
+respected. You can upgrade via:</p>
 
 <ul>
   <li>
 <p><b>The safe way</b> : compile your app with the JGraphT version that immediately 
-follows your existing version and follow the deprecation notes, if exist. Then 
-move to the next version, and on, until you're current. </p>
+follows your existing version and follow the deprecation notes, if exist, and 
+modify your application accordingly. Then move to the next version, and on, until 
+you're current. </p>
   </li>
   
   <li>
@@ -238,6 +240,7 @@ done.</p>
   </li>
 </ul>
 
+<p>Reading the <a href="#history">change history</a> is always recommended.</p>
 
 
 
@@ -256,7 +259,7 @@ http://jgrapht.sourceforge.net/javadoc</a>.</p>
 <li>
 JGraphT requires JDK 1.3 or later. You might get JGraphT to work
 with JDK 1.2.x, but I haven't tested this. JGraphT will certainly 
-not work with JDK 1.1.x because it requires the collection framework that
+not work with JDK 1.1.x because it requires the collection framework which
 was only introduced in JDK 1.2.<br>
 &nbsp;</li>
 
@@ -276,7 +279,7 @@ using JUnit 3.8.1.<br>
 JGraph is a graph visualization and editing component. You need 
 JGraph only if you want to create graph visualizations using the JGraphT-to-JGraph 
 adapter. The 
-<code>jgraph.jar</code> runtime file of JGraph version 2.2.1 is included in this 
+<code>jgraph.jar</code> runtime file of JGraph version 3.0 is included in this 
 distribution. JGraph is licensed under the terms of the GNU Lesser General 
 Public License (LGPL). You can find more about JGraph and/or download the latest 
 version from <a href="http://www.sourceforge.net/projects/jgraph">
@@ -307,22 +310,31 @@ to report.</li>
 
 <h2>Your Improvements</h2>
 <p>If you add improvements to JGraphT please send them to me. I 
-will add them to the next release so that everyone can enjoy your contribution. You 
-might also benefit from it: others may fix bugs in your code or may continue to 
-enhance it.</p>
+will add them to the next release so that everyone can enjoy them. You 
+might also benefit from it: others may fix bugs in your source files or may continue to 
+enhance them.</p>
+
+<p>If you particularly like the elegance of a certain part, don't be 
+shy to drop a compliment to its author - it's heartening (and it's free)! On the 
+other hand, if you think you can do better, let's see your source...</p>
 
 
 
 
-<h2>History</h2>
+<h2><a name="history"></a>History</h2>
 <p>
 Changes to JGraphT in each version:
 <ul>
 
+<li><b>version 0.5.1</b> (07-Nov-2003) : Semantics of <font color="#FF6600">
+Graph.clone() has changed</font>, please check the documentation if you're using 
+it, added Dijkstra's shortest path, new graph generation framework, upgraded to 
+JGraph 3.0, various bug fixed and API improvements.</li>
+
 <li><b>version 0.5.0</b> (14-Aug-2003) : a new connectivity inspector added, 
 edge API refactored to be simpler, an improved ant build, an improved event 
 model, all known bugs were fixed, documentation clarifications, other small 
-improvements. API of 0.5.0 is not %100 backward compatible with 0.4.1 but 
+improvements. API of 0.5.0 is not  100% backward compatible with 0.4.1 but 
 upgrade is simple and straightforward.</li>
 
 <li><b>version 0.4.1</b> (05-Aug-2003) : A new adapter to JGraph that provides 
@@ -339,11 +351,21 @@ hierarchy and added more unit-tests.</li>
 
 
 <h2>Contributors</h2>
-<p>Many thanks to developers
-<a href="http://sourceforge.net/users/perfecthash/">John V Sichi</a> and
-<a href="http://sourceforge.net/users/liviu_aurelian/">Liviu Rau</a> that have 
-made important contributions to JGraphT.</p>
-<p>&nbsp;</p>
+<p>JGraphT wouldn't be the library it is today without the source contributions made by 
+the authors:</p>
+<ul>
+  <li>
+<a href="http://sourceforge.net/users/perfecthash/">John V Sichi</a></li>
+  <li>
+<a href="http://sourceforge.net/users/liviu_aurelian/">Liviu Rau</a></li>
+  <li><a href="http://www.bluemarsh.com/personal/index.html">Nathan Fiedler</a></li>
+  <li><a href="http://sourceforge.net/users/behrisch/">Michael Behrisch</a></li>
+  <li><a href="http://sourceforge.net/users/linda_buisman/">Linda Buisman</a></li>
+</ul>
+<p>(if I have missed your name on this list, please email me to get it fixed). </p>
+<p dir="ltr">Other people have also helped in different ways: reporting bugs, 
+requesting features, commenting, and by merely asking very good questions. Many 
+thanks for all of you. </p>
 <p>
 
 
