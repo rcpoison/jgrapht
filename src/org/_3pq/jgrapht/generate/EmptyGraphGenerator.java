@@ -44,9 +44,8 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.VertexFactory;
 
 /**
- * EmptyGraphGenerator generates an <a
- * href="http://mathworld.wolfram.com/EmptyGraph.html">empty graph</a> of any
- * size. An empty graph is a graph that has no edges.
+ * Generates an <a href="http://mathworld.wolfram.com/EmptyGraph.html">empty
+ * graph</a> of any size. An empty graph is a graph that has no edges.
  *
  * @author John V. Sichi
  *
