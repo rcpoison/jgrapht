@@ -146,7 +146,7 @@ public class Subgraph extends AbstractGraph {
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public Subgraph( ListenableGraph base, Set vertexSubset, Set edgeSubset ) {
+    public Subgraph( Graph base, Set vertexSubset, Set edgeSubset ) {
         super(  );
 
         m_base = base;
