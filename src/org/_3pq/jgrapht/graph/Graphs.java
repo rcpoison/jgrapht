@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 31-Jul-2003 : Refactored out from GraphFactory (LR + BN);
+ * 04-Aug-2003 : Default constructors for internal classes (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -47,6 +48,7 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.UndirectedWeightedGraph;
+import org._3pq.jgrapht.edge.EdgeFactories;
 
 /**
  * This utility class is a container of internal graph classes that should not
@@ -72,12 +74,79 @@ public class Graphs {
     private Graphs(  ) {} // ensure non-instantiability.
 
     /**
+     * A directed graph. A directed graph is a non-simple directed graph in
+     * which multiple edges between any two vertices are <i>not</i> permitted,
+     * but loops are.
+     * 
+     * <p>
+     * prefixed 'Default' to avoid name collision with the DirectedGraph
+     * interface.
+     * </p>
+     */
+    public static class DefaultDirectedGraph extends DefaultGraph
+        implements DirectedGraph {
+        /**
+         * @see DefaultGraph
+         */
+        public DefaultDirectedGraph(  ) {
+            this( new EdgeFactories.DirectedEdgeFactory(  ) );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public DefaultDirectedGraph( EdgeFactory ef ) {
+            super( ef, false, true );
+        }
+    }
+
+
+    /**
+     * A directed weighted graph. A directed weighted graph is a non-simple
+     * directed graph in which multiple edges between any two vertices are
+     * <i>not</i> permitted, but loops are. The graph has weights on its
+     * edges.
+     * 
+     * <p>
+     * prefixed 'Default' to avoid name collision with the
+     * DirectedWeightedGraph interface.
+     * </p>
+     */
+    public static class DefaultDirectedWeightedGraph
+        extends DefaultDirectedGraph implements DirectedWeightedGraph {
+        /**
+         * @see DefaultGraph
+         */
+        public DefaultDirectedWeightedGraph(  ) {
+            this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public DefaultDirectedWeightedGraph( EdgeFactory ef ) {
+            super( ef );
+        }
+    }
+
+
+    /**
      * A directed multigraph. A directed multigraph is a non-simple directed
      * graph in which loops and multiple edges between any two vertices are
      * permitted.
      */
     public static class DirectedMultigraph extends DefaultGraph
         implements DirectedGraph {
+        /**
+         * @see DefaultGraph
+         */
+        public DirectedMultigraph(  ) {
+            this( new EdgeFactories.DirectedEdgeFactory(  ) );
+        }
+
+
         /**
          * @see DefaultGraph
          */
@@ -94,6 +163,14 @@ public class Graphs {
      */
     public static class DirectedWeightedMultigraph extends DirectedMultigraph
         implements DirectedWeightedGraph {
+        /**
+         * @see DefaultGraph
+         */
+        public DirectedWeightedMultigraph(  ) {
+            this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+        }
+
+
         /**
          * @see DefaultGraph
          */
@@ -174,51 +251,16 @@ public class Graphs {
         /**
          * @see DefaultGraph
          */
+        public Multigraph(  ) {
+            this( new EdgeFactories.UndirectedEdgeFactory(  ) );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
         public Multigraph( EdgeFactory ef ) {
             super( ef, true, false );
-        }
-    }
-
-
-    /**
-     * A directed graph. A directed graph is a non-simple directed graph in
-     * which multiple edges between any two vertices are <i>not</i> permitted,
-     * but loops are.
-     * 
-     * <p>
-     * prefixed 'Plain' to avoid name collision with the DirectedGraph
-     * interface.
-     * </p>
-     */
-    public static class PlainDirectedGraph extends DefaultGraph
-        implements DirectedGraph {
-        /**
-         * @see DefaultGraph
-         */
-        public PlainDirectedGraph( EdgeFactory ef ) {
-            super( ef, false, true );
-        }
-    }
-
-
-    /**
-     * A directed weighted graph. A directed weighted graph is a non-simple
-     * directed graph in which multiple edges between any two vertices are
-     * <i>not</i> permitted, but loops are. The graph has weights on its
-     * edges.
-     * 
-     * <p>
-     * prefixed 'Plain' to avoid name collision with the DirectedWeightedGraph
-     * interface.
-     * </p>
-     */
-    public static class PlainDirectedWeightedGraph extends PlainDirectedGraph
-        implements DirectedWeightedGraph {
-        /**
-         * @see DefaultGraph
-         */
-        public PlainDirectedWeightedGraph( EdgeFactory ef ) {
-            super( ef );
         }
     }
 
@@ -235,6 +277,14 @@ public class Graphs {
         /**
          * @see DefaultGraph
          */
+        public Pseudograph(  ) {
+            this( new EdgeFactories.UndirectedEdgeFactory(  ) );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
         public Pseudograph( EdgeFactory ef ) {
             super( ef, true, true );
         }
@@ -248,6 +298,14 @@ public class Graphs {
      */
     public static class SimpleDirectedGraph extends DefaultGraph
         implements DirectedGraph {
+        /**
+         * @see DefaultGraph
+         */
+        public SimpleDirectedGraph(  ) {
+            this( new EdgeFactories.DirectedEdgeFactory(  ) );
+        }
+
+
         /**
          * @see DefaultGraph
          */
@@ -269,6 +327,14 @@ public class Graphs {
         public SimpleDirectedWeightedGraph( EdgeFactory ef ) {
             super( ef );
         }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public SimpleDirectedWeightedGraph(  ) {
+            this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+        }
     }
 
 
@@ -287,6 +353,14 @@ public class Graphs {
         public SimpleGraph( EdgeFactory ef ) {
             super( ef, false, false );
         }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public SimpleGraph(  ) {
+            this( new EdgeFactories.UndirectedEdgeFactory(  ) );
+        }
     }
 
 
@@ -301,6 +375,14 @@ public class Graphs {
          */
         public SimpleWeightedGraph( EdgeFactory ef ) {
             super( ef );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public SimpleWeightedGraph(  ) {
+            this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
         }
     }
 
@@ -437,6 +519,14 @@ public class Graphs {
         public WeightedMultigraph( EdgeFactory ef ) {
             super( ef );
         }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public WeightedMultigraph(  ) {
+            this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
+        }
     }
 
 
@@ -455,6 +545,14 @@ public class Graphs {
          */
         public WeightedPseudograph( EdgeFactory ef ) {
             super( ef );
+        }
+
+
+        /**
+         * @see DefaultGraph
+         */
+        public WeightedPseudograph(  ) {
+            this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
         }
     }
 }
