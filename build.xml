@@ -109,6 +109,7 @@
         <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
         <property name="project.zip.name"    value="${project.prefix}.zip" />
         <property name="build.file.name"     value="build.xml" />
+        <property name="license.file.name"   value="license-LGPL.txt" />
         <property name="junit.jar.name"      value="junit.jar" />
         <property name="jgraph.jar.name"     value="jgraph.jar" />
         <property name="checkstyle.jar.name" value="checkstyle-all-3.3.jar" />
@@ -281,7 +282,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <copy file="${basedir}/README.html" tofile="${distrib.dir}/README.html" />
 
         <!-- add license -->
-        <copy file="${basedir}/license-LGPL.txt" tofile="${distrib.dir}/license-LGPL.txt" />
+        <copy file="${basedir}/${license.file.name}" tofile="${distrib.dir}/${license.file.name}" />
 
         <!-- add runtime jar file -->
         <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
@@ -339,8 +340,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/testsrc" eol="crlf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/etc"     eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/${build.file.name}"  
-                                                 eol="crlf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}"         eol="crlf" eof="remove" 
+                 includes="${build.file.name},${license.file.name}"/>
 
         <!-- make the zip file -->
         <zip zipfile="${project.zip}">
@@ -356,8 +357,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/etc"     eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/${build.file.name}"  
-                                                 eol="lf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}"         eol="lf" eof="remove" 
+                 includes="${build.file.name},${license.file.name}"/>
 
         <!-- make the tar.gz file -->
         <tar tarfile="${project.tar}">
