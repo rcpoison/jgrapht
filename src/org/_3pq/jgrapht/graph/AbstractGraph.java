@@ -143,6 +143,8 @@ public abstract class AbstractGraph implements Graph {
      *
      * @param v vertex
      *
+     * @return <code>true</code> if this assertion holds.
+     *
      * @throws NullPointerException if specified vertex is <code>null</code>.
      * @throws IllegalArgumentException if specified vertex does not exist in
      *         this graph.

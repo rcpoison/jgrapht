@@ -242,9 +242,9 @@ public final class TraverseUtils {
      * A common superclass for BreadthFirstIterator and DepthFirstIterator.
      */
     static class XXFirstIterator extends AbstractGraphIterator {
-        private static int CCS_BEFORE_COMPONENT = 1;
-        private static int CCS_WITHIN_COMPONENT = 2;
-        private static int CCS_AFTER_COMPONENT  = 3;
+        private static final int CCS_BEFORE_COMPONENT = 1;
+        private static final int CCS_WITHIN_COMPONENT = 2;
+        private static final int CCS_AFTER_COMPONENT  = 3;
 
         // todo: support ConcurrentModificationException if graph modified during iteration. 
         private Iterator        m_vertexIterator = null;
