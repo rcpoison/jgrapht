@@ -21,10 +21,10 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------------
+/* --------------
  * CloneTest.java
- * ----------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * --------------
+ * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
