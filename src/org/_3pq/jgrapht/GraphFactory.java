@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 26-Jul-2003 : Added support for user-definable GraphFactory (BN);
  *
  */
 package org._3pq.jgrapht;
@@ -54,17 +55,46 @@ import org._3pq.jgrapht.graph.UnmodifiableGraph;
  * specified an <code>IllegalArgumentException</code> is thrown.
  * 
  * <p>
- * The terminology of graphs is rather confusing due to naming inconsistency
- * between directed and undirected graphs. For example, directed multigraph
- * allows loops while (undirected) multigraph does not.
+ * Please note that the naming of graphs is rather confusing due to
+ * inconsistency between directed and undirected graphs. For example, directed
+ * multigraph allows loops while (undirected) multigraph does not. The
+ * documentation of each  method below tell you the details of the type of
+ * graph to be created.
  * </p>
  *
  * @author Barak Naveh
  *
  * @since Jul 19, 2003
  */
-public class GraphFactory {
-    private EdgeFactoryFactory m_eff = new EdgeFactoryFactory(  );
+public abstract class GraphFactory {
+    private static GraphFactory s_factory = null;
+    private EdgeFactoryFactory  m_eff = new EdgeFactoryFactory(  );
+
+    /**
+     * Installs the specified graph factory as the globally used graph factory
+     * of the JGraphT library.
+     *
+     * @param factory the new graph factory to be installed.
+     */
+    public static void setFactory( GraphFactory factory ) {
+        s_factory = factory;
+    }
+
+
+    /**
+     * Returns the graph factory that is globally used by the JGraphT library.
+     *
+     * @return the graph factory used by the JGraphT library.
+     */
+    public static GraphFactory getFactory(  ) {
+        if( s_factory == null ) {
+            s_factory = new GraphFactory(  ) {}
+            ;
+        }
+
+        return s_factory;
+    }
+
 
     /**
      * Creates a new directed graph. A directed graph is a non-simple directed
@@ -472,7 +502,7 @@ public class GraphFactory {
         /**
          * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
          */
-        public ListenableDirectedGraph( Graph base ) {
+        public ListenableDirectedGraph( DirectedGraph base ) {
             super( base );
         }
     }
@@ -483,7 +513,7 @@ public class GraphFactory {
         /**
          * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
          */
-        public ListenableDirectedWeightedGraph( Graph base ) {
+        public ListenableDirectedWeightedGraph( DirectedWeightedGraph base ) {
             super( base );
         }
     }
@@ -494,7 +524,7 @@ public class GraphFactory {
         /**
          * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
          */
-        public ListenableUndirectedGraph( Graph base ) {
+        public ListenableUndirectedGraph( UndirectedGraph base ) {
             super( base );
         }
     }
@@ -505,7 +535,7 @@ public class GraphFactory {
         /**
          * @see DefaultListenableGraph#DefaultListenableGraph(Graph)
          */
-        public ListenableUndirectedWeightedGraph( Graph base ) {
+        public ListenableUndirectedWeightedGraph( UndirectedWeightedGraph base ) {
             super( base );
         }
     }
@@ -606,7 +636,8 @@ public class GraphFactory {
         /**
          * @see Subgraph#Subgraph(Graph, Set, Set)
          */
-        public SubgraphDirected( Graph base, Set vertexSubset, Set edgeSubset ) {
+        public SubgraphDirected( DirectedGraph base, Set vertexSubset,
+            Set edgeSubset ) {
             super( base, vertexSubset, edgeSubset );
         }
     }
@@ -617,8 +648,8 @@ public class GraphFactory {
         /**
          * @see Subgraph#Subgraph(Graph, Set, Set)
          */
-        public SubgraphDirectedWeighted( Graph base, Set vertexSubset,
-            Set edgeSubset ) {
+        public SubgraphDirectedWeighted( DirectedWeightedGraph base,
+            Set vertexSubset, Set edgeSubset ) {
             super( base, vertexSubset, edgeSubset );
         }
     }
@@ -629,7 +660,8 @@ public class GraphFactory {
         /**
          * @see Subgraph#Subgraph(Graph, Set, Set)
          */
-        public SubgraphUndirected( Graph base, Set vertexSubset, Set edgeSubset ) {
+        public SubgraphUndirected( UndirectedGraph base, Set vertexSubset,
+            Set edgeSubset ) {
             super( base, vertexSubset, edgeSubset );
         }
     }
@@ -640,8 +672,8 @@ public class GraphFactory {
         /**
          * @see Subgraph#Subgraph(Graph, Set, Set)
          */
-        public SubgraphUndirectedWeighted( Graph base, Set vertexSubset,
-            Set edgeSubset ) {
+        public SubgraphUndirectedWeighted( UndirectedWeightedGraph base,
+            Set vertexSubset, Set edgeSubset ) {
             super( base, vertexSubset, edgeSubset );
         }
     }
