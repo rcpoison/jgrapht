@@ -70,35 +70,35 @@ public class ConnectivityInspectorTest extends TestCase {
     public Pseudograph create(  ) {
         Pseudograph g = new Pseudograph(  );
 
-        assertEquals( g.vertexSet(  ).size(  ), 0 );
+        assertEquals( 0, g.vertexSet(  ).size(  ) );
         g.addVertex( m_v1 );
-        assertEquals( g.vertexSet(  ).size(  ), 1 );
+        assertEquals( 1, g.vertexSet(  ).size(  ) );
         g.addVertex( m_v2 );
-        assertEquals( g.vertexSet(  ).size(  ), 2 );
+        assertEquals( 2, g.vertexSet(  ).size(  ) );
         g.addVertex( m_v3 );
-        assertEquals( g.vertexSet(  ).size(  ), 3 );
+        assertEquals( 3, g.vertexSet(  ).size(  ) );
         g.addVertex( m_v4 );
-        assertEquals( g.vertexSet(  ).size(  ), 4 );
+        assertEquals( 4, g.vertexSet(  ).size(  ) );
 
-        assertEquals( g.edgeSet(  ).size(  ), 0 );
+        assertEquals( 0, g.edgeSet(  ).size(  ) );
 
         m_e1 = g.addEdge( m_v1, m_v2 );
-        assertEquals( g.edgeSet(  ).size(  ), 1 );
+        assertEquals( 1, g.edgeSet(  ).size(  ) );
 
         m_e2 = g.addEdge( m_v2, m_v3 );
-        assertEquals( g.edgeSet(  ).size(  ), 2 );
+        assertEquals( 2, g.edgeSet(  ).size(  ) );
 
         m_e3 = g.addEdge( m_v3, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 3 );
+        assertEquals( 3, g.edgeSet(  ).size(  ) );
 
         m_e3_b = g.addEdge( m_v3, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 4 );
+        assertEquals( 4, g.edgeSet(  ).size(  ) );
         assertNotNull( m_e3_b );
 
         m_u = g.addEdge( m_v1, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 5 );
+        assertEquals( 5, g.edgeSet(  ).size(  ) );
         m_u = g.addEdge( m_v1, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 6 );
+        assertEquals( 6, g.edgeSet(  ).size(  ) );
 
         return g;
     }
@@ -140,11 +140,11 @@ public class ConnectivityInspectorTest extends TestCase {
         assertEquals( true, inspector.isGraphConnected(  ) );
 
         g.removeVertex( m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 1 );
+        assertEquals( 1, g.edgeSet(  ).size(  ) );
 
         g.removeEdge( m_e2 );
         g.addEdge( m_v2, m_v2 );
-        assertEquals( g.edgeSet(  ).size(  ), 1 );
+        assertEquals( 1, g.edgeSet(  ).size(  ) );
 
         inspector = new ConnectivityInspector( g );
         assertEquals( false, inspector.isGraphConnected(  ) );
