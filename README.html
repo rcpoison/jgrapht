@@ -1,4 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
 <html>
 <!--
 /* ==========================================
@@ -8,7 +9,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +28,7 @@
 /* ~~~~~~~~~~~
  * README.html
  * ~~~~~~~~~~~
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   -
@@ -49,366 +50,363 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <meta name="Author" content="Barak Naveh">
-  <meta name="keywords" content="JGraphT, graph, theory, graph-theory, free, java, LGPL, open-source">
+  <meta name="keywords" content=
+  "JGraphT, graph, theory, graph-theory, free, java, LGPL, open-source">
+
   <title>JGraphT Release Notes</title>
-  
-<style type="text/css">
-<!--
-body {
-	font-family:Verdana;
-	text-align:left;
-	color:#000011;
-	background-color:#FAFBFF;
-}
-a {
-	COLOR: #336699; 
-	TEXT-DECORATION: underline;
-}
-a:visited {
-	color: #663366; 
-	TEXT-DECORATION: underline;
-}
-a:hover {
-	color: #FF9900; 
-	TEXT-DECORATION: underline;
-}
-code {
-	font-family:Courier New;
-	font-size:medium;
-}
+  <style type="text/css">
+  <!--
+  body {
+  font-family:Verdana;
+  text-align:left;
+  color:#000011;
+  background-color:#FAFBFF;
+  }
+  a {
+  COLOR: #336699; 
+  TEXT-DECORATION: underline;
+  }
+  a:visited {
+  color: #663366; 
+  TEXT-DECORATION: underline;
+  }
+  a:hover {
+  color: #FF9900; 
+  TEXT-DECORATION: underline;
+  }
+  code {
+  font-family:Courier New;
+  font-size:medium;
+  }
 
-ul {
-	list-style:disc;
-}
-li {
-	list-style:disc;
-	margin-left:1em;
-	margin-right:1em;
-	line-height: 150%;
-}
+  ul {
+  list-style:disc;
+  }
+  li {
+  list-style:disc;
+  margin-left:1em;
+  margin-right:1em;
+  line-height: 150%;
+  }
 
-ol {
-	list-style:decimal;
-}
+  ol {
+  list-style:decimal;
+  }
 
-p {
-	margin-left:1em;
-	margin-right:1em;
-	line-height: 140%;
-}
+  p {
+  margin-left:1em;
+  margin-right:1em;
+  line-height: 140%;
+  }
 
-h1 {
-	background-color:#7AA1E6;
-	border-left:1px solid #245BCB; 
-	border-right:1px solid #245BCB; 
-	border-top:1px solid #245BCB; 
-	border-bottom:1px solid #245BCB; 
-	color:#FFFFFF;
-	text-align:center;
-}
- 
-h2 {
-	border-left:0px solid Black; 
-	border-right:0px solid Black; 
-	border-top:0px solid Black; 
-	border-bottom:2px solid #7AA1E6; 
-	margin-top:50;
-	color:#25507C;
-}
- 
-h3 {
-	border-left:0px solid Black; 
-	border-right:0px solid Black; 
-	border-top:0px solid Black; 
-	border-bottom:2px solid #7AA1E6; 
-	margin-top:30;
-	color:#25507C;
-}
+  h1 {
+  background-color:#7AA1E6;
+  border-left:1px solid #245BCB; 
+  border-right:1px solid #245BCB; 
+  border-top:1px solid #245BCB; 
+  border-bottom:1px solid #245BCB; 
+  color:#FFFFFF;
+  text-align:center;
+  }
 
-table {
-	border-collapse: collapse;
-}
+  h2 {
+  border-left:0px solid Black; 
+  border-right:0px solid Black; 
+  border-top:0px solid Black; 
+  border-bottom:2px solid #7AA1E6; 
+  margin-top:50;
+  color:#25507C;
+  }
 
-//-->
+  h3 {
+  border-left:0px solid Black; 
+  border-right:0px solid Black; 
+  border-top:0px solid Black; 
+  border-bottom:2px solid #7AA1E6; 
+  margin-top:30;
+  color:#25507C;
+  }
+
+  table {
+  border-collapse: collapse;
+  }
+
+  //-->
   </style>
 </head>
+
 <body>
-<h1><font size="2"><br>
-</font><font size="7"><font color="#CC3399">J</font>Graph<font color=
-"#FFCC00">T</font></font>&nbsp; 0.5.3<br>
-<font size="3">&nbsp;</font></h1>
-&nbsp;<p>Released: June, 2004</p>
-
-<p>Written by Barak Naveh (<a href="mailto:barak_naveh@users.sourceforge.net"
->barak_naveh@users.sourceforge.net</a>) and Contributors.</p>
-
-<p>(C) Copyright 2003-2004, by Barak Naveh and Contributors. All rights reserved.</p>
-
-
-
-
-<h2>Introduction</h2>
-
-<p>JGraphT is a free Java class library that provides mathematical graph-theory 
-objects and algorithms. It runs on Java 2 Platform (JDK 1.3 or later).</p>
-
-<p>JGraphT is licensed under the terms of the GNU Lesser General
-Public License (LGPL). A copy of the <a href="license-LGPL.txt">license</a> is 
-included in the download.</p>
+  <h1><font size="2"><br></font><font size="7"><font color=
+  "#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>  0.5.3<br>
+  <font size="3"> </font></h1> 
 
-<p>Please note that JGraphT is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  Please refer to the license for details.</p>
+  <p>Released: June, 2004</p>
 
+  <p>Written by Barak Naveh (<a href=
+  "mailto:barak_naveh@users.sourceforge.net">barak_naveh@users.sourceforge.net</a>)
+  and Contributors.</p>
 
+  <p>(C) Copyright 2003-2005, by Barak Naveh and Contributors. All rights
+  reserved.</p>
 
-
-
-<h2>Contents</h2>
-<p>
-<table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
-  <tr>
-		<td valign="top">
-        <b><code>jgrapht.jar</code></b></td>
-		<td>the compiled JGraphT 
-        library</td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <b><code>README.html</code></b></td>
-		<td>this file</td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <b><code>licence-LGPL.txt</code></b></td>
-		<td>GNU Lesser General 
-        Public License</td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <b><code>javadoc/</code></b></td>
-		<td>Javadoc documentation</td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <b><code>lib/</code></b></td>
-		<td>required libraries:
-				<ul compact>
-					<li><code>junit.jar</code></li>
-					<li><code>jgraph.jar</code></li>
-				</ul></td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <b><code>src/</code></b></td>
-		<td>source code</td>
-  </tr>
-  <tr>
-		<td valign="top">
-        <code><b>testsrc/</b></code></td>
-		<td>source code of unit tests</td>
-  </tr>
-</table>
+  <h2>Introduction</h2>
 
+  <p>JGraphT is a free Java class library that provides mathematical
+  graph-theory objects and algorithms. It runs on Java 2 Platform (JDK 1.3 or
+  later).</p>
 
+  <p>JGraphT is licensed under the terms of the GNU Lesser General Public
+  License (LGPL). A copy of the <a href="license-LGPL.txt">license</a> is
+  included in the download.</p>
 
+  <p>Please note that JGraphT is distributed WITHOUT ANY WARRANTY; without even
+  the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+  Please refer to the license for details.</p>
 
+  <h2>Contents</h2>
 
-<h2>Getting Started</h2>
-<p>
-The package <code>org._3pq.jgrapht.demo</code> includes small demo 
-applications to help you get started. If you spawn your own demo app and think 
-others can use it, please send it to me and I will add it to that package. </p>
+  <table border="1" cellspacing="0" cellpadding="5" style=
+  "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
+    <tr>
+      <td valign="top"><b><code>jgrapht.jar</code></b></td>
 
+      <td>the compiled JGraphT library</td>
+    </tr>
 
+    <tr>
+      <td valign="top"><b><code>README.html</code></b></td>
 
+      <td>this file</td>
+    </tr>
 
-<h2>Upgrading Versions</h2>
-<p>
-To help upgrading, JGraphT maintains a one-version-backwards 
-compatibility. While this compatibility is not a hard promise, it generally 
-respected. You can upgrade via:</p>
+    <tr>
+      <td valign="top"><b><code>licence-LGPL.txt</code></b></td>
 
-<ul>
-  <li>
-<p><b>The safe way</b> : compile your app with the JGraphT version that immediately 
-follows your existing version and follow the deprecation notes, if exist, and 
-modify your application accordingly. Then move to the next version, and on, until 
-you're current. </p>
-  </li>
-  
-  <li>
-<p><b>The fast way</b> : go to the latest JGraphT right away - if it works, you're 
-done.</p>
-  </li>
-</ul>
+      <td>GNU Lesser General Public License</td>
+    </tr>
 
-<p>Reading the <a href="#history">change history</a> is always recommended.</p>
+    <tr>
+      <td valign="top"><b><code>javadoc/</code></b></td>
 
+      <td>Javadoc documentation</td>
+    </tr>
 
+    <tr>
+      <td valign="top"><b><code>lib/</code></b></td>
 
-<h2>Documentation</h2>
-<p>A local copy of the Javadoc HTML files is included in this distribution.
-The latest version of these files is also available on-line at
-<a href="http://jgrapht.sourceforge.net/javadoc">
-http://jgrapht.sourceforge.net/javadoc</a>.</p>
+      <td>
+        required libraries:
 
+        <ul compact>
+          <li><code>junit.jar</code></li>
 
+          <li><code>jgraph.jar</code></li>
+        </ul>
+      </td>
+    </tr>
 
+    <tr>
+      <td valign="top"><b><code>src/</code></b></td>
 
-<h2>Dependencies</h2>
-<p>
-<ul>
-<li>
-JGraphT requires JDK 1.3 or later. You might get JGraphT to work
-with JDK 1.2.x, but I haven't tested this. JGraphT will certainly 
-not work with JDK 1.1.x because it requires the collection framework which
-was only introduced in JDK 1.2.<br>
-&nbsp;</li>
+      <td>source code</td>
+    </tr>
 
-<li>
-JUnit is a unit testing framework.  You need JUnit only if you 
-want to run the unit tests. The 
-<code>junit.jar</code> runtime file is included in this distribution. JUnit is licensed under the terms of the IBM Common Public License. 
-You can find out more about JUnit and/or download the latest version from
+    <tr>
+      <td valign="top"><code><b>testsrc/</b></code></td>
 
-    <a href="http://www.junit.org">http://www.junit.org</a>.
+      <td>source code of unit tests</td>
+    </tr>
+  </table>
 
-The JUnit tests included with JGraphT have been created 
-using JUnit 3.8.1.<br>
-&nbsp;</li>
+  <h2>Getting Started</h2>
 
-<li>
-JGraph is a graph visualization and editing component. You need 
-JGraph only if you want to create graph visualizations using the JGraphT-to-JGraph 
-adapter. The 
-<code>jgraph.jar</code> runtime file of JGraph version 4.0 is included in this 
-distribution. JGraph is licensed under the terms of the GNU Lesser General 
-Public License (LGPL). You can find more about JGraph and/or download the latest 
-version from <a href="http://www.sourceforge.net/projects/jgraph">
-http://www.sourceforge.net/projects/jgraph</a>.</li>
-</ul>
+  <p>The package <code>org._3pq.jgrapht.demo</code> includes small demo
+  applications to help you get started. If you spawn your own demo app and
+  think others can use it, please send it to me and I will add it to that
+  package.</p>
 
+  <h2>Upgrading Versions</h2>
 
+  <p>To help upgrading, JGraphT maintains a one-version-backwards
+  compatibility. While this compatibility is not a hard promise, it generally
+  respected. You can upgrade via:</p>
 
+  <ul>
+    <li>
+      <p><b>The safe way</b> : compile your app with the JGraphT version that
+      immediately follows your existing version and follow the deprecation
+      notes, if exist, and modify your application accordingly. Then move to
+      the next version, and on, until you're current.</p>
+    </li>
+
+    <li>
+      <p><b>The fast way</b> : go to the latest JGraphT right away - if it
+      works, you're done.</p>
+    </li>
+  </ul>
+
+  <p>Reading the <a href="#history">change history</a> is always
+  recommended.</p>
+
+  <h2>Documentation</h2>
+
+  <p>A local copy of the Javadoc HTML files is included in this distribution.
+  The latest version of these files is also available on-line at <a href=
+  "http://jgrapht.sourceforge.net/javadoc">http://jgrapht.sourceforge.net/javadoc</a>.</p>
+
+  <h2>Dependencies</h2>
+
+  <ul>
+    <li>JGraphT requires JDK 1.3 or later. You might get JGraphT to work with
+    JDK 1.2.x, but I haven't tested this. JGraphT will certainly not work with
+    JDK 1.1.x because it requires the collection framework which was only
+    introduced in JDK 1.2.<br>
+    &nbsp;</li>
+
+    <li>JUnit is a unit testing framework. You need JUnit only if you want to
+    run the unit tests. The <code>junit.jar</code> runtime file is included in
+    this distribution. JUnit is licensed under the terms of the IBM Common
+    Public License. You can find out more about JUnit and/or download the
+    latest version from <a href=
+    "http://www.junit.org">http://www.junit.org</a>. The JUnit tests included
+    with JGraphT have been created using JUnit 3.8.1.<br>
+    &nbsp;</li>
+
+    <li>JGraph is a graph visualization and editing component. You need JGraph
+    only if you want to create graph visualizations using the JGraphT-to-JGraph
+    adapter. The <code>jgraph.jar</code> runtime file of JGraph version 5.3.1 is
+    included in this distribution. JGraph is licensed under the terms of the
+    GNU Lesser General Public License (LGPL). You can find more about JGraph
+    and/or download the latest version from <a href=
+    "http://www.sourceforge.net/projects/jgraph">http://www.sourceforge.net/projects/jgraph</a>.</li>
+  </ul>
 
-<h2>Online Resources</h2>
-<p>
-The JGraphT website is  at: <a href="http://jgrapht.sourceforge.net/"
->http://jgrapht.sourceforge.net</a>. You can use this site to:<p>
+  <h2>Online Resources</h2>
 
-<ul>
-<li><b>Obtain the latest version</b> : latest version and all previous versions 
-of JGraphT are available online.</li>
+  <p>The JGraphT website is at: <a href=
+  "http://jgrapht.sourceforge.net/">http://jgrapht.sourceforge.net</a>. You can
+  use this site to:</p>
 
-<li><b>Report bugs</b> : if you have any comments, suggestions or bugs you want 
-to report.</li>
+  <ul>
+    <li><b>Obtain the latest version</b> : latest version and all previous
+    versions of JGraphT are available online.</li>
 
-<li><b>Get support</b> : if you have questions or need help with JGraphT.</li>
+    <li><b>Report bugs</b> : if you have any comments, suggestions or bugs you
+    want to report.</li>
 
-</ul>
+    <li><b>Get support</b> : if you have questions or need help with
+    JGraphT.</li>
+  </ul>
+
+  <h2>Your Improvements</h2>
+
+  <p>If you add improvements to JGraphT please send them to me. I will add them
+  to the next release so that everyone can enjoy them. You might also benefit
+  from it: others may fix bugs in your source files or may continue to enhance
+  them.</p>
 
-
-
-
-<h2>Your Improvements</h2>
-<p>If you add improvements to JGraphT please send them to me. I 
-will add them to the next release so that everyone can enjoy them. You 
-might also benefit from it: others may fix bugs in your source files or may 
-continue to enhance them.</p>
-
-<p>If you particularly like the elegance of a certain part, don't be 
-shy to drop a compliment to its author - it's heartening (and it's free)! On the 
-other hand, if you think you can do better, let's see your source...</p>
-
-
-
-
-<h2><a name="history"></a>History</h2>
-<p>
-Changes to JGraphT in each version:
-<ul>
-
-<li><b>version 0.5.3</b> (June-2004) : Removed Subgraph verification of 
- element's identity to base graph, upgraded to JGraph 4.0, Added the 
- VisioExporter which was contributed by Avner Linder, minor bug fixes 
- and  improvements.</li>
-
-<li><b>version 0.5.2</b> (March-2004) : Serialization improvements, fixes to 
- subgraphs and listenable graphs, added support for JGraph-&gt;JGraphT change 
- propagation for JGraph adapter (contributed by Erik Postma), upgraded to JGraph 
- 3.1, various bug fixes and improvements.</li>
-
-<li><b>version 0.5.1</b> (10-Nov-2003) : Semantics of 
-Graph.clone() has changed, please check the documentation if you're using 
-it. Added Dijkstra's shortest path, vertex cover approximations, new graph 
-generation framework, upgraded to JGraph 3.0, various bug fixes and API 
-improvements.</li>
-
-<li><b>version 0.5.0</b> (14-Aug-2003) : a new connectivity inspector added, 
-edge API refactored to be simpler, an improved ant build, an improved event 
-model, all known bugs were fixed, documentation clarifications, other small 
-improvements. API of 0.5.0 is not  100% backward compatible with 0.4.1 but 
-upgrade is simple and straightforward.</li>
-
-<li><b>version 0.4.1</b> (05-Aug-2003) : A new adapter to JGraph that provides 
-graph visualizations, new depth-first and breadth-first iteration algorithms, 
-various bug fixes and refactorings, moved unit-tests to a separate folder 
-hierarchy and added more unit-tests.</li>
-
-<li><b>version
-0.4.0</b> (28-Jul-2003) : Initial public release.</li>
-
-</ul>
-
-
-
-
-<h2>Contributors</h2>
-<p>JGraphT wouldn't be the library it is today without the source contributions made by 
-the authors:</p>
-<ul>
-  <li>
-<a href="http://sourceforge.net/users/perfecthash/">John V Sichi</a></li>
-  <li>
-<a href="http://sourceforge.net/users/liviu_aurelian/">Liviu Rau</a></li>
-  <li><a href="http://www.bluemarsh.com/personal/index.html">Nathan Fiedler</a></li>
-  <li><a href="http://sourceforge.net/users/behrisch/">Michael Behrisch</a></li>
-  <li><a href="http://sourceforge.net/users/linda_buisman/">Linda Buisman</a></li>
-  <li>Erik Postma</li>
-  <li>Mikael Hansen</li>
-  <li>Avner Linder</li>
-</ul>
-<p>(if I have missed your name on this list, please email me to get it fixed). </p>
-<p dir="ltr">Other people have also helped in different ways: reporting bugs, 
-requesting features, commenting, and by merely asking very good questions. Many 
-thanks to all of you. </p>
-<p>
-
-
-Regards,<br>
-<a href="mailto:barak_naveh@users.sourceforge.net">Barak Naveh</a><br>
-JGraphT Project Lead</p>
-<p>&nbsp; </p>
-
-
-
-<hr noshade size="2" style="background-color:#7AA1E6;color:#7AA1E6;border-width: thin none none;">
-<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" width="100%">
-  <tr>
-    <td width="10%"align="left"><a href="http://validator.w3.org/check/referer"><img
-          src="http://www.w3.org/Icons/valid-html401" border="0"
-          alt="Valid HTML 4.01!" height="31" width="88"/></a></td>
-          
-    <td width="80%"align="center"><small>
-		  &copy; Copyright 2003-2004, by Barak Naveh and Contributors. All rights reserved.</small></td>
-	    
-	<td width="10%" align="right"><a href="http://sourceforge.net"><img 
-    	  src="http://sourceforge.net/sflogo.php?group_id=86459&amp;type=1" 
-    	  width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></td>
-  </tr>
-</table>
-<br/>
-
+  <p>If you particularly like the elegance of a certain part, don't be shy to
+  drop a compliment to its author - it's heartening (and it's free)! On the
+  other hand, if you think you can do better, let's see your source...</p>
+
+  <h2><a name="history"></a>History</h2>
+
+  <p>Changes to JGraphT in each version:</p>
+
+  <ul>
+    <li><b>version 0.5.4</b> (TBD) : Fixed various serialization issues. Added
+    to <code>JGraphModelAdapter</code> support for JGraph's "dangling" edges,
+    its constructors have slightly changed and now forbid <code>null</code>
+    values. Upgraded to JGraph 5.3.1.</li>
+
+    <li><b>version 0.5.3</b> (June-2004) : Removed Subgraph verification of
+    element's identity to base graph, upgraded to JGraph 4.0, Added the
+    VisioExporter which was contributed by Avner Linder, minor bug fixes and
+    improvements.</li>
+
+    <li><b>version 0.5.2</b> (March-2004) : Serialization improvements, fixes
+    to subgraphs and listenable graphs, added support for JGraph-&gt;JGraphT
+    change propagation for JGraph adapter (contributed by Erik Postma),
+    upgraded to JGraph 3.1, various bug fixes and improvements.</li>
+
+    <li><b>version 0.5.1</b> (November-2003) : Semantics of Graph.clone() has
+    changed, please check the documentation if you're using it. Added
+    Dijkstra's shortest path, vertex cover approximations, new graph generation
+    framework, upgraded to JGraph 3.0, various bug fixes and API
+    improvements.</li>
+
+    <li><b>version 0.5.0</b> (14-Aug-2003) : a new connectivity inspector
+    added, edge API refactored to be simpler, an improved ant build, an
+    improved event model, all known bugs were fixed, documentation
+    clarifications, other small improvements. API of 0.5.0 is not 100% backward
+    compatible with 0.4.1 but upgrade is simple and straightforward.</li>
+
+    <li><b>version 0.4.1</b> (05-Aug-2003) : A new adapter to JGraph that
+    provides graph visualizations, new depth-first and breadth-first iteration
+    algorithms, various bug fixes and refactoring, moved unit-tests to a
+    separate folder hierarchy and added more unit-tests.</li>
+
+    <li><b>version 0.4.0</b> (July-2003) : Initial public release.</li>
+  </ul>
+
+  <h2>Contributors</h2>
+
+  <p>JGraphT wouldn't be the library it is today without the source
+  contributions made by the authors:</p>
+
+  <ul>
+    <li><a href="http://sourceforge.net/users/perfecthash/">John V
+    Sichi</a></li>
+
+    <li><a href="http://sourceforge.net/users/liviu_aurelian/">Liviu
+    Rau</a></li>
+
+    <li><a href="http://www.bluemarsh.com/personal/index.html">Nathan
+    Fiedler</a></li>
+
+    <li><a href="http://sourceforge.net/users/behrisch/">Michael
+    Behrisch</a></li>
+
+    <li><a href="http://sourceforge.net/users/linda_buisman/">Linda
+    Buisman</a></li>
+
+    <li>Erik Postma</li>
+
+    <li>Mikael Hansen</li>
+
+    <li>Avner Linder</li>
+  </ul>
+
+  <p>(if I have missed your name on this list, please email me to get it
+  fixed).</p>
+
+  <p dir="ltr">Other people have also helped in different ways: reporting bugs,
+  requesting features, commenting, and by merely asking very good questions.
+  Many thanks to all of you.</p>
+
+  <p>Regards,<br>
+  <a href="mailto:barak_naveh@users.sourceforge.net">Barak Naveh</a><br>
+  JGraphT Project Lead</p>
+
+  <p> </p>
+  <hr noshade size="2" style=
+  "background-color:#7AA1E6;color:#7AA1E6;border-width: thin none none;">
+
+  <table border="0" cellpadding="0" cellspacing="0" style=
+  "border-collapse: collapse" width="100%">
+    <tr>
+      <td width="10%" align="left"><a href=
+      "http://validator.w3.org/check/referer"><img src=
+      "http://www.w3.org/Icons/valid-html401" border="0" alt="Valid HTML 4.01!"
+      height="31" width="88"></a></td>
+
+      <td width="80%" align="center"><small>© Copyright 2003-2004, by Barak
+      Naveh and Contributors. All rights reserved.</small></td>
+
+      <td width="10%" align="right"><a href="http://sourceforge.net"><img src=
+      "http://sourceforge.net/sflogo.php?group_id=86459&amp;type=1" width="88"
+      height="31" border="0" alt="SourceForge.net Logo"></a></td>
+    </tr>
+  </table><br>
 </body>
 </html>
