@@ -49,7 +49,7 @@ import java.util.EventListener;
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.GraphListener
+ * @see org._3pq.jgrapht.event.GraphListener
  * @since Jul 18, 2003
  */
 public interface VertexSetListener extends EventListener {

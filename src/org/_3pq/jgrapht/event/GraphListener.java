@@ -50,7 +50,7 @@ package org._3pq.jgrapht.event;
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.VertexSetListener
+ * @see org._3pq.jgrapht.event.VertexSetListener
  * @since Jul 18, 2003
  */
 public interface GraphListener extends VertexSetListener {
