@@ -55,8 +55,8 @@ import java.util.Set;
  * href="http://mathworld.wolfram.com/topics/GraphTheory.html">
  * http://mathworld.wolfram.com/topics/GraphTheory.html</a>. Implementation of
  * this interface can provide simple-graphs, multigraphs, pseudographs etc.
- * The package {@link org._3pq.jgrapht.graph} provides a gallery of abstract
- * and  concrete graph implementations.
+ * The package <code>org._3pq.jgrapht.graph</code> provides a gallery of
+ * abstract and concrete graph implementations.
  * </p>
  * 
  * <p>
