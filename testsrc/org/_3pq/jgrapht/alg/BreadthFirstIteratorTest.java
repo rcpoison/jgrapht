@@ -107,7 +107,6 @@ public class BreadthFirstIteratorTest extends TestCase {
         }
 
         String s = result.toString(  );
-        System.out.println( s );
         assertEquals( "1,2,3,4,5,6,7,8,9,orphan", s );
     }
 }

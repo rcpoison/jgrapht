@@ -106,7 +106,6 @@ public class DepthFirstIteratorTest extends TestCase {
         }
 
         String s = result.toString(  );
-        System.out.println( s );
         assertEquals( "1,3,6,5,7,9,4,8,2,orphan", s );
     }
 }
