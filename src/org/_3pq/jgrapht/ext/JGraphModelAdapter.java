@@ -44,7 +44,7 @@ package org._3pq.jgrapht.ext;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 import java.io.Serializable;
 
@@ -270,12 +270,14 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
     /**
      * Applies the specified attributes to the model, as in {@link
-     * org.jgraph.graph.GraphModel#edit} method.
+     * org.jgraph.graph.GraphModel#edit(java.util.Map,
+     * org.jgraph.graph.ConnectionSet, org.jgraph.graph.ParentMap,
+     * javax.swing.undo.UndoableEdit[])} method.
      *
-     * @param attributes the attributes to be applied to the model.
+     * @param attrs the attributes to be applied to the model.
      */
-    public void edit( Map attributes ) {
-        super.edit( attributes, null, null, null );
+    public void edit( Map attrs ) {
+        super.edit( attrs, null, null, null );
     }
 
 
@@ -303,7 +305,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         if( !( m_cellToVertex.containsKey( jSource )
                 && m_cellToVertex.containsKey( jTarget ) ) ) {
             // This is a 'dangling edge'. We have to remove it in the
-            // JGraph. 
+            // JGraph.
             // TODO: Consider alternatives that will allow dangling edges.
             Object[] eArray = { jEdge };
             m_jEdgesBeingRemoved.add( jEdge );
@@ -364,12 +366,11 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         cs.connect( edgeCell, getVertexPort( jtEdge.getSource(  ) ),
             getVertexPort( jtEdge.getTarget(  ) ) );
 
-        Object[] cells      = { edgeCell };
-        Map      attributes = new HashMap(  );
-        attributes.put( edgeCell,
-            GraphConstants.cloneMap( m_defaultEdgeAttributes ) );
+        Object[] cells = { edgeCell };
+        Map      attrs = new HashMap(  );
+        attrs.put( edgeCell, GraphConstants.cloneMap( m_defaultEdgeAttributes ) );
         m_jEdgesBeingAdded.add( edgeCell );
-        super.insert( cells, attributes, cs, null, null );
+        super.insert( cells, attrs, cs, null, null );
     }
 
 
@@ -389,11 +390,11 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
         Object[] cells = { vertexCell };
 
-        Map      attributes = new HashMap(  );
-        attributes.put( vertexCell,
+        Map      attrs = new HashMap(  );
+        attrs.put( vertexCell,
             GraphConstants.cloneMap( m_defaultVertexAttributes ) );
         m_jVerticesBeingAdded.add( vertexCell );
-        super.insert( cells, attributes, null, null, null );
+        super.insert( cells, attrs, null, null, null );
     }
 
 
@@ -478,7 +479,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         Map   map = new HashMap(  );
         Color c = Color.decode( "#FF9900" );
 
-        GraphConstants.setBounds( map, new Rectangle( 50, 50, 90, 30 ) );
+        GraphConstants.setBounds( map, new Rectangle2D.Double( 50, 50, 90, 30 ) );
         GraphConstants.setBorder( map, BorderFactory.createRaisedBevelBorder(  ) );
         GraphConstants.setBackground( map, c );
         GraphConstants.setForeground( map, Color.white );
@@ -592,7 +593,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
             m_jtGraph.removeAllEdges( incidentEdges );
 
             // This also triggers removal of the corresponding JGraph
-            // edges. 
+            // edges.
         }
 
         m_jtVerticesBeingRemoved.add( jtVertex );
@@ -642,7 +643,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      */
     public class DefaultCellFactory implements CellFactory, Serializable {
         /**
-         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(Edge)
+         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(org._3pq.jgrapht.Edge)
          */
         public DefaultEdge createEdgeCell( org._3pq.jgrapht.Edge jGraphTEdge ) {
             return new DefaultEdge( jGraphTEdge );
@@ -839,7 +840,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
 
         /**
-         * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+         * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
         public void vertexAdded( GraphVertexChangeEvent e ) {
             Object jtVertex = e.getVertex(  );
@@ -854,7 +855,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
 
 
         /**
-         * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+         * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
         public void vertexRemoved( GraphVertexChangeEvent e ) {
             Object jtVertex = e.getVertex(  );

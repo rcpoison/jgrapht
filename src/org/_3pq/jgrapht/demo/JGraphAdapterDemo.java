@@ -41,7 +41,7 @@ package org._3pq.jgrapht.demo;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -152,11 +152,15 @@ public class JGraphAdapterDemo extends JApplet {
 
 
     private void positionVertexAt( Object vertex, int x, int y ) {
-        DefaultGraphCell cell = m_jgAdapter.getVertexCell( vertex );
-        Map              attr = cell.getAttributes(  );
-        Rectangle        b    = GraphConstants.getBounds( attr );
+        DefaultGraphCell cell   = m_jgAdapter.getVertexCell( vertex );
+        Map              attr   = cell.getAttributes(  );
+        Rectangle2D      bounds = GraphConstants.getBounds( attr );
 
-        GraphConstants.setBounds( attr, new Rectangle( x, y, b.width, b.height ) );
+        Rectangle2D      newBounds =
+            new Rectangle2D.Double( x, y, bounds.getWidth(  ),
+                bounds.getHeight(  ) );
+
+        GraphConstants.setBounds( attr, newBounds );
 
         Map cellAttr = new HashMap(  );
         cellAttr.put( cell, attr );
