@@ -86,7 +86,9 @@ public class BinaryHeap extends AbstractHeap {
             e.pos = 0;
             percolateDown( 0 );
         }
-
+        if( z.x instanceof HeapElement ) {
+            ( (HeapElement) z.x ).setPeer( null );
+        }
         return z.x;
     }
 

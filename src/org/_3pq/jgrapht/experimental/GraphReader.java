@@ -29,6 +29,7 @@ import java.util.*;
 
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.traverse.*;
 
 /**
  * .
@@ -57,27 +58,54 @@ public class GraphReader {
      * @throws Exception  
      */
     public static void main( String[] args ) throws Exception {
-        Graph g = new SimpleGraph(  );
+        Graph g = new SimpleWeightedGraph(  );
         new GraphReader( args[ 0 ] ).readGraph( g );
-
-        Set uncovered = new HashSet( g.edgeSet(  ) );
         System.out.println( "graph read" );
-
-        for( Iterator it = g.vertexSet(  ).iterator(  ); it.hasNext(  ); ) {
-            Object v = it.next(  );
-            Set    c = new HashSet( GraphHelper.neighborListOf( g, v ) );
-            c.add( v );
-
-            Graph sub = new Subgraph( g, c, null );
-
-            if( GraphTests.isComplete( sub ) ) {
-                System.out.println( c );
-                uncovered.removeAll( sub.edgeSet(  ) );
-            }
+        
+        {long time = System.currentTimeMillis();
+        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
+        while (spi.hasNext(  )) {
+            Object v = spi.next(  );
+//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
         }
+        System.out.println( System.currentTimeMillis() - time );
+        time = System.currentTimeMillis();
+        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
+        while (cfi.hasNext(  )) {
+            Object v = cfi.next(  );
+//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+        }
+        System.out.println( System.currentTimeMillis() - time );}
+        {long time = System.currentTimeMillis();
+        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
+        while (spi.hasNext(  )) {
+            Object v = spi.next(  );
+//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
+        }
+        System.out.println( System.currentTimeMillis() - time );
+        time = System.currentTimeMillis();
+        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
+        while (cfi.hasNext(  )) {
+            Object v = cfi.next(  );
+//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+        }
+        System.out.println( System.currentTimeMillis() - time );}
+        long time = System.currentTimeMillis();
+        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
+        while (spi.hasNext(  )) {
+            Object v = spi.next(  );
+//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
+        }
+        System.out.println( System.currentTimeMillis() - time );
+        time = System.currentTimeMillis();
+        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
+        while (cfi.hasNext(  )) {
+            Object v = cfi.next(  );
+//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+        }
+        System.out.println( System.currentTimeMillis() - time );
+        time = System.currentTimeMillis();
 
-        System.out.println( uncovered.size(  ) );
-        System.out.println( uncovered );
     }
 
 
@@ -98,8 +126,13 @@ public class GraphReader {
                     int y = Integer.parseInt( cols[ 2 ] ) - 1;
 
                     if( x != y ) {
-                        GraphHelper.addEdgeWithVertices( g, new Integer( x ),
-                            new Integer( y ) );
+                        if (cols.length > 3) {
+                            GraphHelper.addEdgeWithVertices( g, new Integer( x ),
+                                new Integer( y ), Double.parseDouble(cols[ 3 ]) );
+                        } else {
+                            GraphHelper.addEdgeWithVertices( g, new Integer( x ),
+                                new Integer( y ) );
+                        }
                     }
                 }
             }

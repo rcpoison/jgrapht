@@ -100,7 +100,9 @@ public class FibonacciHeap extends AbstractHeap {
 
             _size--;
         }
-
+        if( z.x instanceof HeapElement ) {
+            ( (HeapElement) z.x ).setPeer( null );
+        }
         return z.x;
     }
 
