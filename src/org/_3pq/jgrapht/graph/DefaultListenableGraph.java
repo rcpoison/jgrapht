@@ -72,9 +72,10 @@ import org._3pq.jgrapht.WeightedGraph;
  */
 public class DefaultListenableGraph extends GraphDelegator
     implements ListenableGraph {
-    private ArrayList m_graphListeners     = new ArrayList(  );
-    private ArrayList m_staleListeners     = new ArrayList(  );
-    private ArrayList m_vertexSetListeners = new ArrayList(  );
+    private static int NOT_FOUND            = -1;
+    private ArrayList  m_graphListeners     = new ArrayList(  );
+    private ArrayList  m_staleListeners     = new ArrayList(  );
+    private ArrayList  m_vertexSetListeners = new ArrayList(  );
 
     /**
      * Constructor for DefaultListenableGraph.
@@ -135,7 +136,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addGraphListener(GraphListener)
      */
     public void addGraphListener( GraphListener l ) {
-        if( !m_graphListeners.contains( l ) ) {
+        if( indexOfListener( l, m_graphListeners ) == NOT_FOUND ) {
             m_graphListeners.add( new WeakListenerReference( l, m_graphListeners ) );
         }
     }
@@ -159,7 +160,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#addVertexSetListener(VertexSetListener)
      */
     public void addVertexSetListener( VertexSetListener l ) {
-        if( !m_vertexSetListeners.contains( l ) ) {
+        if( indexOfListener( l, m_vertexSetListeners ) == NOT_FOUND ) {
             m_vertexSetListeners.add( new WeakListenerReference( l,
                     m_vertexSetListeners ) );
         }
@@ -198,7 +199,11 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#removeGraphListener(GraphListener)
      */
     public void removeGraphListener( GraphListener l ) {
-        m_graphListeners.remove( l );
+        int i = indexOfListener( l, m_graphListeners );
+
+        if( i != NOT_FOUND ) {
+            m_graphListeners.remove( i );
+        }
     }
 
 
@@ -220,7 +225,11 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see ListenableGraph#removeVertexSetListener(VertexSetListener)
      */
     public void removeVertexSetListener( VertexSetListener l ) {
-        m_vertexSetListeners.remove( l );
+        int i = indexOfListener( l, m_vertexSetListeners );
+
+        if( i != NOT_FOUND ) {
+            m_vertexSetListeners.remove( i );
+        }
     }
 
 
@@ -345,6 +354,19 @@ public class DefaultListenableGraph extends GraphDelegator
     }
 
 
+    private int indexOfListener( VertexSetListener listener, List list ) {
+        for( int i = 0; i < list.size(  ); i++ ) {
+            WeakListenerReference ref = (WeakListenerReference) list.get( i );
+
+            if( ref.get(  ) == listener ) {
+                return i;
+            }
+        }
+
+        return NOT_FOUND;
+    }
+
+
     /**
      * Remove listeners that became weakly reachable. This first implementation
      * suffers from "busy idle" checks. Should do it properly some day.
@@ -384,26 +406,6 @@ public class DefaultListenableGraph extends GraphDelegator
          */
         public List getContainingList(  ) {
             return m_containingList;
-        }
-
-
-        /**
-         * @see java.lang.Object#equals(java.lang.Object)
-         */
-        public boolean equals( Object obj ) {
-            Object ref = get(  );
-
-            return ref == null ? false : ref.equals( obj );
-        }
-
-
-        /**
-         * @see java.lang.Object#hashCode()
-         */
-        public int hashCode(  ) {
-            Object ref = get(  );
-
-            return ref == null ? 0 : ref.hashCode(  );
         }
     }
 }
