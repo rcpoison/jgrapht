@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <!--
 /* ==========================================
@@ -174,10 +174,7 @@ version. These items have one of the following statuses<font color="#7AA1E6">*</
 <p>Please try to use simple and tidy HTML for this document, to ease version compare. </p>
 
 
-<p>&nbsp;</p>
-
-
-<h3>Following Versions </h3>
+<h3>Future Versions </h3>
 
 
 
@@ -207,12 +204,11 @@ independent and will allow users to see their graphs (however, only in browser).
 
 
 
-<p>&nbsp;</p>
 <p></p>
 
 
 
-<h3>Version 0.4.2</h3>
+<h3>Version 0.5.0</h3>
 
 
 
@@ -224,8 +220,8 @@ AbstractGraphAssertion class will isolate the exception handling from the
 logical checks, and make it easy to use composites. Methods of that class will 
 redirect to a testing method that will return boolean flag to indicate an 
 approved operation. Example: the AbstractGraphAssertion receives the 'beforeVertexAdded(v)' 
-call, and tests the approveAddVertex(v) method - if true it returns, if false 
-throws some assertion exception. The approveAddVertex(v) is, of course, 
+call, and tests the canAddVertex(v) method - if true it returns, if false 
+throws some assertion exception. The canAddVertex(v) is, of course, 
 polymorphic. <i>(proposed JVS+BN)</i></p>
 
 <p>Automatic JUnit execution in ANT build script. <i>(committed)</i></p>
@@ -245,10 +241,14 @@ polymorphic. <i>(proposed JVS+BN)</i></p>
 non-delegating graphs, which are based on the AbstractBaseGraph class and are the 
 very core of JGraphT. <i>(proposed BN)</i></p>
 
+<p>Edge refactoring - improve and simplify the handling of edges. also solve the 
+edge multiplicity problem. <i>(commited)</i></p>
+
+<p>Improve event model so that listener receive an extensible event object 
+rather than the object involved. <i>(commited)</i></p>
+
 <p>Graph connectivity predicates and iteration of connected components of 
 undirected graphs. <i>(committed)</i></p>
-
-<p>&nbsp;</p>
 
 
 
@@ -263,8 +263,6 @@ Class naming is the same as in 'src', only suffixed with 'Test'. <i>(committed)<
 <p>Refactoring of inner classes of GraphFactory. <i>(committed)</i></p>
 
 <p>JGraph adapter <i>(committed)</i></p>
-
-<p>&nbsp;</p>
 
 <h3>Version 0.4.0&nbsp; (released)</h3>
 
