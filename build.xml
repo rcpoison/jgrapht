@@ -339,6 +339,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/testsrc" eol="crlf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/etc"     eol="crlf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/${build.file.name}"  
+                                                 eol="crlf" eof="remove" />
 
         <!-- make the zip file -->
         <zip zipfile="${project.zip}">
@@ -354,6 +356,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
         <fixcrlf srcdir="${distrib.dir}/etc"     eol="lf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/${build.file.name}"  
+                                                 eol="lf" eof="remove" />
 
         <!-- make the tar.gz file -->
         <tar tarfile="${project.tar}">
