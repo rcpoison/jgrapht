@@ -39,6 +39,7 @@
  * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
  * 07-Feb-2004 : Enabled serialization (BN);
  * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
+ * 21-Sep-2004 : Added induced subgraph 
  *
  */
 package org._3pq.jgrapht.graph;
@@ -75,7 +76,9 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * subgraph listens on the base graph and guarantees the subgraph property. If
  * an edge or a vertex is removed from the base graph, it is automatically
  * removed from the subgraph. Subgraph listeners are informed on such removal
- * only if it results in a cascaded removal from the subgraph. If edges or
+ * only if it results in a cascaded removal from the subgraph. If the subgraph
+ * has been created as an induced subgraph it also keeps track of edges being 
+ * added to its vertices. If 
  * vertices are added to the base graph, the subgraph remains unaffected.
  * </p>
  * 
@@ -130,6 +133,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     private transient Set m_unmodifiableVertexSet = null;
     private Graph         m_base;
     private boolean       m_verifyIntegrity       = true;
+    private boolean       m_isInduced             = false;
 
     /**
      * Creates a new Subgraph.
@@ -153,6 +157,23 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
         addVerticesUsingFilter( base.vertexSet(  ), vertexSubset );
         addEdgesUsingFilter( base.edgeSet(  ), edgeSubset );
+    }
+
+    /**
+     * Creates a new induced Subgraph. The subgraph will keep track
+     * of edges being added to its vertex subset as well as deletion
+     * of edges and vertices. If base it not listenable,
+     * this is identical to the call Subgraph(base, vertexSubset, null) .
+     *
+     * @param base the base (backing) graph on which the subgraph will be
+     *        based.
+     * @param vertexSubset vertices to include in the subgraph. If
+     *        <code>null</code> then all vertices are included.
+     */
+    public Subgraph( Graph base, Set vertexSubset ) {
+        this(base, vertexSubset, null);
+        
+        m_isInduced = true;
     }
 
     /**
@@ -508,7 +529,9 @@ public class Subgraph extends AbstractGraph implements Serializable {
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
         public void edgeAdded( GraphEdgeChangeEvent e ) {
-            // we don't care
+            if (m_isInduced) {
+                addEdge(e.getEdge());
+            }
         }
 
 
