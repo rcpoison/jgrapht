@@ -6,7 +6,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* ~~~~~~~~~
  * build.xml
  * ~~~~~~~~~
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
@@ -55,7 +55,7 @@
  * when building a distribution. A ./javadoc directory is created for the 
  * Javadoc HTML pages. 
  *
- * This script is based on a nice script originally written by David Gilbert.
+ * This script was originally based on a nice script written by David Gilbert.
  *
  * @author Barak Naveh
  * @author John V. Sichi
@@ -74,7 +74,7 @@
         <property name="project.version"  value="0.5.2" />
         <property name="project.prefix"   value="${project.name}-${project.version}" />
 
-        <!-- directories -->
+        <!-- Directories -->
         <property name="build.dir"        value="${basedir}/build" />
         <property name="testbuild.dir"    value="${basedir}/testbuild" />
         <property name="distrib.dir"      value="${basedir}/distribution"/>
