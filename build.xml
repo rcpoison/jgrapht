@@ -64,6 +64,7 @@
             <include name="org/_3pq/jgrapht/alg/*"/>
             <include name="org/_3pq/jgrapht/demo/*"/>
             <include name="org/_3pq/jgrapht/edge/*"/>
+            <include name="org/_3pq/jgrapht/event/*"/>
             <include name="org/_3pq/jgrapht/ext/*"/>
             <include name="org/_3pq/jgrapht/graph/*"/>
             <include name="org/_3pq/jgrapht/traverse/*"/>
@@ -114,6 +115,7 @@
 	            <include name="org/_3pq/jgrapht/alg"/>
 	            <include name="org/_3pq/jgrapht/demo"/>
 	            <include name="org/_3pq/jgrapht/edge"/>
+	            <include name="org/_3pq/jgrapht/event"/>
 	            <include name="org/_3pq/jgrapht/ext"/>
 	            <include name="org/_3pq/jgrapht/graph"/>
 	            <include name="org/_3pq/jgrapht/traverse"/>
@@ -152,6 +154,8 @@
 	            <include name="org/_3pq/jgrapht/edge/package.html"/>
 	            <include name="org/_3pq/jgrapht/ext/*.java"/>
 	            <include name="org/_3pq/jgrapht/ext/package.html"/>
+	            <include name="org/_3pq/jgrapht/event/*.java"/>
+	            <include name="org/_3pq/jgrapht/event/package.html"/>
 	            <include name="org/_3pq/jgrapht/graph/*.java"/>
 	            <include name="org/_3pq/jgrapht/graph/package.html"/>
 	            <include name="org/_3pq/jgrapht/traverse/*.java"/>
@@ -237,6 +241,8 @@
 	            <include name="org/_3pq/jgrapht/demo/package.html"/>
 	            <include name="org/_3pq/jgrapht/edge/*.java"/>
 	            <include name="org/_3pq/jgrapht/edge/package.html"/>
+	            <include name="org/_3pq/jgrapht/event/*.java"/>
+	            <include name="org/_3pq/jgrapht/event/package.html"/>
 	            <include name="org/_3pq/jgrapht/ext/*.java"/>
 	            <include name="org/_3pq/jgrapht/ext/package.html"/>
 	            <include name="org/_3pq/jgrapht/graph/*.java"/>
