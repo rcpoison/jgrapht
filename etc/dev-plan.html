@@ -204,7 +204,11 @@ independent and will allow users to see their graphs (however, only in browser).
 
 
 
-<p></p>
+<p>Support in edge ordering. A use case example is a makefile dependency graph. 
+Suppose it has targets 'all', 'clean', and 'compile', where 'all' depends on 
+'clean, compile'. The order here is significant. User should be able to express 
+the fact that 'clean' comes before 'compile'. 
+<i> (proposed BN)</i></p>
 
 
 
