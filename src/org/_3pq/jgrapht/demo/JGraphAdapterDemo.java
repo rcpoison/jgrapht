@@ -32,7 +32,9 @@
  * $Id$
  *
  * Changes
+ * -------
  * 03-Aug-2003 : Initial revision (BN);
+ * 07-Nov-2003 : Adaptation to JGraph 3.0 (BN);
  *
  */
 package org._3pq.jgrapht.demo;
