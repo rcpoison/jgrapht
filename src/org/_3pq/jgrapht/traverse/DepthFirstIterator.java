@@ -40,7 +40,9 @@
  */
 package org._3pq.jgrapht.traverse;
 
+import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.traverse.TraverseUtils.SimpleStack;
 import org._3pq.jgrapht.traverse.TraverseUtils.XXFirstIterator;
 
@@ -78,5 +80,23 @@ public class DepthFirstIterator extends XXFirstIterator {
      */
     public DepthFirstIterator( Graph g, Object startVertex ) {
         super( g, startVertex, new SimpleStack(  ) );
+    }
+
+
+    /**
+     * This constructor is deprecated, use {@link AsUndirectedGraph} to ignore
+     * edge direction.
+     *
+     * @param g deprecated
+     * @param startVertex deprecated
+     * @param ignoreEdgeDirection deprecated
+     *
+     * @see AsUndirectedGraph
+     * @deprecated use {@link AsUndirectedGraph} to ignore edge direction.
+     */
+    public DepthFirstIterator( Graph g, Object startVertex,
+        boolean ignoreEdgeDirection ) {
+        this( ignoreEdgeDirection ? new AsUndirectedGraph( (DirectedGraph) g ) : g,
+            startVertex );
     }
 }
