@@ -74,13 +74,18 @@
 
     <!-- Initialization. -->
 	<target name="init.local" unless="cvstag">
-        <property name="project.version"  value="${latest.version.name}-local" />
         <property name="checkout.dir"     value="checkout" />
+        <property name="project.version"  value="${latest.version.name}-local" />
 	</target>
 	
 	<target name="init.cvs" if="cvstag">
-        <property name="project.version"  value="${cvstag}.name" />
         <property name="checkout.dir"     value="${cvstag}" />
+		<!-- A dereferencing heck to set project.version=${${cvstag}.name} -->
+		<!-- To be simplified if future Ant versions will support it directly -->
+	    <echo file="project.version.tmp">project.version=$${${cvstag}.name}</echo>
+	    <property file="project.version.tmp" />
+	    <delete file="project.version.tmp" />
+	    <!-- project.version now has the dereferenced value of ${${cvstag}.name} -->
 	</target>
 
     <target name="init" depends="init.local,init.cvs">
