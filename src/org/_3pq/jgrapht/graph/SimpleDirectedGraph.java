@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -49,8 +49,10 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  */
 public class SimpleDirectedGraph extends AbstractBaseGraph
     implements DirectedGraph {
+    private static final long serialVersionUID = 4049358608472879671L;
+
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple directed graph.
      */
     public SimpleDirectedGraph(  ) {
         this( new EdgeFactories.DirectedEdgeFactory(  ) );
@@ -58,7 +60,9 @@ public class SimpleDirectedGraph extends AbstractBaseGraph
 
 
     /**
-     * @see AbstractBaseGraph
+     * Creates a new simple directed graph with the specified edge factory.
+     *
+     * @param ef the edge factory of the new graph.
      */
     public SimpleDirectedGraph( EdgeFactory ef ) {
         super( ef, false, false );
