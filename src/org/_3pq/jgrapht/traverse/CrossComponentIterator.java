@@ -381,6 +381,8 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @since Aug 11, 2003
      */
     static class FlyweightEdgeEvent extends EdgeTraversalEvent {
+        private static final long serialVersionUID = 4051327833765000755L;
+
         /**
          * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
          */
@@ -407,6 +409,8 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @since Aug 11, 2003
      */
     static class FlyweightVertexEvent extends VertexTraversalEvent {
+        private static final long serialVersionUID = 3834024753848399924L;
+
         /**
          * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
          */
