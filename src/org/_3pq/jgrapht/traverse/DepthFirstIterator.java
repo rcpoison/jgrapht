@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
- * BreadthFirstIterator.java
+ * DepthFirstIterator.java
  * -------------------------
  * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
@@ -42,6 +42,8 @@
 package org._3pq.jgrapht.traverse;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
@@ -58,7 +60,7 @@ import org._3pq.jgrapht.Graph;
  * @since Jul 29, 2003
  */
 public class DepthFirstIterator extends CrossComponentIterator {
-    private SimpleStack m_stack = new SimpleStack(  );
+    private List m_stack = new ArrayList(  );
 
     /**
      * Creates a new depth-first iterator for the specified graph.
@@ -114,44 +116,6 @@ public class DepthFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected Object provideNextVertex(  ) {
-        return m_stack.remove(  );
-    }
-
-    /**
-     * .
-     *
-     * @deprecated will be inlined in next releases.
-     */
-    static class SimpleStack implements SimpleContainer {
-        private ArrayList m_elementList = new ArrayList(  );
-
-        /**
-         * Tests if this stack is empty.
-         *
-         * @return <code>true</code> if empty, otherwise <code>false</code>.
-         */
-        public boolean isEmpty(  ) {
-            return m_elementList.size(  ) == 0;
-        }
-
-
-        /**
-         * Pushes the specified object at the top of this stack.
-         *
-         * @param o the object to be added.
-         */
-        public void add( Object o ) {
-            m_elementList.add( o );
-        }
-
-
-        /**
-         * Pops the object at the top of the stack and return it.
-         *
-         * @return the object that has been removed from the top of the stack.
-         */
-        public Object remove(  ) {
-            return m_elementList.remove( m_elementList.size(  ) - 1 );
-        }
+        return m_stack.remove( m_stack.size(  ) - 1 );
     }
 }

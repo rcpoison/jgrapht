@@ -49,6 +49,7 @@ import javax.swing.JFrame;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.ext.JGraphModelAdapter;
 import org._3pq.jgrapht.graph.ListenableDirectedGraph;
+
 import org.jgraph.JGraph;
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultGraphCell;

@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -82,7 +82,7 @@ public class VertexCovers {
      *         graph.
      */
     public Set find2ApproximationCover( Graph g ) {
-        // C <-- Ø
+        // C <-- ?
         Set cover = new HashSet(  );
 
         // G'=(V',E') <-- G(V,E)
@@ -127,7 +127,7 @@ public class VertexCovers {
      *         graph.
      */
     public Set findGreedyCover( UndirectedGraph g ) {
-        // C <-- Ø
+        // C <-- ?
         Set cover = new HashSet(  );
 
         // G' <-- G
@@ -136,7 +136,7 @@ public class VertexCovers {
         // compare vertices in descending order of degree
         VertexDegreeComparator comp = new VertexDegreeComparator( sg );
 
-        // while G' != Ø
+        // while G' != ?
         while( sg.edgeSet(  ).size(  ) > 0 ) {
             // v <-- vertex with maximum degree in G'
             Object v = Collections.max( sg.vertexSet(  ), comp );

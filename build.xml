@@ -182,7 +182,8 @@
         <!-- create a test build directory -->
         <mkdir dir="${testbuild.dir}" />
 
-        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" target="1.3">
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" target="1.3"
+               debug="on">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>
             <exclude name="org/_3pq/jgrapht/experimental/**"/>

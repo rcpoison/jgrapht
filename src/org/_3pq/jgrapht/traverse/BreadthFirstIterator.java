@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -56,7 +56,12 @@ import org._3pq.jgrapht.Graph;
  * @since Jul 19, 2003
  */
 public class BreadthFirstIterator extends CrossComponentIterator {
-    private SimpleQueue m_queue = new SimpleQueue(  );
+    /**
+     * <b>Note to users:</b> this queue implementation is a bit lame in terms
+     * of GC efficiency. If you need it to be improved either let us know or
+     * use the source...
+     */
+    private LinkedList m_queue = new LinkedList(  );
 
     /**
      * Creates a new breadth-first iterator for the specified graph.
@@ -97,7 +102,7 @@ public class BreadthFirstIterator extends CrossComponentIterator {
      */
     protected void encounterVertex( Object vertex, Edge edge ) {
         putSeenData( vertex, null );
-        m_queue.add( vertex );
+        m_queue.addLast( vertex );
     }
 
 
@@ -112,46 +117,6 @@ public class BreadthFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected Object provideNextVertex(  ) {
-        return m_queue.remove(  );
-    }
-
-    /**
-     * <b>Note to users:</b> this queue implementation is a bit lame in terms
-     * of GC efficiency. If you need it to be improved either let us know or
-     * use the source...
-     *
-     * @deprecated will be inlined in next releases.
-     */
-    static class SimpleQueue implements SimpleContainer {
-        private LinkedList m_elementList = new LinkedList(  );
-
-        /**
-         * Tests if this queue is empty.
-         *
-         * @return <code>true</code> if empty, otherwise <code>false</code>.
-         */
-        public boolean isEmpty(  ) {
-            return m_elementList.size(  ) == 0;
-        }
-
-
-        /**
-         * Adds the specified object to the tail of the queue.
-         *
-         * @param o the object to be added.
-         */
-        public void add( Object o ) {
-            m_elementList.addLast( o );
-        }
-
-
-        /**
-         * Remove the object at the head of the queue and return it.
-         *
-         * @return the object and the head of the queue.
-         */
-        public Object remove(  ) {
-            return m_elementList.removeFirst(  );
-        }
+        return m_queue.removeFirst(  );
     }
 }
