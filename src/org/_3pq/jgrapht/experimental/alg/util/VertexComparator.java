@@ -1,16 +1,3 @@
-/**
- * <p>Title: SENG2120-Graph Analysis Tool</p>
- * <p>Description:
- * compares two vertices based on their degree. Used by algorithms that need to
- * sort vertices by their degree. Two vertices are considered equal if their
- * degrees are equal.
- * <p>Copyright: Copyright (c) 2003</p>
- * <p>Company: SENG2120 Project</p>
- * @author Linda Buisman
- * @version 1.0
- */
-
-
 /* ==========================================
  * JGraphT : a free Java graph-theory library
  * ==========================================
