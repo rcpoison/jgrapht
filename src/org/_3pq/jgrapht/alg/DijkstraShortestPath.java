@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
+/* -------------------------
  * DijkstraShortestPath.java
- * --------------------------
+ * -------------------------
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
@@ -32,7 +32,7 @@
  *
  * Changes
  * -------
- * 02-Sept-2003 : Initial revision (JVS);
+ * 02-Sep-2003 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -52,7 +52,7 @@ import org._3pq.jgrapht.traverse.ClosestFirstIterator;
  *
  * @author John V. Sichi
  *
- * @since Sept 2, 2003
+ * @since Sep 2, 2003
  */
 public final class DijkstraShortestPath {
     private DijkstraShortestPath(  ) {} // ensure non-instantiability.
@@ -61,16 +61,16 @@ public final class DijkstraShortestPath {
      * Find the shortest path between two vertices, represented as a List of
      * Edges in order from start to end vertex.
      *
-     * @param searchGraph the graph to be searched
+     * @param graph the graph to be searched
      * @param startVertex the vertex at which the path should start
      * @param endVertex the vertex at which the path should end
      *
      * @return List of Edges, or null if no path exists
      */
-    public static List findPathBetween( Graph searchGraph, Object startVertex,
+    public static List findPathBetween( Graph graph, Object startVertex,
         Object endVertex ) {
         ClosestFirstIterator iter =
-            new ClosestFirstIterator( searchGraph, startVertex );
+            new ClosestFirstIterator( graph, startVertex );
 
         while( iter.hasNext(  ) ) {
             Object vertex = iter.next(  );
@@ -95,7 +95,7 @@ public final class DijkstraShortestPath {
     private static List createPath( ClosestFirstIterator iter, Object endVertex ) {
         List path = new ArrayList(  );
 
-        for( ;; ) {
+        while( true ) {
             Edge edge = iter.getSpanningTreeEdge( endVertex );
 
             if( edge == null ) {
