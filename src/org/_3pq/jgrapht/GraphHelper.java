@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 10-Jul-2003 : Initial revision (BN);
+ * 06-Nov-2003 : Change edge sharing semantics (JVS);
  *
  */
 package org._3pq.jgrapht;
@@ -141,13 +142,12 @@ public final class GraphHelper {
 
 
     /**
-     * Adds all the vertices and all the edge-clones of the specified source
-     * graph to the specified destination graph. First all vertices of the
-     * source graph are added to the destination graph. Then every edge of the
-     * source graph is cloned and the clone is added to the destination graph.
-     * This method returns <code>true</code> if the destination graph has been
-     * modified as a result of this operation, otherwise it returns
-     * <code>false</code>.
+     * Adds all the vertices and all the edges of the specified source graph to
+     * the specified destination graph. First all vertices of the source graph
+     * are added to the destination graph. Then every edge of the source graph
+     * is added to the destination graph. This method returns
+     * <code>true</code> if the destination graph has been modified as a
+     * result of this operation, otherwise it returns <code>false</code>.
      * 
      * <p>
      * The behavior of this operation is undefined if any of the specified
@@ -162,11 +162,7 @@ public final class GraphHelper {
      */
     public static boolean addGraph( Graph destination, Graph source ) {
         boolean modified = destination.addAllVertices( source.vertexSet(  ) );
-
-        for( Iterator i = source.edgeSet(  ).iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
-            modified |= destination.addEdge( (Edge) e.clone(  ) );
-        }
+        modified |= destination.addAllEdges( source.edgeSet(  ) );
 
         return modified;
     }

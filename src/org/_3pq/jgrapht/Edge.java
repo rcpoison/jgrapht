@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 06-Nov-2003 : Change edge sharing semantics (JVS);
  *
  */
 package org._3pq.jgrapht;
@@ -41,6 +42,18 @@ package org._3pq.jgrapht;
 /**
  * An edge used with graph objects. This is the root interface in the edge
  * hierarchy.
+ * 
+ * <p>
+ * NOTE: the source and target associations of an Edge must be immutable after
+ * construction for all implementations.  The reason is that once an Edge is
+ * added to a Graph, the Graph representation may be optimized via internal
+ * indexing data structures; if the Edge associations were to change, these
+ * structures would be corrupted.  However, other properties of an edge (such
+ * as weight or label) may be mutable, although this still requires caution:
+ * changes to Edges shared by multiple Graphs may not always be desired, and
+ * indexing mechanisms for these properties may require a change notification
+ * mechanism.
+ * </p>
  *
  * @author Barak Naveh
  *
@@ -79,7 +92,7 @@ public interface Edge extends Cloneable {
 
     /**
      * Returns the weight of this edge. If this edge is unweighted the value
-     * <code>1,0</code> is returned.
+     * <code>1.0</code> is returned.
      *
      * @return the weight of this element.
      */

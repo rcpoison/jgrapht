@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : General edge refactoring (BN);
+ * 06-Nov-2003 : Change edge sharing semantics (JVS);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -54,6 +55,7 @@ import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.GraphHelper;
 import org._3pq.jgrapht.UndirectedGraph;
 
 /**
@@ -251,8 +253,8 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
 
     /**
-     * Returns a copy of this graph instance. Edges are cloned but vertices are
-     * NOT cloned.
+     * Returns a shallow copy of this graph instance.  Neither edges nor
+     * vertices are cloned.
      *
      * @return a shallow copy of this set.
      *
@@ -270,10 +272,13 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             newGraph.m_edgeFactory               = this.m_edgeFactory;
             newGraph.m_unmodifiableEdgeSet       = null;
             newGraph.m_unmodifiableVertexSet     = null;
+
+            // NOTE:  it's important for this to happen in an object
+            // method so that the new inner class instance gets associated with
+            // the right outer class instance
             newGraph.setSpecifics(  );
 
-            newGraph.addAllVertices( this.vertexSet(  ) );
-            newGraph.addAllEdgeClones( this.edgeSet(  ) );
+            GraphHelper.addGraph( newGraph, this );
 
             return newGraph;
         }
@@ -449,14 +454,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         else {
             throw new IllegalArgumentException( 
                 "graph is incompatible with edge factory" );
-        }
-    }
-
-
-    private void addAllEdgeClones( Set edgeSet ) {
-        for( Iterator iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
-            addEdge( (Edge) e.clone(  ) );
         }
     }
 

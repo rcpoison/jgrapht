@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 06-Nov-2003 : Change edge sharing semantics (JVS);
  *
  */
 package org._3pq.jgrapht;
@@ -51,7 +52,7 @@ import java.util.Set;
  * http://mathworld.wolfram.com/Graph.html</a>.
  * 
  * <p>
- * This library is generally follows the terminology found at: <a
+ * This library generally follows the terminology found at: <a
  * href="http://mathworld.wolfram.com/topics/GraphTheory.html">
  * http://mathworld.wolfram.com/topics/GraphTheory.html</a>. Implementation of
  * this interface can provide simple-graphs, multigraphs, pseudographs etc.
@@ -61,11 +62,8 @@ import java.util.Set;
  * 
  * <p>
  * This library works best when vertices represent arbitrary objects and edges
- * represent the relationships between them. While vertex instances are
- * expected to be included in more than one graph, edges are generally assumed
- * to be exclusive to one graph. The method <code>addEdge(Edge)</code>
- * provides a back-door for that assumption and a programmer must exercise
- * care if decided to use it.
+ * represent the relationships between them.  Vertex and edge instances may be
+ * shared by more than one graph.
  * </p>
  *
  * @author Barak Naveh
@@ -221,15 +219,6 @@ public interface Graph {
      * thrown. The edge must also be assignment compatible with the class of
      * the edges produced by the edge factory of this graph. If this is not
      * the case ClassCastException is thrown.
-     * </p>
-     * 
-     * <p>
-     * This method allows trickery such as adding the same edge into two
-     * different graphs. Changing a property of the edge, such as weight, in
-     * one graph will be reflected in the other graph. Such behavior is
-     * generally <i>not</i> desired for edges. A safer alternative would be to
-     * use {@link #addEdge(Object, Object)}, or {@link
-     * GraphHelper#addEdge(Graph, Object, Object, double)} instead.
      * </p>
      *
      * @param e edge to be added to this graph.
