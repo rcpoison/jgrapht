@@ -41,7 +41,6 @@ package org._3pq.jgrapht.edge;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.edge.DefaultDirectedEdge;
 
 /**
  * Tests for the {@link DefaultDirectedEdge} class.

@@ -42,7 +42,6 @@ import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedEdge;
-import org._3pq.jgrapht.edge.DefaultUndirectedEdge;
 
 /**
  * Tests for the {@link DefaultUndirectedEdge} class.

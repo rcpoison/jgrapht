@@ -53,18 +53,17 @@ import org._3pq.jgrapht.GraphFactory;
  * @since Jul 25, 2003
  */
 public class SimpleDirectedGraphTest extends EnhancedTestCase {
-    DirectedEdge  e1_1;
-    DirectedEdge  eLoop;
-    DirectedGraph g1;
-    DirectedGraph g2;
-    DirectedGraph g3;
-    DirectedGraph g4;
-    DirectedGraph gEmpty;
-    EdgeFactory   eFactory;
-    String        v1 = "v1";
-    String        v2 = "v2";
-    String        v3 = "v3";
-    String        v4 = "v4";
+    DirectedGraph         m_gEmpty;
+    private DirectedEdge  m_eLoop;
+    private DirectedGraph m_g1;
+    private DirectedGraph m_g2;
+    private DirectedGraph m_g3;
+    private DirectedGraph m_g4;
+    private EdgeFactory   m_eFactory;
+    private String        m_v1 = "v1";
+    private String        m_v2 = "v2";
+    private String        m_v3 = "v3";
+    private String        m_v4 = "v4";
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -80,7 +79,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         init(  );
 
         try {
-            g1.addEdge( eLoop ); // loops not allowed
+            m_g1.addEdge( m_eLoop ); // loops not allowed
             assertFalse(  );
         }
          catch( IllegalArgumentException e ) {
@@ -88,26 +87,26 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         }
 
         try {
-            g3.addEdge( null );
+            m_g3.addEdge( null );
             assertFalse(  ); // NPE
         }
          catch( NullPointerException e ) {
             assertTrue(  );
         }
 
-        Edge e = eFactory.createEdge( v2, v1 );
+        Edge e = m_eFactory.createEdge( m_v2, m_v1 );
 
         try {
-            g1.addEdge( e ); // no such vertex in graph
+            m_g1.addEdge( e ); // no such vertex in graph
             assertFalse(  );
         }
          catch( IllegalArgumentException ile ) {
             assertTrue(  );
         }
 
-        assertEquals( false, g2.addEdge( e ) );
-        assertEquals( false, g3.addEdge( e ) );
-        assertEquals( true, g4.addEdge( e ) );
+        assertEquals( false, m_g2.addEdge( e ) );
+        assertEquals( false, m_g3.addEdge( e ) );
+        assertEquals( true, m_g4.addEdge( e ) );
     }
 
 
@@ -118,7 +117,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         init(  );
 
         try {
-            g1.addEdge( v1, v1 ); // loops not allowed
+            m_g1.addEdge( m_v1, m_v1 ); // loops not allowed
             assertFalse(  );
         }
          catch( IllegalArgumentException e ) {
@@ -126,7 +125,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         }
 
         try {
-            g3.addEdge( null, null );
+            m_g3.addEdge( null, null );
             assertFalse(  ); // NPE
         }
          catch( NullPointerException e ) {
@@ -134,16 +133,16 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         }
 
         try {
-            g1.addEdge( v2, v1 ); // no such vertex in graph
+            m_g1.addEdge( m_v2, m_v1 ); // no such vertex in graph
             assertFalse(  );
         }
          catch( IllegalArgumentException ile ) {
             assertTrue(  );
         }
 
-        assertNull( g2.addEdge( v2, v1 ) );
-        assertNull( g3.addEdge( v2, v1 ) );
-        assertNotNull( g4.addEdge( v2, v1 ) );
+        assertNull( m_g2.addEdge( m_v2, m_v1 ) );
+        assertNull( m_g3.addEdge( m_v2, m_v1 ) );
+        assertNotNull( m_g4.addEdge( m_v2, m_v1 ) );
     }
 
 
@@ -153,13 +152,13 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
     public void testAddVertex(  ) {
         init(  );
 
-        assertEquals( 1, g1.vertexSet(  ).size(  ) );
-        assertEquals( 2, g2.vertexSet(  ).size(  ) );
-        assertEquals( 3, g3.vertexSet(  ).size(  ) );
-        assertEquals( 4, g4.vertexSet(  ).size(  ) );
+        assertEquals( 1, m_g1.vertexSet(  ).size(  ) );
+        assertEquals( 2, m_g2.vertexSet(  ).size(  ) );
+        assertEquals( 3, m_g3.vertexSet(  ).size(  ) );
+        assertEquals( 4, m_g4.vertexSet(  ).size(  ) );
 
-        assertFalse( g1.addVertex( v1 ) );
-        assertTrue( g1.addVertex( v2 ) );
+        assertFalse( m_g1.addVertex( m_v1 ) );
+        assertTrue( m_g1.addVertex( m_v2 ) );
     }
 
 
@@ -179,25 +178,25 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
     public void testContainsEdgeObjectObject(  ) {
         init(  );
 
-        assertFalse( g1.containsEdge( v1, v2 ) );
-        assertFalse( g1.containsEdge( v1, v1 ) );
+        assertFalse( m_g1.containsEdge( m_v1, m_v2 ) );
+        assertFalse( m_g1.containsEdge( m_v1, m_v1 ) );
 
-        assertTrue( g2.containsEdge( v1, v2 ) );
-        assertTrue( g2.containsEdge( v2, v1 ) );
+        assertTrue( m_g2.containsEdge( m_v1, m_v2 ) );
+        assertTrue( m_g2.containsEdge( m_v2, m_v1 ) );
 
-        assertTrue( g3.containsEdge( v1, v2 ) );
-        assertTrue( g3.containsEdge( v2, v1 ) );
-        assertTrue( g3.containsEdge( v3, v2 ) );
-        assertTrue( g3.containsEdge( v2, v3 ) );
-        assertTrue( g3.containsEdge( v1, v3 ) );
-        assertTrue( g3.containsEdge( v3, v1 ) );
+        assertTrue( m_g3.containsEdge( m_v1, m_v2 ) );
+        assertTrue( m_g3.containsEdge( m_v2, m_v1 ) );
+        assertTrue( m_g3.containsEdge( m_v3, m_v2 ) );
+        assertTrue( m_g3.containsEdge( m_v2, m_v3 ) );
+        assertTrue( m_g3.containsEdge( m_v1, m_v3 ) );
+        assertTrue( m_g3.containsEdge( m_v3, m_v1 ) );
 
-        assertFalse( g4.containsEdge( v1, v4 ) );
-        g4.addEdge( v1, v4 );
-        assertTrue( g4.containsEdge( v1, v4 ) );
+        assertFalse( m_g4.containsEdge( m_v1, m_v4 ) );
+        m_g4.addEdge( m_v1, m_v4 );
+        assertTrue( m_g4.containsEdge( m_v1, m_v4 ) );
 
-        assertFalse( g3.containsEdge( v4, v2 ) );
-        assertFalse( g3.containsEdge( null, null ) );
+        assertFalse( m_g3.containsEdge( m_v4, m_v2 ) );
+        assertFalse( m_g3.containsEdge( null, null ) );
     }
 
 
@@ -259,22 +258,22 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
     public void testInDegreeOf(  ) {
         init(  );
 
-        assertEquals( 0, g1.inDegreeOf( v1 ) );
+        assertEquals( 0, m_g1.inDegreeOf( m_v1 ) );
 
-        assertEquals( 1, g2.inDegreeOf( v1 ) );
-        assertEquals( 1, g2.inDegreeOf( v2 ) );
+        assertEquals( 1, m_g2.inDegreeOf( m_v1 ) );
+        assertEquals( 1, m_g2.inDegreeOf( m_v2 ) );
 
-        assertEquals( 2, g3.inDegreeOf( v1 ) );
-        assertEquals( 2, g3.inDegreeOf( v2 ) );
-        assertEquals( 2, g3.inDegreeOf( v3 ) );
+        assertEquals( 2, m_g3.inDegreeOf( m_v1 ) );
+        assertEquals( 2, m_g3.inDegreeOf( m_v2 ) );
+        assertEquals( 2, m_g3.inDegreeOf( m_v3 ) );
 
-        assertEquals( 1, g4.inDegreeOf( v1 ) );
-        assertEquals( 1, g4.inDegreeOf( v2 ) );
-        assertEquals( 1, g4.inDegreeOf( v3 ) );
-        assertEquals( 1, g4.inDegreeOf( v4 ) );
+        assertEquals( 1, m_g4.inDegreeOf( m_v1 ) );
+        assertEquals( 1, m_g4.inDegreeOf( m_v2 ) );
+        assertEquals( 1, m_g4.inDegreeOf( m_v3 ) );
+        assertEquals( 1, m_g4.inDegreeOf( m_v4 ) );
 
         try {
-            g3.inDegreeOf( new Object(  ) );
+            m_g3.inDegreeOf( new Object(  ) );
             assertFalse(  );
         }
          catch( IllegalArgumentException e ) {
@@ -282,7 +281,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         }
 
         try {
-            g3.inDegreeOf( null );
+            m_g3.inDegreeOf( null );
             assertFalse(  );
         }
          catch( NullPointerException e ) {
@@ -348,40 +347,40 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
 
 
     private void init(  ) {
-        GraphFactory gf = GraphFactory.getFactory();
-        gEmpty     = gf.createSimpleDirectedGraph(  );
-        g1         = gf.createSimpleDirectedGraph(  );
-        g2         = gf.createSimpleDirectedGraph(  );
-        g3         = gf.createSimpleDirectedGraph(  );
-        g4         = gf.createSimpleDirectedGraph(  );
+        GraphFactory gf = GraphFactory.getFactory(  );
+        m_gEmpty     = gf.createSimpleDirectedGraph(  );
+        m_g1         = gf.createSimpleDirectedGraph(  );
+        m_g2         = gf.createSimpleDirectedGraph(  );
+        m_g3         = gf.createSimpleDirectedGraph(  );
+        m_g4         = gf.createSimpleDirectedGraph(  );
 
-        eFactory     = g1.getEdgeFactory(  );
-        eLoop        = (DirectedEdge) eFactory.createEdge( v1, v1 );
+        m_eFactory     = m_g1.getEdgeFactory(  );
+        m_eLoop        = (DirectedEdge) m_eFactory.createEdge( m_v1, m_v1 );
 
-        g1.addVertex( v1 );
+        m_g1.addVertex( m_v1 );
 
-        g2.addVertex( v1 );
-        g2.addVertex( v2 );
-        g2.addEdge( v1, v2 );
-        g2.addEdge( v2, v1 );
+        m_g2.addVertex( m_v1 );
+        m_g2.addVertex( m_v2 );
+        m_g2.addEdge( m_v1, m_v2 );
+        m_g2.addEdge( m_v2, m_v1 );
 
-        g3.addVertex( v1 );
-        g3.addVertex( v2 );
-        g3.addVertex( v3 );
-        g3.addEdge( v1, v2 );
-        g3.addEdge( v2, v1 );
-        g3.addEdge( v2, v3 );
-        g3.addEdge( v3, v2 );
-        g3.addEdge( v3, v1 );
-        g3.addEdge( v1, v3 );
+        m_g3.addVertex( m_v1 );
+        m_g3.addVertex( m_v2 );
+        m_g3.addVertex( m_v3 );
+        m_g3.addEdge( m_v1, m_v2 );
+        m_g3.addEdge( m_v2, m_v1 );
+        m_g3.addEdge( m_v2, m_v3 );
+        m_g3.addEdge( m_v3, m_v2 );
+        m_g3.addEdge( m_v3, m_v1 );
+        m_g3.addEdge( m_v1, m_v3 );
 
-        g4.addVertex( v1 );
-        g4.addVertex( v2 );
-        g4.addVertex( v3 );
-        g4.addVertex( v4 );
-        g4.addEdge( v1, v2 );
-        g4.addEdge( v2, v3 );
-        g4.addEdge( v3, v4 );
-        g4.addEdge( v4, v1 );
+        m_g4.addVertex( m_v1 );
+        m_g4.addVertex( m_v2 );
+        m_g4.addVertex( m_v3 );
+        m_g4.addVertex( m_v4 );
+        m_g4.addEdge( m_v1, m_v2 );
+        m_g4.addEdge( m_v2, m_v3 );
+        m_g4.addEdge( m_v3, m_v4 );
+        m_g4.addEdge( m_v4, m_v1 );
     }
 }

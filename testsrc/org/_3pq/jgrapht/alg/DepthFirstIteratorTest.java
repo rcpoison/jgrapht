@@ -42,7 +42,6 @@ import junit.framework.TestCase;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.GraphFactory;
-import org._3pq.jgrapht.alg.DepthFirstIterator;
 
 /**
  * Tests for the {@link DepthFirstIteratorTest} class.
@@ -79,8 +78,8 @@ public class DepthFirstIteratorTest extends TestCase {
         graph.addVertex( "7" );
         graph.addVertex( "8" );
         graph.addVertex( "9" );
-        
-        graph.addVertex("orphan");
+
+        graph.addVertex( "orphan" );
 
         graph.addEdge( v1, v2 );
         graph.addEdge( v1, v3 );
@@ -100,8 +99,9 @@ public class DepthFirstIteratorTest extends TestCase {
 
         while( iterator.hasNext(  ) ) {
             result.append( (String) iterator.next(  ) );
-            if (iterator.hasNext(  )) {
-                result.append(',');
+
+            if( iterator.hasNext(  ) ) {
+                result.append( ',' );
             }
         }
 

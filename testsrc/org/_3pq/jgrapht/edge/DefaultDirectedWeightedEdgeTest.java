@@ -39,8 +39,6 @@
 package org._3pq.jgrapht.edge;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.edge.DefaultDirectedWeightedEdge;
-import org._3pq.jgrapht.edge.DirectedWeightedEdge;
 
 /**
  * Tests for the {@link DefaultDirectedWeightedEdge} class.
