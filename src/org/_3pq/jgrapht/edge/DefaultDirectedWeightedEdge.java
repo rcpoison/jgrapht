@@ -71,7 +71,7 @@ public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
     }
 
     /**
-     * @see WeightedElement#setWeight(double)
+     * @see org._3pq.jgrapht.WeightedElement#setWeight(double)
      */
     public void setWeight( double weight ) {
         m_weight = weight;
@@ -79,7 +79,7 @@ public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
 
 
     /**
-     * @see WeightedElement#getWeight()
+     * @see org._3pq.jgrapht.WeightedElement#getWeight()
      */
     public double getWeight(  ) {
         return m_weight;

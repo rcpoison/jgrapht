@@ -72,7 +72,7 @@ public class DefaultUndirectedWeightedEdge extends DefaultUndirectedEdge
     }
 
     /**
-     * @see WeightedElement#setWeight(double)
+     * @see org._3pq.jgrapht.WeightedElement#setWeight(double)
      */
     public void setWeight( double weight ) {
         m_weight = weight;
@@ -80,7 +80,7 @@ public class DefaultUndirectedWeightedEdge extends DefaultUndirectedEdge
 
 
     /**
-     * @see WeightedElement#getWeight()
+     * @see org._3pq.jgrapht.WeightedElement#getWeight()
      */
     public double getWeight(  ) {
         return m_weight;
@@ -88,7 +88,7 @@ public class DefaultUndirectedWeightedEdge extends DefaultUndirectedEdge
 
 
     /**
-     * @see UndirectedEdge#equals(Object)
+     * @see org._3pq.jgrapht.UndirectedEdge#equals(Object)
      */
     public boolean equals( Object o ) {
         if( o instanceof UndirectedWeightedEdge ) {
@@ -102,7 +102,7 @@ public class DefaultUndirectedWeightedEdge extends DefaultUndirectedEdge
 
 
     /**
-     * @see UndirectedEdge#hashCode()
+     * @see org._3pq.jgrapht.UndirectedEdge#hashCode()
      */
     public int hashCode(  ) {
         return super.hashCode(  );

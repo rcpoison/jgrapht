@@ -49,5 +49,6 @@ import org._3pq.jgrapht.WeightedElement;
  * @since Jul 14, 2003
  */
 public interface UndirectedWeightedEdge extends UndirectedEdge, WeightedElement {
+    /** A default weight new undirected edges are created with. */
     public static double DEFAULT_EDGE_WEIGHT = 1.0;
 }

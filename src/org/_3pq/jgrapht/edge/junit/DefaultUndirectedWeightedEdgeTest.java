@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -------------------------------------
+/* --------------------------------------
  * DefaultUndirectedWeightedEdgeTest.java
- * -------------------------------------
+ * --------------------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -51,16 +51,14 @@ import org._3pq.jgrapht.edge.UndirectedWeightedEdge;
  */
 public class DefaultUndirectedWeightedEdgeTest extends DefaultUndirectedEdgeTest {
     /**
-     * Creates a new DefaultUndirectedWeightedEdgeTest object.
-     *
-     * @param name
+     * @see junit.framework.TestCase#TestCase(java.lang.String)
      */
     public DefaultUndirectedWeightedEdgeTest( String name ) {
         super( name );
     }
 
     /**
-     * .
+     * Tests the equals() method.
      */
     public void testEqualsObject(  ) {
         Edge e1 = new DefaultUndirectedWeightedEdge( m_source1, m_target1 );
@@ -83,7 +81,7 @@ public class DefaultUndirectedWeightedEdgeTest extends DefaultUndirectedEdgeTest
 
 
     /**
-     * @see TestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     protected void setUp(  ) throws Exception {
         super.setUp(  );
@@ -92,13 +90,5 @@ public class DefaultUndirectedWeightedEdgeTest extends DefaultUndirectedEdgeTest
             new DefaultUndirectedWeightedEdge( new Object(  ), new Object(  ) );
 
         m_e1Clone = (DefaultUndirectedWeightedEdge) m_e1.clone(  );
-    }
-
-
-    /**
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown(  ) throws Exception {
-        super.tearDown(  );
     }
 }

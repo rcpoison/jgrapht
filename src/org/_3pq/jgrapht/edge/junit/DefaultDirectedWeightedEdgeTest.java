@@ -51,16 +51,14 @@ import org._3pq.jgrapht.edge.DirectedWeightedEdge;
  */
 public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
     /**
-     * Creates a new DefaultDirectedWeightedEdgeTest object.
-     *
-     * @param name  
+     * @see junit.framework.TestCase#TestCase(java.lang.String)
      */
     public DefaultDirectedWeightedEdgeTest( String name ) {
         super( name );
     }
 
     /**
-     * .
+     * Tests the equals() method.
      */
     public void testEqualsObject(  ) {
         Edge e1 = new DefaultDirectedWeightedEdge( m_source1, m_target1 );
@@ -83,7 +81,7 @@ public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
 
 
     /**
-     * @see TestCase#setUp()
+     * @see junit.framework.TestCase#setUp()
      */
     protected void setUp(  ) throws Exception {
         super.setUp(  );
@@ -92,13 +90,5 @@ public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
             new DefaultDirectedWeightedEdge( new Object(  ), new Object(  ) );
 
         m_e1Clone = (DefaultDirectedWeightedEdge) m_e1.clone(  );
-    }
-
-
-    /**
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown(  ) throws Exception {
-        super.tearDown(  );
     }
 }

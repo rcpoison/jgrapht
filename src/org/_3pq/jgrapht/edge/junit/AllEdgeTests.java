@@ -42,15 +42,20 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * A TestSuite for all edge test.
+ * A TestSuite for all edge tests.
  *
  * @author Barak Naveh
  */
-public class AllEdgeTests {
+public final class AllEdgeTests {
+    /*
+     * We don't want instances of this class.
+     */
+    private AllEdgeTests(  ) {}
+
     /**
-     * Creates the test.
-     *
-     * @return
+     * Creates a test suite for all edge tests.
+     * 
+     * @return a test suite for all edge tests.
      */
     public static Test suite(  ) {
         TestSuite suite = new TestSuite( "TestSuite for all edge test" );
@@ -64,5 +69,4 @@ public class AllEdgeTests {
         //$JUnit-END$
         return suite;
     }
-
 }
