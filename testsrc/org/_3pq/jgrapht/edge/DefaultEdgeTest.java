@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------
- * AbstractEdgeTest.java
+ * DefaultEdgeTest.java
  * ---------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -44,19 +44,19 @@ import junit.framework.TestCase;
 import org._3pq.jgrapht.Edge;
 
 /**
- * Tests for the {@link org._3pq.jgrapht.edge.AbstractEdge} class.
+ * Tests for the {@link org._3pq.jgrapht.edge.DefaulltEdge} class.
  *
  * @author Barak Naveh
  *
  * @since Jul 24, 2003
  */
-public abstract class AbstractEdgeTest extends TestCase {
-    protected Edge   m_e1;
-    protected Edge   m_e1Clone;
-    protected Edge   m_e3;
-    protected String m_source1 = "s1";
-    protected String m_target1 = "t1";
-    protected String m_target2 = "t2";
+public abstract class DefaultEdgeTest extends TestCase {
+    Edge   m_e1;
+    Edge   m_e1Clone;
+    Edge   m_e3;
+    String m_source1 = "s1";
+    String m_target1 = "t1";
+    String m_target2 = "t2";
 
     /**
      * .
@@ -109,7 +109,7 @@ public abstract class AbstractEdgeTest extends TestCase {
 
 
     /**
-     * Set initial values to internal fields.
+     * @see TestCase#setUp()
      */
     protected abstract void setUp(  ) throws Exception;
 }

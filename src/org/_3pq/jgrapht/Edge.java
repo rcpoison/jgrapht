@@ -43,11 +43,13 @@ package org._3pq.jgrapht;
  * hierarchy.
  *
  * @author Barak Naveh
- * @version 1.0
  *
  * @since Jul 14, 2003
  */
 public interface Edge extends Cloneable {
+    /** The default weight for an edge. */
+    public static double DEFAULT_EDGE_WEIGHT = 1.0;
+
     /**
      * Returns the source vertex of this edge.
      *
@@ -62,6 +64,26 @@ public interface Edge extends Cloneable {
      * @return the target vertex of this edge.
      */
     public Object getTarget(  );
+
+
+    /**
+     * Sets the weight of this edge. If this edge is unweighted an
+     * <code>UnsupportedOperationException</code> is thrown.
+     *
+     * @param weight new weight.
+     *
+     * @throws UnsupportedOperationException if this edge is unweighted.
+     */
+    public void setWeight( double weight );
+
+
+    /**
+     * Returns the weight of this edge. If this edge is unweighted the value
+     * <code>1,0</code> is returned.
+     *
+     * @return the weight of this element.
+     */
+    public double getWeight(  );
 
 
     /**

@@ -127,8 +127,7 @@ public interface Graph {
      * Adds all of the specified edges to this graph. The behavior of this
      * operation is undefined if the specified vertex collection is modified
      * while the operation is in progress. This method will invoke the {@link
-     * #addEdge(Edge)} method, which has a warning. It is recommended that you
-     * read and understand that warning.
+     * #addEdge(Edge)} method.
      *
      * @param edges the edges to be added to this graph.
      *
@@ -170,26 +169,26 @@ public interface Graph {
      * does not change the graph and returns <code>null</code>.
      * 
      * <p>
-     * The source and target vertices must be already in this graph. If they
-     * are not found in graph IllegalArgumentException is thrown.
+     * The source and target vertices must already be contained in this graph.
+     * If they are not found in graph IllegalArgumentException is thrown.
      * </p>
      * 
      * <p>
-     * This method creates the new edge <code>e</code> using the
+     * This method creates the new edge <code>e</code> using this graph's
      * <code>EdgeFactory</code>. For the new edge to be added <code>e</code>
      * must <i>not</i> be equal to any other edge the graph (even if the graph
      * allows edge-multiplicity). More formally, the graph must not contain
      * any edge <code>e2</code> such that <code>e2.equals(e)</code>. If such
      * <code>e2</code> is found then the newly created edge <code>e</code> is
-     * abandoned, the  method leaves this graph unchanged returns
+     * abandoned, the method leaves this graph unchanged returns
      * <code>null</code>.
      * </p>
      *
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      *
-     * @return The new edge if created, or <code>null</code> if such edge
-     *         already exists or for some reason was not created.
+     * @return The newly created edge if added to the graph, otherwise
+     *         <code>null</code>.
      *
      * @throws IllegalArgumentException if source or target vertices are not
      *         found in the graph.
@@ -197,15 +196,13 @@ public interface Graph {
      *         <code>null</code>.
      *
      * @see #getEdgeFactory()
-     * @see EdgeFactory
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex );
 
 
     /**
-     * Adds the specified edge to this graph (prefer using {@link
-     * #addEdge(Object, Object)}). More formally, adds the specified edge,
-     * <code>e</code>, to this graph if this graph contains no edge
+     * Adds the specified edge to this graph. More formally, adds the specified
+     * edge, <code>e</code>, to this graph if this graph contains no edge
      * <code>e2</code> such that <code>e2.equals(e)</code>. If this graph
      * already contains such edge, the call leaves this graph unchanged and
      * returns <tt>false</tt>. If the edge was added to the graph, returns
@@ -213,9 +210,9 @@ public interface Graph {
      * 
      * <p>
      * Some graphs do not allow edge-multiplicity. In such cases, if the graph
-     * already contains an edge going from the source vertex of the specified
-     * edge to the target vertex of the specified edge,  this method does not
-     * change the graph and returns <code>false</code>.
+     * already contains an edge going from <code>e.getSource()</code> vertex
+     * to <code>e.getTarget()</code> vertex, than this method does not change
+     * the graph and returns <code>false</code>.
      * </p>
      * 
      * <p>
@@ -227,11 +224,12 @@ public interface Graph {
      * </p>
      * 
      * <p>
-     * USE WITH CARE: This method allows trickery such as adding the same edge
-     * instance into two graphs. Changing a property of the edge, such as
-     * weight, in one graph will be reflected in the other graph. Such
-     * behavior is generally <i>not</i> desired for edges. A safe alternative
-     * would be to use {@link #addEdge(Object, Object)} instead.
+     * This method allows trickery such as adding the same edge into two
+     * different graphs. Changing a property of the edge, such as weight, in
+     * one graph will be reflected in the other graph. Such behavior is
+     * generally <i>not</i> desired for edges. A safer alternative would be to
+     * use {@link #addEdge(Object, Object)}, or {@link
+     * GraphHelper#addEdge(Graph, Object, Object, double)} instead.
      * </p>
      *
      * @param e edge to be added to this graph.

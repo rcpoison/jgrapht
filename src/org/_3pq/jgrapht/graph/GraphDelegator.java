@@ -39,7 +39,6 @@
 package org._3pq.jgrapht.graph;
 
 import java.io.Serializable;
-
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +47,6 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.WeightedGraph;
 
 /**
  * A graph backed by the the graph specified at the constructor, which
@@ -72,6 +70,7 @@ import org._3pq.jgrapht.WeightedGraph;
  */
 public class GraphDelegator extends AbstractGraph implements Graph,
     Serializable {
+    /** The graph to which operations are delegated. */
     protected Graph m_delegate;
 
     /**
@@ -128,15 +127,6 @@ public class GraphDelegator extends AbstractGraph implements Graph,
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex ) {
         return m_delegate.addEdge( sourceVertex, targetVertex );
-    }
-
-
-    /**
-     * @see WeightedGraph#addEdge(Object, Object, double)
-     */
-    public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
-        return ( (WeightedGraph) m_delegate ).addEdge( sourceVertex,
-            targetVertex, weight );
     }
 
 

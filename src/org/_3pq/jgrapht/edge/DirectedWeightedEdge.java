@@ -39,8 +39,6 @@
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.WeightedElement;
-
 /**
  * An implementation of directed weighted edge.
  *
@@ -48,9 +46,8 @@ import org._3pq.jgrapht.WeightedElement;
  *
  * @since Jul 14, 2003
  */
-public class DirectedWeightedEdge extends DirectedEdge
-    implements WeightedElement {
-    private double m_weight = WeightedElement.DEFAULT_WEIGHT;
+public class DirectedWeightedEdge extends DirectedEdge {
+    private double m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
      * @see #DirectedWeightedEdge(Object, Object, double)
@@ -74,7 +71,7 @@ public class DirectedWeightedEdge extends DirectedEdge
     }
 
     /**
-     * @see org._3pq.jgrapht.WeightedElement#setWeight(double)
+     * @see org._3pq.jgrapht.Edge#setWeight(double)
      */
     public void setWeight( double weight ) {
         m_weight = weight;
@@ -82,7 +79,7 @@ public class DirectedWeightedEdge extends DirectedEdge
 
 
     /**
-     * @see org._3pq.jgrapht.WeightedElement#getWeight()
+     * @see org._3pq.jgrapht.Edge#getWeight()
      */
     public double getWeight(  ) {
         return m_weight;

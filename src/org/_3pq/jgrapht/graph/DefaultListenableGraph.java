@@ -47,7 +47,6 @@ import java.util.List;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.WeightedGraph;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
@@ -142,22 +141,6 @@ public class DefaultListenableGraph extends GraphDelegator
      */
     public boolean isReuseEvents(  ) {
         return m_reuseEvents;
-    }
-
-
-    /**
-     * @see WeightedGraph#addEdge(Object, Object, double)
-     */
-    public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
-        Edge e =
-            ( (WeightedGraph) m_delegate ).addEdge( sourceVertex, targetVertex,
-                weight );
-
-        if( e != null ) {
-            fireEdgeAdded( e );
-        }
-
-        return e;
     }
 
 

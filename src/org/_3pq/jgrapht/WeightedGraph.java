@@ -34,31 +34,16 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 13-Aug-2003 : Included weight methods in Edge interface (BN);
  *
  */
 package org._3pq.jgrapht;
 
 /**
- * A graph whose all edges have weights.
+ * A tagging interface for a graph whose all edges have weights.
  *
  * @author Barak Naveh
  *
  * @since Jul 23, 2003
  */
-public interface WeightedGraph extends Graph {
-    /**
-     * Adds a new edge to this graph similarly to the method
-     * <code>Graph#addEdge(Object,Object)</code>. If the new edge has been
-     * added it is assigned the specified weight.
-     *
-     * @param sourceVertex source vertex of the edge.
-     * @param targetVertex target vertex of the edge.
-     * @param weight weight of the edge.
-     *
-     * @return The new edge if created, or <code>null</code> if such edge
-     *         already exists.
-     *
-     * @see Graph#addEdge(Object, Object)
-     */
-    public Edge addEdge( Object sourceVertex, Object targetVertex, double weight );
-}
+public interface WeightedGraph extends Graph {}

@@ -40,7 +40,6 @@
 package org._3pq.jgrapht.graph;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,7 +54,6 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.WeightedElement;
 
 /**
  * The most general implementation of the {@link org._3pq.jgrapht.Graph}
@@ -206,20 +204,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
             return e;
         }
-    }
-
-
-    /**
-     * @see org._3pq.jgrapht.WeightedGraph#addEdge(Object, Object, double)
-     */
-    public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
-        Edge e = addEdge( sourceVertex, targetVertex );
-
-        if( e != null ) {
-            ( (WeightedElement) e ).setWeight( weight );
-        }
-
-        return e;
     }
 
 

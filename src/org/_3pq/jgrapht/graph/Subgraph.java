@@ -52,7 +52,6 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.WeightedElement;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
@@ -282,20 +281,6 @@ public class Subgraph extends AbstractGraph {
 
             return true;
         }
-    }
-
-
-    /**
-     * @see org._3pq.jgrapht.WeightedGraph#addEdge(Object, Object, double)
-     */
-    public Edge addEdge( Object sourceVertex, Object targetVertex, double weight ) {
-        Edge e = addEdge( sourceVertex, targetVertex );
-
-        if( e != null ) {
-            ( (WeightedElement) e ).setWeight( weight );
-        }
-
-        return e;
     }
 
 

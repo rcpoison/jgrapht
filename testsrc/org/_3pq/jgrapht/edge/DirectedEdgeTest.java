@@ -46,7 +46,7 @@ package org._3pq.jgrapht.edge;
  *
  * @since Jul 24, 2003
  */
-public class DirectedEdgeTest extends AbstractEdgeTest {
+public class DirectedEdgeTest extends DefaultEdgeTest {
     /**
      * .
      */
@@ -57,7 +57,7 @@ public class DirectedEdgeTest extends AbstractEdgeTest {
 
 
     /**
-     * @see AbstractEdgeTest#setUp()
+     * @see DefaultEdgeTest#setUp()
      */
     protected void setUp(  ) throws Exception {
         m_e1     = new DirectedEdge( m_source1, m_target1 );

@@ -39,8 +39,6 @@
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.WeightedElement;
-
 /**
  * An implementation of undirected weighted edge.
  *
@@ -48,12 +46,11 @@ import org._3pq.jgrapht.WeightedElement;
  *
  * @since Jul 16, 2003
  */
-public class UndirectedWeightedEdge extends UndirectedEdge
-    implements WeightedElement {
-    private double m_weight = WeightedElement.DEFAULT_WEIGHT;
+public class UndirectedWeightedEdge extends UndirectedEdge {
+    private double m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
-     * @see AbstractEdge#AbstractEdge(Object, Object)
+     * @see DefaulltEdge#DefaulltEdge(Object, Object)
      */
     public UndirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
@@ -74,7 +71,7 @@ public class UndirectedWeightedEdge extends UndirectedEdge
     }
 
     /**
-     * @see org._3pq.jgrapht.WeightedElement#setWeight(double)
+     * @see org._3pq.jgrapht.Edge#setWeight(double)
      */
     public void setWeight( double weight ) {
         m_weight = weight;
@@ -82,7 +79,7 @@ public class UndirectedWeightedEdge extends UndirectedEdge
 
 
     /**
-     * @see org._3pq.jgrapht.WeightedElement#getWeight()
+     * @see org._3pq.jgrapht.Edge#getWeight()
      */
     public double getWeight(  ) {
         return m_weight;

@@ -49,6 +49,30 @@ public final class GraphHelper {
     private GraphHelper(  ) {} // ensure non-instantiability.
 
     /**
+     * Creates a new edge and adds it to the specified graph similarly to the
+     * {@link Graph#addEdge(Object, Object)} method.
+     *
+     * @param g the graph for which the edge to be added.
+     * @param sourceVertex source vertex of the edge.
+     * @param targetVertex target vertex of the edge.
+     * @param weight weight of the edge.
+     *
+     * @return The newly created edge if added to the graph, otherwise
+     *         <code>null</code>.
+     *
+     * @see Graph#addEdge(Object, Object)
+     */
+    public static Edge addEdge( Graph g, Object sourceVertex,
+        Object targetVertex, double weight ) {
+        EdgeFactory ef = g.getEdgeFactory(  );
+        Edge        e = ef.createEdge( sourceVertex, targetVertex );
+        e.setWeight( weight );
+
+        return g.addEdge( e ) ? e : null;
+    }
+
+
+    /**
      * Adds the specified edge to the specified graph including its vertices.
      * If any of the vertices of the specified edge are not already in the
      * graph they are also added (before the edge is added).
@@ -59,7 +83,7 @@ public final class GraphHelper {
      * @return <code>true</code> if and only if the specified edge was not
      *         already contained in the graph.
      */
-    public static boolean addEdgeWithVertics( Graph g, Edge e ) {
+    public static boolean addEdgeWithVertices( Graph g, Edge e ) {
         g.addVertex( e.getSource(  ) );
         g.addVertex( e.getTarget(  ) );
 

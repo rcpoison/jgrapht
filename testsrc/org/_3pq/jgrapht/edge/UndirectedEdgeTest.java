@@ -48,7 +48,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Jul 24, 2003
  */
-public class UndirectedEdgeTest extends AbstractEdgeTest {
+public class UndirectedEdgeTest extends DefaultEdgeTest {
     /**
      * .
      */

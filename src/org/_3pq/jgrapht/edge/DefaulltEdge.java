@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
- * AbstractEdge.java
+ * DefaulltEdge.java
  * -----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -49,17 +49,17 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Jul 14, 2003
  */
-public abstract class AbstractEdge implements Edge, Cloneable {
+public class DefaulltEdge implements Edge, Cloneable {
     private Object m_source;
     private Object m_target;
 
     /**
-     * Constructor for AbstractEdge.
+     * Constructor for DefaulltEdge.
      *
-     * @param sourceVertex source vertex of the edge. 
-     * @param targetVertex target vertex of the edge. 
+     * @param sourceVertex source vertex of the edge.
+     * @param targetVertex target vertex of the edge.
      */
-    public AbstractEdge( Object sourceVertex, Object targetVertex ) {
+    public DefaulltEdge( Object sourceVertex, Object targetVertex ) {
         m_source     = sourceVertex;
         m_target     = targetVertex;
     }
@@ -77,6 +77,22 @@ public abstract class AbstractEdge implements Edge, Cloneable {
      */
     public Object getTarget(  ) {
         return m_target;
+    }
+
+
+    /**
+     * @see org._3pq.jgrapht.Edge#setWeight(double)
+     */
+    public void setWeight( double weight ) {
+        throw new UnsupportedOperationException(  );
+    }
+
+
+    /**
+     * @see org._3pq.jgrapht.Edge#getWeight()
+     */
+    public double getWeight(  ) {
+        return DEFAULT_EDGE_WEIGHT;
     }
 
 

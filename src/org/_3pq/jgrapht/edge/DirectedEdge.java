@@ -46,9 +46,9 @@ package org._3pq.jgrapht.edge;
  *
  * @since Jul 14, 2003
  */
-public class DirectedEdge extends AbstractEdge {
+public class DirectedEdge extends DefaulltEdge {
     /**
-     * @see AbstractEdge#AbstractEdge(Object, Object)
+     * @see DefaulltEdge#DefaulltEdge(Object, Object)
      */
     public DirectedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
