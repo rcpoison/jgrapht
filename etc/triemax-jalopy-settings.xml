@@ -377,9 +377,9 @@
       </footer>
       <header>
         <keepTags>false</keepTags>
-        <keys>(C) Copyright</keys>
-        <override>false</override>
-        <smartMode>5</smartMode>
+        <keys>JGraphT : a free Java graph-theory library</keys>
+        <override>true</override>
+        <smartMode>0</smartMode>
         <text><![CDATA[/* ==========================================
  * JGraphT : a free Java graph-theory library
  * ==========================================
