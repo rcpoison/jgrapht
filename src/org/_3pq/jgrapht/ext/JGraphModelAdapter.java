@@ -71,6 +71,7 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelEvent.GraphModelChange;
 import org.jgraph.event.GraphModelListener;
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.ConnectionSet;
 import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
@@ -117,23 +118,23 @@ import org.jgraph.graph.Port;
  * @since Aug 2, 2003
  */
 public class JGraphModelAdapter extends DefaultGraphModel {
-    Set                   m_jEdgesBeingAdded        = new HashSet(  );
-    Set                   m_jEdgesBeingRemoved      = new HashSet(  );
-    Set                   m_jVerticesBeingAdded     = new HashSet(  );
-    Set                   m_jVerticesBeingRemoved   = new HashSet(  );
-    Set                   m_jtEdgesBeingAdded       = new HashSet(  );
-    Set                   m_jtEdgesBeingRemoved     = new HashSet(  );
-    Set                   m_jtVerticesBeingAdded    = new HashSet(  );
-    Set                   m_jtVerticesBeingRemoved  = new HashSet(  );
-    private CellFactory   m_cellFactory;
-    private Graph         m_jtGraph;
-    private GraphListener m_jtGraphListener;
-    private Map           m_cellToEdge              = new HashMap(  );
-    private Map           m_cellToVertex            = new HashMap(  );
-    private Map           m_defaultEdgeAttributes   = new HashMap(  );
-    private Map           m_defaultVertexAttributes = new HashMap(  );
-    private Map           m_edgeToCell              = new HashMap(  );
-    private Map           m_vertexToCell            = new HashMap(  );
+    final Set                  m_jEdgesBeingAdded        = new HashSet(  );
+    final Set                  m_jEdgesBeingRemoved      = new HashSet(  );
+    final Set                  m_jVerticesBeingAdded     = new HashSet(  );
+    final Set                  m_jVerticesBeingRemoved   = new HashSet(  );
+    final Set                  m_jtEdgesBeingAdded       = new HashSet(  );
+    final Set                  m_jtEdgesBeingRemoved     = new HashSet(  );
+    final Set                  m_jtVerticesBeingAdded    = new HashSet(  );
+    final Set                  m_jtVerticesBeingRemoved  = new HashSet(  );
+    private final AttributeMap m_defaultEdgeAttributes;
+    private final AttributeMap m_defaultVertexAttributes;
+    private CellFactory        m_cellFactory;
+    private Graph              m_jtGraph;
+    private GraphListener      m_jtGraphListener;
+    private Map                m_cellToEdge              = new HashMap(  );
+    private Map                m_cellToVertex            = new HashMap(  );
+    private Map                m_edgeToCell              = new HashMap(  );
+    private Map                m_vertexToCell            = new HashMap(  );
 
     /**
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
@@ -174,8 +175,34 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @param cellFactory a {@link CellFactory} to be used to create the JGraph
      *        cells, or <code>null</code> to use internal default factory.
      */
+    public JGraphModelAdapter( Graph jGraphTGraph,
+        AttributeMap defaultVertexAttributes,
+        AttributeMap defaultEdgeAttributes, CellFactory cellFactory ) {
+        // call the deprecated constructor during transition period. 
+        // when the deprecated constructor is delete, code will move here.
+        this( jGraphTGraph, (Map) defaultVertexAttributes,
+            (Map) defaultEdgeAttributes, cellFactory );
+    }
+
+
+    /**
+     * Constructs a new JGraph model adapter for the specified JGraphT graph.
+     *
+     * @param jGraphTGraph the JGraphT graph for which JGraph model adapter to
+     *        be created.
+     * @param defaultVertexAttributes a default map of JGraph attributes to
+     *        format vertices, or <code>null</code> to use internal defaults.
+     * @param defaultEdgeAttributes a default map of JGraph attributes to
+     *        format edges, or <code>null</code> to use internal defaults.
+     * @param cellFactory a {@link CellFactory} to be used to create the JGraph
+     *        cells, or <code>null</code> to use internal default factory.
+     *
+     * @deprecated will be deleted, use {@link #JGraphModelAdapter(Graph,
+     *             AttributeMap, AttributeMap, CellFactory)} instead.
+     */
     public JGraphModelAdapter( Graph jGraphTGraph, Map defaultVertexAttributes,
         Map defaultEdgeAttributes, CellFactory cellFactory ) {
+        // body of this constructor will move away and it will be deleted.
         super(  );
 
         m_jtGraph = jGraphTGraph;
@@ -184,7 +211,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
             m_defaultVertexAttributes = createDefaultVertexAttributes(  );
         }
         else {
-            m_defaultVertexAttributes = defaultVertexAttributes;
+            // use AttributeMap to intelligently clone the attributes.
+            // this will no longer be needed after shifting to new constructor.
+            AttributeMap tmp = new AttributeMap( defaultVertexAttributes );
+            m_defaultVertexAttributes = (AttributeMap) tmp.clone(  );
         }
 
         if( defaultEdgeAttributes == null ) {
@@ -192,7 +222,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
                 createDefaultEdgeAttributes( jGraphTGraph );
         }
         else {
-            m_defaultEdgeAttributes = defaultEdgeAttributes;
+            // use AttributeMap to intelligently clone the attributes.
+            // this will no longer be needed after shifting to new constructor.
+            AttributeMap tmp = new AttributeMap( defaultEdgeAttributes );
+            m_defaultEdgeAttributes = (AttributeMap) tmp.clone(  );
         }
 
         if( cellFactory == null ) {
@@ -265,6 +298,56 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         else {
             return (DefaultPort) vertexCell.getChildAt( 0 );
         }
+    }
+
+
+    /**
+     * Creates and returns a map of attributes to be used as defaults for edge
+     * attributes, depending on the specified graph.
+     *
+     * @param jGraphTGraph the graph for which default edge attributes to be
+     *        created.
+     *
+     * @return a map of attributes to be used as default for edge attributes.
+     */
+    public static AttributeMap createDefaultEdgeAttributes( Graph jGraphTGraph ) {
+        AttributeMap map = new AttributeMap(  );
+
+        if( jGraphTGraph instanceof DirectedGraph ) {
+            GraphConstants.setLineEnd( map, GraphConstants.ARROW_TECHNICAL );
+            GraphConstants.setEndFill( map, true );
+            GraphConstants.setEndSize( map, 10 );
+        }
+
+        GraphConstants.setForeground( map, Color.decode( "#25507C" ) );
+        GraphConstants.setFont( map,
+            GraphConstants.DEFAULTFONT.deriveFont( Font.BOLD, 12 ) );
+        GraphConstants.setLineColor( map, Color.decode( "#7AA1E6" ) );
+
+        return map;
+    }
+
+
+    /**
+     * Creates and returns a map of attributes to be used as defaults for
+     * vertex attributes.
+     *
+     * @return a map of attributes to be used as defaults for vertex
+     *         attributes.
+     */
+    public static AttributeMap createDefaultVertexAttributes(  ) {
+        AttributeMap map = new AttributeMap(  );
+        Color        c = Color.decode( "#FF9900" );
+
+        GraphConstants.setBounds( map, new Rectangle2D.Double( 50, 50, 90, 30 ) );
+        GraphConstants.setBorder( map, BorderFactory.createRaisedBevelBorder(  ) );
+        GraphConstants.setBackground( map, c );
+        GraphConstants.setForeground( map, Color.white );
+        GraphConstants.setFont( map,
+            GraphConstants.DEFAULTFONT.deriveFont( Font.BOLD, 12 ) );
+        GraphConstants.setOpaque( map, true );
+
+        return map;
     }
 
 
@@ -366,9 +449,9 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         cs.connect( edgeCell, getVertexPort( jtEdge.getSource(  ) ),
             getVertexPort( jtEdge.getTarget(  ) ) );
 
-        Object[] cells = { edgeCell };
-        Map      attrs = new HashMap(  );
-        attrs.put( edgeCell, GraphConstants.cloneMap( m_defaultEdgeAttributes ) );
+        Object[]     cells = { edgeCell };
+        AttributeMap attrs = new AttributeMap(  );
+        attrs.put( edgeCell, m_defaultEdgeAttributes.clone(  ) );
         m_jEdgesBeingAdded.add( edgeCell );
         super.insert( cells, attrs, cs, null, null );
     }
@@ -388,11 +471,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         m_vertexToCell.put( jtVertex, vertexCell );
         m_cellToVertex.put( vertexCell, jtVertex );
 
-        Object[] cells = { vertexCell };
+        Object[]     cells = { vertexCell };
 
-        Map      attrs = new HashMap(  );
-        attrs.put( vertexCell,
-            GraphConstants.cloneMap( m_defaultVertexAttributes ) );
+        AttributeMap attrs = new AttributeMap(  );
+        attrs.put( vertexCell, m_defaultVertexAttributes.clone(  ) );
         m_jVerticesBeingAdded.add( vertexCell );
         super.insert( cells, attrs, null, null, null );
     }
@@ -438,56 +520,6 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         m_vertexToCell.put( jtVertex, jVertex );
 
         return result;
-    }
-
-
-    /**
-     * Creates and returns a map of attributes to be used as defaults for edge
-     * attributes, depending on the specified graph.
-     *
-     * @param jGraphTGraph the graph for which default edge attributes to be
-     *        created.
-     *
-     * @return a map of attributes to be used as default for edge attributes.
-     */
-    protected Map createDefaultEdgeAttributes( Graph jGraphTGraph ) {
-        Map map = new HashMap(  );
-
-        if( jGraphTGraph instanceof DirectedGraph ) {
-            GraphConstants.setLineEnd( map, GraphConstants.ARROW_TECHNICAL );
-            GraphConstants.setEndFill( map, true );
-            GraphConstants.setEndSize( map, 10 );
-        }
-
-        GraphConstants.setForeground( map, Color.decode( "#25507C" ) );
-        GraphConstants.setFont( map,
-            GraphConstants.defaultFont.deriveFont( Font.BOLD, 12 ) );
-        GraphConstants.setLineColor( map, Color.decode( "#7AA1E6" ) );
-
-        return map;
-    }
-
-
-    /**
-     * Creates and returns a map of attributes to be used as defaults for
-     * vertex attributes.
-     *
-     * @return a map of attributes to be used as defaults for vertex
-     *         attributes.
-     */
-    protected Map createDefaultVertexAttributes(  ) {
-        Map   map = new HashMap(  );
-        Color c = Color.decode( "#FF9900" );
-
-        GraphConstants.setBounds( map, new Rectangle2D.Double( 50, 50, 90, 30 ) );
-        GraphConstants.setBorder( map, BorderFactory.createRaisedBevelBorder(  ) );
-        GraphConstants.setBackground( map, c );
-        GraphConstants.setForeground( map, Color.white );
-        GraphConstants.setFont( map,
-            GraphConstants.defaultFont.deriveFont( Font.BOLD, 12 ) );
-        GraphConstants.setOpaque( map, true );
-
-        return map;
     }
 
 
