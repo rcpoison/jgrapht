@@ -45,6 +45,7 @@ import junit.framework.TestSuite;
 
 import org._3pq.jgrapht.alg.AllAlgTests;
 import org._3pq.jgrapht.edge.AllEdgeTests;
+import org._3pq.jgrapht.generate.AllGenerateTests;
 import org._3pq.jgrapht.graph.AllGraphTests;
 import org._3pq.jgrapht.traverse.AllTraverseTests;
 
@@ -65,9 +66,10 @@ public final class AllTests {
         ExpandableTestSuite suite =
             new ExpandableTestSuite( "All tests of JGraphT" );
 
-        suite.addTestSuit( (TestSuite) AllEdgeTests.suite(  ) );
-        suite.addTestSuit( (TestSuite) AllGraphTests.suite(  ) );
         suite.addTestSuit( (TestSuite) AllAlgTests.suite(  ) );
+        suite.addTestSuit( (TestSuite) AllEdgeTests.suite(  ) );
+        suite.addTestSuit( (TestSuite) AllGenerateTests.suite(  ) );
+        suite.addTestSuit( (TestSuite) AllGraphTests.suite(  ) );
         suite.addTestSuit( (TestSuite) AllTraverseTests.suite(  ) );
 
         return suite;
