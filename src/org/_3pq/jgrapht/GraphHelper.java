@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Mikael Hansen
  *
  * $Id$
  *
@@ -38,6 +38,10 @@
  *
  */
 package org._3pq.jgrapht;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org._3pq.jgrapht.graph.AsUndirectedGraph;
 
@@ -169,6 +173,77 @@ public final class GraphHelper {
 
 
     /**
+     * Returns a list of vertices that are the neighbors of a specified vertex.
+     * If the graph is a multigraph vertices may appear more than once in the
+     * returned list.
+     *
+     * @param g the graph to look for neighbors in.
+     * @param vertex the vertex to get the neighbors of.
+     *
+     * @return a list of the vertices that are the neighbors of the specified
+     *         vertex.
+     */
+    public static List neighborListOf( Graph g, Object vertex ) {
+        List neighbors = new ArrayList(  );
+
+        for( Iterator i = g.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+            neighbors.add( e.oppositeVertex( vertex ) );
+        }
+
+        return neighbors;
+    }
+
+
+    /**
+     * Returns a list of vertices that are the predecessors of a specified
+     * vertex. If the graph is a multigraph, vertices may appear more than
+     * once in the returned list.
+     *
+     * @param g the graph to look for predecessors in.
+     * @param vertex the vertex to get the predecessors of.
+     *
+     * @return a list of the vertices that are the predecessors of the
+     *         specified vertex.
+     */
+    public static List predecessorListOf( DirectedGraph g, Object vertex ) {
+        List predecessors = new ArrayList(  );
+        List edges = g.incomingEdgesOf( vertex );
+
+        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+            predecessors.add( e.oppositeVertex( vertex ) );
+        }
+
+        return predecessors;
+    }
+
+
+    /**
+     * Returns a list of vertices that are the successors of a specified
+     * vertex. If the graph is a multigraph vertices may appear more than once
+     * in the returned list.
+     *
+     * @param g the graph to look for successors in.
+     * @param vertex the vertex to get the successors of.
+     *
+     * @return a list of the vertices that are the successors of the specified
+     *         vertex.
+     */
+    public static List successorListOf( DirectedGraph g, Object vertex ) {
+        List successors = new ArrayList(  );
+        List edges = g.outgoingEdgesOf( vertex );
+
+        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+            successors.add( e.oppositeVertex( vertex ) );
+        }
+
+        return successors;
+    }
+
+
+    /**
      * Returns an undirected view of the specified graph. If the specified
      * graph is directed, returns an undirected view of it. If the specified
      * graph is undirected, just returns it.
@@ -178,7 +253,7 @@ public final class GraphHelper {
      * @return an undirected view of the specified graph, if it is directed, or
      *         or the specified graph itself if it is undirected.
      *
-     * @throws IllegalArgumentException if the graph is neigher DirectedGraph
+     * @throws IllegalArgumentException if the graph is neither DirectedGraph
      *         nor UndirectedGraph.
      *
      * @see AsUndirectedGraph
