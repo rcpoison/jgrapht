@@ -40,6 +40,7 @@
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.DirectedGraph;
 
 /**
  * Tests for the {@link DepthFirstIteratorTest} class.
@@ -65,8 +66,8 @@ public class DepthFirstIteratorTest extends AbstractGraphIteratorTest {
     }
 
 
-    AbstractGraphIterator createIterator( Graph g, Object vertex ) {
-        AbstractGraphIterator i = new DepthFirstIterator( g, vertex, false );
+    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
+        AbstractGraphIterator i = new DepthFirstIterator( g, vertex );
         i.setCrossComponentTraversal( true );
 
         return i;

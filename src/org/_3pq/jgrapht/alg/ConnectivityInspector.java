@@ -47,6 +47,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
 import org._3pq.jgrapht.event.GraphListener;
@@ -90,13 +93,23 @@ public class ConnectivityInspector implements GraphListener {
     private Graph m_graph;
 
     /**
-     * Creates a connectivity inspector for the specified graph.
+     * Creates a connectivity inspector for the specified undirected graph.
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public ConnectivityInspector( Graph g ) {
+    public ConnectivityInspector( UndirectedGraph g ) {
         init(  );
         m_graph = g;
+    }
+
+    /**
+     * Creates a connectivity inspector for the specified directed graph.
+     *
+     * @param g the graph for which a connectivity inspector to be created.
+     */
+    public ConnectivityInspector( DirectedGraph g ) {
+        init(  );
+        m_graph = new AsUndirectedGraph( g );
     }
 
     /**
@@ -129,7 +142,7 @@ public class ConnectivityInspector implements GraphListener {
             connectedSet = new HashSet(  );
 
             BreadthFirstIterator i =
-                new BreadthFirstIterator( m_graph, vertex, true );
+                new BreadthFirstIterator( m_graph, vertex );
 
             while( i.hasNext(  ) ) {
                 connectedSet.add( i.next(  ) );
@@ -231,7 +244,7 @@ public class ConnectivityInspector implements GraphListener {
 
             if( vertexSet.size(  ) > 0 ) {
                 BreadthFirstIterator i =
-                    new BreadthFirstIterator( m_graph, null, true );
+                    new BreadthFirstIterator( m_graph, null );
                 i.addTraversalListener( new MyTraversalListener(  ) );
 
                 while( i.hasNext(  ) ) {

@@ -160,4 +160,20 @@ public abstract class AbstractGraph implements Graph {
             throw new IllegalArgumentException( "no such vertex in graph" );
         }
     }
+
+    /**
+     * Helper for subclass implementations of toString(  ).
+     *
+     * @param vertexSet the vertex set V to be printed
+     *
+     * @param edgeSet the edge set E to be printed
+     *
+     * @return a string representation of (V,E)
+     */
+    protected String toStringFromSets(
+        Collection vertexSet, Collection edgeSet )
+    {
+        return "(" + vertexSet.toString(  ) + ", "
+        + edgeSet.toString(  ) + ")";
+    }
 }

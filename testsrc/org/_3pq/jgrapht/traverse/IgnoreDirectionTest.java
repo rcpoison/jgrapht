@@ -38,6 +38,9 @@
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.graph.AsUndirectedGraph;
 
 /**
  * Tests for the ignoreDirection parameter to XXFirstIterator.
@@ -63,10 +66,12 @@ public class IgnoreDirectionTest extends AbstractGraphIteratorTest {
     }
 
 
-    AbstractGraphIterator createIterator( Graph g, Object vertex ) {
+    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
         // ignore the passed in vertex and always start from v4, since that's
         // the only vertex without out-edges
-        AbstractGraphIterator i = new DepthFirstIterator( g, "4", true );
+        UndirectedGraph undirectedView = new AsUndirectedGraph( g );
+        AbstractGraphIterator i = new DepthFirstIterator(
+            undirectedView, "4" );
         i.setCrossComponentTraversal( true );
 
         return i;

@@ -122,7 +122,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
     abstract String getExpectedStr2(  );
 
 
-    abstract AbstractGraphIterator createIterator( Graph g, Object startVertex );
+    abstract AbstractGraphIterator createIterator(
+        DirectedGraph g, Object startVertex );
 
     /**
      * Internal traversal listener.

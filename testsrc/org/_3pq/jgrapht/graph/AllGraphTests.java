@@ -63,6 +63,7 @@ public final class AllGraphTests {
         suite.addTest( new TestSuite( DefaultDirectedGraphTest.class ) );
         suite.addTest( new TestSuite( ListenableGraphTest.class ) );
         suite.addTest( new TestSuite( SimpleDirectedGraphTest.class ) );
+        suite.addTest( new TestSuite( AsUndirectedGraphTest.class ) );
 
         //$JUnit-END$
         return suite;

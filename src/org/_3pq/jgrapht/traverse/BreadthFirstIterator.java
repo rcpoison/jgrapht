@@ -60,7 +60,7 @@ public class BreadthFirstIterator extends XXFirstIterator {
      * @param g the graph to be iterated.
      */
     public BreadthFirstIterator( Graph g ) {
-        this( g, null, false );
+        this( g, null );
     }
 
 
@@ -74,11 +74,8 @@ public class BreadthFirstIterator extends XXFirstIterator {
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
-     * @param ignoreEdgeDirection if true, traversal ignores edge direction; if
-     *        false, traversal follows outgoing edges only if g is directed
      */
-    public BreadthFirstIterator( Graph g, Object startVertex,
-        boolean ignoreEdgeDirection ) {
-        super( g, startVertex, new SimpleQueue(  ), ignoreEdgeDirection );
+    public BreadthFirstIterator( Graph g, Object startVertex ) {
+        super( g, startVertex, new SimpleQueue(  ) );
     }
 }

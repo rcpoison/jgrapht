@@ -41,6 +41,7 @@ package org._3pq.jgrapht.graph;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -429,10 +430,8 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * @return a string representation of this graph.
      */
     public String toString(  ) {
-        return "(" + vertexSet(  ).toString(  ) + ", "
-        + edgeSet(  ).toString(  ) + ")";
+        return toStringFromSets( vertexSet(  ), edgeSet(  ) );
     }
-
 
     /**
      * @see Graph#vertexSet()

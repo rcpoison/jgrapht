@@ -65,8 +65,8 @@ import org._3pq.jgrapht.event.VertexTraversalEvent;
 public final class TraverseUtils {
     private TraverseUtils(  ) {} // ensure non-instantiability.
 
-    static Specifics createGraphSpecifics( Graph g, boolean ignoreEdgeDirection ) {
-        if( !ignoreEdgeDirection && ( g instanceof DirectedGraph ) ) {
+    static Specifics createGraphSpecifics( Graph g ) {
+        if( g instanceof DirectedGraph ) {
             return new DirectedSpecifics( (DirectedGraph) g );
         }
         else {
@@ -279,16 +279,12 @@ public final class TraverseUtils {
          * @param g the graph to be iterated.
          * @param startVertex the vertex iteration to be started.
          * @param pendingVerticesContainer
-         * @param ignoreEdgeDirection if true, traversal ignores edge
-         *        direction; if false, traversal follows outgoing edges only
-         *        if g is directed
          *
          * @throws NullPointerException
          * @throws IllegalArgumentException
          */
         public XXFirstIterator( Graph g, Object startVertex,
-            SimpleContainer pendingVerticesContainer,
-            boolean ignoreEdgeDirection ) {
+            SimpleContainer pendingVerticesContainer ) {
             super(  );
 
             if( g == null ) {
@@ -298,7 +294,7 @@ public final class TraverseUtils {
             m_pending     = pendingVerticesContainer;
 
             m_specifics =
-                TraverseUtils.createGraphSpecifics( g, ignoreEdgeDirection );
+                TraverseUtils.createGraphSpecifics( g );
             m_vertexIterator = g.vertexSet(  ).iterator(  );
             setCrossComponentTraversal( startVertex == null );
 
