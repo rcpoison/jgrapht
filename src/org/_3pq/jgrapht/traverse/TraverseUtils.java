@@ -38,6 +38,7 @@
  */
 package org._3pq.jgrapht.traverse;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -97,6 +98,11 @@ public final class TraverseUtils {
         public Object remove(  );
     }
 
+    /**
+     * <b>Note to users:</b> this queue implementation is a bit lame in terms
+     * of GC efficiency. If you need it to be improved either let us know or
+     * use the source...
+     */
     static class SimpleQueue implements SimpleContainer {
         private LinkedList m_elementList = new LinkedList(  );
 
@@ -177,7 +183,7 @@ public final class TraverseUtils {
 
 
     static class SimpleStack implements SimpleContainer {
-        private LinkedList m_elementList = new LinkedList(  );
+        private ArrayList m_elementList = new ArrayList(  );
 
         /**
          * Tests if this queue is empty.
@@ -195,7 +201,7 @@ public final class TraverseUtils {
          * @param o the object to be added.
          */
         public void add( Object o ) {
-            m_elementList.addLast( o );
+            m_elementList.add( o );
         }
 
 
@@ -205,7 +211,7 @@ public final class TraverseUtils {
          * @return the object and the head of the queue.
          */
         public Object remove(  ) {
-            return m_elementList.removeLast(  );
+            return m_elementList.remove( m_elementList.size(  ) - 1 );
         }
     }
 
