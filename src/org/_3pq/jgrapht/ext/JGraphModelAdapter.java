@@ -35,6 +35,7 @@
  * -------
  * 02-Aug-2003 : Initial revision (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 06-Nov-2003 : Allowed non-listenable underlying JGraphT graph (BN);
  *
  */
 package org._3pq.jgrapht.ext;
@@ -73,11 +74,18 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * href="http://jgraph.sourceforge.net">http://jgraph.sourceforge.net</a>
  * 
  * <p>
- * <b>Note:</b> modifications made to the underlying JGraphT graph are
- * reflected to this JGraph model, but changes made to this JGraph model are
- * <b>not</b> reflected back to the underlying JGraphT graph. To avoid
- * confusion, the methods <code>remove</code>, <code>insert</code> have been
- * disabled, and the method <code>edit</code> has been restricted.
+ * Modifications made to the underlying JGraphT graph are reflected to this
+ * JGraph model if and only if the underlying JGraphT graph is a {@link
+ * org._3pq.jgrapht.ListenableGraph}. If the underlying JGraphT graph is
+ * <i>not</i> ListenableGraph, then this JGraph model represent a snapshot if
+ * the graph at the time of its creation.
+ * </p>
+ * 
+ * <p>
+ * <b>Note:</b> as if now, changes made to this JGraph model are <b>not</b>
+ * reflected back to the underlying JGraphT graph. To avoid confusion, the
+ * methods <code>remove</code>, <code>insert</code> have been disabled, and
+ * the method <code>edit</code> has been restricted.
  * </p>
  *
  * @author Barak Naveh
@@ -85,19 +93,18 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * @since Aug 2, 2003
  */
 public class JGraphModelAdapter extends DefaultGraphModel {
-    private GraphListener   m_graphListener;
-    private ListenableGraph m_graph;
-    private Map             m_defaultEdgeAttributes   = new HashMap(  );
-    private Map             m_defaultVertexAttributes = new HashMap(  );
-    private Map             m_edgeCells               = new HashMap(  );
-    private Map             m_vertexCells             = new HashMap(  );
+    private GraphListener m_graphListener;
+    private Map           m_defaultEdgeAttributes   = new HashMap(  );
+    private Map           m_defaultVertexAttributes = new HashMap(  );
+    private Map           m_edgeCells               = new HashMap(  );
+    private Map           m_vertexCells             = new HashMap(  );
 
     /**
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
      * @param g the JGraphT graph for which JGraph model adapter to be created.
      */
-    public JGraphModelAdapter( ListenableGraph g ) {
+    public JGraphModelAdapter( Graph g ) {
         this( g, null, null );
     }
 
@@ -111,7 +118,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * @param defaultEdgeAttributes default map of JGraph attributes to format
      *        edges.
      */
-    public JGraphModelAdapter( ListenableGraph g, Map defaultVertexAttributes,
+    public JGraphModelAdapter( Graph g, Map defaultVertexAttributes,
         Map defaultEdgeAttributes ) {
         super(  );
 
@@ -129,9 +136,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
             m_defaultEdgeAttributes = defaultEdgeAttributes;
         }
 
-        m_graph             = g;
-        m_graphListener     = new MyGraphListener(  );
-        m_graph.addGraphListener( m_graphListener );
+        if( g instanceof ListenableGraph ) {
+            m_graphListener = new MyGraphListener(  );
+            ( (ListenableGraph) g ).addGraphListener( m_graphListener );
+        }
 
         for( Iterator i = g.vertexSet(  ).iterator(  ); i.hasNext(  ); ) {
             addJGraphTVertex( i.next(  ) );
