@@ -147,9 +147,9 @@ public abstract class AbstractGraph implements Graph {
      * @throws IllegalArgumentException if specified vertex does not exist in
      *         this graph.
      */
-    protected void assertVertexExist( Object v ) {
+    protected boolean assertVertexExist( Object v ) {
         if( containsVertex( v ) ) {
-            return;
+            return true;
         }
         else if( v == null ) {
             throw new NullPointerException(  );
