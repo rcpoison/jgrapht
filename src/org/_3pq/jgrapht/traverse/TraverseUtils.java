@@ -38,10 +38,15 @@
  */
 package org._3pq.jgrapht.traverse;
 
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.UndirectedGraph;
 
@@ -67,14 +72,32 @@ public final class TraverseUtils {
         }
     }
 
-    /**
-     * A simple queue structure.
-     *
-     * @author Liviu Rau
-     *
-     * @since Jul 29, 2003
-     */
-    static class SimpleQueue {
+    static interface SimpleContainer {
+        /**
+         * Tests if this container is empty.
+         *
+         * @return <code>true</code> if empty, otherwise <code>false</code>.
+         */
+        public boolean isEmpty(  );
+
+
+        /**
+         * Adds the specified object to this container.
+         *
+         * @param o the object to be added.
+         */
+        public void add( Object o );
+
+
+        /**
+         * Remove an object from this container and return it.
+         *
+         * @return the object removed from this container.
+         */
+        public Object remove(  );
+    }
+
+    static class SimpleQueue implements SimpleContainer {
         private LinkedList m_elementList = new LinkedList(  );
 
         /**
@@ -111,10 +134,6 @@ public final class TraverseUtils {
     /**
      * Provides unified interface for operations that are different in directed
      * graphs and in undirected graphs.
-     *
-     * @author Barak Naveh
-     *
-     * @since Jul 28, 2003
      */
     abstract static class Specifics {
         /**
@@ -135,10 +154,6 @@ public final class TraverseUtils {
     /**
      * An implementation of {@link TraverseUtils.Specifics} for a directed
      * graph.
-     *
-     * @author Barak Naveh
-     *
-     * @since Jul 28, 2003
      */
     static class DirectedSpecifics extends Specifics {
         private DirectedGraph m_graph;
@@ -161,12 +176,7 @@ public final class TraverseUtils {
     }
 
 
-    /**
-     * A simple queue structure.
-     *
-     * @author Liviu Rau
-     */
-    static class SimpleStack {
+    static class SimpleStack implements SimpleContainer {
         private LinkedList m_elementList = new LinkedList(  );
 
         /**
@@ -203,10 +213,6 @@ public final class TraverseUtils {
     /**
      * An implementation of {@link TraverseUtils.Specifics} for an undirected
      * graph.
-     *
-     * @author Barak Naveh
-     *
-     * @since Jul 28, 2003
      */
     static class UndirectedSpecifics extends Specifics {
         private UndirectedGraph m_graph;
@@ -225,6 +231,147 @@ public final class TraverseUtils {
          */
         public List edgesOf( Object vertex ) {
             return m_graph.edgesOf( vertex );
+        }
+    }
+
+
+    /**
+     * A common superclass for BreadthFirstIterator and DepthFirstIterator.
+     */
+    static class XXFirstIterator extends AbstractGraphIterator {
+        private static int CCS_BEFORE_COMPONENT = 1;
+        private static int CCS_WITHIN_COMPONENT = 2;
+        private static int CCS_AFTER_COMPONENT  = 3;
+
+        // todo: support ConcurrentModificationException if graph modified during iteration. 
+        private Iterator        m_vertexIterator = null;
+        private Set             m_seen      = new HashSet(  );
+        private SimpleContainer m_pending;
+        private Specifics       m_specifics;
+
+        /** the connected component state */
+        private int m_state = CCS_BEFORE_COMPONENT;
+
+        /**
+         * Creates a new iterator for the specified graph. Iteration will start
+         * at the specified start vertex. If the specified start vertex is
+         * <code>null</code>, Iteration will start at an arbitrary graph
+         * vertex.
+         *
+         * @param g the graph to be iterated.
+         * @param startVertex the vertex iteration to be started.
+         * @param crossComponentTraversal whether to traverse the graph across
+         *        connected components.
+         * @param pendingVerticesContainer
+         *
+         * @throws NullPointerException
+         * @throws IllegalArgumentException
+         */
+        public XXFirstIterator( Graph g, Object startVertex,
+            boolean crossComponentTraversal,
+            SimpleContainer pendingVerticesContainer ) {
+            super(  );
+
+            m_pending = pendingVerticesContainer;
+
+            if( g == null ) {
+                throw new NullPointerException( "graph must not be null" );
+            }
+
+            m_specifics          = TraverseUtils.createGraphSpecifics( g );
+            m_vertexIterator     = g.vertexSet(  ).iterator(  );
+            setCrossComponentTraversal( crossComponentTraversal );
+
+            if( startVertex == null ) {
+                // pick a start vertex if graph not empty 
+                if( m_vertexIterator.hasNext(  ) ) {
+                    Object vStart = g.vertexSet(  ).iterator(  ).next(  );
+                    m_seen.add( vStart );
+                    m_pending.add( vStart );
+                }
+            }
+            else if( g.containsVertex( startVertex ) ) {
+                m_seen.add( startVertex );
+                m_pending.add( startVertex );
+            }
+            else {
+                throw new IllegalArgumentException( 
+                    "graph must contain the start vertex" );
+            }
+        }
+
+        /**
+         * @see java.util.Iterator#hasNext()
+         */
+        public boolean hasNext(  ) {
+            if( m_pending.isEmpty(  ) ) {
+                if( m_state == CCS_WITHIN_COMPONENT ) {
+                    m_state = CCS_AFTER_COMPONENT;
+                    fireConnectedComponentFinished(  );
+                }
+
+                if( isCrossComponentTraversal(  ) ) {
+                    while( m_vertexIterator.hasNext(  ) ) {
+                        Object v = m_vertexIterator.next(  );
+
+                        if( !m_seen.contains( v ) ) {
+                            m_seen.add( v );
+                            m_pending.add( v );
+                            m_state = CCS_BEFORE_COMPONENT;
+
+                            return true;
+                        }
+                    }
+
+                    return false;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                return true;
+            }
+        }
+
+
+        /**
+         * @see java.util.Iterator#next()
+         */
+        public Object next(  ) {
+            if( hasNext(  ) ) {
+                if( m_state == CCS_BEFORE_COMPONENT ) {
+                    m_state = CCS_WITHIN_COMPONENT;
+                    fireConnectedComponentStarted(  );
+                }
+
+                Object nextVertex = m_pending.remove(  );
+                fireVertexVisited( nextVertex );
+
+                addUnseenChildrenOf( nextVertex );
+
+                return nextVertex;
+            }
+            else {
+                throw new NoSuchElementException(  );
+            }
+        }
+
+
+        private void addUnseenChildrenOf( Object vertex ) {
+            List edges = m_specifics.edgesOf( vertex );
+
+            for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
+                Edge e = (Edge) iter.next(  );
+                fireEdgeVisited( e );
+
+                Object v = e.oppositeVertex( vertex );
+
+                if( !m_seen.contains( v ) ) {
+                    m_seen.add( v );
+                    m_pending.add( v );
+                }
+            }
         }
     }
 }

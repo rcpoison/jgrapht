@@ -34,20 +34,14 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 06-Aug-2003 : Extracted common logic to TraverseUtils.XXFirstIterator (BN);
  *
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Set;
-
-import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.TraverseUtils.SimpleQueue;
-import org._3pq.jgrapht.traverse.TraverseUtils.Specifics;
+import org._3pq.jgrapht.traverse.TraverseUtils.XXFirstIterator;
 
 /**
  * A breadth-first iterator for a directed and an undirected graph. For this
@@ -59,13 +53,7 @@ import org._3pq.jgrapht.traverse.TraverseUtils.Specifics;
  *
  * @since Jul 19, 2003
  */
-public class BreadthFirstIterator extends AbstractGraphIterator {
-    // todo: support ConcurrentModificationException if graph modified during iteration. 
-    private Iterator    m_vertexIterator = null;
-    private Set         m_seen      = new HashSet(  );
-    private SimpleQueue m_pending   = new SimpleQueue(  );
-    private Specifics   m_specifics;
-
+public class BreadthFirstIterator extends XXFirstIterator {
     /**
      * Creates a new breadth-first iterator for the specified graph.
      *
@@ -88,100 +76,9 @@ public class BreadthFirstIterator extends AbstractGraphIterator {
      * @param startVertex the vertex iteration to be started.
      * @param crossComponentTraversal whether to traverse the graph across
      *        connected components.
-     *
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
      */
     public BreadthFirstIterator( Graph g, Object startVertex,
         boolean crossComponentTraversal ) {
-        super(  );
-
-        if( g == null ) {
-            throw new NullPointerException( "graph must not be null" );
-        }
-
-        m_specifics          = TraverseUtils.createGraphSpecifics( g );
-        m_vertexIterator     = g.vertexSet(  ).iterator(  );
-        setCrossComponentTraversal( crossComponentTraversal );
-
-        if( startVertex == null ) {
-            // pick a start vertex if graph not empty 
-            if( m_vertexIterator.hasNext(  ) ) {
-                Object vStart = g.vertexSet(  ).iterator(  ).next(  );
-                m_seen.add( vStart );
-                m_pending.add( vStart );
-            }
-        }
-        else if( g.containsVertex( startVertex ) ) {
-            m_seen.add( startVertex );
-            m_pending.add( startVertex );
-        }
-        else {
-            throw new IllegalArgumentException( 
-                "graph must contain the start vertex" );
-        }
-    }
-
-    /**
-     * @see java.util.Iterator#hasNext()
-     */
-    public boolean hasNext(  ) {
-        if( m_pending.isEmpty(  ) ) {
-            if( isCrossComponentTraversal(  ) ) {
-                while( m_vertexIterator.hasNext(  ) ) {
-                    Object v = m_vertexIterator.next(  );
-
-                    if( !m_seen.contains( v ) ) {
-                        m_seen.add( v );
-                        m_pending.add( v );
-
-                        return true;
-                    }
-                }
-
-                return false;
-            }
-            else {
-                return false;
-            }
-        }
-        else {
-            return true;
-        }
-    }
-
-
-    /**
-     * @see java.util.Iterator#next()
-     */
-    public Object next(  ) {
-        if( hasNext(  ) ) {
-            Object nextVertex = m_pending.remove(  );
-            fireVertexVisited( nextVertex );
-
-            enqueueUnseenChildrenOf( nextVertex );
-
-            return nextVertex;
-        }
-        else {
-            throw new NoSuchElementException(  );
-        }
-    }
-
-
-    private void enqueueUnseenChildrenOf( Object vertex ) {
-        List edges = m_specifics.edgesOf( vertex );
-
-        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
-            fireEdgeVisited( e );
-
-            Object v = e.oppositeVertex( vertex );
-
-            if( !m_seen.contains( v ) ) {
-                m_seen.add( v );
-                m_pending.add( v );
-            }
-        }
+        super( g, startVertex, crossComponentTraversal, new SimpleQueue(  ) );
     }
 }
