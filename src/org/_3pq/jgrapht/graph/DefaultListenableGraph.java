@@ -74,6 +74,7 @@ import org._3pq.jgrapht.event.VertexSetListener;
  */
 public class DefaultListenableGraph extends GraphDelegator
     implements ListenableGraph, Cloneable {
+    private static final long    serialVersionUID       = 3977575900898471984L;
     private ArrayList            m_graphListeners       = new ArrayList(  );
     private ArrayList            m_vertexSetListeners   = new ArrayList(  );
     private FlyweightEdgeEvent   m_reuseableEdgeEvent;
@@ -214,7 +215,7 @@ public class DefaultListenableGraph extends GraphDelegator
 
             return g;
         }
-         catch( CloneNotSupportedException e ) {
+        catch( CloneNotSupportedException e ) {
             // should never get here since we're Cloneable
             e.printStackTrace(  );
             throw new RuntimeException( "internal error" );
@@ -417,6 +418,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @since Aug 10, 2003
      */
     private static class FlyweightEdgeEvent extends GraphEdgeChangeEvent {
+        private static final long serialVersionUID = 3907207152526636089L;
+
         /**
          * @see GraphEdgeChangeEvent#GraphEdgeChangeEvent(Object, int, Edge)
          */
@@ -453,6 +456,8 @@ public class DefaultListenableGraph extends GraphDelegator
      * @since Aug 10, 2003
      */
     private static class FlyweightVertexEvent extends GraphVertexChangeEvent {
+        private static final long serialVersionUID = 3257848787857585716L;
+
         /**
          * @see GraphVertexChangeEvent#GraphVertexChangeEvent(Object, int,
          *      Object)
