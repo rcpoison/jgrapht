@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* -----------------------
- * EdgeFactoryFactory.java
- * -----------------------
+/* ------------------
+ * EdgeFactories.java
+ * ------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 04-Aug-2003 : Renamed from EdgeFactoryFactory & made utility class (BN);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -42,51 +43,20 @@ import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 
 /**
- * A factory of edge factories.
+ * This utility class is a container of {@link org._3pq.jgrapht.EdgeFactory}
+ * classes.
+ * 
+ * <p>
+ * Classes included here do not have substantial logic. They are grouped
+ * together  in this container in order to avoid clutter.
+ * </p>
  *
  * @author Barak Naveh
  *
  * @since Jul 16, 2003
  */
-public class EdgeFactoryFactory {
-    /**
-     * Returns an edge factory producing directed edges.
-     *
-     * @return an edge factory producing directed edges.
-     */
-    public EdgeFactory createDirectedEdgeFactory(  ) {
-        return new DirectedEdgeFactory(  );
-    }
-
-
-    /**
-     * Returns an edge factory producing directed weighted edges.
-     *
-     * @return an edge factory producing directed weighted edges.
-     */
-    public EdgeFactory createDirectedWeightedEdgeFactory(  ) {
-        return new DirectedWeightedEdgeFactory(  );
-    }
-
-
-    /**
-     * Returns an edge factory producing undirected edges.
-     *
-     * @return an edge factory producing undirected edges.
-     */
-    public EdgeFactory createUndirectedEdgeFactory(  ) {
-        return new UndirectedEdgeFactory(  );
-    }
-
-
-    /**
-     * Returns an edge factory producing undirected weighted edges.
-     *
-     * @return an edge factory producing undirected weighted edges.
-     */
-    public EdgeFactory createUndirectedWeightedEdgeFactory(  ) {
-        return new UndirectedWeightedEdgeFactory(  );
-    }
+public class EdgeFactories {
+    private EdgeFactories(  ) {} // ensure non-instantiability.
 
     /**
      * An EdgeFactory for producing directed edges.
