@@ -367,7 +367,25 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see UndirectedGraph#degreeOf(Object)
      */
     public int degreeOf( Object vertex ) {
-        return ( (UndirectedGraph) m_base ).degreeOf( vertex );
+        assertVertexExist( vertex );
+        
+        // sophisticated way to check runtime class of base ;-)
+        ((UndirectedGraph)m_base).degreeOf( vertex );
+        
+        int degree = 0;
+
+        for( Iterator i = m_base.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+
+            if( containsEdge( e ) ) {
+                degree++;
+                if (e.getSource().equals(e.getTarget())) {
+                    degree++;
+                }
+            }
+        }
+        
+        return degree;
     }
 
 
@@ -408,7 +426,17 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see DirectedGraph#inDegreeOf(Object)
      */
     public int inDegreeOf( Object vertex ) {
-        return ( (DirectedGraph) m_base ).inDegreeOf( vertex );
+        assertVertexExist( vertex );
+        
+        int degree = 0;
+
+        for( Iterator i = ((DirectedGraph)m_base).incomingEdgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+            if( containsEdge( (Edge) i.next(  ) ) ) {
+                degree++;
+            }
+        }
+        
+        return degree;
     }
 
 
@@ -416,7 +444,20 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
     public List incomingEdgesOf( Object vertex ) {
-        return ( (DirectedGraph) m_base ).incomingEdgesOf( vertex );
+        assertVertexExist( vertex );
+
+        ArrayList edges     = new ArrayList(  );
+        List      baseEdges = ((DirectedGraph)m_base).incomingEdgesOf( vertex );
+
+        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+
+            if( containsEdge( e ) ) {
+                edges.add( e );
+            }
+        }
+
+        return edges;
     }
 
 
@@ -424,7 +465,17 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see DirectedGraph#outDegreeOf(Object)
      */
     public int outDegreeOf( Object vertex ) {
-        return ( (DirectedGraph) m_base ).outDegreeOf( vertex );
+        assertVertexExist( vertex );
+        
+        int degree = 0;
+
+        for( Iterator i = ((DirectedGraph)m_base).outgoingEdgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+            if( containsEdge( (Edge) i.next(  ) ) ) {
+                degree++;
+            }
+        }
+        
+        return degree;
     }
 
 
@@ -432,7 +483,20 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
     public List outgoingEdgesOf( Object vertex ) {
-        return ( (DirectedGraph) m_base ).outgoingEdgesOf( vertex );
+        assertVertexExist( vertex );
+
+        ArrayList edges     = new ArrayList(  );
+        List      baseEdges = ((DirectedGraph)m_base).outgoingEdgesOf( vertex );
+
+        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+
+            if( containsEdge( e ) ) {
+                edges.add( e );
+            }
+        }
+
+        return edges;
     }
 
 

@@ -103,7 +103,7 @@ public class SubgraphTest extends TestCase {
         vset.add(_v1);
         sub = new Subgraph(g, vset, null);
         assertEquals( vset, sub.vertexSet() );
-//         assertEquals( 0, sub.degreeOf(_v1) );
+        assertEquals( 0, sub.degreeOf(_v1) );
         assertEquals( Collections.EMPTY_SET, sub.edgeSet() );
         
         vset.add(_v2);
