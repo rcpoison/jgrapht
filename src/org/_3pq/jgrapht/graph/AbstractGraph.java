@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -159,6 +159,30 @@ public abstract class AbstractGraph implements Graph {
         else {
             throw new IllegalArgumentException( "no such vertex in graph" );
         }
+    }
+
+
+    /**
+     * Removes all the edges in this graph that are also contained in the
+     * specified edge array.  After this call returns, this graph will contain
+     * no edges in common with the specified edges. This method will invoke
+     * the {@link Graph#removeEdge(Edge)} method.
+     *
+     * @param edges edges to be removed from this graph.
+     *
+     * @return <tt>true</tt> if this graph changed as a result of the call.
+     *
+     * @see Graph#removeEdge(Edge)
+     * @see Graph#containsEdge(Edge)
+     */
+    protected boolean removeAllEdges( Edge[] edges ) {
+        boolean modified = false;
+
+        for( int i = 0; i < edges.length; i++ ) {
+            modified |= removeEdge( edges[ i ] );
+        }
+
+        return modified;
     }
 
 
