@@ -65,10 +65,21 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase {
 
     /**
      * .
-     *
-     * @return
      */
-    public WeightedGraph create(  ) {
+    public void testShortestPath(  ) {
+        WeightedGraph         g        = create(  );
+        ShortestPathAlgorithm alg      = new DijkstraShortestPathAlgorithm( g );
+        WeightedGraph         pathTree = alg.shortestPathTree( V1 );
+
+        assertEquals( 4, pathTree.vertexSet(  ).size(  ) );
+        assertEquals( 3, pathTree.edgeSet(  ).size(  ) );
+        assertTrue( pathTree.containsEdge( m_e1 ) );
+        assertTrue( pathTree.containsEdge( m_e2 ) );
+        assertTrue( pathTree.containsEdge( m_e4 ) );
+    }
+
+
+    private WeightedGraph create(  ) {
         WeightedGraph g = new WeightedPseudograph(  );
 
         g.addVertex( V1 );
@@ -82,21 +93,5 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase {
         m_u      = GraphHelper.addEdge( g, V3, V3, 5 );
 
         return g;
-    }
-
-
-    /**
-     * .
-     */
-    public void testShortestPath(  ) {
-        WeightedGraph         g        = create(  );
-        ShortestPathAlgorithm alg      = new DijkstraShortestPathAlgorithm( g );
-        WeightedGraph         pathTree = alg.shortestPathTree( V1 );
-
-        assertEquals( 4, pathTree.vertexSet(  ).size(  ) );
-        assertEquals( 3, pathTree.edgeSet(  ).size(  ) );
-        assertTrue( pathTree.containsEdge( m_e1 ) );
-        assertTrue( pathTree.containsEdge( m_e2 ) );
-        assertTrue( pathTree.containsEdge( m_e4 ) );
     }
 }
