@@ -40,7 +40,6 @@ package org._3pq.jgrapht.graph;
 
 import java.io.Serializable;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -71,8 +70,9 @@ import org._3pq.jgrapht.WeightedGraph;
  *
  * @since Jul 20, 2003
  */
-public class GraphDelegator extends AbstractGraph implements Serializable {
-    Graph m_delegate;
+public class GraphDelegator extends AbstractGraph implements Graph,
+    Serializable {
+    protected Graph m_delegate;
 
     /**
      * Constructor for GraphDelegator.
@@ -112,22 +112,6 @@ public class GraphDelegator extends AbstractGraph implements Serializable {
      */
     public EdgeFactory getEdgeFactory(  ) {
         return m_delegate.getEdgeFactory(  );
-    }
-
-
-    /**
-     * @see AbstractGraph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges( Collection edges ) {
-        return m_delegate.addAllEdges( edges );
-    }
-
-
-    /**
-     * @see AbstractGraph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices( Collection vertices ) {
-        return m_delegate.addAllVertices( vertices );
     }
 
 
@@ -173,14 +157,6 @@ public class GraphDelegator extends AbstractGraph implements Serializable {
 
 
     /**
-     * @see Graph#containsEdge(Object, Object)
-     */
-    public boolean containsEdge( Object sourceVertex, Object targetVertex ) {
-        return m_delegate.containsEdge( sourceVertex, targetVertex );
-    }
-
-
-    /**
      * @see Graph#containsVertex(Object)
      */
     public boolean containsVertex( Object v ) {
@@ -213,22 +189,6 @@ public class GraphDelegator extends AbstractGraph implements Serializable {
 
 
     /**
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    public boolean equals( Object obj ) {
-        return m_delegate.equals( obj );
-    }
-
-
-    /**
-     * @see java.lang.Object#hashCode()
-     */
-    public int hashCode(  ) {
-        return m_delegate.hashCode(  );
-    }
-
-
-    /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
     public int inDegreeOf( Object vertex ) {
@@ -257,30 +217,6 @@ public class GraphDelegator extends AbstractGraph implements Serializable {
      */
     public List outgoingEdgesOf( Object vertex ) {
         return ( (DirectedGraph) m_delegate ).outgoingEdgesOf( vertex );
-    }
-
-
-    /**
-     * @see AbstractGraph#removeAllEdges(Collection)
-     */
-    public boolean removeAllEdges( Collection edges ) {
-        return m_delegate.removeAllEdges( edges );
-    }
-
-
-    /**
-     * @see AbstractGraph#removeAllEdges(Object, Object)
-     */
-    public List removeAllEdges( Object sourceVertex, Object targetVertex ) {
-        return m_delegate.removeAllEdges( sourceVertex, targetVertex );
-    }
-
-
-    /**
-     * @see AbstractGraph#removeAllVertices(Collection)
-     */
-    public boolean removeAllVertices( Collection vertices ) {
-        return m_delegate.removeAllVertices( vertices );
     }
 
 
