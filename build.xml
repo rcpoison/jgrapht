@@ -40,6 +40,7 @@
  * 15-Aug-2003 : Used JUnit batch test feature (JVS);
  * 15-Aug-2003 : Added jalopy task (JVS);
  * 03-Sep-2003 : Add etags support (JVS);
+ * 24-Feb-2004 : Removed duplicates and cleaned code (BN);
  *
  */
 -->
@@ -69,14 +70,41 @@
     <target name="init" description="Initializes required settings.">
         <tstamp />
         <echo>JAVA_HOME=${java.home}</echo>
-        <property name="jgrapht.name"    value="jgrapht" />
-        <property name="jgrapht.version" value="0.5.2" />
-        <property name="builddir"        value="${basedir}/build" />
-        <property name="testbuilddir"    value="${basedir}/testbuild" />
-        <property name="junit.jar"       value="${basedir}/lib/junit.jar"/>
-        <property name="jgraph.jar"      value="${basedir}/lib/jgraph.jar"/>
-        <property name="ant.buildfile"   value="${basedir}/build.xml"/>
-        <property name="distribution"    value="${basedir}/distribution"/>
+        <property name="project.name"     value="jgrapht" />
+        <property name="project.version"  value="0.5.2" />
+        <property name="project.prefix"   value="${project.name}-${project.version}" />
+
+        <!-- directories -->
+        <property name="build.dir"        value="${basedir}/build" />
+        <property name="testbuild.dir"    value="${basedir}/testbuild" />
+        <property name="distrib.dir"      value="${basedir}/distribution"/>
+        <property name="src.dir"          value="${basedir}/src"/>
+        <property name="testsrc.dir"      value="${basedir}/testsrc"/>
+        <property name="lib.dir"          value="${basedir}/lib"/>
+        <property name="etc.dir"          value="${basedir}/etc"/>
+        <property name="javadoc.dir"      value="${basedir}/javadoc"/>
+
+		<!-- File names -->
+        <property name="project.jar.name" value="${project.prefix}.jar" />
+        <property name="project.tar.name" value="${project.prefix}.tar" />
+        <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
+        <property name="project.zip.name" value="${project.prefix}.zip" />
+        <property name="build.file.name"  value="build.xml" />
+        <property name="junit.jar.name"   value="junit.jar" />
+        <property name="jgraph.jar.name"  value="jgraph.jar" />
+
+		<!-- Files -->
+        <property name="project.jar"      value="${basedir}/${project.jar.name}" />
+        <property name="project.tar"      value="${basedir}/${project.tar.name}" />
+        <property name="project.tar.gz"   value="${basedir}/${project.tar.gz.name}" />
+        <property name="project.zip"      value="${basedir}/${project.zip.name}" />
+        <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
+        <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
+        <property name="checkstyle.jar"   value="${lib.dir}/checkstyle-all-3.1.jar"/>
+        <property name="build.file"       value="${basedir}/${build.file.name}"/>
+        <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
+        <property name="jalopy.settings"  value="${etc.dir}/jalopy-settings.xml"/>
+
 
         <!-- Classpath for building functional sources. -->
         <path id="build.classpath">
@@ -88,27 +116,27 @@
         <!-- Classpath for building tests. -->
         <path id="testbuild.classpath">
             <pathelement path="${build.classpath}"/>
-            <pathelement location="${builddir}"/>
+            <pathelement location="${build.dir}"/>
         </path>
         <property name="testbuild.classpath" refid="testbuild.classpath"/>
 
         <!-- Classpath for running tests. -->
         <path id="test.classpath">
             <pathelement path="${testbuild.classpath}"/>
-            <pathelement location="${testbuilddir}"/>
+            <pathelement location="${testbuild.dir}"/>
         </path>
     </target>
 
 
     <!-- Compile the JGraphT classes -->
     <target name="compile" depends="init"
-            description="Compiles the JGraphT source code.">
+                           description="Compiles the JGraphT source code.">
 
         <!-- create a build directory -->
-        <mkdir dir="${builddir}" />
+        <mkdir dir="${build.dir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${basedir}/src" destdir="${builddir}" target="1.3">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" target="1.3">
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
@@ -118,20 +146,18 @@
 
     <!-- Generate the JGraphT runtime jar -->
     <target name="jar" depends="compile" 
-                           description="Creates the runtime jar.">
-        <jar jarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.jar"
-             basedir="${builddir}" />
+                       description="Creates the runtime jar.">
+        <jar jarfile="${project.jar}" basedir="${build.dir}" />
     </target>
 
 
     <!-- Build all JUnit tests -->
     <target name="test.compile" depends="compile"
-                           description="Builds all JUnit tests.">
+                                description="Builds all JUnit tests.">
         <!-- create a test build directory -->
-        <mkdir dir="${testbuilddir}" />
+        <mkdir dir="${testbuild.dir}" />
 
-        <javac srcdir="${basedir}/testsrc" destdir="${testbuilddir}" 
-               target="1.3">
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" target="1.3">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>
             <exclude name="org/_3pq/jgrapht/experimental/**"/>
@@ -140,13 +166,13 @@
 
     <!-- Run all JUnit tests -->
     <target name="test" depends="test.compile"
-                           description="Builds and runs all JUnit tests.">
+                        description="Builds and runs all JUnit tests.">
         <junit printsummary="no" fork="yes" 
                            haltonerror="true" haltonfailure="true">
             <classpath refid="test.classpath"/>
             <formatter type="brief" usefile="no" />
             <batchtest>
-                <fileset dir="${basedir}/testsrc">
+                <fileset dir="${testsrc.dir}">
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                     <exclude name="**/Default*Test.java"/>
@@ -160,9 +186,9 @@
     <!-- TODO:  once code is all clean, use as a dependency for "all" task -->
     <target name="checkstyle" depends="init"
                            description="Runs checkstyle on all source code.">
-        <taskdef resource="checkstyletask.properties"
-        		 classpath="${basedir}/lib/checkstyle-all-3.1.jar"/>
-        <checkstyle config="${basedir}/etc/checkstyle-settings.xml">
+        <taskdef resource="checkstyletask.properties" 
+        		 classpath="${checkstyle.jar}"/>
+        <checkstyle config="${checkstyle.settings}">
             <fileset dir="${basedir}">
                 <include name="src/**/*.java"/>
                 <include name="testsrc/**/*.java"/>
@@ -186,7 +212,7 @@
                 </fileset>
             </classpath>
         </taskdef>
-        <jalopy backup="true" convention="${basedir}/etc/jalopy-settings.xml"
+        <jalopy backup="true" convention="${jalopy.settings}"
                 classpathref="testbuild.classpath" history="FILE">
             <fileset dir="${basedir}">
                 <include name="src/**/*.java"/>
@@ -198,15 +224,15 @@
     <!-- Generate the JGraphT JavaDoc HTML pages -->
     <target name="javadoc" depends="init" 
                            description="Creates the Javadocs.">
-        <delete dir="${basedir}/javadoc" />
-        <mkdir dir="${basedir}/javadoc" />
-        <javadoc destdir="${basedir}/javadoc" 
+        <delete dir="${javadoc.dir}" />
+        <mkdir dir="${javadoc.dir}" />
+        <javadoc destdir="${javadoc.dir}" 
         		 access="protected" 
                  windowtitle="JGraphT : a free Java graph-theory library"
-                 overview="${basedir}/src/overview.html">
+                 overview="${src.dir}/overview.html">
             <classpath refid="build.classpath" />
             
-            <packageset dir="${basedir}/src" defaultexcludes="yes">
+            <packageset dir="${src.dir}" defaultexcludes="yes">
                 <include name="**"/>
 	            <exclude name="org/_3pq/jgrapht/experimental/**"/>
             </packageset>
@@ -214,25 +240,25 @@
     </target>
 
 
-    <!-- Make .zip distribution for JGraphT -->
-    <target name="zip" depends="jar"
-    				   description="Creates a .zip distribution.">
-
+    <!-- Creates the distribution directory of JGraphT -->
+    <!-- Helper target that is called from zip and targz targets -->
+	<target name="create.distribution">
+	
         <!-- make a temporary distribution directory -->
-        <mkdir dir="${distribution}" />
+        <mkdir dir="${distrib.dir}" />
 
         <!-- add README -->
-        <copy file="${basedir}/README.html" tofile="${distribution}/README.html" />
+        <copy file="${basedir}/README.html" tofile="${distrib.dir}/README.html" />
 
         <!-- add license -->
-        <copy file="${basedir}/license-LGPL.txt" tofile="${distribution}/license-LGPL.txt" />
+        <copy file="${basedir}/license-LGPL.txt" tofile="${distrib.dir}/license-LGPL.txt" />
 
         <!-- add runtime jar file -->
-        <copy file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" tofile="${distribution}/${jgrapht.name}-${jgrapht.version}.jar" />
+        <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
     
         <!-- add source files -->
-        <copy todir="${distribution}/src">
-            <fileset dir="${basedir}/src">
+        <copy todir="${distrib.dir}/src">
+            <fileset dir="${src.dir}">
                 <include name="overview.html"/>
                 <include name="**/*.java"/>
                 <include name="**/package.html"/>
@@ -241,28 +267,28 @@
         </copy>
 
         <!-- add source files of unit tests -->
-        <copy todir="${distribution}/testsrc">
-            <fileset dir="${basedir}/testsrc">
+        <copy todir="${distrib.dir}/testsrc">
+            <fileset dir="${testsrc.dir}">
                 <include name="**"/>
                 <exclude name="org/_3pq/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
         <!-- add lib files -->
-        <copy todir="${distribution}/lib">
-            <fileset dir="${basedir}/lib">
-                <include name="junit.jar"/>
-                <include name="jgraph.jar"/>
+        <copy todir="${distrib.dir}/lib">
+            <fileset dir="${lib.dir}">
+                <include name="${junit.jar.name}"/>
+                <include name="${jgraph.jar.name}"/>
                 <include name="lib-readme.txt"/>
             </fileset>
         </copy>
 
         <!-- add ant build file (this file) -->
-        <copy file="${ant.buildfile}" tofile="${distribution}/build.xml" />
+        <copy file="${build.file}" tofile="${distrib.dir}/${build.file.name}" />
 
         <!-- add etc files -->
-        <copy todir="${distribution}/etc">
-            <fileset dir="${basedir}/etc">
+        <copy todir="${distrib.dir}/etc">
+            <fileset dir="${etc.dir}">
                 <include name="checkstyle-settings.xml"/>
                 <include name="etc-readme.txt"/>
                 <include name="jalopy-settings.xml"/>
@@ -270,24 +296,30 @@
         </copy>
 
         <!-- add Javadoc files -->
-        <copy todir="${distribution}/javadoc">
-            <fileset dir="${basedir}/javadoc"/>
+        <copy todir="${distrib.dir}/javadoc">
+            <fileset dir="${javadoc.dir}"/>
         </copy>
-        
-        <!-- convert end-of-line characters in text files -->
-        <fixcrlf srcdir="${distribution}/src"     eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distribution}/testsrc" eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distribution}/etc"     eol="crlf" eof="remove" />
+    </target>
+	
+
+    <!-- Make .zip distribution for JGraphT -->
+    <target name="zip" depends="jar"
+    				   description="Creates a .zip distribution.">
+
+		<antcall target="create.distribution" />
+
+        <!-- convert end-of-line characters in text files to PC style -->
+        <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/testsrc" eol="crlf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/etc"     eol="crlf" eof="remove" />
 
         <!-- make the zip file -->
-        <zip zipfile="${basedir}/${jgrapht.name}-${jgrapht.version}.zip">
-             <zipfileset dir="${distribution}"
-                         prefix="${jgrapht.name}-${jgrapht.version}" />
+        <zip zipfile="${project.zip}">
+             <zipfileset dir="${distrib.dir}" prefix="${project.prefix}" />
         </zip>
 
         <!-- delete the temporary distribution directory -->
-        <delete dir="${basedir}/distribution" />
-
+        <delete dir="${distrib.dir}" />
     </target>
 
 
@@ -295,102 +327,43 @@
     <target name="targz" depends="jar"
                          description="Creates a tar.gz distribution.">
 
-        <!-- make a temporary distribution directory -->
-        <mkdir dir="${distribution}" />
-
-        <!-- add README -->
-        <copy file="${basedir}/README.html" tofile="${distribution}/README.html" />
-
-        <!-- add license -->
-        <copy file="${basedir}/license-LGPL.txt" tofile="${distribution}/license-LGPL.txt" />
-
-        <!-- add runtime jar file -->
-        <copy file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" tofile="${distribution}/${jgrapht.name}-${jgrapht.version}.jar" />
-    
-        <!-- add source files -->
-        <copy todir="${distribution}/src">
-            <fileset dir="${basedir}/src">
-                <include name="overview.html"/>
-                <include name="**/*.java"/>
-                <include name="**/package.html"/>
-	            <exclude name="org/_3pq/jgrapht/experimental/**"/>
-            </fileset>
-        </copy>
-
-        <!-- add source files of unit tests -->
-        <copy todir="${distribution}/testsrc">
-            <fileset dir="${basedir}/testsrc">
-                <include name="**"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**"/>
-            </fileset>
-        </copy>
-
-        <!-- add lib files -->
-        <copy todir="${distribution}/lib">
-            <fileset dir="${basedir}/lib">
-                <include name="junit.jar"/>
-                <include name="jgraph.jar"/>
-                <include name="lib-readme.txt"/>
-            </fileset>
-        </copy>
-
-        <!-- add ant build file (this file) -->
-        <copy file="${ant.buildfile}" tofile="${distribution}/build.xml" />
-
-        <!-- add etc files -->
-        <copy todir="${distribution}/etc">
-            <fileset dir="${basedir}/etc">
-                <include name="checkstyle-settings.xml"/>
-                <include name="etc-readme.txt"/>
-                <include name="jalopy-settings.xml"/>
-            </fileset>
-        </copy>
-
-        <!-- add Javadoc files -->
-        <copy todir="${distribution}/javadoc">
-            <fileset dir="${basedir}/javadoc"/>
-        </copy>
+		<antcall target="create.distribution" />
         
-        <!-- convert end-of-line characters in text files -->
-        <fixcrlf srcdir="${distribution}/src"     eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distribution}/testsrc" eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distribution}/etc"     eol="lf" eof="remove" />
+        <!-- convert end-of-line characters in text files to Unix style -->
+        <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
+        <fixcrlf srcdir="${distrib.dir}/etc"     eol="lf" eof="remove" />
 
         <!-- make the tar.gz file -->
-        <tar tarfile="${basedir}/${jgrapht.name}-${jgrapht.version}.tar">
-             <tarfileset dir="${distribution}"
-                         prefix="${jgrapht.name}-${jgrapht.version}" />
+        <tar tarfile="${project.tar}">
+             <tarfileset dir="${distrib.dir}" prefix="${project.prefix}" />
         </tar>
-        <gzip zipfile="${basedir}/${jgrapht.name}-${jgrapht.version}.tar.gz"   
-              src="${basedir}/${jgrapht.name}-${jgrapht.version}.tar" />
-        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.tar" />
+        <gzip zipfile="${project.tar.gz}" src="${project.tar}" />
+        <delete file="${project.tar}" />
 
         <!-- delete the temporary distribution directory -->
-        <delete dir="${distribution}" />
-
+        <delete dir="${distrib.dir}" />
     </target>
     
 
 	<!-- Clean outputs from previous build -->    
-	<target name="clean"
-			depends="init"
+	<target name="clean" depends="init"
 			description="Cleans all outputs from previous builds">
-        <delete dir="${distribution}" />
-        <delete dir="${builddir}" />
-        <delete dir="${testbuilddir}" />
-        <delete dir="${basedir}/javadoc" />
-        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
-        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.zip" />
-        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.tar.gz" />
+        <delete dir="${distrib.dir}" />
+        <delete dir="${build.dir}" />
+        <delete dir="${testbuild.dir}" />
+        <delete dir="${javadoc.dir}" />
+        <delete file="${project.jar}" />
+        <delete file="${project.zip}" />
+        <delete file="${project.tar.gz}" />
 	</target>
 
 
 	<!-- Clean unnecessary outputs from this build -->    
-	<target name="postclean"
-			depends="init"
+	<target name="postclean" depends="init"
 			description="Cleans unnecessary outputs from this build">
-        <delete dir="${basedir}/javadoc" />
-        <delete file="${basedir}/${jgrapht.name}-${jgrapht.version}.jar" />
+        <delete dir="${javadoc.dir}" />
+        <delete file="${project.jar}" />
 	</target>
 
 
