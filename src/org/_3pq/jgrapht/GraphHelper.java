@@ -38,6 +38,8 @@
  */
 package org._3pq.jgrapht;
 
+import java.util.Iterator;
+
 /**
  * A collection of utilities to assist the working with graphs.
  *
@@ -88,5 +90,37 @@ public final class GraphHelper {
         g.addVertex( e.getTarget(  ) );
 
         return g.addEdge( e );
+    }
+
+
+    /**
+     * Adds all the vertices and all the edge-clones of the specified source
+     * graph to the specified destination graph. First all vertices of the
+     * source graph are added to the destination graph. Then every edge of the
+     * source graph is cloned and the clone is added to the destination graph.
+     * This method returns <code>true</code> if the destination graph has
+     * been modified as a result of this operation, otherwise it returns
+     * <code>false</code>.
+     * 
+     * <p>
+     * The behavior of this operation is undefined if any of the specified
+     * graphs is modified while operation is in progress.
+     * </p>
+     *
+     * @param destination the graph to which vertices and edges are added.
+     * @param source the graph used as source for vertices and edges to add.
+     *
+     * @return <code>true</code> if and only if the destination graph has been
+     *         changed as a result of this operation.
+     */
+    public static boolean addGraph( Graph destination, Graph source ) {
+        boolean modified = destination.addAllVertices( source.vertexSet(  ) );
+
+        for( Iterator i = source.edgeSet(  ).iterator(  ); i.hasNext(  ); ) {
+            Edge e = (Edge) i.next(  );
+            modified |= destination.addEdge( (Edge) e.clone(  ) );
+        }
+
+        return modified;
     }
 }
