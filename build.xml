@@ -36,6 +36,7 @@
  * ~~~~~~~
  * 24-Jul-2003 : Initial revision (BN);
  * 15-Aug-2003 : Used wildcards instead of enumerating files(JVS);
+ * 15-Aug-2003 : Added checkstyle task (JVS);
  *
  */
 -->
@@ -138,6 +139,19 @@
         </junit>
     </target>
 
+    <!-- Run checkstyle on source code -->
+    <!-- TODO:  once code is all clean, use as a dependency for "all" task -->
+    <target name="checkstyle" depends="init"
+                           description="Runs checkstyle on all source code.">
+        <taskdef resource="checkstyletask.properties"
+        		 classpath="${basedir}/lib/checkstyle-all-3.1.jar"/>
+        <checkstyle config="${basedir}/etc/checkstyle-settings.xml">
+            <fileset dir="${basedir}">
+                <include name="src/**/*.java"/>
+                <include name="testsrc/**/*.java"/>
+            </fileset>
+        </checkstyle>
+    </target>
 
     <!-- Generate the JGraphT JavaDoc HTML pages -->
     <target name="javadoc" depends="init" 
