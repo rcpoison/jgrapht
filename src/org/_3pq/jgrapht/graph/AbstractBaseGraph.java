@@ -36,7 +36,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : General edge refactoring (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
- * 07-Feb-2004 : Enabled serialization (BN); 
+ * 07-Feb-2004 : Enabled serialization (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -589,7 +589,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private static class DirectedEdgeContainer {
+    private static class DirectedEdgeContainer implements Serializable {
         List                   m_incoming             = new ArrayList( 1 );
         List                   m_outgoing             = new ArrayList( 1 );
         private transient List m_unmodifiableIncoming = null;
@@ -852,7 +852,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      *
      * @author Barak Naveh
      */
-    private static class UndirectedEdgeContainer {
+    private static class UndirectedEdgeContainer implements Serializable {
         List                   m_vertexEdges             = new ArrayList( 1 );
         private transient List m_unmodifiableVertexEdges = null;
 
