@@ -454,7 +454,10 @@ public class Subgraph extends AbstractGraph {
      * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
-        if( containsVertex( v ) ) {
+        // If the base graph does NOT contain v it means we are here in 
+        // response to removal of v from the base. In such case we don't need 
+        // to remove all the edges of v as they were already removed. 
+        if( containsVertex( v ) && m_base.containsVertex( v ) ) {
             removeAllEdges( edgesOf( v ) );
         }
 
