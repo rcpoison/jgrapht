@@ -148,7 +148,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#addEdge(Object, Object)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex ) {
-        Edge e = m_delegate.addEdge( sourceVertex, targetVertex );
+        Edge e = super.addEdge( sourceVertex, targetVertex );
 
         if( e != null ) {
             fireEdgeAdded( e );
@@ -162,7 +162,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#addEdge(Edge)
      */
     public boolean addEdge( Edge e ) {
-        boolean modified = m_delegate.addEdge( e );
+        boolean modified = super.addEdge( e );
 
         if( modified ) {
             fireEdgeAdded( e );
@@ -184,7 +184,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#addVertex(Object)
      */
     public boolean addVertex( Object v ) {
-        boolean modified = m_delegate.addVertex( v );
+        boolean modified = super.addVertex( v );
 
         if( modified ) {
             fireVertexAdded( v );
@@ -225,7 +225,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#removeEdge(Object, Object)
      */
     public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
-        Edge e = m_delegate.removeEdge( sourceVertex, targetVertex );
+        Edge e = super.removeEdge( sourceVertex, targetVertex );
 
         if( e != null ) {
             fireEdgeRemoved( e );
@@ -239,7 +239,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#removeEdge(Edge)
      */
     public boolean removeEdge( Edge e ) {
-        boolean modified = m_delegate.removeEdge( e );
+        boolean modified = super.removeEdge( e );
 
         if( modified ) {
             fireEdgeRemoved( e );
@@ -261,7 +261,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @see Graph#removeVertex(Object)
      */
     public boolean removeVertex( Object v ) {
-        boolean modified = m_delegate.removeVertex( v );
+        boolean modified = super.removeVertex( v );
 
         if( modified ) {
             fireVertexRemoved( v );

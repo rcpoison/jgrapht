@@ -39,6 +39,7 @@
 package org._3pq.jgrapht.graph;
 
 import java.io.Serializable;
+
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +51,7 @@ import org._3pq.jgrapht.UndirectedGraph;
 
 /**
  * A graph backed by the the graph specified at the constructor, which
- * delegates  all its methods to the backing graph. Operations on this graph
+ * delegates all its methods to the backing graph. Operations on this graph
  * "pass through" to the to the backing graph. Any modification made to this
  * graph or the backing graph is reflected by the other.
  * 
@@ -71,7 +72,7 @@ import org._3pq.jgrapht.UndirectedGraph;
 public class GraphDelegator extends AbstractGraph implements Graph,
     Serializable {
     /** The graph to which operations are delegated. */
-    protected Graph m_delegate;
+    private Graph m_delegate;
 
     /**
      * Constructor for GraphDelegator.
