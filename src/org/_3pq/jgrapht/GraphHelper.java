@@ -39,8 +39,6 @@
  */
 package org._3pq.jgrapht;
 
-import java.util.Iterator;
-
 /**
  * A collection of utilities to assist the working with graphs.
  *
