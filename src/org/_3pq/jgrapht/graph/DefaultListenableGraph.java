@@ -287,9 +287,8 @@ public class DefaultListenableGraph extends GraphDelegator
     protected void fireEdgeAdded( Edge edge ) {
         GraphEdgeChangeEvent e =
             createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_ADDED, edge );
-        int                  len = m_graphListeners.size(  );
 
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
             l.edgeAdded( e );
@@ -305,9 +304,8 @@ public class DefaultListenableGraph extends GraphDelegator
     protected void fireEdgeRemoved( Edge edge ) {
         GraphEdgeChangeEvent e =
             createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_REMOVED, edge );
-        int                  len = m_graphListeners.size(  );
 
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
             l.edgeRemoved( e );
@@ -324,20 +322,15 @@ public class DefaultListenableGraph extends GraphDelegator
         GraphVertexChangeEvent e =
             createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_ADDED,
                 vertex );
-        int                    len;
 
-        len = m_vertexSetListeners.size(  );
-
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_vertexSetListeners.size(  ); i++ ) {
             VertexSetListener l =
                 (VertexSetListener) m_vertexSetListeners.get( i );
 
             l.vertexAdded( e );
         }
 
-        len = m_graphListeners.size(  );
-
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
             l.vertexAdded( e );
@@ -354,20 +347,15 @@ public class DefaultListenableGraph extends GraphDelegator
         GraphVertexChangeEvent e =
             createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_REMOVED,
                 vertex );
-        int                    len;
 
-        len = m_vertexSetListeners.size(  );
-
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_vertexSetListeners.size(  ); i++ ) {
             VertexSetListener l =
                 (VertexSetListener) m_vertexSetListeners.get( i );
 
             l.vertexRemoved( e );
         }
 
-        len = m_graphListeners.size(  );
-
-        for( int i = 0; i < len; i++ ) {
+        for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
             GraphListener l = (GraphListener) m_graphListeners.get( i );
 
             l.vertexRemoved( e );
