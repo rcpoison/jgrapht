@@ -60,8 +60,8 @@ import org._3pq.jgrapht.traverse.DepthFirstIterator;
  * <p>
  * WARNING: Don't run this demo as-is on machines with less than 512MB memory.
  * Your machine will start paging severely. You need to first modify it to
- * have fewer graph elements. This is easily done by changing the loop counter
- * below.
+ * have fewer graph elements. This is easily done by changing the loop
+ * counters below.
  * </p>
  *
  * @author Barak Naveh
@@ -75,10 +75,10 @@ public final class PerformanceDemo {
      * @param args ignored.
      */
     public static void main( String[] args ) {
-        System.out.println( 
-            "allocating graph with 3M elements (may take a few tens of seconds)..." );
+        long time = System.currentTimeMillis(  );
+        
+        reportPerformanceFor( "starting at", time );
 
-        long   time = System.currentTimeMillis(  );
         Graph  g    = new Pseudograph(  );
         Object prev;
         Object curr;
@@ -86,39 +86,45 @@ public final class PerformanceDemo {
         curr = prev = new Object(  );
         g.addVertex( prev );
 
-        for( int i = 0; i < 500000; i++ ) {
+        int numVertices       = 10000;
+        int numEdgesPerVertex = 200;
+        int numElements       = numVertices * ( 1 + numEdgesPerVertex );
+
+        System.out.println( "\n" + "allocating graph with " + numElements
+            + " elements (may take a few tens of seconds)..." );
+
+        for( int i = 0; i < numVertices; i++ ) {
             curr = new Object(  );
             g.addVertex( curr );
-            g.addEdge( prev, curr );
-            g.addEdge( prev, curr );
-            g.addEdge( prev, curr );
-            g.addEdge( prev, curr );
-            g.addEdge( prev, curr );
+
+            for( int j = 0; j < numEdgesPerVertex; j++ ) {
+                g.addEdge( prev, curr );
+            }
+
             prev = curr;
         }
 
-        reportElapsedFor( "graph allocation", time );
+        reportPerformanceFor( "graph allocation", time );
 
-        time = System.currentTimeMillis(  );
+        time     = System.currentTimeMillis(  );
 
         for( Iterator i = new BreadthFirstIterator( g ); i.hasNext(  ); ) {
             i.next(  );
         }
 
-        reportElapsedFor( "breadth traversal", time );
+        reportPerformanceFor( "breadth traversal", time );
 
-        time = System.currentTimeMillis(  );
+        time     = System.currentTimeMillis(  );
 
         for( Iterator i = new DepthFirstIterator( g ); i.hasNext(  ); ) {
             i.next(  );
         }
 
-        reportElapsedFor( "depth traversal", time );
+        reportPerformanceFor( "depth traversal", time );
 
-        System.out.println(  );
-        System.out.println( 
-            "Paused: graph is still in memory (to check mem consumption)." );
-        System.out.print( "press any key to finish..." );
+        System.out.println( "\n"
+            + "Paused: graph is still in memory (to check mem consumption)." );
+        System.out.print( "press any key to free memory and finish..." );
 
         try {
             System.in.read(  );
@@ -129,8 +135,18 @@ public final class PerformanceDemo {
     }
 
 
-    private static void reportElapsedFor( String msg, long startTime ) {
-        double time = ( System.currentTimeMillis(  ) - startTime ) / 1000;
-        System.out.println( msg + " (" + time + " secs)" );
+    private static void reportPerformanceFor( String msg, long refTime ) {
+        double time = ( System.currentTimeMillis(  ) - refTime ) / 1000.0;
+        double mem = usedMemory(  ) / ( 1024.0 * 1024.0);
+        mem = Math.round(mem * 100) / 100.0;
+        System.out.println( msg + " (" + time + " sec, " + mem
+            + "MB)" );
+    }
+
+
+    private static long usedMemory(  ) {
+        Runtime rt = Runtime.getRuntime(  );
+
+        return rt.totalMemory(  ) - rt.freeMemory(  );
     }
 }
