@@ -36,6 +36,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 26-Jul-2003 : Accurate constructors to avoid casting problems (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -50,6 +51,7 @@ import java.util.Set;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.ListenableGraph;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
@@ -57,39 +59,48 @@ import org._3pq.jgrapht.event.GraphListener;
 import org._3pq.jgrapht.event.GraphVertexChangeEvent;
 
 /**
- * A subgraph is a graph that has a subset of vertices and subset of edges with
- * respect to some base graph. More formally, A subgraph G(V,E) that is based
- * on a graph Gb(Vb,Eb) satisfies the following <b><i>subgraph
+ * A subgraph is a graph that has a subset of vertices and a subset of edges
+ * with respect to some base graph. More formally, a subgraph G(V,E) that is
+ * based on a base graph Gb(Vb,Eb) satisfies the following <b><i>subgraph
  * property</i></b>: V is a subset of Vb and E is a subset of Eb. Other than
  * this property, a subgraph is a graph with any respect and fully complies
  * with the <code>Graph</code> interface.
  * 
  * <p>
- * A subgraph is a "live-window" on the the base graph. If edges or vertices
- * are removed from the base graph, they are automatically removed from the
- * subgraph. Subgraph listeners are informed on such removals if they also
- * result in a cascade removal from the subgraph. If edges or vertices are
- * added to the base graph, the subgraph remains unaffected.
+ * If the base graph is a {@link org._3pq.jgrapht.ListenableGraph}, the
+ * subgraph becomes a "live-window" on the the base graph and guarantees the
+ * subgraph property. If an edge or a vertex is removed from the base graph,
+ * it is automatically removed from the subgraph. Subgraph listeners are
+ * informed on such removal only if it results in a cascaded removal from the
+ * subgraph. If edges or vertices are added to the base graph, the subgraph
+ * remains unaffected.
+ * </p>
+ * 
+ * <p>
+ * If the base graph is <i>not</i> a ListenableGraph, then the subgraph
+ * property cannot be guaranteed. If edges or vertices are removed from the
+ * base graph, they are <i>not</i> removed from the subgraph.
  * </p>
  * 
  * <p>
  * Modifications to Subgraph are allowed as long as the subgraph property is
  * maintained. Addition of vertices or edges are allowed as long as they also
  * exist in the base graph. Removal of vertices or edges is always allowed.
- * The base graph is <i>never</i> affected by any modification applied to the
+ * The base graph is <i>never</i> affected by any modification made to the
  * subgraph.
  * </p>
  * 
  * <p>
  * PERFORMANCE NOTE: The intention of Subgraph is to provide a "window" on a
- * base graph, so that changes made to vertices or edges in the subgraph are
- * reflected in the base graph, and vice versa. To achieve that, vertices and
- * edges of the subgraph must be reference-equal (and not only value-equal) to
- * their respective ones in the base graph. By default, this class verifies
- * this reference-equality, but at a performance cost. You can avoid this cost
- * by setting the verifyIntegrity flag off. However, you must <i>exercise
- * care</i> and make sure that all vertices or edges you add to the subgraph
- * are reference-equal to the ones contained in the base graph.
+ * base graph, so that changes made to vertex instances or to edge instances
+ * in the subgraph are immediately reflected in the base graph, and vice
+ * versa. For that to happen, vertices and edges of the subgraph must be
+ * reference-equal (and not only value-equal) to their respective ones in the
+ * base graph. By default, this class verifies that this reference-equality is
+ * maintained, but at a performance cost. You can avoid this cost by setting
+ * the verifyIntegrity flag off. However, you must <i>exercise care</i> and
+ * make sure that all vertices or edges you add to the subgraph are
+ * reference-equal to the ones contained in the base graph.
  * </p>
  * 
  * <p>
@@ -119,10 +130,10 @@ public class Subgraph extends AbstractGraph {
     Set m_vertexSet = new HashSet(  ); // friendly to improve performance
 
     // 
-    private transient Set   m_unmodifiableEdgeSet   = null;
-    private transient Set   m_unmodifiableVertexSet = null;
-    private ListenableGraph m_base;
-    private boolean         m_verifyIntegrity       = true;
+    private transient Set m_unmodifiableEdgeSet   = null;
+    private transient Set m_unmodifiableVertexSet = null;
+    private Graph         m_base;
+    private boolean       m_verifyIntegrity       = true;
 
     /**
      * Creates a new Subgraph.
@@ -139,7 +150,10 @@ public class Subgraph extends AbstractGraph {
         super(  );
 
         m_base = base;
-        m_base.addGraphListener( new BaseGraphListener(  ) );
+
+        if( m_base instanceof ListenableGraph ) {
+            ( (ListenableGraph) m_base ).addGraphListener( new BaseGraphListener(  ) );
+        }
 
         addVerticesUsingFilter( base.vertexSet(  ), vertexSubset );
         addEdgesUsingFilter( base.edgeSet(  ), edgeSubset );
@@ -475,7 +489,7 @@ public class Subgraph extends AbstractGraph {
                 containsVertex( e.getSource(  ) )
                 && containsVertex( e.getTarget(  ) );
 
-            // note short circuit eval            
+            // note the use of short circuit evaluation            
             edgeIncluded = ( filter == null ) || filter.contains( e );
 
             if( containsVertices && edgeIncluded ) {
@@ -491,7 +505,8 @@ public class Subgraph extends AbstractGraph {
         for( Iterator iter = vertexSet.iterator(  ); iter.hasNext(  ); ) {
             v = iter.next(  );
 
-            if( filter == null || filter.contains( v ) ) { // note short circuit eval
+            // note the use of short circuit evaluation            
+            if( filter == null || filter.contains( v ) ) {
                 addVertex( v );
             }
         }
