@@ -45,7 +45,7 @@ import org._3pq.jgrapht.DirectedGraph;
 /**
  * A directed graph that is a subgraph on other graph.
  *
- * @see Subgraph
+ * @see org._3pq.jgrapht.graph.Subgraph
  */
 public class DirectedSubgraph extends Subgraph implements DirectedGraph {
     private static final long serialVersionUID = 3616445700507054133L;
