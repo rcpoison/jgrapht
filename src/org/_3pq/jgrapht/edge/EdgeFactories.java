@@ -70,7 +70,7 @@ public final class EdgeFactories {
          * @see EdgeFactory#createEdge(Object, Object)
          */
         public Edge createEdge( Object source, Object target ) {
-            return new DefaultDirectedEdge( source, target );
+            return new DirectedEdge( source, target );
         }
     }
 
@@ -87,7 +87,7 @@ public final class EdgeFactories {
          * @see EdgeFactory#createEdge(Object, Object)
          */
         public Edge createEdge( Object source, Object target ) {
-            return new DefaultDirectedWeightedEdge( source, target );
+            return new DirectedWeightedEdge( source, target );
         }
     }
 
@@ -104,7 +104,7 @@ public final class EdgeFactories {
          * @see EdgeFactory#createEdge(Object, Object)
          */
         public Edge createEdge( Object source, Object target ) {
-            return new DefaultUndirectedEdge( source, target );
+            return new UndirectedEdge( source, target );
         }
     }
 
@@ -121,7 +121,7 @@ public final class EdgeFactories {
          * @see EdgeFactory#createEdge(Object, Object)
          */
         public Edge createEdge( Object source, Object target ) {
-            return new DefaultUndirectedWeightedEdge( source, target );
+            return new UndirectedWeightedEdge( source, target );
         }
     }
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
- * DefaultUndirectedEdge.java
- * --------------------------
+/* ---------------------------
+ * UndirectedWeightedEdge.java
+ * ---------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,63 +34,57 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.UndirectedEdge;
+import org._3pq.jgrapht.WeightedElement;
 
 /**
- * A default implementation of UndirectedEdge.
+ * An implementation of undirected weighted edge.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.UndirectedEdge
- * @since Jul 14, 2003
+ * @since Jul 16, 2003
  */
-public class DefaultUndirectedEdge extends AbstractEdge
-    implements UndirectedEdge {
+public class UndirectedWeightedEdge extends UndirectedEdge
+    implements WeightedElement {
+    private double m_weight = WeightedElement.DEFAULT_WEIGHT;
+
     /**
      * @see AbstractEdge#AbstractEdge(Object, Object)
      */
-    public DefaultUndirectedEdge( Object sourceVertex, Object targetVertex ) {
+    public UndirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
     }
 
+
     /**
-     * @see UndirectedEdge#equals(Object)
+     * Constructor for UndirectedWeightedEdge.
+     *
+     * @param sourceVertex source vertex of the new edge.
+     * @param targetVertex target vertex of the new edge.
+     * @param weight the weight of the new edge.
      */
-    public boolean equals( Object o ) {
-        if( o instanceof UndirectedEdge ) {
-            UndirectedEdge e = (UndirectedEdge) o;
+    public UndirectedWeightedEdge( Object sourceVertex, Object targetVertex,
+        double weight ) {
+        super( sourceVertex, targetVertex );
+        m_weight = weight;
+    }
 
-            boolean        equalStraight =
-                this.getSource(  ).equals( e.getSource(  ) )
-                && this.getTarget(  ).equals( e.getTarget(  ) );
-
-            boolean equalInverted =
-                this.getSource(  ).equals( e.getTarget(  ) )
-                && this.getTarget(  ).equals( e.getSource(  ) );
-
-            return equalStraight || equalInverted;
-        }
-
-        return false;
+    /**
+     * @see org._3pq.jgrapht.WeightedElement#setWeight(double)
+     */
+    public void setWeight( double weight ) {
+        m_weight = weight;
     }
 
 
     /**
-     * @see UndirectedEdge#hashCode()
+     * @see org._3pq.jgrapht.WeightedElement#getWeight()
      */
-    public int hashCode(  ) {
-        return getSource(  ).hashCode(  ) + getTarget(  ).hashCode(  );
-    }
-
-
-    /**
-     * @see java.lang.Object#toString()
-     */
-    public String toString(  ) {
-        return "{" + getSource(  ) + "," + getTarget(  ) + "}";
+    public double getWeight(  ) {
+        return m_weight;
     }
 }

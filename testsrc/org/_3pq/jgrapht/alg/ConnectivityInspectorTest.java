@@ -41,8 +41,8 @@ package org._3pq.jgrapht.alg;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.graph.Pseudograph;
 import org._3pq.jgrapht.graph.ListenableDirectedGraph;
+import org._3pq.jgrapht.graph.Pseudograph;
 
 /**
  * .
@@ -92,13 +92,37 @@ public class ConnectivityInspectorTest extends TestCase {
         assertEquals( g.edgeSet(  ).size(  ), 3 );
 
         m_e3_b = g.addEdge( m_v3, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 3 );
-        assertEquals( m_e3_b, null );
+        assertEquals( g.edgeSet(  ).size(  ), 4 );
+        assertNotNull( m_e3_b );
 
         m_u = g.addEdge( m_v1, m_v1 );
-        assertEquals( g.edgeSet(  ).size(  ), 4 );
+        assertEquals( g.edgeSet(  ).size(  ), 5 );
+        m_u = g.addEdge( m_v1, m_v1 );
+        assertEquals( g.edgeSet(  ).size(  ), 6 );
 
         return g;
+    }
+
+
+    /**
+     * .
+     */
+    public void testDirectedGraph(  ) {
+        ListenableDirectedGraph g = new ListenableDirectedGraph(  );
+        g.addVertex( m_v1 );
+        g.addVertex( m_v2 );
+        g.addVertex( m_v3 );
+
+        g.addEdge( m_v1, m_v2 );
+
+        ConnectivityInspector inspector = new ConnectivityInspector( g );
+        g.addGraphListener( inspector );
+
+        assertEquals( false, inspector.isGraphConnected(  ) );
+
+        g.addEdge( m_v1, m_v3 );
+
+        assertEquals( true, inspector.isGraphConnected(  ) );
     }
 
 
@@ -109,11 +133,11 @@ public class ConnectivityInspectorTest extends TestCase {
         Pseudograph           g         = create(  );
         ConnectivityInspector inspector = new ConnectivityInspector( g );
 
-        assertEquals( inspector.isGraphConnected(  ), false );
+        assertEquals( false, inspector.isGraphConnected(  ) );
 
         g.removeVertex( m_v4 );
         inspector = new ConnectivityInspector( g );
-        assertEquals( inspector.isGraphConnected(  ), true );
+        assertEquals( true, inspector.isGraphConnected(  ) );
 
         g.removeVertex( m_v1 );
         assertEquals( g.edgeSet(  ).size(  ), 1 );
@@ -123,25 +147,6 @@ public class ConnectivityInspectorTest extends TestCase {
         assertEquals( g.edgeSet(  ).size(  ), 1 );
 
         inspector = new ConnectivityInspector( g );
-        assertEquals( inspector.isGraphConnected(  ), false );
+        assertEquals( false, inspector.isGraphConnected(  ) );
     }
-
-    public void testDirectedGraph( ) {
-        ListenableDirectedGraph g = new ListenableDirectedGraph( );
-        g.addVertex( m_v1 );
-        g.addVertex( m_v2 );
-        g.addVertex( m_v3 );
-
-        g.addEdge( m_v1, m_v2 );
-        
-        ConnectivityInspector inspector = new ConnectivityInspector( g );
-        g.addGraphListener(inspector);
-
-        assertEquals( inspector.isGraphConnected(), false);
-
-        g.addEdge( m_v1, m_v3 );
-
-        assertEquals( inspector.isGraphConnected(), true);
-    }
-    
 }

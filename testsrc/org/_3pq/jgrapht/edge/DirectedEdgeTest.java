@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------------------
- * DefaultDirectedWeightedEdgeTest.java
- * ------------------------------------
+/* ---------------------
+ * DirectedEdgeTest.java
+ * ---------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,53 +34,35 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.WeightedElement;
-
 /**
- * Tests for the {@link DefaultDirectedWeightedEdge} class.
+ * Tests for the {@link DirectedEdge} class.
  *
  * @author Barak Naveh
  *
  * @since Jul 24, 2003
  */
-public class DefaultDirectedWeightedEdgeTest extends DefaultDirectedEdgeTest {
+public class DirectedEdgeTest extends AbstractEdgeTest {
     /**
-     * Tests the equals() method.
+     * .
      */
-    public void testEqualsObject(  ) {
-        Edge e1 = new DefaultDirectedWeightedEdge( m_source1, m_target1 );
-        Edge e2 = new DefaultDirectedWeightedEdge( m_target1, m_source1 );
-        assertTrue( m_e1.equals( e1 ) );
-        assertFalse( m_e1.equals( e2 ) );
-        assertFalse( m_e1.equals( m_e3 ) );
-
-        String s1 = new String( "s1" );
-        Edge   e4 = new DefaultDirectedWeightedEdge( s1, "t1" );
-        assertTrue( m_e1.equals( e4 ) );
-        assertFalse( m_source1 == e4.getSource(  ) );
-
-        DefaultDirectedWeightedEdge e5 =
-            new DefaultDirectedWeightedEdge( m_source1, m_target1, 2.0 );
-        assertFalse( e5.equals( e1 ) );
-        e5.setWeight( WeightedElement.DEFAULT_WEIGHT );
-        assertTrue( e5.equals( e1 ) );
+    public void testToString(  ) {
+        assertTrue( "(s1,t1)".equals( m_e1.toString(  ) ) );
+        assertTrue( "(s1,t1)".equals( m_e1Clone.toString(  ) ) );
     }
 
 
     /**
-     * @see junit.framework.TestCase#setUp()
+     * @see AbstractEdgeTest#setUp()
      */
     protected void setUp(  ) throws Exception {
-        super.setUp(  );
-        m_e1     = new DefaultDirectedWeightedEdge( m_source1, m_target1 );
-        m_e3 =
-            new DefaultDirectedWeightedEdge( new Object(  ), new Object(  ) );
+        m_e1     = new DirectedEdge( m_source1, m_target1 );
+        m_e3     = new DirectedEdge( new Object(  ), new Object(  ) );
 
-        m_e1Clone = (DefaultDirectedWeightedEdge) m_e1.clone(  );
+        m_e1Clone = (DirectedEdge) m_e1.clone(  );
     }
 }

@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------------
- * DefaultUndirectedEdgeTest.java
- * ------------------------------
+/* ---------------------
+ * AbstractEdgeTest.java
+ * ---------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -33,7 +33,8 @@
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 09-Aug-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -41,29 +42,28 @@ package org._3pq.jgrapht.edge;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.UndirectedEdge;
 
 /**
- * Tests for the {@link DefaultUndirectedEdge} class.
+ * Tests for the {@link org._3pq.jgrapht.edge.AbstractEdge} class.
  *
  * @author Barak Naveh
  *
  * @since Jul 24, 2003
  */
-public class DefaultUndirectedEdgeTest extends TestCase {
-    String         m_source1 = "s1";
-    String         m_target1 = "t1";
-    String         m_target2 = "t2";
-    UndirectedEdge m_e1;
-    UndirectedEdge m_e1Clone;
-    UndirectedEdge m_e3;
+public abstract class AbstractEdgeTest extends TestCase {
+    protected Edge   m_e1;
+    protected Edge   m_e1Clone;
+    protected Edge   m_e3;
+    protected String m_source1 = "s1";
+    protected String m_target1 = "t1";
+    protected String m_target2 = "t2";
 
     /**
      * .
      */
     public void testClone(  ) {
-        assertTrue( m_e1Clone.equals( m_e1 ) );
-        assertFalse( m_e1Clone == m_e1 );
+        assertEquals( m_e1Clone.getSource(  ), m_e1.getSource(  ) );
+        assertEquals( m_e1Clone.getTarget(  ), m_e1.getTarget(  ) );
     }
 
 
@@ -75,23 +75,6 @@ public class DefaultUndirectedEdgeTest extends TestCase {
         assertTrue( m_e1.containsVertex( m_target1 ) );
 
         assertFalse( m_e1.containsVertex( m_target2 ) );
-    }
-
-
-    /**
-     * .
-     */
-    public void testEqualsObject(  ) {
-        Edge e1 = new DefaultUndirectedEdge( m_source1, m_target1 );
-        Edge e2 = new DefaultUndirectedEdge( m_target1, m_source1 );
-        assertTrue( m_e1.equals( e1 ) );
-        assertTrue( m_e1.equals( e2 ) );
-        assertFalse( m_e1.equals( m_e3 ) );
-
-        String s1 = new String( "s1" );
-        Edge   e4 = new DefaultUndirectedEdge( s1, "t1" );
-        assertTrue( m_e1.equals( e4 ) );
-        assertFalse( m_source1 == e4.getSource(  ) );
     }
 
 
@@ -116,31 +99,6 @@ public class DefaultUndirectedEdgeTest extends TestCase {
     /**
      * .
      */
-    public void testHashCode(  ) {
-        assertEquals( m_source1.hashCode(  ) + m_target1.hashCode(  ),
-            m_e1.hashCode(  ) );
-    }
-
-
-    /**
-     * .
-     */
-    public void testIsSource(  ) {
-        assertEquals( m_source1, m_e1.getSource(  ) );
-    }
-
-
-    /**
-     * .
-     */
-    public void testIsTarget(  ) {
-        assertEquals( m_target1, m_e1.getTarget(  ) );
-    }
-
-
-    /**
-     * .
-     */
     public void testOppositeVertex(  ) {
         assertEquals( m_source1, m_e1.oppositeVertex( m_target1 ) );
         assertEquals( m_target1, m_e1.oppositeVertex( m_source1 ) );
@@ -151,30 +109,7 @@ public class DefaultUndirectedEdgeTest extends TestCase {
 
 
     /**
-     * .
+     * Set initial values to internal fields.
      */
-    public void testToString(  ) {
-        assertTrue( "{s1,t1}".equals( m_e1.toString(  ) ) );
-        assertTrue( "{s1,t1}".equals( m_e1Clone.toString(  ) ) );
-    }
-
-
-    /**
-     * @see TestCase#setUp()
-     */
-    protected void setUp(  ) throws Exception {
-        super.setUp(  );
-        m_e1     = new DefaultUndirectedEdge( m_source1, m_target1 );
-        m_e3     = new DefaultUndirectedEdge( new Object(  ), new Object(  ) );
-
-        m_e1Clone = (UndirectedEdge) m_e1.clone(  );
-    }
-
-
-    /**
-     * @see TestCase#tearDown()
-     */
-    protected void tearDown(  ) throws Exception {
-        super.tearDown(  );
-    }
+    protected abstract void setUp(  ) throws Exception;
 }

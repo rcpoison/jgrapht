@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------
- * DefaultDirectedEdge.java
- * ------------------------
+/* -------------------
+ * UndirectedEdge.java
+ * -------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,71 +34,34 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.DirectedEdge;
-
 /**
- * A default implementation of DirectedEdge.
+ * A implementation for an undirected edge.
  *
  * @author Barak Naveh
  *
- * @see org._3pq.jgrapht.DirectedEdge
  * @since Jul 14, 2003
  */
-public class DefaultDirectedEdge extends AbstractEdge implements DirectedEdge {
+public class UndirectedEdge extends AbstractEdge {
     /**
      * @see AbstractEdge#AbstractEdge(Object, Object)
      */
-    public DefaultDirectedEdge( Object sourceVertex, Object targetVertex ) {
+    public UndirectedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
     }
 
     /**
-     * @see DirectedEdge#isSource(Object)
-     */
-    public boolean isSource( Object vertex ) {
-        return vertex.equals( this.getSource(  ) );
-    }
-
-
-    /**
-     * @see DirectedEdge#isTarget(Object)
-     */
-    public boolean isTarget( Object vertex ) {
-        return vertex.equals( this.getTarget(  ) );
-    }
-
-
-    /**
-     * @see DirectedEdge#equals(Object)
-     */
-    public boolean equals( Object o ) {
-        if( o instanceof DirectedEdge ) {
-            DirectedEdge e = (DirectedEdge) o;
-
-            return this.getSource(  ).equals( e.getSource(  ) )
-            && this.getTarget(  ).equals( e.getTarget(  ) );
-        }
-
-        return false;
-    }
-
-
-    /**
-     * @see DirectedEdge#hashCode()
-     */
-    public int hashCode(  ) {
-        return getSource(  ).hashCode(  ) + getTarget(  ).hashCode(  );
-    }
-
-
-    /**
-     * @see java.lang.Object#toString()
+     * Returns a string representation of this undirected edge. The
+     * representation is a curly-braced pair {v1,v2} where v1,v2 are the two
+     * endpoint vertices of this edge.
+     *
+     * @return a string representation of this directed edge.
      */
     public String toString(  ) {
-        return "(" + getSource(  ) + "," + getTarget(  ) + ")";
+        return "{" + getSource(  ) + "," + getTarget(  ) + "}";
     }
 }

@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;

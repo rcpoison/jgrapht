@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -49,12 +50,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org._3pq.jgrapht.DirectedEdge;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedEdge;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedElement;
 
@@ -75,7 +74,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
     // friendly (to improve performance)
     Map     m_vertexMap;
-    boolean m_loopsAllowed;
+    boolean m_allowingLoops;
 
     // private
     private Class         m_factoryEdgeClass;
@@ -84,7 +83,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     private transient Set m_unmodifiableEdgeSet   = null;
     private transient Set m_unmodifiableVertexSet = null;
     private Specifics     m_specifics;
-    private boolean       m_multipleEdgesAllowed;
+    private boolean       m_allowingMultipleEdges;
 
     /**
      * Construct a new pseudograph. The pseudograph can either be directed or
@@ -96,33 +95,30 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * <code>IllegalArgumentException</code> is thrown.
      *
      * @param ef the edge factory of the new graph.
-     * @param multipleEdgesAllowed whether to allow multiple edges or not.
-     * @param loopsAllowed whether to allow loops or not.
+     * @param allowMultipleEdges whether to allow multiple edges or not.
+     * @param allowLoops whether to allow edges that are self-loops or not.
      *
      * @throws NullPointerException if the specified edge factory is
      *         <code>null</code>.
      * @throws IllegalArgumentException if the edge factory produces
      *         incompatible edges.
      */
-    public AbstractBaseGraph( EdgeFactory ef, boolean multipleEdgesAllowed,
-        boolean loopsAllowed ) {
+    public AbstractBaseGraph( EdgeFactory ef, boolean allowMultipleEdges,
+        boolean allowLoops ) {
         if( ef == null ) {
             throw new NullPointerException(  );
         }
 
-        m_vertexMap                = new HashMap(  );
-        m_edgeSet                  = new HashSet(  );
-        m_edgeFactory              = ef;
-        m_loopsAllowed             = loopsAllowed;
-        m_multipleEdgesAllowed     = multipleEdgesAllowed;
+        m_vertexMap                 = new HashMap(  );
+        m_edgeSet                   = new HashSet(  );
+        m_edgeFactory               = ef;
+        m_allowingLoops             = allowLoops;
+        m_allowingMultipleEdges     = allowMultipleEdges;
 
-        //
-        Edge e = ef.createEdge( new Object(  ), new Object(  ) );
-
-        if( e instanceof DirectedEdge && this instanceof DirectedGraph ) {
+        if( this instanceof DirectedGraph ) {
             m_specifics = new DirectedSpecifics(  );
         }
-        else if( e instanceof UndirectedEdge && this instanceof UndirectedGraph ) {
+        else if( this instanceof UndirectedGraph ) {
             m_specifics = new UndirectedSpecifics(  );
         }
         else {
@@ -130,6 +126,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
                 "graph is incompatible with edge factory" );
         }
 
+        Edge e = ef.createEdge( new Object(  ), new Object(  ) );
         m_factoryEdgeClass = e.getClass(  );
     }
 
@@ -138,6 +135,30 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      */
     public List getAllEdges( Object sourceVertex, Object targetVertex ) {
         return m_specifics.getAllEdges( sourceVertex, targetVertex );
+    }
+
+
+    /**
+     * Returns <code>true</code> if and only if self-loops are allowed in this
+     * graph. A self loop is an edge that its source and target vertices are
+     * the same.
+     *
+     * @return <code>true</code> if and only if graph loops are allowed.
+     */
+    public boolean isAllowingLoops(  ) {
+        return m_allowingLoops;
+    }
+
+
+    /**
+     * Returns <code>true</code> if and only if multiple edges are allowed in
+     * this graph. The meaning of multiple edges is that there can be many
+     * edges going from vertex v1 to vertex v2.
+     *
+     * @return <code>true</code> if and only if multiple edges are allowed.
+     */
+    public boolean isAllowingMultipleEdges(  ) {
+        return m_allowingMultipleEdges;
     }
 
 
@@ -158,40 +179,18 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
 
     /**
-     * Returns <code>true</code> if and only if graph loops are allowed in this
-     * graph.
-     *
-     * @return <code>true</code> if and only if graph loops are allowed.
-     */
-    public boolean isLoopsAllowed(  ) {
-        return m_loopsAllowed;
-    }
-
-
-    /**
-     * Returns <code>true</code> if and only if multiple edges are allowed in
-     * this graph.
-     *
-     * @return <code>true</code> if and only if multiple edges are allowed.
-     */
-    public boolean isMultipleEdgesAllowed(  ) {
-        return m_multipleEdgesAllowed;
-    }
-
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public Edge addEdge( Object sourceVertex, Object targetVertex ) {
         assertVertexExist( sourceVertex );
         assertVertexExist( targetVertex );
 
-        if( !m_multipleEdgesAllowed
+        if( !m_allowingMultipleEdges
                 && containsEdge( sourceVertex, targetVertex ) ) {
             return null;
         }
 
-        if( !m_loopsAllowed && sourceVertex.equals( targetVertex ) ) {
+        if( !m_allowingLoops && sourceVertex.equals( targetVertex ) ) {
             throw new IllegalArgumentException( LOOPS_NOT_ALLOWED );
         }
 
@@ -243,12 +242,12 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
         assertCompatibleWithEdgeFactory( e );
 
-        if( !m_multipleEdgesAllowed
+        if( !m_allowingMultipleEdges
                 && containsEdge( sourceVertex, targetVertex ) ) {
             return false;
         }
 
-        if( !m_loopsAllowed && sourceVertex.equals( targetVertex ) ) {
+        if( !m_allowingLoops && sourceVertex.equals( targetVertex ) ) {
             throw new IllegalArgumentException( LOOPS_NOT_ALLOWED );
         }
 
@@ -472,13 +471,15 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     }
 
 
-    private void assertCompatibleWithEdgeFactory( Edge e ) {
+    private boolean assertCompatibleWithEdgeFactory( Edge e ) {
         if( e == null ) {
             throw new NullPointerException(  );
         }
         else if( !m_factoryEdgeClass.isInstance( e ) ) {
             throw new ClassCastException( "incompatible edge class" );
         }
+
+        return true;
     }
 
 
@@ -496,7 +497,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * .
      *
      * @author Barak Naveh
-     * @version 1.0
      */
     private abstract class Specifics {
         /**
@@ -777,7 +777,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             inAndOut.addAll( getEdgeContainer( vertex ).m_outgoing );
 
             // we have two copies for each self-loop - remove one of them.
-            if( m_loopsAllowed ) {
+            if( m_allowingLoops ) {
                 List loops = getAllEdges( vertex, vertex );
 
                 for( int i = 0; i < inAndOut.size(  ); ) {
@@ -929,7 +929,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * .
      *
      * @author Barak Naveh
-     * @version 1.0
      */
     private class UndirectedSpecifics extends Specifics {
         private static final String NOT_IN_UNDIRECTED_GRAPH =
@@ -1018,7 +1017,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
          * @see UndirectedGraph#degree(Object)
          */
         public int degreeOf( Object vertex ) {
-            if( m_loopsAllowed ) { // then we must count, and add loops twice
+            if( m_allowingLoops ) { // then we must count, and add loops twice
 
                 int  degree = 0;
                 List edges = getEdgeContainer( vertex ).m_vertexEdges;

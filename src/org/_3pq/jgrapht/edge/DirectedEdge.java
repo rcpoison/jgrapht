@@ -22,7 +22,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
- * AllEdgeTests.java
+ * DirectedEdge.java
  * -----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
@@ -34,37 +34,34 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
- * A TestSuite for all edge tests.
+ * A implementation of directed edge.
  *
  * @author Barak Naveh
+ *
+ * @since Jul 14, 2003
  */
-public final class AllEdgeTests {
-    /*
-     * We don't want instances of this class.
+public class DirectedEdge extends AbstractEdge {
+    /**
+     * @see AbstractEdge#AbstractEdge(Object, Object)
      */
-    private AllEdgeTests(  ) {}
+    public DirectedEdge( Object sourceVertex, Object targetVertex ) {
+        super( sourceVertex, targetVertex );
+    }
 
     /**
-     * Creates a test suite for all edge tests.
+     * Returns a string representation of this directed edge. The
+     * representation is a parenthesized pair (v1,v2) where v1 is the source
+     * vertex of this edge and v2 is the target vertex of this edge.
      *
-     * @return a test suite for all edge tests.
+     * @return a string representation of this directed edge.
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite( "TestSuite for all edge tests" );
-
-        //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( DirectedEdgeTest.class ) );
-        suite.addTest( new TestSuite( UndirectedEdgeTest.class ) );
-
-        //$JUnit-END$
-        return suite;
+    public String toString(  ) {
+        return "(" + getSource(  ) + "," + getTarget(  ) + ")";
     }
 }

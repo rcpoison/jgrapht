@@ -21,9 +21,9 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------------
- * DefaultDirectedWeightedEdge.java
- * --------------------------------
+/* -------------------------
+ * DirectedWeightedEdge.java
+ * -------------------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -41,33 +42,33 @@ package org._3pq.jgrapht.edge;
 import org._3pq.jgrapht.WeightedElement;
 
 /**
- * A default implementation of DirectedWeightedEdge.
+ * An implementation of directed weighted edge.
  *
  * @author Barak Naveh
  *
  * @since Jul 14, 2003
  */
-public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
+public class DirectedWeightedEdge extends DirectedEdge
     implements WeightedElement {
     private double m_weight = WeightedElement.DEFAULT_WEIGHT;
 
     /**
-     * @see #DefaultDirectedWeightedEdge(Object, Object, double)
+     * @see #DirectedWeightedEdge(Object, Object, double)
      */
-    public DefaultDirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
+    public DirectedWeightedEdge( Object sourceVertex, Object targetVertex ) {
         super( sourceVertex, targetVertex );
     }
 
 
     /**
-     * Constructor for DefaultDirectedWeightedEdge.
+     * Constructor for DirectedWeightedEdge.
      *
      * @param sourceVertex source vertex of the new edge.
      * @param targetVertex target vertex of the new edge.
      * @param weight the weight of the new edge.
      */
-    public DefaultDirectedWeightedEdge( Object sourceVertex,
-        Object targetVertex, double weight ) {
+    public DirectedWeightedEdge( Object sourceVertex, Object targetVertex,
+        double weight ) {
         super( sourceVertex, targetVertex );
         m_weight = weight;
     }
@@ -85,27 +86,5 @@ public class DefaultDirectedWeightedEdge extends DefaultDirectedEdge
      */
     public double getWeight(  ) {
         return m_weight;
-    }
-
-
-    /**
-     * @see org._3pq.jgrapht.DirectedEdge#equals(Object)
-     */
-    public boolean equals( Object o ) {
-        if( o instanceof WeightedElement ) {
-            WeightedElement e = (WeightedElement) o;
-
-            return super.equals( o ) && this.getWeight(  ) == e.getWeight(  );
-        }
-
-        return false;
-    }
-
-
-    /**
-     * @see org._3pq.jgrapht.DirectedEdge#hashCode()
-     */
-    public int hashCode(  ) {
-        return super.hashCode(  );
     }
 }

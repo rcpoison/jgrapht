@@ -40,7 +40,6 @@ package org._3pq.jgrapht.graph;
 
 import java.util.Iterator;
 
-import org._3pq.jgrapht.DirectedEdge;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
@@ -55,7 +54,7 @@ import org._3pq.jgrapht.EnhancedTestCase;
  */
 public class SimpleDirectedGraphTest extends EnhancedTestCase {
     DirectedGraph         m_gEmpty;
-    private DirectedEdge  m_eLoop;
+    private Edge  m_eLoop;
     private DirectedGraph m_g1;
     private DirectedGraph m_g2;
     private DirectedGraph m_g3;
@@ -389,7 +388,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase {
         m_g4         = new SimpleDirectedGraph(  );
 
         m_eFactory     = m_g1.getEdgeFactory(  );
-        m_eLoop        = (DirectedEdge) m_eFactory.createEdge( m_v1, m_v1 );
+        m_eLoop        = m_eFactory.createEdge( m_v1, m_v1 );
 
         m_g1.addVertex( m_v1 );
 
