@@ -152,7 +152,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
                 while( m_vertexIterator.hasNext(  ) ) {
                     Object v = m_vertexIterator.next(  );
 
-                    if( !m_seen.containsKey( v ) ) {
+                    if( !isSeenVertex( v ) ) {
                         encounterVertex( v, null );
                         m_state = CCS_BEFORE_COMPONENT;
 
@@ -228,6 +228,16 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      */
     protected abstract Object provideNextVertex(  );
 
+    /**
+     * Determines whether a vertex has been seen yet by this traversal.
+     *
+     * @param vertex vertex in question
+     *
+     * @return <tt>true</tt> if vertex has already been seen
+     */
+    protected boolean isSeenVertex( Object vertex ) {
+        return m_seen.containsKey( vertex );
+    }
 
     /**
      * Access the data stored for a seen vertex.
@@ -289,7 +299,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
 
             Object v = e.oppositeVertex( vertex );
 
-            if( m_seen.containsKey( v ) ) {
+            if( isSeenVertex( v ) ) {
                 encounterVertexAgain( v, e );
             }
             else {
