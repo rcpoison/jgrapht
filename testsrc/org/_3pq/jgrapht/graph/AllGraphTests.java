@@ -49,10 +49,7 @@ import junit.framework.TestSuite;
  * @since Aug 3, 2003
  */
 public final class AllGraphTests {
-    /*
-     * We don't want instances of this class.
-     */
-    private AllGraphTests(  ) {}
+    private AllGraphTests(  ) {} // ensure non-instantiability.
 
     /**
      * Creates a test suite for all graph tests.
@@ -63,8 +60,9 @@ public final class AllGraphTests {
         TestSuite suite = new TestSuite( "TestSuite for all graph tests" );
 
         //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( SimpleDirectedGraphTest.class ) );
+        suite.addTest( new TestSuite( DefaultDirectedGraphTest.class ) );
         suite.addTest( new TestSuite( ListenableGraphTest.class ) );
+        suite.addTest( new TestSuite( SimpleDirectedGraphTest.class ) );
 
         //$JUnit-END$
         return suite;

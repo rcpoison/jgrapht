@@ -439,10 +439,13 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
 
 
     /**
-     * @see java.lang.Object#toString()
+     * Returns a string of the parenthesized pair (V, E) representing this
+     * G=(V,E) graph. 'V' is the string representation of the vertex set, and
+     * 'E' is the string representation of the edge set.
+     *
+     * @return a string representation of this graph.
      */
     public String toString(  ) {
-        // TODO: write a real javadoc
         return "(" + vertexSet(  ).toString(  ) + ", "
         + edgeSet(  ).toString(  ) + ")";
     }
@@ -690,7 +693,6 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * .
      *
      * @author Barak Naveh
-     * @version 1.0
      */
     private class DirectedSpecifics extends Specifics {
         private static final String NOT_IN_DIRECTED_GRAPH =
@@ -754,10 +756,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             Object target = e.getTarget(  );
 
             getEdgeContainer( source ).addOutgoingEdge( e );
-
-            if( source != target ) {
-                getEdgeContainer( target ).addIncomingEdge( e );
-            }
+            getEdgeContainer( target ).addIncomingEdge( e );
         }
 
 
@@ -777,7 +776,24 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
                 new ArrayList( getEdgeContainer( vertex ).m_incoming );
             inAndOut.addAll( getEdgeContainer( vertex ).m_outgoing );
 
-            return Collections.unmodifiableList( inAndOut );
+            // we have two copies for each self-loop - remove one of them.
+            if( m_loopsAllowed ) {
+                List loops = getAllEdges( vertex, vertex );
+
+                for( int i = 0; i < inAndOut.size(  ); ) {
+                    Object e = inAndOut.get( i );
+
+                    if( loops.contains( e ) ) {
+                        inAndOut.remove( i );
+                        loops.remove( e ); // so we remove it only once
+                    }
+                    else {
+                        i++;
+                    }
+                }
+            }
+
+            return inAndOut;
         }
 
 
@@ -821,10 +837,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             Object target = e.getTarget(  );
 
             getEdgeContainer( source ).removeOutgoingEdge( e );
-
-            if( source != target ) {
-                getEdgeContainer( target ).removeIncomingEdge( e );
-            }
+            getEdgeContainer( target ).removeIncomingEdge( e );
         }
 
 
