@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Liviu Rau and Contributors.
  *
  * Original Author:  Liviu Rau
- * Contributor(s):   -
+ * Contributor(s):   Barak Naveh
  *
  * $Id$
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 29-Jul-2003 : Initial revision (LR);
+ * 31-Jul-2003 : Fixed traversal across connected components (BN);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -55,23 +56,24 @@ import org._3pq.jgrapht.alg.AlgUtils.Specifics;
 import org._3pq.jgrapht.alg.AlgUtils.UndirectedSpecifics;
 
 /**
- * A breadth-first iterator for a directed and an undirected graph. For this
+ * A depth-first iterator for a directed and an undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The result
  * of such modifications are undefined.
  *
- * @author Barak Naveh
+ * @author Liviu Rau
  *
- * @since Jul 19, 2003
+ * @since Jul 29, 2003
  */
 public class DepthFirstIterator extends AbstractGraphIterator {
     // todo: support ConcurrentModificationException if graph modified during iteration. 
-    private Set         m_visited   = new HashSet(  );
+    private Iterator    m_vertexIterator = null;
+    private Set         m_seen      = new HashSet(  );
     private SimpleStack m_stack     = new SimpleStack(  );
     private Specifics   m_specifics;
 
     /**
-     * Creates a new BreadthFirstIterator object.
+     * Creates a new DepthFirstIterator object.
      *
      * @param g the directed graph to be iterated.
      * @param startVertex the vertex iteration to be started.
@@ -84,7 +86,7 @@ public class DepthFirstIterator extends AbstractGraphIterator {
 
 
     /**
-     * Creates a new BreadthFirstIterator object.
+     * Creates a new DepthFirstIterator object.
      *
      * @param g the undirected graph to be iterated.
      * @param startVertex the vertex iteration to be started.
@@ -99,7 +101,28 @@ public class DepthFirstIterator extends AbstractGraphIterator {
      * @see java.util.Iterator#hasNext()
      */
     public boolean hasNext(  ) {
-        return !m_stack.isEmpty(  ) && isCrossComponentTraversal(  );
+        if( m_stack.isEmpty(  ) ) {
+            if( isCrossComponentTraversal(  ) ) {
+                while( m_vertexIterator.hasNext(  ) ) {
+                    Object v = m_vertexIterator.next(  );
+
+                    if( !m_seen.contains( v ) ) {
+                        m_seen.add( v );
+                        m_stack.add( v );
+
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return true;
+        }
     }
 
 
@@ -111,29 +134,12 @@ public class DepthFirstIterator extends AbstractGraphIterator {
             Object nextVertex = m_stack.remove(  );
             fireVertexVisited( nextVertex );
 
-            List edges = m_specifics.edgesOf( nextVertex );
-            collectChildren( nextVertex, edges );
-            m_visited.add( nextVertex );
-            m_stack.removeVisited( nextVertex );
+            pushChildrenOf( nextVertex );
 
             return nextVertex;
         }
         else {
             throw new NoSuchElementException(  );
-        }
-    }
-
-
-    private void collectChildren( Object nextVertex, List edges ) {
-        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            Edge e = (Edge) iter.next(  );
-            fireEdgeVisited( e );
-
-            Object v = e.oppositeVertex( nextVertex );
-
-            if( !m_visited.contains( v ) ) {
-                m_stack.add( v );
-            }
         }
     }
 
@@ -147,7 +153,25 @@ public class DepthFirstIterator extends AbstractGraphIterator {
             throw new IllegalArgumentException( "start vertex not in graph" );
         }
 
+        m_seen.add( startVertex );
         m_stack.add( startVertex );
-        m_visited.add( startVertex );
+        m_vertexIterator = g.vertexSet(  ).iterator(  );
+    }
+
+
+    private void pushChildrenOf( Object vertex ) {
+        List edges = m_specifics.edgesOf( vertex );
+
+        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
+            Edge e = (Edge) iter.next(  );
+            fireEdgeVisited( e );
+
+            Object v = e.oppositeVertex( vertex );
+
+            if( !m_seen.contains( v ) ) {
+                m_seen.add( v );
+                m_stack.add( v );
+            }
+        }
     }
 }
