@@ -59,8 +59,7 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * Allows obtaining various connectivity aspects of a graph. The <i>inspected
  * graph</i> is specified at construction time and cannot be modified.
  * Currently, the inspector supports connected components for an undirected
- * graph and weakly connected components for a directed graph.  (TODO:
- * implement Tarjan's algorithm for strongly connected component discovery.)
+ * graph and weakly connected components for a directed graph.
  * 
  * <p>
  * The inspector methods work in a lazy fashion: no computation is performed
@@ -79,10 +78,12 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * </p>
  *
  * @author Barak Naveh
- * @author John V. Sichi (original author of a similar class in OpenJGraph)
+ * @author John V. Sichi
  *
  * @since Aug 6, 2003
  */
+
+//TODO: implement Tarjan's algorithm for strongly connected component discovery.
 public class ConnectivityInspector implements GraphListener {
     List          m_connectedSets;
     Map           m_vertexToConnectedSet;
