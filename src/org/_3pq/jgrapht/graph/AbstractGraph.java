@@ -48,10 +48,9 @@ import org._3pq.jgrapht.Graph;
 /**
  * A skeletal implementation of the <tt>Graph</tt> interface, to minimize the
  * effort required to implement graph interfaces. This implementation is
- * applicable to both: directed graphs and unirected graphs.
+ * applicable to both: directed graphs and undirected graphs.
  *
  * @author Barak Naveh
- * @version 1.0
  *
  * @see org._3pq.jgrapht.Graph
  * @see org._3pq.jgrapht.DirectedGraph
