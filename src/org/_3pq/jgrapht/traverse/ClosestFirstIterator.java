@@ -46,7 +46,7 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  * A closest-first iterator for a directed or undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The result
- * of such modifications are undefined.
+ * of such modifications is undefined.
  * 
  * <p>
  * The metric for <i>closest</i> here is the path length from a start vertex.
