@@ -47,7 +47,8 @@ package org._3pq.jgrapht.edge;
  * @since Jul 16, 2003
  */
 public class UndirectedWeightedEdge extends UndirectedEdge {
-    private double m_weight = DEFAULT_EDGE_WEIGHT;
+    private static final long serialVersionUID = 4120853256903012915L;
+    private double            m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
      * @see UndirectedEdge#UndirectedEdge(Object, Object)

@@ -69,6 +69,8 @@ public final class EdgeFactories {
      * @since Jul 14, 2003
      */
     public static class DirectedEdgeFactory extends AbstractEdgeFactory {
+        private static final long serialVersionUID = 3618135658586388792L;
+
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -86,6 +88,8 @@ public final class EdgeFactories {
      * @since Jul 14, 2003
      */
     public static class DirectedWeightedEdgeFactory extends AbstractEdgeFactory {
+        private static final long serialVersionUID = 3257002163870775604L;
+
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -103,6 +107,8 @@ public final class EdgeFactories {
      * @since Jul 14, 2003
      */
     public static class UndirectedEdgeFactory extends AbstractEdgeFactory {
+        private static final long serialVersionUID = 3257007674431189815L;
+
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
@@ -121,6 +127,8 @@ public final class EdgeFactories {
      */
     public static class UndirectedWeightedEdgeFactory
         extends AbstractEdgeFactory {
+        private static final long serialVersionUID = 4048797883346269237L;
+
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */

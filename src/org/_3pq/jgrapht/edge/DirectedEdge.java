@@ -47,6 +47,8 @@ package org._3pq.jgrapht.edge;
  * @since Jul 14, 2003
  */
 public class DirectedEdge extends DefaultEdge {
+    private static final long serialVersionUID = 3258689927188134195L;
+
     /**
      * @see DefaultEdge#DefaultEdge(Object, Object)
      */

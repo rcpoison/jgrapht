@@ -52,8 +52,9 @@ import org._3pq.jgrapht.Edge;
  * @since Jul 14, 2003
  */
 public class DefaultEdge implements Edge, Cloneable, Serializable {
-    private Object m_source;
-    private Object m_target;
+    private static final long serialVersionUID = 3258408452177932855L;
+    private Object            m_source;
+    private Object            m_target;
 
     /**
      * Constructor for DefaultEdge.
@@ -105,7 +106,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
         try {
             return super.clone(  );
         }
-         catch( CloneNotSupportedException e ) {
+        catch( CloneNotSupportedException e ) {
             // shouldn't happen as we are Cloneable
             throw new InternalError(  );
         }

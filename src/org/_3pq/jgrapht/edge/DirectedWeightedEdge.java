@@ -47,7 +47,8 @@ package org._3pq.jgrapht.edge;
  * @since Jul 14, 2003
  */
 public class DirectedWeightedEdge extends DirectedEdge {
-    private double m_weight = DEFAULT_EDGE_WEIGHT;
+    private static final long serialVersionUID = 3689070664137257523L;
+    private double            m_weight = DEFAULT_EDGE_WEIGHT;
 
     /**
      * @see DirectedEdge#DirectedEdge(Object, Object)
