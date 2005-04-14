@@ -49,26 +49,9 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.DepthFirstIterator;
 
 /**
- * Allows obtaining various connectivity aspects of a graph. The <i>inspected
+ * Performs cycle detection on a graph. The <i>inspected
  * graph</i> is specified at construction time and cannot be modified.
- * Currently, the inspector supports connected components for an undirected
- * graph and weakly connected components for a directed graph.
- * 
- * <p>
- * The inspector methods work in a lazy fashion: no computation is performed
- * unless immediately necessary. Computation are done once and results and
- * cached within this class for future need.
- * </p>
- * 
- * <p>
- * The inspector is also a {@link org._3pq.jgrapht.event.GraphListener}. If
- * added as a listener to the inspected graph, the inspector will amend
- * internal cached results instead of recomputing them. It is efficient when a
- * few modifications are applied to a large graph. If many modifications are
- * expected it will not be efficient due to added overhead on graph update
- * operations. If inspector is added as listener to a graph other than the one
- * it inspects, results are undefined.
- * </p>
+ * Currently, the detector supports only directed graphs.
  *
  * @author John V. Sichi
  *
