@@ -97,8 +97,8 @@ public final class AllTests {
          * @param suite
          */
         public void addTestSuit( TestSuite suite ) {
-            for( Enumeration enum = suite.tests(  ); enum.hasMoreElements(  ); ) {
-                Test t = (Test) enum.nextElement(  );
+            for( Enumeration e = suite.tests(  ); e.hasMoreElements(  ); ) {
+                Test t = (Test) e.nextElement(  );
                 this.addTest( t );
             }
         }
