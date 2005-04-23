@@ -43,7 +43,6 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,6 @@ import java.util.Set;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.GraphHelper;
-import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.traverse.DepthFirstIterator;
 
@@ -78,7 +76,7 @@ import org._3pq.jgrapht.traverse.DepthFirstIterator;
  * @since Feb 2, 2005
  */
 public class StrongConnectivityInspector {
-    private final DirectedGraph graph;
+    private final DirectedGraph m_graph;
 
     /**
      * The constructor for the StrongConnectivityInspector class.
@@ -86,7 +84,7 @@ public class StrongConnectivityInspector {
      * @param g The graph to inspect.
      */
     public StrongConnectivityInspector( DirectedGraph g ) {
-        this.graph = g;
+        m_graph = g;
     }
 
     /**
@@ -100,7 +98,7 @@ public class StrongConnectivityInspector {
 
         // calculate discover and finish times
         AnalyzingDepthFirstIterator iter =
-            new AnalyzingDepthFirstIterator( graph );
+            new AnalyzingDepthFirstIterator( m_graph );
 
         while( iter.hasNext(  ) ) {
             iter.next(  );
@@ -110,7 +108,7 @@ public class StrongConnectivityInspector {
 
         // create inverted graph
         DirectedGraph invertedGraph = new DefaultDirectedGraph(  );
-        GraphHelper.addGraphReversed( invertedGraph, this.graph );
+        GraphHelper.addGraphReversed( invertedGraph, m_graph );
 
         // sort vertices in increasing finish time order
         VertexData[] orderedVertices =
@@ -158,8 +156,8 @@ public class StrongConnectivityInspector {
      * @author chris
      */
     private class AnalyzingDepthFirstIterator extends DepthFirstIterator {
-        private final Map vertices = new HashMap(  );
-        private int       time = 0;
+        private final Map m_vertices = new HashMap(  );
+        private int       m_time = 0;
 
         /**
          * {@inheritDoc}
@@ -175,9 +173,9 @@ public class StrongConnectivityInspector {
             super.encounterVertex( vertex, edge );
 
             VertexData data = new VertexData( vertex );
-            data.visit( time );
-            time++;
-            vertices.put( vertex, data );
+            data.visit( m_time );
+            m_time++;
+            m_vertices.put( vertex, data );
         }
 
 
@@ -187,9 +185,9 @@ public class StrongConnectivityInspector {
         protected void encounterVertexAgain( Object vertex, Edge edge ) {
             super.encounterVertexAgain( vertex, edge );
 
-            VertexData data = (VertexData) vertices.get( vertex );
-            data.visit( time );
-            time++;
+            VertexData data = (VertexData) m_vertices.get( vertex );
+            data.visit( m_time );
+            m_time++;
         }
 
 
@@ -200,7 +198,7 @@ public class StrongConnectivityInspector {
          * @return the HashMap containing vertices and data.
          */
         Map getVerticesData(  ) {
-            return vertices;
+            return m_vertices;
         }
     }
 
@@ -245,9 +243,9 @@ public class StrongConnectivityInspector {
      * @author chris
      */
     private class VertexData {
-        private final Object vertex;
-        private int          discovered = Integer.MIN_VALUE;
-        private int          finished   = Integer.MIN_VALUE;
+        private final Object m_vertex;
+        private int          m_discovered = Integer.MIN_VALUE;
+        private int          m_finished   = Integer.MIN_VALUE;
 
         /**
          * The constructor of the VertexData class.
@@ -256,7 +254,7 @@ public class StrongConnectivityInspector {
          */
         VertexData( Object vertex ) {
             super(  );
-            this.vertex = vertex;
+            m_vertex = vertex;
         }
 
         /**
@@ -266,7 +264,7 @@ public class StrongConnectivityInspector {
          * @return The discovery time
          */
         int getDiscoveyTime(  ) {
-            return discovered;
+            return m_discovered;
         }
 
 
@@ -277,7 +275,7 @@ public class StrongConnectivityInspector {
          * @return The finishing time
          */
         int getFinishingTime(  ) {
-            return finished;
+            return m_finished;
         }
 
 
@@ -287,7 +285,7 @@ public class StrongConnectivityInspector {
          * @return The vertex
          */
         Object getVertex(  ) {
-            return this.vertex;
+            return m_vertex;
         }
 
 
@@ -300,12 +298,12 @@ public class StrongConnectivityInspector {
          *        AnalyzingDepthFirstIterator}
          */
         void visit( int time ) {
-            if( this.discovered == Integer.MIN_VALUE ) {
-                this.discovered     = time;
-                this.finished       = time;
+            if( m_discovered == Integer.MIN_VALUE ) {
+                m_discovered     = time;
+                m_finished       = time;
             }
             else {
-                this.finished = time;
+                this.m_finished = time;
             }
         }
     }

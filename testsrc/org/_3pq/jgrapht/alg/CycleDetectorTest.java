@@ -46,12 +46,8 @@ import java.util.Set;
 import junit.framework.TestCase;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.alg.CycleDetector;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
-import org._3pq.jgrapht.graph.SimpleGraph;
 
 /**
  * .

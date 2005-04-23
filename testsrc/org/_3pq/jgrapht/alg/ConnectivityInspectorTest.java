@@ -39,7 +39,8 @@
  */
 package org._3pq.jgrapht.alg;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.TestCase;
 
