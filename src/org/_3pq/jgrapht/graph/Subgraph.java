@@ -39,7 +39,7 @@
  * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
  * 07-Feb-2004 : Enabled serialization (BN);
  * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
- * 21-Sep-2004 : Added induced subgraph 
+ * 21-Sep-2004 : Added induced subgraph
  *
  */
 package org._3pq.jgrapht.graph;
@@ -77,9 +77,9 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * an edge or a vertex is removed from the base graph, it is automatically
  * removed from the subgraph. Subgraph listeners are informed on such removal
  * only if it results in a cascaded removal from the subgraph. If the subgraph
- * has been created as an induced subgraph it also keeps track of edges being 
- * added to its vertices. If 
- * vertices are added to the base graph, the subgraph remains unaffected.
+ * has been created as an induced subgraph it also keeps track of edges being
+ * added to its vertices. If  vertices are added to the base graph, the
+ * subgraph remains unaffected.
  * </p>
  * 
  * <p>
@@ -132,8 +132,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
     private transient Set m_unmodifiableEdgeSet   = null;
     private transient Set m_unmodifiableVertexSet = null;
     private Graph         m_base;
-    private boolean       m_verifyIntegrity       = true;
-    private boolean       m_isInduced             = false;
+    private boolean       m_isInduced       = false;
+    private boolean       m_verifyIntegrity = true;
 
     /**
      * Creates a new Subgraph.
@@ -159,11 +159,12 @@ public class Subgraph extends AbstractGraph implements Serializable {
         addEdgesUsingFilter( base.edgeSet(  ), edgeSubset );
     }
 
+
     /**
-     * Creates a new induced Subgraph. The subgraph will keep track
-     * of edges being added to its vertex subset as well as deletion
-     * of edges and vertices. If base it not listenable,
-     * this is identical to the call Subgraph(base, vertexSubset, null) .
+     * Creates a new induced Subgraph. The subgraph will keep track of edges
+     * being added to its vertex subset as well as deletion of edges and
+     * vertices. If base it not listenable, this is identical to the call
+     * Subgraph(base, vertexSubset, null) .
      *
      * @param base the base (backing) graph on which the subgraph will be
      *        based.
@@ -171,8 +172,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
      *        <code>null</code> then all vertices are included.
      */
     public Subgraph( Graph base, Set vertexSubset ) {
-        this(base, vertexSubset, null);
-        
+        this( base, vertexSubset, null );
+
         m_isInduced = true;
     }
 
@@ -368,10 +369,10 @@ public class Subgraph extends AbstractGraph implements Serializable {
      */
     public int degreeOf( Object vertex ) {
         assertVertexExist( vertex );
-        
+
         // sophisticated way to check runtime class of base ;-)
-        ((UndirectedGraph)m_base).degreeOf( vertex );
-        
+        ( (UndirectedGraph) m_base ).degreeOf( vertex );
+
         int degree = 0;
 
         for( Iterator i = m_base.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
@@ -379,12 +380,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
             if( containsEdge( e ) ) {
                 degree++;
-                if (e.getSource().equals(e.getTarget())) {
+
+                if( e.getSource(  ).equals( e.getTarget(  ) ) ) {
                     degree++;
                 }
             }
         }
-        
+
         return degree;
     }
 
@@ -427,15 +429,17 @@ public class Subgraph extends AbstractGraph implements Serializable {
      */
     public int inDegreeOf( Object vertex ) {
         assertVertexExist( vertex );
-        
+
         int degree = 0;
 
-        for( Iterator i = ((DirectedGraph)m_base).incomingEdgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+        for( Iterator i =
+                ( (DirectedGraph) m_base ).incomingEdgesOf( vertex ).iterator(  );
+                i.hasNext(  ); ) {
             if( containsEdge( (Edge) i.next(  ) ) ) {
                 degree++;
             }
         }
-        
+
         return degree;
     }
 
@@ -447,7 +451,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         assertVertexExist( vertex );
 
         ArrayList edges     = new ArrayList(  );
-        List      baseEdges = ((DirectedGraph)m_base).incomingEdgesOf( vertex );
+        List      baseEdges =
+            ( (DirectedGraph) m_base ).incomingEdgesOf( vertex );
 
         for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
             Edge e = (Edge) i.next(  );
@@ -466,15 +471,17 @@ public class Subgraph extends AbstractGraph implements Serializable {
      */
     public int outDegreeOf( Object vertex ) {
         assertVertexExist( vertex );
-        
+
         int degree = 0;
 
-        for( Iterator i = ((DirectedGraph)m_base).outgoingEdgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
+        for( Iterator i =
+                ( (DirectedGraph) m_base ).outgoingEdgesOf( vertex ).iterator(  );
+                i.hasNext(  ); ) {
             if( containsEdge( (Edge) i.next(  ) ) ) {
                 degree++;
             }
         }
-        
+
         return degree;
     }
 
@@ -486,7 +493,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         assertVertexExist( vertex );
 
         ArrayList edges     = new ArrayList(  );
-        List      baseEdges = ((DirectedGraph)m_base).outgoingEdgesOf( vertex );
+        List      baseEdges =
+            ( (DirectedGraph) m_base ).outgoingEdgesOf( vertex );
 
         for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
             Edge e = (Edge) i.next(  );
@@ -593,8 +601,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
         public void edgeAdded( GraphEdgeChangeEvent e ) {
-            if (m_isInduced) {
-                addEdge(e.getEdge());
+            if( m_isInduced ) {
+                addEdge( e.getEdge(  ) );
             }
         }
 

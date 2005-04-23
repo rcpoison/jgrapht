@@ -106,7 +106,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
         try {
             return super.clone(  );
         }
-        catch( CloneNotSupportedException e ) {
+         catch( CloneNotSupportedException e ) {
             // shouldn't happen as we are Cloneable
             throw new InternalError(  );
         }

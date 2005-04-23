@@ -228,16 +228,6 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      */
     protected abstract Object provideNextVertex(  );
 
-    /**
-     * Determines whether a vertex has been seen yet by this traversal.
-     *
-     * @param vertex vertex in question
-     *
-     * @return <tt>true</tt> if vertex has already been seen
-     */
-    protected boolean isSeenVertex( Object vertex ) {
-        return m_seen.containsKey( vertex );
-    }
 
     /**
      * Access the data stored for a seen vertex.
@@ -251,6 +241,18 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      */
     protected Object getSeenData( Object vertex ) {
         return m_seen.get( vertex );
+    }
+
+
+    /**
+     * Determines whether a vertex has been seen yet by this traversal.
+     *
+     * @param vertex vertex in question
+     *
+     * @return <tt>true</tt> if vertex has already been seen
+     */
+    protected boolean isSeenVertex( Object vertex ) {
+        return m_seen.containsKey( vertex );
     }
 
 

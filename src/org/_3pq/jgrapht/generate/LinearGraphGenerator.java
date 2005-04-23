@@ -44,8 +44,8 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.VertexFactory;
 
 /**
- * Generates a linear graph of any size.  For a directed
- * graph, the edges are oriented from START_VERTEX to END_VERTEX.
+ * Generates a linear graph of any size.  For a directed graph, the edges are
+ * oriented from START_VERTEX to END_VERTEX.
  *
  * @author John V. Sichi
  *

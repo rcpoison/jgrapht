@@ -24,23 +24,28 @@
 /* ------------------------------
  * ConnectivityInspectorTest.java
  * ------------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   John V. Sichi
  *
  * $Id$
  *
  * Changes
  * -------
  * 07-Aug-2003 : Initial revision (BN);
+ * 20-Apr-2005 : Added StrongConnectivityInspector test (JVS);
  *
  */
 package org._3pq.jgrapht.alg;
 
+import java.util.*;
+
 import junit.framework.TestCase;
 
+import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.graph.ListenableDirectedGraph;
 import org._3pq.jgrapht.graph.Pseudograph;
 
@@ -148,5 +153,44 @@ public class ConnectivityInspectorTest extends TestCase {
 
         inspector = new ConnectivityInspector( g );
         assertEquals( false, inspector.isGraphConnected(  ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testStronglyConnected(  ) {
+        DirectedGraph g = new DefaultDirectedGraph(  );
+        g.addVertex( V1 );
+        g.addVertex( V2 );
+        g.addVertex( V3 );
+        g.addVertex( V4 );
+
+        g.addEdge( V1, V2 );
+        g.addEdge( V2, V1 ); // strongly connected
+
+        g.addEdge( V3, V4 ); // only weakly connected
+
+        StrongConnectivityInspector inspector =
+            new StrongConnectivityInspector( g );
+
+        // convert from List to Set because we need to ignore order
+        // during comparison
+        Set actualSets = new HashSet( inspector.stronglyConnectedSets(  ) );
+
+        // construct the expected answer
+        Set expectedSets = new HashSet(  );
+        Set set = new HashSet(  );
+        set.add( V1 );
+        set.add( V2 );
+        expectedSets.add( set );
+        set = new HashSet(  );
+        set.add( V3 );
+        expectedSets.add( set );
+        set = new HashSet(  );
+        set.add( V4 );
+        expectedSets.add( set );
+
+        assertEquals( expectedSets, actualSets );
     }
 }

@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -61,14 +61,13 @@ import org.jgraph.graph.GraphConstants;
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
  *
  * @author Barak Naveh
+ *
  * @since Aug 3, 2003
  */
 public class JGraphAdapterDemo extends JApplet {
     private static final long      serialVersionUID = 3256444702936019250L;
-    private static final Color     DEFAULT_BG_COLOR =
-        Color.decode( "#FAFBFF" );
-    private static final Dimension DEFAULT_SIZE     =
-        new Dimension( 530, 320 );
+    private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
+    private static final Dimension DEFAULT_SIZE = new Dimension( 530, 320 );
 
     //
     private JGraphModelAdapter m_jgAdapter;
@@ -80,14 +79,14 @@ public class JGraphAdapterDemo extends JApplet {
      * @param args ignored.
      */
     public static void main( String[] args ) {
-        JGraphAdapterDemo applet = new JGraphAdapterDemo();
-        applet.init();
+        JGraphAdapterDemo applet = new JGraphAdapterDemo(  );
+        applet.init(  );
 
-        JFrame frame = new JFrame();
-        frame.getContentPane().add( applet );
+        JFrame frame = new JFrame(  );
+        frame.getContentPane(  ).add( applet );
         frame.setTitle( "JGraphT Adapter to JGraph Demo" );
         frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        frame.pack();
+        frame.pack(  );
         frame.setVisible( true );
     }
 
@@ -95,9 +94,9 @@ public class JGraphAdapterDemo extends JApplet {
     /**
      * {@inheritDoc}
      */
-    public void init() {
+    public void init(  ) {
         // create a JGraphT graph
-        ListenableGraph g = new ListenableDirectedMultigraph();
+        ListenableGraph g = new ListenableDirectedMultigraph(  );
 
         // create a visualization using JGraph, via an adapter
         m_jgAdapter = new JGraphModelAdapter( g );
@@ -105,7 +104,7 @@ public class JGraphAdapterDemo extends JApplet {
         JGraph jgraph = new JGraph( m_jgAdapter );
 
         adjustDisplaySettings( jgraph );
-        getContentPane().add( jgraph );
+        getContentPane(  ).add( jgraph );
         resize( DEFAULT_SIZE );
 
         Object v1 = "v1";
@@ -143,7 +142,7 @@ public class JGraphAdapterDemo extends JApplet {
         try {
             colorStr = getParameter( "bgcolor" );
         }
-        catch( Exception e ) { }
+         catch( Exception e ) {}
 
         if( colorStr != null ) {
             c = Color.decode( colorStr );
@@ -155,16 +154,16 @@ public class JGraphAdapterDemo extends JApplet {
 
     private void positionVertexAt( Object vertex, int x, int y ) {
         DefaultGraphCell cell   = m_jgAdapter.getVertexCell( vertex );
-        AttributeMap     attr   = cell.getAttributes();
+        AttributeMap     attr   = cell.getAttributes(  );
         Rectangle2D      bounds = GraphConstants.getBounds( attr );
 
-        Rectangle2D newBounds =
-            new Rectangle2D.Double( x, y, bounds.getWidth(),
-                bounds.getHeight() );
+        Rectangle2D      newBounds =
+            new Rectangle2D.Double( x, y, bounds.getWidth(  ),
+                bounds.getHeight(  ) );
 
         GraphConstants.setBounds( attr, newBounds );
 
-        AttributeMap cellAttr = new AttributeMap();
+        AttributeMap cellAttr = new AttributeMap(  );
         cellAttr.put( cell, attr );
         m_jgAdapter.edit( cellAttr, null, null, null );
     }
@@ -176,10 +175,8 @@ public class JGraphAdapterDemo extends JApplet {
         extends DefaultListenableGraph implements DirectedGraph {
         private static final long serialVersionUID = 1L;
 
-        ListenableDirectedMultigraph() {
-            super( new DirectedMultigraph() );
+        ListenableDirectedMultigraph(  ) {
+            super( new DirectedMultigraph(  ) );
         }
     }
 }
-
-//~ Formatting done by Jalopy - www.triemax.com ~//

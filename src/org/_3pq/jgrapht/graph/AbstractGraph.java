@@ -138,6 +138,18 @@ public abstract class AbstractGraph implements Graph {
 
 
     /**
+     * Returns a string of the parenthesized pair (V, E) representing this
+     * G=(V,E) graph. 'V' is the string representation of the vertex set, and
+     * 'E' is the string representation of the edge set.
+     *
+     * @return a string representation of this graph.
+     */
+    public String toString(  ) {
+        return toStringFromSets( vertexSet(  ), edgeSet(  ) );
+    }
+
+
+    /**
      * Ensures that the specified vertex exists in this graph, or else throws
      * exception.
      *
@@ -196,17 +208,5 @@ public abstract class AbstractGraph implements Graph {
      */
     protected String toStringFromSets( Collection vertexSet, Collection edgeSet ) {
         return "(" + vertexSet.toString(  ) + ", " + edgeSet.toString(  ) + ")";
-    }
-
-
-    /**
-     * Returns a string of the parenthesized pair (V, E) representing this
-     * G=(V,E) graph. 'V' is the string representation of the vertex set, and
-     * 'E' is the string representation of the edge set.
-     *
-     * @return a string representation of this graph.
-     */
-    public String toString(  ) {
-        return toStringFromSets( vertexSet(  ), edgeSet(  ) );
     }
 }

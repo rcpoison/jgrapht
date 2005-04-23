@@ -49,9 +49,9 @@ import org._3pq.jgrapht.Graph;
 import org._3pq.jgrapht.traverse.DepthFirstIterator;
 
 /**
- * Performs cycle detection on a graph. The <i>inspected
- * graph</i> is specified at construction time and cannot be modified.
- * Currently, the detector supports only directed graphs.
+ * Performs cycle detection on a graph. The <i>inspected graph</i> is specified
+ * at construction time and cannot be modified. Currently, the detector
+ * supports only directed graphs.
  *
  * @author John V. Sichi
  *
@@ -80,7 +80,7 @@ public class CycleDetector {
         try {
             execute( null, null );
         }
-        catch( CycleDetectedException ex ) {
+         catch( CycleDetectedException ex ) {
             return true;
         }
 
@@ -99,7 +99,7 @@ public class CycleDetector {
         try {
             execute( null, v );
         }
-        catch( CycleDetectedException ex ) {
+         catch( CycleDetectedException ex ) {
             return true;
         }
 

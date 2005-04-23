@@ -215,7 +215,7 @@ public class DefaultListenableGraph extends GraphDelegator
 
             return g;
         }
-        catch( CloneNotSupportedException e ) {
+         catch( CloneNotSupportedException e ) {
             // should never get here since we're Cloneable
             e.printStackTrace(  );
             throw new RuntimeException( "internal error" );
