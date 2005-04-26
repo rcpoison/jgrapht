@@ -62,6 +62,7 @@ public final class AllTraverseTests {
         suite.addTest( new TestSuite( DepthFirstIteratorTest.class ) );
         suite.addTest( new TestSuite( ClosestFirstIteratorTest.class ) );
         suite.addTest( new TestSuite( IgnoreDirectionTest.class ) );
+        suite.addTest( new TestSuite( TopologicalOrderIteratorTest.class ) );
 
         //$JUnit-END$
         return suite;

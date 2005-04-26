@@ -182,7 +182,7 @@ public class JGraphModelAdapter extends DefaultGraphModel {
     private final Map m_cellToEdge = new HashMap(  );
 
     /** Maps JGraph vertices to JGraphT vertices */
-    private final Map    m_cellToVertex = new HashMap(  );
+    private final Map    m_cellToVertex            = new HashMap(  );
     private AttributeMap m_defaultEdgeAttributes;
     private AttributeMap m_defaultVertexAttributes;
 

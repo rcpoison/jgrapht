@@ -67,7 +67,7 @@ import org.jgraph.graph.GraphConstants;
 public class JGraphAdapterDemo extends JApplet {
     private static final long      serialVersionUID = 3256444702936019250L;
     private static final Color     DEFAULT_BG_COLOR = Color.decode( "#FAFBFF" );
-    private static final Dimension DEFAULT_SIZE = new Dimension( 530, 320 );
+    private static final Dimension DEFAULT_SIZE     = new Dimension( 530, 320 );
 
     //
     private JGraphModelAdapter m_jgAdapter;

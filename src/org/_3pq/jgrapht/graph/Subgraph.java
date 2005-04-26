@@ -132,8 +132,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
     private transient Set m_unmodifiableEdgeSet   = null;
     private transient Set m_unmodifiableVertexSet = null;
     private Graph         m_base;
-    private boolean       m_isInduced       = false;
-    private boolean       m_verifyIntegrity = true;
+    private boolean       m_isInduced             = false;
+    private boolean       m_verifyIntegrity       = true;
 
     /**
      * Creates a new Subgraph.

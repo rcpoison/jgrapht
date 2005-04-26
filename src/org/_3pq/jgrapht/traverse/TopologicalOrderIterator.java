@@ -27,13 +27,14 @@
  * (C) Copyright 2004, by Marden Neubert and Contributors.
  *
  * Original Author:  Marden Neubert
- * Contributor(s):   Barak Naveh
+ * Contributor(s):   Barak Naveh, John V. Sichi
  *
  * $Id$
  *
  * Changes
  * -------
  * 17-Dec-2004 : Initial revision (MN);
+ * 25-Apr-2005 : Fixes for start vertex order (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -74,8 +75,8 @@ import org._3pq.jgrapht.util.ModifiableInteger;
  * @since Dec 18, 2004
  */
 public class TopologicalOrderIterator extends CrossComponentIterator {
-    private LinkedList m_queue       = new LinkedList(  );
-    private Map        m_inDegreeMap = new HashMap(  );
+    private LinkedList m_queue;
+    private Map        m_inDegreeMap;
 
     /**
      * Creates a new topological order iterator over the directed graph
@@ -87,14 +88,34 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
      * @param dg the directed graph to be iterated.
      */
     public TopologicalOrderIterator( DirectedGraph dg ) {
-        super( dg, null );
-        initialize( dg );
+        this( dg, new LinkedList(  ), new HashMap(  ) );
+    }
+
+
+    // NOTE: This is a hack to deal with the fact that CrossComponentIterator
+    // needs to know the start vertex in its constructor
+    private TopologicalOrderIterator( DirectedGraph dg, LinkedList queue,
+        Map inDegreeMap ) {
+        this( dg, initialize( dg, queue, inDegreeMap ) );
+        m_queue           = queue;
+        m_inDegreeMap     = inDegreeMap;
+    }
+
+
+    // NOTE: This is intentionally private, because starting the sort "in the
+    // middle" doesn't make sense.
+    private TopologicalOrderIterator( DirectedGraph dg, Object start ) {
+        super( dg, start );
     }
 
     /**
      * @see CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted(  ) {
+        // FIXME jvs 25-Apr-2005: This isn't correct for a graph with more than
+        // one component.  We will actually exhaust a connected component
+        // before the queue is empty, because initialize adds roots from all
+        // components to the queue.
         return m_queue.isEmpty(  );
     }
 
@@ -149,17 +170,29 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
      * structure for the in-degrees.
      *
      * @param dg the directed graph to be iterated.
+     * @param queue initializer for m_queue
+     * @param inDegreeMap initializer for m_inDegreeMap
+     *
+     * @return start vertex
      */
-    private void initialize( DirectedGraph dg ) {
+    private static Object initialize( DirectedGraph dg, LinkedList queue,
+        Map inDegreeMap ) {
         for( Iterator i = dg.vertexSet(  ).iterator(  ); i.hasNext(  ); ) {
             Object vertex = i.next(  );
 
             int    inDegree = dg.inDegreeOf( vertex );
-            m_inDegreeMap.put( vertex, new ModifiableInteger( inDegree ) );
+            inDegreeMap.put( vertex, new ModifiableInteger( inDegree ) );
 
             if( inDegree == 0 ) {
-                m_queue.add( vertex );
+                queue.add( vertex );
             }
+        }
+
+        if( queue.isEmpty(  ) ) {
+            return null;
+        }
+        else {
+            return queue.getFirst(  );
         }
     }
 }
