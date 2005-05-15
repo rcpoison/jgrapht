@@ -21,290 +21,224 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* --------------------------
- * StrongConnectivityInspector.java
- * --------------------------
- * (C) Copyright 2005, by Chris Soltenborn and Contributors.
- *
- * Original Author:  Chris Soltenborn
- * Contributor(s):   John V. Sichi
- *
- * $Id$
- *
- * Changes
- * -------
- * 05-Feb-2005 : Initial revision (CS);
- * 20-Apr-2005 : Reformatted for JGraphT (JVS);
- *
- */
 package org._3pq.jgrapht.alg;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Stack;
+import java.util.Vector;
 
 import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.GraphHelper;
+import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
-import org._3pq.jgrapht.traverse.DepthFirstIterator;
 
 /**
+ * <p>
  * Complements the {@link ConnectivityInspector} class with the capability to
- * compute the strongly connected components of a directed graph.  The
+ * compute the strongly connected components of a directed graph. The
  * algorithm is implemented after "Corman et al: Introduction to agorithms",
- * Chapter 25.2. It has a running time of O(V log( V ) + E).  NOTE: The
- * running time could be improved to O(V + E) in the following way: If a
- * vertex is visited by AnalyzingDepthFirstIterator for the last time, it is
- * added to a stack. This stack can be used to perform the first call of
- * DepthFirstSearch without sorting it first (this is where the O(V log V)
- * comes from).
+ * Chapter 25.2. It has a running time of O(V + E).
+ * </p>
  * 
  * <p>
  * Unlike ConnectivityInspector, this class does not implement incremental
- * inspection; every call to stronglyConnectedSets executes the full
- * algorithm.
+ * inspection. The full algorithm is executed at the first call of  {@link
+ * StrongConnectivityInspector#stronglyConnectedSets()} or {@link
+ * StrongConnectivityInspector#isStronglyConnected()}.
  * </p>
  *
- * @author chris
+ * @author Christian Soltenborn
  *
  * @since Feb 2, 2005
  */
 public class StrongConnectivityInspector {
-    private final DirectedGraph m_graph;
+    // the graph to compute the strongly connected sets for
+    private DirectedGraph m_graph;
+
+    // stores the vertices, ordered by their finishing time in first dfs
+    private LinkedList m_orderedVertices;
+
+    // the result of the computation, cached for future calls
+    private List m_stronglyConnectedSets;
+
+    // maps vertices to their VertexData object
+    private Map m_verticesToVerticesData;
 
     /**
      * The constructor for the StrongConnectivityInspector class.
      *
-     * @param g The graph to inspect.
+     * @param directedGraph the graph to inspect
      */
-    public StrongConnectivityInspector( DirectedGraph g ) {
-        m_graph = g;
+    public StrongConnectivityInspector( DirectedGraph directedGraph ) {
+        m_graph                      = directedGraph;
+        m_verticesToVerticesData     = null;
+        m_orderedVertices            = null;
+        m_stronglyConnectedSets      = null;
     }
 
     /**
-     * Computes a List of Sets, where each set contains vertices which together
-     * form a strongly connected component within the given graph.
+     * Returns true if the graph of this
+     * <code>StronglyConnectivityInspector</code> instance is strongly
+     * connected.
      *
-     * @return List of Sets containing the strongly connected components
+     * @return true if the graph is strongly connected
+     */
+    public boolean isStronglyConnected(  ) {
+        return stronglyConnectedSets(  ).size(  ) == 1;
+    }
+
+
+    /**
+     * Computes a {@link List} of {@link Set}s, where each set contains
+     * vertices which together form a strongly connected component within the
+     * given graph.
+     *
+     * @return <code>List</code> of <code>Set</code>s containing the strongly
+     *         connected components
      */
     public List stronglyConnectedSets(  ) {
-        LinkedList result = new LinkedList(  );
+        if( m_stronglyConnectedSets == null ) {
+            m_verticesToVerticesData =
+                new HashMap( m_graph.vertexSet(  ).size(  ) );
+            m_orderedVertices           = new LinkedList(  );
+            m_stronglyConnectedSets =
+                new Vector( m_graph.vertexSet(  ).size(  ) );
 
-        // calculate discover and finish times
-        AnalyzingDepthFirstIterator iter =
-            new AnalyzingDepthFirstIterator( m_graph );
+            // create VertexData objects for all vertices, store them
+            Iterator iter = m_graph.vertexSet(  ).iterator(  );
 
-        while( iter.hasNext(  ) ) {
-            iter.next(  );
+            while( iter.hasNext(  ) ) {
+                Object vertex = iter.next(  );
+                m_verticesToVerticesData.put( vertex,
+                    new VertexData( vertex, false, false ) );
+            }
+
+            // perform the first round of DFS, result is an ordering
+            // of the vertices by decreasing finishing time
+            iter = m_verticesToVerticesData.values(  ).iterator(  );
+
+            while( iter.hasNext(  ) ) {
+                VertexData data = (VertexData) iter.next(  );
+
+                if( !data.m_discovered ) {
+                    dfsVisit( m_graph, data, null );
+                }
+            }
+
+            // calculate inverse graph (i.e. every edge is turned)
+            DirectedGraph inverseGraph = new DefaultDirectedGraph(  );
+            GraphHelper.addGraphReversed( inverseGraph, m_graph );
+
+            // get ready for next dfs round
+            resetVertexData(  );
+
+            // second dfs round: vertices are considered in decreasing
+            // finishing time order; every tree found is a strongly
+            // connected set
+            iter = m_orderedVertices.iterator(  );
+
+            while( iter.hasNext(  ) ) {
+                VertexData data = (VertexData) iter.next(  );
+
+                if( !data.m_discovered ) {
+                    // new strongly connected set
+                    Set set = new HashSet(  );
+                    m_stronglyConnectedSets.add( set );
+                    dfsVisit( inverseGraph, data, set );
+                }
+            }
+
+            // clean up for garbage collection
+            m_graph                      = null;
+            m_orderedVertices            = null;
+            m_verticesToVerticesData     = null;
         }
 
-        Map verticesData = iter.getVerticesData(  );
+        return m_stronglyConnectedSets;
+    }
 
-        // create inverted graph
-        DirectedGraph invertedGraph = new DefaultDirectedGraph(  );
-        GraphHelper.addGraphReversed( invertedGraph, m_graph );
 
-        // sort vertices in increasing finish time order
-        VertexData[] orderedVertices =
-            new VertexData[ verticesData.values(  ).size(  ) ];
-        verticesData.values(  ).toArray( orderedVertices );
-        Arrays.sort( orderedVertices, new FinishingTimeComparator(  ) );
+    /*
+     * The subroutine of DFS.
+     * NOTE: the set is used to distinguish between 1st and 2nd round of DFS.
+     * set == null: finished vertices are stored (1st round).
+     * set != null: all vertices found will be saved in the set (2nd round)
+     */
+    private void dfsVisit( DirectedGraph graph, VertexData vertexData,
+        Set vertices ) {
+        Stack stack = new Stack(  );
+        stack.push( vertexData );
 
-        // create DepthFirstOrder forest on inverted graph,
-        // save trees as strongly connected components
-        HashSet processedVertices = new HashSet(  );
+        while( !stack.isEmpty(  ) ) {
+            VertexData data = (VertexData) stack.pop(  );
 
-        for( int i = 0; i < orderedVertices.length; i++ ) {
-            VertexData data = orderedVertices[ i ];
+            if( !data.m_discovered ) {
+                data.m_discovered = true;
 
-            // already contained in one of the trees?
-            if( !processedVertices.contains( data.getVertex(  ) ) ) {
-                Set                stronglyConnectedComponent = new HashSet(  );
-                DepthFirstIterator myIter =
-                    new DepthFirstIterator( invertedGraph, data.getVertex(  ) );
-
-                while( myIter.hasNext(  ) ) {
-                    Object vertex = myIter.next(  );
-
-                    if( !processedVertices.contains( vertex ) ) {
-                        processedVertices.add( vertex );
-                        stronglyConnectedComponent.add( vertex );
-                    }
+                if( vertices != null ) {
+                    vertices.add( data.m_vertex );
                 }
 
-                // save tree
-                result.add( stronglyConnectedComponent );
+                // TODO: other way to identify when this vertex is finished!?
+                stack.push( new VertexData( data, true, true ) );
+
+                // follow all edges
+                Iterator iter =
+                    graph.outgoingEdgesOf( data.m_vertex ).iterator(  );
+
+                while( iter.hasNext(  ) ) {
+                    DirectedEdge edge       = (DirectedEdge) iter.next(  );
+                    VertexData   targetData =
+                        (VertexData) m_verticesToVerticesData.get( edge
+                            .getTarget(  ) );
+
+                    if( !targetData.m_discovered ) {
+                        // the "recursion"
+                        stack.push( targetData );
+                    }
+                }
             }
-        }
-
-        return result;
-    }
-
-    /**
-     * Overwrites some method of the subclass {@link DepthFirstIterator} to
-     * compute the discovery and finishing time of all vertices. The result is
-     * saved in a map which contains the vertices as keys and the computed
-     * {@link VertexData} objects as values.  For an example of usage, see
-     * {@link AnalyzingDepthFirstIterator}.
-     *
-     * @author chris
-     */
-    private class AnalyzingDepthFirstIterator extends DepthFirstIterator {
-        private final Map m_vertices = new HashMap(  );
-        private int       m_time = 0;
-
-        /**
-         * {@inheritDoc}
-         */
-        AnalyzingDepthFirstIterator( DirectedGraph g ) {
-            super( g );
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        protected void encounterVertex( Object vertex, Edge edge ) {
-            super.encounterVertex( vertex, edge );
-
-            VertexData data = new VertexData( vertex );
-            data.visit( m_time );
-            m_time++;
-            m_vertices.put( vertex, data );
-        }
-
-
-        /**
-         * {@inheritDoc}
-         */
-        protected void encounterVertexAgain( Object vertex, Edge edge ) {
-            super.encounterVertexAgain( vertex, edge );
-
-            VertexData data = (VertexData) m_vertices.get( vertex );
-            data.visit( m_time );
-            m_time++;
-        }
-
-
-        /**
-         * After the iterator has been used, this method returns a HashMap
-         * containing the vertices as keys and VertexData objects as values.
-         *
-         * @return the HashMap containing vertices and data.
-         */
-        Map getVerticesData(  ) {
-            return m_vertices;
-        }
-    }
-
-
-    /**
-     * A {@link Comparator} for {@link VertexData} objects.
-     *
-     * @author chris
-     */
-    private class FinishingTimeComparator implements Comparator {
-        /**
-         * Returns -1, 0 or 1 if the finishing time of vertexData1 is less,
-         * equal or greater than the finishing time of vertexData2.
-         *
-         * @param vertexData1 The first VertexData object to compare
-         * @param vertexData2 The second VertexData object to compare
-         *
-         * @return -1, 0 or 1 (see above)
-         */
-        public int compare( Object vertexData1, Object vertexData2 ) {
-            VertexData vd1 = (VertexData) vertexData1;
-            VertexData vd2 = (VertexData) vertexData2;
-
-            if( vd1.getFinishingTime(  ) < vd2.getFinishingTime(  ) ) {
-                return -1;
-            }
-            else if( vd1.getFinishingTime(  ) > vd2.getFinishingTime(  ) ) {
-                return 1;
-            }
-            else {
-                return 0;
+            else if( data.m_finished ) {
+                if( vertices == null ) {
+                    // see TODO above
+                    m_orderedVertices.addFirst( data.m_vertex );
+                }
             }
         }
     }
 
 
-    /**
-     * Used to store data about a vertex, namely the time when a vertex has
-     * been visited first (discovery time) and the time when it was visited
-     * last (finishing time).
-     *
-     * @author chris
+    /*
+     * Resets all VertexData objects.
      */
-    private class VertexData {
+    private void resetVertexData(  ) {
+        Iterator iter = m_orderedVertices.iterator(  );
+
+        while( iter.hasNext(  ) ) {
+            VertexData data = (VertexData) iter.next(  );
+            data.m_discovered     = false;
+            data.m_finished       = false;
+        }
+    }
+
+    /*
+     * Lightweight class storing some data vor every vertex.
+     */
+    private final class VertexData {
         private final Object m_vertex;
-        private int          m_discovered = Integer.MIN_VALUE;
-        private int          m_finished   = Integer.MIN_VALUE;
+        private boolean      m_discovered;
+        private boolean      m_finished;
 
-        /**
-         * The constructor of the VertexData class.
-         *
-         * @param vertex the vertex to associate with this VertexData object.
-         */
-        VertexData( Object vertex ) {
-            super(  );
-            m_vertex = vertex;
-        }
-
-        /**
-         * Gets the discovery time of the vertex associated with this
-         * VertexData object.
-         *
-         * @return The discovery time
-         */
-        int getDiscoveyTime(  ) {
-            return m_discovered;
-        }
-
-
-        /**
-         * Gets the finishing time of the vertex associated with this
-         * VertexData object.
-         *
-         * @return The finishing time
-         */
-        int getFinishingTime(  ) {
-            return m_finished;
-        }
-
-
-        /**
-         * Gets the vertex associated with this VertexData object.
-         *
-         * @return The vertex
-         */
-        Object getVertex(  ) {
-            return m_vertex;
-        }
-
-
-        /**
-         * Called every time a vertex is visited by
-         * AnalyzingDepthFirstIterator. Makes sure that discovery and
-         * finishing time are set to proper values.
-         *
-         * @param time The current time of the {@link
-         *        AnalyzingDepthFirstIterator}
-         */
-        void visit( int time ) {
-            if( m_discovered == Integer.MIN_VALUE ) {
-                m_discovered     = time;
-                m_finished       = time;
-            }
-            else {
-                this.m_finished = time;
-            }
+        private VertexData( Object vertex, boolean discovered, boolean finished ) {
+            m_vertex         = vertex;
+            m_discovered     = discovered;
+            m_finished       = finished;
         }
     }
 }

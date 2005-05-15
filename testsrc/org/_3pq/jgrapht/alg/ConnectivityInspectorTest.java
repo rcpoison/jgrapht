@@ -160,7 +160,7 @@ public class ConnectivityInspectorTest extends TestCase {
     /**
      * .
      */
-    public void testStronglyConnected(  ) {
+    public void testStronglyConnected1(  ) {
         DirectedGraph g = new DefaultDirectedGraph(  );
         g.addVertex( V1 );
         g.addVertex( V2 );
@@ -186,6 +186,86 @@ public class ConnectivityInspectorTest extends TestCase {
         set.add( V2 );
         expectedSets.add( set );
         set = new HashSet(  );
+        set.add( V3 );
+        expectedSets.add( set );
+        set = new HashSet(  );
+        set.add( V4 );
+        expectedSets.add( set );
+
+        assertEquals( expectedSets, actualSets );
+    }
+
+
+    /**
+     * .
+     */
+    public void testStronglyConnected2(  ) {
+        DirectedGraph g = new DefaultDirectedGraph(  );
+        g.addVertex( V1 );
+        g.addVertex( V2 );
+        g.addVertex( V3 );
+        g.addVertex( V4 );
+
+        g.addEdge( V1, V2 );
+        g.addEdge( V2, V1 ); // strongly connected
+
+        g.addEdge( V4, V3 ); // only weakly connected
+        g.addEdge( V3, V2 ); // only weakly connected
+
+        StrongConnectivityInspector inspector =
+            new StrongConnectivityInspector( g );
+
+        // convert from List to Set because we need to ignore order
+        // during comparison
+        Set actualSets = new HashSet( inspector.stronglyConnectedSets(  ) );
+
+        // construct the expected answer
+        Set expectedSets = new HashSet(  );
+        Set set = new HashSet(  );
+        set.add( V1 );
+        set.add( V2 );
+        expectedSets.add( set );
+        set = new HashSet(  );
+        set.add( V3 );
+        expectedSets.add( set );
+        set = new HashSet(  );
+        set.add( V4 );
+        expectedSets.add( set );
+
+        assertEquals( expectedSets, actualSets );
+    }
+
+
+    /**
+     * .
+     */
+    public void testStronglyConnected3(  ) {
+        DirectedGraph g = new DefaultDirectedGraph(  );
+        g.addVertex( V1 );
+        g.addVertex( V2 );
+        g.addVertex( V3 );
+        g.addVertex( V4 );
+
+        g.addEdge( V1, V2 );
+        g.addEdge( V2, V3 );
+        g.addEdge( V3, V1 ); // strongly connected
+
+        g.addEdge( V1, V4 );
+        g.addEdge( V2, V4 );
+        g.addEdge( V3, V4 ); // weakly connected
+
+        StrongConnectivityInspector inspector =
+            new StrongConnectivityInspector( g );
+
+        // convert from List to Set because we need to ignore order
+        // during comparison
+        Set actualSets = new HashSet( inspector.stronglyConnectedSets(  ) );
+
+        // construct the expected answer
+        Set expectedSets = new HashSet(  );
+        Set set = new HashSet(  );
+        set.add( V1 );
+        set.add( V2 );
         set.add( V3 );
         expectedSets.add( set );
         set = new HashSet(  );
