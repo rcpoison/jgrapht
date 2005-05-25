@@ -38,9 +38,11 @@
  */
 package org._3pq.jgrapht.graph;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EnhancedTestCase;
 
 /**
@@ -54,6 +56,26 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
+
+    /**
+     * .
+     */
+    public void testEdgeOrderDeterminism(  ) {
+        DirectedGraph g = new DirectedMultigraph(  );
+        g.addVertex( m_v1 );
+        g.addVertex( m_v2 );
+        g.addVertex( m_v3 );
+
+        Edge     e1 = g.addEdge( m_v1, m_v2 );
+        Edge     e2 = g.addEdge( m_v2, m_v3 );
+        Edge     e3 = g.addEdge( m_v3, m_v1 );
+
+        Iterator iter = g.edgeSet(  ).iterator(  );
+        assertEquals( e1, iter.next(  ) );
+        assertEquals( e2, iter.next(  ) );
+        assertEquals( e3, iter.next(  ) );
+    }
+
 
     /**
      * .
@@ -96,6 +118,18 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
 
         assertEquals( 2, g.outDegreeOf( m_v1 ) );
         assertEquals( 1, g.outDegreeOf( m_v2 ) );
+    }
+
+
+    /**
+     * .
+     */
+    public void testVertexOrderDeterminism(  ) {
+        DirectedGraph g    = createMultiTriangleWithMultiLoop(  );
+        Iterator      iter = g.vertexSet(  ).iterator(  );
+        assertEquals( m_v1, iter.next(  ) );
+        assertEquals( m_v2, iter.next(  ) );
+        assertEquals( m_v3, iter.next(  ) );
     }
 
 

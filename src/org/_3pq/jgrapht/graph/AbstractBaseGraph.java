@@ -45,9 +45,9 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +65,11 @@ import org._3pq.jgrapht.UndirectedGraph;
  * graphs. The decision whether it is directed or undirected is decided at
  * construction time and cannot be later modified (see constructor for
  * details).
+ * 
+ * <p>
+ * This graph implementation guarantees deterministic vertex and edge set
+ * ordering (via {@link LinkedHashMap} and {@link LinkedHashSet}).
+ * </p>
  *
  * @author Barak Naveh
  *
@@ -109,8 +114,8 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
             throw new NullPointerException(  );
         }
 
-        m_vertexMap                 = new HashMap(  );
-        m_edgeSet                   = new HashSet(  );
+        m_vertexMap                 = new LinkedHashMap(  );
+        m_edgeSet                   = new LinkedHashSet(  );
         m_edgeFactory               = ef;
         m_allowingLoops             = allowLoops;
         m_allowingMultipleEdges     = allowMultipleEdges;
@@ -267,8 +272,8 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         try {
             AbstractBaseGraph newGraph = (AbstractBaseGraph) super.clone(  );
 
-            newGraph.m_vertexMap                 = new HashMap(  );
-            newGraph.m_edgeSet                   = new HashSet(  );
+            newGraph.m_vertexMap                 = new LinkedHashMap(  );
+            newGraph.m_edgeSet                   = new LinkedHashSet(  );
             newGraph.m_factoryEdgeClass          = this.m_factoryEdgeClass;
             newGraph.m_edgeFactory               = this.m_edgeFactory;
             newGraph.m_unmodifiableEdgeSet       = null;

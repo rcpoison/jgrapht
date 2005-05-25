@@ -159,7 +159,7 @@
         <mkdir dir="${build.dir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${build.dir}" target="1.3">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.4">
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
@@ -175,7 +175,7 @@
         <mkdir dir="${expbuild.dir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" target="1.3">
+        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" source="1.4">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/experimental/**/*.java"/>
         </javac>
@@ -199,7 +199,7 @@
         <!-- create a test build directory -->
         <mkdir dir="${testbuild.dir}" />
 
-        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" target="1.3"
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.4"
                debug="on">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>
@@ -223,7 +223,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 <fileset dir="${testsrc.dir}">
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
-                    <exclude name="**/Default*Test.java"/>
+                    <exclude name="**/DefaultEdgeTest.java"/>
                     <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
                 </fileset>
             </batchtest>

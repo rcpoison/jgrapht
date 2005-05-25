@@ -48,8 +48,8 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -111,6 +111,11 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * directly but exercise a great care to avoid having different-but-equal
  * instances in the subgraph and the base graph.
  * </p>
+ * 
+ * <p>
+ * This graph implementation guarantees deterministic vertex and edge set
+ * ordering (via {@link LinkedHashSet}).
+ * </p>
  *
  * @author Barak Naveh
  *
@@ -125,8 +130,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         "no such vertex in base graph";
 
     //
-    Set m_edgeSet   = new HashSet(  ); // friendly to improve performance
-    Set m_vertexSet = new HashSet(  ); // friendly to improve performance
+    Set m_edgeSet   = new LinkedHashSet(  ); // friendly to improve performance
+    Set m_vertexSet = new LinkedHashSet(  ); // friendly to improve performance
 
     // 
     private transient Set m_unmodifiableEdgeSet   = null;
