@@ -56,12 +56,38 @@ import org._3pq.jgrapht.graph.DefaultDirectedWeightedGraph;
  * @since Jul 30, 2003
  */
 public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
-    StringBuffer m_result = new StringBuffer(  );
+    StringBuffer m_result;
 
     /**
      * .
      */
     public void testDirectedGraph(  ) {
+        m_result = new StringBuffer(  );
+
+        DirectedGraph         graph = createDirectedGraph(  );
+
+        AbstractGraphIterator iterator = createIterator( graph, "1" );
+        iterator.addTraversalListener( new MyTraversalListener(  ) );
+
+        while( iterator.hasNext(  ) ) {
+            m_result.append( (String) iterator.next(  ) );
+
+            if( iterator.hasNext(  ) ) {
+                m_result.append( ',' );
+            }
+        }
+
+        assertEquals( getExpectedStr2(  ), m_result.toString(  ) );
+    }
+
+
+    abstract String getExpectedStr1(  );
+
+
+    abstract String getExpectedStr2(  );
+
+
+    DirectedGraph createDirectedGraph(  ) {
         DirectedGraph graph = new DefaultDirectedWeightedGraph(  );
 
         //
@@ -103,25 +129,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
         graph.addEdge( v8, v2 );
         graph.addEdge( v9, v4 );
 
-        AbstractGraphIterator iterator = createIterator( graph, v1 );
-        iterator.addTraversalListener( new MyTraversalListener(  ) );
-
-        while( iterator.hasNext(  ) ) {
-            m_result.append( (String) iterator.next(  ) );
-
-            if( iterator.hasNext(  ) ) {
-                m_result.append( ',' );
-            }
-        }
-
-        assertEquals( getExpectedStr2(  ), m_result.toString(  ) );
+        return graph;
     }
-
-
-    abstract String getExpectedStr1(  );
-
-
-    abstract String getExpectedStr2(  );
 
 
     abstract AbstractGraphIterator createIterator( DirectedGraph g,

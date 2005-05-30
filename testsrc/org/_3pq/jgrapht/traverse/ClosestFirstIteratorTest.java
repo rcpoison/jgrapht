@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 03-Sep-2003 : Initial revision (JVS);
+ * 29-May-2005 : Test radius support (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -48,6 +49,31 @@ import org._3pq.jgrapht.DirectedGraph;
  * @since Sep 3, 2003
  */
 public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest {
+    /**
+     * .
+     */
+    public void testRadius(  ) {
+        m_result = new StringBuffer(  );
+
+        DirectedGraph graph = createDirectedGraph(  );
+
+        // NOTE:  pick 301 as the radius because it discriminates
+        // the boundary case edge between v7 and v9
+        AbstractGraphIterator iterator =
+            new ClosestFirstIterator( graph, "1", 301 );
+
+        while( iterator.hasNext(  ) ) {
+            m_result.append( (String) iterator.next(  ) );
+
+            if( iterator.hasNext(  ) ) {
+                m_result.append( ',' );
+            }
+        }
+
+        assertEquals( "1,2,3,5,6,7", m_result.toString(  ) );
+    }
+
+
     // NOTE:  the edge weights make the result deterministic
     String getExpectedStr1(  ) {
         return "1,2,3,5,6,7,9,4,8";

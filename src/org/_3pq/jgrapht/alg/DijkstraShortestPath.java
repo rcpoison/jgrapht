@@ -3,9 +3,9 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -33,6 +33,7 @@
  * Changes
  * -------
  * 02-Sep-2003 : Initial revision (JVS);
+ * 29-May-2005 : Make non-static and add radius support (JVS);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -55,11 +56,64 @@ import org._3pq.jgrapht.traverse.ClosestFirstIterator;
  * @since Sep 2, 2003
  */
 public final class DijkstraShortestPath {
-    private DijkstraShortestPath(  ) {} // ensure non-instantiability.
+    private List   m_edgeList;
+    private double m_pathLength;
 
     /**
-     * Find the shortest path between two vertices, represented as a List of
-     * Edges in order from start to end vertex.
+     * Creates and executes a new DijkstraShortestPath algorithm instance. An
+     * instance is only good for a single search; after construction, it can
+     * be accessed to retrieve information about the path found.
+     *
+     * @param graph the graph to be searched
+     * @param startVertex the vertex at which the path should start
+     * @param endVertex the vertex at which the path should end
+     * @param radius limit on path length, or Double.POSITIVE_INFINITY for
+     *        unbounded search
+     */
+    public DijkstraShortestPath( Graph graph, Object startVertex,
+        Object endVertex, double radius ) {
+        ClosestFirstIterator iter =
+            new ClosestFirstIterator( graph, startVertex, radius );
+
+        while( iter.hasNext(  ) ) {
+            Object vertex = iter.next(  );
+
+            if( vertex.equals( endVertex ) ) {
+                createEdgeList( iter, endVertex );
+                m_pathLength = iter.getShortestPathLength( endVertex );
+
+                return;
+            }
+        }
+
+        m_edgeList       = null;
+        m_pathLength     = Double.POSITIVE_INFINITY;
+    }
+
+    /**
+     * Return the edges making up the path found.
+     *
+     * @return List of Edges, or null if no path exists
+     */
+    public List getPathEdgeList(  ) {
+        return m_edgeList;
+    }
+
+
+    /**
+     * Return the length of the path found.
+     *
+     * @return path length, or Double.POSITIVE_INFINITY if no path exists
+     */
+    public double getPathLength(  ) {
+        return m_pathLength;
+    }
+
+
+    /**
+     * Convenience method to find the shortest path via a single static method
+     * call.  If you need a more advanced search (e.g. limited by radius, or
+     * computation of the path length), use the constructor instead.
      *
      * @param graph the graph to be searched
      * @param startVertex the vertex at which the path should start
@@ -69,31 +123,16 @@ public final class DijkstraShortestPath {
      */
     public static List findPathBetween( Graph graph, Object startVertex,
         Object endVertex ) {
-        ClosestFirstIterator iter =
-            new ClosestFirstIterator( graph, startVertex );
+        DijkstraShortestPath alg =
+            new DijkstraShortestPath( graph, startVertex, endVertex,
+                Double.POSITIVE_INFINITY );
 
-        while( iter.hasNext(  ) ) {
-            Object vertex = iter.next(  );
-
-            if( vertex.equals( endVertex ) ) {
-                return createPath( iter, endVertex );
-            }
-        }
-
-        return null;
+        return alg.getPathEdgeList(  );
     }
 
 
-    /**
-     * Helper for findPathBetween.
-     *
-     * @param iter a ClosestFirstIterator which has already visited endVertex
-     * @param endVertex the vertex being sought
-     *
-     * @return non-null result for findPathBetween
-     */
-    private static List createPath( ClosestFirstIterator iter, Object endVertex ) {
-        List path = new ArrayList(  );
+    private void createEdgeList( ClosestFirstIterator iter, Object endVertex ) {
+        m_edgeList = new ArrayList(  );
 
         while( true ) {
             Edge edge = iter.getSpanningTreeEdge( endVertex );
@@ -102,12 +141,10 @@ public final class DijkstraShortestPath {
                 break;
             }
 
-            path.add( edge );
+            m_edgeList.add( edge );
             endVertex = edge.oppositeVertex( endVertex );
         }
 
-        Collections.reverse( path );
-
-        return path;
+        Collections.reverse( m_edgeList );
     }
 }

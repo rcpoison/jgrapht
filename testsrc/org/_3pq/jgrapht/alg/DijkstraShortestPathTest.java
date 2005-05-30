@@ -68,6 +68,24 @@ public class DijkstraShortestPathTest extends TestCase {
     /**
      * .
      */
+    public void testConstructor(  ) {
+        DijkstraShortestPath path;
+        Graph                g = create(  );
+
+        path = new DijkstraShortestPath( g, V3, V4, Double.POSITIVE_INFINITY );
+        assertEquals( Arrays.asList( new Edge[] { m_e13, m_e12, m_e24 } ),
+            path.getPathEdgeList(  ) );
+        assertEquals( 10.0, path.getPathLength(  ), 0 );
+
+        path = new DijkstraShortestPath( g, V3, V4, 7 );
+        assertNull( path.getPathEdgeList(  ) );
+        assertEquals( Double.POSITIVE_INFINITY, path.getPathLength(  ), 0 );
+    }
+
+
+    /**
+     * .
+     */
     public void testPathBetween(  ) {
         List  path;
         Graph g = create(  );

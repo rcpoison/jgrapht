@@ -35,6 +35,7 @@
  * -------
  * 02-Sep-2003 : Initial revision (JVS);
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
+ * 29-May-2005 : Added radius support (JVS);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -52,7 +53,8 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  * <p>
  * The metric for <i>closest</i> here is the path length from a start vertex.
  * Edge.getWeight() is summed to calculate path length. Negative edge weights
- * will result in an IllegalArgumentException.
+ * will result in an IllegalArgumentException.  Optionally, path length may be
+ * bounded by a finite radius.
  * </p>
  *
  * @author John V. Sichi
@@ -62,6 +64,9 @@ import org._3pq.jgrapht.util.FibonacciHeap;
 public class ClosestFirstIterator extends CrossComponentIterator {
     /** Priority queue of fringe vertices. */
     private FibonacciHeap m_heap = new FibonacciHeap(  );
+
+    /** Maximum distance to search. */
+    private double m_radius = Double.POSITIVE_INFINITY;
 
     /**
      * Creates a new closest-first iterator for the specified graph.
@@ -85,8 +90,56 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @param startVertex the vertex iteration to be started.
      */
     public ClosestFirstIterator( Graph g, Object startVertex ) {
-        super( g, startVertex );
+        this( g, startVertex, Double.POSITIVE_INFINITY );
     }
+
+
+    /**
+     * Creates a new radius-bounded closest-first iterator for the specified
+     * graph. Iteration will start at the specified start vertex and will be
+     * limited to the subset of the connected component which includes that
+     * vertex and is reachable via paths of length less than or equal to the
+     * specified radius.  The specified start vertex may not be
+     * <code>null</code>.
+     *
+     * @param g the graph to be iterated.
+     * @param startVertex the vertex iteration to be started.
+     * @param radius limit on path length, or Double.POSITIVE_INFINITY for
+     *        unbounded search.
+     */
+    public ClosestFirstIterator( Graph g, Object startVertex, double radius ) {
+        super( g, startVertex );
+        m_radius = radius;
+        checkRadiusTraversal( isCrossComponentTraversal(  ) );
+    }
+
+    // override AbstractGraphIterator
+    public void setCrossComponentTraversal( boolean crossComponentTraversal ) {
+        checkRadiusTraversal( crossComponentTraversal );
+        super.setCrossComponentTraversal( crossComponentTraversal );
+    }
+
+
+    /**
+     * Get the length of the shortest path known to the given vertex.  If the
+     * vertex has already been visited, then it is truly the shortest path
+     * length; otherwise, it is the best known upper bound.
+     *
+     * @param vertex vertex being sought from start vertex
+     *
+     * @return length of shortest path known, or Double.POSITIVE_INFINITY if no
+     *         path found yet
+     */
+    public double getShortestPathLength( Object vertex ) {
+        QueueEntry entry = (QueueEntry) getSeenData( vertex );
+
+        if( entry == null ) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        return entry.getShortestPathLength(  );
+    }
+
 
     /**
      * Get the spanning tree edge reaching a vertex which has been seen already
@@ -115,7 +168,19 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted(  ) {
-        return m_heap.size(  ) == 0;
+        if( m_heap.size(  ) == 0 ) {
+            return true;
+        }
+        else {
+            if( m_heap.min(  ).getKey(  ) > m_radius ) {
+                m_heap.clear(  );
+
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 
 
@@ -189,6 +254,14 @@ public class ClosestFirstIterator extends CrossComponentIterator {
         QueueEntry otherEntry = (QueueEntry) getSeenData( otherVertex );
 
         return otherEntry.getShortestPathLength(  ) + edge.getWeight(  );
+    }
+
+
+    private void checkRadiusTraversal( boolean crossComponentTraversal ) {
+        if( crossComponentTraversal && ( m_radius != Double.POSITIVE_INFINITY ) ) {
+            throw new IllegalArgumentException( 
+                "radius may not be specified for cross-component traversal" );
+        }
     }
 
 
