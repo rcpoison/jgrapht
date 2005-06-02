@@ -37,6 +37,7 @@
  * 10-Aug-2003 : General edge refactoring (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
  * 07-Feb-2004 : Enabled serialization (BN);
+ * 01-Jun-2005 : Added EdgeListFactory (JVS);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -84,13 +85,14 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     boolean m_allowingLoops;
 
     // private
-    private Class         m_factoryEdgeClass;
-    private EdgeFactory   m_edgeFactory;
-    private Set           m_edgeSet;
-    private transient Set m_unmodifiableEdgeSet   = null;
-    private transient Set m_unmodifiableVertexSet = null;
-    private Specifics     m_specifics;
-    private boolean       m_allowingMultipleEdges;
+    private Class           m_factoryEdgeClass;
+    private EdgeFactory     m_edgeFactory;
+    private EdgeListFactory m_edgeListFactory;
+    private Set             m_edgeSet;
+    private transient Set   m_unmodifiableEdgeSet   = null;
+    private transient Set   m_unmodifiableVertexSet = null;
+    private Specifics       m_specifics;
+    private boolean         m_allowingMultipleEdges;
 
     /**
      * Construct a new pseudograph. The pseudograph can either be directed or
@@ -123,7 +125,9 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
         m_specifics = createSpecifics(  );
 
         Edge e = ef.createEdge( new Object(  ), new Object(  ) );
-        m_factoryEdgeClass = e.getClass(  );
+        m_factoryEdgeClass     = e.getClass(  );
+
+        m_edgeListFactory = new ArrayListFactory(  );
     }
 
     /**
@@ -171,6 +175,19 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      */
     public EdgeFactory getEdgeFactory(  ) {
         return m_edgeFactory;
+    }
+
+
+    /**
+     * Set the {@link EdgeListFactory} to use for this graph. Initially, a
+     * graph is created with a default implementation which always supplies an
+     * {@link java.util.ArrayList} with capacity 1.
+     *
+     * @param edgeListFactory factory to use for subsequently created edge
+     *        lists (this call has no effect on existing edge lists)
+     */
+    public void setEdgeListFactory( EdgeListFactory edgeListFactory ) {
+        m_edgeListFactory = edgeListFactory;
     }
 
 
@@ -571,6 +588,18 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
     }
 
 
+    private static class ArrayListFactory implements EdgeListFactory {
+        /**
+         * @see EdgeListFactory.createEdgeList
+         */
+        public List createEdgeList( Object vertex ) {
+            // NOTE:  use size 1 to keep memory usage under control
+            // for the common case of vertices with low degree
+            return new ArrayList( 1 );
+        }
+    }
+
+
     /**
      * A container of for vertex edges.
      * 
@@ -583,10 +612,15 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * @author Barak Naveh
      */
     private static class DirectedEdgeContainer implements Serializable {
-        List                   m_incoming             = new ArrayList( 1 );
-        List                   m_outgoing             = new ArrayList( 1 );
+        List                   m_incoming;
+        List                   m_outgoing;
         private transient List m_unmodifiableIncoming = null;
         private transient List m_unmodifiableOutgoing = null;
+
+        DirectedEdgeContainer( EdgeListFactory edgeListFactory, Object vertex ) {
+            m_incoming     = edgeListFactory.createEdgeList( vertex );
+            m_outgoing     = edgeListFactory.createEdgeList( vertex );
+        }
 
         /**
          * A lazy build of unmodifiable incoming edge list.
@@ -825,7 +859,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
                 (DirectedEdgeContainer) m_vertexMap.get( vertex );
 
             if( ec == null ) {
-                ec = new DirectedEdgeContainer(  );
+                ec = new DirectedEdgeContainer( m_edgeListFactory, vertex );
                 m_vertexMap.put( vertex, ec );
             }
 
@@ -846,8 +880,12 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
      * @author Barak Naveh
      */
     private static class UndirectedEdgeContainer implements Serializable {
-        List                   m_vertexEdges             = new ArrayList( 1 );
+        List                   m_vertexEdges;
         private transient List m_unmodifiableVertexEdges = null;
+
+        UndirectedEdgeContainer( EdgeListFactory edgeListFactory, Object vertex ) {
+            m_vertexEdges = edgeListFactory.createEdgeList( vertex );
+        }
 
         /**
          * A lazy build of unmodifiable list of vertex edges
@@ -1080,7 +1118,7 @@ public abstract class AbstractBaseGraph extends AbstractGraph implements Graph,
                 (UndirectedEdgeContainer) m_vertexMap.get( vertex );
 
             if( ec == null ) {
-                ec = new UndirectedEdgeContainer(  );
+                ec = new UndirectedEdgeContainer( m_edgeListFactory, vertex );
                 m_vertexMap.put( vertex, ec );
             }
 

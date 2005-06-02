@@ -39,6 +39,7 @@
 package org._3pq.jgrapht.graph;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org._3pq.jgrapht.DirectedGraph;
@@ -56,6 +57,16 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
+
+    /**
+     * .
+     */
+    public void testEdgeListFactory(  ) {
+        DirectedMultigraph g = new DirectedMultigraph(  );
+        g.setEdgeListFactory( new LinkedListFactory(  ) );
+        initMultiTriangleWithMultiLoop( g );
+    }
+
 
     /**
      * .
@@ -135,7 +146,13 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
 
     private DirectedGraph createMultiTriangleWithMultiLoop(  ) {
         DirectedGraph g = new DirectedMultigraph(  );
+        initMultiTriangleWithMultiLoop( g );
 
+        return g;
+    }
+
+
+    private void initMultiTriangleWithMultiLoop( DirectedGraph g ) {
         g.addVertex( m_v1 );
         g.addVertex( m_v2 );
         g.addVertex( m_v3 );
@@ -144,7 +161,18 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
         g.addEdge( m_v1, m_v2 );
         g.addEdge( m_v2, m_v3 );
         g.addEdge( m_v3, m_v1 );
+    }
 
-        return g;
+    private static class LinkedListFactory implements EdgeListFactory {
+        /**
+         * .
+         *
+         * @param vertex  
+         *
+         * @return  
+         */
+        public List createEdgeList( Object vertex ) {
+            return new LinkedList(  );
+        }
     }
 }
