@@ -167,9 +167,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
         /**
          * .
          *
-         * @param vertex  
+         * @param vertex
          *
-         * @return  
+         * @return
          */
         public List createEdgeList( Object vertex ) {
             return new LinkedList(  );

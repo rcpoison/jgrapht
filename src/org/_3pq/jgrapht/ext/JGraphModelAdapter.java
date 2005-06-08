@@ -256,8 +256,6 @@ public class JGraphModelAdapter extends DefaultGraphModel {
             g.addGraphListener( new JGraphTListener(  ) );
         }
 
-        this.addGraphModelListener( new JGraphListener(  ) );
-
         for( Iterator i = jGraphTGraph.vertexSet(  ).iterator(  );
                 i.hasNext(  ); ) {
             handleJGraphTAddedVertex( i.next(  ) );
@@ -266,6 +264,8 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         for( Iterator i = jGraphTGraph.edgeSet(  ).iterator(  ); i.hasNext(  ); ) {
             handleJGraphTAddedEdge( (org._3pq.jgrapht.Edge) i.next(  ) );
         }
+
+        this.addGraphModelListener( new JGraphListener(  ) );
     }
 
     /**
@@ -714,7 +714,9 @@ public class JGraphModelAdapter extends DefaultGraphModel {
         internalRemoveCell( vertexCell );
 
         // FIXME: Why remove childAt(0)? Explain if correct, otherwise fix.
-        remove( new Object[] { vertexCell.getChildAt( 0 ) } );
+        if( vertexCell.getChildCount(  ) > 0 ) {
+            remove( new Object[] { vertexCell.getChildAt( 0 ) } );
+        }
     }
 
 
