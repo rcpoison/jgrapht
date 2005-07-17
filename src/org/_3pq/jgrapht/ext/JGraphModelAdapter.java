@@ -161,21 +161,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * </p>
      */
     final Set m_jCellsBeingAdded = new HashSet(  );
-
-    /**
-     * @see #m_jCellsBeingAdded
-     */
     final Set m_jCellsBeingRemoved = new HashSet(  );
-
-    /**
-     * @see #m_jCellsBeingAdded
-     */
     final Set m_jtElementsBeingAdded = new HashSet(  );
-
-    /**
-     * @see #m_jCellsBeingAdded
-     */
     final Set                 m_jtElementsBeingRemoved = new HashSet(  );
+    
     private final CellFactory m_cellFactory;
 
     /** Maps JGraph edges to JGraphT edges */

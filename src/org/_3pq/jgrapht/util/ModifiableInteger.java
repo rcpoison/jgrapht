@@ -77,7 +77,7 @@ public class ModifiableInteger extends Number implements Comparable {
      * instead !!!</b>
      * 
      * <p>
-     * This constructor is for the use of {@link java.beans.XMLDecoder}
+     * This constructor is for the use of java.beans.XMLDecoder
      * deserialization. The constructor is marked as 'deprecated' to indicate
      * to the programmer against using it by mistake.
      * </p>
@@ -110,8 +110,8 @@ public class ModifiableInteger extends Number implements Comparable {
 
     /**
      * Returns the value of this object, similarly to {@link #intValue()}. This
-     * getter is NOT redundant. It is used for serialization by the {@link
-     * java.beans.XMLEncoder}.
+     * getter is NOT redundant. It is used for serialization by 
+     * java.beans.XMLEncoder.
      *
      * @return the value.
      */
