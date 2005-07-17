@@ -68,9 +68,10 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
-    <property name="latest.version.name"  value="0.5.3" />
+    <property name="latest.version.name"  value="0.6.0" />
     
     <!-- CVS tags and their respective version names -->
+    <property name="ver_0_6_0.name"       value="0.6.0" />
     <property name="ver_0_5_3.name"       value="0.5.3" />
     <property name="ver_0_5_2.name"       value="0.5.2" />
 
@@ -250,10 +251,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
 
     <!-- Run jalopy on source code                                         -->
     <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
-    <!-- WARNING:                                                          -->
-    <!--   to workaround a bug in jalopy you need to edit your ant/bin/ant -->
-    <!--   or ant/bin/ant.bat script and add the -server option when it    -->
-    <!--   runs java. this prevents jalopy from eating memory.             -->
     <target name="jalopy" depends="compile"
             description="Runs jalopy on all source code (see WARNING comment).">
         <taskdef name="jalopy" 

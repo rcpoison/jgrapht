@@ -31,7 +31,7 @@
  * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   John V. Sichi
  *
  * $Id$
  *
@@ -43,6 +43,7 @@
  * 27-Aug-2003 : Upgrading versions (BN);
  * 06-Nov-2003 : Version 0.5.1 notes (BN);
  * 10-Feb-2004 : Version 0.5.2 notes (BN);
+ * 16-Jul-2005 : Version 0.6.0 notes (JVS);
  *
  */
 -->
@@ -137,10 +138,10 @@
 
 <body>
   <h1><font size="2"><br></font><font size="7"><font color=
-  "#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>  0.5.3<br>
+  "#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>  0.6.0<br>
   <font size="3"> </font></h1> 
 
-  <p>Released: June, 2004</p>
+  <p>Released: July, 2005</p>
 
   <p>Written by Barak Naveh (<a href=
   "mailto:barak_naveh@users.sourceforge.net">barak_naveh@users.sourceforge.net</a>)
@@ -149,10 +150,14 @@
   <p>(C) Copyright 2003-2005, by Barak Naveh and Contributors. All rights
   reserved.</p>
 
+  <p>Please address all contributions, suggestions, and inquiries to the
+  current project administrator, <a
+  href="mailto:perfecthash@users.sf.net">John Sichi</a>.</p>
+
   <h2>Introduction</h2>
 
   <p>JGraphT is a free Java class library that provides mathematical
-  graph-theory objects and algorithms. It runs on Java 2 Platform (JDK 1.3 or
+  graph-theory objects and algorithms. It runs on Java 2 Platform (JDK 1.4 or
   later).</p>
 
   <p>JGraphT is licensed under the terms of the GNU Lesser General Public
@@ -222,7 +227,7 @@
 
   <p>The package <code>org._3pq.jgrapht.demo</code> includes small demo
   applications to help you get started. If you spawn your own demo app and
-  think others can use it, please send it to me and I will add it to that
+  think others can use it, please send it to us and we will add it to that
   package.</p>
 
   <h2>Upgrading Versions</h2>
@@ -257,10 +262,7 @@
   <h2>Dependencies</h2>
 
   <ul>
-    <li>JGraphT requires JDK 1.3 or later. You might get JGraphT to work with
-    JDK 1.2.x, but I haven't tested this. JGraphT will certainly not work with
-    JDK 1.1.x because it requires the collection framework which was only
-    introduced in JDK 1.2.<br>
+    <li>JGraphT requires JDK 1.4 or later. <br>
     &nbsp;</li>
 
     <li>JUnit is a unit testing framework. You need JUnit only if you want to
@@ -275,9 +277,9 @@
     <li>JGraph is a graph visualization and editing component. You
     need JGraph only if you want to create graph visualizations using
     the JGraphT-to-JGraph adapter. The <code>jgraph.jar</code> runtime
-    file of JGraph is included in this distribution (see lib
-    directory; file lib-readme.txt has version information). JGraph is
-    licensed under the terms of the GNU Lesser General Public License
+    file of JGraph is included in this distribution (file
+    lib/lib-readme.txt has version information). JGraph is licensed
+    under the terms of the GNU Lesser General Public License
     (LGPL). You can find more about JGraph and/or download the latest
     version from <a href=
     "http://www.sourceforge.net/projects/jgraph">http://www.sourceforge.net/projects/jgraph</a>.</li>
@@ -302,7 +304,7 @@
 
   <h2>Your Improvements</h2>
 
-  <p>If you add improvements to JGraphT please send them to me. I will add them
+  <p>If you add improvements to JGraphT please send them to us. We will add them
   to the next release so that everyone can enjoy them. You might also benefit
   from it: others may fix bugs in your source files or may continue to enhance
   them.</p>
@@ -316,10 +318,19 @@
   <p>Changes to JGraphT in each version:</p>
 
   <ul>
-    <li><b>version 0.5.4</b> (TBD) : Fixed various serialization issues. Added
-    to <code>JGraphModelAdapter</code> support for JGraph's "dangling" edges,
-    its constructors have slightly changed and now forbid <code>null</code>
-    values. Upgraded to JGraph 5.3.1.</li>
+    <li><b>version 0.6.0</b> (July-2005) : Upgraded to JDK 1.4, taking
+    advantage of its new linked hash set/map containers to make
+    edge/vertex set order-deterministic. Added support for custom edge
+    lists.  Fixed various serialization and Subgraph issues. Added to
+    <code>JGraphModelAdapter</code> support for JGraph's "dangling"
+    edges, its constructors have slightly changed and now forbid
+    <code>null</code> values. Improved interface to
+    <code>DijskstraShortestPath</code>, and added radius support to
+    <code>ClosestFirstIterator</code>.  Added new
+    <code>StrongConnectivityInspector</code> algorithm (contributed by
+    Chris Soltenborn) and <code>TopologicalOrderIterator</code>
+    (contributed by Marden Neubert).  Deleted deprecated
+    <code>TraverseUtils</code>.  Upgraded to JGraph 5.6.1.1.</li>
 
     <li><b>version 0.5.3</b> (June-2004) : Removed Subgraph verification of
     element's identity to base graph, upgraded to JGraph 4.0, Added the
@@ -357,8 +368,11 @@
   contributions made by the authors:</p>
 
   <ul>
+    <li><a href="http://sourceforge.net/users/barak_naveh/">Barak Naveh</a> 
+        (project founder)</li>
+
     <li><a href="http://sourceforge.net/users/perfecthash/">John V
-    Sichi</a></li>
+    Sichi</a> (current project administrator)</li>
 
     <li><a href="http://sourceforge.net/users/liviu_aurelian/">Liviu
     Rau</a></li>
@@ -377,9 +391,20 @@
     <li>Mikael Hansen</li>
 
     <li>Avner Linder</li>
+
+    <li>Marden Neubert</li>
+
+    <li><a href="http://sourceforge.net/users/csoltenborn/">Chris
+    Soltenborn</a></li>
+
+    <li><a href="http://sourceforge.net/users/hammerc/">Christian
+    Hammer</a></li>
+
+    <li>Marden Neubert</li>
+
   </ul>
 
-  <p>(if I have missed your name on this list, please email me to get it
+  <p>(if we have missed your name on this list, please email us to get it
   fixed).</p>
 
   <p dir="ltr">Other people have also helped in different ways: reporting bugs,
@@ -388,7 +413,7 @@
 
   <p>Regards,<br>
   <a href="mailto:barak_naveh@users.sourceforge.net">Barak Naveh</a><br>
-  JGraphT Project Lead</p>
+  JGraphT Project Founder</p>
 
   <p> </p>
   <hr noshade size="2" style=

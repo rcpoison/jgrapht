@@ -21,6 +21,20 @@
  * along with this library; if not, write to the Free Software Foundation, Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
+/* --------------------------
+ * StrongConnectivityInspector.java
+ * --------------------------
+ * (C) Copyright 2005, by Christian Soltenborn and Contributors.
+ *
+ * Original Author:  Christian Soltenborn
+ *
+ * $Id$
+ *
+ * Changes
+ * -------
+ * 2-Feb-2005 : Initial revision (CS);
+ *
+ */
 package org._3pq.jgrapht.alg;
 
 import java.util.HashMap;
