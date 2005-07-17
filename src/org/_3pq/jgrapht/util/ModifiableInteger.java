@@ -110,7 +110,7 @@ public class ModifiableInteger extends Number implements Comparable {
 
     /**
      * Returns the value of this object, similarly to {@link #intValue()}. This
-     * getter is NOT redundant. It is used for serialization by 
+     * getter is NOT redundant. It is used for serialization by
      * java.beans.XMLEncoder.
      *
      * @return the value.

@@ -160,11 +160,10 @@ public class JGraphModelAdapter extends DefaultGraphModel {
      * both allowed operations that do not inform listeners...
      * </p>
      */
-    final Set m_jCellsBeingAdded = new HashSet(  );
-    final Set m_jCellsBeingRemoved = new HashSet(  );
-    final Set m_jtElementsBeingAdded = new HashSet(  );
+    final Set                 m_jCellsBeingAdded       = new HashSet(  );
+    final Set                 m_jCellsBeingRemoved     = new HashSet(  );
+    final Set                 m_jtElementsBeingAdded   = new HashSet(  );
     final Set                 m_jtElementsBeingRemoved = new HashSet(  );
-    
     private final CellFactory m_cellFactory;
 
     /** Maps JGraph edges to JGraphT edges */
