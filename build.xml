@@ -68,7 +68,7 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
-    <property name="latest.version.name"  value="0.6.0" />
+    <property name="latest.version.name"  value="0.7.0alpha" />
     
     <!-- CVS tags and their respective version names -->
     <property name="ver_0_6_0.name"       value="0.6.0" />
@@ -160,7 +160,7 @@
         <mkdir dir="${build.dir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.4">
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
@@ -176,7 +176,7 @@
         <mkdir dir="${expbuild.dir}" />
 
         <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" source="1.4">
+        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" source="1.5">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/experimental/**/*.java"/>
         </javac>
@@ -200,7 +200,7 @@
         <!-- create a test build directory -->
         <mkdir dir="${testbuild.dir}" />
 
-        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.4"
+        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.5"
                debug="on">
             <classpath refid="testbuild.classpath" />
             <include name="org/_3pq/jgrapht/**"/>

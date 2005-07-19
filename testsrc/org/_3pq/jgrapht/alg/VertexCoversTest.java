@@ -65,11 +65,10 @@ public class VertexCoversTest extends TestCase {
      * .
      */
     public void testFind2ApproximationCover(  ) {
-        VertexCovers vc = new VertexCovers(  );
-
         for( int i = 0; i < TEST_REPEATS; i++ ) {
             Graph g = createRandomGraph(  );
-            assertTrue( isCover( vc.find2ApproximationCover( g ), g ) );
+            assertTrue(
+                isCover( VertexCovers.find2ApproximationCover( g ), g ) );
         }
     }
 
@@ -78,11 +77,10 @@ public class VertexCoversTest extends TestCase {
      * .
      */
     public void testFindGreedyCover(  ) {
-        VertexCovers vc = new VertexCovers(  );
-
         for( int i = 0; i < TEST_REPEATS; i++ ) {
             Graph g = createRandomGraph(  );
-            Set   c = vc.findGreedyCover( GraphHelper.undirectedGraph( g ) );
+            Set   c = VertexCovers.findGreedyCover(
+                GraphHelper.undirectedGraph( g ) );
             assertTrue( isCover( c, g ) );
         }
     }

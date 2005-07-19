@@ -64,9 +64,7 @@ import org._3pq.jgrapht.graph.UndirectedSubgraph;
  *
  * @since Nov 6, 2003
  */
-public class VertexCovers {
-    private VertexCovers() {}
-
+public abstract class VertexCovers {
     /**
      * Finds a 2-approximation for a minimal vertex cover of the specified
      * graph. The algorithm promises a cover that is at most double the size
