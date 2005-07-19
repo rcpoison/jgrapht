@@ -28,6 +28,7 @@
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
+ *                   Christian Hammer
  *
  * $Id$
  *
@@ -36,6 +37,7 @@
  * 31-Jul-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
  * 31-Jan-2004 : Extracted cross-component traversal functionality (BN);
+ * 04-May-2004 : Made generic (CH)
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -61,7 +63,7 @@ import org._3pq.jgrapht.event.VertexTraversalEvent;
  *
  * @since Jan 31, 2004
  */
-public abstract class CrossComponentIterator extends AbstractGraphIterator {
+public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends AbstractGraphIterator<V, E> {
     private static final int CCS_BEFORE_COMPONENT = 1;
     private static final int CCS_WITHIN_COMPONENT = 2;
     private static final int CCS_AFTER_COMPONENT  = 3;
@@ -74,19 +76,19 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
         new ConnectedComponentTraversalEvent( this,
             ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED );
 
-    // TODO: support ConcurrentModificationException if graph modified 
-    // during iteration. 
-    private FlyweightEdgeEvent   m_reusableEdgeEvent;
-    private FlyweightVertexEvent m_reusableVertexEvent;
-    private Iterator             m_vertexIterator = null;
+    // TODO: support ConcurrentModificationException if graph modified
+    // during iteration.
+    private FlyweightEdgeEvent<V, E>   m_reusableEdgeEvent;
+    private FlyweightVertexEvent<V>    m_reusableVertexEvent;
+    private Iterator<V>                m_vertexIterator = null;
 
     /**
      * Stores the vertices that have been seen during iteration and
      * (optionally) some additional traversal info regarding each vertex.
      */
-    private Map       m_seen        = new HashMap(  );
-    private Object    m_startVertex;
-    private Specifics m_specifics;
+    private Map<V, D>       m_seen        = new HashMap(  );
+    private V               m_startVertex;
+    private Specifics<V, E> m_specifics;
 
     /** The connected component state */
     private int m_state = CCS_BEFORE_COMPONENT;
@@ -102,7 +104,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @throws NullPointerException
      * @throws IllegalArgumentException
      */
-    public CrossComponentIterator( Graph g, Object startVertex ) {
+    public CrossComponentIterator( Graph<V, E> g, V startVertex ) {
         super(  );
 
         if( g == null ) {
@@ -117,7 +119,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
         m_reusableVertexEvent     = new FlyweightVertexEvent( this, null );
 
         if( startVertex == null ) {
-            // pick a start vertex if graph not empty 
+            // pick a start vertex if graph not empty
             if( m_vertexIterator.hasNext(  ) ) {
                 m_startVertex = m_vertexIterator.next(  );
             }
@@ -129,7 +131,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
             m_startVertex = startVertex;
         }
         else {
-            throw new IllegalArgumentException( 
+            throw new IllegalArgumentException(
                 "graph must contain the start vertex" );
         }
     }
@@ -150,7 +152,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
 
             if( isCrossComponentTraversal(  ) ) {
                 while( m_vertexIterator.hasNext(  ) ) {
-                    Object v = m_vertexIterator.next(  );
+                    V v = m_vertexIterator.next(  );
 
                     if( !isSeenVertex( v ) ) {
                         encounterVertex( v, null );
@@ -175,7 +177,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
     /**
      * @see java.util.Iterator#next()
      */
-    public Object next(  ) {
+    public V next(  ) {
         if( m_startVertex != null ) {
             encounterStartVertex(  );
         }
@@ -186,7 +188,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
                 fireConnectedComponentStarted( m_ccStartedEvent );
             }
 
-            Object nextVertex = provideNextVertex(  );
+            V nextVertex = provideNextVertex(  );
             fireVertexTraversed( createVertexTraversalEvent( nextVertex ) );
 
             addUnseenChildrenOf( nextVertex );
@@ -217,7 +219,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @param edge the edge via which the vertex was encountered, or null if
      *        the vertex is a starting point
      */
-    protected abstract void encounterVertex( Object vertex, Edge edge );
+    protected abstract void encounterVertex( V vertex, E edge );
 
 
     /**
@@ -226,7 +228,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *
      * @return the next vertex to be returned by this iterator.
      */
-    protected abstract Object provideNextVertex(  );
+    protected abstract V provideNextVertex(  );
 
 
     /**
@@ -239,7 +241,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *         can also indicate that the vertex was explicitly associated
      *         with <code>null</code>.
      */
-    protected Object getSeenData( Object vertex ) {
+    protected D getSeenData( V vertex ) {
         return m_seen.get( vertex );
     }
 
@@ -263,7 +265,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * @param vertex the vertex re-encountered
      * @param edge the edge via which the vertex was re-encountered
      */
-    protected abstract void encounterVertexAgain( Object vertex, Edge edge );
+    protected abstract void encounterVertexAgain( V vertex, E edge );
 
 
     /**
@@ -277,7 +279,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *         <code>null</code> return can also indicate that the vertex was
      *         explicitly associated with <code>null</code>.
      */
-    protected Object putSeenData( Object vertex, Object data ) {
+    protected D putSeenData( V vertex, D data ) {
         return m_seen.put( vertex, data );
     }
 
@@ -292,14 +294,14 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
     }
 
 
-    private void addUnseenChildrenOf( Object vertex ) {
-        List edges = m_specifics.edgesOf( vertex );
+    private void addUnseenChildrenOf( V vertex ) {
+        List<E> edges = m_specifics.edgesOf( vertex );
 
-        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( Iterator<E> i = edges.iterator(  ); i.hasNext(  ); ) {
+            E e = i.next(  );
             fireEdgeTraversed( createEdgeTraversalEvent( e ) );
 
-            Object v = e.oppositeVertex( vertex );
+            V v = e.oppositeVertex( vertex );
 
             if( isSeenVertex( v ) ) {
                 encounterVertexAgain( v, e );
@@ -311,7 +313,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
     }
 
 
-    private EdgeTraversalEvent createEdgeTraversalEvent( Edge edge ) {
+    private EdgeTraversalEvent createEdgeTraversalEvent( E edge ) {
         if( isReuseEvents(  ) ) {
             m_reusableEdgeEvent.setEdge( edge );
 
@@ -323,7 +325,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
     }
 
 
-    private VertexTraversalEvent createVertexTraversalEvent( Object vertex ) {
+    private VertexTraversalEvent createVertexTraversalEvent( V vertex ) {
         if( isReuseEvents(  ) ) {
             m_reusableVertexEvent.setVertex( vertex );
 
@@ -340,7 +342,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
         m_startVertex = null;
     }
 
-    static interface SimpleContainer {
+    static interface SimpleContainer<T> {
         /**
          * Tests if this container is empty.
          *
@@ -354,7 +356,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
          *
          * @param o the object to be added.
          */
-        public void add( Object o );
+        public void add( T o );
 
 
         /**
@@ -362,14 +364,14 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
          *
          * @return the object removed from this container.
          */
-        public Object remove(  );
+        public T remove(  );
     }
 
     /**
      * Provides unified interface for operations that are different in directed
      * graphs and in undirected graphs.
      */
-    abstract static class Specifics {
+    abstract static class Specifics<V, E extends Edge<V>> {
         /**
          * Returns the edges outgoing from the specified vertex in case of
          * directed graph, and the edge touching the specified vertex in case
@@ -381,7 +383,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
          *         directed graph, and the edge touching the specified vertex
          *         in case of undirected graph.
          */
-        public abstract List edgesOf( Object vertex );
+        public abstract List<E> edgesOf( V vertex );
     }
 
 
@@ -392,13 +394,13 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *
      * @since Aug 11, 2003
      */
-    static class FlyweightEdgeEvent extends EdgeTraversalEvent {
+    static class FlyweightEdgeEvent<V, E extends Edge<V>> extends EdgeTraversalEvent<V, E> {
         private static final long serialVersionUID = 4051327833765000755L;
 
         /**
          * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
          */
-        public FlyweightEdgeEvent( Object eventSource, Edge edge ) {
+        public FlyweightEdgeEvent( Object eventSource, E edge ) {
             super( eventSource, edge );
         }
 
@@ -407,7 +409,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
          *
          * @param edge the edge to be set.
          */
-        protected void setEdge( Edge edge ) {
+        protected void setEdge( E edge ) {
             m_edge = edge;
         }
     }
@@ -420,13 +422,13 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      *
      * @since Aug 11, 2003
      */
-    static class FlyweightVertexEvent extends VertexTraversalEvent {
+    static class FlyweightVertexEvent<V> extends VertexTraversalEvent<V> {
         private static final long serialVersionUID = 3834024753848399924L;
 
         /**
          * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
          */
-        public FlyweightVertexEvent( Object eventSource, Object vertex ) {
+        public FlyweightVertexEvent( Object eventSource, V vertex ) {
             super( eventSource, vertex );
         }
 
@@ -435,7 +437,7 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
          *
          * @param vertex the vertex to be set.
          */
-        protected void setVertex( Object vertex ) {
+        protected void setVertex( V vertex ) {
             m_vertex = vertex;
         }
     }
@@ -445,22 +447,22 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * An implementation of {@link TraverseUtils.Specifics} for a directed
      * graph.
      */
-    private static class DirectedSpecifics extends Specifics {
-        private DirectedGraph m_graph;
+    private static class DirectedSpecifics<V, E extends Edge<V>> extends Specifics<V, E> {
+        private DirectedGraph<V, E> m_graph;
 
         /**
          * Creates a new DirectedSpecifics object.
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public DirectedSpecifics( DirectedGraph g ) {
+        public DirectedSpecifics( DirectedGraph<V, E> g ) {
             m_graph = g;
         }
 
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List edgesOf( Object vertex ) {
+        public List<E> edgesOf( V vertex ) {
             return m_graph.outgoingEdgesOf( vertex );
         }
     }
@@ -470,22 +472,22 @@ public abstract class CrossComponentIterator extends AbstractGraphIterator {
      * An implementation of {@link TraverseUtils.Specifics} in which edge
      * direction (if any) is ignored.
      */
-    private static class UndirectedSpecifics extends Specifics {
-        private Graph m_graph;
+    private static class UndirectedSpecifics<V, E extends Edge<V>> extends Specifics<V, E> {
+        private Graph<V, E> m_graph;
 
         /**
          * Creates a new UndirectedSpecifics object.
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public UndirectedSpecifics( Graph g ) {
+        public UndirectedSpecifics( Graph<V, E> g ) {
             m_graph = g;
         }
 
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List edgesOf( Object vertex ) {
+        public List<E> edgesOf( V vertex ) {
             return m_graph.edgesOf( vertex );
         }
     }

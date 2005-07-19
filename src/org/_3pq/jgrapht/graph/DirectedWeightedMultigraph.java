@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,14 +42,15 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.WeightedGraph;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed weighted multigraph. A directed weighted multigraph is a
  * non-simple directed graph in which loops and multiple edges between any two
  * vertices are permitted, and edges have weights.
  */
-public class DirectedWeightedMultigraph extends DirectedMultigraph
-    implements WeightedGraph {
+public class DirectedWeightedMultigraph<V, E extends Edge<V>> extends DirectedMultigraph<V, E>
+    implements WeightedGraph<V,E> {
     private static final long serialVersionUID = 4049071636005206066L;
 
     /**
@@ -65,7 +67,7 @@ public class DirectedWeightedMultigraph extends DirectedMultigraph
      *
      * @param ef the edge factory of the new graph.
      */
-    public DirectedWeightedMultigraph( EdgeFactory ef ) {
+    public DirectedWeightedMultigraph( EdgeFactory<V,E> ef ) {
         super( ef );
     }
 }

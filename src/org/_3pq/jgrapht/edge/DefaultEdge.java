@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : General edge refactoring (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -51,10 +52,10 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Jul 14, 2003
  */
-public class DefaultEdge implements Edge, Cloneable, Serializable {
+public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable {
     private static final long serialVersionUID = 3258408452177932855L;
-    private Object            m_source;
-    private Object            m_target;
+    private V m_source;
+    private V m_target;
 
     /**
      * Constructor for DefaultEdge.
@@ -62,7 +63,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      */
-    public DefaultEdge( Object sourceVertex, Object targetVertex ) {
+    public DefaultEdge( V sourceVertex, V targetVertex ) {
         m_source     = sourceVertex;
         m_target     = targetVertex;
     }
@@ -70,7 +71,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
     /**
      * @see org._3pq.jgrapht.Edge#getSource()
      */
-    public Object getSource(  ) {
+    public V getSource(  ) {
         return m_source;
     }
 
@@ -78,7 +79,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
     /**
      * @see org._3pq.jgrapht.Edge#getTarget()
      */
-    public Object getTarget(  ) {
+    public V getTarget(  ) {
         return m_target;
     }
 
@@ -116,7 +117,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
     /**
      * @see org._3pq.jgrapht.Edge#containsVertex(java.lang.Object)
      */
-    public boolean containsVertex( Object v ) {
+    public boolean containsVertex( V v ) {
         return m_source.equals( v ) || m_target.equals( v );
     }
 
@@ -124,7 +125,7 @@ public class DefaultEdge implements Edge, Cloneable, Serializable {
     /**
      * @see org._3pq.jgrapht.Edge#oppositeVertex(java.lang.Object)
      */
-    public Object oppositeVertex( Object v ) {
+    public V oppositeVertex( V v ) {
         if( v.equals( m_source ) ) {
             return m_target;
         }

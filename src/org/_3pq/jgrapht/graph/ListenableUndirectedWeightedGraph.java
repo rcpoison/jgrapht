@@ -27,19 +27,21 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * An undirected weighted graph which is also {@link
@@ -47,8 +49,8 @@ import org._3pq.jgrapht.WeightedGraph;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableUndirectedWeightedGraph extends ListenableUndirectedGraph
-    implements WeightedGraph {
+public class ListenableUndirectedWeightedGraph<V, E extends Edge<V>> extends ListenableUndirectedGraph<V, E>
+    implements WeightedGraph<V, E> {
     private static final long serialVersionUID = 3690762799613949747L;
 
     /**
@@ -64,7 +66,7 @@ public class ListenableUndirectedWeightedGraph extends ListenableUndirectedGraph
      *
      * @param base the backing graph.
      */
-    public ListenableUndirectedWeightedGraph( WeightedGraph base ) {
+    public ListenableUndirectedWeightedGraph( WeightedGraph<V, E> base ) {
         super( (UndirectedGraph) base );
     }
 }

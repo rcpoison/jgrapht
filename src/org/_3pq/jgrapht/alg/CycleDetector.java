@@ -27,13 +27,14 @@
  * (C) Copyright 2004, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 16-Sept-2004 : Initial revision (JVS);
+ * 07-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -57,9 +58,9 @@ import org._3pq.jgrapht.traverse.DepthFirstIterator;
  *
  * @since Sept 16, 2004
  */
-public class CycleDetector {
+public class CycleDetector<V, E extends Edge<V>> {
     /** Graph on which cycle detection is being performed. */
-    Graph m_graph;
+    Graph<V, E> m_graph;
 
     /**
      * Creates a cycle detector for the specified graph.  Currently only
@@ -67,7 +68,7 @@ public class CycleDetector {
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
-    public CycleDetector( DirectedGraph graph ) {
+    public CycleDetector( DirectedGraph<V, E> graph ) {
         m_graph = graph;
     }
 
@@ -95,7 +96,7 @@ public class CycleDetector {
      *
      * @return true if v is on at least one cycle
      */
-    public boolean detectCyclesContainingVertex( Object v ) {
+    public boolean detectCyclesContainingVertex( V v ) {
         try {
             execute( null, v );
         }
@@ -113,7 +114,7 @@ public class CycleDetector {
      * @return set of all vertices which participate in at least one cycle in
      *         this graph
      */
-    public Set findCycles(  ) {
+    public Set<V> findCycles(  ) {
         Set set = new HashSet(  );
         execute( set, null );
 
@@ -129,7 +130,7 @@ public class CycleDetector {
      *
      * @return set of all vertices reachable from v via at least one cycle
      */
-    public Set findCyclesContainingVertex( Object v ) {
+    public Set findCyclesContainingVertex( V v ) {
         Set set = new HashSet(  );
         execute( set, v );
 
@@ -137,7 +138,7 @@ public class CycleDetector {
     }
 
 
-    private void execute( Set s, Object v ) {
+    private void execute( Set<V> s, V v ) {
         ProbeIterator iter = new ProbeIterator( s, v );
 
         while( iter.hasNext(  ) ) {
@@ -158,11 +159,11 @@ public class CycleDetector {
      * Version of DFS which maintains a backtracking path used to probe for
      * cycles.
      */
-    private class ProbeIterator extends DepthFirstIterator {
-        private List m_path;
-        private Set  m_cycleSet;
+    private class ProbeIterator extends DepthFirstIterator<V, E, Object> {
+        private List<V> m_path;
+        private Set<V>  m_cycleSet;
 
-        ProbeIterator( Set cycleSet, Object startVertex ) {
+        ProbeIterator( Set<V> cycleSet, V startVertex ) {
             super( m_graph, startVertex );
             m_cycleSet     = cycleSet;
             m_path         = new ArrayList(  );
@@ -171,7 +172,7 @@ public class CycleDetector {
         /**
          * {@inheritDoc}
          */
-        protected void encounterVertexAgain( Object vertex, Edge edge ) {
+        protected void encounterVertexAgain( V vertex, E edge ) {
             super.encounterVertexAgain( vertex, edge );
 
             int i = m_path.indexOf( vertex );
@@ -192,8 +193,8 @@ public class CycleDetector {
         /**
          * {@inheritDoc}
          */
-        protected Object provideNextVertex(  ) {
-            Object v = super.provideNextVertex(  );
+        protected V provideNextVertex(  ) {
+            V v = super.provideNextVertex(  );
 
             // backtrack
             for( int i = m_path.size(  ) - 1; i >= 0; --i ) {

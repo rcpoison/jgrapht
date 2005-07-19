@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -45,7 +46,7 @@ package org._3pq.jgrapht;
  *
  * @since Jul 14, 2003
  */
-public interface EdgeFactory {
+public interface EdgeFactory<V, E extends Edge<V>> {
     /**
      * Creates a new edge whose endpoints are the specified source and target
      * vertices.
@@ -56,5 +57,5 @@ public interface EdgeFactory {
      * @return a new edge whose endpoints are the specified source and target
      *         vertices.
      */
-    public Edge createEdge( Object sourceVertex, Object targetVertex );
+    public E createEdge( V sourceVertex, V targetVertex );
 }

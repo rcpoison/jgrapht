@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,13 +42,14 @@ package org._3pq.jgrapht.graph;
 import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed graph that is a subgraph on other graph.
  *
  * @see org._3pq.jgrapht.graph.Subgraph
  */
-public class DirectedSubgraph extends Subgraph implements DirectedGraph {
+public class DirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E> implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 3616445700507054133L;
 
     /**
@@ -61,8 +63,8 @@ public class DirectedSubgraph extends Subgraph implements DirectedGraph {
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public DirectedSubgraph( DirectedGraph base, Set vertexSubset,
-        Set edgeSubset ) {
+    public DirectedSubgraph( DirectedGraph<V, E> base, Set<V> vertexSubset,
+        Set<E> edgeSubset ) {
         super( base, vertexSubset, edgeSubset );
     }
 }

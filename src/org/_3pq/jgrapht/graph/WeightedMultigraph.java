@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,6 +42,7 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.WeightedGraph;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A weighted multigraph. A weighted multigraph is a non-simple undirected
@@ -50,7 +52,7 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class WeightedMultigraph extends Multigraph implements WeightedGraph {
+public class WeightedMultigraph<V, E extends Edge<V>> extends Multigraph<V, E> implements WeightedGraph<V, E> {
     private static final long serialVersionUID = 3544671793370640696L;
 
     /**
@@ -58,7 +60,7 @@ public class WeightedMultigraph extends Multigraph implements WeightedGraph {
      *
      * @param ef the edge factory of the new graph.
      */
-    public WeightedMultigraph( EdgeFactory ef ) {
+    public WeightedMultigraph( EdgeFactory<V, E> ef ) {
         super( ef );
     }
 

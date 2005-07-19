@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 13-Aug-2003 : Included weight methods in Edge interface (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -46,4 +47,4 @@ package org._3pq.jgrapht;
  *
  * @since Jul 23, 2003
  */
-public interface WeightedGraph extends Graph {}
+public interface WeightedGraph<V, E extends Edge<V>> extends Graph<V, E> {}

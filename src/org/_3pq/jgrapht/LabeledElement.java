@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -45,13 +46,13 @@ package org._3pq.jgrapht;
  *
  * @since Jul 14, 2003
  */
-public interface LabeledElement {
+public interface LabeledElement<L> {
     /**
      * Sets the specified label object to this element.
      *
      * @param label a label to set to this element.
      */
-    public void setLabel( Object label );
+    public void setLabel( L label );
 
 
     /**
@@ -61,7 +62,7 @@ public interface LabeledElement {
      * @return the element's label, or <code>null</code> if element has no
      *         label.
      */
-    public Object getLabel(  );
+    public L getLabel(  );
 
 
     /**

@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -37,6 +37,7 @@
  * 04-Aug-2003 : Strong refs to listeners instead of weak refs (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 07-Mar-2004 : Fixed unnecessary clone bug #819075 (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -72,11 +73,11 @@ import org._3pq.jgrapht.event.VertexSetListener;
  * @see VertexSetListener
  * @since Jul 20, 2003
  */
-public class DefaultListenableGraph extends GraphDelegator
-    implements ListenableGraph, Cloneable {
+public class DefaultListenableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E>
+    implements ListenableGraph<V, E>, Cloneable {
     private static final long    serialVersionUID       = 3977575900898471984L;
-    private ArrayList            m_graphListeners       = new ArrayList(  );
-    private ArrayList            m_vertexSetListeners   = new ArrayList(  );
+    private ArrayList<GraphListener<V, E>>  m_graphListeners     = new ArrayList(  );
+    private ArrayList<VertexSetListener<V>> m_vertexSetListeners = new ArrayList(  );
     private FlyweightEdgeEvent   m_reuseableEdgeEvent;
     private FlyweightVertexEvent m_reuseableVertexEvent;
     private boolean              m_reuseEvents;
@@ -86,7 +87,7 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param g the backing graph.
      */
-    public DefaultListenableGraph( Graph g ) {
+    public DefaultListenableGraph( Graph<V, E> g ) {
         this( g, false );
     }
 
@@ -105,7 +106,7 @@ public class DefaultListenableGraph extends GraphDelegator
      * @throws IllegalArgumentException if the backing graph is already a
      *         listenable graph.
      */
-    public DefaultListenableGraph( Graph g, boolean reuseEvents ) {
+    public DefaultListenableGraph( Graph<V, E> g, boolean reuseEvents ) {
         super( g );
         m_reuseEvents              = reuseEvents;
         m_reuseableEdgeEvent       = new FlyweightEdgeEvent( this, -1, null );
@@ -113,7 +114,7 @@ public class DefaultListenableGraph extends GraphDelegator
 
         // the following restriction could be probably relaxed in the future.
         if( g instanceof ListenableGraph ) {
-            throw new IllegalArgumentException( 
+            throw new IllegalArgumentException(
                 "base graph cannot be listenable" );
         }
     }
@@ -149,8 +150,8 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
-        Edge e = super.addEdge( sourceVertex, targetVertex );
+    public E addEdge( V sourceVertex, V targetVertex ) {
+        E e = super.addEdge( sourceVertex, targetVertex );
 
         if( e != null ) {
             fireEdgeAdded( e );
@@ -163,7 +164,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
+    public boolean addEdge( E e ) {
         boolean modified = super.addEdge( e );
 
         if( modified ) {
@@ -177,7 +178,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see ListenableGraph#addGraphListener(GraphListener)
      */
-    public void addGraphListener( GraphListener l ) {
+    public void addGraphListener( GraphListener<V, E> l ) {
         addToListenerList( m_graphListeners, l );
     }
 
@@ -185,7 +186,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex( Object v ) {
+    public boolean addVertex( V v ) {
         boolean modified = super.addVertex( v );
 
         if( modified ) {
@@ -199,7 +200,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see ListenableGraph#addVertexSetListener(VertexSetListener)
      */
-    public void addVertexSetListener( VertexSetListener l ) {
+    public void addVertexSetListener( VertexSetListener<V> l ) {
         addToListenerList( m_vertexSetListeners, l );
     }
 
@@ -226,8 +227,8 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#removeEdge(Object, Object)
      */
-    public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
-        Edge e = super.removeEdge( sourceVertex, targetVertex );
+    public E removeEdge( V sourceVertex, V targetVertex ) {
+        E e = super.removeEdge( sourceVertex, targetVertex );
 
         if( e != null ) {
             fireEdgeRemoved( e );
@@ -240,7 +241,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( Edge e ) {
+    public boolean removeEdge( E e ) {
         boolean modified = super.removeEdge( e );
 
         if( modified ) {
@@ -254,7 +255,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see ListenableGraph#removeGraphListener(GraphListener)
      */
-    public void removeGraphListener( GraphListener l ) {
+    public void removeGraphListener( GraphListener<V, E> l ) {
         m_graphListeners.remove( l );
     }
 
@@ -262,15 +263,15 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see Graph#removeVertex(Object)
      */
-    public boolean removeVertex( Object v ) {
+    public boolean removeVertex( V v ) {
         if( containsVertex( v ) ) {
             List touchingEdgesList = edgesOf( v );
 
             // cannot iterate over list - will cause ConcurrentModificationException
-            Edge[] touchingEdges = new Edge[ touchingEdgesList.size(  ) ];
-            touchingEdgesList.toArray( touchingEdges );
+            //Edge[] touchingEdges = new Edge[ touchingEdgesList.size(  ) ];
+            //touchingEdgesList.toArray( touchingEdges );
 
-            removeAllEdges( touchingEdges );
+            removeAllEdges( new ArrayList(touchingEdgesList) );
 
             super.removeVertex( v ); // remove the vertex itself
 
@@ -287,7 +288,7 @@ public class DefaultListenableGraph extends GraphDelegator
     /**
      * @see ListenableGraph#removeVertexSetListener(VertexSetListener)
      */
-    public void removeVertexSetListener( VertexSetListener l ) {
+    public void removeVertexSetListener( VertexSetListener<V> l ) {
         m_vertexSetListeners.remove( l );
     }
 
@@ -297,12 +298,12 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param edge the edge that was added.
      */
-    protected void fireEdgeAdded( Edge edge ) {
-        GraphEdgeChangeEvent e =
+    protected void fireEdgeAdded( E edge ) {
+        GraphEdgeChangeEvent<V, E> e =
             createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_ADDED, edge );
 
         for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
-            GraphListener l = (GraphListener) m_graphListeners.get( i );
+            GraphListener<V, E> l = m_graphListeners.get( i );
 
             l.edgeAdded( e );
         }
@@ -314,12 +315,12 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param edge the edge that was removed.
      */
-    protected void fireEdgeRemoved( Edge edge ) {
-        GraphEdgeChangeEvent e =
+    protected void fireEdgeRemoved( E edge ) {
+        GraphEdgeChangeEvent<V, E> e =
             createGraphEdgeChangeEvent( GraphEdgeChangeEvent.EDGE_REMOVED, edge );
 
         for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
-            GraphListener l = (GraphListener) m_graphListeners.get( i );
+            GraphListener l = m_graphListeners.get( i );
 
             l.edgeRemoved( e );
         }
@@ -331,20 +332,20 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param vertex the vertex that was added.
      */
-    protected void fireVertexAdded( Object vertex ) {
-        GraphVertexChangeEvent e =
+    protected void fireVertexAdded( V vertex ) {
+        GraphVertexChangeEvent<V> e =
             createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_ADDED,
                 vertex );
 
         for( int i = 0; i < m_vertexSetListeners.size(  ); i++ ) {
-            VertexSetListener l =
-                (VertexSetListener) m_vertexSetListeners.get( i );
+            VertexSetListener<V> l =
+                m_vertexSetListeners.get( i );
 
             l.vertexAdded( e );
         }
 
         for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
-            GraphListener l = (GraphListener) m_graphListeners.get( i );
+            GraphListener<V, E> l = m_graphListeners.get( i );
 
             l.vertexAdded( e );
         }
@@ -356,35 +357,35 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @param vertex the vertex that was removed.
      */
-    protected void fireVertexRemoved( Object vertex ) {
-        GraphVertexChangeEvent e =
+    protected void fireVertexRemoved( V vertex ) {
+        GraphVertexChangeEvent<V> e =
             createGraphVertexChangeEvent( GraphVertexChangeEvent.VERTEX_REMOVED,
                 vertex );
 
         for( int i = 0; i < m_vertexSetListeners.size(  ); i++ ) {
-            VertexSetListener l =
-                (VertexSetListener) m_vertexSetListeners.get( i );
+            VertexSetListener<V> l =
+                m_vertexSetListeners.get( i );
 
             l.vertexRemoved( e );
         }
 
         for( int i = 0; i < m_graphListeners.size(  ); i++ ) {
-            GraphListener l = (GraphListener) m_graphListeners.get( i );
+            GraphListener<V, E> l = m_graphListeners.get( i );
 
             l.vertexRemoved( e );
         }
     }
 
 
-    private void addToListenerList( List list, EventListener l ) {
+    private static <L extends EventListener> void addToListenerList( List<L> list, L l ) {
         if( !list.contains( l ) ) {
             list.add( l );
         }
     }
 
 
-    private GraphEdgeChangeEvent createGraphEdgeChangeEvent( int eventType,
-        Edge edge ) {
+    private GraphEdgeChangeEvent<V, E> createGraphEdgeChangeEvent( int eventType,
+        E edge ) {
         if( m_reuseEvents ) {
             m_reuseableEdgeEvent.setType( eventType );
             m_reuseableEdgeEvent.setEdge( edge );
@@ -397,7 +398,7 @@ public class DefaultListenableGraph extends GraphDelegator
     }
 
 
-    private GraphVertexChangeEvent createGraphVertexChangeEvent( 
+    private GraphVertexChangeEvent<V> createGraphVertexChangeEvent(
         int eventType, Object vertex ) {
         if( m_reuseEvents ) {
             m_reuseableVertexEvent.setType( eventType );
@@ -417,13 +418,13 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @since Aug 10, 2003
      */
-    private static class FlyweightEdgeEvent extends GraphEdgeChangeEvent {
+    private static class FlyweightEdgeEvent<V, E extends Edge<V>> extends GraphEdgeChangeEvent<V, E> {
         private static final long serialVersionUID = 3907207152526636089L;
 
         /**
          * @see GraphEdgeChangeEvent#GraphEdgeChangeEvent(Object, int, Edge)
          */
-        public FlyweightEdgeEvent( Object eventSource, int type, Edge e ) {
+        public FlyweightEdgeEvent( Object eventSource, int type, E e ) {
             super( eventSource, type, e );
         }
 
@@ -432,7 +433,7 @@ public class DefaultListenableGraph extends GraphDelegator
          *
          * @param e the edge to be set.
          */
-        protected void setEdge( Edge e ) {
+        protected void setEdge( E e ) {
             m_edge = e;
         }
 
@@ -455,14 +456,14 @@ public class DefaultListenableGraph extends GraphDelegator
      *
      * @since Aug 10, 2003
      */
-    private static class FlyweightVertexEvent extends GraphVertexChangeEvent {
+    private static class FlyweightVertexEvent<V> extends GraphVertexChangeEvent<V> {
         private static final long serialVersionUID = 3257848787857585716L;
 
         /**
          * @see GraphVertexChangeEvent#GraphVertexChangeEvent(Object, int,
          *      Object)
          */
-        public FlyweightVertexEvent( Object eventSource, int type, Object vertex ) {
+        public FlyweightVertexEvent( Object eventSource, int type, V vertex ) {
             super( eventSource, type, vertex );
         }
 
@@ -481,7 +482,7 @@ public class DefaultListenableGraph extends GraphDelegator
          *
          * @param vertex the vertex to be set.
          */
-        protected void setVertex( Object vertex ) {
+        protected void setVertex( V vertex ) {
             m_vertex = vertex;
         }
     }

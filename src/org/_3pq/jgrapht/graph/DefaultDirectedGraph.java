@@ -27,18 +27,20 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.edge.EdgeFactories;
 
@@ -51,8 +53,8 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * prefixed 'Default' to avoid name collision with the DirectedGraph interface.
  * </p>
  */
-public class DefaultDirectedGraph extends AbstractBaseGraph
-    implements DirectedGraph {
+public class DefaultDirectedGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 3544953246956466230L;
 
     /**
@@ -68,7 +70,7 @@ public class DefaultDirectedGraph extends AbstractBaseGraph
      *
      * @param ef the edge factory of the new graph.
      */
-    public DefaultDirectedGraph( EdgeFactory ef ) {
+    public DefaultDirectedGraph( EdgeFactory<V, E> ef ) {
         super( ef, false, true );
     }
 }

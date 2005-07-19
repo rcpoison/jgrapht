@@ -27,19 +27,19 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org._3pq.jgrapht.Edge;
@@ -56,7 +56,7 @@ import org._3pq.jgrapht.Graph;
  * @see org._3pq.jgrapht.DirectedGraph
  * @see org._3pq.jgrapht.UndirectedGraph
  */
-public abstract class AbstractGraph implements Graph {
+public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E> {
     /**
      * Construct a new empty graph object.
      */
@@ -65,11 +65,11 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges( Collection edges ) {
+    public boolean addAllEdges( Collection<? extends E> edges ) {
         boolean modified = false;
 
-        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            modified |= addEdge( (Edge) iter.next(  ) );
+        for( E e : edges) {
+            modified |= addEdge( e );
         }
 
         return modified;
@@ -79,11 +79,11 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#addAllVertices(Collection)
      */
-    public boolean addAllVertices( Collection vertices ) {
+    public boolean addAllVertices( Collection<? extends V> vertices ) {
         boolean modified = false;
 
-        for( Iterator iter = vertices.iterator(  ); iter.hasNext(  ); ) {
-            modified |= addVertex( iter.next(  ) );
+        for( V v : vertices) {
+            modified |= addVertex( v );
         }
 
         return modified;
@@ -93,7 +93,7 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#containsEdge(Object, Object)
      */
-    public boolean containsEdge( Object sourceVertex, Object targetVertex ) {
+    public boolean containsEdge( V sourceVertex, V targetVertex ) {
         return getEdge( sourceVertex, targetVertex ) != null;
     }
 
@@ -101,11 +101,11 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#removeAllEdges(Collection)
      */
-    public boolean removeAllEdges( Collection edges ) {
+    public boolean removeAllEdges( Collection<? extends E> edges ) {
         boolean modified = false;
 
-        for( Iterator iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            modified |= removeEdge( (Edge) iter.next(  ) );
+        for( E e : edges ) {
+            modified |= removeEdge( e );
         }
 
         return modified;
@@ -115,8 +115,8 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges( Object sourceVertex, Object targetVertex ) {
-        List removed = getAllEdges( sourceVertex, targetVertex );
+    public List removeAllEdges( V sourceVertex, V targetVertex ) {
+        List<E> removed = getAllEdges( sourceVertex, targetVertex );
         removeAllEdges( removed );
 
         return removed;
@@ -126,11 +126,11 @@ public abstract class AbstractGraph implements Graph {
     /**
      * @see Graph#removeAllVertices(Collection)
      */
-    public boolean removeAllVertices( Collection vertices ) {
+    public boolean removeAllVertices( Collection<? extends V> vertices ) {
         boolean modified = false;
 
-        for( Iterator iter = vertices.iterator(  ); iter.hasNext(  ); ) {
-            modified |= removeVertex( iter.next(  ) );
+        for( V v : vertices ) {
+            modified |= removeVertex( v );
         }
 
         return modified;
@@ -161,7 +161,7 @@ public abstract class AbstractGraph implements Graph {
      * @throws IllegalArgumentException if specified vertex does not exist in
      *         this graph.
      */
-    protected boolean assertVertexExist( Object v ) {
+    protected boolean assertVertexExist( V v ) {
         if( containsVertex( v ) ) {
             return true;
         }
@@ -187,7 +187,7 @@ public abstract class AbstractGraph implements Graph {
      * @see Graph#removeEdge(Edge)
      * @see Graph#containsEdge(Edge)
      */
-    protected boolean removeAllEdges( Edge[] edges ) {
+    protected boolean removeAllEdges( E[] edges ) {
         boolean modified = false;
 
         for( int i = 0; i < edges.length; i++ ) {
@@ -206,7 +206,7 @@ public abstract class AbstractGraph implements Graph {
      *
      * @return a string representation of (V,E)
      */
-    protected String toStringFromSets( Collection vertexSet, Collection edgeSet ) {
+    protected String toStringFromSets( Collection<V> vertexSet, Collection<E> edgeSet ) {
         return "(" + vertexSet.toString(  ) + ", " + edgeSet.toString(  ) + ")";
     }
 }

@@ -27,6 +27,7 @@
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -34,6 +35,7 @@
  * -------
  * 02-Sep-2003 : Initial revision (JVS);
  * 29-May-2005 : Make non-static and add radius support (JVS);
+ * 07-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -55,9 +57,9 @@ import org._3pq.jgrapht.traverse.ClosestFirstIterator;
  *
  * @since Sep 2, 2003
  */
-public final class DijkstraShortestPath {
-    private List   m_edgeList;
-    private double m_pathLength;
+public final class DijkstraShortestPath<V, E extends Edge<V>> {
+    private List<E> m_edgeList;
+    private double  m_pathLength;
 
     /**
      * Creates and executes a new DijkstraShortestPath algorithm instance. An
@@ -70,13 +72,13 @@ public final class DijkstraShortestPath {
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
      *        unbounded search
      */
-    public DijkstraShortestPath( Graph graph, Object startVertex,
-        Object endVertex, double radius ) {
-        ClosestFirstIterator iter =
+    public DijkstraShortestPath( Graph<V, E> graph, V startVertex,
+        V endVertex, double radius ) {
+        ClosestFirstIterator<V, E> iter =
             new ClosestFirstIterator( graph, startVertex, radius );
 
         while( iter.hasNext(  ) ) {
-            Object vertex = iter.next(  );
+            V vertex = iter.next(  );
 
             if( vertex.equals( endVertex ) ) {
                 createEdgeList( iter, endVertex );
@@ -121,8 +123,8 @@ public final class DijkstraShortestPath {
      *
      * @return List of Edges, or null if no path exists
      */
-    public static List findPathBetween( Graph graph, Object startVertex,
-        Object endVertex ) {
+    public static <V, E extends Edge<V>> List findPathBetween( Graph<V, E> graph, V startVertex,
+        V endVertex ) {
         DijkstraShortestPath alg =
             new DijkstraShortestPath( graph, startVertex, endVertex,
                 Double.POSITIVE_INFINITY );
@@ -131,11 +133,11 @@ public final class DijkstraShortestPath {
     }
 
 
-    private void createEdgeList( ClosestFirstIterator iter, Object endVertex ) {
+    private void createEdgeList( ClosestFirstIterator<V, E> iter, V endVertex ) {
         m_edgeList = new ArrayList(  );
 
         while( true ) {
-            Edge edge = iter.getSpanningTreeEdge( endVertex );
+            E edge = iter.getSpanningTreeEdge( endVertex );
 
             if( edge == null ) {
                 break;

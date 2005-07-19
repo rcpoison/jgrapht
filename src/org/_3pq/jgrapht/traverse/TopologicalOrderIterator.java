@@ -35,6 +35,7 @@
  * -------
  * 17-Dec-2004 : Initial revision (MN);
  * 25-Apr-2005 : Fixes for start vertex order (JVS);
+ * 06-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -55,7 +56,7 @@ import org._3pq.jgrapht.util.ModifiableInteger;
  * <tt>p</tt> (Skiena 1990, p. 208). See also <a
  * href="http://mathworld.wolfram.com/TopologicalSort.html">
  * http://mathworld.wolfram.com/TopologicalSort.html</a>.
- * 
+ *
  * <p>
  * See "Algorithms in Java, Third Edition, Part 5: Graph Algorithms" by Robert
  * Sedgewick and "Data Structures and Algorithms with Object-Oriented Design
@@ -63,7 +64,7 @@ import org._3pq.jgrapht.util.ModifiableInteger;
  * latter can be found online at <a
  * href="http://www.brpreiss.com/books/opus5/">http://www.brpreiss.com/books/opus5/</a>
  * </p>
- * 
+ *
  * <p>
  * For this iterator to work correctly the graph must not be modified during
  * iteration. Currently there are no means to ensure that, nor to fail-fast.
@@ -74,9 +75,9 @@ import org._3pq.jgrapht.util.ModifiableInteger;
  *
  * @since Dec 18, 2004
  */
-public class TopologicalOrderIterator extends CrossComponentIterator {
-    private LinkedList m_queue;
-    private Map        m_inDegreeMap;
+public class TopologicalOrderIterator<V, E extends Edge<V>, D> extends CrossComponentIterator<V, E, D> {
+    private LinkedList<V> m_queue;
+    private Map<V, ModifiableInteger> m_inDegreeMap;
 
     /**
      * Creates a new topological order iterator over the directed graph
@@ -87,14 +88,14 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
      *
      * @param dg the directed graph to be iterated.
      */
-    public TopologicalOrderIterator( DirectedGraph dg ) {
+    public TopologicalOrderIterator( DirectedGraph<V, E> dg ) {
         this( dg, new LinkedList(  ), new HashMap(  ) );
     }
 
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
-    private TopologicalOrderIterator( DirectedGraph dg, LinkedList queue,
+    private TopologicalOrderIterator( DirectedGraph<V, E> dg, LinkedList<V> queue,
         Map inDegreeMap ) {
         this( dg, initialize( dg, queue, inDegreeMap ) );
         m_queue           = queue;
@@ -104,7 +105,7 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
 
     // NOTE: This is intentionally private, because starting the sort "in the
     // middle" doesn't make sense.
-    private TopologicalOrderIterator( DirectedGraph dg, Object start ) {
+    private TopologicalOrderIterator( DirectedGraph<V, E> dg, V start ) {
         super( dg, start );
     }
 
@@ -123,7 +124,7 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
     /**
      * @see CrossComponentIterator#encounterVertex(Object, Edge)
      */
-    protected void encounterVertex( Object vertex, Edge edge ) {
+    protected void encounterVertex( V vertex, E edge ) {
         putSeenData( vertex, null );
         decrementInDegree( vertex );
     }
@@ -132,7 +133,7 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
     /**
      * @see CrossComponentIterator#encounterVertexAgain(Object, Edge)
      */
-    protected void encounterVertexAgain( Object vertex, Edge edge ) {
+    protected void encounterVertexAgain( V vertex, E edge ) {
         decrementInDegree( vertex );
     }
 
@@ -140,7 +141,7 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
     /**
      * @see CrossComponentIterator#provideNextVertex()
      */
-    protected Object provideNextVertex(  ) {
+    protected V provideNextVertex(  ) {
         return m_queue.removeFirst(  );
     }
 
@@ -150,9 +151,9 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
      *
      * @param vertex the vertex whose in-degree will be decremented.
      */
-    private void decrementInDegree( Object vertex ) {
+    private void decrementInDegree( V vertex ) {
         ModifiableInteger inDegree =
-            (ModifiableInteger) m_inDegreeMap.get( vertex );
+            m_inDegreeMap.get( vertex );
 
         if( inDegree.value > 0 ) {
             inDegree.value--;
@@ -175,10 +176,10 @@ public class TopologicalOrderIterator extends CrossComponentIterator {
      *
      * @return start vertex
      */
-    private static Object initialize( DirectedGraph dg, LinkedList queue,
-        Map inDegreeMap ) {
-        for( Iterator i = dg.vertexSet(  ).iterator(  ); i.hasNext(  ); ) {
-            Object vertex = i.next(  );
+    private static <V, E extends Edge<V>> V initialize( DirectedGraph<V, E> dg,
+        LinkedList<V> queue, Map inDegreeMap ) {
+        for( Iterator<V> i = dg.vertexSet(  ).iterator(  ); i.hasNext(  ); ) {
+            V vertex = i.next(  );
 
             int    inDegree = dg.inDegreeOf( vertex );
             inDegreeMap.put( vertex, new ModifiableInteger( inDegree ) );

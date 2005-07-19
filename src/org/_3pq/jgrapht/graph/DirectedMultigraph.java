@@ -27,18 +27,20 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.edge.EdgeFactories;
 
@@ -46,8 +48,8 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * A directed multigraph. A directed multigraph is a non-simple directed graph
  * in which loops and multiple edges between any two vertices are permitted.
  */
-public class DirectedMultigraph extends AbstractBaseGraph
-    implements DirectedGraph {
+public class DirectedMultigraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 3258408413590599219L;
 
     /**
@@ -63,7 +65,7 @@ public class DirectedMultigraph extends AbstractBaseGraph
      *
      * @param ef the edge factory of the new graph.
      */
-    public DirectedMultigraph( EdgeFactory ef ) {
+    public DirectedMultigraph( EdgeFactory<V, E> ef ) {
         super( ef, true, true );
     }
 }

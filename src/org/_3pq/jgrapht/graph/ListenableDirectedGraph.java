@@ -27,26 +27,28 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableDirectedGraph extends DefaultListenableGraph
-    implements DirectedGraph {
+public class ListenableDirectedGraph<V, E extends Edge<V>> extends DefaultListenableGraph<V, E>
+    implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 3257571698126368824L;
 
     /**
@@ -62,7 +64,7 @@ public class ListenableDirectedGraph extends DefaultListenableGraph
      *
      * @param base the backing graph.
      */
-    public ListenableDirectedGraph( DirectedGraph base ) {
+    public ListenableDirectedGraph( DirectedGraph<V, E> base ) {
         super( base );
     }
 }

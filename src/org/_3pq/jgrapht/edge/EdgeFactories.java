@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -36,6 +36,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 04-Aug-2003 : Renamed from EdgeFactoryFactory & made utility class (BN);
  * 03-Nov-2003 : Made edge factories serializable (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -48,7 +49,7 @@ import org._3pq.jgrapht.EdgeFactory;
 /**
  * This utility class is a container of various {@link
  * org._3pq.jgrapht.EdgeFactory} classes.
- * 
+ *
  * <p>
  * Classes included here do not have substantial logic. They are grouped
  * together in this container in order to avoid clutter.
@@ -68,13 +69,13 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class DirectedEdgeFactory extends AbstractEdgeFactory {
+    public static class DirectedEdgeFactory<V> extends AbstractEdgeFactory<V, DirectedEdge<V>> {
         private static final long serialVersionUID = 3618135658586388792L;
 
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public Edge createEdge( Object source, Object target ) {
+        public DirectedEdge<V> createEdge( V source, V target ) {
             return new DirectedEdge( source, target );
         }
     }
@@ -87,13 +88,13 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class DirectedWeightedEdgeFactory extends AbstractEdgeFactory {
+    public static class DirectedWeightedEdgeFactory<V> extends AbstractEdgeFactory<V, DirectedWeightedEdge<V>> {
         private static final long serialVersionUID = 3257002163870775604L;
 
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public Edge createEdge( Object source, Object target ) {
+        public DirectedWeightedEdge createEdge( V source, V target ) {
             return new DirectedWeightedEdge( source, target );
         }
     }
@@ -106,13 +107,13 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class UndirectedEdgeFactory extends AbstractEdgeFactory {
+    public static class UndirectedEdgeFactory<V> extends AbstractEdgeFactory<V, UndirectedEdge<V>> {
         private static final long serialVersionUID = 3257007674431189815L;
 
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public Edge createEdge( Object source, Object target ) {
+        public UndirectedEdge createEdge( V source, V target ) {
             return new UndirectedEdge( source, target );
         }
     }
@@ -125,14 +126,14 @@ public final class EdgeFactories {
      *
      * @since Jul 14, 2003
      */
-    public static class UndirectedWeightedEdgeFactory
-        extends AbstractEdgeFactory {
+    public static class UndirectedWeightedEdgeFactory<V>
+        extends AbstractEdgeFactory<V, UndirectedWeightedEdge<V>> {
         private static final long serialVersionUID = 4048797883346269237L;
 
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public Edge createEdge( Object source, Object target ) {
+        public UndirectedWeightedEdge createEdge( V source, V target ) {
             return new UndirectedWeightedEdge( source, target );
         }
     }
@@ -145,6 +146,6 @@ public final class EdgeFactories {
      *
      * @since Nov 3, 2003
      */
-    abstract static class AbstractEdgeFactory implements EdgeFactory,
+    abstract static class AbstractEdgeFactory<V, E extends Edge<V>> implements EdgeFactory<V, E>,
         Serializable {}
 }

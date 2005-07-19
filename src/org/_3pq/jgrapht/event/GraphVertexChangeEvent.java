@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 10-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
@@ -49,7 +50,7 @@ package org._3pq.jgrapht.event;
  *
  * @since Aug 10, 2003
  */
-public class GraphVertexChangeEvent extends GraphChangeEvent {
+public class GraphVertexChangeEvent<V> extends GraphChangeEvent {
     private static final long serialVersionUID = 3690189962679104053L;
 
     /**
@@ -77,7 +78,7 @@ public class GraphVertexChangeEvent extends GraphChangeEvent {
     public static final int VERTEX_REMOVED = 14;
 
     /** The vertex that this event is related to. */
-    protected Object m_vertex;
+    protected V m_vertex;
 
     /**
      * Creates a new GraphVertexChangeEvent object.
@@ -86,7 +87,7 @@ public class GraphVertexChangeEvent extends GraphChangeEvent {
      * @param type the type of the event.
      * @param vertex the vertex that the event is related to.
      */
-    public GraphVertexChangeEvent( Object eventSource, int type, Object vertex ) {
+    public GraphVertexChangeEvent( Object eventSource, int type, V vertex ) {
         super( eventSource, type );
         m_vertex = vertex;
     }
@@ -96,7 +97,7 @@ public class GraphVertexChangeEvent extends GraphChangeEvent {
      *
      * @return the vertex that this event is related to.
      */
-    public Object getVertex(  ) {
+    public V getVertex(  ) {
         return m_vertex;
     }
 }

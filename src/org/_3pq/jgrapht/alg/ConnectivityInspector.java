@@ -28,6 +28,7 @@
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
+ *                   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +36,7 @@
  * -------
  * 06-Aug-2003 : Initial revision (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 07-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -57,6 +59,7 @@ import org._3pq.jgrapht.event.TraversalListenerAdapter;
 import org._3pq.jgrapht.event.VertexTraversalEvent;
 import org._3pq.jgrapht.graph.AsUndirectedGraph;
 import org._3pq.jgrapht.traverse.BreadthFirstIterator;
+import org._3pq.jgrapht.Edge;
 
 /**
  * Allows obtaining various connectivity aspects of a graph. The <i>inspected
@@ -65,13 +68,13 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  * graph and weakly connected components for a directed graph.  To find
  * strongly connected components, use {@link StrongConnectivityInspector}
  * instead.
- * 
+ *
  * <p>
  * The inspector methods work in a lazy fashion: no computation is performed
  * unless immediately necessary. Computation are done once and results and
  * cached within this class for future need.
  * </p>
- * 
+ *
  * <p>
  * The inspector is also a {@link org._3pq.jgrapht.event.GraphListener}. If
  * added as a listener to the inspected graph, the inspector will amend
@@ -87,17 +90,17 @@ import org._3pq.jgrapht.traverse.BreadthFirstIterator;
  *
  * @since Aug 6, 2003
  */
-public class ConnectivityInspector implements GraphListener {
-    List          m_connectedSets;
-    Map           m_vertexToConnectedSet;
-    private Graph m_graph;
+public class ConnectivityInspector<V, E extends Edge<V>> implements GraphListener<V,E> {
+    List<Set<V>>        m_connectedSets;
+    Map<V,Set<V>>       m_vertexToConnectedSet;
+    private Graph<V, E> m_graph;
 
     /**
      * Creates a connectivity inspector for the specified undirected graph.
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public ConnectivityInspector( UndirectedGraph g ) {
+    public ConnectivityInspector( UndirectedGraph<V, E> g ) {
         init(  );
         m_graph = g;
     }
@@ -108,7 +111,7 @@ public class ConnectivityInspector implements GraphListener {
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public ConnectivityInspector( DirectedGraph g ) {
+    public ConnectivityInspector( DirectedGraph<V, E> g ) {
         init(  );
         m_graph = new AsUndirectedGraph( g );
     }
@@ -136,13 +139,13 @@ public class ConnectivityInspector implements GraphListener {
      * @return a set of all vertices that are in the maximally connected
      *         component together with the specified vertex.
      */
-    public Set connectedSetOf( Object vertex ) {
-        Set connectedSet = (Set) m_vertexToConnectedSet.get( vertex );
+    public Set<V> connectedSetOf( V vertex ) {
+        Set<V> connectedSet = m_vertexToConnectedSet.get( vertex );
 
         if( connectedSet == null ) {
             connectedSet = new HashSet(  );
 
-            BreadthFirstIterator i =
+            BreadthFirstIterator<V, E, Object> i =
                 new BreadthFirstIterator( m_graph, vertex );
 
             while( i.hasNext(  ) ) {
@@ -167,7 +170,7 @@ public class ConnectivityInspector implements GraphListener {
      * @return Returns a list of <code>Set</code>s, where each set contains all
      *         vertices that are in the same maximally connected component.
      */
-    public List connectedSets(  ) {
+    public List<Set<V>> connectedSets(  ) {
         return lazyFindConnectedSets(  );
     }
 
@@ -175,16 +178,16 @@ public class ConnectivityInspector implements GraphListener {
     /**
      * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
-    public void edgeAdded( GraphEdgeChangeEvent e ) {
-        init(  ); // for now invalidate cached results, in the future need to amend them. 
+    public void edgeAdded( GraphEdgeChangeEvent<V, E> e ) {
+        init(  ); // for now invalidate cached results, in the future need to amend them.
     }
 
 
     /**
      * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
      */
-    public void edgeRemoved( GraphEdgeChangeEvent e ) {
-        init(  ); // for now invalidate cached results, in the future need to amend them. 
+    public void edgeRemoved( GraphEdgeChangeEvent<V, E> e ) {
+        init(  ); // for now invalidate cached results, in the future need to amend them.
     }
 
 
@@ -192,7 +195,7 @@ public class ConnectivityInspector implements GraphListener {
      * Tests if there is a path from the specified source vertex to the
      * specified target vertices. For a directed graph, direction is ignored
      * for this interpretation of path.
-     * 
+     *
      * <p>
      * Note: Future versions of this method might not ignore edge directions
      * for directed graphs.
@@ -204,7 +207,7 @@ public class ConnectivityInspector implements GraphListener {
      * @return <code>true</code> if and only if there is a path from the source
      *         vertex to the target vertex.
      */
-    public boolean pathExists( Object sourceVertex, Object targetVertex ) {
+    public boolean pathExists( V sourceVertex, V targetVertex ) {
         /*
          * TODO: Ignoring edge direction for directed graph may be
          * confusing. For directed graphs, consider Dijkstra's algorithm.
@@ -218,16 +221,16 @@ public class ConnectivityInspector implements GraphListener {
     /**
      * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
-    public void vertexAdded( GraphVertexChangeEvent e ) {
-        init(  ); // for now invalidate cached results, in the future need to amend them. 
+    public void vertexAdded( GraphVertexChangeEvent<V> e ) {
+        init(  ); // for now invalidate cached results, in the future need to amend them.
     }
 
 
     /**
      * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
-    public void vertexRemoved( GraphVertexChangeEvent e ) {
-        init(  ); // for now invalidate cached results, in the future need to amend them. 
+    public void vertexRemoved( GraphVertexChangeEvent<V> e ) {
+        init(  ); // for now invalidate cached results, in the future need to amend them.
     }
 
 
@@ -237,7 +240,7 @@ public class ConnectivityInspector implements GraphListener {
     }
 
 
-    private List lazyFindConnectedSets(  ) {
+    private List<Set<V>> lazyFindConnectedSets(  ) {
         if( m_connectedSets == null ) {
             m_connectedSets = new ArrayList(  );
 
@@ -265,13 +268,13 @@ public class ConnectivityInspector implements GraphListener {
      *
      * @since Aug 6, 2003
      */
-    private class MyTraversalListener extends TraversalListenerAdapter {
+    private class MyTraversalListener extends TraversalListenerAdapter<V, E> {
         private Set m_currentConnectedSet;
 
         /**
          * @see TraversalListenerAdapter#connectedComponentFinished(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentFinished( 
+        public void connectedComponentFinished(
             ConnectedComponentTraversalEvent e ) {
             m_connectedSets.add( m_currentConnectedSet );
         }
@@ -280,7 +283,7 @@ public class ConnectivityInspector implements GraphListener {
         /**
          * @see TraversalListenerAdapter#connectedComponentStarted(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentStarted( 
+        public void connectedComponentStarted(
             ConnectedComponentTraversalEvent e ) {
             m_currentConnectedSet = new HashSet(  );
         }
@@ -289,8 +292,8 @@ public class ConnectivityInspector implements GraphListener {
         /**
          * @see TraversalListenerAdapter#vertexTraversed(Object)
          */
-        public void vertexTraversed( VertexTraversalEvent e ) {
-            Object v = e.getVertex(  );
+        public void vertexTraversed( VertexTraversalEvent<V> e ) {
+            V v = e.getVertex(  );
             m_currentConnectedSet.add( v );
             m_vertexToConnectedSet.put( v, m_currentConnectedSet );
         }

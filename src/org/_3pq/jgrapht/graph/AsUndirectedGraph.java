@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 14-Aug-2003 : Initial revision (JVS);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -81,9 +82,9 @@ import org._3pq.jgrapht.edge.UndirectedEdge;
  *
  * @since Aug 14, 2003
  */
-public class AsUndirectedGraph extends GraphDelegator implements Serializable,
-    UndirectedGraph {
-    private static final long   serialVersionUID = 3257845485078065462L;
+public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E> implements Serializable,
+    UndirectedGraph<V, E> {
+    private static final long   serialVersionUID = 3257845485078065462L; //@todo renew
     private static final String NO_EDGE_ADD =
         "this graph does not support edge addition";
     private static final String UNDIRECTED =
@@ -95,23 +96,23 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
      * @param g the backing directed graph over which an undirected view is to
      *        be created.
      */
-    public AsUndirectedGraph( DirectedGraph g ) {
+    public AsUndirectedGraph( DirectedGraph<V, E> g ) {
         super( g );
     }
 
     /**
      * @see org._3pq.jgrapht.Graph#getAllEdges(Object, Object)
      */
-    public List getAllEdges( Object sourceVertex, Object targetVertex ) {
-        List forwardList = super.getAllEdges( sourceVertex, targetVertex );
+    public List<E> getAllEdges( V sourceVertex, V targetVertex ) {
+        List<E> forwardList = super.getAllEdges( sourceVertex, targetVertex );
 
         if( sourceVertex.equals( targetVertex ) ) {
             // avoid duplicating loops
             return forwardList;
         }
 
-        List reverseList = super.getAllEdges( targetVertex, sourceVertex );
-        List list =
+        List<E> reverseList = super.getAllEdges( targetVertex, sourceVertex );
+        List<E> list =
             new ArrayList( forwardList.size(  ) + reverseList.size(  ) );
         list.addAll( forwardList );
         list.addAll( reverseList );
@@ -123,8 +124,8 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see org._3pq.jgrapht.Graph#getEdge(Object, Object)
      */
-    public Edge getEdge( Object sourceVertex, Object targetVertex ) {
-        Edge edge = super.getEdge( sourceVertex, targetVertex );
+    public E getEdge( V sourceVertex, V targetVertex ) {
+        E edge = super.getEdge( sourceVertex, targetVertex );
 
         if( edge != null ) {
             return edge;
@@ -138,7 +139,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see org._3pq.jgrapht.Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges( Collection edges ) {
+    public boolean addAllEdges( Collection<? extends E> edges ) {
         throw new UnsupportedOperationException( NO_EDGE_ADD );
     }
 
@@ -146,7 +147,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see org._3pq.jgrapht.Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
+    public boolean addEdge( E e ) {
         throw new UnsupportedOperationException( NO_EDGE_ADD );
     }
 
@@ -154,7 +155,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see org._3pq.jgrapht.Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
+    public E addEdge( V sourceVertex, V targetVertex ) {
         throw new UnsupportedOperationException( NO_EDGE_ADD );
     }
 
@@ -162,7 +163,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf( Object vertex ) {
+    public int degreeOf( V vertex ) {
         // this counts loops twice, which is consistent with AbstractBaseGraph
         return super.inDegreeOf( vertex ) + super.outDegreeOf( vertex );
     }
@@ -171,7 +172,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
-    public int inDegreeOf( Object vertex ) {
+    public int inDegreeOf( V vertex ) {
         throw new UnsupportedOperationException( UNDIRECTED );
     }
 
@@ -179,7 +180,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List incomingEdgesOf( Object vertex ) {
+    public List<E> incomingEdgesOf( V vertex ) {
         throw new UnsupportedOperationException( UNDIRECTED );
     }
 
@@ -187,7 +188,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see DirectedGraph#outDegreeOf(Object)
      */
-    public int outDegreeOf( Object vertex ) {
+    public int outDegreeOf( V vertex ) {
         throw new UnsupportedOperationException( UNDIRECTED );
     }
 
@@ -195,7 +196,7 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List outgoingEdgesOf( Object vertex ) {
+    public List<E> outgoingEdgesOf( V vertex ) {
         throw new UnsupportedOperationException( UNDIRECTED );
     }
 
@@ -207,10 +208,10 @@ public class AsUndirectedGraph extends GraphDelegator implements Serializable,
         // take care to print edges using the undirected convention
         Collection edgeSet = new ArrayList(  );
 
-        Iterator   iter = edgeSet(  ).iterator(  );
+        Iterator<E>   iter = edgeSet(  ).iterator(  );
 
         while( iter.hasNext(  ) ) {
-            Edge edge = (Edge) iter.next(  );
+            Edge edge = iter.next(  );
             edgeSet.add( new UndirectedEdge( edge.getSource(  ),
                     edge.getTarget(  ) ) );
         }

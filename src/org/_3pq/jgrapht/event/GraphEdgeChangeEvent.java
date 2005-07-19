@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 10-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
@@ -51,7 +52,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Aug 10, 2003
  */
-public class GraphEdgeChangeEvent extends GraphChangeEvent {
+public class GraphEdgeChangeEvent<V, E extends Edge<V>> extends GraphChangeEvent {
     private static final long serialVersionUID = 3618134563335844662L;
 
     /**
@@ -78,7 +79,7 @@ public class GraphEdgeChangeEvent extends GraphChangeEvent {
     public static final int EDGE_REMOVED = 24;
 
     /** The edge that this event is related to. */
-    protected Edge m_edge;
+    protected E m_edge;
 
     /**
      * Constructor for GraphEdgeChangeEvent.
@@ -87,7 +88,7 @@ public class GraphEdgeChangeEvent extends GraphChangeEvent {
      * @param type the event type of this event.
      * @param e the edge that this event is related to.
      */
-    public GraphEdgeChangeEvent( Object eventSource, int type, Edge e ) {
+    public GraphEdgeChangeEvent( Object eventSource, int type, E e ) {
         super( eventSource, type );
         m_edge = e;
     }
@@ -97,7 +98,7 @@ public class GraphEdgeChangeEvent extends GraphChangeEvent {
      *
      * @return the edge that this event is related to.
      */
-    public Edge getEdge(  ) {
+    public E getEdge(  ) {
         return m_edge;
     }
 }

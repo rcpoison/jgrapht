@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : General edge refactoring (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.edge;
@@ -46,13 +47,13 @@ package org._3pq.jgrapht.edge;
  *
  * @since Jul 14, 2003
  */
-public class DirectedEdge extends DefaultEdge {
+public class DirectedEdge<V> extends DefaultEdge<V> {
     private static final long serialVersionUID = 3258689927188134195L;
 
     /**
      * @see DefaultEdge#DefaultEdge(Object, Object)
      */
-    public DirectedEdge( Object sourceVertex, Object targetVertex ) {
+    public DirectedEdge( V sourceVertex, V targetVertex ) {
         super( sourceVertex, targetVertex );
     }
 

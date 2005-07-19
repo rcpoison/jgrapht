@@ -27,7 +27,7 @@
  * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -38,6 +38,8 @@
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 23-Oct-2003 : Allowed non-listenable graph as base (BN);
  * 07-Feb-2004 : Enabled serialization (BN);
+ * 11-Mar-2004 : Made generic (CH);
+ * 15-Mar-2004 : Integrity is now checked using Maps (CH);
  * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
  * 21-Sep-2004 : Added induced subgraph
  *
@@ -48,9 +50,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
@@ -123,22 +128,22 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * @see java.util.Set
  * @since Jul 18, 2003
  */
-public class Subgraph extends AbstractGraph implements Serializable {
+public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implements Serializable {
     private static final String NO_SUCH_EDGE_IN_BASE =
         "no such edge in base graph";
     private static final String NO_SUCH_VERTEX_IN_BASE =
         "no such vertex in base graph";
 
     //
-    Set m_edgeSet   = new LinkedHashSet(  ); // friendly to improve performance
-    Set m_vertexSet = new LinkedHashSet(  ); // friendly to improve performance
+    Set<E> m_edgeSet   = new LinkedHashSet(  ); // friendly to improve performance
+    Set<V> m_vertexSet = new LinkedHashSet(  ); // friendly to improve performance
 
     // 
-    private transient Set m_unmodifiableEdgeSet   = null;
-    private transient Set m_unmodifiableVertexSet = null;
-    private Graph         m_base;
-    private boolean       m_isInduced             = false;
-    private boolean       m_verifyIntegrity       = true;
+    private transient Set<E>    m_unmodifiableEdgeSet   = null;
+    private transient Set<V>    m_unmodifiableVertexSet = null;
+    private Graph<V, E>         m_base;
+    private boolean             m_isInduced             = false;
+    private boolean             m_verifyIntegrity       = true;
 
     /**
      * Creates a new Subgraph.
@@ -151,13 +156,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public Subgraph( Graph base, Set vertexSubset, Set edgeSubset ) {
+    public Subgraph( Graph<V, E> base, Set<V> vertexSubset, Set<E> edgeSubset ) {
         super(  );
 
         m_base = base;
 
         if( m_base instanceof ListenableGraph ) {
-            ( (ListenableGraph) m_base ).addGraphListener( new BaseGraphListener(  ) );
+            ( (ListenableGraph<V, E>) m_base ).addGraphListener( new BaseGraphListener(  ) );
         }
 
         addVerticesUsingFilter( base.vertexSet(  ), vertexSubset );
@@ -176,7 +181,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @param vertexSubset vertices to include in the subgraph. If
      *        <code>null</code> then all vertices are included.
      */
-    public Subgraph( Graph base, Set vertexSubset ) {
+    public Subgraph( Graph<V, E> base, Set<V> vertexSubset ) {
         this( base, vertexSubset, null );
 
         m_isInduced = true;
@@ -185,16 +190,16 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#getAllEdges(Object, Object)
      */
-    public List getAllEdges( Object sourceVertex, Object targetVertex ) {
-        List edges = null;
+    public List<E> getAllEdges( V sourceVertex, V targetVertex ) {
+        List<E> edges = null;
 
         if( containsVertex( sourceVertex ) && containsVertex( targetVertex ) ) {
             edges = new ArrayList(  );
 
-            List baseEdges = m_base.getAllEdges( sourceVertex, targetVertex );
+            List<E> baseEdges = m_base.getAllEdges( sourceVertex, targetVertex );
 
-            for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
-                Edge e = (Edge) i.next(  );
+            for( Iterator<E> iter = baseEdges.iterator(  ); iter.hasNext(  ); ) {
+                E e = iter.next(  );
 
                 if( m_edgeSet.contains( e ) ) { // add if subgraph also contains it
                     edges.add( e );
@@ -209,14 +214,14 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#getEdge(Object, Object)
      */
-    public Edge getEdge( Object sourceVertex, Object targetVertex ) {
-        List edges = getAllEdges( sourceVertex, targetVertex );
+    public E getEdge( V sourceVertex, V targetVertex ) {
+        List<E> edges = getAllEdges( sourceVertex, targetVertex );
 
         if( edges == null || edges.isEmpty(  ) ) {
             return null;
         }
         else {
-            return (Edge) edges.get( 0 );
+            return edges.get( 0 );
         }
     }
 
@@ -224,7 +229,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#getEdgeFactory()
      */
-    public EdgeFactory getEdgeFactory(  ) {
+    public EdgeFactory<V, E> getEdgeFactory(  ) {
         return m_base.getEdgeFactory(  );
     }
 
@@ -258,7 +263,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
+    public E addEdge( V sourceVertex, V targetVertex ) {
         assertVertexExist( sourceVertex );
         assertVertexExist( targetVertex );
 
@@ -266,10 +271,10 @@ public class Subgraph extends AbstractGraph implements Serializable {
             throw new IllegalArgumentException( NO_SUCH_EDGE_IN_BASE );
         }
 
-        List edges = m_base.getAllEdges( sourceVertex, targetVertex );
+        List<E> edges = m_base.getAllEdges( sourceVertex, targetVertex );
 
-        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( Iterator<E> iter = edges.iterator(  ); iter.hasNext(  ); ) {
+            E e = iter.next(  );
 
             if( !containsEdge( e ) ) {
                 m_edgeSet.add( e );
@@ -296,7 +301,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see Subgraph
      * @see org._3pq.jgrapht.Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
+    public boolean addEdge( E e ) {
         if( e == null ) {
             throw new NullPointerException(  );
         }
@@ -333,7 +338,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
      * @see Subgraph
      * @see org._3pq.jgrapht.Graph#addVertex(Object)
      */
-    public boolean addVertex( Object v ) {
+    public boolean addVertex( V v ) {
         if( v == null ) {
             throw new NullPointerException(  );
         }
@@ -356,7 +361,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#containsEdge(Edge)
      */
-    public boolean containsEdge( Edge e ) {
+    public boolean containsEdge( E e ) {
         return m_edgeSet.contains( e );
     }
 
@@ -364,7 +369,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#containsVertex(Object)
      */
-    public boolean containsVertex( Object v ) {
+    public boolean containsVertex( V v ) {
         return m_vertexSet.contains( v );
     }
 
@@ -372,7 +377,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf( Object vertex ) {
+    public int degreeOf( V vertex ) {
         assertVertexExist( vertex );
 
         // sophisticated way to check runtime class of base ;-)
@@ -380,8 +385,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
 
         int degree = 0;
 
-        for( Iterator i = m_base.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( E e : m_base.edgesOf( vertex ) ) {
 
             if( containsEdge( e ) ) {
                 degree++;
@@ -399,7 +403,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#edgeSet()
      */
-    public Set edgeSet(  ) {
+    public Set<E> edgeSet(  ) {
         if( m_unmodifiableEdgeSet == null ) {
             m_unmodifiableEdgeSet = Collections.unmodifiableSet( m_edgeSet );
         }
@@ -411,14 +415,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#edgesOf(Object)
      */
-    public List edgesOf( Object vertex ) {
+    public List<E> edgesOf( V vertex ) {
         assertVertexExist( vertex );
 
         ArrayList edges     = new ArrayList(  );
-        List      baseEdges = m_base.edgesOf( vertex );
+        List<E>   baseEdges = m_base.edgesOf( vertex );
 
-        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( E e : baseEdges ) {
 
             if( containsEdge( e ) ) {
                 edges.add( e );
@@ -432,15 +435,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
-    public int inDegreeOf( Object vertex ) {
+    public int inDegreeOf( V vertex ) {
         assertVertexExist( vertex );
 
         int degree = 0;
 
-        for( Iterator i =
-                ( (DirectedGraph) m_base ).incomingEdgesOf( vertex ).iterator(  );
-                i.hasNext(  ); ) {
-            if( containsEdge( (Edge) i.next(  ) ) ) {
+        for( E e : ( (DirectedGraph<V,E>) m_base ).incomingEdgesOf( vertex ) ) {
+            if( containsEdge( e ) ) {
                 degree++;
             }
         }
@@ -452,15 +453,14 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List incomingEdgesOf( Object vertex ) {
+    public List<E> incomingEdgesOf( V vertex ) {
         assertVertexExist( vertex );
 
         ArrayList edges     = new ArrayList(  );
-        List      baseEdges =
-            ( (DirectedGraph) m_base ).incomingEdgesOf( vertex );
+        List<E>   baseEdges =
+            ( (DirectedGraph<V,E>) m_base ).incomingEdgesOf( vertex );
 
-        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( E e : baseEdges ) {
 
             if( containsEdge( e ) ) {
                 edges.add( e );
@@ -474,15 +474,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see DirectedGraph#outDegreeOf(Object)
      */
-    public int outDegreeOf( Object vertex ) {
+    public int outDegreeOf( V vertex ) {
         assertVertexExist( vertex );
 
         int degree = 0;
 
-        for( Iterator i =
-                ( (DirectedGraph) m_base ).outgoingEdgesOf( vertex ).iterator(  );
-                i.hasNext(  ); ) {
-            if( containsEdge( (Edge) i.next(  ) ) ) {
+        for( E e : ( (DirectedGraph<V,E>) m_base ).outgoingEdgesOf( vertex ) ) {
+            if( containsEdge( e ) ) {
                 degree++;
             }
         }
@@ -494,15 +492,14 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List outgoingEdgesOf( Object vertex ) {
+    public List<E> outgoingEdgesOf( V vertex ) {
         assertVertexExist( vertex );
 
         ArrayList edges     = new ArrayList(  );
-        List      baseEdges =
-            ( (DirectedGraph) m_base ).outgoingEdgesOf( vertex );
+        List<E>   baseEdges =
+            ( (DirectedGraph<V,E>) m_base ).outgoingEdgesOf( vertex );
 
-        for( Iterator i = baseEdges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
+        for( E e : baseEdges ) {
 
             if( containsEdge( e ) ) {
                 edges.add( e );
@@ -516,7 +513,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( Edge e ) {
+    public boolean removeEdge( E e ) {
         return m_edgeSet.remove( e );
     }
 
@@ -524,8 +521,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#removeEdge(Object, Object)
      */
-    public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
-        Edge e = getEdge( sourceVertex, targetVertex );
+    public E removeEdge( V sourceVertex, V targetVertex ) {
+        E e = getEdge( sourceVertex, targetVertex );
 
         return m_edgeSet.remove( e ) ? e : null;
     }
@@ -534,7 +531,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
-    public boolean removeVertex( Object v ) {
+    public boolean removeVertex( V v ) {
         // If the base graph does NOT contain v it means we are here in 
         // response to removal of v from the base. In such case we don't need 
         // to remove all the edges of v as they were already removed. 
@@ -549,7 +546,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
     /**
      * @see org._3pq.jgrapht.Graph#vertexSet()
      */
-    public Set vertexSet(  ) {
+    public Set<V> vertexSet(  ) {
         if( m_unmodifiableVertexSet == null ) {
             m_unmodifiableVertexSet =
                 Collections.unmodifiableSet( m_vertexSet );
@@ -559,19 +556,19 @@ public class Subgraph extends AbstractGraph implements Serializable {
     }
 
 
-    private void addEdgesUsingFilter( Set edgeSet, Set filter ) {
-        Edge    e;
+    private void addEdgesUsingFilter( Set<E> edgeSet, Set<E> filter ) {
+        E    e;
         boolean containsVertices;
         boolean edgeIncluded;
 
-        for( Iterator i = edgeSet.iterator(  ); i.hasNext(  ); ) {
-            e     = (Edge) i.next(  );
+        for( Iterator<E> iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
+            e     = iter.next(  );
 
             containsVertices =
                 containsVertex( e.getSource(  ) )
                 && containsVertex( e.getTarget(  ) );
 
-            // note the use of short circuit evaluation            
+            // note the use of short circuit evaluation
             edgeIncluded = ( filter == null ) || filter.contains( e );
 
             if( containsVertices && edgeIncluded ) {
@@ -581,13 +578,13 @@ public class Subgraph extends AbstractGraph implements Serializable {
     }
 
 
-    private void addVerticesUsingFilter( Set vertexSet, Set filter ) {
-        Object v;
+    private void addVerticesUsingFilter( Set<V> vertexSet, Set<V> filter ) {
+        V v;
 
-        for( Iterator i = vertexSet.iterator(  ); i.hasNext(  ); ) {
-            v = i.next(  );
+        for( Iterator<V> iter = vertexSet.iterator(  ); iter.hasNext(  ); ) {
+            v = iter.next(  );
 
-            // note the use of short circuit evaluation            
+            // note the use of short circuit evaluation
             if( filter == null || filter.contains( v ) ) {
                 addVertex( v );
             }
@@ -601,11 +598,11 @@ public class Subgraph extends AbstractGraph implements Serializable {
      *
      * @since Jul 20, 2003
      */
-    private class BaseGraphListener implements GraphListener, Serializable {
+    private class BaseGraphListener implements GraphListener<V, E>, Serializable {
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded( GraphEdgeChangeEvent e ) {
+        public void edgeAdded( GraphEdgeChangeEvent<V, E> e ) {
             if( m_isInduced ) {
                 addEdge( e.getEdge(  ) );
             }
@@ -615,8 +612,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         /**
          * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved( GraphEdgeChangeEvent e ) {
-            Edge edge = e.getEdge(  );
+        public void edgeRemoved( GraphEdgeChangeEvent<V, E> e ) {
+            E edge = e.getEdge(  );
 
             removeEdge( edge );
         }
@@ -625,7 +622,7 @@ public class Subgraph extends AbstractGraph implements Serializable {
         /**
          * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
-        public void vertexAdded( GraphVertexChangeEvent e ) {
+        public void vertexAdded( GraphVertexChangeEvent<V> e ) {
             // we don't care
         }
 
@@ -633,8 +630,8 @@ public class Subgraph extends AbstractGraph implements Serializable {
         /**
          * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
-        public void vertexRemoved( GraphVertexChangeEvent e ) {
-            Object vertex = e.getVertex(  );
+        public void vertexRemoved( GraphVertexChangeEvent<V> e ) {
+            V vertex = e.getVertex(  );
 
             removeVertex( vertex );
         }

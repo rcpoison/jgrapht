@@ -27,7 +27,8 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   Mikael Hansen
+ * Contributor(s):   Christian Hammer
+ *                   Mikael Hansen
  *
  * $Id$
  *
@@ -35,6 +36,7 @@
  * -------
  * 10-Jul-2003 : Initial revision (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -43,6 +45,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.AsUndirectedGraph;
 
@@ -70,12 +77,12 @@ public final class GraphHelper {
      *
      * @see Graph#addEdge(Object, Object)
      */
-    public static Edge addEdge( Graph g, Object sourceVertex,
-        Object targetVertex, double weight ) {
-        EdgeFactory ef = g.getEdgeFactory(  );
-        Edge        e = ef.createEdge( sourceVertex, targetVertex );
+    public static <V, E extends Edge<V>> E addEdge( Graph<V, E> g, V sourceVertex,
+        V targetVertex, double weight ) {
+        EdgeFactory<V, E> ef = g.getEdgeFactory(  );
+        E           e = ef.createEdge( sourceVertex, targetVertex );
 
-        // we first create the edge and set the weight to make sure that 
+        // we first create the edge and set the weight to make sure that
         // listeners will see the correct weight upon addEdge.
         e.setWeight( weight );
 
@@ -94,7 +101,7 @@ public final class GraphHelper {
      * @return <code>true</code> if and only if the specified edge was not
      *         already contained in the graph.
      */
-    public static boolean addEdgeWithVertices( Graph g, Edge e ) {
+    public static <V, E extends Edge<V>> boolean addEdgeWithVertices( Graph<V, E> g, E e ) {
         g.addVertex( e.getSource(  ) );
         g.addVertex( e.getTarget(  ) );
 
@@ -114,8 +121,8 @@ public final class GraphHelper {
      * @return The newly created edge if added to the graph, otherwise
      *         <code>null</code>.
      */
-    public static Edge addEdgeWithVertices( Graph g, Object sourceVertex,
-        Object targetVertex ) {
+    public static <V, E extends Edge<V>> E addEdgeWithVertices( Graph<V, E> g,
+            V sourceVertex, V targetVertex ) {
         g.addVertex( sourceVertex );
         g.addVertex( targetVertex );
 
@@ -137,8 +144,8 @@ public final class GraphHelper {
      * @return The newly created edge if added to the graph, otherwise
      *         <code>null</code>.
      */
-    public static Edge addEdgeWithVertices( Graph g, Object sourceVertex,
-        Object targetVertex, double weight ) {
+    public static <V, E extends Edge<V>> E addEdgeWithVertices( Graph<V, E> g,
+            V sourceVertex, V targetVertex, double weight ) {
         g.addVertex( sourceVertex );
         g.addVertex( targetVertex );
 
@@ -153,7 +160,7 @@ public final class GraphHelper {
      * is added to the destination graph. This method returns
      * <code>true</code> if the destination graph has been modified as a
      * result of this operation, otherwise it returns <code>false</code>.
-     * 
+     *
      * <p>
      * The behavior of this operation is undefined if any of the specified
      * graphs is modified while operation is in progress.
@@ -165,7 +172,8 @@ public final class GraphHelper {
      * @return <code>true</code> if and only if the destination graph has been
      *         changed as a result of this operation.
      */
-    public static boolean addGraph( Graph destination, Graph source ) {
+    public static <V, E extends Edge<V>> boolean addGraph( Graph<V, E> destination,
+            Graph<? extends V, ? extends E> source ) {
         boolean modified = destination.addAllVertices( source.vertexSet(  ) );
         modified |= destination.addAllEdges( source.edgeSet(  ) );
 
@@ -176,7 +184,7 @@ public final class GraphHelper {
     /**
      * Adds all the vertices and all the edges of the specified source digraph
      * to the specified destination digraph, reversing all of the edges.
-     * 
+     *
      * <p>
      * The behavior of this operation is undefined if any of the specified
      * graphs is modified while operation is in progress.
@@ -211,7 +219,7 @@ public final class GraphHelper {
      * @return a list of the vertices that are the neighbors of the specified
      *         vertex.
      */
-    public static List neighborListOf( Graph g, Object vertex ) {
+    public static <V, E extends Edge<V>> List<V> neighborListOf( Graph<V,E> g, V vertex ) {
         List neighbors = new ArrayList(  );
 
         for( Iterator i = g.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
@@ -234,7 +242,7 @@ public final class GraphHelper {
      * @return a list of the vertices that are the predecessors of the
      *         specified vertex.
      */
-    public static List predecessorListOf( DirectedGraph g, Object vertex ) {
+    public static <V, E extends Edge<V>> List<V> predecessorListOf( DirectedGraph<V,E> g, V vertex ) {
         List predecessors = new ArrayList(  );
         List edges = g.incomingEdgesOf( vertex );
 
@@ -258,7 +266,7 @@ public final class GraphHelper {
      * @return a list of the vertices that are the successors of the specified
      *         vertex.
      */
-    public static List successorListOf( DirectedGraph g, Object vertex ) {
+    public static <V, E extends Edge<V>> List<V> successorListOf( DirectedGraph<V,E> g, V vertex ) {
         List successors = new ArrayList(  );
         List edges = g.outgoingEdgesOf( vertex );
 
@@ -286,7 +294,7 @@ public final class GraphHelper {
      *
      * @see AsUndirectedGraph
      */
-    public static UndirectedGraph undirectedGraph( Graph g ) {
+    public static <V, E extends Edge<V>> UndirectedGraph<V, E> undirectedGraph( Graph<V, E> g ) {
         if( g instanceof DirectedGraph ) {
             return new AsUndirectedGraph( (DirectedGraph) g );
         }
@@ -294,7 +302,7 @@ public final class GraphHelper {
             return (UndirectedGraph) g;
         }
         else {
-            throw new IllegalArgumentException( 
+            throw new IllegalArgumentException(
                 "Graph must be either DirectedGraph or UndirectedGraph" );
         }
     }

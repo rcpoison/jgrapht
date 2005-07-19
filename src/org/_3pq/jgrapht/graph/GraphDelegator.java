@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -54,13 +55,13 @@ import org._3pq.jgrapht.UndirectedGraph;
  * delegates all its methods to the backing graph. Operations on this graph
  * "pass through" to the to the backing graph. Any modification made to this
  * graph or the backing graph is reflected by the other.
- * 
+ *
  * <p>
  * This graph does <i>not</i> pass the hashCode and equals operations through
  * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
  * <tt>hashCode</tt> methods.
  * </p>
- * 
+ *
  * <p>
  * This class is mostly used as a base for extending subclasses.
  * </p>
@@ -69,12 +70,12 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @since Jul 20, 2003
  */
-public class GraphDelegator extends AbstractGraph implements Graph,
+public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E> implements Graph<V, E>,
     Serializable {
     private static final long serialVersionUID = 3257005445226181425L;
 
     /** The graph to which operations are delegated. */
-    private Graph m_delegate;
+    private Graph<V, E> m_delegate;
 
     /**
      * Constructor for GraphDelegator.
@@ -83,7 +84,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
      *
      * @throws NullPointerException
      */
-    public GraphDelegator( Graph g ) {
+    public GraphDelegator( Graph<V, E> g ) {
         super(  );
 
         if( g == null ) {
@@ -96,7 +97,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#getAllEdges(Object, Object)
      */
-    public List getAllEdges( Object sourceVertex, Object targetVertex ) {
+    public List<E> getAllEdges( V sourceVertex, V targetVertex ) {
         return m_delegate.getAllEdges( sourceVertex, targetVertex );
     }
 
@@ -104,7 +105,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#getEdge(Object, Object)
      */
-    public Edge getEdge( Object sourceVertex, Object targetVertex ) {
+    public E getEdge( V sourceVertex, V targetVertex ) {
         return m_delegate.getEdge( sourceVertex, targetVertex );
     }
 
@@ -112,7 +113,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#getEdgeFactory()
      */
-    public EdgeFactory getEdgeFactory(  ) {
+    public EdgeFactory<V, E> getEdgeFactory(  ) {
         return m_delegate.getEdgeFactory(  );
     }
 
@@ -120,7 +121,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
+    public boolean addEdge( E e ) {
         return m_delegate.addEdge( e );
     }
 
@@ -128,7 +129,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
+    public E addEdge( V sourceVertex, V targetVertex ) {
         return m_delegate.addEdge( sourceVertex, targetVertex );
     }
 
@@ -136,7 +137,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex( Object v ) {
+    public boolean addVertex( V v ) {
         return m_delegate.addVertex( v );
     }
 
@@ -144,7 +145,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#containsEdge(Edge)
      */
-    public boolean containsEdge( Edge e ) {
+    public boolean containsEdge( E e ) {
         return m_delegate.containsEdge( e );
     }
 
@@ -152,7 +153,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#containsVertex(Object)
      */
-    public boolean containsVertex( Object v ) {
+    public boolean containsVertex( V v ) {
         return m_delegate.containsVertex( v );
     }
 
@@ -160,7 +161,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf( Object vertex ) {
+    public int degreeOf( V vertex ) {
         return ( (UndirectedGraph) m_delegate ).degreeOf( vertex );
     }
 
@@ -168,7 +169,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#edgeSet()
      */
-    public Set edgeSet(  ) {
+    public Set<E> edgeSet(  ) {
         return m_delegate.edgeSet(  );
     }
 
@@ -176,7 +177,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#edgesOf(Object)
      */
-    public List edgesOf( Object vertex ) {
+    public List<E> edgesOf( V vertex ) {
         return m_delegate.edgesOf( vertex );
     }
 
@@ -184,7 +185,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
-    public int inDegreeOf( Object vertex ) {
+    public int inDegreeOf( V vertex ) {
         return ( (DirectedGraph) m_delegate ).inDegreeOf( vertex );
     }
 
@@ -192,7 +193,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List incomingEdgesOf( Object vertex ) {
+    public List<E> incomingEdgesOf( V vertex ) {
         return ( (DirectedGraph) m_delegate ).incomingEdgesOf( vertex );
     }
 
@@ -200,7 +201,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see DirectedGraph#outDegreeOf(Object)
      */
-    public int outDegreeOf( Object vertex ) {
+    public int outDegreeOf( V vertex ) {
         return ( (DirectedGraph) m_delegate ).outDegreeOf( vertex );
     }
 
@@ -208,7 +209,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List outgoingEdgesOf( Object vertex ) {
+    public List<E> outgoingEdgesOf( V vertex ) {
         return ( (DirectedGraph) m_delegate ).outgoingEdgesOf( vertex );
     }
 
@@ -216,7 +217,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( Edge e ) {
+    public boolean removeEdge( E e ) {
         return m_delegate.removeEdge( e );
     }
 
@@ -224,7 +225,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#removeEdge(Object, Object)
      */
-    public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
+    public E removeEdge( V sourceVertex, V targetVertex ) {
         return m_delegate.removeEdge( sourceVertex, targetVertex );
     }
 
@@ -232,7 +233,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#removeVertex(Object)
      */
-    public boolean removeVertex( Object v ) {
+    public boolean removeVertex( V v ) {
         return m_delegate.removeVertex( v );
     }
 
@@ -248,7 +249,7 @@ public class GraphDelegator extends AbstractGraph implements Graph,
     /**
      * @see Graph#vertexSet()
      */
-    public Set vertexSet(  ) {
+    public Set<V> vertexSet(  ) {
         return m_delegate.vertexSet(  );
     }
 }

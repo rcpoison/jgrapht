@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -51,13 +52,13 @@ import org._3pq.jgrapht.event.VertexSetListener;
  * @see org._3pq.jgrapht.event.VertexSetListener
  * @since Jul 20, 2003
  */
-public interface ListenableGraph extends Graph {
+public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E> {
     /**
      * Adds the specified graph listener to this graph, if not already present.
      *
      * @param l the listener to be added.
      */
-    public void addGraphListener( GraphListener l );
+    public void addGraphListener( GraphListener<V, E> l );
 
 
     /**
@@ -66,7 +67,7 @@ public interface ListenableGraph extends Graph {
      *
      * @param l the listener to be added.
      */
-    public void addVertexSetListener( VertexSetListener l );
+    public void addVertexSetListener( VertexSetListener<V> l );
 
 
     /**
@@ -74,7 +75,7 @@ public interface ListenableGraph extends Graph {
      *
      * @param l he listener to be removed.
      */
-    public void removeGraphListener( GraphListener l );
+    public void removeGraphListener( GraphListener<V, E> l );
 
 
     /**
@@ -82,5 +83,5 @@ public interface ListenableGraph extends Graph {
      *
      * @param l the listener to be removed.
      */
-    public void removeVertexSetListener( VertexSetListener l );
+    public void removeVertexSetListener( VertexSetListener<V> l );
 }

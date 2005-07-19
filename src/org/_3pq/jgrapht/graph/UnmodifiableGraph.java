@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -45,6 +46,8 @@ import java.util.List;
 
 import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.UndirectedGraph;
 
 /**
  * An unmodifiable view of the backing graph specified in the constructor. This
@@ -64,7 +67,7 @@ import org._3pq.jgrapht.Graph;
  *
  * @since Jul 24, 2003
  */
-public class UnmodifiableGraph extends GraphDelegator implements Serializable {
+class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E> implements Serializable {
     private static final long   serialVersionUID = 3544957670722713913L;
     private static final String UNMODIFIABLE = "this graph is unmodifiable";
 
@@ -74,14 +77,14 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
      * @param g the backing graph on which an unmodifiable graph is to be
      *        created.
      */
-    public UnmodifiableGraph( Graph g ) {
+    public UnmodifiableGraph( Graph<V, E> g ) {
         super( g );
     }
-
-    /**
+    
+   /**
      * @see Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges( Collection edges ) {
+    public boolean addAllEdges( Collection<? extends E> edges ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -89,7 +92,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#addAllVertices(Collection)
      */
-    public boolean addAllVertices( Collection vertices ) {
+    public boolean addAllVertices( Collection<? extends V> vertices ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -97,7 +100,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
+    public boolean addEdge( E e ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -105,7 +108,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
+    public E addEdge( V sourceVertex, V targetVertex ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -113,7 +116,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex( Object v ) {
+    public boolean addVertex( V v ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -121,7 +124,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeAllEdges(Collection)
      */
-    public boolean removeAllEdges( Collection edges ) {
+    public boolean removeAllEdges( Collection<? extends E> edges ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -129,7 +132,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges( Object sourceVertex, Object targetVertex ) {
+    public List<E> removeAllEdges( V sourceVertex, V targetVertex ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -137,7 +140,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeAllVertices(Collection)
      */
-    public boolean removeAllVertices( Collection vertices ) {
+    public boolean removeAllVertices( Collection<? extends V> vertices ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -145,7 +148,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( Edge e ) {
+    public boolean removeEdge( E e ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -153,7 +156,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeEdge(Object, Object)
      */
-    public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
+    public E removeEdge( V sourceVertex, V targetVertex ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 
@@ -161,7 +164,7 @@ public class UnmodifiableGraph extends GraphDelegator implements Serializable {
     /**
      * @see Graph#removeVertex(Object)
      */
-    public boolean removeVertex( Object v ) {
+    public boolean removeVertex( V v ) {
         throw new UnsupportedOperationException( UNMODIFIABLE );
     }
 }

@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -54,7 +55,7 @@ import java.util.List;
  *
  * @since Jul 14, 2003
  */
-public interface DirectedGraph extends Graph {
+public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
     /**
      * Returns the "in degree" of the specified vertex. An in degree of a
      * vertex in a directed graph is the number of inward directed edges from
@@ -65,7 +66,7 @@ public interface DirectedGraph extends Graph {
      *
      * @return the degree of the specified vertex.
      */
-    public int inDegreeOf( Object vertex );
+    public int inDegreeOf( V vertex );
 
 
     /**
@@ -76,7 +77,7 @@ public interface DirectedGraph extends Graph {
      *
      * @return a list of all edges incoming into the specified vertex.
      */
-    public List incomingEdgesOf( Object vertex );
+    public List<E> incomingEdgesOf( V vertex );
 
 
     /**
@@ -89,7 +90,7 @@ public interface DirectedGraph extends Graph {
      *
      * @return the degree of the specified vertex.
      */
-    public int outDegreeOf( Object vertex );
+    public int outDegreeOf( V vertex );
 
 
     /**
@@ -100,5 +101,5 @@ public interface DirectedGraph extends Graph {
      *
      * @return a list of all edges outgoing from the specified vertex.
      */
-    public List outgoingEdgesOf( Object vertex );
+    public List<E> outgoingEdgesOf( V vertex );
 }

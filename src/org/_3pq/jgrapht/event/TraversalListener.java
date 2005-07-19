@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,9 +35,12 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
+
+import org._3pq.jgrapht.Edge;
 
 /**
  * A listener on graph iterator or on a graph traverser.
@@ -46,7 +49,7 @@ package org._3pq.jgrapht.event;
  *
  * @since Jul 19, 2003
  */
-public interface TraversalListener {
+public interface TraversalListener<V, E extends Edge<V>> {
     /**
      * Called to inform listeners that the traversal of the current connected
      * component has finished.
@@ -72,7 +75,7 @@ public interface TraversalListener {
      *
      * @param e the edge traversal event.
      */
-    public void edgeTraversed( EdgeTraversalEvent e );
+    public void edgeTraversed( EdgeTraversalEvent<V, E> e );
 
 
     /**
@@ -82,5 +85,5 @@ public interface TraversalListener {
      *
      * @param e the vertex traversal event.
      */
-    public void vertexTraversed( VertexTraversalEvent e );
+    public void vertexTraversed( VertexTraversalEvent<V> e );
 }

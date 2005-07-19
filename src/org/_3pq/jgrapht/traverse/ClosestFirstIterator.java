@@ -36,6 +36,7 @@
  * 02-Sep-2003 : Initial revision (JVS);
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  * 29-May-2005 : Added radius support (JVS);
+ * 06-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -49,7 +50,7 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The results
  * of such modifications are undefined.
- * 
+ *
  * <p>
  * The metric for <i>closest</i> here is the path length from a start vertex.
  * Edge.getWeight() is summed to calculate path length. Negative edge weights
@@ -61,7 +62,7 @@ import org._3pq.jgrapht.util.FibonacciHeap;
  *
  * @since Sep 2, 2003
  */
-public class ClosestFirstIterator extends CrossComponentIterator {
+public class ClosestFirstIterator<V, E extends Edge<V>> extends CrossComponentIterator<V, E, ClosestFirstIterator.QueueEntry> {
     /** Priority queue of fringe vertices. */
     private FibonacciHeap m_heap = new FibonacciHeap(  );
 
@@ -73,7 +74,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      *
      * @param g the graph to be iterated.
      */
-    public ClosestFirstIterator( Graph g ) {
+    public ClosestFirstIterator( Graph<V,E> g ) {
         this( g, null );
     }
 
@@ -89,7 +90,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public ClosestFirstIterator( Graph g, Object startVertex ) {
+    public ClosestFirstIterator( Graph<V,E> g, V startVertex ) {
         this( g, startVertex, Double.POSITIVE_INFINITY );
     }
 
@@ -107,7 +108,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
      *        unbounded search.
      */
-    public ClosestFirstIterator( Graph g, Object startVertex, double radius ) {
+    public ClosestFirstIterator( Graph<V,E> g, V startVertex, double radius ) {
         super( g, startVertex );
         m_radius = radius;
         checkRadiusTraversal( isCrossComponentTraversal(  ) );
@@ -130,8 +131,8 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @return length of shortest path known, or Double.POSITIVE_INFINITY if no
      *         path found yet
      */
-    public double getShortestPathLength( Object vertex ) {
-        QueueEntry entry = (QueueEntry) getSeenData( vertex );
+    public double getShortestPathLength( V vertex ) {
+        QueueEntry entry = getSeenData( vertex );
 
         if( entry == null ) {
             return Double.POSITIVE_INFINITY;
@@ -153,8 +154,8 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @return the spanning tree edge, or null if the vertex either has not
      *         been seen yet or is the start vertex.
      */
-    public Edge getSpanningTreeEdge( Object vertex ) {
-        QueueEntry entry = (QueueEntry) getSeenData( vertex );
+    public E getSpanningTreeEdge( V vertex ) {
+        QueueEntry<V, E> entry = getSeenData( vertex );
 
         if( entry == null ) {
             return null;
@@ -188,7 +189,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertex( Object vertex, Edge edge ) {
+    protected void encounterVertex( V vertex, E edge ) {
         QueueEntry entry = createSeenData( vertex, edge );
         putSeenData( vertex, entry );
         m_heap.insert( entry, entry.getShortestPathLength(  ) );
@@ -202,8 +203,8 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      * @param vertex the vertex re-encountered
      * @param edge the edge via which the vertex was re-encountered
      */
-    protected void encounterVertexAgain( Object vertex, Edge edge ) {
-        QueueEntry entry = (QueueEntry) getSeenData( vertex );
+    protected void encounterVertexAgain( V vertex, E edge ) {
+        QueueEntry entry = getSeenData( vertex );
 
         if( entry.m_frozen ) {
             // no improvement for this vertex possible
@@ -222,17 +223,17 @@ public class ClosestFirstIterator extends CrossComponentIterator {
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected Object provideNextVertex(  ) {
-        QueueEntry entry = (QueueEntry) m_heap.removeMin(  );
+    protected V provideNextVertex(  ) {
+        QueueEntry<V,E> entry = (QueueEntry) m_heap.removeMin(  );
         entry.m_frozen = true;
 
         return entry.m_vertex;
     }
 
 
-    private void assertNonNegativeEdge( Edge edge ) {
+    private void assertNonNegativeEdge( E edge ) {
         if( edge.getWeight(  ) < 0 ) {
-            throw new IllegalArgumentException( 
+            throw new IllegalArgumentException(
                 "negative edge weights not allowed" );
         }
     }
@@ -247,11 +248,11 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      *
      * @return calculated path length.
      */
-    private double calculatePathLength( Object vertex, Edge edge ) {
+    private double calculatePathLength( V vertex, E edge ) {
         assertNonNegativeEdge( edge );
 
-        Object     otherVertex = edge.oppositeVertex( vertex );
-        QueueEntry otherEntry = (QueueEntry) getSeenData( otherVertex );
+        V          otherVertex = edge.oppositeVertex( vertex );
+        QueueEntry otherEntry = getSeenData( otherVertex );
 
         return otherEntry.getShortestPathLength(  ) + edge.getWeight(  );
     }
@@ -259,7 +260,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
 
     private void checkRadiusTraversal( boolean crossComponentTraversal ) {
         if( crossComponentTraversal && ( m_radius != Double.POSITIVE_INFINITY ) ) {
-            throw new IllegalArgumentException( 
+            throw new IllegalArgumentException(
                 "radius may not be specified for cross-component traversal" );
         }
     }
@@ -273,7 +274,7 @@ public class ClosestFirstIterator extends CrossComponentIterator {
      *
      * @return the new queue entry.
      */
-    private QueueEntry createSeenData( Object vertex, Edge edge ) {
+    private QueueEntry createSeenData( V vertex, E edge ) {
         double shortestPathLength;
 
         if( edge == null ) {
@@ -290,25 +291,27 @@ public class ClosestFirstIterator extends CrossComponentIterator {
         return entry;
     }
 
+
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    private static class QueueEntry extends FibonacciHeap.Node {
+    static class QueueEntry<V,
+            E extends Edge<V>> extends FibonacciHeap.Node {
         /** Best spanning tree edge to vertex seen so far. */
-        Edge m_spanningTreeEdge;
+        E m_spanningTreeEdge;
 
         /** The vertex reached. */
-        Object m_vertex;
+        V m_vertex;
 
         /** True once m_spanningTreeEdge is guaranteed to be the true minimum. */
         boolean m_frozen;
 
-        QueueEntry( double key ) {
-            super( key );
+        QueueEntry(double key) {
+            super(key);
         }
 
-        double getShortestPathLength(  ) {
-            return getKey(  );
+        double getShortestPathLength() {
+            return getKey();
         }
     }
 }

@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   CHristian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,6 +42,7 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A simple graph. A simple graph is an undirected graph for which at most one
@@ -49,7 +51,7 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * href="http://mathworld.wolfram.com/SimpleGraph.html">
  * http://mathworld.wolfram.com/SimpleGraph.html</a>.
  */
-public class SimpleGraph extends AbstractBaseGraph implements UndirectedGraph {
+public class SimpleGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E> implements UndirectedGraph<V, E> {
     private static final long serialVersionUID = 3545796589454112304L;
 
     /**
@@ -57,7 +59,7 @@ public class SimpleGraph extends AbstractBaseGraph implements UndirectedGraph {
      *
      * @param ef the edge factory of the new graph.
      */
-    public SimpleGraph( EdgeFactory ef ) {
+    public SimpleGraph( EdgeFactory<V, E> ef ) {
         super( ef, false, false );
     }
 

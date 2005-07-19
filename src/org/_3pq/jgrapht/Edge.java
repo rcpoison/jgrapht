@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -59,7 +60,7 @@ package org._3pq.jgrapht;
  *
  * @since Jul 14, 2003
  */
-public interface Edge extends Cloneable {
+public interface Edge<V> extends Cloneable {
     /** The default weight for an edge. */
     public static double DEFAULT_EDGE_WEIGHT = 1.0;
 
@@ -68,7 +69,7 @@ public interface Edge extends Cloneable {
      *
      * @return the source vertex of this edge.
      */
-    public Object getSource(  );
+    public V getSource(  );
 
 
     /**
@@ -76,7 +77,7 @@ public interface Edge extends Cloneable {
      *
      * @return the target vertex of this edge.
      */
-    public Object getTarget(  );
+    public V getTarget(  );
 
 
     /**
@@ -122,7 +123,7 @@ public interface Edge extends Cloneable {
      *
      * @return <tt>true</tt> if this edge contains the specified vertex.
      */
-    public boolean containsVertex( Object v );
+    public boolean containsVertex( V v );
 
 
     /**
@@ -136,5 +137,5 @@ public interface Edge extends Cloneable {
      *         target vertices of this edge.
      * @throws NullPointerException if v is <code>null</code>.
      */
-    public Object oppositeVertex( Object v );
+    public V oppositeVertex( V v );
 }

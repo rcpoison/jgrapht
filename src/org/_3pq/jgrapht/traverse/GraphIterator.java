@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,12 +35,14 @@
  * -------
  * 31-Jul-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
+ * 04-May-2004 : Made generic (CH)
  *
  */
 package org._3pq.jgrapht.traverse;
 
 import java.util.Iterator;
 
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.event.TraversalListener;
 
 /**
@@ -50,7 +52,7 @@ import org._3pq.jgrapht.event.TraversalListener;
  *
  * @since Jul 31, 2003
  */
-public interface GraphIterator extends Iterator {
+public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V> {
     /**
      * Test whether this iterator is set to traverse the grpah across connected
      * components.
@@ -91,7 +93,7 @@ public interface GraphIterator extends Iterator {
      *
      * @param l the traversal listener to be added.
      */
-    public void addTraversalListener( TraversalListener l );
+    public void addTraversalListener( TraversalListener<V, E> l );
 
 
     /**
@@ -107,5 +109,5 @@ public interface GraphIterator extends Iterator {
      *
      * @param l the traversal listener to be removed.
      */
-    public void removeTraversalListener( TraversalListener l );
+    public void removeTraversalListener( TraversalListener<V, E> l );
 }

@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 16-Sep-2003 : Initial revision (JVS);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht;
@@ -47,11 +48,11 @@ package org._3pq.jgrapht;
  *
  * @since Sep 16, 2003
  */
-public interface VertexFactory {
+public interface VertexFactory<V> {
     /**
      * Creates a new vertex.
      *
      * @return the new vertex
      */
-    public Object createVertex(  );
+    public V createVertex(  );
 }

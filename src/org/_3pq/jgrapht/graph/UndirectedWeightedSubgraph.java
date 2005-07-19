@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -42,14 +43,15 @@ import java.util.Set;
 
 import org._3pq.jgrapht.UndirectedGraph;
 import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * An undirected weighted graph that is a subgraph on other graph.
  *
  * @see Subgraph
  */
-public class UndirectedWeightedSubgraph extends UndirectedSubgraph
-    implements WeightedGraph {
+public class UndirectedWeightedSubgraph<V, E extends Edge<V>> extends UndirectedSubgraph<V, E>
+    implements WeightedGraph<V, E> {
     private static final long serialVersionUID = 3689346615735236409L;
 
     /**
@@ -63,8 +65,8 @@ public class UndirectedWeightedSubgraph extends UndirectedSubgraph
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public UndirectedWeightedSubgraph( WeightedGraph base, Set vertexSubset,
-        Set edgeSubset ) {
+    public UndirectedWeightedSubgraph( WeightedGraph<V, E> base, Set<V> vertexSubset,
+        Set<E> edgeSubset ) {
         super( (UndirectedGraph) base, vertexSubset, edgeSubset );
     }
 }

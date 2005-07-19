@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,9 +35,12 @@
  * -------
  * 06-Aug-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
+
+import org._3pq.jgrapht.Edge;
 
 /**
  * An empty do-nothing implementation of the {@link TraversalListener}
@@ -47,7 +50,7 @@ package org._3pq.jgrapht.event;
  *
  * @since Aug 6, 2003
  */
-public class TraversalListenerAdapter implements TraversalListener {
+public class TraversalListenerAdapter<V, E extends Edge<V>> implements TraversalListener<V, E> {
     /**
      * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
      */
@@ -63,11 +66,11 @@ public class TraversalListenerAdapter implements TraversalListener {
     /**
      * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
      */
-    public void edgeTraversed( EdgeTraversalEvent e ) {}
+    public void edgeTraversed( EdgeTraversalEvent<V, E> e ) {}
 
 
     /**
      * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
      */
-    public void vertexTraversed( VertexTraversalEvent e ) {}
+    public void vertexTraversed( VertexTraversalEvent<V> e ) {}
 }

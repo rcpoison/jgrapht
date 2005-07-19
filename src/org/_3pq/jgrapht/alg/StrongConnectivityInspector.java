@@ -52,6 +52,7 @@ import org._3pq.jgrapht.GraphHelper;
 import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 import org._3pq.jgrapht.graph.DirectedSubgraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * <p>
@@ -61,7 +62,7 @@ import org._3pq.jgrapht.graph.DirectedSubgraph;
  * Introduction to agorithms", Chapter 25.2. It has a running time of O(V +
  * E).
  * </p>
- * 
+ *
  * <p>
  * Unlike {@link org._3pq.jgrapht.alg.ConnectivityInspector}, this class does
  * not implement incremental inspection. The full algorithm is executed at the
@@ -70,24 +71,25 @@ import org._3pq.jgrapht.graph.DirectedSubgraph;
  * </p>
  *
  * @author Christian Soltenborn
+ * @author Christian Hammer
  *
  * @since Feb 2, 2005
  */
-public class StrongConnectivityInspector {
+public class StrongConnectivityInspector<V, E extends DirectedEdge<V>> {
     // the graph to compute the strongly connected sets for
-    private final DirectedGraph m_graph;
+    private final DirectedGraph<V, E> m_graph;
 
     // stores the vertices, ordered by their finishing time in first dfs
-    private LinkedList m_orderedVertices;
+    private LinkedList<VertexData> m_orderedVertices;
 
     // the result of the computation, cached for future calls
-    private List m_stronglyConnectedSets;
+    private List<Set<V>> m_stronglyConnectedSets;
 
     // the result of the computation, cached for future calls
-    private List m_stronglyConnectedSubgraphs;
+    private List<DirectedSubgraph> m_stronglyConnectedSubgraphs;
 
     // maps vertices to their VertexData object
-    private Map m_vertexToVertexData;
+    private Map<V, VertexData> m_vertexToVertexData;
 
     /**
      * The constructor of the StrongConnectivityInspector class.
@@ -96,7 +98,7 @@ public class StrongConnectivityInspector {
      *
      * @throws IllegalArgumentException
      */
-    public StrongConnectivityInspector( DirectedGraph directedGraph ) {
+    public StrongConnectivityInspector( DirectedGraph<V, E> directedGraph ) {
         if( directedGraph == null ) {
             throw new IllegalArgumentException( "null not allowed for graph!" );
         }
@@ -113,7 +115,7 @@ public class StrongConnectivityInspector {
      *
      * @return the graph inspected by this StrongConnectivityInspector
      */
-    public DirectedGraph getGraph(  ) {
+    public DirectedGraph<V, E> getGraph(  ) {
         return m_graph;
     }
 
@@ -138,7 +140,7 @@ public class StrongConnectivityInspector {
      * @return <code>List</code> of <code>Set</code>s containing the strongly
      *         connected components
      */
-    public List stronglyConnectedSets(  ) {
+    public List<Set<V>> stronglyConnectedSets(  ) {
         if( m_stronglyConnectedSets == null ) {
             m_orderedVertices           = new LinkedList(  );
             m_stronglyConnectedSets     = new Vector(  );
@@ -148,10 +150,10 @@ public class StrongConnectivityInspector {
 
             // perform the first round of DFS, result is an ordering
             // of the vertices by decreasing finishing time
-            Iterator iter = m_vertexToVertexData.values(  ).iterator(  );
+            Iterator<VertexData> iter = m_vertexToVertexData.values(  ).iterator(  );
 
             while( iter.hasNext(  ) ) {
-                VertexData data = (VertexData) iter.next(  );
+                VertexData data = iter.next(  );
 
                 if( !data.m_discovered ) {
                     dfsVisit( m_graph, data, null );
@@ -171,7 +173,7 @@ public class StrongConnectivityInspector {
             iter = m_orderedVertices.iterator(  );
 
             while( iter.hasNext(  ) ) {
-                VertexData data = (VertexData) iter.next(  );
+                VertexData data = iter.next(  );
 
                 if( !data.m_discovered ) {
                     // new strongly connected set
@@ -197,7 +199,7 @@ public class StrongConnectivityInspector {
      * all vertices of that component. The subgraph will have an edge (u,v)
      * iff u and v are contained in the strongly connected component.
      * </p>
-     * 
+     *
      * <p>
      * NOTE: Calling this method will first execute {@link
      * StrongConnectivityInspector#stronglyConnectedSets()}. If you don't need
@@ -207,16 +209,16 @@ public class StrongConnectivityInspector {
      * @return a list of subgraphs representing the strongly connected
      *         components
      */
-    public List stronglyConnectedSubgraphs(  ) {
+    public List<DirectedSubgraph> stronglyConnectedSubgraphs(  ) {
         if( m_stronglyConnectedSubgraphs == null ) {
-            List sets = stronglyConnectedSets(  );
+            List<Set<V>> sets = stronglyConnectedSets(  );
             m_stronglyConnectedSubgraphs = new Vector( sets.size(  ) );
 
-            Iterator iter = sets.iterator(  );
+            Iterator<Set<V>> iter = sets.iterator(  );
 
             while( iter.hasNext(  ) ) {
-                m_stronglyConnectedSubgraphs.add( new DirectedSubgraph( 
-                        m_graph, (Set) iter.next(  ), null ) );
+                m_stronglyConnectedSubgraphs.add( new DirectedSubgraph(
+                        m_graph, iter.next(  ), null ) );
             }
         }
 
@@ -231,10 +233,10 @@ public class StrongConnectivityInspector {
     private void createVertexData(  ) {
         m_vertexToVertexData = new HashMap( m_graph.vertexSet(  ).size(  ) );
 
-        Iterator iter = m_graph.vertexSet(  ).iterator(  );
+        Iterator<V> iter = m_graph.vertexSet(  ).iterator(  );
 
         while( iter.hasNext(  ) ) {
-            Object vertex = iter.next(  );
+            V vertex = iter.next(  );
             m_vertexToVertexData.put( vertex,
                 new VertexData( vertex, false, false ) );
         }
@@ -247,32 +249,32 @@ public class StrongConnectivityInspector {
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-    private void dfsVisit( DirectedGraph graph, VertexData vertexData,
-        Set vertices ) {
-        Stack stack = new Stack(  );
+    private void dfsVisit( DirectedGraph<V, E> graph, VertexData vertexData,
+        Set<V> vertices ) {
+        Stack<VertexData> stack = new Stack(  );
         stack.push( vertexData );
 
         while( !stack.isEmpty(  ) ) {
-            VertexData data = (VertexData) stack.pop(  );
+            VertexData data = stack.pop(  );
 
             if( !data.m_discovered ) {
                 data.m_discovered = true;
 
                 if( vertices != null ) {
-                    vertices.add( data.m_vertex );
+                    vertices.add( (V) data.m_vertex );
                 }
 
                 // TODO: other way to identify when this vertex is finished!?
                 stack.push( new VertexData( data, true, true ) );
 
                 // follow all edges
-                Iterator iter =
-                    graph.outgoingEdgesOf( data.m_vertex ).iterator(  );
+                Iterator<E> iter =
+                    graph.outgoingEdgesOf( (V) data.m_vertex ).iterator(  );
 
                 while( iter.hasNext(  ) ) {
-                    DirectedEdge edge       = (DirectedEdge) iter.next(  );
+                    DirectedEdge edge       = iter.next(  );
                     VertexData   targetData =
-                        (VertexData) m_vertexToVertexData.get( edge.getTarget(  ) );
+                        m_vertexToVertexData.get( edge.getTarget(  ) );
 
                     if( !targetData.m_discovered ) {
                         // the "recursion"
@@ -283,7 +285,7 @@ public class StrongConnectivityInspector {
             else if( data.m_finished ) {
                 if( vertices == null ) {
                     // see TODO above
-                    m_orderedVertices.addFirst( data.m_vertex );
+                    m_orderedVertices.addFirst( (VertexData) data.m_vertex );
                 }
             }
         }
@@ -294,10 +296,10 @@ public class StrongConnectivityInspector {
      * Resets all VertexData objects.
      */
     private void resetVertexData(  ) {
-        Iterator iter = m_vertexToVertexData.values(  ).iterator(  );
+        Iterator<VertexData> iter = m_vertexToVertexData.values(  ).iterator(  );
 
         while( iter.hasNext(  ) ) {
-            VertexData data = (VertexData) iter.next(  );
+            VertexData data = iter.next(  );
             data.m_discovered     = false;
             data.m_finished       = false;
         }
@@ -308,8 +310,8 @@ public class StrongConnectivityInspector {
      */
     private final class VertexData {
         private final Object m_vertex;
-        private boolean      m_discovered;
-        private boolean      m_finished;
+        private boolean m_discovered;
+        private boolean m_finished;
 
         private VertexData( Object vertex, boolean discovered, boolean finished ) {
             m_vertex         = vertex;

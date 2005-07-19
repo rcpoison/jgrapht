@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,14 +42,15 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A simple directed graph. A simple directed graph is a directed graph in
  * which neither multiple edges between any two vertices nor loops are
  * permitted.
  */
-public class SimpleDirectedGraph extends AbstractBaseGraph
-    implements DirectedGraph {
+public class SimpleDirectedGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 4049358608472879671L;
 
     /**
@@ -64,7 +66,7 @@ public class SimpleDirectedGraph extends AbstractBaseGraph
      *
      * @param ef the edge factory of the new graph.
      */
-    public SimpleDirectedGraph( EdgeFactory ef ) {
+    public SimpleDirectedGraph( EdgeFactory<V, E> ef ) {
         super( ef, false, false );
     }
 }

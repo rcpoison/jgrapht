@@ -27,26 +27,28 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH)
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * An undirected graph that cannot be modified.
  *
  * @see UnmodifiableGraph
  */
-public class UnmodifiableUndirectedGraph extends UnmodifiableGraph
-    implements UndirectedGraph {
+class UnmodifiableUndirectedGraph<V, E extends Edge<V>> extends UnmodifiableGraph<V, E>
+    implements UndirectedGraph<V, E> {
     private static final long serialVersionUID = 3258134639355704624L;
 
     /**
@@ -56,7 +58,7 @@ public class UnmodifiableUndirectedGraph extends UnmodifiableGraph
      * @param g the backing graph on which an unmodifiable graph is to be
      *        created.
      */
-    public UnmodifiableUndirectedGraph( UndirectedGraph g ) {
+    public UnmodifiableUndirectedGraph( UndirectedGraph<V, E> g ) {
         super( g );
     }
 }

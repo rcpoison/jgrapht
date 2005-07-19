@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 11-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
@@ -49,11 +50,11 @@ import org._3pq.jgrapht.Edge;
  *
  * @since Aug 11, 2003
  */
-public class EdgeTraversalEvent extends EventObject {
+public class EdgeTraversalEvent<V, E extends Edge<V>> extends EventObject {
     private static final long serialVersionUID = 4050768173789820979L;
 
     /** The traversed edge. */
-    protected Edge m_edge;
+    protected E m_edge;
 
     /**
      * Creates a new EdgeTraversalEvent.
@@ -61,7 +62,7 @@ public class EdgeTraversalEvent extends EventObject {
      * @param eventSource the source of the event.
      * @param edge the traversed edge.
      */
-    public EdgeTraversalEvent( Object eventSource, Edge edge ) {
+    public EdgeTraversalEvent( Object eventSource, E edge ) {
         super( eventSource );
         m_edge = edge;
     }
@@ -71,7 +72,7 @@ public class EdgeTraversalEvent extends EventObject {
      *
      * @return the traversed edge.
      */
-    public Edge getEdge(  ) {
+    public E getEdge(  ) {
         return m_edge;
     }
 }

@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -42,14 +43,15 @@ import java.util.Set;
 
 import org._3pq.jgrapht.DirectedGraph;
 import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed weighted graph that is a subgraph on other graph.
  *
  * @see Subgraph
  */
-public class DirectedWeightedSubgraph extends DirectedSubgraph
-    implements WeightedGraph {
+public class DirectedWeightedSubgraph<V, E extends Edge<V>> extends DirectedSubgraph<V, E>
+    implements WeightedGraph<V, E> {
     private static final long serialVersionUID = 3905799799168250680L;
 
     /**
@@ -63,8 +65,8 @@ public class DirectedWeightedSubgraph extends DirectedSubgraph
      *        <code>null</code> then all the edges whose vertices found in the
      *        graph are included.
      */
-    public DirectedWeightedSubgraph( WeightedGraph base, Set vertexSubset,
-        Set edgeSubset ) {
+    public DirectedWeightedSubgraph( WeightedGraph<V, E> base, Set<V> vertexSubset,
+        Set<E> edgeSubset ) {
         super( (DirectedGraph) base, vertexSubset, edgeSubset );
     }
 }

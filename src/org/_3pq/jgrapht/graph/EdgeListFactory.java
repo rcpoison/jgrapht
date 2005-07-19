@@ -27,18 +27,20 @@
  * (C) Copyright 2005, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 01-Jun-2005 : Initial revision (JVS);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import java.util.List;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A factory for edge lists.  This interface allows the creator of a graph to
@@ -49,7 +51,7 @@ import java.util.List;
  * @author John V. Sichi
  * @version $Id$
  */
-public interface EdgeListFactory {
+public interface EdgeListFactory<V, E extends Edge<V>> {
     /**
      * Create a new edge list for a particular vertex.
      *
@@ -61,7 +63,7 @@ public interface EdgeListFactory {
      *
      * @return new list
      */
-    public List createEdgeList( Object vertex );
+    public List<E> createEdgeList( V vertex );
 }
 
 

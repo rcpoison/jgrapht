@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Aug-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,6 +42,7 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.WeightedGraph;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A weighted pseudograph. A weighted pseudograph is a non-simple undirected
@@ -49,7 +51,7 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  * pseudographs, see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class WeightedPseudograph extends Pseudograph implements WeightedGraph {
+public class WeightedPseudograph<V, E extends Edge<V>> extends Pseudograph<V, E> implements WeightedGraph<V, E> {
     private static final long serialVersionUID = 3257290244524356152L;
 
     /**
@@ -57,7 +59,7 @@ public class WeightedPseudograph extends Pseudograph implements WeightedGraph {
      *
      * @param ef the edge factory of the new graph.
      */
-    public WeightedPseudograph( EdgeFactory ef ) {
+    public WeightedPseudograph( EdgeFactory<V, E> ef ) {
         super( ef );
     }
 

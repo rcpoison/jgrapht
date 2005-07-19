@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Aug-2003 : Adaptation to new event model (BN);
+ * 04-May-2004 : Made generic (CH)
  *
  */
 package org._3pq.jgrapht.traverse;
@@ -42,6 +43,7 @@ package org._3pq.jgrapht.traverse;
 import java.util.ArrayList;
 import java.util.List;
 
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
 import org._3pq.jgrapht.event.EdgeTraversalEvent;
 import org._3pq.jgrapht.event.TraversalListener;
@@ -55,8 +57,8 @@ import org._3pq.jgrapht.event.VertexTraversalEvent;
  *
  * @since Jul 19, 2003
  */
-public abstract class AbstractGraphIterator implements GraphIterator {
-    private List    m_traversalListeners      = new ArrayList(  );
+public abstract class AbstractGraphIterator<V, E extends Edge<V>> implements GraphIterator<V, E> {
+    private List<TraversalListener<V, E>>  m_traversalListeners = new ArrayList(  );
     private boolean m_crossComponentTraversal = true;
     private boolean m_reuseEvents             = false;
 
@@ -105,7 +107,7 @@ public abstract class AbstractGraphIterator implements GraphIterator {
      *
      * @param l the traversal listener to be added.
      */
-    public void addTraversalListener( TraversalListener l ) {
+    public void addTraversalListener( TraversalListener<V, E> l ) {
         if( !m_traversalListeners.contains( l ) ) {
             m_traversalListeners.add( l );
         }
@@ -127,7 +129,7 @@ public abstract class AbstractGraphIterator implements GraphIterator {
      *
      * @param l the traversal listener to be removed.
      */
-    public void removeTraversalListener( TraversalListener l ) {
+    public void removeTraversalListener( TraversalListener<V, E> l ) {
         m_traversalListeners.remove( l );
     }
 
@@ -144,7 +146,7 @@ public abstract class AbstractGraphIterator implements GraphIterator {
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
-                (TraversalListener) m_traversalListeners.get( i );
+                m_traversalListeners.get( i );
             l.connectedComponentFinished( e );
         }
     }
@@ -162,7 +164,7 @@ public abstract class AbstractGraphIterator implements GraphIterator {
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
-                (TraversalListener) m_traversalListeners.get( i );
+                m_traversalListeners.get( i );
             l.connectedComponentStarted( e );
         }
     }
@@ -173,12 +175,12 @@ public abstract class AbstractGraphIterator implements GraphIterator {
      *
      * @param e the edge traversal event.
      */
-    protected void fireEdgeTraversed( EdgeTraversalEvent e ) {
+    protected void fireEdgeTraversed( EdgeTraversalEvent<V, E> e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
-                (TraversalListener) m_traversalListeners.get( i );
+                m_traversalListeners.get( i );
             l.edgeTraversed( e );
         }
     }
@@ -189,12 +191,12 @@ public abstract class AbstractGraphIterator implements GraphIterator {
      *
      * @param e the vertex traversal event.
      */
-    protected void fireVertexTraversed( VertexTraversalEvent e ) {
+    protected void fireVertexTraversed( VertexTraversalEvent<V> e ) {
         int len = m_traversalListeners.size(  );
 
         for( int i = 0; i < len; i++ ) {
             TraversalListener l =
-                (TraversalListener) m_traversalListeners.get( i );
+                m_traversalListeners.get( i );
             l.vertexTraversed( e );
         }
     }

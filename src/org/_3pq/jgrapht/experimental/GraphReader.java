@@ -28,7 +28,7 @@ import java.io.*;
 import java.util.*;
 
 import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.graph.SimpleWeightedGraph;
 import org._3pq.jgrapht.traverse.*;
 
 /**
@@ -42,9 +42,9 @@ public class GraphReader {
     /**
      * Creates a new GraphReader object.
      *
-     * @param file  
+     * @param file
      *
-     * @throws IOException  
+     * @throws IOException
      */
     public GraphReader( String file ) throws IOException {
         _in = new BufferedReader( new FileReader( file ) );
@@ -53,15 +53,15 @@ public class GraphReader {
     /**
      * .
      *
-     * @param args  
+     * @param args
      *
-     * @throws Exception  
+     * @throws Exception
      */
     public static void main( String[] args ) throws Exception {
         Graph g = new SimpleWeightedGraph(  );
         new GraphReader( args[ 0 ] ).readGraph( g );
         System.out.println( "graph read" );
-        
+
         {long time = System.currentTimeMillis();
         ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
         while (spi.hasNext(  )) {
@@ -112,9 +112,9 @@ public class GraphReader {
     /**
      * .
      *
-     * @param g  
+     * @param g
      *
-     * @throws IOException  
+     * @throws IOException
      */
     public void readGraph( Graph g ) throws IOException {
         while( ready(  ) ) {
@@ -143,9 +143,9 @@ public class GraphReader {
     /**
      * .
      *
-     * @return  
+     * @return
      *
-     * @throws IOException  
+     * @throws IOException
      */
     public boolean ready(  ) throws IOException {
         return _in.ready(  );

@@ -27,7 +27,7 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
@@ -35,6 +35,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 10-Aug-2003 : Adaptation to new event model (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
@@ -52,13 +53,13 @@ import java.util.EventListener;
  * @see org._3pq.jgrapht.event.GraphListener
  * @since Jul 18, 2003
  */
-public interface VertexSetListener extends EventListener {
+public interface VertexSetListener<V> extends EventListener {
     /**
      * Notifies that a vertex has been added to the graph.
      *
      * @param e the vertex event.
      */
-    public void vertexAdded( GraphVertexChangeEvent e );
+    public void vertexAdded( GraphVertexChangeEvent<V> e );
 
 
     /**
@@ -66,5 +67,5 @@ public interface VertexSetListener extends EventListener {
      *
      * @param e the vertex event.
      */
-    public void vertexRemoved( GraphVertexChangeEvent e );
+    public void vertexRemoved( GraphVertexChangeEvent<V> e );
 }

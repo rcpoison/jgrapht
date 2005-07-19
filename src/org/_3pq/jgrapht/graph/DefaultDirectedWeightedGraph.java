@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 06-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
@@ -41,6 +42,7 @@ package org._3pq.jgrapht.graph;
 import org._3pq.jgrapht.EdgeFactory;
 import org._3pq.jgrapht.WeightedGraph;
 import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed weighted graph. A directed weighted graph is a non-simple
@@ -54,8 +56,8 @@ import org._3pq.jgrapht.edge.EdgeFactories;
  *
  * @see org._3pq.jgrapht.graph.DefaultDirectedGraph
  */
-public class DefaultDirectedWeightedGraph extends DefaultDirectedGraph
-    implements WeightedGraph {
+public class DefaultDirectedWeightedGraph<V, E extends Edge<V>>
+    extends DefaultDirectedGraph<V,E> implements WeightedGraph<V,E> {
     private static final long serialVersionUID = 3761405317841171513L;
 
     /**
@@ -71,7 +73,7 @@ public class DefaultDirectedWeightedGraph extends DefaultDirectedGraph
      *
      * @param ef the edge factory of the new graph.
      */
-    public DefaultDirectedWeightedGraph( EdgeFactory ef ) {
+    public DefaultDirectedWeightedGraph( EdgeFactory<V, E> ef ) {
         super( ef );
     }
 }

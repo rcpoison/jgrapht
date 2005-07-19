@@ -27,17 +27,19 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
+import org._3pq.jgrapht.Edge;
 import org._3pq.jgrapht.UndirectedGraph;
 
 /**
@@ -45,8 +47,8 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableUndirectedGraph extends DefaultListenableGraph
-    implements UndirectedGraph {
+class ListenableUndirectedGraph<V, E extends Edge<V>> extends DefaultListenableGraph<V, E>
+    implements UndirectedGraph<V, E> {
     private static final long serialVersionUID = 3256999969193145905L;
 
     /**
@@ -62,7 +64,7 @@ public class ListenableUndirectedGraph extends DefaultListenableGraph
      *
      * @param base the backing graph.
      */
-    public ListenableUndirectedGraph( UndirectedGraph base ) {
+    public ListenableUndirectedGraph( UndirectedGraph<V, E> base ) {
         super( base );
     }
 }

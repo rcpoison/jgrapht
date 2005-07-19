@@ -27,26 +27,28 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 05-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.graph;
 
 import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * A directed graph that cannot be modified.
  *
  * @see org._3pq.jgrapht.graph.UnmodifiableGraph
  */
-public class UnmodifiableDirectedGraph extends UnmodifiableGraph
-    implements DirectedGraph {
+class UnmodifiableDirectedGraph<V, E extends Edge<V>> extends UnmodifiableGraph<V, E>
+    implements DirectedGraph<V, E> {
     private static final long serialVersionUID = 3978701783725913906L;
 
     /**
@@ -56,7 +58,7 @@ public class UnmodifiableDirectedGraph extends UnmodifiableGraph
      * @param g the backing graph on which an unmodifiable graph is to be
      *        created.
      */
-    public UnmodifiableDirectedGraph( DirectedGraph g ) {
+    public UnmodifiableDirectedGraph( DirectedGraph<V, E> g ) {
         super( g );
     }
 }

@@ -27,13 +27,14 @@
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 11-Aug-2003 : Initial revision (BN);
+ * 11-Mar-2004 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.event;
@@ -47,11 +48,11 @@ import java.util.EventObject;
  *
  * @since Aug 11, 2003
  */
-public class VertexTraversalEvent extends EventObject {
+public class VertexTraversalEvent<V> extends EventObject {
     private static final long serialVersionUID = 3688790267213918768L;
 
     /** The traversed vertex. */
-    protected Object m_vertex;
+    protected V m_vertex;
 
     /**
      * Creates a new VertexTraversalEvent.
@@ -59,7 +60,7 @@ public class VertexTraversalEvent extends EventObject {
      * @param eventSource the source of the event.
      * @param vertex the traversed vertex.
      */
-    public VertexTraversalEvent( Object eventSource, Object vertex ) {
+    public VertexTraversalEvent( Object eventSource, V vertex ) {
         super( eventSource );
         m_vertex = vertex;
     }
@@ -69,7 +70,7 @@ public class VertexTraversalEvent extends EventObject {
      *
      * @return the traversed vertex.
      */
-    public Object getVertex(  ) {
+    public V getVertex(  ) {
         return m_vertex;
     }
 }

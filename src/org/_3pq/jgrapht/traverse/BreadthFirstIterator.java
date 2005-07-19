@@ -28,6 +28,7 @@
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   Liviu Rau
+ *                   Christian Hammer
  *
  * $Id$
  *
@@ -55,20 +56,20 @@ import org._3pq.jgrapht.Graph;
  *
  * @since Jul 19, 2003
  */
-public class BreadthFirstIterator extends CrossComponentIterator {
+public class BreadthFirstIterator<V, E extends Edge<V>, D> extends CrossComponentIterator<V, E, D> {
     /**
      * <b>Note to users:</b> this queue implementation is a bit lame in terms
      * of GC efficiency. If you need it to be improved either let us know or
      * use the source...
      */
-    private LinkedList m_queue = new LinkedList(  );
+    private LinkedList<V> m_queue = new LinkedList(  );
 
     /**
      * Creates a new breadth-first iterator for the specified graph.
      *
      * @param g the graph to be iterated.
      */
-    public BreadthFirstIterator( Graph g ) {
+    public BreadthFirstIterator( Graph<V, E> g ) {
         this( g, null );
     }
 
@@ -84,7 +85,7 @@ public class BreadthFirstIterator extends CrossComponentIterator {
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public BreadthFirstIterator( Graph g, Object startVertex ) {
+    public BreadthFirstIterator( Graph<V, E> g, V startVertex ) {
         super( g, startVertex );
     }
 
@@ -100,9 +101,9 @@ public class BreadthFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertex( Object vertex, Edge edge ) {
+    protected void encounterVertex( V vertex, E edge ) {
         putSeenData( vertex, null );
-        m_queue.addLast( vertex );
+        m_queue.add( vertex );
     }
 
 
@@ -110,13 +111,13 @@ public class BreadthFirstIterator extends CrossComponentIterator {
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertexAgain( Object vertex, Edge edge ) {}
+    protected void encounterVertexAgain( V vertex, E edge ) {}
 
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected Object provideNextVertex(  ) {
-        return m_queue.removeFirst(  );
+    protected V provideNextVertex(  ) {
+        return m_queue.remove(  );
     }
 }

@@ -27,22 +27,24 @@
  * (C) Copyright 2003, by Linda Buisman and Contributors.
  *
  * Original Author:  Linda Buisman
- * Contributor(s):   -
+ * Contributor(s):   Christian Hammer
  *
  * $Id$
  *
  * Changes
  * -------
  * 06-Nov-2003 : Initial revision (LB);
+ * 07-Jun-2005 : Made generic (CH);
  *
  */
 package org._3pq.jgrapht.alg.util;
 
 import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.Edge;
 
 /**
  * Compares two vertices based on their degree.
- * 
+ *
  * <p>
  * Used by greedy algorithms that need to sort vertices by their degree. Two
  * vertices are considered equal if their degrees are equal.
@@ -52,9 +54,9 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @since Nov 6, 2003
  */
-public class VertexDegreeComparator implements java.util.Comparator {
+public class VertexDegreeComparator<V, E extends Edge<V>> implements java.util.Comparator<V> {
     /** The graph that contains the vertices to be compared. */
-    private UndirectedGraph m_graph;
+    private UndirectedGraph<V, E> m_graph;
 
     /**
      * The sort order for vertex degree. <code>true</code>for ascending degree
@@ -69,7 +71,7 @@ public class VertexDegreeComparator implements java.util.Comparator {
      *
      * @param g graph with respect to which the degree is calculated.
      */
-    public VertexDegreeComparator( UndirectedGraph g ) {
+    public VertexDegreeComparator( UndirectedGraph<V, E> g ) {
         this( g, true );
     }
 
@@ -83,7 +85,7 @@ public class VertexDegreeComparator implements java.util.Comparator {
      *        (lowest first), false - compares in descending order of degrees
      *        (highest first).
      */
-    public VertexDegreeComparator( UndirectedGraph g, boolean ascendingOrder ) {
+    public VertexDegreeComparator( UndirectedGraph<V, E> g, boolean ascendingOrder ) {
         m_graph              = g;
         m_ascendingOrder     = ascendingOrder;
     }
@@ -98,7 +100,7 @@ public class VertexDegreeComparator implements java.util.Comparator {
      * @return -1 if <code>v1</code> comes before <code>v2</code>,  +1 if
      *         <code>v1</code> comes after <code>v2</code>, 0 if equal.
      */
-    public int compare( Object v1, Object v2 ) {
+    public int compare( V v1, V v2 ) {
         int degree1 = m_graph.degreeOf( v1 );
         int degree2 = m_graph.degreeOf( v2 );
 
