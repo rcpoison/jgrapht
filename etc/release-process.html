@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<!--
+/* ==========================================
+ * JGraphT : a free Java graph-theory library
+ * ==========================================
+ *
+ * Project Info:  http://jgrapht.sourceforge.net/
+ * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ *
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ */
+/* ~~~~~~~~~~~~~
+ * release-process.html
+ * ~~~~~~~~~~~~~
+ * (C) Copyright 2005, by Barak Naveh and Contributors.
+ *
+ * Original Author:  Barak Naveh
+ * Contributor(s):   John V. Sichi
+ *
+ * $Id$
+ *
+ * Changes
+ * ~~~~~~~
+ * 18-Jul-2005 : Initial revision added based on email from Barak (JVS);
+ *
+ */
+-->
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="Author" content="Barak Naveh">
+  <meta name="keywords" content=
+  "JGraphT, graph, theory, graph-theory, free, java, LGPL, open-source">
+
+  <title>JGraphT Release Process</title>
+  <style type="text/css">
+  <!--
+  body {
+  font-family:Verdana;
+  text-align:left;
+  color:#000011;
+  background-color:#FAFBFF;
+  }
+  a {
+  COLOR: #336699; 
+  TEXT-DECORATION: underline;
+  }
+  a:visited {
+  color: #663366; 
+  TEXT-DECORATION: underline;
+  }
+  a:hover {
+  color: #FF9900; 
+  TEXT-DECORATION: underline;
+  }
+  code {
+  font-family:Courier New;
+  font-size:medium;
+  }
+
+  ol {
+  list-style:decimal;
+  }
+
+  ul {
+  list-style:disc;
+  li {
+  list-style:disc;
+  margin-left:1em;
+  margin-right:1em;
+  line-height: 150%;
+  }
+  }
+
+  p {
+  margin-left:1em;
+  margin-right:1em;
+  line-height: 140%;
+  }
+
+  h1 {
+  background-color:#7AA1E6;
+  border-left:1px solid #245BCB; 
+  border-right:1px solid #245BCB; 
+  border-top:1px solid #245BCB; 
+  border-bottom:1px solid #245BCB; 
+  color:#FFFFFF;
+  text-align:center;
+  }
+
+  h2 {
+  border-left:0px solid Black; 
+  border-right:0px solid Black; 
+  border-top:0px solid Black; 
+  border-bottom:2px solid #7AA1E6; 
+  margin-top:50;
+  color:#25507C;
+  }
+
+  h3 {
+  border-left:0px solid Black; 
+  border-right:0px solid Black; 
+  border-top:0px solid Black; 
+  border-bottom:2px solid #7AA1E6; 
+  margin-top:30;
+  color:#25507C;
+  }
+
+  table {
+  border-collapse: collapse;
+  }
+
+  //-->
+  </style>
+</head>
+
+<body>
+  <h1><font size="7"><font color="#CC3399">J</font>Graph<font color=
+  "#FFCC00">T</font></font> Release Process</h1><br>
+
+<ol>
+
+<li>Update the new version number and CVS tag in the build.xml file.
+  
+<li>Review the README.html and update: 
+<ul>
+<li>Version
+<li>Dependencies
+<li>Release notes
+<li>Contributors
+</ul>
+
+<li>Review/update the bug/feature trackers to make sure they reflect the
+current state.  If there were important bug/feature changes, it is worth
+mentioning them in the README.html release notes.
+
+<li>Bring dependent libraries (JGraph, Checkstyle) up to date and update
+lib/lib-readme.txt accordingly.
+
+<li>Run ant to build the javadoc and make sure it is generated without
+errors/warnings. Fix where necessary.
+
+<li>Run Checkstyle globally to make a "code quality review" according to its
+reporting. Fix where necessary.  [Could be useful to also add PMD and
+FindBugs as additional code scanners.]
+
+<li>Run all the JUnit tests. Fix where necessary.
+
+<li>Run jalopy to reformat the code.  
+
+<li>Commit all work to CVS.
+
+<li>Add a CVS tag using the convention: ver_x_y_z (e.g., the tag ver_0_5_1
+denotes Version 0.5.1).
+
+<li>
+At this stage, the release is complete in CVS and only a distribution
+is needed to be built.  The distribution is built from CVS to ensure
+that whatever released is reproducible later.  CAUTION: the build
+command below checks out from the SF pserver, which is used for
+observers only and takes about 24 hours to update after committing to
+the developer CVS.  Wait for SF to be updated before proceeding (the
+new tag will appear in browse CVS).
+
+<li>The ant build.xml has a hack that allows specifying a CVS tag.
+You just need to invoke:
+
+<pre><code>
+      ant -Dcvstag=ver_0_5_1 release
+</code></pre>
+
+It will checkout from CVS the tagged version 0.5.1, and build a distribution
+for it.
+
+<li>Upload the release to SF and add it using the File Release System.
+
+<li>Update the website with the latest javadocs.
+
+<li>Update the website with links to the new downloads, version numbers,
+etc.  This involves uploading web/index.html (at least).
+
+<li>Announce the new version in the mailing lists and forum, and using
+the File Release System notification feature.
+
+</ol>
+
+  <hr noshade size="2" style=
+  "background-color:#7AA1E6;color:#7AA1E6;border-width: thin none none;">
+
+  <table border="0" cellpadding="0" cellspacing="0" style=
+  "border-collapse: collapse" width="100%">
+    <tr>
+      <td width="10%" align="left"><a href=
+      "http://validator.w3.org/check/referer"><img src=
+      "http://www.w3.org/Icons/valid-html401" border="0" alt="Valid HTML 4.01!"
+      height="31" width="88"></a></td>
+
+      <td width="80%" align="center"><small>© Copyright 2005, by Barak Naveh
+      and Contributors. All rights reserved.</small></td>
+
+      <td width="10%" align="right"><a href="http://sourceforge.net"><img src=
+      "http://sourceforge.net/sflogo.php?group_id=86459&amp;type=1" width="88"
+      height="31" border="0" alt="SourceForge.net Logo"></a></td>
+    </tr>
+  </table><br>
+</body>
+</html>
