@@ -43,6 +43,7 @@
  * 24-Feb-2004 : Removed duplicates and cleaned code (BN);
  * 06-Mar-2004 : Added tasks for building a release by CVS tag (BN);
  * 13-Oct-2004 : Added task for building experimental package (MB);
+ * 31-Jul-2005 : Added support for retroweaver (JVS);
  *
  */
 -->
@@ -68,6 +69,10 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
+    <!-- import local property overrides; these take precedence over
+         later definitions in this file -->
+    <property file="customBuild.properties"/>
+
     <property name="latest.version.name"  value="0.7.0alpha" />
     
     <!-- CVS tags and their respective version names -->
@@ -83,7 +88,7 @@
     
     <target name="init.cvs" if="cvstag">
         <property name="checkout.dir"     value="${cvstag}" />
-        <!-- A dereferencing heck to set project.version=${${cvstag}.name} -->
+        <!-- A dereferencing hack to set project.version=${${cvstag}.name} -->
         <!-- To be simplified if future Ant versions will support it directly -->
         <echo file="project.version.tmp">project.version=$${${cvstag}.name}</echo>
         <property file="project.version.tmp" />
@@ -109,6 +114,7 @@
 
         <!-- File names -->
         <property name="project.jar.name"    value="${project.prefix}.jar" />
+        <property name="retro.jar.name"   value="${project.prefix}-retro.jar" />
         <property name="project.tar.name"    value="${project.prefix}.tar" />
         <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
         <property name="project.zip.name"    value="${project.prefix}.zip" />
@@ -120,6 +126,7 @@
 
         <!-- Files -->
         <property name="project.jar"      value="${basedir}/${project.jar.name}" />
+        <property name="retro.jar"        value="${basedir}/${retro.jar.name}" />
         <property name="project.tar"      value="${basedir}/${project.tar.name}" />
         <property name="project.tar.gz"   value="${basedir}/${project.tar.gz.name}" />
         <property name="project.zip"      value="${basedir}/${project.zip.name}" />
@@ -149,6 +156,7 @@
             <pathelement path="${testbuild.classpath}"/>
             <pathelement location="${testbuild.dir}"/>
         </path>
+        <property name="test.classpath" refid="test.classpath"/>
     </target>
 
 
@@ -193,6 +201,16 @@
         </jar>
     </target>
 
+    <!-- Generate the retrowoven runtime jar -->
+    <target name="jar.retro" depends="compile">
+        <jar jarfile="${retro.jar}" basedir="${build.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
+                <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
+            </manifest> 
+        </jar>
+    </target>
+
 
     <!-- Build all JUnit tests -->
     <target name="test.compile" depends="compile"
@@ -208,15 +226,16 @@
         </javac>
     </target>
 
-    <!-- Run all JUnit tests -->
-    <target name="test" depends="test.compile"
-                        description="Builds and runs all JUnit tests.">
+    <!-- Macro for running all JUnit tests -->
+    <macrodef name="runTests">
+      <attribute name="jvm" default="java"/>
+      <sequential>
         <echo level="info">
 If you get a junit task failure, you need to add the junit.jar to
 the classpath, possibly by copying it into the ANT_HOME/lib folder.
 See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         </echo>
-        <junit printsummary="no" fork="yes" 
+        <junit printsummary="no" fork="yes" jvm="@{jvm}"
                            haltonerror="true" haltonfailure="true">
             <classpath refid="test.classpath"/>
             <formatter type="brief" usefile="no" />
@@ -229,6 +248,13 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 </fileset>
             </batchtest>
         </junit>
+      </sequential>
+    </macrodef>
+
+    <!-- Run all JUnit tests -->
+    <target name="test" depends="test.compile"
+                        description="Builds and runs all JUnit tests.">
+      <runTests/>
     </target>
 
     <!-- Run checkstyle on source code -->
@@ -270,6 +296,28 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         </jalopy>
     </target>
 
+    <target name="backport" if="retroweaver.dir">
+      <antcall target="retroweave"/>
+      <antcall target="jar.retro"/>
+      <runTests jvm="${retro.jre.dir}/bin/java"/>
+    </target>
+
+    <!-- Run retroweaver on compiled classes                               -->
+    <!-- NOTE:  requires manual installation of .jars in lib/retroweaver   -->
+    <target name="retroweave" depends="init" 
+      description="Retroweaves for backward compatibility with JDK 1.4.">
+      <fail unless="retroweaver.dir"/>
+      <taskdef name="retroweaver"
+        classname="com.rc.retroweaver.ant.RetroWeaverTask">
+        <classpath>
+          <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
+            <pathelement location="${retroweaver.dir}/release/retroweaver.jar"/>
+        </classpath>
+      </taskdef>
+      <retroweaver srcdir="${build.dir}"/>
+      <retroweaver srcdir="${testbuild.dir}"/>
+    </target>
+
     <!-- Generate the JGraphT JavaDoc HTML pages -->
     <target name="javadoc" depends="init" description="Creates the Javadocs.">
         <delete dir="${javadoc.dir}" />
@@ -291,6 +339,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <!-- Prepares a distribution directory of JGraphT -->
     <target name="prepare.distribution" depends="jar,javadoc">
     
+        <antcall target="backport" />
+
         <!-- make a temporary distribution directory -->
         <mkdir dir="${distrib.dir}" />
 
@@ -302,6 +352,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
 
         <!-- add runtime jar file -->
         <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
+        <copy file="${retro.jar}" tofile="${distrib.dir}/${retro.jar.name}" 
+          failonerror="false" />
     
         <!-- add source files -->
         <copy todir="${distrib.dir}/src">
@@ -449,6 +501,8 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             
         <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
+        <fail unless="retroweaver.dir"/>
+        <fail unless="retro.jre.dir"/>
         <ant dir="${checkout.dir}" antfile="${build.file.name}" 
              target="all" inheritall="false" inheritrefs="false">
             <property name="cvstag" value="${cvstag}"/>

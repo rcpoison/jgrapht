@@ -157,7 +157,8 @@
   <h2>Introduction</h2>
 
   <p>JGraphT is a free Java class library that provides mathematical
-  graph-theory objects and algorithms. It runs on Java 2 Platform (JDK 1.4 or
+  graph-theory objects and algorithms. It runs on Java 2 Platform
+  (requires JDK 1.5 or later to build, but runs on JRE 1.4 or
   later).</p>
 
   <p>JGraphT is licensed under the terms of the GNU Lesser General Public
@@ -173,9 +174,15 @@
   <table border="1" cellspacing="0" cellpadding="5" style=
   "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
     <tr>
-      <td valign="top"><b><code>jgrapht.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-x.y.z.jar</code></b></td>
 
-      <td>the compiled JGraphT library</td>
+      <td>the compiled JGraphT library for JRE 1.5</td>
+    </tr>
+
+    <tr>
+      <td valign="top"><b><code>jgrapht-x.y.z-retro.jar</code></b></td>
+
+      <td>the backported JGraphT library for JRE 1.4</td>
     </tr>
 
     <tr>
@@ -262,7 +269,9 @@
   <h2>Dependencies</h2>
 
   <ul>
-    <li>JGraphT requires JDK 1.4 or later. <br>
+    <li>JGraphT requires JDK 1.5 or later to build.  To run on JRE
+    1.4, a backport based on <a
+    href="http://retroweaver.sf.net">Retroweaver</a> is provided.<br>
     &nbsp;</li>
 
     <li>JUnit is a unit testing framework. You need JUnit only if you want to
@@ -318,6 +327,10 @@
   <p>Changes to JGraphT in each version:</p>
 
   <ul>
+    <li><b>version 0.7.0alpha</b> (under development) :
+    Upgraded to JDK 1.5 (conversion provided by Christian
+    Hammer).</li>
+
     <li><b>version 0.6.0</b> (July-2005) : Upgraded to JDK 1.4, taking
     advantage of its new linked hash set/map containers to make
     edge/vertex set order-deterministic. Added support for custom edge

@@ -178,6 +178,17 @@ observers only and takes about 24 hours to update after committing to
 the developer CVS.  Wait for SF to be updated before proceeding (the
 new tag will appear in browse CVS).
 
+<li>To build the release, you need to have extra software installed to
+create and test the JRE 1.4 backport.  In particular, you need JRE 1.4
+and <a href="http://retroweaver.sf.net">Retroweaver</a>.  To tell the
+build where these are installed, create a file named
+customBuild.properties, with content like:
+
+<pre><code>
+retroweaver.dir=/path/to/full/distribution/of/retroweaver
+retro.jre.dir=/path/to/jre1.4
+</code></pre>
+
 <li>The ant build.xml has a hack that allows specifying a CVS tag.
 You just need to invoke:
 
@@ -185,8 +196,9 @@ You just need to invoke:
       ant -Dcvstag=ver_0_5_1 release
 </code></pre>
 
-It will checkout from CVS the tagged version 0.5.1, and build a distribution
-for it.
+It will checkout from CVS the tagged version 0.5.1, and build a
+distribution for it.  This will fail unless you have set up your build
+to include the retroweaver-based backport.
 
 <li>Upload the release to SF and add it using the File Release System.
 

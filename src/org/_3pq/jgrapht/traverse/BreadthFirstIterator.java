@@ -118,6 +118,6 @@ public class BreadthFirstIterator<V, E extends Edge<V>, D> extends CrossComponen
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected V provideNextVertex(  ) {
-        return m_queue.remove(  );
+        return m_queue.removeFirst(  );
     }
 }
