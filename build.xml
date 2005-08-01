@@ -197,6 +197,9 @@
             <manifest>
                 <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
                 <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}-jdk1.5"/>
             </manifest> 
         </jar>
     </target>
@@ -207,6 +210,9 @@
             <manifest>
                 <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
                 <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
+                <attribute name="Specification-Title" value="${project.name}"/>
+                <attribute name="Specification-Version" value="${project.version}"/>
+                <attribute name="Implementation-Version" value="${project.version}-jdk1.4"/>
             </manifest> 
         </jar>
     </target>
