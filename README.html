@@ -174,13 +174,13 @@
   <table border="1" cellspacing="0" cellpadding="5" style=
   "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
     <tr>
-      <td valign="top"><b><code>jgrapht-x.y.z.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-0.7.0.jar</code></b></td>
 
       <td>the compiled JGraphT library for JRE 1.5</td>
     </tr>
 
     <tr>
-      <td valign="top"><b><code>jgrapht-x.y.z-retro.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-0.7.0-jre1.4.jar</code></b></td>
 
       <td>the backported JGraphT library for JRE 1.4</td>
     </tr>
@@ -228,6 +228,12 @@
 
       <td>source code of unit tests</td>
     </tr>
+
+    <tr>
+      <td valign="top"><code><b>build.xml/</b></code></td>
+
+      <td>ant buildfile</td>
+    </tr>
   </table>
 
   <h2>Getting Started</h2>
@@ -237,18 +243,58 @@
   think others can use it, please send it to us and we will add it to that
   package.</p>
 
+  <p>For your own applications, the table below explains which jars to
+  use for various scenarios:</p>
+
+  <table border="1" cellspacing="0" cellpadding="5" style=
+  "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
+    <tr>
+      <td valign="top"><b>Scenario</b></td>
+
+      <td><b>Compile with</b></td>
+
+      <td><b>Deploy with</b></td>
+    </tr>
+    <tr>
+      <td valign="top">Your application builds on JDK 1.5 and runs on
+      JRE 1.5</td>
+
+      <td><code>jgrapht-0.7.0.jar</code></td>
+
+      <td><code>jgrapht-0.7.0.jar</code></td>
+    </tr>
+    <tr>
+      <td valign="top">Your application builds on JDK 1.4 and runs on
+ JRE 1.4 (when reading the JGraphT javadoc, ignore the generics; the
+ backported jar is type-erased so your application must use runtime
+ casts as with 1.4 collection classes)</td>
+
+      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+
+      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+    </tr>
+    <tr>
+      <td valign="top">Your application builds on JDK 1.5 but runs on JRE 1.4 via Retroweaver</td>
+
+      <td><code>jgrapht-0.7.0</code></td>
+
+      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+    </tr>
+  </table>
+
   <h2>Upgrading Versions</h2>
 
   <p>To help upgrading, JGraphT maintains a one-version-backwards
-  compatibility. While this compatibility is not a hard promise, it generally
+  compatibility. While this compatibility is not a hard promise, it is generally
   respected. You can upgrade via:</p>
 
   <ul>
     <li>
-      <p><b>The safe way</b> : compile your app with the JGraphT version that
-      immediately follows your existing version and follow the deprecation
-      notes, if exist, and modify your application accordingly. Then move to
-      the next version, and on, until you're current.</p>
+      <p><b>The safe way</b> : compile your app with the JGraphT
+      version that immediately follows your existing version and
+      follow the deprecation notes, if they exist, and modify your
+      application accordingly. Then move to the next version, and on,
+      until you're current.</p>
     </li>
 
     <li>

@@ -47,7 +47,7 @@ import org._3pq.jgrapht.Edge;
  *
  * @see UnmodifiableGraph
  */
-class UnmodifiableUndirectedGraph<V, E extends Edge<V>> extends UnmodifiableGraph<V, E>
+public class UnmodifiableUndirectedGraph<V, E extends Edge<V>> extends UnmodifiableGraph<V, E>
     implements UndirectedGraph<V, E> {
     private static final long serialVersionUID = 3258134639355704624L;
 

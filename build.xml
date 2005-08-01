@@ -71,7 +71,7 @@
 
     <!-- import local property overrides; these take precedence over
          later definitions in this file -->
-    <property file="customBuild.properties"/>
+    <property file="etc/build.properties"/>
 
     <property name="latest.version.name"  value="0.7.0alpha" />
     
@@ -113,8 +113,8 @@
         <property name="javadoc.dir"      value="${basedir}/javadoc"/>
 
         <!-- File names -->
-        <property name="project.jar.name"    value="${project.prefix}.jar" />
-        <property name="retro.jar.name"   value="${project.prefix}-retro.jar" />
+        <property name="project.jar.name"    value="${project.name}-jdk1.5.jar" />
+        <property name="retro.jar.name"      value="${project.name}-jdk1.4.jar" />
         <property name="project.tar.name"    value="${project.prefix}.tar" />
         <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
         <property name="project.zip.name"    value="${project.prefix}.zip" />
@@ -296,16 +296,24 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         </jalopy>
     </target>
 
-    <target name="backport" if="retroweaver.dir">
+    <!-- Build and test the retrowoven JRE 1.4 backport                    -->
+    <target name="backport" if="retroweaver.dir"
+      description="Builds and tests the JRE 1.4 backport.">
       <antcall target="retroweave"/>
       <antcall target="jar.retro"/>
-      <runTests jvm="${retro.jre.dir}/bin/java"/>
+      <antcall target="test.retro"/>
+    </target>
+
+    <!-- Test the retrowoven JRE 1.4 backport                              -->
+    <target name="test.retro" if="jre1.4.dir"
+      description="Tests the JRE 1.4 backport.">
+      <runTests jvm="${jre1.4.dir}/bin/java"/>
     </target>
 
     <!-- Run retroweaver on compiled classes                               -->
     <!-- NOTE:  requires manual installation of .jars in lib/retroweaver   -->
     <target name="retroweave" depends="init" 
-      description="Retroweaves for backward compatibility with JDK 1.4.">
+      description="Retroweaves for backward compatibility with JRE 1.4.">
       <fail unless="retroweaver.dir"/>
       <taskdef name="retroweaver"
         classname="com.rc.retroweaver.ant.RetroWeaverTask">
@@ -391,7 +399,13 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 <include name="checkstyle-settings.xml"/>
                 <include name="etc-readme.txt"/>
                 <include name="jalopy-settings.xml"/>
+                <include name="build.properties.template"/>
             </fileset>
+        </copy>
+
+        <!-- add etc/build.properties -->
+        <copy file="${etc.dir}/build.properties.template" 
+          tofile="${distrib.dir}/etc/build.properties">
         </copy>
 
         <!-- add Javadoc files -->
@@ -446,6 +460,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <delete dir="${testbuild.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
+        <delete file="${retro.jar}" />
         <delete file="${project.zip}" />
         <delete file="${project.tar.gz}" />
     </target>
@@ -459,6 +474,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <delete dir="${distrib.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
+        <delete file="${retro.jar}" />
     </target>
 
 
@@ -502,7 +518,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
         <fail unless="retroweaver.dir"/>
-        <fail unless="retro.jre.dir"/>
+        <fail unless="jre1.4.dir"/>
         <ant dir="${checkout.dir}" antfile="${build.file.name}" 
              target="all" inheritall="false" inheritrefs="false">
             <property name="cvstag" value="${cvstag}"/>

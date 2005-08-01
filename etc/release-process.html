@@ -181,13 +181,8 @@ new tag will appear in browse CVS).
 <li>To build the release, you need to have extra software installed to
 create and test the JRE 1.4 backport.  In particular, you need JRE 1.4
 and <a href="http://retroweaver.sf.net">Retroweaver</a>.  To tell the
-build where these are installed, create a file named
-customBuild.properties, with content like:
-
-<pre><code>
-retroweaver.dir=/path/to/full/distribution/of/retroweaver
-retro.jre.dir=/path/to/jre1.4
-</code></pre>
+build where these are installed, follow the instructions in
+etc/build.properties.template.
 
 <li>The ant build.xml has a hack that allows specifying a CVS tag.
 You just need to invoke:

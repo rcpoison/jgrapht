@@ -67,7 +67,7 @@ import org._3pq.jgrapht.UndirectedGraph;
  *
  * @since Jul 24, 2003
  */
-class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E> implements Serializable {
+public class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E> implements Serializable {
     private static final long   serialVersionUID = 3544957670722713913L;
     private static final String UNMODIFIABLE = "this graph is unmodifiable";
 
