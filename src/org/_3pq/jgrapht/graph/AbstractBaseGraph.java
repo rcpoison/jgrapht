@@ -591,7 +591,9 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>> extends AbstractGr
     }
 
 
-    private static class ArrayListFactory implements EdgeListFactory {
+    private static class ArrayListFactory
+        implements EdgeListFactory, Serializable
+    {
         /**
          * @see EdgeListFactory.createEdgeList
          */
