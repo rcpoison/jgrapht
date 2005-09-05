@@ -26,15 +26,13 @@ You can find more about Checkstyle at http://checkstyle.sourceforge.net.
 
 
 -------------------
-jalopy-settings.xml
+triemax-jalopy-settings.xml
 -------------------
 
 A setting file for Jalopy - a great Java source code formatter!
 
 All JGraphT source file are formatted using these settings. It helps to keep
 the code tidy with one consistent look. It also saves time during development. 
-It is recommanded that you run Jalopy before Checkstyle - it will save you
-messages regarding the formatting issues.
 
 You can find more about Jalopy at http://jalopy.sourceforge.net.
 

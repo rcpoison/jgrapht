@@ -173,8 +173,12 @@ styles they are likely to stop using JGraphT. If we give them
 one consistent look, they will appreciate our work (even if they disagree with our styling). The general rule is to see existing code and do alike.</p>
 
 <p>2.2.&nbsp; <i>Automated tools</i>. The "Jalopy" and "Checkstyle" tools are used and greatly 
-help to achieve one consistent look -- it is strongly recommended to use 
-them. They both have plugins for various IDEs. 
+help to achieve one consistent look.  Jalopy requires a commercial license,
+and is usually run by the project maintainer, but if you have a copy,
+you can run it too.  Checkstyle was broken by the move to JDK 1.5; once
+we upgrade to the new version, developers will be expected to run it
+before each checkin.
+Both Jalopy and Checkstyle have plugins for various IDEs. 
 You can find more about them in the &quot;etc&quot; folder of JGraphT. </p>
 
 <p>2.3.&nbsp; <i>&quot;Principle of least surprise&quot;</i> should be practiced. A method should do what 
