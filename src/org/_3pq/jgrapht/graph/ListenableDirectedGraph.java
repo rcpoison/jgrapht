@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------------------
@@ -39,32 +40,39 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A directed graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableDirectedGraph<V, E extends Edge<V>> extends DefaultListenableGraph<V, E>
-    implements DirectedGraph<V, E> {
+public class ListenableDirectedGraph<V, E extends Edge<V>>
+    extends DefaultListenableGraph<V, E> implements DirectedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3257571698126368824L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new listenable directed graph.
      */
-    public ListenableDirectedGraph(  ) {
-        this( new DefaultDirectedGraph(  ) );
+    public ListenableDirectedGraph()
+    {
+        this(new DefaultDirectedGraph());
     }
-
 
     /**
      * Creates a new listenable directed graph.
      *
      * @param base the backing graph.
      */
-    public ListenableDirectedGraph( DirectedGraph<V, E> base ) {
-        super( base );
+    public ListenableDirectedGraph(DirectedGraph<V, E> base)
+    {
+        super(base);
     }
 }

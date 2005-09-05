@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Michael Behrisch
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: DijkstraShortestPathAlgorithmTest.java,v 1.4 2004/05/01 12:21:54
+ * barak_naveh Exp $
  *
  * Changes
  * -------
@@ -38,23 +40,28 @@
  */
 package org._3pq.jgrapht.experimental.alg;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.GraphHelper;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.graph.WeightedPseudograph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * .
  *
  * @author Barak Naveh
  */
-public class DijkstraShortestPathAlgorithmTest extends TestCase {
-    private static final String V1 = new String( "v1" );
-    private static final String V2 = new String( "v2" );
-    private static final String V3 = new String( "v3" );
-    private static final String V4 = new String( "v4" );
+public class DijkstraShortestPathAlgorithmTest extends TestCase
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
+    private static final String V1 = new String("v1");
+    private static final String V2 = new String("v2");
+    private static final String V3 = new String("v3");
+    private static final String V4 = new String("v4");
+
+    //~ Instance fields -------------------------------------------------------
 
     //
     Edge m_e1;
@@ -63,34 +70,37 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase {
     Edge m_e4;
     Edge m_u;
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      */
-    public void testShortestPath(  ) {
-        WeightedGraph         g        = create(  );
-        ShortestPathAlgorithm alg      = new DijkstraShortestPathAlgorithm( g );
-        WeightedGraph         pathTree = alg.shortestPathTree( V1 );
+    public void testShortestPath()
+    {
+        WeightedGraph g = create();
+        ShortestPathAlgorithm alg = new DijkstraShortestPathAlgorithm(g);
+        WeightedGraph pathTree = alg.shortestPathTree(V1);
 
-        assertEquals( 4, pathTree.vertexSet(  ).size(  ) );
-        assertEquals( 3, pathTree.edgeSet(  ).size(  ) );
-        assertTrue( pathTree.containsEdge( m_e1 ) );
-        assertTrue( pathTree.containsEdge( m_e2 ) );
-        assertTrue( pathTree.containsEdge( m_e4 ) );
+        assertEquals(4, pathTree.vertexSet().size());
+        assertEquals(3, pathTree.edgeSet().size());
+        assertTrue(pathTree.containsEdge(m_e1));
+        assertTrue(pathTree.containsEdge(m_e2));
+        assertTrue(pathTree.containsEdge(m_e4));
     }
 
+    private WeightedGraph create()
+    {
+        WeightedGraph g = new WeightedPseudograph();
 
-    private WeightedGraph create(  ) {
-        WeightedGraph g = new WeightedPseudograph(  );
-
-        g.addVertex( V1 );
-        g.addVertex( V2 );
-        g.addVertex( V3 );
-        g.addVertex( V4 );
-        m_e1     = GraphHelper.addEdge( g, V1, V2, 1 );
-        m_e2     = GraphHelper.addEdge( g, V2, V3, 2 );
-        m_e3     = GraphHelper.addEdge( g, V3, V1, 4 );
-        m_e4     = GraphHelper.addEdge( g, V3, V4, 10 );
-        m_u      = GraphHelper.addEdge( g, V3, V3, 5 );
+        g.addVertex(V1);
+        g.addVertex(V2);
+        g.addVertex(V3);
+        g.addVertex(V4);
+        m_e1 = GraphHelper.addEdge(g, V1, V2, 1);
+        m_e2 = GraphHelper.addEdge(g, V2, V3, 2);
+        m_e3 = GraphHelper.addEdge(g, V3, V1, 4);
+        m_e4 = GraphHelper.addEdge(g, V3, V4, 10);
+        m_u = GraphHelper.addEdge(g, V3, V3, 5);
 
         return g;
     }

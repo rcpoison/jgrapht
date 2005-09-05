@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: DefaultDirectedGraphTest.java,v 1.5 2005/06/08 22:24:57 perfecthash Exp
+ * $
  *
  * Changes
  * -------
@@ -38,132 +40,138 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EnhancedTestCase;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A unit test for directed multigraph.
  *
  * @author Barak Naveh
- *
  * @since Aug 9, 2003
  */
-public class DefaultDirectedGraphTest extends EnhancedTestCase {
+public class DefaultDirectedGraphTest extends EnhancedTestCase
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
 
-    /**
-     * .
-     */
-    public void testEdgeListFactory(  ) {
-        DirectedMultigraph g = new DirectedMultigraph(  );
-        g.setEdgeListFactory( new LinkedListFactory(  ) );
-        initMultiTriangleWithMultiLoop( g );
-    }
-
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      */
-    public void testEdgeOrderDeterminism(  ) {
-        DirectedGraph g = new DirectedMultigraph(  );
-        g.addVertex( m_v1 );
-        g.addVertex( m_v2 );
-        g.addVertex( m_v3 );
-
-        Edge     e1 = g.addEdge( m_v1, m_v2 );
-        Edge     e2 = g.addEdge( m_v2, m_v3 );
-        Edge     e3 = g.addEdge( m_v3, m_v1 );
-
-        Iterator iter = g.edgeSet(  ).iterator(  );
-        assertEquals( e1, iter.next(  ) );
-        assertEquals( e2, iter.next(  ) );
-        assertEquals( e3, iter.next(  ) );
+    public void testEdgeListFactory()
+    {
+        DirectedMultigraph g = new DirectedMultigraph();
+        g.setEdgeListFactory(new LinkedListFactory());
+        initMultiTriangleWithMultiLoop(g);
     }
-
 
     /**
      * .
      */
-    public void testEdgesOf(  ) {
-        DirectedGraph g = createMultiTriangleWithMultiLoop(  );
+    public void testEdgeOrderDeterminism()
+    {
+        DirectedGraph g = new DirectedMultigraph();
+        g.addVertex(m_v1);
+        g.addVertex(m_v2);
+        g.addVertex(m_v3);
 
-        assertEquals( 3, g.edgesOf( m_v1 ).size(  ) );
-        assertEquals( 2, g.edgesOf( m_v2 ).size(  ) );
+        Edge e1 = g.addEdge(m_v1, m_v2);
+        Edge e2 = g.addEdge(m_v2, m_v3);
+        Edge e3 = g.addEdge(m_v3, m_v1);
+
+        Iterator iter = g.edgeSet().iterator();
+        assertEquals(e1, iter.next());
+        assertEquals(e2, iter.next());
+        assertEquals(e3, iter.next());
     }
-
 
     /**
      * .
      */
-    public void testGetAllEdges(  ) {
-        DirectedGraph g = createMultiTriangleWithMultiLoop(  );
+    public void testEdgesOf()
+    {
+        DirectedGraph g = createMultiTriangleWithMultiLoop();
 
-        List          loops = g.getAllEdges( m_v1, m_v1 );
-        assertEquals( 1, loops.size(  ) );
+        assertEquals(3, g.edgesOf(m_v1).size());
+        assertEquals(2, g.edgesOf(m_v2).size());
     }
-
 
     /**
      * .
      */
-    public void testInDegreeOf(  ) {
-        DirectedGraph g = createMultiTriangleWithMultiLoop(  );
+    public void testGetAllEdges()
+    {
+        DirectedGraph g = createMultiTriangleWithMultiLoop();
 
-        assertEquals( 2, g.inDegreeOf( m_v1 ) );
-        assertEquals( 1, g.inDegreeOf( m_v2 ) );
+        List loops = g.getAllEdges(m_v1, m_v1);
+        assertEquals(1, loops.size());
     }
-
 
     /**
      * .
      */
-    public void testOutDegreeOf(  ) {
-        DirectedGraph g = createMultiTriangleWithMultiLoop(  );
+    public void testInDegreeOf()
+    {
+        DirectedGraph g = createMultiTriangleWithMultiLoop();
 
-        assertEquals( 2, g.outDegreeOf( m_v1 ) );
-        assertEquals( 1, g.outDegreeOf( m_v2 ) );
+        assertEquals(2, g.inDegreeOf(m_v1));
+        assertEquals(1, g.inDegreeOf(m_v2));
     }
-
 
     /**
      * .
      */
-    public void testVertexOrderDeterminism(  ) {
-        DirectedGraph g    = createMultiTriangleWithMultiLoop(  );
-        Iterator      iter = g.vertexSet(  ).iterator(  );
-        assertEquals( m_v1, iter.next(  ) );
-        assertEquals( m_v2, iter.next(  ) );
-        assertEquals( m_v3, iter.next(  ) );
+    public void testOutDegreeOf()
+    {
+        DirectedGraph g = createMultiTriangleWithMultiLoop();
+
+        assertEquals(2, g.outDegreeOf(m_v1));
+        assertEquals(1, g.outDegreeOf(m_v2));
     }
 
+    /**
+     * .
+     */
+    public void testVertexOrderDeterminism()
+    {
+        DirectedGraph g = createMultiTriangleWithMultiLoop();
+        Iterator iter = g.vertexSet().iterator();
+        assertEquals(m_v1, iter.next());
+        assertEquals(m_v2, iter.next());
+        assertEquals(m_v3, iter.next());
+    }
 
-    private DirectedGraph createMultiTriangleWithMultiLoop(  ) {
-        DirectedGraph g = new DirectedMultigraph(  );
-        initMultiTriangleWithMultiLoop( g );
+    private DirectedGraph createMultiTriangleWithMultiLoop()
+    {
+        DirectedGraph g = new DirectedMultigraph();
+        initMultiTriangleWithMultiLoop(g);
 
         return g;
     }
 
+    private void initMultiTriangleWithMultiLoop(DirectedGraph g)
+    {
+        g.addVertex(m_v1);
+        g.addVertex(m_v2);
+        g.addVertex(m_v3);
 
-    private void initMultiTriangleWithMultiLoop( DirectedGraph g ) {
-        g.addVertex( m_v1 );
-        g.addVertex( m_v2 );
-        g.addVertex( m_v3 );
-
-        g.addEdge( m_v1, m_v1 );
-        g.addEdge( m_v1, m_v2 );
-        g.addEdge( m_v2, m_v3 );
-        g.addEdge( m_v3, m_v1 );
+        g.addEdge(m_v1, m_v1);
+        g.addEdge(m_v1, m_v2);
+        g.addEdge(m_v2, m_v3);
+        g.addEdge(m_v3, m_v1);
     }
 
-    private static class LinkedListFactory implements EdgeListFactory {
+    //~ Inner Classes ---------------------------------------------------------
+
+    private static class LinkedListFactory implements EdgeListFactory
+    {
         /**
          * .
          *
@@ -171,8 +179,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase {
          *
          * @return
          */
-        public List createEdgeList( Object vertex ) {
-            return new LinkedList(  );
+        public List createEdgeList(Object vertex)
+        {
+            return new LinkedList();
         }
     }
 }

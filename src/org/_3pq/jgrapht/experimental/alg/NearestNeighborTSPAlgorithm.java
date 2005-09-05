@@ -18,70 +18,82 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.graph.SimpleWeightedGraph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * A trivial heuristic for the Travelling Salesperson problem which simply
- * usest the closest vertex available. Fast, but graphs can be generated,
- * where it performs arbitrarily bad.
+ * usest the closest vertex available. Fast, but graphs can be generated, where
+ * it performs arbitrarily bad.
  *
  * @author Michael Behrisch
  */
 public class NearestNeighborTSPAlgorithm extends WeightedGraphAlgorithm
-    implements TravellingSalespersonAlgorithm {
+    implements TravellingSalespersonAlgorithm
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates a new NearestNeighborTSPAlgorithm object.
      *
-     * @param wgraph  
+     * @param wgraph
      */
-    public NearestNeighborTSPAlgorithm( WeightedGraph wgraph ) {
-        super( wgraph );
+    public NearestNeighborTSPAlgorithm(WeightedGraph wgraph)
+    {
+        super(wgraph);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      *
-     * @return  
+     * @return
      *
-     * @throws Exception  
+     * @throws Exception
      */
-    public WeightedGraph tspTour(  ) throws Exception {
-        WeightedGraph tour      = new SimpleWeightedGraph(  );
-        Set           used      = new HashSet(  );
-        Object        posVertex = _wgraph.vertexSet(  ).iterator(  ).next(  );
-        used.add( posVertex );
+    public WeightedGraph tspTour()
+        throws Exception
+    {
+        WeightedGraph tour = new SimpleWeightedGraph();
+        Set used = new HashSet();
+        Object posVertex = _wgraph.vertexSet().iterator().next();
+        used.add(posVertex);
 
-        while( used.size(  ) < _wgraph.vertexSet(  ).size(  ) ) {
-            double min  = Double.POSITIVE_INFINITY;
-            Edge   next = null;
+        while (used.size() < _wgraph.vertexSet().size()) {
+            double min = Double.POSITIVE_INFINITY;
+            Edge next = null;
 
-            for( Iterator it = _wgraph.edgesOf( posVertex ).iterator(  );
-                    it.hasNext(  ); ) {
-                Edge edge = (Edge) it.next(  );
+            for (
+                Iterator it = _wgraph.edgesOf(posVertex).iterator();
+                it.hasNext();) {
+                Edge edge = (Edge) it.next();
 
-                if( !used.contains( edge.oppositeVertex( posVertex ) )
-                        && edge.getWeight(  ) < min ) {
-                    min      = edge.getWeight(  );
-                    next     = edge;
+                if (
+                    !used.contains(edge.oppositeVertex(posVertex))
+                    && (edge.getWeight() < min)) {
+                    min = edge.getWeight();
+                    next = edge;
                 }
             }
 
-            if( next == null ) {
-                throw new Exception( "NoTSPTour" );
+            if (next == null) {
+                throw new Exception("NoTSPTour");
             }
 
-            posVertex = next.oppositeVertex( posVertex );
-            used.add( posVertex );
-            tour.addEdge( next );
+            posVertex = next.oppositeVertex(posVertex);
+            used.add(posVertex);
+            tour.addEdge(next);
         }
 
         return tour;

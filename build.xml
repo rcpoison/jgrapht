@@ -135,7 +135,7 @@
         <property name="checkstyle.jar"   value="${lib.dir}/${checkstyle.jar.name}"/>
         <property name="build.file"       value="${basedir}/${build.file.name}"/>
         <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
-        <property name="jalopy.settings"  value="${etc.dir}/jalopy-settings.xml"/>
+        <property name="jalopy.settings"  value="${etc.dir}/triemax-jalopy-settings.xml"/>
 
         <!-- Classpath for building functional sources. -->
         <path id="build.classpath">
@@ -157,6 +157,13 @@
             <pathelement location="${testbuild.dir}"/>
         </path>
         <property name="test.classpath" refid="test.classpath"/>
+
+        <!-- Classpath for running experimental code. -->
+        <path id="exp.classpath">
+            <pathelement path="${test.classpath}"/>
+            <pathelement location="${expbuild.dir}"/>
+        </path>
+        <property name="exp.classpath" refid="exp.classpath"/>
     </target>
 
 
@@ -283,10 +290,10 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
 
     <!-- Run jalopy on source code                                         -->
     <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
-    <target name="jalopy" depends="compile"
-            description="Runs jalopy on all source code (see WARNING comment).">
+    <target name="jalopy" depends="exp.compile"
+            description="Runs jalopy on all source code.">
         <taskdef name="jalopy" 
-                 classname="de.hunsicker.jalopy.plugin.ant.AntPlugin">
+                 classname="com.triemax.JalopyTask">
             <classpath>
                 <fileset dir="${basedir}/lib/jalopy">
                     <include name="*.jar"/>
@@ -294,7 +301,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             </classpath>
         </taskdef>
         <jalopy backup="true" convention="${jalopy.settings}"
-                classpathref="testbuild.classpath" history="FILE">
+                classpathref="exp.classpath" history="CRC32">
             <fileset dir="${basedir}">
                 <include name="src/**/*.java"/>
                 <include name="testsrc/**/*.java"/>

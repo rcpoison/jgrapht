@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -38,11 +39,10 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Generates a ring graph of any size. A ring graph is a graph that contains a
@@ -51,11 +51,16 @@ import org._3pq.jgrapht.VertexFactory;
  * ring.
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public class RingGraphGenerator implements GraphGenerator {
+public class RingGraphGenerator implements GraphGenerator
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private int m_size;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new RingGraphGenerator.
@@ -64,31 +69,36 @@ public class RingGraphGenerator implements GraphGenerator {
      *
      * @throws IllegalArgumentException if the specified size is negative.
      */
-    public RingGraphGenerator( int size ) {
-        if( size < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public RingGraphGenerator(int size)
+    {
+        if (size < 0) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
         m_size = size;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap ) {
-        if( m_size < 1 ) {
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap)
+    {
+        if (m_size < 1) {
             return;
         }
 
         LinearGraphGenerator linearGenerator =
-            new LinearGraphGenerator( m_size );
-        Map                  privateMap = new HashMap(  );
-        linearGenerator.generateGraph( target, vertexFactory, privateMap );
+            new LinearGraphGenerator(m_size);
+        Map privateMap = new HashMap();
+        linearGenerator.generateGraph(target, vertexFactory, privateMap);
 
-        Object startVertex =
-            privateMap.get( LinearGraphGenerator.START_VERTEX );
-        Object endVertex = privateMap.get( LinearGraphGenerator.END_VERTEX );
-        target.addEdge( endVertex, startVertex );
+        Object startVertex = privateMap.get(LinearGraphGenerator.START_VERTEX);
+        Object endVertex = privateMap.get(LinearGraphGenerator.END_VERTEX);
+        target.addEdge(endVertex, startVertex);
     }
 }

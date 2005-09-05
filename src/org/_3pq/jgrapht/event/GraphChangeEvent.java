@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------
@@ -38,21 +39,31 @@
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventObject;
+import java.util.*;
+
 
 /**
  * An event which indicates that a graph has changed. This class is a root for
  * graph change events.
  *
  * @author Barak Naveh
- *
  * @since Aug 10, 2003
  */
-public class GraphChangeEvent extends EventObject {
+public class GraphChangeEvent extends EventObject
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3834592106026382391L;
 
-    /** The type of graph change this event indicates. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The type of graph change this event indicates.
+     */
     protected int m_type;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new graph change event.
@@ -60,17 +71,21 @@ public class GraphChangeEvent extends EventObject {
      * @param eventSource the source of the event.
      * @param type the type of event.
      */
-    public GraphChangeEvent( Object eventSource, int type ) {
-        super( eventSource );
+    public GraphChangeEvent(Object eventSource, int type)
+    {
+        super(eventSource);
         m_type = type;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the event type.
      *
      * @return the event type.
      */
-    public int getType(  ) {
+    public int getType()
+    {
         return m_type;
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -38,36 +39,37 @@
  */
 package org._3pq.jgrapht.experimental;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.graph.GraphDelegator;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * A <tt>MandatedGraph</tt> maintains some desired restriction in a graph.
  * Example restrictions are: tree structure, acyclicality, connectivity,
  * immutability, etc. An <tt>UpdateAuthority</tt> is used to fulfill such
  * desired restrictions.
- * 
- * <p>
- * All the modifying methods of the graph are redirected to an
- * <tt>UpdateAuthority</tt> which can decide what to do. Courses of action for
- * can be to allow the modifications, to ignore them, to throw exceptions,
- * etc.
- * </p>
+ *
+ * <p>All the modifying methods of the graph are redirected to an <tt>
+ * UpdateAuthority</tt> which can decide what to do. Courses of action for can
+ * be to allow the modifications, to ignore them, to throw exceptions, etc.</p>
  *
  * @author Barak Naveh
- *
  * @see UpdateAuthority
  * @since Jul 21, 2003
  * @deprecated Thought it will become useful but don't have any use for now.
  *             Will be un-deprecated if a decent use is suggested, or will be
  *             deleted if keeps being non-useful.
  */
-public class MandatedGraph extends GraphDelegator {
+public class MandatedGraph extends GraphDelegator
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private UpdateAuthority m_updateAuthority;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Constructor for MandatedGraph.
@@ -77,111 +79,115 @@ public class MandatedGraph extends GraphDelegator {
      *
      * @throws IllegalArgumentException
      */
-    public MandatedGraph( Graph g, UpdateAuthority ua ) {
-        super( g );
+    public MandatedGraph(Graph g, UpdateAuthority ua)
+    {
+        super(g);
 
-        if( !ua.isUpdateAuthorityOf( g ) ) {
-            throw new IllegalArgumentException( 
-                "UpdateAuthority graph mismatch" );
+        if (!ua.isUpdateAuthorityOf(g)) {
+            throw new IllegalArgumentException(
+                "UpdateAuthority graph mismatch");
         }
 
         m_updateAuthority = ua;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the update authority of this graph.
      *
      * @return the update authority of this graph.
      */
-    public UpdateAuthority getUpdateAuthority(  ) {
+    public UpdateAuthority getUpdateAuthority()
+    {
         return m_updateAuthority;
     }
-
 
     /**
      * @see Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges( Collection edges ) {
-        return m_updateAuthority.addAllEdges( edges );
+    public boolean addAllEdges(Collection edges)
+    {
+        return m_updateAuthority.addAllEdges(edges);
     }
-
 
     /**
      * @see Graph#addAllVertices(Collection)
      */
-    public boolean addAllVertices( Collection vertices ) {
-        return m_updateAuthority.addAllVertices( vertices );
+    public boolean addAllVertices(Collection vertices)
+    {
+        return m_updateAuthority.addAllVertices(vertices);
     }
-
 
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge( Edge e ) {
-        return m_updateAuthority.addEdge( e );
+    public boolean addEdge(Edge e)
+    {
+        return m_updateAuthority.addEdge(e);
     }
-
 
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public Edge addEdge( Object sourceVertex, Object targetVertex ) {
-        return m_updateAuthority.addEdge( sourceVertex, targetVertex );
+    public Edge addEdge(Object sourceVertex, Object targetVertex)
+    {
+        return m_updateAuthority.addEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex( Object v ) {
-        return m_updateAuthority.addVertex( v );
+    public boolean addVertex(Object v)
+    {
+        return m_updateAuthority.addVertex(v);
     }
-
 
     /**
      * @see Graph#removeAllEdges(Collection)
      */
-    public boolean removeAllEdges( Collection edges ) {
-        return m_updateAuthority.removeAllEdges( edges );
+    public boolean removeAllEdges(Collection edges)
+    {
+        return m_updateAuthority.removeAllEdges(edges);
     }
-
 
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges( Object sourceVertex, Object targetVertex ) {
-        return m_updateAuthority.removeAllEdges( sourceVertex, targetVertex );
+    public List removeAllEdges(Object sourceVertex, Object targetVertex)
+    {
+        return m_updateAuthority.removeAllEdges(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#removeAllVertices(Collection)
      */
-    public boolean removeAllVertices( Collection vertices ) {
-        return m_updateAuthority.removeAllVertices( vertices );
+    public boolean removeAllVertices(Collection vertices)
+    {
+        return m_updateAuthority.removeAllVertices(vertices);
     }
-
 
     /**
      * @see Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( Edge e ) {
-        return m_updateAuthority.removeEdge( e );
+    public boolean removeEdge(Edge e)
+    {
+        return m_updateAuthority.removeEdge(e);
     }
-
 
     /**
      * @see Graph#removeEdge(Object, Object)
      */
-    public Edge removeEdge( Object sourceVertex, Object targetVertex ) {
-        return m_updateAuthority.removeEdge( sourceVertex, targetVertex );
+    public Edge removeEdge(Object sourceVertex, Object targetVertex)
+    {
+        return m_updateAuthority.removeEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#removeVertex(Object)
      */
-    public boolean removeVertex( Object v ) {
-        return m_updateAuthority.removeVertex( v );
+    public boolean removeVertex(Object v)
+    {
+        return m_updateAuthority.removeVertex(v);
     }
 }

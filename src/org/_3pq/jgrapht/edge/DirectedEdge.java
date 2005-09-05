@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
@@ -44,18 +45,26 @@ package org._3pq.jgrapht.edge;
  * A implementation of directed edge.
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public class DirectedEdge<V> extends DefaultEdge<V> {
+public class DirectedEdge<V> extends DefaultEdge<V>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3258689927188134195L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * @see DefaultEdge#DefaultEdge(Object, Object)
      */
-    public DirectedEdge( V sourceVertex, V targetVertex ) {
-        super( sourceVertex, targetVertex );
+    public DirectedEdge(V sourceVertex, V targetVertex)
+    {
+        super(sourceVertex, targetVertex);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns a string representation of this directed edge. The
@@ -64,7 +73,8 @@ public class DirectedEdge<V> extends DefaultEdge<V> {
      *
      * @return a string representation of this directed edge.
      */
-    public String toString(  ) {
-        return "(" + getSource(  ) + "," + getTarget(  ) + ")";
+    public String toString()
+    {
+        return "(" + getSource() + "," + getTarget() + ")";
     }
 }

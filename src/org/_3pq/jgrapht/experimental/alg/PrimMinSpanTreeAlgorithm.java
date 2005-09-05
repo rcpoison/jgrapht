@@ -18,13 +18,15 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.alg;
 
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.experimental.heap.HeapFactory;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.experimental.heap.*;
+
 
 /**
  * A concrete implementation of MinimumSpanningTreeAlgorithm using Prim's
@@ -37,30 +39,39 @@ import org._3pq.jgrapht.experimental.heap.HeapFactory;
  * @author Michael Behrisch
  */
 public final class PrimMinSpanTreeAlgorithm extends DijkstraAlgorithm
-    implements MinimumSpanningTreeAlgorithm {
+    implements MinimumSpanningTreeAlgorithm
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates an instance of PrimMinSpanTreeAlgorithm for the graph given
      * using the default Heap.
      *
      * @param wgraph The WeightedGraph where a minimum spanning tree will be
-     *        determined.
+     *               determined.
      */
-    public PrimMinSpanTreeAlgorithm( WeightedGraph wgraph ) {
-        super( wgraph, false );
+    public PrimMinSpanTreeAlgorithm(WeightedGraph wgraph)
+    {
+        super(wgraph, false);
     }
-
 
     /**
      * Creates an instance of PrimMinSpanTreeAlgorithm for the graph given
      * using the given Heap.
      *
      * @param wgraph The WeightedGraph where a minimum spanning tree will be
-     *        determined.
+     *               determined.
      * @param factory The factory to be used for creating heaps.
      */
-    public PrimMinSpanTreeAlgorithm( WeightedGraph wgraph, HeapFactory factory ) {
-        super( wgraph, factory, false );
+    public PrimMinSpanTreeAlgorithm(
+        WeightedGraph wgraph,
+        HeapFactory factory)
+    {
+        super(wgraph, factory, false);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Determines a minimum spanning tree in the weighted graph using Prim's
@@ -68,20 +79,21 @@ public final class PrimMinSpanTreeAlgorithm extends DijkstraAlgorithm
      *
      * @return A WeightedGraph comprising of the minimum spanning tree.
      */
-    public final WeightedGraph minSpanTree(  ) {
-        return optimumPathTree( _wgraph.vertexSet(  ).iterator(  ).next(  ) );
+    public final WeightedGraph minSpanTree()
+    {
+        return optimumPathTree(_wgraph.vertexSet().iterator().next());
     }
-
 
     /**
      * .
      *
-     * @param vertexPrio  
-     * @param edgeWeight  
+     * @param vertexPrio
+     * @param edgeWeight
      *
-     * @return  
+     * @return
      */
-    protected double priorityFunction( double vertexPrio, double edgeWeight ) {
+    protected double priorityFunction(double vertexPrio, double edgeWeight)
+    {
         return edgeWeight;
     }
 }

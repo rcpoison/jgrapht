@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------
@@ -40,26 +41,28 @@
  */
 package org._3pq.jgrapht;
 
-import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.VertexSetListener;
+import org._3pq.jgrapht.event.*;
+
 
 /**
  * A graph that supports listeners on structural change events.
  *
  * @author Barak Naveh
- *
  * @see org._3pq.jgrapht.event.GraphListener
  * @see org._3pq.jgrapht.event.VertexSetListener
  * @since Jul 20, 2003
  */
-public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E> {
+public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Adds the specified graph listener to this graph, if not already present.
      *
      * @param l the listener to be added.
      */
-    public void addGraphListener( GraphListener<V, E> l );
-
+    public void addGraphListener(GraphListener<V, E> l);
 
     /**
      * Adds the specified vertex set listener to this graph, if not already
@@ -67,21 +70,19 @@ public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E> {
      *
      * @param l the listener to be added.
      */
-    public void addVertexSetListener( VertexSetListener<V> l );
-
+    public void addVertexSetListener(VertexSetListener<V> l);
 
     /**
      * Removes the specified graph listener from this graph, if present.
      *
      * @param l he listener to be removed.
      */
-    public void removeGraphListener( GraphListener<V, E> l );
-
+    public void removeGraphListener(GraphListener<V, E> l);
 
     /**
      * Removes the specified vertex set listener from this graph, if present.
      *
      * @param l the listener to be removed.
      */
-    public void removeVertexSetListener( VertexSetListener<V> l );
+    public void removeVertexSetListener(VertexSetListener<V> l);
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------
@@ -42,18 +43,19 @@ package org._3pq.jgrapht;
 /**
  * A graph whose all edges are undirected. This is the root interface of all
  * undirected graphs.
- * 
- * <p>
- * See <a href="http://mathworld.wolfram.com/Graph.html">
+ *
+ * <p>See <a href="http://mathworld.wolfram.com/Graph.html">
  * http://mathworld.wolfram.com/Graph.html</a> for more on undirected and on
- * directed graphs.
- * </p>
+ * directed graphs.</p>
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public interface UndirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
+public interface UndirectedGraph<V, E extends Edge<V>> extends Graph<V, E>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Returns the degree of the specified vertex. A degree of a vertex in an
      * undirected graph is the number of edges touching that vertex.
@@ -62,5 +64,5 @@ public interface UndirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
      *
      * @return the degree of the specified vertex.
      */
-    public int degreeOf( V vertex );
+    public int degreeOf(V vertex);
 }

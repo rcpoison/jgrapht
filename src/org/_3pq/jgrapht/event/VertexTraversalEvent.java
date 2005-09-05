@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -39,20 +40,30 @@
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventObject;
+import java.util.*;
+
 
 /**
  * A traversal event for a graph vertex.
  *
  * @author Barak Naveh
- *
  * @since Aug 11, 2003
  */
-public class VertexTraversalEvent<V> extends EventObject {
+public class VertexTraversalEvent<V> extends EventObject
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3688790267213918768L;
 
-    /** The traversed vertex. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The traversed vertex.
+     */
     protected V m_vertex;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new VertexTraversalEvent.
@@ -60,17 +71,21 @@ public class VertexTraversalEvent<V> extends EventObject {
      * @param eventSource the source of the event.
      * @param vertex the traversed vertex.
      */
-    public VertexTraversalEvent( Object eventSource, V vertex ) {
-        super( eventSource );
+    public VertexTraversalEvent(Object eventSource, V vertex)
+    {
+        super(eventSource);
         m_vertex = vertex;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the traversed vertex.
      *
      * @return the traversed vertex.
      */
-    public V getVertex(  ) {
+    public V getVertex()
+    {
         return m_vertex;
     }
 }

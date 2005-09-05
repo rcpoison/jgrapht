@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -40,77 +41,86 @@
  */
 package org._3pq.jgrapht.alg;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.traverse.ClosestFirstIterator;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.traverse.*;
+
 
 /**
  * An implementation of <a
- * href="http://mathworld.wolfram.com/DijkstrasAlgorithm.html"> Dijkstra's
+ * href="http://mathworld.wolfram.com/DijkstrasAlgorithm.html">Dijkstra's
  * shortest path algorithm</a> using <code>ClosestFirstIterator</code>.
  *
  * @author John V. Sichi
- *
  * @since Sep 2, 2003
  */
-public final class DijkstraShortestPath<V, E extends Edge<V>> {
+public final class DijkstraShortestPath<V, E extends Edge<V>>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private List<E> m_edgeList;
-    private double  m_pathLength;
+    private double m_pathLength;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates and executes a new DijkstraShortestPath algorithm instance. An
-     * instance is only good for a single search; after construction, it can
-     * be accessed to retrieve information about the path found.
+     * instance is only good for a single search; after construction, it can be
+     * accessed to retrieve information about the path found.
      *
      * @param graph the graph to be searched
      * @param startVertex the vertex at which the path should start
      * @param endVertex the vertex at which the path should end
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
-     *        unbounded search
+     *               unbounded search
      */
-    public DijkstraShortestPath( Graph<V, E> graph, V startVertex,
-        V endVertex, double radius ) {
+    public DijkstraShortestPath(
+        Graph<V, E> graph,
+        V startVertex,
+        V endVertex,
+        double radius)
+    {
         ClosestFirstIterator<V, E> iter =
-            new ClosestFirstIterator( graph, startVertex, radius );
+            new ClosestFirstIterator(graph, startVertex, radius);
 
-        while( iter.hasNext(  ) ) {
-            V vertex = iter.next(  );
+        while (iter.hasNext()) {
+            V vertex = iter.next();
 
-            if( vertex.equals( endVertex ) ) {
-                createEdgeList( iter, endVertex );
-                m_pathLength = iter.getShortestPathLength( endVertex );
+            if (vertex.equals(endVertex)) {
+                createEdgeList(iter, endVertex);
+                m_pathLength = iter.getShortestPathLength(endVertex);
 
                 return;
             }
         }
 
-        m_edgeList       = null;
-        m_pathLength     = Double.POSITIVE_INFINITY;
+        m_edgeList = null;
+        m_pathLength = Double.POSITIVE_INFINITY;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Return the edges making up the path found.
      *
      * @return List of Edges, or null if no path exists
      */
-    public List getPathEdgeList(  ) {
+    public List getPathEdgeList()
+    {
         return m_edgeList;
     }
-
 
     /**
      * Return the length of the path found.
      *
      * @return path length, or Double.POSITIVE_INFINITY if no path exists
      */
-    public double getPathLength(  ) {
+    public double getPathLength()
+    {
         return m_pathLength;
     }
-
 
     /**
      * Convenience method to find the shortest path via a single static method
@@ -123,30 +133,36 @@ public final class DijkstraShortestPath<V, E extends Edge<V>> {
      *
      * @return List of Edges, or null if no path exists
      */
-    public static <V, E extends Edge<V>> List findPathBetween( Graph<V, E> graph, V startVertex,
-        V endVertex ) {
+    public static <V, E extends Edge<V>> List findPathBetween(
+        Graph<V, E> graph,
+        V startVertex,
+        V endVertex)
+    {
         DijkstraShortestPath alg =
-            new DijkstraShortestPath( graph, startVertex, endVertex,
-                Double.POSITIVE_INFINITY );
+            new DijkstraShortestPath(
+                graph,
+                startVertex,
+                endVertex,
+                Double.POSITIVE_INFINITY);
 
-        return alg.getPathEdgeList(  );
+        return alg.getPathEdgeList();
     }
 
+    private void createEdgeList(ClosestFirstIterator<V, E> iter, V endVertex)
+    {
+        m_edgeList = new ArrayList();
 
-    private void createEdgeList( ClosestFirstIterator<V, E> iter, V endVertex ) {
-        m_edgeList = new ArrayList(  );
+        while (true) {
+            E edge = iter.getSpanningTreeEdge(endVertex);
 
-        while( true ) {
-            E edge = iter.getSpanningTreeEdge( endVertex );
-
-            if( edge == null ) {
+            if (edge == null) {
                 break;
             }
 
-            m_edgeList.add( edge );
-            endVertex = edge.oppositeVertex( endVertex );
+            m_edgeList.add(edge);
+            endVertex = edge.oppositeVertex(endVertex);
         }
 
-        Collections.reverse( m_edgeList );
+        Collections.reverse(m_edgeList);
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -39,30 +40,36 @@
  */
 package org._3pq.jgrapht.alg.util;
 
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Compares two vertices based on their degree.
  *
- * <p>
- * Used by greedy algorithms that need to sort vertices by their degree. Two
- * vertices are considered equal if their degrees are equal.
- * </p>
+ * <p>Used by greedy algorithms that need to sort vertices by their degree. Two
+ * vertices are considered equal if their degrees are equal.</p>
  *
  * @author Linda Buisman
- *
  * @since Nov 6, 2003
  */
-public class VertexDegreeComparator<V, E extends Edge<V>> implements java.util.Comparator<V> {
-    /** The graph that contains the vertices to be compared. */
+public class VertexDegreeComparator<V, E extends Edge<V>>
+    implements java.util.Comparator<V>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The graph that contains the vertices to be compared.
+     */
     private UndirectedGraph<V, E> m_graph;
 
     /**
-     * The sort order for vertex degree. <code>true</code>for ascending degree
+     * The sort order for vertex degree. <code>true</code> for ascending degree
      * order (smaller degrees first), <code>false</code> for descending.
      */
     private boolean m_ascendingOrder;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a comparator for comparing the degrees of vertices in the
@@ -71,10 +78,10 @@ public class VertexDegreeComparator<V, E extends Edge<V>> implements java.util.C
      *
      * @param g graph with respect to which the degree is calculated.
      */
-    public VertexDegreeComparator( UndirectedGraph<V, E> g ) {
-        this( g, true );
+    public VertexDegreeComparator(UndirectedGraph<V, E> g)
+    {
+        this(g, true);
     }
-
 
     /**
      * Creates a comparator for comparing the degrees of vertices in the
@@ -82,13 +89,18 @@ public class VertexDegreeComparator<V, E extends Edge<V>> implements java.util.C
      *
      * @param g graph with respect to which the degree is calculated.
      * @param ascendingOrder true - compares in ascending order of degrees
-     *        (lowest first), false - compares in descending order of degrees
-     *        (highest first).
+     *                       (lowest first), false - compares in descending
+     *                       order of degrees (highest first).
      */
-    public VertexDegreeComparator( UndirectedGraph<V, E> g, boolean ascendingOrder ) {
-        m_graph              = g;
-        m_ascendingOrder     = ascendingOrder;
+    public VertexDegreeComparator(
+        UndirectedGraph<V, E> g,
+        boolean ascendingOrder)
+    {
+        m_graph = g;
+        m_ascendingOrder = ascendingOrder;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Compare the degrees of <code>v1</code> and <code>v2</code>, taking into
@@ -97,22 +109,23 @@ public class VertexDegreeComparator<V, E extends Edge<V>> implements java.util.C
      * @param v1 the first vertex to be compared.
      * @param v2 the second vertex to be compared.
      *
-     * @return -1 if <code>v1</code> comes before <code>v2</code>,  +1 if
-     *         <code>v1</code> comes after <code>v2</code>, 0 if equal.
+     * @return -1 if <code>v1</code> comes before <code>v2</code>, +1 if <code>
+     *         v1</code> comes after <code>v2</code>, 0 if equal.
      */
-    public int compare( V v1, V v2 ) {
-        int degree1 = m_graph.degreeOf( v1 );
-        int degree2 = m_graph.degreeOf( v2 );
+    public int compare(V v1, V v2)
+    {
+        int degree1 = m_graph.degreeOf(v1);
+        int degree2 = m_graph.degreeOf(v2);
 
-        if( ( degree1 < degree2 && m_ascendingOrder )
-                || ( degree1 > degree2 && !m_ascendingOrder ) ) {
+        if (
+            ((degree1 < degree2) && m_ascendingOrder)
+            || ((degree1 > degree2) && !m_ascendingOrder)) {
             return -1;
-        }
-        else if( ( degree1 > degree2 && m_ascendingOrder )
-                || ( degree1 < degree2 && !m_ascendingOrder ) ) {
+        } else if (
+            ((degree1 > degree2) && m_ascendingOrder)
+            || ((degree1 < degree2) && !m_ascendingOrder)) {
             return 1;
-        }
-        else {
+        } else {
             return 0;
         }
     }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------
@@ -39,35 +40,42 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A weighted pseudograph. A weighted pseudograph is a non-simple undirected
  * graph in which both graph loops and multiple edges are permitted. The edges
- * of a weighted pseudograph have weights. If you're unsure about
- * pseudographs, see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
+ * of a weighted pseudograph have weights. If you're unsure about pseudographs,
+ * see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class WeightedPseudograph<V, E extends Edge<V>> extends Pseudograph<V, E> implements WeightedGraph<V, E> {
+public class WeightedPseudograph<V, E extends Edge<V>> extends Pseudograph<V, E>
+    implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3257290244524356152L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new weighted pseudograph with the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      */
-    public WeightedPseudograph( EdgeFactory<V, E> ef ) {
-        super( ef );
+    public WeightedPseudograph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
-
 
     /**
      * Creates a new weighted pseudograph.
      */
-    public WeightedPseudograph(  ) {
-        this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
+    public WeightedPseudograph()
+    {
+        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
     }
 }

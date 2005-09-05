@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
@@ -43,10 +44,13 @@ package org._3pq.jgrapht;
  * An edge factory used by graphs for creating new edges.
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public interface EdgeFactory<V, E extends Edge<V>> {
+public interface EdgeFactory<V, E extends Edge<V>>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Creates a new edge whose endpoints are the specified source and target
      * vertices.
@@ -57,5 +61,5 @@ public interface EdgeFactory<V, E extends Edge<V>> {
      * @return a new edge whose endpoints are the specified source and target
      *         vertices.
      */
-    public E createEdge( V sourceVertex, V targetVertex );
+    public E createEdge(V sourceVertex, V targetVertex);
 }

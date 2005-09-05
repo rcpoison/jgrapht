@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -44,7 +45,8 @@ package org._3pq.jgrapht;
  * A tagging interface for a graph whose all edges have weights.
  *
  * @author Barak Naveh
- *
  * @since Jul 23, 2003
  */
-public interface WeightedGraph<V, E extends Edge<V>> extends Graph<V, E> {}
+public interface WeightedGraph<V, E extends Edge<V>> extends Graph<V, E>
+{
+}

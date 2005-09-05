@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Liviu Rau
  * Contributor(s):   Barak Naveh
  *
- * $Id$
+ * $Id: AbstractGraphIteratorTest.java,v 1.8 2005/05/30 05:37:29 perfecthash
+ * Exp $
  *
  * Changes
  * -------
@@ -39,56 +41,57 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
-import org._3pq.jgrapht.event.EdgeTraversalEvent;
-import org._3pq.jgrapht.event.TraversalListener;
-import org._3pq.jgrapht.event.VertexTraversalEvent;
-import org._3pq.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.event.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * A basis for testing {@link org._3pq.jgrapht.traverse.BreadthFirstIterator}
  * and {@link org._3pq.jgrapht.traverse.DepthFirstIterator} classes.
  *
  * @author Liviu Rau
- *
  * @since Jul 30, 2003
  */
-public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
+public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     StringBuffer m_result;
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      */
-    public void testDirectedGraph(  ) {
-        m_result = new StringBuffer(  );
+    public void testDirectedGraph()
+    {
+        m_result = new StringBuffer();
 
-        DirectedGraph         graph = createDirectedGraph(  );
+        DirectedGraph graph = createDirectedGraph();
 
-        AbstractGraphIterator iterator = createIterator( graph, "1" );
-        iterator.addTraversalListener( new MyTraversalListener(  ) );
+        AbstractGraphIterator iterator = createIterator(graph, "1");
+        iterator.addTraversalListener(new MyTraversalListener());
 
-        while( iterator.hasNext(  ) ) {
-            m_result.append( (String) iterator.next(  ) );
+        while (iterator.hasNext()) {
+            m_result.append((String) iterator.next());
 
-            if( iterator.hasNext(  ) ) {
-                m_result.append( ',' );
+            if (iterator.hasNext()) {
+                m_result.append(',');
             }
         }
 
-        assertEquals( getExpectedStr2(  ), m_result.toString(  ) );
+        assertEquals(getExpectedStr2(), m_result.toString());
     }
 
+    abstract String getExpectedStr1();
 
-    abstract String getExpectedStr1(  );
+    abstract String getExpectedStr2();
 
-
-    abstract String getExpectedStr2(  );
-
-
-    DirectedGraph createDirectedGraph(  ) {
-        DirectedGraph graph = new DefaultDirectedWeightedGraph(  );
+    DirectedGraph createDirectedGraph()
+    {
+        DirectedGraph graph = new DefaultDirectedWeightedGraph();
 
         //
         String v1 = "1";
@@ -101,99 +104,103 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase {
         String v8 = "8";
         String v9 = "9";
 
-        graph.addVertex( v1 );
-        graph.addVertex( v2 );
-        graph.addVertex( "3" );
-        graph.addVertex( "4" );
-        graph.addVertex( "5" );
-        graph.addVertex( "6" );
-        graph.addVertex( "7" );
-        graph.addVertex( "8" );
-        graph.addVertex( "9" );
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex("3");
+        graph.addVertex("4");
+        graph.addVertex("5");
+        graph.addVertex("6");
+        graph.addVertex("7");
+        graph.addVertex("8");
+        graph.addVertex("9");
 
-        graph.addVertex( "orphan" );
+        graph.addVertex("orphan");
 
         // NOTE:  set weights on some of the edges to test traversals like
         // ClosestFirstIterator where it matters.  For other traversals, it
         // will be ignored.  Rely on the default edge weight being 1.
-        graph.addEdge( v1, v2 );
-        graph.addEdge( v1, v3 ).setWeight( 100 );
-        graph.addEdge( v2, v4 ).setWeight( 1000 );
-        graph.addEdge( v3, v5 );
-        graph.addEdge( v3, v6 ).setWeight( 100 );
-        graph.addEdge( v5, v6 );
-        graph.addEdge( v5, v7 ).setWeight( 200 );
-        graph.addEdge( v6, v1 );
-        graph.addEdge( v7, v8 ).setWeight( 100 );
-        graph.addEdge( v7, v9 );
-        graph.addEdge( v8, v2 );
-        graph.addEdge( v9, v4 );
+        graph.addEdge(v1, v2);
+        graph.addEdge(v1, v3).setWeight(100);
+        graph.addEdge(v2, v4).setWeight(1000);
+        graph.addEdge(v3, v5);
+        graph.addEdge(v3, v6).setWeight(100);
+        graph.addEdge(v5, v6);
+        graph.addEdge(v5, v7).setWeight(200);
+        graph.addEdge(v6, v1);
+        graph.addEdge(v7, v8).setWeight(100);
+        graph.addEdge(v7, v9);
+        graph.addEdge(v8, v2);
+        graph.addEdge(v9, v4);
 
         return graph;
     }
 
+    abstract AbstractGraphIterator createIterator(
+        DirectedGraph g,
+        Object startVertex);
 
-    abstract AbstractGraphIterator createIterator( DirectedGraph g,
-        Object startVertex );
+    //~ Inner Classes ---------------------------------------------------------
 
     /**
      * Internal traversal listener.
      *
      * @author Barak Naveh
      */
-    private class MyTraversalListener implements TraversalListener {
-        private int m_componentNumber      = 0;
+    private class MyTraversalListener implements TraversalListener
+    {
+        private int m_componentNumber = 0;
         private int m_numComponentVertices = 0;
 
         /**
          * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentFinished( 
-            ConnectedComponentTraversalEvent e ) {
-            switch( m_componentNumber ) {
-                case 1:
-                    assertEquals( getExpectedStr1(  ), m_result.toString(  ) );
-                    assertEquals( 9, m_numComponentVertices );
+        public void connectedComponentFinished(
+            ConnectedComponentTraversalEvent e)
+        {
+            switch (m_componentNumber) {
+            case 1:
+                assertEquals(getExpectedStr1(), m_result.toString());
+                assertEquals(9, m_numComponentVertices);
 
-                    break;
+                break;
 
-                case 2:
-                    assertEquals( getExpectedStr2(  ), m_result.toString(  ) );
-                    assertEquals( 1, m_numComponentVertices );
+            case 2:
+                assertEquals(getExpectedStr2(), m_result.toString());
+                assertEquals(1, m_numComponentVertices);
 
-                    break;
+                break;
 
-                default:
-                    assertFalse(  );
+            default:
+                assertFalse();
 
-                    break;
+                break;
             }
 
             m_numComponentVertices = 0;
         }
 
-
         /**
          * @see TraversalListener#connectedComponentStarted(ConnectedComponentTraversalEvent)
          */
-        public void connectedComponentStarted( 
-            ConnectedComponentTraversalEvent e ) {
+        public void connectedComponentStarted(
+            ConnectedComponentTraversalEvent e)
+        {
             m_componentNumber++;
         }
-
 
         /**
          * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
          */
-        public void edgeTraversed( EdgeTraversalEvent e ) {
+        public void edgeTraversed(EdgeTraversalEvent e)
+        {
             // to be tested...
         }
-
 
         /**
          * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
          */
-        public void vertexTraversed( VertexTraversalEvent e ) {
+        public void vertexTraversed(VertexTraversalEvent e)
+        {
             m_numComponentVertices++;
         }
     }

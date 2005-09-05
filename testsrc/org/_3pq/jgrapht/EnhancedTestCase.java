@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------
@@ -38,43 +39,51 @@
  */
 package org._3pq.jgrapht;
 
-import junit.framework.TestCase;
+import junit.framework.*;
+
 
 /**
  * A little extension to JUnit's TestCase.
  *
  * @author Barak Naveh
- *
  * @since Jul 25, 2003
  */
-public class EnhancedTestCase extends TestCase {
+public class EnhancedTestCase extends TestCase
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * @see TestCase#TestCase()
      */
-    public EnhancedTestCase(  ) {
-        super(  );
+    public EnhancedTestCase()
+    {
+        super();
     }
-
 
     /**
      * @see TestCase#TestCase(java.lang.String)
      */
-    public EnhancedTestCase( String name ) {
-        super( name );
+    public EnhancedTestCase(String name)
+    {
+        super(name);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * It means: it's wrong that we got here.
      */
-    public void assertFalse(  ) {
-        assertTrue( false );
+    public void assertFalse()
+    {
+        assertTrue(false);
     }
-
 
     /**
      * It means: it's right that we got here.
      */
-    public void assertTrue(  ) {
-        assertTrue( true );
+    public void assertTrue()
+    {
+        assertTrue(true);
     }
 }

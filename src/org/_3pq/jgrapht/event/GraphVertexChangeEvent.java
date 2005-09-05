@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -42,15 +43,18 @@ package org._3pq.jgrapht.event;
 /**
  * An event which indicates that a graph vertex has changed, or is about to
  * change. The event can be used either as an indication <i>after</i> the
- * vertex has  been added or removed, or <i>before</i> it is added. The type
- * of the event can be tested using the {@link
+ * vertex has  been added or removed, or <i>before</i> it is added. The type of
+ * the event can be tested using the {@link
  * org._3pq.jgrapht.event.GraphChangeEvent#getType()} method.
  *
  * @author Barak Naveh
- *
  * @since Aug 10, 2003
  */
-public class GraphVertexChangeEvent<V> extends GraphChangeEvent {
+public class GraphVertexChangeEvent<V> extends GraphChangeEvent
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3690189962679104053L;
 
     /**
@@ -77,8 +81,14 @@ public class GraphVertexChangeEvent<V> extends GraphChangeEvent {
      */
     public static final int VERTEX_REMOVED = 14;
 
-    /** The vertex that this event is related to. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The vertex that this event is related to.
+     */
     protected V m_vertex;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new GraphVertexChangeEvent object.
@@ -87,17 +97,21 @@ public class GraphVertexChangeEvent<V> extends GraphChangeEvent {
      * @param type the type of the event.
      * @param vertex the vertex that the event is related to.
      */
-    public GraphVertexChangeEvent( Object eventSource, int type, V vertex ) {
-        super( eventSource, type );
+    public GraphVertexChangeEvent(Object eventSource, int type, V vertex)
+    {
+        super(eventSource, type);
         m_vertex = vertex;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the vertex that this event is related to.
      *
      * @return the vertex that this event is related to.
      */
-    public V getVertex(  ) {
+    public V getVertex()
+    {
         return m_vertex;
     }
 }

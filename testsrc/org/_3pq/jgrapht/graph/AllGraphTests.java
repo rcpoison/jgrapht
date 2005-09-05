@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
@@ -38,36 +39,44 @@
  */
 package org._3pq.jgrapht.graph;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.*;
+
 
 /**
  * A TestSuite for all tests in this package.
  *
  * @author Barak Naveh
- *
  * @since Aug 3, 2003
  */
-public final class AllGraphTests {
-    private AllGraphTests(  ) {} // ensure non-instantiability.
+public final class AllGraphTests
+{
+
+    //~ Constructors ----------------------------------------------------------
+
+    private AllGraphTests()
+    {
+    } // ensure non-instantiability.
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Creates a test suite for all tests in this package.
      *
      * @return a test suite for all tests in this package.
      */
-    public static Test suite(  ) {
-        TestSuite suite = new TestSuite(  );
+    public static Test suite()
+    {
+        TestSuite suite = new TestSuite();
 
-        //$JUnit-BEGIN$
-        suite.addTest( new TestSuite( DefaultDirectedGraphTest.class ) );
-        suite.addTest( new TestSuite( ListenableGraphTest.class ) );
-        suite.addTest( new TestSuite( SimpleDirectedGraphTest.class ) );
-        suite.addTest( new TestSuite( AsUndirectedGraphTest.class ) );
-        suite.addTest( new TestSuite( CloneTest.class ) );
-        suite.addTest( new TestSuite( SerializationTest.class ) );
+        // $JUnit-BEGIN$
+        suite.addTest(new TestSuite(DefaultDirectedGraphTest.class));
+        suite.addTest(new TestSuite(ListenableGraphTest.class));
+        suite.addTest(new TestSuite(SimpleDirectedGraphTest.class));
+        suite.addTest(new TestSuite(AsUndirectedGraphTest.class));
+        suite.addTest(new TestSuite(CloneTest.class));
+        suite.addTest(new TestSuite(SerializationTest.class));
 
-        //$JUnit-END$
+        // $JUnit-END$
         return suite;
     }
 }

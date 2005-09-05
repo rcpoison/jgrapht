@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -38,13 +39,10 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Generates a <a href="http://mathworld.wolfram.com/WheelGraph.html">wheel
@@ -54,14 +52,24 @@ import org._3pq.jgrapht.VertexFactory;
  * edges that are called "spokes".
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public class WheelGraphGenerator implements GraphGenerator {
-    /** Role for the hub vertex. */
-    public static final String HUB_VERTEX     = "Hub Vertex";
-    private boolean            m_inwardSpokes;
-    private int                m_size;
+public class WheelGraphGenerator implements GraphGenerator
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
+    /**
+     * Role for the hub vertex.
+     */
+    public static final String HUB_VERTEX = "Hub Vertex";
+
+    //~ Instance fields -------------------------------------------------------
+
+    private boolean m_inwardSpokes;
+    private int m_size;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new WheelGraphGenerator object. This constructor is more
@@ -70,72 +78,78 @@ public class WheelGraphGenerator implements GraphGenerator {
      *
      * @param size number of vertices to be generated.
      */
-    public WheelGraphGenerator( int size ) {
-        this( size, true );
+    public WheelGraphGenerator(int size)
+    {
+        this(size, true);
     }
-
 
     /**
      * Construct a new WheelGraphGenerator.
      *
      * @param size number of vertices to be generated.
      * @param inwardSpokes if <code>true</code> and graph is directed, spokes
-     *        are oriented from rim to hub; else from hub to rim.
+     *                     are oriented from rim to hub; else from hub to rim.
      *
      * @throws IllegalArgumentException
      */
-    public WheelGraphGenerator( int size, boolean inwardSpokes ) {
-        if( size < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public WheelGraphGenerator(int size, boolean inwardSpokes)
+    {
+        if (size < 0) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
-        m_size             = size;
-        m_inwardSpokes     = inwardSpokes;
+        m_size = size;
+        m_inwardSpokes = inwardSpokes;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * {@inheritDoc}
      */
-    public void generateGraph( Graph target, final VertexFactory vertexFactory,
-        Map resultMap ) {
-        if( m_size < 1 ) {
+    public void generateGraph(
+        Graph target,
+        final VertexFactory vertexFactory,
+        Map resultMap)
+    {
+        if (m_size < 1) {
             return;
         }
 
         // A little trickery to intercept the rim generation.  This is
         // necessary since target may be initially non-empty, meaning we can't
         // rely on its vertex set after the rim is generated.
-        final Collection rim              = new ArrayList(  );
-        VertexFactory    rimVertexFactory =
-            new VertexFactory(  ) {
-                public Object createVertex(  ) {
-                    Object vertex      = vertexFactory.createVertex(  );
-                    rim.add( vertex );
+        final Collection rim = new ArrayList();
+        VertexFactory rimVertexFactory =
+            new VertexFactory() {
+                public Object createVertex()
+                {
+                    Object vertex = vertexFactory.createVertex();
+                    rim.add(vertex);
 
                     return vertex;
                 }
             };
 
-        RingGraphGenerator ringGenerator = new RingGraphGenerator( m_size - 1 );
-        ringGenerator.generateGraph( target, rimVertexFactory, resultMap );
+        RingGraphGenerator ringGenerator = new RingGraphGenerator(m_size - 1);
+        ringGenerator.generateGraph(target, rimVertexFactory, resultMap);
 
-        Object hubVertex = vertexFactory.createVertex(  );
-        target.addVertex( hubVertex );
+        Object hubVertex = vertexFactory.createVertex();
+        target.addVertex(hubVertex);
 
-        if( resultMap != null ) {
-            resultMap.put( HUB_VERTEX, hubVertex );
+        if (resultMap != null) {
+            resultMap.put(HUB_VERTEX, hubVertex);
         }
 
-        Iterator rimIter = rim.iterator(  );
+        Iterator rimIter = rim.iterator();
 
-        while( rimIter.hasNext(  ) ) {
-            Object rimVertex = rimIter.next(  );
+        while (rimIter.hasNext()) {
+            Object rimVertex = rimIter.next();
 
-            if( m_inwardSpokes ) {
-                target.addEdge( rimVertex, hubVertex );
-            }
-            else {
-                target.addEdge( hubVertex, rimVertex );
+            if (m_inwardSpokes) {
+                target.addEdge(rimVertex, hubVertex);
+            } else {
+                target.addEdge(hubVertex, rimVertex);
             }
         }
     }

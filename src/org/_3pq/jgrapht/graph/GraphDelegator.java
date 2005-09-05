@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -39,16 +40,12 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.io.Serializable;
+import java.io.*;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A graph backed by the the graph specified at the constructor, which
@@ -56,26 +53,31 @@ import org._3pq.jgrapht.UndirectedGraph;
  * "pass through" to the to the backing graph. Any modification made to this
  * graph or the backing graph is reflected by the other.
  *
- * <p>
- * This graph does <i>not</i> pass the hashCode and equals operations through
- * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
- * <tt>hashCode</tt> methods.
- * </p>
+ * <p>This graph does <i>not</i> pass the hashCode and equals operations
+ * through to the backing graph, but relies on <tt>Object</tt>'s <tt>
+ * equals</tt> and <tt>hashCode</tt> methods.</p>
  *
- * <p>
- * This class is mostly used as a base for extending subclasses.
- * </p>
+ * <p>This class is mostly used as a base for extending subclasses.</p>
  *
  * @author Barak Naveh
- *
  * @since Jul 20, 2003
  */
-public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E> implements Graph<V, E>,
-    Serializable {
+public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
+    implements Graph<V, E>, Serializable
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3257005445226181425L;
 
-    /** The graph to which operations are delegated. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The graph to which operations are delegated.
+     */
     private Graph<V, E> m_delegate;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Constructor for GraphDelegator.
@@ -84,172 +86,176 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E> im
      *
      * @throws NullPointerException
      */
-    public GraphDelegator( Graph<V, E> g ) {
-        super(  );
+    public GraphDelegator(Graph<V, E> g)
+    {
+        super();
 
-        if( g == null ) {
-            throw new NullPointerException(  );
+        if (g == null) {
+            throw new NullPointerException();
         }
 
         m_delegate = g;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * @see Graph#getAllEdges(Object, Object)
      */
-    public List<E> getAllEdges( V sourceVertex, V targetVertex ) {
-        return m_delegate.getAllEdges( sourceVertex, targetVertex );
+    public List<E> getAllEdges(V sourceVertex, V targetVertex)
+    {
+        return m_delegate.getAllEdges(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#getEdge(Object, Object)
      */
-    public E getEdge( V sourceVertex, V targetVertex ) {
-        return m_delegate.getEdge( sourceVertex, targetVertex );
+    public E getEdge(V sourceVertex, V targetVertex)
+    {
+        return m_delegate.getEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#getEdgeFactory()
      */
-    public EdgeFactory<V, E> getEdgeFactory(  ) {
-        return m_delegate.getEdgeFactory(  );
+    public EdgeFactory<V, E> getEdgeFactory()
+    {
+        return m_delegate.getEdgeFactory();
     }
-
 
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge( E e ) {
-        return m_delegate.addEdge( e );
+    public boolean addEdge(E e)
+    {
+        return m_delegate.addEdge(e);
     }
-
 
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public E addEdge( V sourceVertex, V targetVertex ) {
-        return m_delegate.addEdge( sourceVertex, targetVertex );
+    public E addEdge(V sourceVertex, V targetVertex)
+    {
+        return m_delegate.addEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex( V v ) {
-        return m_delegate.addVertex( v );
+    public boolean addVertex(V v)
+    {
+        return m_delegate.addVertex(v);
     }
-
 
     /**
      * @see Graph#containsEdge(Edge)
      */
-    public boolean containsEdge( E e ) {
-        return m_delegate.containsEdge( e );
+    public boolean containsEdge(E e)
+    {
+        return m_delegate.containsEdge(e);
     }
-
 
     /**
      * @see Graph#containsVertex(Object)
      */
-    public boolean containsVertex( V v ) {
-        return m_delegate.containsVertex( v );
+    public boolean containsVertex(V v)
+    {
+        return m_delegate.containsVertex(v);
     }
-
 
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf( V vertex ) {
-        return ( (UndirectedGraph) m_delegate ).degreeOf( vertex );
+    public int degreeOf(V vertex)
+    {
+        return ((UndirectedGraph) m_delegate).degreeOf(vertex);
     }
-
 
     /**
      * @see Graph#edgeSet()
      */
-    public Set<E> edgeSet(  ) {
-        return m_delegate.edgeSet(  );
+    public Set<E> edgeSet()
+    {
+        return m_delegate.edgeSet();
     }
-
 
     /**
      * @see Graph#edgesOf(Object)
      */
-    public List<E> edgesOf( V vertex ) {
-        return m_delegate.edgesOf( vertex );
+    public List<E> edgesOf(V vertex)
+    {
+        return m_delegate.edgesOf(vertex);
     }
-
 
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
-    public int inDegreeOf( V vertex ) {
-        return ( (DirectedGraph) m_delegate ).inDegreeOf( vertex );
+    public int inDegreeOf(V vertex)
+    {
+        return ((DirectedGraph) m_delegate).inDegreeOf(vertex);
     }
-
 
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf( V vertex ) {
-        return ( (DirectedGraph) m_delegate ).incomingEdgesOf( vertex );
+    public List<E> incomingEdgesOf(V vertex)
+    {
+        return ((DirectedGraph) m_delegate).incomingEdgesOf(vertex);
     }
-
 
     /**
      * @see DirectedGraph#outDegreeOf(Object)
      */
-    public int outDegreeOf( V vertex ) {
-        return ( (DirectedGraph) m_delegate ).outDegreeOf( vertex );
+    public int outDegreeOf(V vertex)
+    {
+        return ((DirectedGraph) m_delegate).outDegreeOf(vertex);
     }
-
 
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf( V vertex ) {
-        return ( (DirectedGraph) m_delegate ).outgoingEdgesOf( vertex );
+    public List<E> outgoingEdgesOf(V vertex)
+    {
+        return ((DirectedGraph) m_delegate).outgoingEdgesOf(vertex);
     }
-
 
     /**
      * @see Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( E e ) {
-        return m_delegate.removeEdge( e );
+    public boolean removeEdge(E e)
+    {
+        return m_delegate.removeEdge(e);
     }
-
 
     /**
      * @see Graph#removeEdge(Object, Object)
      */
-    public E removeEdge( V sourceVertex, V targetVertex ) {
-        return m_delegate.removeEdge( sourceVertex, targetVertex );
+    public E removeEdge(V sourceVertex, V targetVertex)
+    {
+        return m_delegate.removeEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * @see Graph#removeVertex(Object)
      */
-    public boolean removeVertex( V v ) {
-        return m_delegate.removeVertex( v );
+    public boolean removeVertex(V v)
+    {
+        return m_delegate.removeVertex(v);
     }
-
 
     /**
      * @see java.lang.Object#toString()
      */
-    public String toString(  ) {
-        return m_delegate.toString(  );
+    public String toString()
+    {
+        return m_delegate.toString();
     }
-
 
     /**
      * @see Graph#vertexSet()
      */
-    public Set<V> vertexSet(  ) {
-        return m_delegate.vertexSet(  );
+    public Set<V> vertexSet()
+    {
+        return m_delegate.vertexSet();
     }
 }

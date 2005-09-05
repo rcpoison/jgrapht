@@ -18,69 +18,70 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.heap;
 
 import java.util.*;
 
+
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public interface Heap {
-    /**
-     * .
-     *
-     * @return  
-     */
-    public boolean isEmpty(  );
+public interface Heap
+{
 
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      *
-     * @param x  
+     * @return
      */
-    public void add( Object x );
-
+    public boolean isEmpty();
 
     /**
      * .
      *
-     * @param c  
+     * @param x
      */
-    public void addAll( Collection c );
-
-
-    /**
-     * .
-     */
-    public void clear(  );
-
+    public void add(Object x);
 
     /**
      * .
      *
-     * @return  
+     * @param c
      */
-    public Object extractTop(  );
+    public void addAll(Collection c);
 
+    /**
+     * .
+     */
+    public void clear();
 
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public int size(  );
-
+    public Object extractTop();
 
     /**
      * .
      *
-     * @param x  
+     * @return
      */
-    public void update( Object x );
+    public int size();
+
+    /**
+     * .
+     *
+     * @param x
+     */
+    public void update(Object x);
 }

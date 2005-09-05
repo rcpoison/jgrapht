@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -45,14 +46,17 @@ package org._3pq.jgrapht;
  * explicitly, but algorithms which generate new vertices require a factory.
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public interface VertexFactory<V> {
+public interface VertexFactory<V>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Creates a new vertex.
      *
      * @return the new vertex
      */
-    public V createVertex(  );
+    public V createVertex();
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -39,59 +40,70 @@
  */
 package org._3pq.jgrapht.experimental;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.traverse.*;
+import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.experimental.heap.*;
+import org._3pq.jgrapht.traverse.*;
+
 
 /**
  * A closest-first iterator for a directed or undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
  * Currently there are no means to ensure that, nor to fail-fast. The results
  * of such modifications are undefined.
- * 
- * <p>
- * The metric for <i>closest</i> here is the path length from a start vertex.
- * Edge.getWeight() is summed to calculate path length. Negative edge weights
- * will result in an IllegalArgumentException.
- * </p>
+ *
+ * <p>The metric for <i>closest</i> here is the path length from a start
+ * vertex. Edge.getWeight() is summed to calculate path length. Negative edge
+ * weights will result in an IllegalArgumentException.</p>
  *
  * @author John V. Sichi
- *
  * @since Sep 2, 2003
  */
-public class ShortestPathIterator extends ProximityIterator {
+public class ShortestPathIterator extends ProximityIterator
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates a new closest-first iterator for the specified graph. Iteration
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
-     * vertex is <code>null</code>, iteration will start at an arbitrary
-     * vertex and will not be limited, that is, will be able to traverse all
-     * the graph.
+     * vertex is <code>null</code>, iteration will start at an arbitrary vertex
+     * and will not be limited, that is, will be able to traverse all the
+     * graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public ShortestPathIterator( Graph g, Object startVertex ) {
-        this( g, startVertex, BinaryHeap.getFactory() );
+    public ShortestPathIterator(Graph g, Object startVertex)
+    {
+        this(g, startVertex, BinaryHeap.getFactory());
     }
 
     /**
      * Creates a new closest-first iterator for the specified graph. Iteration
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
-     * vertex is <code>null</code>, iteration will start at an arbitrary
-     * vertex and will not be limited, that is, will be able to traverse all
-     * the graph.
+     * vertex is <code>null</code>, iteration will start at an arbitrary vertex
+     * and will not be limited, that is, will be able to traverse all the
+     * graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public ShortestPathIterator( Graph g, Object startVertex, HeapFactory factory ) {
-        super( g, startVertex, factory, false );
+    public ShortestPathIterator(
+        Graph g,
+        Object startVertex,
+        HeapFactory factory)
+    {
+        super(g, startVertex, factory, false);
     }
 
-    protected final double priorityFunction( double vertexPrio, double edgeWeight ) {
+    //~ Methods ---------------------------------------------------------------
+
+    protected final double priorityFunction(
+        double vertexPrio,
+        double edgeWeight)
+    {
         return vertexPrio + edgeWeight;
     }
 }

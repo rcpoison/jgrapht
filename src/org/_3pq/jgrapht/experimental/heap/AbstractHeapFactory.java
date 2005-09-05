@@ -18,100 +18,108 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.heap;
 
 import java.util.*;
 
+
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public abstract class AbstractHeapFactory implements HeapFactory {
+public abstract class AbstractHeapFactory implements HeapFactory
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap(  ) {
-        return createHeap( Collections.EMPTY_LIST, null, false );
+    public Heap createHeap()
+    {
+        return createHeap(Collections.EMPTY_LIST, null, false);
     }
 
-
     /**
      * .
      *
-     * @param comp  
+     * @param comp
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Comparator comp ) {
-        return createHeap( Collections.EMPTY_LIST, comp, false );
+    public Heap createHeap(Comparator comp)
+    {
+        return createHeap(Collections.EMPTY_LIST, comp, false);
     }
 
-
     /**
      * .
      *
-     * @param c  
+     * @param c
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c ) {
-        return createHeap( c, null, false );
+    public Heap createHeap(Collection c)
+    {
+        return createHeap(c, null, false);
     }
 
-
     /**
      * .
      *
-     * @param c  
-     * @param comp  
+     * @param c
+     * @param comp
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c, Comparator comp ) {
-        return createHeap( c, comp, false );
+    public Heap createHeap(Collection c, Comparator comp)
+    {
+        return createHeap(c, comp, false);
     }
 
-
     /**
      * .
      *
-     * @param maximum  
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( boolean maximum ) {
-        return createHeap( Collections.EMPTY_LIST, null, maximum );
+    public Heap createHeap(boolean maximum)
+    {
+        return createHeap(Collections.EMPTY_LIST, null, maximum);
     }
 
-
     /**
      * .
      *
-     * @param comp  
-     * @param maximum  
+     * @param comp
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Comparator comp, boolean maximum ) {
-        return createHeap( Collections.EMPTY_LIST, comp, maximum );
+    public Heap createHeap(Comparator comp, boolean maximum)
+    {
+        return createHeap(Collections.EMPTY_LIST, comp, maximum);
     }
 
-
     /**
      * .
      *
-     * @param c  
-     * @param maximum  
+     * @param c
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c, boolean maximum ) {
-        return createHeap( c, null, maximum );
+    public Heap createHeap(Collection c, boolean maximum)
+    {
+        return createHeap(c, null, maximum);
     }
 }

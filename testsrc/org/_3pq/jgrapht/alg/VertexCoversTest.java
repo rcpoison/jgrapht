@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------
@@ -39,100 +40,104 @@
  */
 package org._3pq.jgrapht.alg;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.GraphHelper;
-import org._3pq.jgrapht.graph.Pseudograph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * Tests the vertex cover algorithms.
  *
  * @author Linda Buisman
- *
  * @since Nov 6, 2003
  */
-public class VertexCoversTest extends TestCase {
+public class VertexCoversTest extends TestCase
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final int TEST_GRAPH_SIZE = 200;
     private static final int TEST_REPEATS = 20;
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      */
-    public void testFind2ApproximationCover(  ) {
-        for( int i = 0; i < TEST_REPEATS; i++ ) {
-            Graph g = createRandomGraph(  );
+    public void testFind2ApproximationCover()
+    {
+        for (int i = 0; i < TEST_REPEATS; i++) {
+            Graph g = createRandomGraph();
             assertTrue(
-                isCover( VertexCovers.find2ApproximationCover( g ), g ) );
+                isCover(VertexCovers.find2ApproximationCover(g), g));
         }
     }
-
 
     /**
      * .
      */
-    public void testFindGreedyCover(  ) {
-        for( int i = 0; i < TEST_REPEATS; i++ ) {
-            Graph g = createRandomGraph(  );
-            Set   c = VertexCovers.findGreedyCover(
-                GraphHelper.undirectedGraph( g ) );
-            assertTrue( isCover( c, g ) );
+    public void testFindGreedyCover()
+    {
+        for (int i = 0; i < TEST_REPEATS; i++) {
+            Graph g = createRandomGraph();
+            Set c =
+                VertexCovers.findGreedyCover(
+                    GraphHelper.undirectedGraph(g));
+            assertTrue(isCover(c, g));
         }
     }
-
 
     /**
      * Checks if the specified vertex set covers every edge of the graph. Uses
      * the definition of Vertex Cover - removes every edge that is incident on
-     * a vertex in vertexSet. If no edges are left, vertexSet is a vertex
-     * cover for the specified graph.
+     * a vertex in vertexSet. If no edges are left, vertexSet is a vertex cover
+     * for the specified graph.
      *
      * @param vertexSet the vertices to be tested for covering the graph.
      * @param g the graph to be covered.
      *
      * @return
      */
-    private boolean isCover( Set vertexSet, Graph g ) {
-        Set uncoveredEdges = new HashSet( g.edgeSet(  ) );
+    private boolean isCover(Set vertexSet, Graph g)
+    {
+        Set uncoveredEdges = new HashSet(g.edgeSet());
 
-        for( Iterator i = vertexSet.iterator(  ); i.hasNext(  ); ) {
-            uncoveredEdges.removeAll( g.edgesOf( i.next(  ) ) );
+        for (Iterator i = vertexSet.iterator(); i.hasNext();) {
+            uncoveredEdges.removeAll(g.edgesOf(i.next()));
         }
 
-        return uncoveredEdges.size(  ) == 0;
+        return uncoveredEdges.size() == 0;
     }
-
 
     /**
      * Create a random graph of TEST_GRAPH_SIZE nodes.
      *
      * @return
      */
-    private Graph createRandomGraph(  ) {
-        // TODO: move random graph generator to be under GraphGenerator framework. 
-        Pseudograph g = new Pseudograph(  );
+    private Graph createRandomGraph()
+    {
+        // TODO: move random graph generator to be under GraphGenerator
+        // framework.
+        Pseudograph g = new Pseudograph();
 
-        for( int i = 0; i < TEST_GRAPH_SIZE; i++ ) {
-            g.addVertex( new Integer( i ) );
+        for (int i = 0; i < TEST_GRAPH_SIZE; i++) {
+            g.addVertex(new Integer(i));
         }
 
-        Vector vertices = new Vector( g.vertexSet(  ) );
+        Vector vertices = new Vector(g.vertexSet());
 
         // join every vertex with a random number of other vertices
-        for( int source = 0; source < TEST_GRAPH_SIZE; source++ ) {
+        for (int source = 0; source < TEST_GRAPH_SIZE; source++) {
             int numEdgesToCreate =
-                (int) Math.random(  ) * TEST_GRAPH_SIZE / 2 + 1;
+                ((int) Math.random() * TEST_GRAPH_SIZE / 2) + 1;
 
-            for( int j = 0; j < numEdgesToCreate; j++ ) {
+            for (int j = 0; j < numEdgesToCreate; j++) {
                 // find a random vertex to join to
-                int target =
-                    (int) Math.floor( Math.random(  ) * TEST_GRAPH_SIZE );
-                g.addEdge( vertices.get( source ), vertices.get( target ) );
+                int target = (int) Math.floor(Math.random() * TEST_GRAPH_SIZE);
+                g.addEdge(vertices.get(source), vertices.get(target));
             }
         }
 

@@ -18,35 +18,47 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.alg;
 
-import java.io.Serializable;
+import java.io.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Abstract superclass for algorithms on WeightedGraphs.
  *
  * @author Michael Behrisch
  */
-public abstract class WeightedGraphAlgorithm implements Serializable {
-    /** The WeightedGraph object that the algorithm uses. */
+public abstract class WeightedGraphAlgorithm implements Serializable
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The WeightedGraph object that the algorithm uses.
+     */
     protected final WeightedGraph _wgraph;
 
-    /** whether the stored graph is directed */
+    /**
+     * whether the stored graph is directed
+     */
     protected final boolean _directed;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new WeightedGraphAlgorithm object.
      *
-     * @param wgraph  
+     * @param wgraph
      */
-    public WeightedGraphAlgorithm( WeightedGraph wgraph ) {
-        _wgraph       = wgraph;
-        _directed     = wgraph instanceof DirectedGraph;
+    public WeightedGraphAlgorithm(WeightedGraph wgraph)
+    {
+        _wgraph = wgraph;
+        _directed = wgraph instanceof DirectedGraph;
     }
 }

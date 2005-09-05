@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -44,20 +45,28 @@ package org._3pq.jgrapht.edge;
  * An implementation of undirected weighted edge.
  *
  * @author Barak Naveh
- *
  * @since Jul 16, 2003
  */
-public class UndirectedWeightedEdge<V> extends UndirectedEdge<V> {
+public class UndirectedWeightedEdge<V> extends UndirectedEdge<V>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 4120853256903012915L;
-    private double            m_weight = DEFAULT_EDGE_WEIGHT;
+
+    //~ Instance fields -------------------------------------------------------
+
+    private double m_weight = DEFAULT_EDGE_WEIGHT;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * @see UndirectedEdge#UndirectedEdge(Object, Object)
      */
-    public UndirectedWeightedEdge( V sourceVertex, V targetVertex ) {
-        super( sourceVertex, targetVertex );
+    public UndirectedWeightedEdge(V sourceVertex, V targetVertex)
+    {
+        super(sourceVertex, targetVertex);
     }
-
 
     /**
      * Constructor for UndirectedWeightedEdge.
@@ -66,24 +75,30 @@ public class UndirectedWeightedEdge<V> extends UndirectedEdge<V> {
      * @param targetVertex target vertex of the new edge.
      * @param weight the weight of the new edge.
      */
-    public UndirectedWeightedEdge( V sourceVertex, V targetVertex,
-        double weight ) {
-        super( sourceVertex, targetVertex );
+    public UndirectedWeightedEdge(
+        V sourceVertex,
+        V targetVertex,
+        double weight)
+    {
+        super(sourceVertex, targetVertex);
         m_weight = weight;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see org._3pq.jgrapht.Edge#setWeight(double)
      */
-    public void setWeight( double weight ) {
+    public void setWeight(double weight)
+    {
         m_weight = weight;
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#getWeight()
      */
-    public double getWeight(  ) {
+    public double getWeight()
+    {
         return m_weight;
     }
 }

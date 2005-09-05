@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------
@@ -39,10 +40,9 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A weighted multigraph. A weighted multigraph is a non-simple undirected
@@ -52,23 +52,31 @@ import org._3pq.jgrapht.Edge;
  * href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class WeightedMultigraph<V, E extends Edge<V>> extends Multigraph<V, E> implements WeightedGraph<V, E> {
+public class WeightedMultigraph<V, E extends Edge<V>> extends Multigraph<V, E>
+    implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3544671793370640696L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new weighted multigraph with the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      */
-    public WeightedMultigraph( EdgeFactory<V, E> ef ) {
-        super( ef );
+    public WeightedMultigraph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
-
 
     /**
      * Creates a new weighted multigraph.
      */
-    public WeightedMultigraph(  ) {
-        this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
+    public WeightedMultigraph()
+    {
+        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------------
@@ -39,34 +40,42 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * An undirected weighted graph that is a subgraph on other graph.
  *
  * @see Subgraph
  */
-public class UndirectedWeightedSubgraph<V, E extends Edge<V>> extends UndirectedSubgraph<V, E>
-    implements WeightedGraph<V, E> {
+public class UndirectedWeightedSubgraph<V, E extends Edge<V>>
+    extends UndirectedSubgraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3689346615735236409L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new undirected weighted subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be
-     *        based.
-     * @param vertexSubset vertices to include in the subgraph. If
-     *        <code>null</code> then all vertices are included.
-     * @param edgeSubset edges to in include in the subgraph. If
-     *        <code>null</code> then all the edges whose vertices found in the
-     *        graph are included.
+     *             based.
+     * @param vertexSubset vertices to include in the subgraph. If <code>
+     *                     null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If <code>
+     *                   null</code> then all the edges whose vertices found in
+     *                   the graph are included.
      */
-    public UndirectedWeightedSubgraph( WeightedGraph<V, E> base, Set<V> vertexSubset,
-        Set<E> edgeSubset ) {
-        super( (UndirectedGraph) base, vertexSubset, edgeSubset );
+    public UndirectedWeightedSubgraph(
+        WeightedGraph<V, E> base,
+        Set<V> vertexSubset,
+        Set<E> edgeSubset)
+    {
+        super((UndirectedGraph) base, vertexSubset, edgeSubset);
     }
 }

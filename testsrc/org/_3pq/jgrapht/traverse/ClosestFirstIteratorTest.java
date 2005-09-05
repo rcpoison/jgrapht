@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------------
@@ -29,7 +30,8 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: ClosestFirstIteratorTest.java,v 1.4 2005/05/30 05:37:29 perfecthash Exp
+ * $
  *
  * Changes
  * -------
@@ -39,55 +41,60 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Tests for ClosestFirstIterator.
  *
  * @author John V. Sichi
- *
  * @since Sep 3, 2003
  */
-public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest {
+public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      */
-    public void testRadius(  ) {
-        m_result = new StringBuffer(  );
+    public void testRadius()
+    {
+        m_result = new StringBuffer();
 
-        DirectedGraph graph = createDirectedGraph(  );
+        DirectedGraph graph = createDirectedGraph();
 
         // NOTE:  pick 301 as the radius because it discriminates
         // the boundary case edge between v7 and v9
         AbstractGraphIterator iterator =
-            new ClosestFirstIterator( graph, "1", 301 );
+            new ClosestFirstIterator(graph, "1", 301);
 
-        while( iterator.hasNext(  ) ) {
-            m_result.append( (String) iterator.next(  ) );
+        while (iterator.hasNext()) {
+            m_result.append((String) iterator.next());
 
-            if( iterator.hasNext(  ) ) {
-                m_result.append( ',' );
+            if (iterator.hasNext()) {
+                m_result.append(',');
             }
         }
 
-        assertEquals( "1,2,3,5,6,7", m_result.toString(  ) );
+        assertEquals("1,2,3,5,6,7", m_result.toString());
     }
 
-
     // NOTE:  the edge weights make the result deterministic
-    String getExpectedStr1(  ) {
+    String getExpectedStr1()
+    {
         return "1,2,3,5,6,7,9,4,8";
     }
 
-
-    String getExpectedStr2(  ) {
-        return getExpectedStr1(  ) + ",orphan";
+    String getExpectedStr2()
+    {
+        return getExpectedStr1() + ",orphan";
     }
 
-
-    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
-        AbstractGraphIterator i = new ClosestFirstIterator( g, vertex );
-        i.setCrossComponentTraversal( true );
+    AbstractGraphIterator createIterator(DirectedGraph g, Object vertex)
+    {
+        AbstractGraphIterator i = new ClosestFirstIterator(g, vertex);
+        i.setCrossComponentTraversal(true);
 
         return i;
     }

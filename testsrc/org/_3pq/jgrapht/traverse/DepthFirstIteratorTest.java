@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -39,35 +40,38 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Tests for the {@link DepthFirstIteratorTest} class.
- * 
- * <p>
- * NOTE: This test uses hard-coded expected ordering isn't really guaranteed by
- * the specification of the algorithm. This could cause false failures if the
- * traversal implementation changes.
- * </p>
+ *
+ * <p>NOTE: This test uses hard-coded expected ordering isn't really guaranteed
+ * by the specification of the algorithm. This could cause false failures if
+ * the traversal implementation changes.</p>
  *
  * @author Liviu Rau
- *
  * @since Jul 30, 2003
  */
-public class DepthFirstIteratorTest extends AbstractGraphIteratorTest {
-    String getExpectedStr1(  ) {
+public class DepthFirstIteratorTest extends AbstractGraphIteratorTest
+{
+
+    //~ Methods ---------------------------------------------------------------
+
+    String getExpectedStr1()
+    {
         return "1,3,6,5,7,9,4,8,2";
     }
 
-
-    String getExpectedStr2(  ) {
+    String getExpectedStr2()
+    {
         return "1,3,6,5,7,9,4,8,2,orphan";
     }
 
-
-    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
-        AbstractGraphIterator i = new DepthFirstIterator( g, vertex );
-        i.setCrossComponentTraversal( true );
+    AbstractGraphIterator createIterator(DirectedGraph g, Object vertex)
+    {
+        AbstractGraphIterator i = new DepthFirstIterator(g, vertex);
+        i.setCrossComponentTraversal(true);
 
         return i;
     }

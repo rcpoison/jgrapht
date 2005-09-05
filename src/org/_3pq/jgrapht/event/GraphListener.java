@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -40,34 +41,36 @@
  */
 package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A listener that is notified when the graph changes.
  *
- * <p>
- * If only notifications on vertex set changes are required it is more
- * efficient to use the VertexSetListener.
- * </p>
+ * <p>If only notifications on vertex set changes are required it is more
+ * efficient to use the VertexSetListener.</p>
  *
  * @author Barak Naveh
- *
  * @see org._3pq.jgrapht.event.VertexSetListener
  * @since Jul 18, 2003
  */
-public interface GraphListener<V, E extends Edge<V>> extends VertexSetListener<V> {
+public interface GraphListener<V, E extends Edge<V>>
+    extends VertexSetListener<V>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Notifies that an edge has been added to the graph.
      *
      * @param e the edge event.
      */
-    public void edgeAdded( GraphEdgeChangeEvent<V, E> e );
-
+    public void edgeAdded(GraphEdgeChangeEvent<V, E> e);
 
     /**
      * Notifies that an edge has been removed from the graph.
      *
      * @param e the edge event.
      */
-    public void edgeRemoved( GraphEdgeChangeEvent<V, E> e );
+    public void edgeRemoved(GraphEdgeChangeEvent<V, E> e);
 }

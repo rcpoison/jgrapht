@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
@@ -38,30 +39,36 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
- * A directed pseudograph. A directed pseudograph is a non-simple directed graph in which both
- * graph loops and multiple edges are permitted. If you're unsure about
- * pseudographs, see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
+ * A directed pseudograph. A directed pseudograph is a non-simple directed
+ * graph in which both graph loops and multiple edges are permitted. If you're
+ * unsure about pseudographs, see: <a
+ * href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class DirectedPseudograph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E> {
+public class DirectedPseudograph<V, E extends Edge<V>>
+    extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * @see AbstractBaseGraph
      */
-    public DirectedPseudograph(  ) {
-        this( new EdgeFactories.DirectedEdgeFactory(  ) );
+    public DirectedPseudograph()
+    {
+        this(new EdgeFactories.DirectedEdgeFactory());
     }
 
-
     /**
      * @see AbstractBaseGraph
      */
-    public DirectedPseudograph( EdgeFactory<V, E> ef ) {
-        super( ef, true, true );
+    public DirectedPseudograph(EdgeFactory<V, E> ef)
+    {
+        super(ef, true, true);
     }
 }

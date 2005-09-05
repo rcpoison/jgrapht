@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
@@ -40,22 +41,31 @@
  */
 package org._3pq.jgrapht.edge;
 
-import java.io.Serializable;
+import java.io.*;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A skeletal implementation of the <tt>Edge</tt> interface, to minimize the
  * effort required to implement the interface.
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable {
+public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3258408452177932855L;
+
+    //~ Instance fields -------------------------------------------------------
+
     private V m_source;
     private V m_target;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Constructor for DefaultEdge.
@@ -63,77 +73,78 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable {
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      */
-    public DefaultEdge( V sourceVertex, V targetVertex ) {
-        m_source     = sourceVertex;
-        m_target     = targetVertex;
+    public DefaultEdge(V sourceVertex, V targetVertex)
+    {
+        m_source = sourceVertex;
+        m_target = targetVertex;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see org._3pq.jgrapht.Edge#getSource()
      */
-    public V getSource(  ) {
+    public V getSource()
+    {
         return m_source;
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#getTarget()
      */
-    public V getTarget(  ) {
+    public V getTarget()
+    {
         return m_target;
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#setWeight(double)
      */
-    public void setWeight( double weight ) {
-        throw new UnsupportedOperationException(  );
+    public void setWeight(double weight)
+    {
+        throw new UnsupportedOperationException();
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#getWeight()
      */
-    public double getWeight(  ) {
+    public double getWeight()
+    {
         return DEFAULT_EDGE_WEIGHT;
     }
-
 
     /**
      * @see Edge#clone()
      */
-    public Object clone(  ) {
+    public Object clone()
+    {
         try {
-            return super.clone(  );
-        }
-         catch( CloneNotSupportedException e ) {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
             // shouldn't happen as we are Cloneable
-            throw new InternalError(  );
+            throw new InternalError();
         }
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#containsVertex(java.lang.Object)
      */
-    public boolean containsVertex( V v ) {
-        return m_source.equals( v ) || m_target.equals( v );
+    public boolean containsVertex(V v)
+    {
+        return m_source.equals(v) || m_target.equals(v);
     }
-
 
     /**
      * @see org._3pq.jgrapht.Edge#oppositeVertex(java.lang.Object)
      */
-    public V oppositeVertex( V v ) {
-        if( v.equals( m_source ) ) {
+    public V oppositeVertex(V v)
+    {
+        if (v.equals(m_source)) {
             return m_target;
-        }
-        else if( v.equals( m_target ) ) {
+        } else if (v.equals(m_target)) {
             return m_source;
-        }
-        else {
-            throw new IllegalArgumentException( "no such vertex" );
+        } else {
+            throw new IllegalArgumentException("no such vertex");
         }
     }
 }

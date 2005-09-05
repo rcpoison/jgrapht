@@ -18,117 +18,127 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.heap;
 
 import java.util.*;
 
+
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public abstract class AbstractHeap implements Heap {
+public abstract class AbstractHeap implements Heap
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private final Comparator _comp;
-    private final int        _compareFactor;
-    private Map              _peerMap = null;
+    private final int _compareFactor;
+    private Map _peerMap = null;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new AbstractHeap object.
      *
-     * @param comp  
-     * @param maximum  
+     * @param comp
+     * @param maximum
      */
-    public AbstractHeap( Comparator comp, boolean maximum ) {
-        _comp              = comp;
-        _compareFactor     = maximum ? -1 : 1;
+    public AbstractHeap(Comparator comp, boolean maximum)
+    {
+        _comp = comp;
+        _compareFactor = maximum ? -1 : 1;
+    }
+
+    //~ Methods ---------------------------------------------------------------
+
+    /**
+     * .
+     *
+     * @return
+     */
+    public boolean isEmpty()
+    {
+        return size() == 0;
     }
 
     /**
      * .
      *
-     * @return  
+     * @param x
      */
-    public boolean isEmpty(  ) {
-        return size(  ) == 0;
-    }
+    public final void add(Object x)
+    {
+        ElementPeer peer = createPeer(x);
 
-
-    /**
-     * .
-     *
-     * @param x  
-     */
-    public final void add( Object x ) {
-        ElementPeer peer = createPeer( x );
-
-        if( x instanceof HeapElement ) {
-            ( (HeapElement) x ).setPeer( peer );
-        }
-        else {
-            if( _peerMap == null ) {
-                _peerMap = new HashMap(  );
+        if (x instanceof HeapElement) {
+            ((HeapElement) x).setPeer(peer);
+        } else {
+            if (_peerMap == null) {
+                _peerMap = new HashMap();
             }
 
-            _peerMap.put( x, peer );
+            _peerMap.put(x, peer);
         }
     }
 
-
     /**
      * .
      *
-     * @param c  
+     * @param c
      */
-    public void addAll( Collection c ) {
-        Iterator it = c.iterator(  );
+    public void addAll(Collection c)
+    {
+        Iterator it = c.iterator();
 
-        while( it.hasNext(  ) ) {
-            add( it.next(  ) );
+        while (it.hasNext()) {
+            add(it.next());
         }
     }
 
-
     /**
      * .
      *
-     * @param x  
+     * @param x
      */
-    public void update( Object x ) {
-        if( x instanceof HeapElement ) {
-            ( (HeapElement) x ).getPeer(  ).update(  );
-        }
-        else {
-            ( (ElementPeer) _peerMap.get( x ) ).update(  );
+    public void update(Object x)
+    {
+        if (x instanceof HeapElement) {
+            ((HeapElement) x).getPeer().update();
+        } else {
+            ((ElementPeer) _peerMap.get(x)).update();
         }
     }
 
+    /**
+     * .
+     *
+     * @param x
+     *
+     * @return
+     */
+    protected abstract ElementPeer createPeer(Object x);
 
     /**
      * .
      *
-     * @param x  
+     * @param x
+     * @param y
      *
-     * @return  
+     * @return
      */
-    protected abstract ElementPeer createPeer( Object x );
-
-
-    /**
-     * .
-     *
-     * @param x  
-     * @param y  
-     *
-     * @return  
-     */
-    protected final boolean isSmaller( Object x, Object y ) {
-        if( _comp != null ) {
-            return _comp.compare( x, y ) * _compareFactor < 0;
+    protected final boolean isSmaller(Object x, Object y)
+    {
+        if (_comp != null) {
+            return (_comp.compare(x, y) * _compareFactor) < 0;
         }
 
-        return ( (Comparable) x ).compareTo( y ) * _compareFactor < 0;
+        return (((Comparable) x).compareTo(y) * _compareFactor) < 0;
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -38,38 +39,43 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
  * GraphGenerator defines an interface for generating new graph structures.
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public interface GraphGenerator {
+public interface GraphGenerator
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Generate a graph structure. The topology of the generated graph is
      * dependent on the implementation.  For graphs in which not all vertices
-     * share the same automorphism equivalence class, the generator may
-     * produce a labeling indicating the roles played by generated elements.
-     * This is the purpose of the resultMap parameter.  For example, a
-     * generator for a wheel graph would designate a hub vertex.  Role names
-     * used as keys in resultMap should be declared as public static final
-     * Strings by implementation classes.
+     * share the same automorphism equivalence class, the generator may produce
+     * a labeling indicating the roles played by generated elements. This is
+     * the purpose of the resultMap parameter.  For example, a generator for a
+     * wheel graph would designate a hub vertex.  Role names used as keys in
+     * resultMap should be declared as public static final Strings by
+     * implementation classes.
      *
      * @param target receives the generated edges and vertices; if this is
-     *        non-empty on entry, the result will be a disconnected graph
-     *        since generated elements will not be connected to existing
-     *        elements
+     *               non-empty on entry, the result will be a disconnected
+     *               graph since generated elements will not be connected to
+     *               existing elements
      * @param vertexFactory called to produce new vertices
      * @param resultMap if non-null, receives implementation-specific mappings
-     *        from String roles to graph elements (or collections of graph
-     *        elements)
+     *                  from String roles to graph elements (or collections of
+     *                  graph elements)
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap );
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap);
 }

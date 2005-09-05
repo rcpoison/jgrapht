@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------------
@@ -40,37 +41,48 @@
  */
 package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * An empty do-nothing implementation of the {@link TraversalListener}
  * interface used for subclasses.
  *
  * @author Barak Naveh
- *
  * @since Aug 6, 2003
  */
-public class TraversalListenerAdapter<V, E extends Edge<V>> implements TraversalListener<V, E> {
+public class TraversalListenerAdapter<V, E extends Edge<V>>
+    implements TraversalListener<V, E>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
      */
-    public void connectedComponentFinished( ConnectedComponentTraversalEvent e ) {}
-
+    public void connectedComponentFinished(
+        ConnectedComponentTraversalEvent e)
+    {
+    }
 
     /**
      * @see TraversalListener#connectedComponentStarted(ConnectedComponentTraversalEvent)
      */
-    public void connectedComponentStarted( ConnectedComponentTraversalEvent e ) {}
-
+    public void connectedComponentStarted(ConnectedComponentTraversalEvent e)
+    {
+    }
 
     /**
      * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
      */
-    public void edgeTraversed( EdgeTraversalEvent<V, E> e ) {}
-
+    public void edgeTraversed(EdgeTraversalEvent<V, E> e)
+    {
+    }
 
     /**
      * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
      */
-    public void vertexTraversed( VertexTraversalEvent<V> e ) {}
+    public void vertexTraversed(VertexTraversalEvent<V> e)
+    {
+    }
 }

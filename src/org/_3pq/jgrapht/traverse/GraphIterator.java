@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -40,19 +41,23 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.event.TraversalListener;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.event.*;
+
 
 /**
  * A graph iterator.
  *
  * @author Barak Naveh
- *
  * @since Jul 31, 2003
  */
-public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V> {
+public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Test whether this iterator is set to traverse the grpah across connected
      * components.
@@ -60,21 +65,20 @@ public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V> {
      * @return <code>true</code> if traverses across connected components,
      *         otherwise <code>false</code>.
      */
-    public boolean isCrossComponentTraversal(  );
-
+    public boolean isCrossComponentTraversal();
 
     /**
-     * Sets a value the <code>reuseEvents</code> flag. If the
-     * <code>reuseEvents</code> flag is set to <code>true</code> this class
-     * will reuse previously fired events and will not create a new object for
-     * each event. This option increases performance but should be used with
-     * care, especially in multithreaded environment.
+     * Sets a value the <code>reuseEvents</code> flag. If the <code>
+     * reuseEvents</code> flag is set to <code>true</code> this class will
+     * reuse previously fired events and will not create a new object for each
+     * event. This option increases performance but should be used with care,
+     * especially in multithreaded environment.
      *
      * @param reuseEvents whether to reuse previously fired event objects
-     *        instead of creating a new event object for each event.
+     *                    instead of creating a new event object for each
+     *                    event.
      */
-    public void setReuseEvents( boolean reuseEvents );
-
+    public void setReuseEvents(boolean reuseEvents);
 
     /**
      * Tests whether the <code>reuseEvents</code> flag is set. If the flag is
@@ -85,29 +89,26 @@ public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V> {
      *
      * @return the value of the <code>reuseEvents</code> flag.
      */
-    public boolean isReuseEvents(  );
-
+    public boolean isReuseEvents();
 
     /**
      * Adds the specified traversal listener to this iterator.
      *
      * @param l the traversal listener to be added.
      */
-    public void addTraversalListener( TraversalListener<V, E> l );
-
+    public void addTraversalListener(TraversalListener<V, E> l);
 
     /**
      * Unsupported.
      *
      * @throws UnsupportedOperationException
      */
-    public void remove(  );
-
+    public void remove();
 
     /**
      * Removes the specified traversal listener from this iterator.
      *
      * @param l the traversal listener to be removed.
      */
-    public void removeTraversalListener( TraversalListener<V, E> l );
+    public void removeTraversalListener(TraversalListener<V, E> l);
 }

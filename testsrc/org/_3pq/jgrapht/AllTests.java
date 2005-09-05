@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------
@@ -38,57 +39,70 @@
  */
 package org._3pq.jgrapht;
 
-import java.util.Enumeration;
+import java.util.*;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
-import org._3pq.jgrapht.alg.AllAlgTests;
-import org._3pq.jgrapht.edge.AllEdgeTests;
-import org._3pq.jgrapht.generate.AllGenerateTests;
-import org._3pq.jgrapht.graph.AllGraphTests;
-import org._3pq.jgrapht.traverse.AllTraverseTests;
+import org._3pq.jgrapht.alg.*;
+import org._3pq.jgrapht.edge.*;
+import org._3pq.jgrapht.generate.*;
+import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.traverse.*;
+
 
 /**
  * Runs all unit tests of the JGraphT library.
  *
  * @author Barak Naveh
  */
-public final class AllTests {
-    private AllTests(  ) {} // ensure non-instantiability.
+public final class AllTests
+{
+
+    //~ Constructors ----------------------------------------------------------
+
+    private AllTests()
+    {
+    } // ensure non-instantiability.
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Creates a test suite that includes all JGraphT tests.
      *
      * @return a test suite that includes all JGraphT tests.
      */
-    public static Test suite(  ) {
+    public static Test suite()
+    {
         ExpandableTestSuite suite =
-            new ExpandableTestSuite( "All tests of JGraphT" );
+            new ExpandableTestSuite("All tests of JGraphT");
 
-        suite.addTestSuit( (TestSuite) AllAlgTests.suite(  ) );
-        suite.addTestSuit( (TestSuite) AllEdgeTests.suite(  ) );
-        suite.addTestSuit( (TestSuite) AllGenerateTests.suite(  ) );
-        suite.addTestSuit( (TestSuite) AllGraphTests.suite(  ) );
-        suite.addTestSuit( (TestSuite) AllTraverseTests.suite(  ) );
+        suite.addTestSuit((TestSuite) AllAlgTests.suite());
+        suite.addTestSuit((TestSuite) AllEdgeTests.suite());
+        suite.addTestSuit((TestSuite) AllGenerateTests.suite());
+        suite.addTestSuit((TestSuite) AllGraphTests.suite());
+        suite.addTestSuit((TestSuite) AllTraverseTests.suite());
 
         return suite;
     }
 
-    private static class ExpandableTestSuite extends TestSuite {
+    //~ Inner Classes ---------------------------------------------------------
+
+    private static class ExpandableTestSuite extends TestSuite
+    {
         /**
          * @see TestSuite#TestSuite()
          */
-        public ExpandableTestSuite(  ) {
-            super(  );
+        public ExpandableTestSuite()
+        {
+            super();
         }
-
 
         /**
          * @see TestSuite#TestSuite(java.lang.String)
          */
-        public ExpandableTestSuite( String name ) {
-            super( name );
+        public ExpandableTestSuite(String name)
+        {
+            super(name);
         }
 
         /**
@@ -96,10 +110,11 @@ public final class AllTests {
          *
          * @param suite
          */
-        public void addTestSuit( TestSuite suite ) {
-            for( Enumeration e = suite.tests(  ); e.hasMoreElements(  ); ) {
-                Test t = (Test) e.nextElement(  );
-                this.addTest( t );
+        public void addTestSuit(TestSuite suite)
+        {
+            for (Enumeration e = suite.tests(); e.hasMoreElements();) {
+                Test t = (Test) e.nextElement();
+                this.addTest(t);
             }
         }
     }

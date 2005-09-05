@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: SimpleDirectedGraphTest.java,v 1.7 2004/05/01 12:24:01 barak_naveh Exp
+ * $
  *
  * Changes
  * -------
@@ -38,382 +40,381 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.Iterator;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.EnhancedTestCase;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A unit test for simple directed graph.
  *
  * @author Barak Naveh
- *
  * @since Jul 25, 2003
  */
-public class SimpleDirectedGraphTest extends EnhancedTestCase {
-    DirectedGraph         m_gEmpty;
+public class SimpleDirectedGraphTest extends EnhancedTestCase
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    DirectedGraph m_gEmpty;
     private DirectedGraph m_g1;
     private DirectedGraph m_g2;
     private DirectedGraph m_g3;
     private DirectedGraph m_g4;
-    private Edge          m_eLoop;
-    private EdgeFactory   m_eFactory;
-    private String        m_v1 = "v1";
-    private String        m_v2 = "v2";
-    private String        m_v3 = "v3";
-    private String        m_v4 = "v4";
+    private Edge m_eLoop;
+    private EdgeFactory m_eFactory;
+    private String m_v1 = "v1";
+    private String m_v2 = "v2";
+    private String m_v3 = "v3";
+    private String m_v4 = "v4";
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
      */
-    public SimpleDirectedGraphTest( String name ) {
-        super( name );
+    public SimpleDirectedGraphTest(String name)
+    {
+        super(name);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Class to test for boolean addEdge(Edge)
      */
-    public void testAddEdgeEdge(  ) {
-        init(  );
+    public void testAddEdgeEdge()
+    {
+        init();
 
         try {
-            m_g1.addEdge( m_eLoop ); // loops not allowed
-            assertFalse(  );
-        }
-         catch( IllegalArgumentException e ) {
-            assertTrue(  );
+            m_g1.addEdge(m_eLoop); // loops not allowed
+            assertFalse();
+        } catch (IllegalArgumentException e) {
+            assertTrue();
         }
 
         try {
-            m_g3.addEdge( null );
-            assertFalse(  ); // NPE
-        }
-         catch( NullPointerException e ) {
-            assertTrue(  );
+            m_g3.addEdge(null);
+            assertFalse(); // NPE
+        } catch (NullPointerException e) {
+            assertTrue();
         }
 
-        Edge e = m_eFactory.createEdge( m_v2, m_v1 );
+        Edge e = m_eFactory.createEdge(m_v2, m_v1);
 
         try {
-            m_g1.addEdge( e ); // no such vertex in graph
-            assertFalse(  );
-        }
-         catch( IllegalArgumentException ile ) {
-            assertTrue(  );
+            m_g1.addEdge(e); // no such vertex in graph
+            assertFalse();
+        } catch (IllegalArgumentException ile) {
+            assertTrue();
         }
 
-        assertEquals( false, m_g2.addEdge( e ) );
-        assertEquals( false, m_g3.addEdge( e ) );
-        assertEquals( true, m_g4.addEdge( e ) );
+        assertEquals(false, m_g2.addEdge(e));
+        assertEquals(false, m_g3.addEdge(e));
+        assertEquals(true, m_g4.addEdge(e));
     }
-
 
     /**
      * Class to test for Edge addEdge(Object, Object)
      */
-    public void testAddEdgeObjectObject(  ) {
-        init(  );
+    public void testAddEdgeObjectObject()
+    {
+        init();
 
         try {
-            m_g1.addEdge( m_v1, m_v1 ); // loops not allowed
-            assertFalse(  );
-        }
-         catch( IllegalArgumentException e ) {
-            assertTrue(  );
-        }
-
-        try {
-            m_g3.addEdge( null, null );
-            assertFalse(  ); // NPE
-        }
-         catch( NullPointerException e ) {
-            assertTrue(  );
+            m_g1.addEdge(m_v1, m_v1); // loops not allowed
+            assertFalse();
+        } catch (IllegalArgumentException e) {
+            assertTrue();
         }
 
         try {
-            m_g1.addEdge( m_v2, m_v1 ); // no such vertex in graph
-            assertFalse(  );
-        }
-         catch( IllegalArgumentException ile ) {
-            assertTrue(  );
+            m_g3.addEdge(null, null);
+            assertFalse(); // NPE
+        } catch (NullPointerException e) {
+            assertTrue();
         }
 
-        assertNull( m_g2.addEdge( m_v2, m_v1 ) );
-        assertNull( m_g3.addEdge( m_v2, m_v1 ) );
-        assertNotNull( m_g4.addEdge( m_v2, m_v1 ) );
+        try {
+            m_g1.addEdge(m_v2, m_v1); // no such vertex in graph
+            assertFalse();
+        } catch (IllegalArgumentException ile) {
+            assertTrue();
+        }
+
+        assertNull(m_g2.addEdge(m_v2, m_v1));
+        assertNull(m_g3.addEdge(m_v2, m_v1));
+        assertNotNull(m_g4.addEdge(m_v2, m_v1));
     }
-
 
     /**
      * .
      */
-    public void testAddVertex(  ) {
-        init(  );
+    public void testAddVertex()
+    {
+        init();
 
-        assertEquals( 1, m_g1.vertexSet(  ).size(  ) );
-        assertEquals( 2, m_g2.vertexSet(  ).size(  ) );
-        assertEquals( 3, m_g3.vertexSet(  ).size(  ) );
-        assertEquals( 4, m_g4.vertexSet(  ).size(  ) );
+        assertEquals(1, m_g1.vertexSet().size());
+        assertEquals(2, m_g2.vertexSet().size());
+        assertEquals(3, m_g3.vertexSet().size());
+        assertEquals(4, m_g4.vertexSet().size());
 
-        assertFalse( m_g1.addVertex( m_v1 ) );
-        assertTrue( m_g1.addVertex( m_v2 ) );
-        assertEquals( 2, m_g1.vertexSet(  ).size(  ) );
+        assertFalse(m_g1.addVertex(m_v1));
+        assertTrue(m_g1.addVertex(m_v2));
+        assertEquals(2, m_g1.vertexSet().size());
     }
-
 
     /**
      * Class to test for boolean containsEdge(Edge)
      */
-    public void testContainsEdgeEdge(  ) {
-        init(  );
+    public void testContainsEdgeEdge()
+    {
+        init();
 
-        //TODO Implement containsEdge().
+        // TODO Implement containsEdge().
     }
-
 
     /**
      * Class to test for boolean containsEdge(Object, Object)
      */
-    public void testContainsEdgeObjectObject(  ) {
-        init(  );
+    public void testContainsEdgeObjectObject()
+    {
+        init();
 
-        assertFalse( m_g1.containsEdge( m_v1, m_v2 ) );
-        assertFalse( m_g1.containsEdge( m_v1, m_v1 ) );
+        assertFalse(m_g1.containsEdge(m_v1, m_v2));
+        assertFalse(m_g1.containsEdge(m_v1, m_v1));
 
-        assertTrue( m_g2.containsEdge( m_v1, m_v2 ) );
-        assertTrue( m_g2.containsEdge( m_v2, m_v1 ) );
+        assertTrue(m_g2.containsEdge(m_v1, m_v2));
+        assertTrue(m_g2.containsEdge(m_v2, m_v1));
 
-        assertTrue( m_g3.containsEdge( m_v1, m_v2 ) );
-        assertTrue( m_g3.containsEdge( m_v2, m_v1 ) );
-        assertTrue( m_g3.containsEdge( m_v3, m_v2 ) );
-        assertTrue( m_g3.containsEdge( m_v2, m_v3 ) );
-        assertTrue( m_g3.containsEdge( m_v1, m_v3 ) );
-        assertTrue( m_g3.containsEdge( m_v3, m_v1 ) );
+        assertTrue(m_g3.containsEdge(m_v1, m_v2));
+        assertTrue(m_g3.containsEdge(m_v2, m_v1));
+        assertTrue(m_g3.containsEdge(m_v3, m_v2));
+        assertTrue(m_g3.containsEdge(m_v2, m_v3));
+        assertTrue(m_g3.containsEdge(m_v1, m_v3));
+        assertTrue(m_g3.containsEdge(m_v3, m_v1));
 
-        assertFalse( m_g4.containsEdge( m_v1, m_v4 ) );
-        m_g4.addEdge( m_v1, m_v4 );
-        assertTrue( m_g4.containsEdge( m_v1, m_v4 ) );
+        assertFalse(m_g4.containsEdge(m_v1, m_v4));
+        m_g4.addEdge(m_v1, m_v4);
+        assertTrue(m_g4.containsEdge(m_v1, m_v4));
 
-        assertFalse( m_g3.containsEdge( m_v4, m_v2 ) );
-        assertFalse( m_g3.containsEdge( null, null ) );
+        assertFalse(m_g3.containsEdge(m_v4, m_v2));
+        assertFalse(m_g3.containsEdge(null, null));
     }
-
 
     /**
      * .
      */
-    public void testContainsVertex(  ) {
-        init(  );
+    public void testContainsVertex()
+    {
+        init();
 
-        //TODO Implement containsVertex().
+        // TODO Implement containsVertex().
     }
-
 
     /**
      * .
      */
-    public void testEdgeSet(  ) {
-        init(  );
+    public void testEdgeSet()
+    {
+        init();
 
-        //TODO Implement edgeSet().
+        // TODO Implement edgeSet().
     }
-
 
     /**
      * .
      */
-    public void testEdgesOf(  ) {
-        init(  );
+    public void testEdgesOf()
+    {
+        init();
 
-        assertEquals( m_g4.edgesOf( m_v1 ).size(  ), 2 );
-        assertEquals( m_g3.edgesOf( m_v1 ).size(  ), 4 );
+        assertEquals(m_g4.edgesOf(m_v1).size(), 2);
+        assertEquals(m_g3.edgesOf(m_v1).size(), 4);
 
-        Iterator iter  = m_g3.edgesOf( m_v1 ).iterator(  );
-        int      count = 0;
+        Iterator iter = m_g3.edgesOf(m_v1).iterator();
+        int count = 0;
 
-        while( iter.hasNext(  ) ) {
-            iter.next(  );
+        while (iter.hasNext()) {
+            iter.next();
             count++;
         }
 
-        assertEquals( count, 4 );
+        assertEquals(count, 4);
     }
-
 
     /**
      * .
      */
-    public void testGetAllEdges(  ) {
-        init(  ); //TODO Implement getAllEdges().
+    public void testGetAllEdges()
+    {
+        init(); // TODO Implement getAllEdges().
     }
-
 
     /**
      * .
      */
-    public void testGetEdge(  ) {
-        init(  ); //TODO Implement getEdge().
+    public void testGetEdge()
+    {
+        init(); // TODO Implement getEdge().
     }
-
 
     /**
      * .
      */
-    public void testGetEdgeFactory(  ) {
-        init(  ); //TODO Implement getEdgeFactory().
+    public void testGetEdgeFactory()
+    {
+        init(); // TODO Implement getEdgeFactory().
     }
-
 
     /**
      * .
      */
-    public void testInDegreeOf(  ) {
-        init(  );
+    public void testInDegreeOf()
+    {
+        init();
 
-        assertEquals( 0, m_g1.inDegreeOf( m_v1 ) );
+        assertEquals(0, m_g1.inDegreeOf(m_v1));
 
-        assertEquals( 1, m_g2.inDegreeOf( m_v1 ) );
-        assertEquals( 1, m_g2.inDegreeOf( m_v2 ) );
+        assertEquals(1, m_g2.inDegreeOf(m_v1));
+        assertEquals(1, m_g2.inDegreeOf(m_v2));
 
-        assertEquals( 2, m_g3.inDegreeOf( m_v1 ) );
-        assertEquals( 2, m_g3.inDegreeOf( m_v2 ) );
-        assertEquals( 2, m_g3.inDegreeOf( m_v3 ) );
+        assertEquals(2, m_g3.inDegreeOf(m_v1));
+        assertEquals(2, m_g3.inDegreeOf(m_v2));
+        assertEquals(2, m_g3.inDegreeOf(m_v3));
 
-        assertEquals( 1, m_g4.inDegreeOf( m_v1 ) );
-        assertEquals( 1, m_g4.inDegreeOf( m_v2 ) );
-        assertEquals( 1, m_g4.inDegreeOf( m_v3 ) );
-        assertEquals( 1, m_g4.inDegreeOf( m_v4 ) );
+        assertEquals(1, m_g4.inDegreeOf(m_v1));
+        assertEquals(1, m_g4.inDegreeOf(m_v2));
+        assertEquals(1, m_g4.inDegreeOf(m_v3));
+        assertEquals(1, m_g4.inDegreeOf(m_v4));
 
         try {
-            m_g3.inDegreeOf( new Object(  ) );
-            assertFalse(  );
-        }
-         catch( IllegalArgumentException e ) {
-            assertTrue(  );
+            m_g3.inDegreeOf(new Object());
+            assertFalse();
+        } catch (IllegalArgumentException e) {
+            assertTrue();
         }
 
         try {
-            m_g3.inDegreeOf( null );
-            assertFalse(  );
+            m_g3.inDegreeOf(null);
+            assertFalse();
+        } catch (NullPointerException e) {
+            assertTrue();
         }
-         catch( NullPointerException e ) {
-            assertTrue(  );
-        }
     }
-
 
     /**
      * .
      */
-    public void testIncomingEdgesOf(  ) {
-        init(  ); //TODO Implement incomingEdgesOf().
+    public void testIncomingEdgesOf()
+    {
+        init(); // TODO Implement incomingEdgesOf().
     }
-
 
     /**
      * .
      */
-    public void testOutDegreeOf(  ) {
-        init(  ); //TODO Implement outDegreeOf().
+    public void testOutDegreeOf()
+    {
+        init(); // TODO Implement outDegreeOf().
     }
-
 
     /**
      * .
      */
-    public void testOutgoingEdgesOf(  ) {
-        init(  ); //TODO Implement outgoingEdgesOf().
+    public void testOutgoingEdgesOf()
+    {
+        init(); // TODO Implement outgoingEdgesOf().
     }
-
 
     /**
      * Class to test for boolean removeEdge(Edge)
      */
-    public void testRemoveEdgeEdge(  ) {
-        init(  );
+    public void testRemoveEdgeEdge()
+    {
+        init();
 
-        assertEquals( m_g4.edgeSet(  ).size(  ), 4 );
-        m_g4.removeEdge( m_v1, m_v2 );
-        assertEquals( m_g4.edgeSet(  ).size(  ), 3 );
-        assertFalse( m_g4.removeEdge( m_eLoop ) );
-        assertTrue( m_g4.removeEdge( m_g4.getEdge( m_v2, m_v3 ) ) );
-        assertEquals( m_g4.edgeSet(  ).size(  ), 2 );
+        assertEquals(m_g4.edgeSet().size(), 4);
+        m_g4.removeEdge(m_v1, m_v2);
+        assertEquals(m_g4.edgeSet().size(), 3);
+        assertFalse(m_g4.removeEdge(m_eLoop));
+        assertTrue(m_g4.removeEdge(m_g4.getEdge(m_v2, m_v3)));
+        assertEquals(m_g4.edgeSet().size(), 2);
     }
-
 
     /**
      * Class to test for Edge removeEdge(Object, Object)
      */
-    public void testRemoveEdgeObjectObject(  ) {
-        init(  ); //TODO Implement removeEdge().
+    public void testRemoveEdgeObjectObject()
+    {
+        init(); // TODO Implement removeEdge().
     }
-
 
     /**
      * .
      */
-    public void testRemoveVertex(  ) {
-        init(  );
-        assertEquals( 4, m_g4.vertexSet(  ).size(  ) );
-        assertTrue( m_g4.removeVertex( m_v1 ) );
-        assertEquals( 3, m_g4.vertexSet(  ).size(  ) );
+    public void testRemoveVertex()
+    {
+        init();
+        assertEquals(4, m_g4.vertexSet().size());
+        assertTrue(m_g4.removeVertex(m_v1));
+        assertEquals(3, m_g4.vertexSet().size());
 
-        assertEquals( 2, m_g4.edgeSet(  ).size(  ) );
-        assertFalse( m_g4.removeVertex( m_v1 ) );
-        assertTrue( m_g4.removeVertex( m_v2 ) );
-        assertEquals( 1, m_g4.edgeSet(  ).size(  ) );
-        assertTrue( m_g4.removeVertex( m_v3 ) );
-        assertEquals( 0, m_g4.edgeSet(  ).size(  ) );
-        assertEquals( 1, m_g4.vertexSet(  ).size(  ) );
-        assertTrue( m_g4.removeVertex( m_v4 ) );
-        assertEquals( 0, m_g4.vertexSet(  ).size(  ) );
+        assertEquals(2, m_g4.edgeSet().size());
+        assertFalse(m_g4.removeVertex(m_v1));
+        assertTrue(m_g4.removeVertex(m_v2));
+        assertEquals(1, m_g4.edgeSet().size());
+        assertTrue(m_g4.removeVertex(m_v3));
+        assertEquals(0, m_g4.edgeSet().size());
+        assertEquals(1, m_g4.vertexSet().size());
+        assertTrue(m_g4.removeVertex(m_v4));
+        assertEquals(0, m_g4.vertexSet().size());
     }
-
 
     /**
      * .
      */
-    public void testVertexSet(  ) {
-        init(  ); //TODO Implement vertexSet().
+    public void testVertexSet()
+    {
+        init(); // TODO Implement vertexSet().
     }
 
+    private void init()
+    {
+        m_gEmpty = new SimpleDirectedGraph();
+        m_g1 = new SimpleDirectedGraph();
+        m_g2 = new SimpleDirectedGraph();
+        m_g3 = new SimpleDirectedGraph();
+        m_g4 = new SimpleDirectedGraph();
 
-    private void init(  ) {
-        m_gEmpty     = new SimpleDirectedGraph(  );
-        m_g1         = new SimpleDirectedGraph(  );
-        m_g2         = new SimpleDirectedGraph(  );
-        m_g3         = new SimpleDirectedGraph(  );
-        m_g4         = new SimpleDirectedGraph(  );
+        m_eFactory = m_g1.getEdgeFactory();
+        m_eLoop = m_eFactory.createEdge(m_v1, m_v1);
 
-        m_eFactory     = m_g1.getEdgeFactory(  );
-        m_eLoop        = m_eFactory.createEdge( m_v1, m_v1 );
+        m_g1.addVertex(m_v1);
 
-        m_g1.addVertex( m_v1 );
+        m_g2.addVertex(m_v1);
+        m_g2.addVertex(m_v2);
+        m_g2.addEdge(m_v1, m_v2);
+        m_g2.addEdge(m_v2, m_v1);
 
-        m_g2.addVertex( m_v1 );
-        m_g2.addVertex( m_v2 );
-        m_g2.addEdge( m_v1, m_v2 );
-        m_g2.addEdge( m_v2, m_v1 );
+        m_g3.addVertex(m_v1);
+        m_g3.addVertex(m_v2);
+        m_g3.addVertex(m_v3);
+        m_g3.addEdge(m_v1, m_v2);
+        m_g3.addEdge(m_v2, m_v1);
+        m_g3.addEdge(m_v2, m_v3);
+        m_g3.addEdge(m_v3, m_v2);
+        m_g3.addEdge(m_v3, m_v1);
+        m_g3.addEdge(m_v1, m_v3);
 
-        m_g3.addVertex( m_v1 );
-        m_g3.addVertex( m_v2 );
-        m_g3.addVertex( m_v3 );
-        m_g3.addEdge( m_v1, m_v2 );
-        m_g3.addEdge( m_v2, m_v1 );
-        m_g3.addEdge( m_v2, m_v3 );
-        m_g3.addEdge( m_v3, m_v2 );
-        m_g3.addEdge( m_v3, m_v1 );
-        m_g3.addEdge( m_v1, m_v3 );
-
-        m_g4.addVertex( m_v1 );
-        m_g4.addVertex( m_v2 );
-        m_g4.addVertex( m_v3 );
-        m_g4.addVertex( m_v4 );
-        m_g4.addEdge( m_v1, m_v2 );
-        m_g4.addEdge( m_v2, m_v3 );
-        m_g4.addEdge( m_v3, m_v4 );
-        m_g4.addEdge( m_v4, m_v1 );
+        m_g4.addVertex(m_v1);
+        m_g4.addVertex(m_v2);
+        m_g4.addVertex(m_v3);
+        m_g4.addVertex(m_v4);
+        m_g4.addEdge(m_v1, m_v2);
+        m_g4.addEdge(m_v2, m_v3);
+        m_g4.addEdge(m_v3, m_v4);
+        m_g4.addEdge(m_v4, m_v1);
     }
 }

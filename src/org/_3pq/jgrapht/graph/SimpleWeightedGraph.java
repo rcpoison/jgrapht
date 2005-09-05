@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------
@@ -39,32 +40,39 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A simple weighted graph. A simple weighted graph is a simple graph  for
  * which edges are assigned weights.
  */
-public class SimpleWeightedGraph<V, E extends Edge<V>> extends SimpleGraph<V, E> implements WeightedGraph<V, E> {
+public class SimpleWeightedGraph<V, E extends Edge<V>> extends SimpleGraph<V, E>
+    implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3906088949100655922L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new simple weighted graph with the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      */
-    public SimpleWeightedGraph( EdgeFactory<V, E> ef ) {
-        super( ef );
+    public SimpleWeightedGraph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
-
 
     /**
      * Creates a new simple weighted graph.
      */
-    public SimpleWeightedGraph(  ) {
-        this( new EdgeFactories.UndirectedWeightedEdgeFactory(  ) );
+    public SimpleWeightedGraph()
+    {
+        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
     }
 }

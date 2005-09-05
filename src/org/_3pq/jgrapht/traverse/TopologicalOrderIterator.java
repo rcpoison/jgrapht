@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------------
@@ -40,14 +41,11 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.util.ModifiableInteger;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.util.*;
+
 
 /**
  * Implements topological order traversal for a directed graph. A topological
@@ -57,113 +55,120 @@ import org._3pq.jgrapht.util.ModifiableInteger;
  * href="http://mathworld.wolfram.com/TopologicalSort.html">
  * http://mathworld.wolfram.com/TopologicalSort.html</a>.
  *
- * <p>
- * See "Algorithms in Java, Third Edition, Part 5: Graph Algorithms" by Robert
- * Sedgewick and "Data Structures and Algorithms with Object-Oriented Design
- * Patterns in Java" by Bruno R. Preiss for implementation alternatives. The
- * latter can be found online at <a
- * href="http://www.brpreiss.com/books/opus5/">http://www.brpreiss.com/books/opus5/</a>
- * </p>
+ * <p>See "Algorithms in Java, Third Edition, Part 5: Graph Algorithms" by
+ * Robert Sedgewick and "Data Structures and Algorithms with Object-Oriented
+ * Design Patterns in Java" by Bruno R. Preiss for implementation alternatives.
+ * The latter can be found online at <a
+ * href="http://www.brpreiss.com/books/opus5/">
+ * http://www.brpreiss.com/books/opus5/</a></p>
  *
- * <p>
- * For this iterator to work correctly the graph must not be modified during
+ * <p>For this iterator to work correctly the graph must not be modified during
  * iteration. Currently there are no means to ensure that, nor to fail-fast.
- * The results of such modifications are undefined.
- * </p>
+ * The results of such modifications are undefined.</p>
  *
  * @author Marden Neubert
- *
  * @since Dec 18, 2004
  */
-public class TopologicalOrderIterator<V, E extends Edge<V>, D> extends CrossComponentIterator<V, E, D> {
+public class TopologicalOrderIterator<V, E extends Edge<V>, D>
+    extends CrossComponentIterator<V, E, D>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private LinkedList<V> m_queue;
     private Map<V, ModifiableInteger> m_inDegreeMap;
 
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates a new topological order iterator over the directed graph
-     * specified. Traversal will start at one of the graphs <i>sources</i>.
-     * See the definition of source at <a
+     * specified. Traversal will start at one of the graphs <i>sources</i>. See
+     * the definition of source at <a
      * href="http://mathworld.wolfram.com/Source.html">
      * http://mathworld.wolfram.com/Source.html</a>.
      *
      * @param dg the directed graph to be iterated.
      */
-    public TopologicalOrderIterator( DirectedGraph<V, E> dg ) {
-        this( dg, new LinkedList(  ), new HashMap(  ) );
+    public TopologicalOrderIterator(DirectedGraph<V, E> dg)
+    {
+        this(dg, new LinkedList(), new HashMap());
     }
-
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
-    private TopologicalOrderIterator( DirectedGraph<V, E> dg, LinkedList<V> queue,
-        Map inDegreeMap ) {
-        this( dg, initialize( dg, queue, inDegreeMap ) );
-        m_queue           = queue;
-        m_inDegreeMap     = inDegreeMap;
+    private TopologicalOrderIterator(
+        DirectedGraph<V, E> dg,
+        LinkedList<V> queue,
+        Map inDegreeMap)
+    {
+        this(dg, initialize(dg, queue, inDegreeMap));
+        m_queue = queue;
+        m_inDegreeMap = inDegreeMap;
     }
-
 
     // NOTE: This is intentionally private, because starting the sort "in the
     // middle" doesn't make sense.
-    private TopologicalOrderIterator( DirectedGraph<V, E> dg, V start ) {
-        super( dg, start );
+    private TopologicalOrderIterator(DirectedGraph<V, E> dg, V start)
+    {
+        super(dg, start);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see CrossComponentIterator#isConnectedComponentExhausted()
      */
-    protected boolean isConnectedComponentExhausted(  ) {
+    protected boolean isConnectedComponentExhausted()
+    {
         // FIXME jvs 25-Apr-2005: This isn't correct for a graph with more than
         // one component.  We will actually exhaust a connected component
         // before the queue is empty, because initialize adds roots from all
         // components to the queue.
-        return m_queue.isEmpty(  );
+        return m_queue.isEmpty();
     }
-
 
     /**
      * @see CrossComponentIterator#encounterVertex(Object, Edge)
      */
-    protected void encounterVertex( V vertex, E edge ) {
-        putSeenData( vertex, null );
-        decrementInDegree( vertex );
+    protected void encounterVertex(V vertex, E edge)
+    {
+        putSeenData(vertex, null);
+        decrementInDegree(vertex);
     }
-
 
     /**
      * @see CrossComponentIterator#encounterVertexAgain(Object, Edge)
      */
-    protected void encounterVertexAgain( V vertex, E edge ) {
-        decrementInDegree( vertex );
+    protected void encounterVertexAgain(V vertex, E edge)
+    {
+        decrementInDegree(vertex);
     }
-
 
     /**
      * @see CrossComponentIterator#provideNextVertex()
      */
-    protected V provideNextVertex(  ) {
-        return m_queue.removeFirst(  );
+    protected V provideNextVertex()
+    {
+        return m_queue.removeFirst();
     }
-
 
     /**
      * Decrements the in-degree of a vertex.
      *
      * @param vertex the vertex whose in-degree will be decremented.
      */
-    private void decrementInDegree( V vertex ) {
-        ModifiableInteger inDegree =
-            m_inDegreeMap.get( vertex );
+    private void decrementInDegree(V vertex)
+    {
+        ModifiableInteger inDegree = m_inDegreeMap.get(vertex);
 
-        if( inDegree.value > 0 ) {
+        if (inDegree.value > 0) {
             inDegree.value--;
 
-            if( inDegree.value == 0 ) {
-                m_queue.addLast( vertex );
+            if (inDegree.value == 0) {
+                m_queue.addLast(vertex);
             }
         }
     }
-
 
     /**
      * Initializes the internal traversal object structure. Sets up the
@@ -176,24 +181,26 @@ public class TopologicalOrderIterator<V, E extends Edge<V>, D> extends CrossComp
      *
      * @return start vertex
      */
-    private static <V, E extends Edge<V>> V initialize( DirectedGraph<V, E> dg,
-        LinkedList<V> queue, Map inDegreeMap ) {
-        for( Iterator<V> i = dg.vertexSet(  ).iterator(  ); i.hasNext(  ); ) {
-            V vertex = i.next(  );
+    private static <V, E extends Edge<V>> V initialize(
+        DirectedGraph<V, E> dg,
+        LinkedList<V> queue,
+        Map inDegreeMap)
+    {
+        for (Iterator<V> i = dg.vertexSet().iterator(); i.hasNext();) {
+            V vertex = i.next();
 
-            int    inDegree = dg.inDegreeOf( vertex );
-            inDegreeMap.put( vertex, new ModifiableInteger( inDegree ) );
+            int inDegree = dg.inDegreeOf(vertex);
+            inDegreeMap.put(vertex, new ModifiableInteger(inDegree));
 
-            if( inDegree == 0 ) {
-                queue.add( vertex );
+            if (inDegree == 0) {
+                queue.add(vertex);
             }
         }
 
-        if( queue.isEmpty(  ) ) {
+        if (queue.isEmpty()) {
             return null;
-        }
-        else {
-            return queue.getFirst(  );
+        } else {
+            return queue.getFirst();
         }
     }
 }

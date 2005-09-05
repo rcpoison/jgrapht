@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------
@@ -43,53 +44,55 @@ package org._3pq.jgrapht;
 /**
  * An edge used with graph objects. This is the root interface in the edge
  * hierarchy.
- * 
- * <p>
- * NOTE: the source and target associations of an Edge must be immutable after
- * construction for all implementations.  The reason is that once an Edge is
- * added to a Graph, the Graph representation may be optimized via internal
+ *
+ * <p>NOTE: the source and target associations of an Edge must be immutable
+ * after construction for all implementations.  The reason is that once an Edge
+ * is added to a Graph, the Graph representation may be optimized via internal
  * indexing data structures; if the Edge associations were to change, these
  * structures would be corrupted.  However, other properties of an edge (such
  * as weight or label) may be mutable, although this still requires caution:
  * changes to Edges shared by multiple Graphs may not always be desired, and
  * indexing mechanisms for these properties may require a change notification
- * mechanism.
- * </p>
+ * mechanism.</p>
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public interface Edge<V> extends Cloneable {
-    /** The default weight for an edge. */
+public interface Edge<V> extends Cloneable
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
+    /**
+     * The default weight for an edge.
+     */
     public static double DEFAULT_EDGE_WEIGHT = 1.0;
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the source vertex of this edge.
      *
      * @return the source vertex of this edge.
      */
-    public V getSource(  );
-
+    public V getSource();
 
     /**
      * Returns the target vertex of this edge.
      *
      * @return the target vertex of this edge.
      */
-    public V getTarget(  );
-
+    public V getTarget();
 
     /**
-     * Sets the weight of this edge. If this edge is unweighted an
-     * <code>UnsupportedOperationException</code> is thrown.
+     * Sets the weight of this edge. If this edge is unweighted an <code>
+     * UnsupportedOperationException</code> is thrown.
      *
      * @param weight new weight.
      *
      * @throws UnsupportedOperationException if this edge is unweighted.
      */
-    public void setWeight( double weight );
-
+    public void setWeight(double weight);
 
     /**
      * Returns the weight of this edge. If this edge is unweighted the value
@@ -97,8 +100,7 @@ public interface Edge<V> extends Cloneable {
      *
      * @return the weight of this element.
      */
-    public double getWeight(  );
-
+    public double getWeight();
 
     /**
      * Creates and returns a shallow copy of this edge. The vertices of this
@@ -108,23 +110,22 @@ public interface Edge<V> extends Cloneable {
      *
      * @see Cloneable
      */
-    public Object clone(  );
-
+    public Object clone();
 
     /**
      * Returns <tt>true</tt> if this edge contains the specified vertex.  More
      * formally, returns <tt>true</tt> if and only if the following condition
      * holds:
+     *
      * <pre>
-     *      this.getSource().equals(v) || this.getTarget().equals(v)
+            this.getSource().equals(v) || this.getTarget().equals(v)
      * </pre>
      *
      * @param v vertex whose presence in this edge is to be tested.
      *
      * @return <tt>true</tt> if this edge contains the specified vertex.
      */
-    public boolean containsVertex( V v );
-
+    public boolean containsVertex(V v);
 
     /**
      * Returns the vertex opposite to the specified vertex.
@@ -134,8 +135,8 @@ public interface Edge<V> extends Cloneable {
      * @return the vertex opposite to the specified vertex.
      *
      * @throws IllegalArgumentException if v is neither the source nor the
-     *         target vertices of this edge.
+     *                                  target vertices of this edge.
      * @throws NullPointerException if v is <code>null</code>.
      */
-    public V oppositeVertex( V v );
+    public V oppositeVertex(V v);
 }

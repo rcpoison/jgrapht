@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -29,7 +30,8 @@
  * Original Author:  Michael Behrisch
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: UniformRandomGraphGenerator.java,v 1.2 2004/10/13 08:09:59 behrisch Exp
+ * $
  *
  * Changes
  * -------
@@ -39,12 +41,11 @@
 // package org._3pq.jgrapht.generate;
 package org._3pq.jgrapht.experimental;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
-import org._3pq.jgrapht.generate.GraphGenerator;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.generate.*;
+
 
 /**
  * UniformRandomGraphGenerator generates a <a
@@ -53,12 +54,17 @@ import org._3pq.jgrapht.generate.GraphGenerator;
  * independently uniformly at random from the set of all possible edges.
  *
  * @author Michael Behrisch
- *
  * @since Sep 13, 2004
  */
-public class UniformRandomGraphGenerator implements GraphGenerator {
+public class UniformRandomGraphGenerator implements GraphGenerator
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private final int m_numEdges;
     private final int m_numVertices;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new UniformRandomGraphGenerator.
@@ -68,27 +74,41 @@ public class UniformRandomGraphGenerator implements GraphGenerator {
      *
      * @throws IllegalArgumentException
      */
-    public UniformRandomGraphGenerator( int numVertices, int numEdges ) {
-        if( numVertices < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public UniformRandomGraphGenerator(int numVertices, int numEdges)
+    {
+        if (numVertices < 0) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
-        if( numEdges < 0 || numEdges > numVertices * ( numVertices - 1 ) / 2 ) {
-            throw new IllegalArgumentException( "illegal number of edges" );
+        if (
+            (numEdges < 0)
+            || (numEdges > (numVertices * (numVertices - 1) / 2))) {
+            throw new IllegalArgumentException("illegal number of edges");
         }
 
-        m_numVertices     = numVertices;
-        m_numEdges        = numEdges;
+        m_numVertices = numVertices;
+        m_numEdges = numEdges;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see GraphGenerator#generateGraph
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap ) {
-        Object[] vertices =
-            RandomGraphHelper.addVertices( target, vertexFactory, m_numVertices );
-        RandomGraphHelper.addEdges( target, Arrays.asList( vertices ),
-            Arrays.asList( vertices ), m_numEdges );
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap)
+    {
+        Object [] vertices =
+            RandomGraphHelper.addVertices(
+                target,
+                vertexFactory,
+                m_numVertices);
+        RandomGraphHelper.addEdges(
+            target,
+            Arrays.asList(vertices),
+            Arrays.asList(vertices),
+            m_numEdges);
     }
 }

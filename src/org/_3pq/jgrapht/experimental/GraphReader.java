@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental;
@@ -28,16 +29,24 @@ import java.io.*;
 import java.util.*;
 
 import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.SimpleWeightedGraph;
+import org._3pq.jgrapht.graph.*;
 import org._3pq.jgrapht.traverse.*;
+
 
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public class GraphReader {
+public class GraphReader
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private final BufferedReader _in;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new GraphReader object.
@@ -46,9 +55,13 @@ public class GraphReader {
      *
      * @throws IOException
      */
-    public GraphReader( String file ) throws IOException {
-        _in = new BufferedReader( new FileReader( file ) );
+    public GraphReader(String file)
+        throws IOException
+    {
+        _in = new BufferedReader(new FileReader(file));
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
@@ -57,57 +70,81 @@ public class GraphReader {
      *
      * @throws Exception
      */
-    public static void main( String[] args ) throws Exception {
-        Graph g = new SimpleWeightedGraph(  );
-        new GraphReader( args[ 0 ] ).readGraph( g );
-        System.out.println( "graph read" );
+    public static void main(String [] args)
+        throws Exception
+    {
+        Graph g = new SimpleWeightedGraph();
+        new GraphReader(args[0]).readGraph(g);
+        System.out.println("graph read");
 
-        {long time = System.currentTimeMillis();
-        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
-        while (spi.hasNext(  )) {
-            Object v = spi.next(  );
-//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
+        {
+            long time = System.currentTimeMillis();
+            ShortestPathIterator spi =
+                new ShortestPathIterator(
+                    g,
+                    g.vertexSet().iterator().next(),
+                    org._3pq.jgrapht.experimental.heap.FibonacciHeap
+                    .getFactory());
+            while (spi.hasNext()) {
+                Object v = spi.next();
+                // System.out.println( v + " " + spi.getSpanningTreeEdge(v) + "
+                // " + spi.getPrio(v));
+            }
+            System.out.println(System.currentTimeMillis() - time);
+            time = System.currentTimeMillis();
+            ClosestFirstIterator cfi =
+                new ClosestFirstIterator(g, g.vertexSet().iterator().next());
+            while (cfi.hasNext()) {
+                Object v = cfi.next();
+                // System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+            }
+            System.out.println(System.currentTimeMillis() - time);
         }
-        System.out.println( System.currentTimeMillis() - time );
-        time = System.currentTimeMillis();
-        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
-        while (cfi.hasNext(  )) {
-            Object v = cfi.next(  );
-//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+        {
+            long time = System.currentTimeMillis();
+            ShortestPathIterator spi =
+                new ShortestPathIterator(
+                    g,
+                    g.vertexSet().iterator().next(),
+                    org._3pq.jgrapht.experimental.heap.FibonacciHeap
+                    .getFactory());
+            while (spi.hasNext()) {
+                Object v = spi.next();
+                // System.out.println( v + " " + spi.getSpanningTreeEdge(v) + "
+                // " + spi.getPrio(v));
+            }
+            System.out.println(System.currentTimeMillis() - time);
+            time = System.currentTimeMillis();
+            ClosestFirstIterator cfi =
+                new ClosestFirstIterator(g, g.vertexSet().iterator().next());
+            while (cfi.hasNext()) {
+                Object v = cfi.next();
+                // System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+            }
+            System.out.println(System.currentTimeMillis() - time);
         }
-        System.out.println( System.currentTimeMillis() - time );}
-        {long time = System.currentTimeMillis();
-        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
-        while (spi.hasNext(  )) {
-            Object v = spi.next(  );
-//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
-        }
-        System.out.println( System.currentTimeMillis() - time );
-        time = System.currentTimeMillis();
-        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
-        while (cfi.hasNext(  )) {
-            Object v = cfi.next(  );
-//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
-        }
-        System.out.println( System.currentTimeMillis() - time );}
         long time = System.currentTimeMillis();
-        ShortestPathIterator spi = new ShortestPathIterator(g, g.vertexSet(  ).iterator(  ).next(), org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
-        while (spi.hasNext(  )) {
-            Object v = spi.next(  );
-//             System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " + spi.getPrio(v));
+        ShortestPathIterator spi =
+            new ShortestPathIterator(
+                g,
+                g.vertexSet().iterator().next(),
+                org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
+        while (spi.hasNext()) {
+            Object v = spi.next();
+            // System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " +
+            // spi.getPrio(v));
         }
-        System.out.println( System.currentTimeMillis() - time );
+        System.out.println(System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
-        ClosestFirstIterator cfi = new ClosestFirstIterator(g, g.vertexSet(  ).iterator(  ).next());
-        while (cfi.hasNext(  )) {
-            Object v = cfi.next(  );
-//             System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
+        ClosestFirstIterator cfi =
+            new ClosestFirstIterator(g, g.vertexSet().iterator().next());
+        while (cfi.hasNext()) {
+            Object v = cfi.next();
+            // System.out.println( v + " " + cfi.getSpanningTreeEdge(v));
         }
-        System.out.println( System.currentTimeMillis() - time );
+        System.out.println(System.currentTimeMillis() - time);
         time = System.currentTimeMillis();
-
     }
-
 
     /**
      * .
@@ -116,29 +153,35 @@ public class GraphReader {
      *
      * @throws IOException
      */
-    public void readGraph( Graph g ) throws IOException {
-        while( ready(  ) ) {
-            String[] cols = skipComments(  );
+    public void readGraph(Graph g)
+        throws IOException
+    {
+        while (ready()) {
+            String [] cols = skipComments();
 
-            if( cols.length > 0 ) {
-                if( cols[ 0 ].equals( "e" ) ) {
-                    int x = Integer.parseInt( cols[ 1 ] ) - 1;
-                    int y = Integer.parseInt( cols[ 2 ] ) - 1;
+            if (cols.length > 0) {
+                if (cols[0].equals("e")) {
+                    int x = Integer.parseInt(cols[1]) - 1;
+                    int y = Integer.parseInt(cols[2]) - 1;
 
-                    if( x != y ) {
+                    if (x != y) {
                         if (cols.length > 3) {
-                            GraphHelper.addEdgeWithVertices( g, new Integer( x ),
-                                new Integer( y ), Double.parseDouble(cols[ 3 ]) );
+                            GraphHelper.addEdgeWithVertices(
+                                g,
+                                new Integer(x),
+                                new Integer(y),
+                                Double.parseDouble(cols[3]));
                         } else {
-                            GraphHelper.addEdgeWithVertices( g, new Integer( x ),
-                                new Integer( y ) );
+                            GraphHelper.addEdgeWithVertices(
+                                g,
+                                new Integer(x),
+                                new Integer(y));
                         }
                     }
                 }
             }
         }
     }
-
 
     /**
      * .
@@ -147,30 +190,33 @@ public class GraphReader {
      *
      * @throws IOException
      */
-    public boolean ready(  ) throws IOException {
-        return _in.ready(  );
+    public boolean ready()
+        throws IOException
+    {
+        return _in.ready();
     }
 
+    private String [] skipComments()
+        throws IOException
+    {
+        String [] cols = split(_in.readLine());
 
-    private String[] skipComments(  ) throws IOException {
-        String[] cols = split( _in.readLine(  ) );
-
-        while( cols.length == 0 || cols[ 0 ].equals( "c" ) ) {
-            cols = split( _in.readLine(  ) );
+        while ((cols.length == 0) || cols[0].equals("c")) {
+            cols = split(_in.readLine());
         }
 
         return cols;
     }
 
+    private String [] split(String src)
+    {
+        final List l = new ArrayList();
+        final StringTokenizer tok = new StringTokenizer(src);
 
-    private String[] split( String src ) {
-        final List            l   = new ArrayList(  );
-        final StringTokenizer tok = new StringTokenizer( src );
-
-        while( tok.hasMoreTokens(  ) ) {
-            l.add( tok.nextToken(  ) );
+        while (tok.hasMoreTokens()) {
+            l.add(tok.nextToken());
         }
 
-        return (String[]) l.toArray( new String[ l.size(  ) ] );
+        return (String []) l.toArray(new String [l.size()]);
     }
 }

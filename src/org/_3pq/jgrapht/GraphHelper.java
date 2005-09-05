@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
@@ -41,27 +42,28 @@
  */
 package org._3pq.jgrapht;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.graph.AsUndirectedGraph;
+import org._3pq.jgrapht.edge.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * A collection of utilities to assist the working with graphs.
  *
  * @author Barak Naveh
- *
  * @since Jul 31, 2003
  */
-public final class GraphHelper {
-    private GraphHelper(  ) {} // ensure non-instantiability.
+public final class GraphHelper
+{
+
+    //~ Constructors ----------------------------------------------------------
+
+    private GraphHelper()
+    {
+    } // ensure non-instantiability.
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Creates a new edge and adds it to the specified graph similarly to the
@@ -72,23 +74,26 @@ public final class GraphHelper {
      * @param targetVertex target vertex of the edge.
      * @param weight weight of the edge.
      *
-     * @return The newly created edge if added to the graph, otherwise
-     *         <code>null</code>.
+     * @return The newly created edge if added to the graph, otherwise <code>
+     *         null</code>.
      *
      * @see Graph#addEdge(Object, Object)
      */
-    public static <V, E extends Edge<V>> E addEdge( Graph<V, E> g, V sourceVertex,
-        V targetVertex, double weight ) {
-        EdgeFactory<V, E> ef = g.getEdgeFactory(  );
-        E           e = ef.createEdge( sourceVertex, targetVertex );
+    public static <V, E extends Edge<V>> E addEdge(
+        Graph<V, E> g,
+        V sourceVertex,
+        V targetVertex,
+        double weight)
+    {
+        EdgeFactory<V, E> ef = g.getEdgeFactory();
+        E e = ef.createEdge(sourceVertex, targetVertex);
 
         // we first create the edge and set the weight to make sure that
         // listeners will see the correct weight upon addEdge.
-        e.setWeight( weight );
+        e.setWeight(weight);
 
-        return g.addEdge( e ) ? e : null;
+        return g.addEdge(e) ? e : null;
     }
-
 
     /**
      * Adds the specified edge to the specified graph including its vertices.
@@ -101,13 +106,15 @@ public final class GraphHelper {
      * @return <code>true</code> if and only if the specified edge was not
      *         already contained in the graph.
      */
-    public static <V, E extends Edge<V>> boolean addEdgeWithVertices( Graph<V, E> g, E e ) {
-        g.addVertex( e.getSource(  ) );
-        g.addVertex( e.getTarget(  ) );
+    public static <V, E extends Edge<V>> boolean addEdgeWithVertices(
+        Graph<V, E> g,
+        E e)
+    {
+        g.addVertex(e.getSource());
+        g.addVertex(e.getTarget());
 
-        return g.addEdge( e );
+        return g.addEdge(e);
     }
-
 
     /**
      * Adds the specified source and target vertices to the graph, if not
@@ -118,17 +125,19 @@ public final class GraphHelper {
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      *
-     * @return The newly created edge if added to the graph, otherwise
-     *         <code>null</code>.
+     * @return The newly created edge if added to the graph, otherwise <code>
+     *         null</code>.
      */
-    public static <V, E extends Edge<V>> E addEdgeWithVertices( Graph<V, E> g,
-            V sourceVertex, V targetVertex ) {
-        g.addVertex( sourceVertex );
-        g.addVertex( targetVertex );
+    public static <V, E extends Edge<V>> E addEdgeWithVertices(
+        Graph<V, E> g,
+        V sourceVertex,
+        V targetVertex)
+    {
+        g.addVertex(sourceVertex);
+        g.addVertex(targetVertex);
 
-        return g.addEdge( sourceVertex, targetVertex );
+        return g.addEdge(sourceVertex, targetVertex);
     }
-
 
     /**
      * Adds the specified source and target vertices to the graph, if not
@@ -141,30 +150,31 @@ public final class GraphHelper {
      * @param targetVertex target vertex of the edge.
      * @param weight weight of the edge.
      *
-     * @return The newly created edge if added to the graph, otherwise
-     *         <code>null</code>.
+     * @return The newly created edge if added to the graph, otherwise <code>
+     *         null</code>.
      */
-    public static <V, E extends Edge<V>> E addEdgeWithVertices( Graph<V, E> g,
-            V sourceVertex, V targetVertex, double weight ) {
-        g.addVertex( sourceVertex );
-        g.addVertex( targetVertex );
+    public static <V, E extends Edge<V>> E addEdgeWithVertices(
+        Graph<V, E> g,
+        V sourceVertex,
+        V targetVertex,
+        double weight)
+    {
+        g.addVertex(sourceVertex);
+        g.addVertex(targetVertex);
 
-        return addEdge( g, sourceVertex, targetVertex, weight );
+        return addEdge(g, sourceVertex, targetVertex, weight);
     }
-
 
     /**
      * Adds all the vertices and all the edges of the specified source graph to
      * the specified destination graph. First all vertices of the source graph
      * are added to the destination graph. Then every edge of the source graph
-     * is added to the destination graph. This method returns
-     * <code>true</code> if the destination graph has been modified as a
-     * result of this operation, otherwise it returns <code>false</code>.
+     * is added to the destination graph. This method returns <code>true</code>
+     * if the destination graph has been modified as a result of this
+     * operation, otherwise it returns <code>false</code>.
      *
-     * <p>
-     * The behavior of this operation is undefined if any of the specified
-     * graphs is modified while operation is in progress.
-     * </p>
+     * <p>The behavior of this operation is undefined if any of the specified
+     * graphs is modified while operation is in progress.</p>
      *
      * @param destination the graph to which vertices and edges are added.
      * @param source the graph used as source for vertices and edges to add.
@@ -172,41 +182,41 @@ public final class GraphHelper {
      * @return <code>true</code> if and only if the destination graph has been
      *         changed as a result of this operation.
      */
-    public static <V, E extends Edge<V>> boolean addGraph( Graph<V, E> destination,
-            Graph<? extends V, ? extends E> source ) {
-        boolean modified = destination.addAllVertices( source.vertexSet(  ) );
-        modified |= destination.addAllEdges( source.edgeSet(  ) );
+    public static <V, E extends Edge<V>> boolean addGraph(
+        Graph<V, E> destination,
+        Graph<? extends V, ? extends E> source)
+    {
+        boolean modified = destination.addAllVertices(source.vertexSet());
+        modified |= destination.addAllEdges(source.edgeSet());
 
         return modified;
     }
-
 
     /**
      * Adds all the vertices and all the edges of the specified source digraph
      * to the specified destination digraph, reversing all of the edges.
      *
-     * <p>
-     * The behavior of this operation is undefined if any of the specified
-     * graphs is modified while operation is in progress.
-     * </p>
+     * <p>The behavior of this operation is undefined if any of the specified
+     * graphs is modified while operation is in progress.</p>
      *
      * @param destination the graph to which vertices and edges are added.
      * @param source the graph used as source for vertices and edges to add.
      */
-    public static void addGraphReversed( DirectedGraph destination,
-        DirectedGraph source ) {
-        destination.addAllVertices( source.vertexSet(  ) );
+    public static void addGraphReversed(
+        DirectedGraph destination,
+        DirectedGraph source)
+    {
+        destination.addAllVertices(source.vertexSet());
 
-        Iterator edgesIter = source.edgeSet(  ).iterator(  );
+        Iterator edgesIter = source.edgeSet().iterator();
 
-        while( edgesIter.hasNext(  ) ) {
-            DirectedEdge edge         = (DirectedEdge) edgesIter.next(  );
+        while (edgesIter.hasNext()) {
+            DirectedEdge edge = (DirectedEdge) edgesIter.next();
             DirectedEdge reversedEdge =
-                new DirectedEdge( edge.getTarget(  ), edge.getSource(  ) );
-            destination.addEdge( reversedEdge );
+                new DirectedEdge(edge.getTarget(), edge.getSource());
+            destination.addEdge(reversedEdge);
         }
     }
-
 
     /**
      * Returns a list of vertices that are the neighbors of a specified vertex.
@@ -219,22 +229,24 @@ public final class GraphHelper {
      * @return a list of the vertices that are the neighbors of the specified
      *         vertex.
      */
-    public static <V, E extends Edge<V>> List<V> neighborListOf( Graph<V,E> g, V vertex ) {
-        List neighbors = new ArrayList(  );
+    public static <V, E extends Edge<V>> List<V> neighborListOf(
+        Graph<V, E> g,
+        V vertex)
+    {
+        List neighbors = new ArrayList();
 
-        for( Iterator i = g.edgesOf( vertex ).iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
-            neighbors.add( e.oppositeVertex( vertex ) );
+        for (Iterator i = g.edgesOf(vertex).iterator(); i.hasNext();) {
+            Edge e = (Edge) i.next();
+            neighbors.add(e.oppositeVertex(vertex));
         }
 
         return neighbors;
     }
 
-
     /**
      * Returns a list of vertices that are the predecessors of a specified
-     * vertex. If the graph is a multigraph, vertices may appear more than
-     * once in the returned list.
+     * vertex. If the graph is a multigraph, vertices may appear more than once
+     * in the returned list.
      *
      * @param g the graph to look for predecessors in.
      * @param vertex the vertex to get the predecessors of.
@@ -242,18 +254,20 @@ public final class GraphHelper {
      * @return a list of the vertices that are the predecessors of the
      *         specified vertex.
      */
-    public static <V, E extends Edge<V>> List<V> predecessorListOf( DirectedGraph<V,E> g, V vertex ) {
-        List predecessors = new ArrayList(  );
-        List edges = g.incomingEdgesOf( vertex );
+    public static <V, E extends Edge<V>> List<V> predecessorListOf(
+        DirectedGraph<V, E> g,
+        V vertex)
+    {
+        List predecessors = new ArrayList();
+        List edges = g.incomingEdgesOf(vertex);
 
-        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
-            predecessors.add( e.oppositeVertex( vertex ) );
+        for (Iterator i = edges.iterator(); i.hasNext();) {
+            Edge e = (Edge) i.next();
+            predecessors.add(e.oppositeVertex(vertex));
         }
 
         return predecessors;
     }
-
 
     /**
      * Returns a list of vertices that are the successors of a specified
@@ -266,18 +280,20 @@ public final class GraphHelper {
      * @return a list of the vertices that are the successors of the specified
      *         vertex.
      */
-    public static <V, E extends Edge<V>> List<V> successorListOf( DirectedGraph<V,E> g, V vertex ) {
-        List successors = new ArrayList(  );
-        List edges = g.outgoingEdgesOf( vertex );
+    public static <V, E extends Edge<V>> List<V> successorListOf(
+        DirectedGraph<V, E> g,
+        V vertex)
+    {
+        List successors = new ArrayList();
+        List edges = g.outgoingEdgesOf(vertex);
 
-        for( Iterator i = edges.iterator(  ); i.hasNext(  ); ) {
-            Edge e = (Edge) i.next(  );
-            successors.add( e.oppositeVertex( vertex ) );
+        for (Iterator i = edges.iterator(); i.hasNext();) {
+            Edge e = (Edge) i.next();
+            successors.add(e.oppositeVertex(vertex));
         }
 
         return successors;
     }
-
 
     /**
      * Returns an undirected view of the specified graph. If the specified
@@ -290,20 +306,20 @@ public final class GraphHelper {
      *         or the specified graph itself if it is undirected.
      *
      * @throws IllegalArgumentException if the graph is neither DirectedGraph
-     *         nor UndirectedGraph.
+     *                                  nor UndirectedGraph.
      *
      * @see AsUndirectedGraph
      */
-    public static <V, E extends Edge<V>> UndirectedGraph<V, E> undirectedGraph( Graph<V, E> g ) {
-        if( g instanceof DirectedGraph ) {
-            return new AsUndirectedGraph( (DirectedGraph) g );
-        }
-        else if( g instanceof UndirectedGraph ) {
+    public static <V, E extends Edge<V>> UndirectedGraph<V, E> undirectedGraph(
+        Graph<V, E> g)
+    {
+        if (g instanceof DirectedGraph) {
+            return new AsUndirectedGraph((DirectedGraph) g);
+        } else if (g instanceof UndirectedGraph) {
             return (UndirectedGraph) g;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException(
-                "Graph must be either DirectedGraph or UndirectedGraph" );
+                "Graph must be either DirectedGraph or UndirectedGraph");
         }
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -29,7 +30,8 @@
  * Original Author:  Michael Behrisch
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: PartiteRandomGraphGenerator.java,v 1.2 2004/10/13 08:09:59 behrisch Exp
+ * $
  *
  * Changes
  * -------
@@ -39,12 +41,11 @@
 // package org._3pq.jgrapht.generate;
 package org._3pq.jgrapht.experimental;
 
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
-import org._3pq.jgrapht.generate.GraphGenerator;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.generate.*;
+
 
 /**
  * PartiteRandomGraphGenerator generates a <a
@@ -54,12 +55,17 @@ import org._3pq.jgrapht.generate.GraphGenerator;
  * partition classes.
  *
  * @author Michael Behrisch
- *
  * @since Sep 13, 2004
  */
-public class PartiteRandomGraphGenerator implements GraphGenerator {
-    private final int[] m_numVertices;
-    private final int   m_numEdges;
+public class PartiteRandomGraphGenerator implements GraphGenerator
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    private final int [] m_numVertices;
+    private final int m_numEdges;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new PartiteRandomGraphGenerator for a bipartite graph.
@@ -70,73 +76,87 @@ public class PartiteRandomGraphGenerator implements GraphGenerator {
      *
      * @throws IllegalArgumentException
      */
-    public PartiteRandomGraphGenerator( int numVertices1, int numVertices2,
-        int numEdges ) {
-        if( numVertices1 < 0 || numVertices2 < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public PartiteRandomGraphGenerator(
+        int numVertices1,
+        int numVertices2,
+        int numEdges)
+    {
+        if ((numVertices1 < 0) || (numVertices2 < 0)) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
-        if( numEdges < 0 || numEdges > numVertices1 * numVertices2 ) {
-            throw new IllegalArgumentException( "illegal number of edges" );
+        if ((numEdges < 0) || (numEdges > (numVertices1 * numVertices2))) {
+            throw new IllegalArgumentException("illegal number of edges");
         }
 
-        final int[] numVertices = { numVertices1, numVertices2 };
-        m_numVertices     = numVertices;
-        m_numEdges        = numEdges;
+        final int [] numVertices = {
+                numVertices1, numVertices2
+            };
+        m_numVertices = numVertices;
+        m_numEdges = numEdges;
     }
-
 
     /**
      * Construct a new PartiteRandomGraphGenerator for a k-partite graph.
      *
      * @param numVertices number of vertices in the k partitions
      * @param numEdges number of edges to be generated between any two
-     *        partitions
+     *                 partitions
      *
      * @throws IllegalArgumentException
      */
-    public PartiteRandomGraphGenerator( int[] numVertices, int numEdges ) {
-        if( numEdges < 0 ) {
-            throw new IllegalArgumentException( "illegal number of edges" );
+    public PartiteRandomGraphGenerator(int [] numVertices, int numEdges)
+    {
+        if (numEdges < 0) {
+            throw new IllegalArgumentException("illegal number of edges");
         }
 
-        for( int i = 0; i < numVertices.length; i++ ) {
-            if( numVertices[ i ] < 0 ) {
-                throw new IllegalArgumentException( "must be non-negative" );
+        for (int i = 0; i < numVertices.length; i++) {
+            if (numVertices[i] < 0) {
+                throw new IllegalArgumentException("must be non-negative");
             }
 
-            for( int j = 0; j < i; j++ ) {
-                if( numEdges > numVertices[ i ] * numVertices[ j ] ) {
-                    throw new IllegalArgumentException( 
-                        "illegal number of edges" );
+            for (int j = 0; j < i; j++) {
+                if (numEdges > (numVertices[i] * numVertices[j])) {
+                    throw new IllegalArgumentException(
+                        "illegal number of edges");
                 }
             }
         }
 
-        m_numVertices     = numVertices;
-        m_numEdges        = numEdges;
+        m_numVertices = numVertices;
+        m_numEdges = numEdges;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see GraphGenerator#generateGraph
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap ) {
-        Object[][] vertices = new Object[ m_numVertices.length ][];
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap)
+    {
+        Object [][] vertices = new Object [m_numVertices.length][];
 
-        for( int i = 0; i < m_numVertices.length; i++ ) {
-            vertices[ i ] =
-                RandomGraphHelper.addVertices( target, vertexFactory,
-                    m_numVertices[ i ] );
+        for (int i = 0; i < m_numVertices.length; i++) {
+            vertices[i] =
+                RandomGraphHelper.addVertices(
+                    target,
+                    vertexFactory,
+                    m_numVertices[i]);
 
-            if( resultMap != null ) {
-                resultMap.put( Integer.toString( i ), vertices[ i ] );
+            if (resultMap != null) {
+                resultMap.put(Integer.toString(i), vertices[i]);
             }
 
-            for( int j = 0; j < i; j++ ) {
-                RandomGraphHelper.addEdges( target,
-                    Arrays.asList( vertices[ i ] ),
-                    Arrays.asList( vertices[ j ] ), m_numEdges );
+            for (int j = 0; j < i; j++) {
+                RandomGraphHelper.addEdges(
+                    target,
+                    Arrays.asList(vertices[i]),
+                    Arrays.asList(vertices[j]),
+                    m_numEdges);
             }
         }
     }

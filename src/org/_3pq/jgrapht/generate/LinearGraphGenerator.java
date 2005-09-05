@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -38,26 +39,38 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Generates a linear graph of any size.  For a directed graph, the edges are
  * oriented from START_VERTEX to END_VERTEX.
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public class LinearGraphGenerator implements GraphGenerator {
-    /** Role for the first vertex generated. */
+public class LinearGraphGenerator implements GraphGenerator
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
+    /**
+     * Role for the first vertex generated.
+     */
     public static final String START_VERTEX = "Start Vertex";
 
-    /** Role for the last vertex generated. */
+    /**
+     * Role for the last vertex generated.
+     */
     public static final String END_VERTEX = "End Vertex";
-    private int                m_size;
+
+    //~ Instance fields -------------------------------------------------------
+
+    private int m_size;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new LinearGraphGenerator.
@@ -66,39 +79,44 @@ public class LinearGraphGenerator implements GraphGenerator {
      *
      * @throws IllegalArgumentException if the specified size is negative.
      */
-    public LinearGraphGenerator( int size ) {
-        if( size < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public LinearGraphGenerator(int size)
+    {
+        if (size < 0) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
         m_size = size;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap ) {
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap)
+    {
         Object lastVertex = null;
 
-        for( int i = 0; i < m_size; ++i ) {
-            Object newVertex = vertexFactory.createVertex(  );
-            target.addVertex( newVertex );
+        for (int i = 0; i < m_size; ++i) {
+            Object newVertex = vertexFactory.createVertex();
+            target.addVertex(newVertex);
 
-            if( lastVertex == null ) {
-                if( resultMap != null ) {
-                    resultMap.put( START_VERTEX, newVertex );
+            if (lastVertex == null) {
+                if (resultMap != null) {
+                    resultMap.put(START_VERTEX, newVertex);
                 }
-            }
-            else {
-                target.addEdge( lastVertex, newVertex );
+            } else {
+                target.addEdge(lastVertex, newVertex);
             }
 
             lastVertex = newVertex;
         }
 
-        if( ( resultMap != null ) && ( lastVertex != null ) ) {
-            resultMap.put( END_VERTEX, lastVertex );
+        if ((resultMap != null) && (lastVertex != null)) {
+            resultMap.put(END_VERTEX, lastVertex);
         }
     }
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -42,61 +43,66 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
-import org._3pq.jgrapht.event.EdgeTraversalEvent;
-import org._3pq.jgrapht.event.VertexTraversalEvent;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.event.*;
+
 
 /**
  * Provides a cross-connected-component traversal functionality for iterator
  * subclasses.
  *
  * @author Barak Naveh
- *
  * @since Jan 31, 2004
  */
-public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends AbstractGraphIterator<V, E> {
+public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
+    extends AbstractGraphIterator<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final int CCS_BEFORE_COMPONENT = 1;
     private static final int CCS_WITHIN_COMPONENT = 2;
-    private static final int CCS_AFTER_COMPONENT  = 3;
+    private static final int CCS_AFTER_COMPONENT = 3;
+
+    //~ Instance fields -------------------------------------------------------
 
     //
     private final ConnectedComponentTraversalEvent m_ccFinishedEvent =
-        new ConnectedComponentTraversalEvent( this,
-            ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_FINISHED );
+        new ConnectedComponentTraversalEvent(
+            this,
+            ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_FINISHED);
     private final ConnectedComponentTraversalEvent m_ccStartedEvent =
-        new ConnectedComponentTraversalEvent( this,
-            ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED );
+        new ConnectedComponentTraversalEvent(
+            this,
+            ConnectedComponentTraversalEvent.CONNECTED_COMPONENT_STARTED);
 
     // TODO: support ConcurrentModificationException if graph modified
     // during iteration.
-    private FlyweightEdgeEvent<V, E>   m_reusableEdgeEvent;
-    private FlyweightVertexEvent<V>    m_reusableVertexEvent;
-    private Iterator<V>                m_vertexIterator = null;
+    private FlyweightEdgeEvent<V, E> m_reusableEdgeEvent;
+    private FlyweightVertexEvent<V> m_reusableVertexEvent;
+    private Iterator<V> m_vertexIterator = null;
 
     /**
      * Stores the vertices that have been seen during iteration and
      * (optionally) some additional traversal info regarding each vertex.
      */
-    private Map<V, D>       m_seen        = new HashMap(  );
-    private V               m_startVertex;
+    private Map<V, D> m_seen = new HashMap();
+    private V m_startVertex;
     private Specifics<V, E> m_specifics;
 
-    /** The connected component state */
+    /**
+     * The connected component state
+     */
     private int m_state = CCS_BEFORE_COMPONENT;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new iterator for the specified graph. Iteration will start at
-     * the specified start vertex. If the specified start vertex is
-     * <code>null</code>, Iteration will start at an arbitrary graph vertex.
+     * the specified start vertex. If the specified start vertex is <code>
+     * null</code>, Iteration will start at an arbitrary graph vertex.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
@@ -104,58 +110,59 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      * @throws NullPointerException
      * @throws IllegalArgumentException
      */
-    public CrossComponentIterator( Graph<V, E> g, V startVertex ) {
-        super(  );
+    public CrossComponentIterator(Graph<V, E> g, V startVertex)
+    {
+        super();
 
-        if( g == null ) {
-            throw new NullPointerException( "graph must not be null" );
+        if (g == null) {
+            throw new NullPointerException("graph must not be null");
         }
 
-        m_specifics          = createGraphSpecifics( g );
-        m_vertexIterator     = g.vertexSet(  ).iterator(  );
-        setCrossComponentTraversal( startVertex == null );
+        m_specifics = createGraphSpecifics(g);
+        m_vertexIterator = g.vertexSet().iterator();
+        setCrossComponentTraversal(startVertex == null);
 
-        m_reusableEdgeEvent       = new FlyweightEdgeEvent( this, null );
-        m_reusableVertexEvent     = new FlyweightVertexEvent( this, null );
+        m_reusableEdgeEvent = new FlyweightEdgeEvent(this, null);
+        m_reusableVertexEvent = new FlyweightVertexEvent(this, null);
 
-        if( startVertex == null ) {
+        if (startVertex == null) {
             // pick a start vertex if graph not empty
-            if( m_vertexIterator.hasNext(  ) ) {
-                m_startVertex = m_vertexIterator.next(  );
-            }
-            else {
+            if (m_vertexIterator.hasNext()) {
+                m_startVertex = m_vertexIterator.next();
+            } else {
                 m_startVertex = null;
             }
-        }
-        else if( g.containsVertex( startVertex ) ) {
+        } else if (g.containsVertex(startVertex)) {
             m_startVertex = startVertex;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException(
-                "graph must contain the start vertex" );
+                "graph must contain the start vertex");
         }
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see java.util.Iterator#hasNext()
      */
-    public boolean hasNext(  ) {
-        if( m_startVertex != null ) {
-            encounterStartVertex(  );
+    public boolean hasNext()
+    {
+        if (m_startVertex != null) {
+            encounterStartVertex();
         }
 
-        if( isConnectedComponentExhausted(  ) ) {
-            if( m_state == CCS_WITHIN_COMPONENT ) {
+        if (isConnectedComponentExhausted()) {
+            if (m_state == CCS_WITHIN_COMPONENT) {
                 m_state = CCS_AFTER_COMPONENT;
-                fireConnectedComponentFinished( m_ccFinishedEvent );
+                fireConnectedComponentFinished(m_ccFinishedEvent);
             }
 
-            if( isCrossComponentTraversal(  ) ) {
-                while( m_vertexIterator.hasNext(  ) ) {
-                    V v = m_vertexIterator.next(  );
+            if (isCrossComponentTraversal()) {
+                while (m_vertexIterator.hasNext()) {
+                    V v = m_vertexIterator.next();
 
-                    if( !isSeenVertex( v ) ) {
-                        encounterVertex( v, null );
+                    if (!isSeenVertex(v)) {
+                        encounterVertex(v, null);
                         m_state = CCS_BEFORE_COMPONENT;
 
                         return true;
@@ -163,43 +170,39 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
                 }
 
                 return false;
-            }
-            else {
+            } else {
                 return false;
             }
-        }
-        else {
+        } else {
             return true;
         }
     }
 
-
     /**
      * @see java.util.Iterator#next()
      */
-    public V next(  ) {
-        if( m_startVertex != null ) {
-            encounterStartVertex(  );
+    public V next()
+    {
+        if (m_startVertex != null) {
+            encounterStartVertex();
         }
 
-        if( hasNext(  ) ) {
-            if( m_state == CCS_BEFORE_COMPONENT ) {
+        if (hasNext()) {
+            if (m_state == CCS_BEFORE_COMPONENT) {
                 m_state = CCS_WITHIN_COMPONENT;
-                fireConnectedComponentStarted( m_ccStartedEvent );
+                fireConnectedComponentStarted(m_ccStartedEvent);
             }
 
-            V nextVertex = provideNextVertex(  );
-            fireVertexTraversed( createVertexTraversalEvent( nextVertex ) );
+            V nextVertex = provideNextVertex();
+            fireVertexTraversed(createVertexTraversalEvent(nextVertex));
 
-            addUnseenChildrenOf( nextVertex );
+            addUnseenChildrenOf(nextVertex);
 
             return nextVertex;
-        }
-        else {
-            throw new NoSuchElementException(  );
+        } else {
+            throw new NoSuchElementException();
         }
     }
-
 
     /**
      * Returns <tt>true</tt> if there are no more uniterated vertices in the
@@ -209,18 +212,16 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      *         currently iterated connected component; <tt>false</tt>
      *         otherwise.
      */
-    protected abstract boolean isConnectedComponentExhausted(  );
-
+    protected abstract boolean isConnectedComponentExhausted();
 
     /**
      * Update data structures the first time we see a vertex.
      *
      * @param vertex the vertex encountered
      * @param edge the edge via which the vertex was encountered, or null if
-     *        the vertex is a starting point
+     *             the vertex is a starting point
      */
-    protected abstract void encounterVertex( V vertex, E edge );
-
+    protected abstract void encounterVertex(V vertex, E edge);
 
     /**
      * Returns the vertex to be returned in the following call to the iterator
@@ -228,8 +229,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      *
      * @return the next vertex to be returned by this iterator.
      */
-    protected abstract V provideNextVertex(  );
-
+    protected abstract V provideNextVertex();
 
     /**
      * Access the data stored for a seen vertex.
@@ -238,13 +238,13 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      *
      * @return data associated with the seen vertex or <code>null</code> if no
      *         data was associated with the vertex. A <code>null</code> return
-     *         can also indicate that the vertex was explicitly associated
-     *         with <code>null</code>.
+     *         can also indicate that the vertex was explicitly associated with
+     *         <code>null</code>.
      */
-    protected D getSeenData( V vertex ) {
-        return m_seen.get( vertex );
+    protected D getSeenData(V vertex)
+    {
+        return m_seen.get(vertex);
     }
-
 
     /**
      * Determines whether a vertex has been seen yet by this traversal.
@@ -253,10 +253,10 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      *
      * @return <tt>true</tt> if vertex has already been seen
      */
-    protected boolean isSeenVertex( Object vertex ) {
-        return m_seen.containsKey( vertex );
+    protected boolean isSeenVertex(Object vertex)
+    {
+        return m_seen.containsKey(vertex);
     }
-
 
     /**
      * Called whenever we re-encounter a vertex.  The default implementation
@@ -265,8 +265,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      * @param vertex the vertex re-encountered
      * @param edge the edge via which the vertex was re-encountered
      */
-    protected abstract void encounterVertexAgain( V vertex, E edge );
-
+    protected abstract void encounterVertexAgain(V vertex, E edge);
 
     /**
      * Stores iterator-dependent data for a vertex that has been seen.
@@ -274,104 +273,105 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
      * @param vertex a vertex which has been seen.
      * @param data data to be associated with the seen vertex.
      *
-     * @return previous value associated with specified vertex or
-     *         <code>null</code> if no data was associated with the vertex. A
-     *         <code>null</code> return can also indicate that the vertex was
+     * @return previous value associated with specified vertex or <code>
+     *         null</code> if no data was associated with the vertex. A <code>
+     *         null</code> return can also indicate that the vertex was
      *         explicitly associated with <code>null</code>.
      */
-    protected D putSeenData( V vertex, D data ) {
-        return m_seen.put( vertex, data );
+    protected D putSeenData(V vertex, D data)
+    {
+        return m_seen.put(vertex, data);
     }
 
-
-    static Specifics createGraphSpecifics( Graph g ) {
-        if( g instanceof DirectedGraph ) {
-            return new DirectedSpecifics( (DirectedGraph) g );
-        }
-        else {
-            return new UndirectedSpecifics( g );
+    static Specifics createGraphSpecifics(Graph g)
+    {
+        if (g instanceof DirectedGraph) {
+            return new DirectedSpecifics((DirectedGraph) g);
+        } else {
+            return new UndirectedSpecifics(g);
         }
     }
 
+    private void addUnseenChildrenOf(V vertex)
+    {
+        List<E> edges = m_specifics.edgesOf(vertex);
 
-    private void addUnseenChildrenOf( V vertex ) {
-        List<E> edges = m_specifics.edgesOf( vertex );
+        for (Iterator<E> i = edges.iterator(); i.hasNext();) {
+            E e = i.next();
+            fireEdgeTraversed(createEdgeTraversalEvent(e));
 
-        for( Iterator<E> i = edges.iterator(  ); i.hasNext(  ); ) {
-            E e = i.next(  );
-            fireEdgeTraversed( createEdgeTraversalEvent( e ) );
+            V v = e.oppositeVertex(vertex);
 
-            V v = e.oppositeVertex( vertex );
-
-            if( isSeenVertex( v ) ) {
-                encounterVertexAgain( v, e );
+            if (isSeenVertex(v)) {
+                encounterVertexAgain(v, e);
+            } else {
+                encounterVertex(v, e);
             }
-            else {
-                encounterVertex( v, e );
-            }
         }
     }
 
-
-    private EdgeTraversalEvent createEdgeTraversalEvent( E edge ) {
-        if( isReuseEvents(  ) ) {
-            m_reusableEdgeEvent.setEdge( edge );
+    private EdgeTraversalEvent createEdgeTraversalEvent(E edge)
+    {
+        if (isReuseEvents()) {
+            m_reusableEdgeEvent.setEdge(edge);
 
             return m_reusableEdgeEvent;
-        }
-        else {
-            return new EdgeTraversalEvent( this, edge );
+        } else {
+            return new EdgeTraversalEvent(this, edge);
         }
     }
 
-
-    private VertexTraversalEvent createVertexTraversalEvent( V vertex ) {
-        if( isReuseEvents(  ) ) {
-            m_reusableVertexEvent.setVertex( vertex );
+    private VertexTraversalEvent createVertexTraversalEvent(V vertex)
+    {
+        if (isReuseEvents()) {
+            m_reusableVertexEvent.setVertex(vertex);
 
             return m_reusableVertexEvent;
-        }
-        else {
-            return new VertexTraversalEvent( this, vertex );
+        } else {
+            return new VertexTraversalEvent(this, vertex);
         }
     }
 
-
-    private void encounterStartVertex(  ) {
-        encounterVertex( m_startVertex, null );
+    private void encounterStartVertex()
+    {
+        encounterVertex(m_startVertex, null);
         m_startVertex = null;
     }
 
-    static interface SimpleContainer<T> {
+    //~ Inner Interfaces ------------------------------------------------------
+
+    static interface SimpleContainer<T>
+    {
         /**
          * Tests if this container is empty.
          *
          * @return <code>true</code> if empty, otherwise <code>false</code>.
          */
-        public boolean isEmpty(  );
-
+        public boolean isEmpty();
 
         /**
          * Adds the specified object to this container.
          *
          * @param o the object to be added.
          */
-        public void add( T o );
-
+        public void add(T o);
 
         /**
          * Remove an object from this container and return it.
          *
          * @return the object removed from this container.
          */
-        public T remove(  );
+        public T remove();
     }
+
+    //~ Inner Classes ---------------------------------------------------------
 
     /**
      * Provides unified interface for operations that are different in directed
      * graphs and in undirected graphs.
      */
-    abstract static class Specifics<V, E extends Edge<V>> {
+    abstract static class Specifics<V, E extends Edge<V>>
+    {
         /**
          * Returns the edges outgoing from the specified vertex in case of
          * directed graph, and the edge touching the specified vertex in case
@@ -383,25 +383,26 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
          *         directed graph, and the edge touching the specified vertex
          *         in case of undirected graph.
          */
-        public abstract List<E> edgesOf( V vertex );
+        public abstract List<E> edgesOf(V vertex);
     }
-
 
     /**
      * A reusable edge event.
      *
      * @author Barak Naveh
-     *
      * @since Aug 11, 2003
      */
-    static class FlyweightEdgeEvent<V, E extends Edge<V>> extends EdgeTraversalEvent<V, E> {
+    static class FlyweightEdgeEvent<V, E extends Edge<V>>
+        extends EdgeTraversalEvent<V, E>
+    {
         private static final long serialVersionUID = 4051327833765000755L;
 
         /**
          * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
          */
-        public FlyweightEdgeEvent( Object eventSource, E edge ) {
-            super( eventSource, edge );
+        public FlyweightEdgeEvent(Object eventSource, E edge)
+        {
+            super(eventSource, edge);
         }
 
         /**
@@ -409,27 +410,28 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
          *
          * @param edge the edge to be set.
          */
-        protected void setEdge( E edge ) {
+        protected void setEdge(E edge)
+        {
             m_edge = edge;
         }
     }
-
 
     /**
      * A reusable vertex event.
      *
      * @author Barak Naveh
-     *
      * @since Aug 11, 2003
      */
-    static class FlyweightVertexEvent<V> extends VertexTraversalEvent<V> {
+    static class FlyweightVertexEvent<V> extends VertexTraversalEvent<V>
+    {
         private static final long serialVersionUID = 3834024753848399924L;
 
         /**
          * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
          */
-        public FlyweightVertexEvent( Object eventSource, V vertex ) {
-            super( eventSource, vertex );
+        public FlyweightVertexEvent(Object eventSource, V vertex)
+        {
+            super(eventSource, vertex);
         }
 
         /**
@@ -437,17 +439,19 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
          *
          * @param vertex the vertex to be set.
          */
-        protected void setVertex( V vertex ) {
+        protected void setVertex(V vertex)
+        {
             m_vertex = vertex;
         }
     }
-
 
     /**
      * An implementation of {@link TraverseUtils.Specifics} for a directed
      * graph.
      */
-    private static class DirectedSpecifics<V, E extends Edge<V>> extends Specifics<V, E> {
+    private static class DirectedSpecifics<V, E extends Edge<V>>
+        extends Specifics<V, E>
+    {
         private DirectedGraph<V, E> m_graph;
 
         /**
@@ -455,24 +459,27 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public DirectedSpecifics( DirectedGraph<V, E> g ) {
+        public DirectedSpecifics(DirectedGraph<V, E> g)
+        {
             m_graph = g;
         }
 
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<E> edgesOf( V vertex ) {
-            return m_graph.outgoingEdgesOf( vertex );
+        public List<E> edgesOf(V vertex)
+        {
+            return m_graph.outgoingEdgesOf(vertex);
         }
     }
-
 
     /**
      * An implementation of {@link TraverseUtils.Specifics} in which edge
      * direction (if any) is ignored.
      */
-    private static class UndirectedSpecifics<V, E extends Edge<V>> extends Specifics<V, E> {
+    private static class UndirectedSpecifics<V, E extends Edge<V>>
+        extends Specifics<V, E>
+    {
         private Graph<V, E> m_graph;
 
         /**
@@ -480,15 +487,17 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D> extends Ab
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public UndirectedSpecifics( Graph<V, E> g ) {
+        public UndirectedSpecifics(Graph<V, E> g)
+        {
             m_graph = g;
         }
 
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<E> edgesOf( V vertex ) {
-            return m_graph.edgesOf( vertex );
+        public List<E> edgesOf(V vertex)
+        {
+            return m_graph.edgesOf(vertex);
         }
     }
 }

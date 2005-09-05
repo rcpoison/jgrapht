@@ -18,98 +18,98 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.heap;
 
 import java.util.*;
 
+
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public interface HeapFactory {
-    /**
-     * .
-     *
-     * @return  
-     */
-    public Heap createHeap(  );
+public interface HeapFactory
+{
 
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      *
-     * @param comp  
-     *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Comparator comp );
-
+    public Heap createHeap();
 
     /**
      * .
      *
-     * @param c  
+     * @param comp
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c );
-
+    public Heap createHeap(Comparator comp);
 
     /**
      * .
      *
-     * @param c  
-     * @param comp  
+     * @param c
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c, Comparator comp );
-
+    public Heap createHeap(Collection c);
 
     /**
      * .
      *
-     * @param maximum  
+     * @param c
+     * @param comp
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( boolean maximum );
-
+    public Heap createHeap(Collection c, Comparator comp);
 
     /**
      * .
      *
-     * @param comp  
-     * @param maximum  
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Comparator comp, boolean maximum );
-
+    public Heap createHeap(boolean maximum);
 
     /**
      * .
      *
-     * @param c  
-     * @param maximum  
+     * @param comp
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c, boolean maximum );
-
+    public Heap createHeap(Comparator comp, boolean maximum);
 
     /**
      * .
      *
-     * @param c  
-     * @param comp  
-     * @param maximum  
+     * @param c
+     * @param maximum
      *
-     * @return  
+     * @return
      */
-    public Heap createHeap( Collection c, Comparator comp, boolean maximum );
+    public Heap createHeap(Collection c, boolean maximum);
+
+    /**
+     * .
+     *
+     * @param c
+     * @param comp
+     * @param maximum
+     *
+     * @return
+     */
+    public Heap createHeap(Collection c, Comparator comp, boolean maximum);
 }

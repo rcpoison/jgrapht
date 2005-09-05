@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: SimpleDirectedWeightedGraph.java,v 1.4 2005/07/19 09:03:31 hammerc Exp
+ * $
  *
  * Changes
  * -------
@@ -39,18 +41,23 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A simple directed weighted graph. A simple directed weighted graph is a
  * simple directed graph for which edges are assigned weights.
  */
-public class SimpleDirectedWeightedGraph<V, E extends Edge<V>> extends SimpleDirectedGraph<V, E>
-    implements WeightedGraph<V, E> {
+public class SimpleDirectedWeightedGraph<V, E extends Edge<V>>
+    extends SimpleDirectedGraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3904960841681220919L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new simple directed weighted graph with the specified edge
@@ -58,15 +65,16 @@ public class SimpleDirectedWeightedGraph<V, E extends Edge<V>> extends SimpleDir
      *
      * @param ef the edge factory of the new graph.
      */
-    public SimpleDirectedWeightedGraph( EdgeFactory<V, E> ef ) {
-        super( ef );
+    public SimpleDirectedWeightedGraph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
-
 
     /**
      * Creates a new simple directed weighted graph.
      */
-    public SimpleDirectedWeightedGraph(  ) {
-        this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+    public SimpleDirectedWeightedGraph()
+    {
+        this(new EdgeFactories.DirectedWeightedEdgeFactory());
     }
 }

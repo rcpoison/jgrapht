@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
@@ -39,32 +40,39 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * An undirected graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-class ListenableUndirectedGraph<V, E extends Edge<V>> extends DefaultListenableGraph<V, E>
-    implements UndirectedGraph<V, E> {
+class ListenableUndirectedGraph<V, E extends Edge<V>>
+    extends DefaultListenableGraph<V, E> implements UndirectedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3256999969193145905L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new listenable undirected simple graph.
      */
-    public ListenableUndirectedGraph(  ) {
-        this( new SimpleGraph(  ) );
+    public ListenableUndirectedGraph()
+    {
+        this(new SimpleGraph());
     }
-
 
     /**
      * Creates a new listenable undirected graph.
      *
      * @param base the backing graph.
      */
-    public ListenableUndirectedGraph( UndirectedGraph<V, E> base ) {
-        super( base );
+    public ListenableUndirectedGraph(UndirectedGraph<V, E> base)
+    {
+        super(base);
     }
 }

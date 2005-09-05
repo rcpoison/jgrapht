@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -38,21 +39,26 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.Map;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
  * Generates an <a href="http://mathworld.wolfram.com/EmptyGraph.html">empty
  * graph</a> of any size. An empty graph is a graph that has no edges.
  *
  * @author John V. Sichi
- *
  * @since Sep 16, 2003
  */
-public class EmptyGraphGenerator implements GraphGenerator {
+public class EmptyGraphGenerator implements GraphGenerator
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     private int m_size;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new EmptyGraphGenerator.
@@ -61,21 +67,27 @@ public class EmptyGraphGenerator implements GraphGenerator {
      *
      * @throws IllegalArgumentException if the specified size is negative.
      */
-    public EmptyGraphGenerator( int size ) {
-        if( size < 0 ) {
-            throw new IllegalArgumentException( "must be non-negative" );
+    public EmptyGraphGenerator(int size)
+    {
+        if (size < 0) {
+            throw new IllegalArgumentException("must be non-negative");
         }
 
         m_size = size;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
-    public void generateGraph( Graph target, VertexFactory vertexFactory,
-        Map resultMap ) {
-        for( int i = 0; i < m_size; ++i ) {
-            target.addVertex( vertexFactory.createVertex(  ) );
+    public void generateGraph(
+        Graph target,
+        VertexFactory vertexFactory,
+        Map resultMap)
+    {
+        for (int i = 0; i < m_size; ++i) {
+            target.addVertex(vertexFactory.createVertex());
         }
     }
 }

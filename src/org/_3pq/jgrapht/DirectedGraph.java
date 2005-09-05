@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -39,23 +40,25 @@
  */
 package org._3pq.jgrapht;
 
-import java.util.List;
+import java.util.*;
+
 
 /**
  * A graph whose all edges are directed. This is the root interface of all
  * directed graphs.
- * 
- * <p>
- * See <a href="http://mathworld.wolfram.com/DirectedGraph.html">
+ *
+ * <p>See <a href="http://mathworld.wolfram.com/DirectedGraph.html">
  * http://mathworld.wolfram.com/DirectedGraph.html</a> for more on directed
- * graphs.
- * </p>
+ * graphs.</p>
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
+public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Returns the "in degree" of the specified vertex. An in degree of a
      * vertex in a directed graph is the number of inward directed edges from
@@ -66,19 +69,17 @@ public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
      *
      * @return the degree of the specified vertex.
      */
-    public int inDegreeOf( V vertex );
-
+    public int inDegreeOf(V vertex);
 
     /**
      * Returns a list of all edges incoming into the specified vertex.
      *
      * @param vertex the vertex for which the list of incoming edges to be
-     *        returned.
+     *               returned.
      *
      * @return a list of all edges incoming into the specified vertex.
      */
-    public List<E> incomingEdgesOf( V vertex );
-
+    public List<E> incomingEdgesOf(V vertex);
 
     /**
      * Returns the "out degree" of the specified vertex. An out degree of a
@@ -90,16 +91,15 @@ public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E> {
      *
      * @return the degree of the specified vertex.
      */
-    public int outDegreeOf( V vertex );
-
+    public int outDegreeOf(V vertex);
 
     /**
      * Returns a list of all edges outgoing from the specified vertex.
      *
      * @param vertex the vertex for which the list of outgoing edges to be
-     *        returned.
+     *               returned.
      *
      * @return a list of all edges outgoing from the specified vertex.
      */
-    public List<E> outgoingEdgesOf( V vertex );
+    public List<E> outgoingEdgesOf(V vertex);
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: ListenableUndirectedWeightedGraph.java,v 1.3 2005/07/19 09:03:31
+ * hammerc Exp $
  *
  * Changes
  * -------
@@ -39,9 +41,8 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * An undirected weighted graph which is also {@link
@@ -49,24 +50,31 @@ import org._3pq.jgrapht.Edge;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableUndirectedWeightedGraph<V, E extends Edge<V>> extends ListenableUndirectedGraph<V, E>
-    implements WeightedGraph<V, E> {
+public class ListenableUndirectedWeightedGraph<V, E extends Edge<V>>
+    extends ListenableUndirectedGraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3690762799613949747L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new listenable undirected weighted graph.
      */
-    public ListenableUndirectedWeightedGraph(  ) {
-        this( new SimpleWeightedGraph(  ) );
+    public ListenableUndirectedWeightedGraph()
+    {
+        this(new SimpleWeightedGraph());
     }
-
 
     /**
      * Creates a new listenable undirected weighted graph.
      *
      * @param base the backing graph.
      */
-    public ListenableUndirectedWeightedGraph( WeightedGraph<V, E> base ) {
-        super( (UndirectedGraph) base );
+    public ListenableUndirectedWeightedGraph(WeightedGraph<V, E> base)
+    {
+        super((UndirectedGraph) base);
     }
 }

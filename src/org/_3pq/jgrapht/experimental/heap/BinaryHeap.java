@@ -18,194 +18,220 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.heap;
 
 import java.util.*;
 
+
 /**
  * .
- * @author  Michael Behrisch
+ *
+ * @author Michael Behrisch
  * @version 1.0
  */
-public class BinaryHeap extends AbstractHeap {
+public class BinaryHeap extends AbstractHeap
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final HeapFactory FACTORY =
-        new AbstractHeapFactory(  ) {
-            public Heap createHeap( Collection c, Comparator comp,
-                boolean maximum ) {
-                return new BinaryHeap( c, comp, maximum );
+        new AbstractHeapFactory() {
+            public Heap createHeap(
+                Collection c,
+                Comparator comp,
+                boolean maximum)
+            {
+                return new BinaryHeap(c, comp, maximum);
             }
         };
 
+
+    //~ Instance fields -------------------------------------------------------
+
     private final List _elems;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new BinaryHeap object.
      *
-     * @param c  
-     * @param comp  
-     * @param maximum  
+     * @param c
+     * @param comp
+     * @param maximum
      */
-    public BinaryHeap( Collection c, Comparator comp, boolean maximum ) {
-        super( comp, maximum );
-        _elems = new ArrayList( Math.max( c.size(  ), 10 ) );
-        addAll( c );
+    public BinaryHeap(Collection c, Comparator comp, boolean maximum)
+    {
+        super(comp, maximum);
+        _elems = new ArrayList(Math.max(c.size(), 10));
+        addAll(c);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public static final HeapFactory getFactory(  ) {
+    public static final HeapFactory getFactory()
+    {
         return FACTORY;
     }
 
-
     /**
      * .
      */
-    public void clear(  ) {
-        _elems.clear(  );
+    public void clear()
+    {
+        _elems.clear();
     }
-
 
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public Object extractTop(  ) {
-        Elem z = (Elem) _elems.get( 0 );
-        Elem e = (Elem) _elems.remove( _elems.size(  ) - 1 );
+    public Object extractTop()
+    {
+        Elem z = (Elem) _elems.get(0);
+        Elem e = (Elem) _elems.remove(_elems.size() - 1);
 
-        if( !isEmpty(  ) ) {
-            _elems.set( 0, e );
+        if (!isEmpty()) {
+            _elems.set(0, e);
             e.pos = 0;
-            percolateDown( 0 );
+            percolateDown(0);
         }
-        if( z.x instanceof HeapElement ) {
-            ( (HeapElement) z.x ).setPeer( null );
+        if (z.x instanceof HeapElement) {
+            ((HeapElement) z.x).setPeer(null);
         }
         return z.x;
     }
 
-
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public int size(  ) {
-        return _elems.size(  );
+    public int size()
+    {
+        return _elems.size();
     }
 
-
     /**
      * .
      *
-     * @return  
+     * @return
      */
-    public String toString(  ) {
-        return _elems.toString(  );
+    public String toString()
+    {
+        return _elems.toString();
     }
 
-
     /**
      * .
      *
-     * @param x  
+     * @param x
      *
-     * @return  
+     * @return
      */
-    protected ElementPeer createPeer( Object x ) {
-        Elem e = new Elem( x );
-        _elems.add( e );
-        e.pos = _elems.size(  ) - 1;
-        percolateUp( e.pos );
+    protected ElementPeer createPeer(Object x)
+    {
+        Elem e = new Elem(x);
+        _elems.add(e);
+        e.pos = _elems.size() - 1;
+        percolateUp(e.pos);
 
         return e;
     }
 
+    private void percolateDown(int pos)
+    {
+        Elem h = (Elem) _elems.get(pos);
 
-    private void percolateDown( int pos ) {
-        Elem h = (Elem) _elems.get( pos );
+        while (((2 * pos) + 1) < size()) {
+            int i = 1;
+            Elem c = (Elem) _elems.get((2 * pos) + i);
 
-        while( 2 * pos + 1 < size(  ) ) {
-            int  i = 1;
-            Elem c = (Elem) _elems.get( 2 * pos + i );
-
-            if( 2 * pos + 2 < size(  )
-                    && isSmaller( ( (Elem) _elems.get( 2 * pos + 2 ) ).x, c.x ) ) {
+            if (
+                (((2 * pos) + 2) < size())
+                && isSmaller(((Elem) _elems.get((2 * pos) + 2)).x, c.x)) {
                 i++;
-                c = (Elem) _elems.get( 2 * pos + i );
+                c = (Elem) _elems.get((2 * pos) + i);
             }
 
-            if( isSmaller( h.x, c.x ) ) {
+            if (isSmaller(h.x, c.x)) {
                 break;
             }
 
-            _elems.set( pos, c );
-            c.pos     = pos;
-            pos       = 2 * pos + i;
+            _elems.set(pos, c);
+            c.pos = pos;
+            pos = (2 * pos) + i;
         }
 
-        _elems.set( pos, h );
+        _elems.set(pos, h);
         h.pos = pos;
     }
 
+    private void percolateUp(int pos)
+    {
+        Elem h = (Elem) _elems.get(pos);
 
-    private void percolateUp( int pos ) {
-        Elem h = (Elem) _elems.get( pos );
-
-        while( pos != 0
-                && isSmaller( h.x,
-                    ( (Elem) _elems.get( ( pos + 1 ) / 2 - 1 ) ).x ) ) {
-            Elem p = (Elem) _elems.get( ( pos + 1 ) / 2 - 1 );
-            _elems.set( pos, p );
-            p.pos     = pos;
-            pos       = ( pos + 1 ) / 2 - 1;
+        while (
+            (pos != 0)
+            && isSmaller(h.x,
+                ((Elem) _elems.get(((pos + 1) / 2) - 1)).x)) {
+            Elem p = (Elem) _elems.get(((pos + 1) / 2) - 1);
+            _elems.set(pos, p);
+            p.pos = pos;
+            pos = ((pos + 1) / 2) - 1;
         }
 
-        _elems.set( pos, h );
+        _elems.set(pos, h);
         h.pos = pos;
     }
 
-    private final class Elem implements ElementPeer {
+    //~ Inner Classes ---------------------------------------------------------
+
+    private final class Elem implements ElementPeer
+    {
         Object x;
-        int    pos;
+        int pos;
 
-        Elem( Object e ) {
+        Elem(Object e)
+        {
             x = e;
         }
 
         /**
          * .
          *
-         * @return  
+         * @return
          */
-        public Object getObject(  ) {
+        public Object getObject()
+        {
             return x;
         }
-
 
         /**
          * .
          *
-         * @return  
+         * @return
          */
-        public String toString(  ) {
-            return x.toString(  );
+        public String toString()
+        {
+            return x.toString();
         }
-
 
         /**
          * .
          */
-        public void update(  ) {
-            percolateUp( pos );
+        public void update()
+        {
+            percolateUp(pos);
         }
     }
 }

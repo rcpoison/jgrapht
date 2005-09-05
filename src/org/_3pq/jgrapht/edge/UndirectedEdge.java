@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -44,18 +45,26 @@ package org._3pq.jgrapht.edge;
  * A implementation for an undirected edge.
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public class UndirectedEdge<V> extends DefaultEdge<V> {
+public class UndirectedEdge<V> extends DefaultEdge<V>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3257563988526380337L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * @see DefaultEdge#DefaultEdge(Object, Object)
      */
-    public UndirectedEdge( V sourceVertex, V targetVertex ) {
-        super( sourceVertex, targetVertex );
+    public UndirectedEdge(V sourceVertex, V targetVertex)
+    {
+        super(sourceVertex, targetVertex);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns a string representation of this undirected edge. The
@@ -64,7 +73,8 @@ public class UndirectedEdge<V> extends DefaultEdge<V> {
      *
      * @return a string representation of this directed edge.
      */
-    public String toString(  ) {
-        return "{" + getSource(  ) + "," + getTarget(  ) + "}";
+    public String toString()
+    {
+        return "{" + getSource() + "," + getTarget() + "}";
     }
 }

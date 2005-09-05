@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -39,7 +40,8 @@
  */
 package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * An event which indicates that a graph edge has changed, or is about to
@@ -49,10 +51,14 @@ import org._3pq.jgrapht.Edge;
  * org._3pq.jgrapht.event.GraphChangeEvent#getType()} method.
  *
  * @author Barak Naveh
- *
  * @since Aug 10, 2003
  */
-public class GraphEdgeChangeEvent<V, E extends Edge<V>> extends GraphChangeEvent {
+public class GraphEdgeChangeEvent<V, E extends Edge<V>>
+    extends GraphChangeEvent
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3618134563335844662L;
 
     /**
@@ -78,8 +84,14 @@ public class GraphEdgeChangeEvent<V, E extends Edge<V>> extends GraphChangeEvent
      */
     public static final int EDGE_REMOVED = 24;
 
-    /** The edge that this event is related to. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The edge that this event is related to.
+     */
     protected E m_edge;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Constructor for GraphEdgeChangeEvent.
@@ -88,17 +100,21 @@ public class GraphEdgeChangeEvent<V, E extends Edge<V>> extends GraphChangeEvent
      * @param type the event type of this event.
      * @param e the edge that this event is related to.
      */
-    public GraphEdgeChangeEvent( Object eventSource, int type, E e ) {
-        super( eventSource, type );
+    public GraphEdgeChangeEvent(Object eventSource, int type, E e)
+    {
+        super(eventSource, type);
         m_edge = e;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the edge that this event is related to.
      *
      * @return the edge that this event is related to.
      */
-    public E getEdge(  ) {
+    public E getEdge()
+    {
         return m_edge;
     }
 }

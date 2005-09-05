@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: ConnectedComponentTraversalEvent.java,v 1.2 2004/11/18 21:55:00
+ * barak_naveh Exp $
  *
  * Changes
  * -------
@@ -38,26 +40,40 @@
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventObject;
+import java.util.*;
+
 
 /**
  * A traversal event with respect to a connected component.
  *
  * @author Barak Naveh
- *
  * @since Aug 11, 2003
  */
-public class ConnectedComponentTraversalEvent extends EventObject {
+public class ConnectedComponentTraversalEvent extends EventObject
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3834311717709822262L;
 
-    /** Connected component traversal started event. */
+    /**
+     * Connected component traversal started event.
+     */
     public static final int CONNECTED_COMPONENT_STARTED = 31;
 
-    /** Connected component traversal finished event. */
+    /**
+     * Connected component traversal finished event.
+     */
     public static final int CONNECTED_COMPONENT_FINISHED = 32;
 
-    /** The type of this event. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The type of this event.
+     */
     private int m_type;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new ConnectedComponentTraversalEvent.
@@ -65,17 +81,21 @@ public class ConnectedComponentTraversalEvent extends EventObject {
      * @param eventSource the source of the event.
      * @param type the type of event.
      */
-    public ConnectedComponentTraversalEvent( Object eventSource, int type ) {
-        super( eventSource );
+    public ConnectedComponentTraversalEvent(Object eventSource, int type)
+    {
+        super(eventSource);
         m_type = type;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the event type.
      *
      * @return the event type.
      */
-    public int getType(  ) {
+    public int getType()
+    {
         return m_type;
     }
 }

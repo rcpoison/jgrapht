@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------
@@ -43,11 +44,10 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A depth-first iterator for a directed and an undirected graph. For this
@@ -57,66 +57,77 @@ import org._3pq.jgrapht.Graph;
  *
  * @author Liviu Rau
  * @author Barak Naveh
- *
  * @since Jul 29, 2003
  */
-public class DepthFirstIterator<V, E extends Edge<V>, D> extends CrossComponentIterator<V, E, D> {
-    private List<V> m_stack = new ArrayList(  );
+public class DepthFirstIterator<V, E extends Edge<V>, D>
+    extends CrossComponentIterator<V, E, D>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    private List<V> m_stack = new ArrayList();
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new depth-first iterator for the specified graph.
      *
      * @param g the graph to be iterated.
      */
-    public DepthFirstIterator( Graph<V, E> g ) {
-        this( g, null );
+    public DepthFirstIterator(Graph<V, E> g)
+    {
+        this(g, null);
     }
-
 
     /**
      * Creates a new depth-first iterator for the specified graph. Iteration
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
-     * vertex is <code>null</code>, iteration will start at an arbitrary
-     * vertex and will not be limited, that is, will be able to traverse all
-     * the graph.
+     * vertex is <code>null</code>, iteration will start at an arbitrary vertex
+     * and will not be limited, that is, will be able to traverse all the
+     * graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public DepthFirstIterator( Graph<V, E> g, V startVertex ) {
-        super( g, startVertex );
+    public DepthFirstIterator(Graph<V, E> g, V startVertex)
+    {
+        super(g, startVertex);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
-    protected boolean isConnectedComponentExhausted(  ) {
-        return m_stack.isEmpty(  );
+    protected boolean isConnectedComponentExhausted()
+    {
+        return m_stack.isEmpty();
     }
-
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertex( V vertex, E edge ) {
-        putSeenData( vertex, null );
-        m_stack.add( vertex );
+    protected void encounterVertex(V vertex, E edge)
+    {
+        putSeenData(vertex, null);
+        m_stack.add(vertex);
     }
-
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertexAgain( V vertex, E edge ) {}
-
+    protected void encounterVertexAgain(V vertex, E edge)
+    {
+    }
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected V provideNextVertex(  ) {
-        return m_stack.remove( m_stack.size(  ) - 1 );
+    protected V provideNextVertex()
+    {
+        return m_stack.remove(m_stack.size() - 1);
     }
 }

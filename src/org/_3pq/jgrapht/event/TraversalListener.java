@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------------
@@ -40,24 +41,28 @@
  */
 package org._3pq.jgrapht.event;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A listener on graph iterator or on a graph traverser.
  *
  * @author Barak Naveh
- *
  * @since Jul 19, 2003
  */
-public interface TraversalListener<V, E extends Edge<V>> {
+public interface TraversalListener<V, E extends Edge<V>>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Called to inform listeners that the traversal of the current connected
      * component has finished.
      *
      * @param e the traversal event.
      */
-    public void connectedComponentFinished( ConnectedComponentTraversalEvent e );
-
+    public void connectedComponentFinished(
+        ConnectedComponentTraversalEvent e);
 
     /**
      * Called to inform listeners that a traversal of a new connected component
@@ -65,8 +70,7 @@ public interface TraversalListener<V, E extends Edge<V>> {
      *
      * @param e the traversal event.
      */
-    public void connectedComponentStarted( ConnectedComponentTraversalEvent e );
-
+    public void connectedComponentStarted(ConnectedComponentTraversalEvent e);
 
     /**
      * Called to inform the listener that the specified edge have been visited
@@ -75,8 +79,7 @@ public interface TraversalListener<V, E extends Edge<V>> {
      *
      * @param e the edge traversal event.
      */
-    public void edgeTraversed( EdgeTraversalEvent<V, E> e );
-
+    public void edgeTraversed(EdgeTraversalEvent<V, E> e);
 
     /**
      * Called to inform the listener that the specified vertex have been
@@ -85,5 +88,5 @@ public interface TraversalListener<V, E extends Edge<V>> {
      *
      * @param e the vertex traversal event.
      */
-    public void vertexTraversed( VertexTraversalEvent<V> e );
+    public void vertexTraversed(VertexTraversalEvent<V> e);
 }

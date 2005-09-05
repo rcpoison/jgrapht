@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
@@ -38,40 +39,42 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.graph.AsUndirectedGraph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * Tests for the ignoreDirection parameter to XXFirstIterator.
- * 
- * <p>
- * NOTE: This test uses hard-coded expected ordering isn't really guaranteed by
- * the specification of the algorithm. This could cause false failures if the
- * traversal implementation changes.
- * </p>
+ *
+ * <p>NOTE: This test uses hard-coded expected ordering isn't really guaranteed
+ * by the specification of the algorithm. This could cause false failures if
+ * the traversal implementation changes.</p>
  *
  * @author John V. Sichi
- *
  * @since Aug 8, 2003
  */
-public class IgnoreDirectionTest extends AbstractGraphIteratorTest {
-    String getExpectedStr1(  ) {
+public class IgnoreDirectionTest extends AbstractGraphIteratorTest
+{
+
+    //~ Methods ---------------------------------------------------------------
+
+    String getExpectedStr1()
+    {
         return "4,9,7,8,5,6,1,3,2";
     }
 
-
-    String getExpectedStr2(  ) {
+    String getExpectedStr2()
+    {
         return "4,9,7,8,5,6,1,3,2,orphan";
     }
 
-
-    AbstractGraphIterator createIterator( DirectedGraph g, Object vertex ) {
+    AbstractGraphIterator createIterator(DirectedGraph g, Object vertex)
+    {
         // ignore the passed in vertex and always start from v4, since that's
         // the only vertex without out-edges
-        UndirectedGraph       undirectedView = new AsUndirectedGraph( g );
-        AbstractGraphIterator i = new DepthFirstIterator( undirectedView, "4" );
-        i.setCrossComponentTraversal( true );
+        UndirectedGraph undirectedView = new AsUndirectedGraph(g);
+        AbstractGraphIterator i = new DepthFirstIterator(undirectedView, "4");
+        i.setCrossComponentTraversal(true);
 
         return i;
     }

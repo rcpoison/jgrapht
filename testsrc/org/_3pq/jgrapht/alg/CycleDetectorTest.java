@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
@@ -38,23 +39,24 @@
  */
 package org._3pq.jgrapht.alg;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * .
  *
  * @author John V. Sichi
  */
-public class CycleDetectorTest extends TestCase {
+public class CycleDetectorTest extends TestCase
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
@@ -62,88 +64,91 @@ public class CycleDetectorTest extends TestCase {
     private static final String V5 = "v5";
     private static final String V6 = "v6";
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      *
      * @param g
      */
-    public void createGraph( Graph g ) {
-        g.addVertex( V1 );
-        g.addVertex( V2 );
-        g.addVertex( V3 );
-        g.addVertex( V4 );
-        g.addVertex( V5 );
-        g.addVertex( V6 );
+    public void createGraph(Graph g)
+    {
+        g.addVertex(V1);
+        g.addVertex(V2);
+        g.addVertex(V3);
+        g.addVertex(V4);
+        g.addVertex(V5);
+        g.addVertex(V6);
 
-        g.addEdge( V1, V2 );
-        g.addEdge( V2, V3 );
-        g.addEdge( V3, V4 );
-        g.addEdge( V4, V1 );
-        g.addEdge( V4, V5 );
-        g.addEdge( V5, V6 );
-        g.addEdge( V1, V6 );
+        g.addEdge(V1, V2);
+        g.addEdge(V2, V3);
+        g.addEdge(V3, V4);
+        g.addEdge(V4, V1);
+        g.addEdge(V4, V5);
+        g.addEdge(V5, V6);
+        g.addEdge(V1, V6);
     }
-
 
     /**
      * .
      */
-    public void testDirectedWithCycle(  ) {
-        DirectedGraph g = new DefaultDirectedGraph(  );
-        createGraph( g );
+    public void testDirectedWithCycle()
+    {
+        DirectedGraph g = new DefaultDirectedGraph();
+        createGraph(g);
 
-        Set cyclicSet = new HashSet(  );
-        cyclicSet.add( V1 );
-        cyclicSet.add( V2 );
-        cyclicSet.add( V3 );
-        cyclicSet.add( V4 );
+        Set cyclicSet = new HashSet();
+        cyclicSet.add(V1);
+        cyclicSet.add(V2);
+        cyclicSet.add(V3);
+        cyclicSet.add(V4);
 
-        Set acyclicSet = new HashSet(  );
-        acyclicSet.add( V5 );
-        acyclicSet.add( V6 );
+        Set acyclicSet = new HashSet();
+        acyclicSet.add(V5);
+        acyclicSet.add(V6);
 
-        runTest( g, cyclicSet, acyclicSet );
+        runTest(g, cyclicSet, acyclicSet);
     }
-
 
     /**
      * .
      */
-    public void testDirectedWithoutCycle(  ) {
-        DirectedGraph g = new DefaultDirectedGraph(  );
-        createGraph( g );
-        g.removeVertex( V2 );
+    public void testDirectedWithoutCycle()
+    {
+        DirectedGraph g = new DefaultDirectedGraph();
+        createGraph(g);
+        g.removeVertex(V2);
 
-        Set cyclicSet  = Collections.EMPTY_SET;
-        Set acyclicSet = g.vertexSet(  );
+        Set cyclicSet = Collections.EMPTY_SET;
+        Set acyclicSet = g.vertexSet();
 
-        runTest( g, cyclicSet, acyclicSet );
+        runTest(g, cyclicSet, acyclicSet);
     }
 
+    private void runTest(DirectedGraph g, Set cyclicSet, Set acyclicSet)
+    {
+        CycleDetector detector = new CycleDetector(g);
 
-    private void runTest( DirectedGraph g, Set cyclicSet, Set acyclicSet ) {
-        CycleDetector detector = new CycleDetector( g );
+        Set emptySet = Collections.EMPTY_SET;
 
-        Set           emptySet = Collections.EMPTY_SET;
+        assertEquals(!cyclicSet.isEmpty(), detector.detectCycles());
 
-        assertEquals( !cyclicSet.isEmpty(  ), detector.detectCycles(  ) );
+        assertEquals(cyclicSet, detector.findCycles());
 
-        assertEquals( cyclicSet, detector.findCycles(  ) );
+        Iterator iter = cyclicSet.iterator();
 
-        Iterator iter = cyclicSet.iterator(  );
-
-        while( iter.hasNext(  ) ) {
-            Object v = iter.next(  );
-            assertEquals( true, detector.detectCyclesContainingVertex( v ) );
-            assertEquals( cyclicSet, detector.findCyclesContainingVertex( v ) );
+        while (iter.hasNext()) {
+            Object v = iter.next();
+            assertEquals(true, detector.detectCyclesContainingVertex(v));
+            assertEquals(cyclicSet, detector.findCyclesContainingVertex(v));
         }
 
-        iter = acyclicSet.iterator(  );
+        iter = acyclicSet.iterator();
 
-        while( iter.hasNext(  ) ) {
-            Object v = iter.next(  );
-            assertEquals( false, detector.detectCyclesContainingVertex( v ) );
-            assertEquals( emptySet, detector.findCyclesContainingVertex( v ) );
+        while (iter.hasNext()) {
+            Object v = iter.next();
+            assertEquals(false, detector.detectCyclesContainingVertex(v));
+            assertEquals(emptySet, detector.findCyclesContainingVertex(v));
         }
     }
 }

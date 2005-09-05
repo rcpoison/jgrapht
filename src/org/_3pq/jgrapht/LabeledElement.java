@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
@@ -43,17 +44,19 @@ package org._3pq.jgrapht;
  * An graph element (vertex or edge) that can have a label.
  *
  * @author Barak Naveh
- *
  * @since Jul 14, 2003
  */
-public interface LabeledElement<L> {
+public interface LabeledElement<L>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Sets the specified label object to this element.
      *
      * @param label a label to set to this element.
      */
-    public void setLabel( L label );
-
+    public void setLabel(L label);
 
     /**
      * Returns the element's label, or <code>null</code> if element has no
@@ -62,14 +65,13 @@ public interface LabeledElement<L> {
      * @return the element's label, or <code>null</code> if element has no
      *         label.
      */
-    public L getLabel(  );
-
+    public L getLabel();
 
     /**
      * Tests if this element has a label.
      *
-     * @return <code>true</code> if the element has a label, otherwise
-     *         <code>false</code>.
+     * @return <code>true</code> if the element has a label, otherwise <code>
+     *         false</code>.
      */
-    public boolean hasLabel(  );
+    public boolean hasLabel();
 }

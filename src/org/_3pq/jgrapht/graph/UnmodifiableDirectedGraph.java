@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: UnmodifiableDirectedGraph.java,v 1.4 2005/08/01 05:54:07 perfecthash
+ * Exp $
  *
  * Changes
  * -------
@@ -39,26 +41,33 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A directed graph that cannot be modified.
  *
  * @see org._3pq.jgrapht.graph.UnmodifiableGraph
  */
-public class UnmodifiableDirectedGraph<V, E extends Edge<V>> extends UnmodifiableGraph<V, E>
-    implements DirectedGraph<V, E> {
+public class UnmodifiableDirectedGraph<V, E extends Edge<V>>
+    extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3978701783725913906L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new unmodifiable directed graph based on the specified backing
      * graph.
      *
      * @param g the backing graph on which an unmodifiable graph is to be
-     *        created.
+     *          created.
      */
-    public UnmodifiableDirectedGraph( DirectedGraph<V, E> g ) {
-        super( g );
+    public UnmodifiableDirectedGraph(DirectedGraph<V, E> g)
+    {
+        super(g);
     }
 }

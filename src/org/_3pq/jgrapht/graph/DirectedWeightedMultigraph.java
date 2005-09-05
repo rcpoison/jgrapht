@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------------
@@ -39,27 +40,32 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A directed weighted multigraph. A directed weighted multigraph is a
  * non-simple directed graph in which loops and multiple edges between any two
  * vertices are permitted, and edges have weights.
  */
-public class DirectedWeightedMultigraph<V, E extends Edge<V>> extends DirectedMultigraph<V, E>
-    implements WeightedGraph<V,E> {
+public class DirectedWeightedMultigraph<V, E extends Edge<V>>
+    extends DirectedMultigraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 4049071636005206066L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new directed weighted multigraph.
      */
-    public DirectedWeightedMultigraph(  ) {
-        this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+    public DirectedWeightedMultigraph()
+    {
+        this(new EdgeFactories.DirectedWeightedEdgeFactory());
     }
-
 
     /**
      * Creates a new directed weighted multigraph with the specified edge
@@ -67,7 +73,8 @@ public class DirectedWeightedMultigraph<V, E extends Edge<V>> extends DirectedMu
      *
      * @param ef the edge factory of the new graph.
      */
-    public DirectedWeightedMultigraph( EdgeFactory<V,E> ef ) {
-        super( ef );
+    public DirectedWeightedMultigraph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
 }

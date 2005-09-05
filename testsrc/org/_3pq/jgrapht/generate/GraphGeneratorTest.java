@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------
@@ -38,119 +39,124 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.VertexFactory;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * .
  *
  * @author John V. Sichi
- *
  * @since Sep 17, 2003
  */
-public class GraphGeneratorTest extends TestCase {
-    private static final int SIZE            = 10;
-    private VertexFactory    m_vertexFactory =
-        new VertexFactory(  ) {
+public class GraphGeneratorTest extends TestCase
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
+    private static final int SIZE = 10;
+
+    //~ Instance fields -------------------------------------------------------
+
+    private VertexFactory m_vertexFactory =
+        new VertexFactory() {
             private int m_i;
 
-            public Object createVertex(  ) {
-                return new Integer( ++m_i );
+            public Object createVertex()
+            {
+                return new Integer(++m_i);
             }
         };
 
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      */
-    public void testEmptyGraphGenerator(  ) {
-        GraphGenerator gen       = new EmptyGraphGenerator( SIZE );
-        DirectedGraph  g         = new DefaultDirectedGraph(  );
-        Map            resultMap = new HashMap(  );
-        gen.generateGraph( g, m_vertexFactory, resultMap );
-        assertEquals( SIZE, g.vertexSet(  ).size(  ) );
-        assertEquals( 0, g.edgeSet(  ).size(  ) );
-        assertTrue( resultMap.isEmpty(  ) );
+    public void testEmptyGraphGenerator()
+    {
+        GraphGenerator gen = new EmptyGraphGenerator(SIZE);
+        DirectedGraph g = new DefaultDirectedGraph();
+        Map resultMap = new HashMap();
+        gen.generateGraph(g, m_vertexFactory, resultMap);
+        assertEquals(SIZE, g.vertexSet().size());
+        assertEquals(0, g.edgeSet().size());
+        assertTrue(resultMap.isEmpty());
     }
 
-
     /**
      * .
      */
-    public void testLinearGraphGenerator(  ) {
-        GraphGenerator gen       = new LinearGraphGenerator( SIZE );
-        DirectedGraph  g         = new DefaultDirectedGraph(  );
-        Map            resultMap = new HashMap(  );
-        gen.generateGraph( g, m_vertexFactory, resultMap );
-        assertEquals( SIZE, g.vertexSet(  ).size(  ) );
-        assertEquals( SIZE - 1, g.edgeSet(  ).size(  ) );
+    public void testLinearGraphGenerator()
+    {
+        GraphGenerator gen = new LinearGraphGenerator(SIZE);
+        DirectedGraph g = new DefaultDirectedGraph();
+        Map resultMap = new HashMap();
+        gen.generateGraph(g, m_vertexFactory, resultMap);
+        assertEquals(SIZE, g.vertexSet().size());
+        assertEquals(SIZE - 1, g.edgeSet().size());
 
-        Object   startVertex =
-            resultMap.get( LinearGraphGenerator.START_VERTEX );
-        Object   endVertex  = resultMap.get( LinearGraphGenerator.END_VERTEX );
-        Iterator vertexIter = g.vertexSet(  ).iterator(  );
+        Object startVertex = resultMap.get(LinearGraphGenerator.START_VERTEX);
+        Object endVertex = resultMap.get(LinearGraphGenerator.END_VERTEX);
+        Iterator vertexIter = g.vertexSet().iterator();
 
-        while( vertexIter.hasNext(  ) ) {
-            Object vertex = vertexIter.next(  );
+        while (vertexIter.hasNext()) {
+            Object vertex = vertexIter.next();
 
-            if( vertex == startVertex ) {
-                assertEquals( 0, g.inDegreeOf( vertex ) );
-                assertEquals( 1, g.outDegreeOf( vertex ) );
-
-                continue;
-            }
-
-            if( vertex == endVertex ) {
-                assertEquals( 1, g.inDegreeOf( vertex ) );
-                assertEquals( 0, g.outDegreeOf( vertex ) );
+            if (vertex == startVertex) {
+                assertEquals(0, g.inDegreeOf(vertex));
+                assertEquals(1, g.outDegreeOf(vertex));
 
                 continue;
             }
 
-            assertEquals( 1, g.inDegreeOf( vertex ) );
-            assertEquals( 1, g.outDegreeOf( vertex ) );
+            if (vertex == endVertex) {
+                assertEquals(1, g.inDegreeOf(vertex));
+                assertEquals(0, g.outDegreeOf(vertex));
+
+                continue;
+            }
+
+            assertEquals(1, g.inDegreeOf(vertex));
+            assertEquals(1, g.outDegreeOf(vertex));
         }
     }
 
-
     /**
      * .
      */
-    public void testRingGraphGenerator(  ) {
-        GraphGenerator gen       = new RingGraphGenerator( SIZE );
-        DirectedGraph  g         = new DefaultDirectedGraph(  );
-        Map            resultMap = new HashMap(  );
-        gen.generateGraph( g, m_vertexFactory, resultMap );
-        assertEquals( SIZE, g.vertexSet(  ).size(  ) );
-        assertEquals( SIZE, g.edgeSet(  ).size(  ) );
+    public void testRingGraphGenerator()
+    {
+        GraphGenerator gen = new RingGraphGenerator(SIZE);
+        DirectedGraph g = new DefaultDirectedGraph();
+        Map resultMap = new HashMap();
+        gen.generateGraph(g, m_vertexFactory, resultMap);
+        assertEquals(SIZE, g.vertexSet().size());
+        assertEquals(SIZE, g.edgeSet().size());
 
-        Object startVertex = g.vertexSet(  ).iterator(  ).next(  );
-        assertEquals( 1, g.outDegreeOf( startVertex ) );
+        Object startVertex = g.vertexSet().iterator().next();
+        assertEquals(1, g.outDegreeOf(startVertex));
 
         Object nextVertex = startVertex;
-        Set    seen = new HashSet(  );
+        Set seen = new HashSet();
 
-        for( int i = 0; i < SIZE; ++i ) {
-            Edge nextEdge = (Edge) g.outgoingEdgesOf( nextVertex ).get( 0 );
-            nextVertex = nextEdge.getTarget(  );
-            assertEquals( 1, g.inDegreeOf( nextVertex ) );
-            assertEquals( 1, g.outDegreeOf( nextVertex ) );
-            assertTrue( !seen.contains( nextVertex ) );
-            seen.add( nextVertex );
+        for (int i = 0; i < SIZE; ++i) {
+            Edge nextEdge = (Edge) g.outgoingEdgesOf(nextVertex).get(0);
+            nextVertex = nextEdge.getTarget();
+            assertEquals(1, g.inDegreeOf(nextVertex));
+            assertEquals(1, g.outDegreeOf(nextVertex));
+            assertTrue(!seen.contains(nextVertex));
+            seen.add(nextVertex);
         }
 
         // do you ever get the feeling you're going in circles?
-        assertTrue( nextVertex == startVertex );
-        assertTrue( resultMap.isEmpty(  ) );
+        assertTrue(nextVertex == startVertex);
+        assertTrue(resultMap.isEmpty());
     }
 
     // TODO:  testWheelGraphGenerator

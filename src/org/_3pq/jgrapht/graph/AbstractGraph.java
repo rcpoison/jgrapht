@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -39,11 +40,10 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A skeletal implementation of the <tt>Graph</tt> interface, to minimize the
@@ -51,91 +51,98 @@ import org._3pq.jgrapht.Graph;
  * applicable to both: directed graphs and undirected graphs.
  *
  * @author Barak Naveh
- *
  * @see org._3pq.jgrapht.Graph
  * @see org._3pq.jgrapht.DirectedGraph
  * @see org._3pq.jgrapht.UndirectedGraph
  */
-public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E> {
+public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
+{
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Construct a new empty graph object.
      */
-    public AbstractGraph(  ) {}
+    public AbstractGraph()
+    {
+    }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges( Collection<? extends E> edges ) {
+    public boolean addAllEdges(Collection<? extends E> edges)
+    {
         boolean modified = false;
 
-        for( E e : edges) {
-            modified |= addEdge( e );
+        for (E e : edges) {
+            modified |= addEdge(e);
         }
 
         return modified;
     }
-
 
     /**
      * @see Graph#addAllVertices(Collection)
      */
-    public boolean addAllVertices( Collection<? extends V> vertices ) {
+    public boolean addAllVertices(Collection<? extends V> vertices)
+    {
         boolean modified = false;
 
-        for( V v : vertices) {
-            modified |= addVertex( v );
+        for (V v : vertices) {
+            modified |= addVertex(v);
         }
 
         return modified;
     }
-
 
     /**
      * @see Graph#containsEdge(Object, Object)
      */
-    public boolean containsEdge( V sourceVertex, V targetVertex ) {
-        return getEdge( sourceVertex, targetVertex ) != null;
+    public boolean containsEdge(V sourceVertex, V targetVertex)
+    {
+        return getEdge(sourceVertex, targetVertex) != null;
     }
-
 
     /**
      * @see Graph#removeAllEdges(Collection)
      */
-    public boolean removeAllEdges( Collection<? extends E> edges ) {
+    public boolean removeAllEdges(Collection<? extends E> edges)
+    {
         boolean modified = false;
 
-        for( E e : edges ) {
-            modified |= removeEdge( e );
+        for (E e : edges) {
+            modified |= removeEdge(e);
         }
 
         return modified;
     }
-
 
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges( V sourceVertex, V targetVertex ) {
-        List<E> removed = getAllEdges( sourceVertex, targetVertex );
-        removeAllEdges( removed );
+    public List removeAllEdges(V sourceVertex, V targetVertex)
+    {
+        List<E> removed = getAllEdges(sourceVertex, targetVertex);
+        removeAllEdges(removed);
 
         return removed;
     }
 
-
     /**
      * @see Graph#removeAllVertices(Collection)
      */
-    public boolean removeAllVertices( Collection<? extends V> vertices ) {
+    public boolean removeAllVertices(Collection<? extends V> vertices)
+    {
         boolean modified = false;
 
-        for( V v : vertices ) {
-            modified |= removeVertex( v );
+        for (V v : vertices) {
+            modified |= removeVertex(v);
         }
 
         return modified;
     }
-
 
     /**
      * Returns a string of the parenthesized pair (V, E) representing this
@@ -144,10 +151,10 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @return a string representation of this graph.
      */
-    public String toString(  ) {
-        return toStringFromSets( vertexSet(  ), edgeSet(  ) );
+    public String toString()
+    {
+        return toStringFromSets(vertexSet(), edgeSet());
     }
-
 
     /**
      * Ensures that the specified vertex exists in this graph, or else throws
@@ -159,26 +166,24 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @throws NullPointerException if specified vertex is <code>null</code>.
      * @throws IllegalArgumentException if specified vertex does not exist in
-     *         this graph.
+     *                                  this graph.
      */
-    protected boolean assertVertexExist( V v ) {
-        if( containsVertex( v ) ) {
+    protected boolean assertVertexExist(V v)
+    {
+        if (containsVertex(v)) {
             return true;
-        }
-        else if( v == null ) {
-            throw new NullPointerException(  );
-        }
-        else {
-            throw new IllegalArgumentException( "no such vertex in graph" );
+        } else if (v == null) {
+            throw new NullPointerException();
+        } else {
+            throw new IllegalArgumentException("no such vertex in graph");
         }
     }
-
 
     /**
      * Removes all the edges in this graph that are also contained in the
      * specified edge array.  After this call returns, this graph will contain
-     * no edges in common with the specified edges. This method will invoke
-     * the {@link Graph#removeEdge(Edge)} method.
+     * no edges in common with the specified edges. This method will invoke the
+     * {@link Graph#removeEdge(Edge)} method.
      *
      * @param edges edges to be removed from this graph.
      *
@@ -187,16 +192,16 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      * @see Graph#removeEdge(Edge)
      * @see Graph#containsEdge(Edge)
      */
-    protected boolean removeAllEdges( E[] edges ) {
+    protected boolean removeAllEdges(E [] edges)
+    {
         boolean modified = false;
 
-        for( int i = 0; i < edges.length; i++ ) {
-            modified |= removeEdge( edges[ i ] );
+        for (int i = 0; i < edges.length; i++) {
+            modified |= removeEdge(edges[i]);
         }
 
         return modified;
     }
-
 
     /**
      * Helper for subclass implementations of toString(  ).
@@ -206,7 +211,10 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @return a string representation of (V,E)
      */
-    protected String toStringFromSets( Collection<V> vertexSet, Collection<E> edgeSet ) {
-        return "(" + vertexSet.toString(  ) + ", " + edgeSet.toString(  ) + ")";
+    protected String toStringFromSets(
+        Collection<V> vertexSet,
+        Collection<E> edgeSet)
+    {
+        return "(" + vertexSet.toString() + ", " + edgeSet.toString() + ")";
     }
 }

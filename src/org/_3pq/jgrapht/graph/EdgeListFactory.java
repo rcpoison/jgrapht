@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
@@ -39,8 +40,10 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.List;
-import org._3pq.jgrapht.Edge;
+import java.util.*;
+
+import org._3pq.jgrapht.*;
+
 
 /**
  * A factory for edge lists.  This interface allows the creator of a graph to
@@ -51,20 +54,23 @@ import org._3pq.jgrapht.Edge;
  * @author John V. Sichi
  * @version $Id$
  */
-public interface EdgeListFactory<V, E extends Edge<V>> {
+public interface EdgeListFactory<V, E extends Edge<V>>
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Create a new edge list for a particular vertex.
      *
      * @param vertex the vertex for which the edge list is being created;
-     *        sophisticated factories may be able to use this information to
-     *        choose an optimal list representation (e.g. ArrayList for a
-     *        vertex expected to have low degree, and TreeList for a vertex
-     *        expected to have high degree)
+     *               sophisticated factories may be able to use this
+     *               information to choose an optimal list representation (e.g.
+     *               ArrayList for a vertex expected to have low degree, and
+     *               TreeList for a vertex expected to have high degree)
      *
      * @return new list
      */
-    public List<E> createEdgeList( V vertex );
+    public List<E> createEdgeList(V vertex);
 }
-
 
 // End EdgeListFactory.java

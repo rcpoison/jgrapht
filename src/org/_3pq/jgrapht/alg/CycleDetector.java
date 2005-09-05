@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
@@ -39,15 +40,11 @@
  */
 package org._3pq.jgrapht.alg;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.traverse.DepthFirstIterator;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.traverse.*;
+
 
 /**
  * Performs cycle detection on a graph. The <i>inspected graph</i> is specified
@@ -55,12 +52,19 @@ import org._3pq.jgrapht.traverse.DepthFirstIterator;
  * supports only directed graphs.
  *
  * @author John V. Sichi
- *
  * @since Sept 16, 2004
  */
-public class CycleDetector<V, E extends Edge<V>> {
-    /** Graph on which cycle detection is being performed. */
+public class CycleDetector<V, E extends Edge<V>>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * Graph on which cycle detection is being performed.
+     */
     Graph<V, E> m_graph;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a cycle detector for the specified graph.  Currently only
@@ -68,26 +72,28 @@ public class CycleDetector<V, E extends Edge<V>> {
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
-    public CycleDetector( DirectedGraph<V, E> graph ) {
+    public CycleDetector(DirectedGraph<V, E> graph)
+    {
         m_graph = graph;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Performs yes/no cycle detection on the entire graph.
      *
      * @return true iff the graph contains at least one cycle
      */
-    public boolean detectCycles(  ) {
+    public boolean detectCycles()
+    {
         try {
-            execute( null, null );
-        }
-         catch( CycleDetectedException ex ) {
+            execute(null, null);
+        } catch (CycleDetectedException ex) {
             return true;
         }
 
         return false;
     }
-
 
     /**
      * Performs yes/no cycle detection on an individual vertex.
@@ -96,17 +102,16 @@ public class CycleDetector<V, E extends Edge<V>> {
      *
      * @return true if v is on at least one cycle
      */
-    public boolean detectCyclesContainingVertex( V v ) {
+    public boolean detectCyclesContainingVertex(V v)
+    {
         try {
-            execute( null, v );
-        }
-         catch( CycleDetectedException ex ) {
+            execute(null, v);
+        } catch (CycleDetectedException ex) {
             return true;
         }
 
         return false;
     }
-
 
     /**
      * Finds the vertex set for the subgraph of all cycles.
@@ -114,13 +119,13 @@ public class CycleDetector<V, E extends Edge<V>> {
      * @return set of all vertices which participate in at least one cycle in
      *         this graph
      */
-    public Set<V> findCycles(  ) {
-        Set set = new HashSet(  );
-        execute( set, null );
+    public Set<V> findCycles()
+    {
+        Set set = new HashSet();
+        execute(set, null);
 
         return set;
     }
-
 
     /**
      * Finds the vertex set for the subgraph of all cycles which contain a
@@ -130,82 +135,88 @@ public class CycleDetector<V, E extends Edge<V>> {
      *
      * @return set of all vertices reachable from v via at least one cycle
      */
-    public Set findCyclesContainingVertex( V v ) {
-        Set set = new HashSet(  );
-        execute( set, v );
+    public Set findCyclesContainingVertex(V v)
+    {
+        Set set = new HashSet();
+        execute(set, v);
 
         return set;
     }
 
+    private void execute(Set<V> s, V v)
+    {
+        ProbeIterator iter = new ProbeIterator(s, v);
 
-    private void execute( Set<V> s, V v ) {
-        ProbeIterator iter = new ProbeIterator( s, v );
-
-        while( iter.hasNext(  ) ) {
-            iter.next(  );
+        while (iter.hasNext()) {
+            iter.next();
         }
     }
+
+    //~ Inner Classes ---------------------------------------------------------
 
     /**
      * Exception thrown internally when a cycle is detected during a yes/no
      * cycle test.  Must be caught by top-level detection method.
      */
-    private static class CycleDetectedException extends RuntimeException {
+    private static class CycleDetectedException extends RuntimeException
+    {
         private static final long serialVersionUID = 3834305137802950712L;
     }
-
 
     /**
      * Version of DFS which maintains a backtracking path used to probe for
      * cycles.
      */
-    private class ProbeIterator extends DepthFirstIterator<V, E, Object> {
+    private class ProbeIterator extends DepthFirstIterator<V, E, Object>
+    {
         private List<V> m_path;
-        private Set<V>  m_cycleSet;
+        private Set<V> m_cycleSet;
 
-        ProbeIterator( Set<V> cycleSet, V startVertex ) {
-            super( m_graph, startVertex );
-            m_cycleSet     = cycleSet;
-            m_path         = new ArrayList(  );
+        ProbeIterator(Set<V> cycleSet, V startVertex)
+        {
+            super(m_graph, startVertex);
+            m_cycleSet = cycleSet;
+            m_path = new ArrayList();
         }
 
         /**
          * {@inheritDoc}
          */
-        protected void encounterVertexAgain( V vertex, E edge ) {
-            super.encounterVertexAgain( vertex, edge );
+        protected void encounterVertexAgain(V vertex, E edge)
+        {
+            super.encounterVertexAgain(vertex, edge);
 
-            int i = m_path.indexOf( vertex );
+            int i = m_path.indexOf(vertex);
 
-            if( i > -1 ) {
-                if( m_cycleSet == null ) {
+            if (i > -1) {
+                if (m_cycleSet == null) {
                     // we're doing yes/no cycle detection
-                    throw new CycleDetectedException(  );
+                    throw new CycleDetectedException();
                 }
 
-                for( ; i < m_path.size(  ); ++i ) {
-                    m_cycleSet.add( m_path.get( i ) );
+                for (; i < m_path.size(); ++i) {
+                    m_cycleSet.add(m_path.get(i));
                 }
             }
         }
 
-
         /**
          * {@inheritDoc}
          */
-        protected V provideNextVertex(  ) {
-            V v = super.provideNextVertex(  );
+        protected V provideNextVertex()
+        {
+            V v = super.provideNextVertex();
 
             // backtrack
-            for( int i = m_path.size(  ) - 1; i >= 0; --i ) {
-                if( m_graph.containsEdge( m_path.get( i ), v ) ) {
+            for (int i = m_path.size() - 1; i >= 0; --i) {
+                if (m_graph.containsEdge(m_path.get(i), v)) {
                     break;
                 }
 
-                m_path.remove( i );
+                m_path.remove(i);
             }
 
-            m_path.add( v );
+            m_path.add(v);
 
             return v;
         }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------
@@ -46,27 +47,13 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.io.Serializable;
+import java.io.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
-import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.GraphVertexChangeEvent;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.event.*;
+
 
 /**
  * A subgraph is a graph that has a subset of vertices and a subset of edges
@@ -75,100 +62,100 @@ import org._3pq.jgrapht.event.GraphVertexChangeEvent;
  * property</i></b>: V is a subset of Vb and E is a subset of Eb. Other than
  * this property, a subgraph is a graph with any respect and fully complies
  * with the <code>Graph</code> interface.
- * 
- * <p>
- * If the base graph is a {@link org._3pq.jgrapht.ListenableGraph}, the
+ *
+ * <p>If the base graph is a {@link org._3pq.jgrapht.ListenableGraph}, the
  * subgraph listens on the base graph and guarantees the subgraph property. If
  * an edge or a vertex is removed from the base graph, it is automatically
  * removed from the subgraph. Subgraph listeners are informed on such removal
  * only if it results in a cascaded removal from the subgraph. If the subgraph
  * has been created as an induced subgraph it also keeps track of edges being
  * added to its vertices. If  vertices are added to the base graph, the
- * subgraph remains unaffected.
- * </p>
- * 
- * <p>
- * If the base graph is <i>not</i> a ListenableGraph, then the subgraph
+ * subgraph remains unaffected.</p>
+ *
+ * <p>If the base graph is <i>not</i> a ListenableGraph, then the subgraph
  * property cannot be guaranteed. If edges or vertices are removed from the
- * base graph, they are <i>not</i> removed from the subgraph.
- * </p>
- * 
- * <p>
- * Modifications to Subgraph are allowed as long as the subgraph property is
+ * base graph, they are <i>not</i> removed from the subgraph.</p>
+ *
+ * <p>Modifications to Subgraph are allowed as long as the subgraph property is
  * maintained. Addition of vertices or edges are allowed as long as they also
- * exist in the base graph. Removal of vertices or edges is always allowed.
- * The base graph is <i>never</i> affected by any modification made to the
- * subgraph.
- * </p>
- * 
- * <p>
- * A subgraph may provide a "live-window" on a base graph, so that changes made
- * to its vertices or edges are immediately reflected in the base graph, and
- * vice versa. For that to happen, vertices and edges added to the subgraph
- * must be <i>identical</i> (that is, reference-equal and not only
- * value-equal) to their respective ones in the base graph. Previous versions
- * of this class enforced such identity, at a severe performance cost.
- * Currently it is no longer enforced. If you want to achieve a "live-window"
- * functionality, your safest tactics would be to NOT override the
- * <code>equals()</code>methods of your vertices and edges. If you use a class
- * that has already overridden the <code>equals()</code> method, such as
- * <code>String</code>, than you can use a wrapper around it, or else use it
- * directly but exercise a great care to avoid having different-but-equal
- * instances in the subgraph and the base graph.
- * </p>
- * 
- * <p>
- * This graph implementation guarantees deterministic vertex and edge set
- * ordering (via {@link LinkedHashSet}).
- * </p>
+ * exist in the base graph. Removal of vertices or edges is always allowed. The
+ * base graph is <i>never</i> affected by any modification made to the
+ * subgraph.</p>
+ *
+ * <p>A subgraph may provide a "live-window" on a base graph, so that changes
+ * made to its vertices or edges are immediately reflected in the base graph,
+ * and vice versa. For that to happen, vertices and edges added to the subgraph
+ * must be <i>identical</i> (that is, reference-equal and not only value-equal)
+ * to their respective ones in the base graph. Previous versions of this class
+ * enforced such identity, at a severe performance cost. Currently it is no
+ * longer enforced. If you want to achieve a "live-window"functionality, your
+ * safest tactics would be to NOT override the <code>equals()</code> methods of
+ * your vertices and edges. If you use a class that has already overridden the
+ * <code>equals()</code> method, such as <code>String</code>, than you can use
+ * a wrapper around it, or else use it directly but exercise a great care to
+ * avoid having different-but-equal instances in the subgraph and the base
+ * graph.</p>
+ *
+ * <p>This graph implementation guarantees deterministic vertex and edge set
+ * ordering (via {@link LinkedHashSet}).</p>
  *
  * @author Barak Naveh
- *
  * @see org._3pq.jgrapht.Graph
  * @see java.util.Set
  * @since Jul 18, 2003
  */
-public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implements Serializable {
+public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
+    implements Serializable
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final String NO_SUCH_EDGE_IN_BASE =
         "no such edge in base graph";
     private static final String NO_SUCH_VERTEX_IN_BASE =
         "no such vertex in base graph";
 
-    //
-    Set<E> m_edgeSet   = new LinkedHashSet(  ); // friendly to improve performance
-    Set<V> m_vertexSet = new LinkedHashSet(  ); // friendly to improve performance
+    //~ Instance fields -------------------------------------------------------
 
-    // 
-    private transient Set<E>    m_unmodifiableEdgeSet   = null;
-    private transient Set<V>    m_unmodifiableVertexSet = null;
-    private Graph<V, E>         m_base;
-    private boolean             m_isInduced             = false;
-    private boolean             m_verifyIntegrity       = true;
+    //
+    Set<E> m_edgeSet = new LinkedHashSet(); // friendly to improve performance
+    Set<V> m_vertexSet = new LinkedHashSet(); // friendly to improve
+                                              // performance
+
+    //
+    private transient Set<E> m_unmodifiableEdgeSet = null;
+    private transient Set<V> m_unmodifiableVertexSet = null;
+    private Graph<V, E> m_base;
+    private boolean m_isInduced = false;
+    private boolean m_verifyIntegrity = true;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new Subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be
-     *        based.
-     * @param vertexSubset vertices to include in the subgraph. If
-     *        <code>null</code> then all vertices are included.
-     * @param edgeSubset edges to in include in the subgraph. If
-     *        <code>null</code> then all the edges whose vertices found in the
-     *        graph are included.
+     *             based.
+     * @param vertexSubset vertices to include in the subgraph. If <code>
+     *                     null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If <code>
+     *                   null</code> then all the edges whose vertices found in
+     *                   the graph are included.
      */
-    public Subgraph( Graph<V, E> base, Set<V> vertexSubset, Set<E> edgeSubset ) {
-        super(  );
+    public Subgraph(Graph<V, E> base, Set<V> vertexSubset, Set<E> edgeSubset)
+    {
+        super();
 
         m_base = base;
 
-        if( m_base instanceof ListenableGraph ) {
-            ( (ListenableGraph<V, E>) m_base ).addGraphListener( new BaseGraphListener(  ) );
+        if (m_base instanceof ListenableGraph) {
+            ((ListenableGraph<V, E>) m_base).addGraphListener(
+                new BaseGraphListener());
         }
 
-        addVerticesUsingFilter( base.vertexSet(  ), vertexSubset );
-        addEdgesUsingFilter( base.edgeSet(  ), edgeSubset );
+        addVerticesUsingFilter(base.vertexSet(), vertexSubset);
+        addEdgesUsingFilter(base.edgeSet(), edgeSubset);
     }
-
 
     /**
      * Creates a new induced Subgraph. The subgraph will keep track of edges
@@ -177,32 +164,37 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
      * Subgraph(base, vertexSubset, null) .
      *
      * @param base the base (backing) graph on which the subgraph will be
-     *        based.
-     * @param vertexSubset vertices to include in the subgraph. If
-     *        <code>null</code> then all vertices are included.
+     *             based.
+     * @param vertexSubset vertices to include in the subgraph. If <code>
+     *                     null</code> then all vertices are included.
      */
-    public Subgraph( Graph<V, E> base, Set<V> vertexSubset ) {
-        this( base, vertexSubset, null );
+    public Subgraph(Graph<V, E> base, Set<V> vertexSubset)
+    {
+        this(base, vertexSubset, null);
 
         m_isInduced = true;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * @see org._3pq.jgrapht.Graph#getAllEdges(Object, Object)
      */
-    public List<E> getAllEdges( V sourceVertex, V targetVertex ) {
+    public List<E> getAllEdges(V sourceVertex, V targetVertex)
+    {
         List<E> edges = null;
 
-        if( containsVertex( sourceVertex ) && containsVertex( targetVertex ) ) {
-            edges = new ArrayList(  );
+        if (containsVertex(sourceVertex) && containsVertex(targetVertex)) {
+            edges = new ArrayList();
 
-            List<E> baseEdges = m_base.getAllEdges( sourceVertex, targetVertex );
+            List<E> baseEdges = m_base.getAllEdges(sourceVertex, targetVertex);
 
-            for( Iterator<E> iter = baseEdges.iterator(  ); iter.hasNext(  ); ) {
-                E e = iter.next(  );
+            for (Iterator<E> iter = baseEdges.iterator(); iter.hasNext();) {
+                E e = iter.next();
 
-                if( m_edgeSet.contains( e ) ) { // add if subgraph also contains it
-                    edges.add( e );
+                if (m_edgeSet.contains(e)) { // add if subgraph also contains
+                                             // it
+                    edges.add(e);
                 }
             }
         }
@@ -210,29 +202,27 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
         return edges;
     }
 
-
     /**
      * @see org._3pq.jgrapht.Graph#getEdge(Object, Object)
      */
-    public E getEdge( V sourceVertex, V targetVertex ) {
-        List<E> edges = getAllEdges( sourceVertex, targetVertex );
+    public E getEdge(V sourceVertex, V targetVertex)
+    {
+        List<E> edges = getAllEdges(sourceVertex, targetVertex);
 
-        if( edges == null || edges.isEmpty(  ) ) {
+        if ((edges == null) || edges.isEmpty()) {
             return null;
-        }
-        else {
-            return edges.get( 0 );
+        } else {
+            return edges.get(0);
         }
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#getEdgeFactory()
      */
-    public EdgeFactory<V, E> getEdgeFactory(  ) {
-        return m_base.getEdgeFactory(  );
+    public EdgeFactory<V, E> getEdgeFactory()
+    {
+        return m_base.getEdgeFactory();
     }
-
 
     /**
      * Sets the the check integrity flag.
@@ -243,10 +233,10 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
      * @deprecated method will be deleted in future versions. verifyIntegrity
      *             flag has no effect now.
      */
-    public void setVerifyIntegrity( boolean verifyIntegrity ) {
+    public void setVerifyIntegrity(boolean verifyIntegrity)
+    {
         m_verifyIntegrity = verifyIntegrity;
     }
-
 
     /**
      * Returns the value of the verifyIntegrity flag.
@@ -255,29 +245,30 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
      *
      * @deprecated method will be deleted in future versions.
      */
-    public boolean isVerifyIntegrity(  ) {
+    public boolean isVerifyIntegrity()
+    {
         return m_verifyIntegrity;
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#addEdge(Object, Object)
      */
-    public E addEdge( V sourceVertex, V targetVertex ) {
-        assertVertexExist( sourceVertex );
-        assertVertexExist( targetVertex );
+    public E addEdge(V sourceVertex, V targetVertex)
+    {
+        assertVertexExist(sourceVertex);
+        assertVertexExist(targetVertex);
 
-        if( !m_base.containsEdge( sourceVertex, targetVertex ) ) {
-            throw new IllegalArgumentException( NO_SUCH_EDGE_IN_BASE );
+        if (!m_base.containsEdge(sourceVertex, targetVertex)) {
+            throw new IllegalArgumentException(NO_SUCH_EDGE_IN_BASE);
         }
 
-        List<E> edges = m_base.getAllEdges( sourceVertex, targetVertex );
+        List<E> edges = m_base.getAllEdges(sourceVertex, targetVertex);
 
-        for( Iterator<E> iter = edges.iterator(  ); iter.hasNext(  ); ) {
-            E e = iter.next(  );
+        for (Iterator<E> iter = edges.iterator(); iter.hasNext();) {
+            E e = iter.next();
 
-            if( !containsEdge( e ) ) {
-                m_edgeSet.add( e );
+            if (!containsEdge(e)) {
+                m_edgeSet.add(e);
 
                 return e;
             }
@@ -286,14 +277,13 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
         return null;
     }
 
-
     /**
      * Adds the specified edge to this subgraph.
      *
      * @param e the edge to be added.
      *
-     * @return <code>true</code> if the edge was added, otherwise
-     *         <code>false</code>.
+     * @return <code>true</code> if the edge was added, otherwise <code>
+     *         false</code>.
      *
      * @throws NullPointerException
      * @throws IllegalArgumentException
@@ -301,36 +291,35 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
      * @see Subgraph
      * @see org._3pq.jgrapht.Graph#addEdge(Edge)
      */
-    public boolean addEdge( E e ) {
-        if( e == null ) {
-            throw new NullPointerException(  );
+    public boolean addEdge(E e)
+    {
+        if (e == null) {
+            throw new NullPointerException();
         }
 
-        if( !m_base.containsEdge( e ) ) {
-            throw new IllegalArgumentException( NO_SUCH_EDGE_IN_BASE );
+        if (!m_base.containsEdge(e)) {
+            throw new IllegalArgumentException(NO_SUCH_EDGE_IN_BASE);
         }
 
-        assertVertexExist( e.getSource(  ) );
-        assertVertexExist( e.getTarget(  ) );
+        assertVertexExist(e.getSource());
+        assertVertexExist(e.getTarget());
 
-        if( containsEdge( e ) ) {
+        if (containsEdge(e)) {
             return false;
-        }
-        else {
-            m_edgeSet.add( e );
+        } else {
+            m_edgeSet.add(e);
 
             return true;
         }
     }
-
 
     /**
      * Adds the specified vertex to this subgraph.
      *
      * @param v the vertex to be added.
      *
-     * @return <code>true</code> if the vertex was added, otherwise
-     *         <code>false</code>.
+     * @return <code>true</code> if the vertex was added, otherwise <code>
+     *         false</code>.
      *
      * @throws NullPointerException
      * @throws IllegalArgumentException
@@ -338,59 +327,58 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
      * @see Subgraph
      * @see org._3pq.jgrapht.Graph#addVertex(Object)
      */
-    public boolean addVertex( V v ) {
-        if( v == null ) {
-            throw new NullPointerException(  );
+    public boolean addVertex(V v)
+    {
+        if (v == null) {
+            throw new NullPointerException();
         }
 
-        if( !m_base.containsVertex( v ) ) {
-            throw new IllegalArgumentException( NO_SUCH_VERTEX_IN_BASE );
+        if (!m_base.containsVertex(v)) {
+            throw new IllegalArgumentException(NO_SUCH_VERTEX_IN_BASE);
         }
 
-        if( containsVertex( v ) ) {
+        if (containsVertex(v)) {
             return false;
-        }
-        else {
-            m_vertexSet.add( v );
+        } else {
+            m_vertexSet.add(v);
 
             return true;
         }
     }
 
-
     /**
      * @see org._3pq.jgrapht.Graph#containsEdge(Edge)
      */
-    public boolean containsEdge( E e ) {
-        return m_edgeSet.contains( e );
+    public boolean containsEdge(E e)
+    {
+        return m_edgeSet.contains(e);
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#containsVertex(Object)
      */
-    public boolean containsVertex( V v ) {
-        return m_vertexSet.contains( v );
+    public boolean containsVertex(V v)
+    {
+        return m_vertexSet.contains(v);
     }
-
 
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf( V vertex ) {
-        assertVertexExist( vertex );
+    public int degreeOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
         // sophisticated way to check runtime class of base ;-)
-        ( (UndirectedGraph) m_base ).degreeOf( vertex );
+        ((UndirectedGraph) m_base).degreeOf(vertex);
 
         int degree = 0;
 
-        for( E e : m_base.edgesOf( vertex ) ) {
-
-            if( containsEdge( e ) ) {
+        for (E e : m_base.edgesOf(vertex)) {
+            if (containsEdge(e)) {
                 degree++;
 
-                if( e.getSource(  ).equals( e.getTarget(  ) ) ) {
+                if (e.getSource().equals(e.getTarget())) {
                     degree++;
                 }
             }
@@ -399,88 +387,86 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
         return degree;
     }
 
-
     /**
      * @see org._3pq.jgrapht.Graph#edgeSet()
      */
-    public Set<E> edgeSet(  ) {
-        if( m_unmodifiableEdgeSet == null ) {
-            m_unmodifiableEdgeSet = Collections.unmodifiableSet( m_edgeSet );
+    public Set<E> edgeSet()
+    {
+        if (m_unmodifiableEdgeSet == null) {
+            m_unmodifiableEdgeSet = Collections.unmodifiableSet(m_edgeSet);
         }
 
         return m_unmodifiableEdgeSet;
     }
 
-
     /**
      * @see org._3pq.jgrapht.Graph#edgesOf(Object)
      */
-    public List<E> edgesOf( V vertex ) {
-        assertVertexExist( vertex );
+    public List<E> edgesOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
-        ArrayList edges     = new ArrayList(  );
-        List<E>   baseEdges = m_base.edgesOf( vertex );
+        ArrayList edges = new ArrayList();
+        List<E> baseEdges = m_base.edgesOf(vertex);
 
-        for( E e : baseEdges ) {
-
-            if( containsEdge( e ) ) {
-                edges.add( e );
+        for (E e : baseEdges) {
+            if (containsEdge(e)) {
+                edges.add(e);
             }
         }
 
         return edges;
     }
-
 
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
-    public int inDegreeOf( V vertex ) {
-        assertVertexExist( vertex );
+    public int inDegreeOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
         int degree = 0;
 
-        for( E e : ( (DirectedGraph<V,E>) m_base ).incomingEdgesOf( vertex ) ) {
-            if( containsEdge( e ) ) {
+        for (E e : ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex)) {
+            if (containsEdge(e)) {
                 degree++;
             }
         }
 
         return degree;
     }
-
 
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf( V vertex ) {
-        assertVertexExist( vertex );
+    public List<E> incomingEdgesOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
-        ArrayList edges     = new ArrayList(  );
-        List<E>   baseEdges =
-            ( (DirectedGraph<V,E>) m_base ).incomingEdgesOf( vertex );
+        ArrayList edges = new ArrayList();
+        List<E> baseEdges =
+            ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex);
 
-        for( E e : baseEdges ) {
-
-            if( containsEdge( e ) ) {
-                edges.add( e );
+        for (E e : baseEdges) {
+            if (containsEdge(e)) {
+                edges.add(e);
             }
         }
 
         return edges;
     }
 
-
     /**
      * @see DirectedGraph#outDegreeOf(Object)
      */
-    public int outDegreeOf( V vertex ) {
-        assertVertexExist( vertex );
+    public int outDegreeOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
         int degree = 0;
 
-        for( E e : ( (DirectedGraph<V,E>) m_base ).outgoingEdgesOf( vertex ) ) {
-            if( containsEdge( e ) ) {
+        for (E e : ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex)) {
+            if (containsEdge(e)) {
                 degree++;
             }
         }
@@ -488,152 +474,154 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E> implemen
         return degree;
     }
 
-
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf( V vertex ) {
-        assertVertexExist( vertex );
+    public List<E> outgoingEdgesOf(V vertex)
+    {
+        assertVertexExist(vertex);
 
-        ArrayList edges     = new ArrayList(  );
-        List<E>   baseEdges =
-            ( (DirectedGraph<V,E>) m_base ).outgoingEdgesOf( vertex );
+        ArrayList edges = new ArrayList();
+        List<E> baseEdges =
+            ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex);
 
-        for( E e : baseEdges ) {
-
-            if( containsEdge( e ) ) {
-                edges.add( e );
+        for (E e : baseEdges) {
+            if (containsEdge(e)) {
+                edges.add(e);
             }
         }
 
         return edges;
     }
 
-
     /**
      * @see org._3pq.jgrapht.Graph#removeEdge(Edge)
      */
-    public boolean removeEdge( E e ) {
-        return m_edgeSet.remove( e );
+    public boolean removeEdge(E e)
+    {
+        return m_edgeSet.remove(e);
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#removeEdge(Object, Object)
      */
-    public E removeEdge( V sourceVertex, V targetVertex ) {
-        E e = getEdge( sourceVertex, targetVertex );
+    public E removeEdge(V sourceVertex, V targetVertex)
+    {
+        E e = getEdge(sourceVertex, targetVertex);
 
-        return m_edgeSet.remove( e ) ? e : null;
+        return m_edgeSet.remove(e) ? e : null;
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#removeVertex(Object)
      */
-    public boolean removeVertex( V v ) {
-        // If the base graph does NOT contain v it means we are here in 
-        // response to removal of v from the base. In such case we don't need 
-        // to remove all the edges of v as they were already removed. 
-        if( containsVertex( v ) && m_base.containsVertex( v ) ) {
-            removeAllEdges( edgesOf( v ) );
+    public boolean removeVertex(V v)
+    {
+        // If the base graph does NOT contain v it means we are here in
+        // response to removal of v from the base. In such case we don't need
+        // to remove all the edges of v as they were already removed.
+        if (containsVertex(v) && m_base.containsVertex(v)) {
+            removeAllEdges(edgesOf(v));
         }
 
-        return m_vertexSet.remove( v );
+        return m_vertexSet.remove(v);
     }
-
 
     /**
      * @see org._3pq.jgrapht.Graph#vertexSet()
      */
-    public Set<V> vertexSet(  ) {
-        if( m_unmodifiableVertexSet == null ) {
-            m_unmodifiableVertexSet =
-                Collections.unmodifiableSet( m_vertexSet );
+    public Set<V> vertexSet()
+    {
+        if (m_unmodifiableVertexSet == null) {
+            m_unmodifiableVertexSet = Collections.unmodifiableSet(m_vertexSet);
         }
 
         return m_unmodifiableVertexSet;
     }
 
-
-    private void addEdgesUsingFilter( Set<E> edgeSet, Set<E> filter ) {
-        E    e;
+    private void addEdgesUsingFilter(Set<E> edgeSet, Set<E> filter)
+    {
+        E e;
         boolean containsVertices;
         boolean edgeIncluded;
 
-        for( Iterator<E> iter = edgeSet.iterator(  ); iter.hasNext(  ); ) {
-            e     = iter.next(  );
+        for (Iterator<E> iter = edgeSet.iterator(); iter.hasNext();) {
+            e = iter.next();
 
             containsVertices =
-                containsVertex( e.getSource(  ) )
-                && containsVertex( e.getTarget(  ) );
+                containsVertex(e.getSource())
+                && containsVertex(e.getTarget());
 
             // note the use of short circuit evaluation
-            edgeIncluded = ( filter == null ) || filter.contains( e );
+            edgeIncluded = (filter == null) || filter.contains(e);
 
-            if( containsVertices && edgeIncluded ) {
-                addEdge( e );
+            if (containsVertices && edgeIncluded) {
+                addEdge(e);
             }
         }
     }
 
-
-    private void addVerticesUsingFilter( Set<V> vertexSet, Set<V> filter ) {
+    private void addVerticesUsingFilter(Set<V> vertexSet, Set<V> filter)
+    {
         V v;
 
-        for( Iterator<V> iter = vertexSet.iterator(  ); iter.hasNext(  ); ) {
-            v = iter.next(  );
+        for (Iterator<V> iter = vertexSet.iterator(); iter.hasNext();) {
+            v = iter.next();
 
             // note the use of short circuit evaluation
-            if( filter == null || filter.contains( v ) ) {
-                addVertex( v );
+            if ((filter == null) || filter.contains(v)) {
+                addVertex(v);
             }
         }
     }
+
+    //~ Inner Classes ---------------------------------------------------------
 
     /**
      * An internal listener on the base graph.
      *
      * @author Barak Naveh
-     *
      * @since Jul 20, 2003
      */
-    private class BaseGraphListener implements GraphListener<V, E>, Serializable {
+    private class BaseGraphListener implements GraphListener<V, E>,
+        Serializable
+    {
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded( GraphEdgeChangeEvent<V, E> e ) {
-            if( m_isInduced ) {
-                addEdge( e.getEdge(  ) );
+        public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
+        {
+            if (m_isInduced) {
+                addEdge(e.getEdge());
             }
         }
-
 
         /**
          * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved( GraphEdgeChangeEvent<V, E> e ) {
-            E edge = e.getEdge(  );
+        public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
+        {
+            E edge = e.getEdge();
 
-            removeEdge( edge );
+            removeEdge(edge);
         }
-
 
         /**
          * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
-        public void vertexAdded( GraphVertexChangeEvent<V> e ) {
+        public void vertexAdded(GraphVertexChangeEvent<V> e)
+        {
             // we don't care
         }
-
 
         /**
          * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
-        public void vertexRemoved( GraphVertexChangeEvent<V> e ) {
-            V vertex = e.getVertex(  );
+        public void vertexRemoved(GraphVertexChangeEvent<V> e)
+        {
+            V vertex = e.getVertex();
 
-            removeVertex( vertex );
+            removeVertex(vertex);
         }
     }
 }

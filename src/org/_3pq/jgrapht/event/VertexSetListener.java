@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------------
@@ -40,32 +41,35 @@
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventListener;
+import java.util.*;
+
 
 /**
  * A listener that is notified when the graph's vertex set changes. It should
  * be used when <i>only</i> notifications on vertex-set changes are of
- * interest. If all graph  notifications are of interest better use
- * <code>GraphListener</code>.
+ * interest. If all graph  notifications are of interest better use <code>
+ * GraphListener</code>.
  *
  * @author Barak Naveh
- *
  * @see org._3pq.jgrapht.event.GraphListener
  * @since Jul 18, 2003
  */
-public interface VertexSetListener<V> extends EventListener {
+public interface VertexSetListener<V> extends EventListener
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Notifies that a vertex has been added to the graph.
      *
      * @param e the vertex event.
      */
-    public void vertexAdded( GraphVertexChangeEvent<V> e );
-
+    public void vertexAdded(GraphVertexChangeEvent<V> e);
 
     /**
      * Notifies that a vertex has been removed from the graph.
      *
      * @param e the vertex event.
      */
-    public void vertexRemoved( GraphVertexChangeEvent<V> e );
+    public void vertexRemoved(GraphVertexChangeEvent<V> e);
 }

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------------
@@ -39,22 +40,32 @@
  */
 package org._3pq.jgrapht.event;
 
-import java.util.EventObject;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A traversal event for a graph edge.
  *
  * @author Barak Naveh
- *
  * @since Aug 11, 2003
  */
-public class EdgeTraversalEvent<V, E extends Edge<V>> extends EventObject {
+public class EdgeTraversalEvent<V, E extends Edge<V>> extends EventObject
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 4050768173789820979L;
 
-    /** The traversed edge. */
+    //~ Instance fields -------------------------------------------------------
+
+    /**
+     * The traversed edge.
+     */
     protected E m_edge;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new EdgeTraversalEvent.
@@ -62,17 +73,21 @@ public class EdgeTraversalEvent<V, E extends Edge<V>> extends EventObject {
      * @param eventSource the source of the event.
      * @param edge the traversed edge.
      */
-    public EdgeTraversalEvent( Object eventSource, E edge ) {
-        super( eventSource );
+    public EdgeTraversalEvent(Object eventSource, E edge)
+    {
+        super(eventSource);
         m_edge = edge;
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Returns the traversed edge.
      *
      * @return the traversed edge.
      */
-    public E getEdge(  ) {
+    public E getEdge()
+    {
         return m_edge;
     }
 }

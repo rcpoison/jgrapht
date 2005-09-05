@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------
@@ -39,32 +40,42 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A directed graph that is a subgraph on other graph.
  *
  * @see org._3pq.jgrapht.graph.Subgraph
  */
-public class DirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E> implements DirectedGraph<V, E> {
+public class DirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E>
+    implements DirectedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3616445700507054133L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new directed subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be
-     *        based.
-     * @param vertexSubset vertices to include in the subgraph. If
-     *        <code>null</code> then all vertices are included.
-     * @param edgeSubset edges to in include in the subgraph. If
-     *        <code>null</code> then all the edges whose vertices found in the
-     *        graph are included.
+     *             based.
+     * @param vertexSubset vertices to include in the subgraph. If <code>
+     *                     null</code> then all vertices are included.
+     * @param edgeSubset edges to in include in the subgraph. If <code>
+     *                   null</code> then all the edges whose vertices found in
+     *                   the graph are included.
      */
-    public DirectedSubgraph( DirectedGraph<V, E> base, Set<V> vertexSubset,
-        Set<E> edgeSubset ) {
-        super( base, vertexSubset, edgeSubset );
+    public DirectedSubgraph(
+        DirectedGraph<V, E> base,
+        Set<V> vertexSubset,
+        Set<E> edgeSubset)
+    {
+        super(base, vertexSubset, edgeSubset);
     }
 }

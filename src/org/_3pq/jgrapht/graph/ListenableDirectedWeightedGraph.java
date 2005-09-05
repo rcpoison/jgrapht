@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: ListenableDirectedWeightedGraph.java,v 1.3 2005/07/19 09:03:31 hammerc
+ * Exp $
  *
  * Changes
  * -------
@@ -39,9 +41,8 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A directed weighted graph which is also {@link
@@ -49,24 +50,31 @@ import org._3pq.jgrapht.Edge;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableDirectedWeightedGraph<V, E extends Edge<V>> extends ListenableDirectedGraph<V, E>
-    implements WeightedGraph<V, E> {
+public class ListenableDirectedWeightedGraph<V, E extends Edge<V>>
+    extends ListenableDirectedGraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3977582476627621938L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new listenable directed weighted graph.
      */
-    public ListenableDirectedWeightedGraph(  ) {
-        this( new DefaultDirectedWeightedGraph(  ) );
+    public ListenableDirectedWeightedGraph()
+    {
+        this(new DefaultDirectedWeightedGraph());
     }
-
 
     /**
      * Creates a new listenable directed weighted graph.
      *
      * @param base the backing graph.
      */
-    public ListenableDirectedWeightedGraph( WeightedGraph<V, E> base ) {
-        super( (DirectedGraph) base );
+    public ListenableDirectedWeightedGraph(WeightedGraph<V, E> base)
+    {
+        super((DirectedGraph) base);
     }
 }

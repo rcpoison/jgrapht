@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: BronKerboschCliqueFinderTest.java,v 1.1 2005/07/26 09:56:01 perfecthash
+ * Exp $
  *
  * Changes
  * -------
@@ -38,16 +40,13 @@
  */
 package org._3pq.jgrapht.alg;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.graph.SimpleGraph;
+import java.util.*;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.List;
-import java.util.Collection;
+import junit.framework.*;
 
-import junit.framework.TestCase;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.graph.*;
+
 
 /**
  * .
@@ -56,6 +55,9 @@ import junit.framework.TestCase;
  */
 public class BronKerboschCliqueFinderTest extends TestCase
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
@@ -65,50 +67,54 @@ public class BronKerboschCliqueFinderTest extends TestCase
     private static final String V7 = "v7";
     private static final String V8 = "v8";
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * .
      *
      * @param g
      */
-    public void createGraph( Graph<String, Edge<String>> g ) {
-        g.addVertex( V1 );
-        g.addVertex( V2 );
-        g.addVertex( V3 );
-        g.addVertex( V4 );
-        g.addVertex( V5 );
-        g.addVertex( V6 );
-        g.addVertex( V7 );
-        g.addVertex( V8 );
+    public void createGraph(Graph<String, Edge<String>> g)
+    {
+        g.addVertex(V1);
+        g.addVertex(V2);
+        g.addVertex(V3);
+        g.addVertex(V4);
+        g.addVertex(V5);
+        g.addVertex(V6);
+        g.addVertex(V7);
+        g.addVertex(V8);
 
         // biggest clique:  { V1, V2, V3, V4 }
-        g.addEdge( V1, V2 );
-        g.addEdge( V1, V3 );
-        g.addEdge( V1, V4 );
-        g.addEdge( V2, V3 );
-        g.addEdge( V2, V4 );
-        g.addEdge( V3, V4 );
+        g.addEdge(V1, V2);
+        g.addEdge(V1, V3);
+        g.addEdge(V1, V4);
+        g.addEdge(V2, V3);
+        g.addEdge(V2, V4);
+        g.addEdge(V3, V4);
 
         // smaller clique:  { V5, V6, V7 }
-        g.addEdge( V5, V6 );
-        g.addEdge( V5, V7 );
-        g.addEdge( V6, V7 );
+        g.addEdge(V5, V6);
+        g.addEdge(V5, V7);
+        g.addEdge(V6, V7);
 
         // for fun, add an overlapping clique { V3, V4, V5 }
-        g.addEdge( V3, V5 );
-        g.addEdge( V4, V5 );
+        g.addEdge(V3, V5);
+        g.addEdge(V4, V5);
 
         // make V8 less lonely
-        g.addEdge( V7, V8 );
+        g.addEdge(V7, V8);
     }
-    
-    public void testFindBiggest(  ) {
+
+    public void testFindBiggest()
+    {
         SimpleGraph<String, Edge<String>> g =
-            new SimpleGraph<String, Edge<String>>(  );
-        createGraph( g );
+            new SimpleGraph<String, Edge<String>>();
+        createGraph(g);
 
         BronKerboschCliqueFinder<String, Edge<String>> finder =
             new BronKerboschCliqueFinder<String, Edge<String>>(g);
-        
+
         Collection<Set<String>> cliques = finder.getBiggestMaximalCliques();
 
         assertEquals(1, cliques.size());
@@ -123,15 +129,16 @@ public class BronKerboschCliqueFinderTest extends TestCase
 
         assertEquals(expected, actual);
     }
-    
-    public void testFindAll(  ) {
+
+    public void testFindAll()
+    {
         SimpleGraph<String, Edge<String>> g =
-            new SimpleGraph<String, Edge<String>>(  );
-        createGraph( g );
+            new SimpleGraph<String, Edge<String>>();
+        createGraph(g);
 
         BronKerboschCliqueFinder<String, Edge<String>> finder =
             new BronKerboschCliqueFinder<String, Edge<String>>(g);
-        
+
         Collection<Set<String>> cliques = finder.getAllMaximalCliques();
 
         assertEquals(4, cliques.size());
@@ -168,7 +175,6 @@ public class BronKerboschCliqueFinderTest extends TestCase
 
         assertEquals(expected, actual);
     }
-    
 }
 
 // End BronKerboschCliqueFinderTest.java

@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -39,38 +40,43 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.edge.EdgeFactories;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A directed graph. A directed graph is a non-simple directed graph in which
  * multiple edges between any two vertices are <i>not</i> permitted, but loops
  * are.
- * 
- * <p>
- * prefixed 'Default' to avoid name collision with the DirectedGraph interface.
- * </p>
+ *
+ * <p>prefixed 'Default' to avoid name collision with the DirectedGraph
+ * interface.</p>
  */
-public class DefaultDirectedGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
-    implements DirectedGraph<V, E> {
+public class DefaultDirectedGraph<V, E extends Edge<V>>
+    extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3544953246956466230L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new directed graph.
      */
-    public DefaultDirectedGraph(  ) {
-        this( new EdgeFactories.DirectedEdgeFactory(  ) );
+    public DefaultDirectedGraph()
+    {
+        this(new EdgeFactories.DirectedEdgeFactory());
     }
-
 
     /**
      * Creates a new directed graph with the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      */
-    public DefaultDirectedGraph( EdgeFactory<V, E> ef ) {
-        super( ef, false, true );
+    public DefaultDirectedGraph(EdgeFactory<V, E> ef)
+    {
+        super(ef, false, true);
     }
 }

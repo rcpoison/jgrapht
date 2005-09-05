@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------------
@@ -29,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: DefaultDirectedWeightedGraph.java,v 1.3 2005/07/19 09:03:31 hammerc Exp
+ * $
  *
  * Changes
  * -------
@@ -39,41 +41,45 @@
  */
 package org._3pq.jgrapht.graph;
 
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.WeightedGraph;
-import org._3pq.jgrapht.edge.EdgeFactories;
-import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.*;
+
 
 /**
  * A directed weighted graph. A directed weighted graph is a non-simple
- * directed graph in which multiple edges between any two vertices are
- * <i>not</i> permitted, but loops are. The graph has weights on its edges.
- * 
- * <p>
- * prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
- * interface.
- * </p>
+ * directed graph in which multiple edges between any two vertices are <i>
+ * not</i> permitted, but loops are. The graph has weights on its edges.
+ *
+ * <p>prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
+ * interface.</p>
  *
  * @see org._3pq.jgrapht.graph.DefaultDirectedGraph
  */
 public class DefaultDirectedWeightedGraph<V, E extends Edge<V>>
-    extends DefaultDirectedGraph<V,E> implements WeightedGraph<V,E> {
+    extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>
+{
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3761405317841171513L;
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new directed weighted graph.
      */
-    public DefaultDirectedWeightedGraph(  ) {
-        this( new EdgeFactories.DirectedWeightedEdgeFactory(  ) );
+    public DefaultDirectedWeightedGraph()
+    {
+        this(new EdgeFactories.DirectedWeightedEdgeFactory());
     }
-
 
     /**
      * Creates a new directed weighted graph with the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      */
-    public DefaultDirectedWeightedGraph( EdgeFactory<V, E> ef ) {
-        super( ef );
+    public DefaultDirectedWeightedGraph(EdgeFactory<V, E> ef)
+    {
+        super(ef);
     }
 }

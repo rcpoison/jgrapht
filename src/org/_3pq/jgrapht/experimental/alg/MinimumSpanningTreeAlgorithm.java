@@ -18,23 +18,29 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 package org._3pq.jgrapht.experimental.alg;
 
-import org._3pq.jgrapht.WeightedGraph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A MinimumSpanningTreeAlgorithm.
  *
  * @author Michael Behrisch
  */
-public interface MinimumSpanningTreeAlgorithm {
+public interface MinimumSpanningTreeAlgorithm
+{
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Determines a minimum spanning tree in the weighted graph.
      *
      * @return A WeightedGraph comprising of a minimum spanning tree.
      */
-    public WeightedGraph minSpanTree(  );
+    public WeightedGraph minSpanTree();
 }

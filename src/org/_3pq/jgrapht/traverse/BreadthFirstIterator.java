@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------------
@@ -41,10 +42,10 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import java.util.LinkedList;
+import java.util.*;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.*;
+
 
 /**
  * A breadth-first iterator for a directed and an undirected graph. For this
@@ -53,71 +54,82 @@ import org._3pq.jgrapht.Graph;
  * of such modifications are undefined.
  *
  * @author Barak Naveh
- *
  * @since Jul 19, 2003
  */
-public class BreadthFirstIterator<V, E extends Edge<V>, D> extends CrossComponentIterator<V, E, D> {
+public class BreadthFirstIterator<V, E extends Edge<V>, D>
+    extends CrossComponentIterator<V, E, D>
+{
+
+    //~ Instance fields -------------------------------------------------------
+
     /**
      * <b>Note to users:</b> this queue implementation is a bit lame in terms
      * of GC efficiency. If you need it to be improved either let us know or
      * use the source...
      */
-    private LinkedList<V> m_queue = new LinkedList(  );
+    private LinkedList<V> m_queue = new LinkedList();
+
+    //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new breadth-first iterator for the specified graph.
      *
      * @param g the graph to be iterated.
      */
-    public BreadthFirstIterator( Graph<V, E> g ) {
-        this( g, null );
+    public BreadthFirstIterator(Graph<V, E> g)
+    {
+        this(g, null);
     }
-
 
     /**
      * Creates a new breadth-first iterator for the specified graph. Iteration
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
-     * vertex is <code>null</code>, iteration will start at an arbitrary
-     * vertex and will not be limited, that is, will be able to traverse all
-     * the graph.
+     * vertex is <code>null</code>, iteration will start at an arbitrary vertex
+     * and will not be limited, that is, will be able to traverse all the
+     * graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      */
-    public BreadthFirstIterator( Graph<V, E> g, V startVertex ) {
-        super( g, startVertex );
+    public BreadthFirstIterator(Graph<V, E> g, V startVertex)
+    {
+        super(g, startVertex);
     }
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
-    protected boolean isConnectedComponentExhausted(  ) {
-        return m_queue.isEmpty(  );
+    protected boolean isConnectedComponentExhausted()
+    {
+        return m_queue.isEmpty();
     }
-
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertex( V vertex, E edge ) {
-        putSeenData( vertex, null );
-        m_queue.add( vertex );
+    protected void encounterVertex(V vertex, E edge)
+    {
+        putSeenData(vertex, null);
+        m_queue.add(vertex);
     }
-
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected void encounterVertexAgain( V vertex, E edge ) {}
-
+    protected void encounterVertexAgain(V vertex, E edge)
+    {
+    }
 
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected V provideNextVertex(  ) {
-        return m_queue.removeFirst(  );
+    protected V provideNextVertex()
+    {
+        return m_queue.removeFirst();
     }
 }
