@@ -76,8 +76,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
      *               unbounded search
      */
-    public DijkstraShortestPath(
-        Graph<V, E> graph,
+    public DijkstraShortestPath(Graph<V, E> graph,
         V startVertex,
         V endVertex,
         double radius)
@@ -133,8 +132,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      *
      * @return List of Edges, or null if no path exists
      */
-    public static <V, E extends Edge<V>> List findPathBetween(
-        Graph<V, E> graph,
+    public static <V, E extends Edge<V>> List findPathBetween(Graph<V, E> graph,
         V startVertex,
         V endVertex)
     {

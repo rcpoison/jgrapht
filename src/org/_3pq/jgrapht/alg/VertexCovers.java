@@ -81,8 +81,7 @@ public abstract class VertexCovers
      * @return a set of vertices which is a vertex cover for the specified
      *         graph.
      */
-    public static <V, E extends Edge<V>> Set<V> find2ApproximationCover(
-        Graph<V, E> g)
+    public static <V, E extends Edge<V>> Set<V> find2ApproximationCover(Graph<V, E> g)
     {
         // C <-- {}
         Set<V> cover = new HashSet();
@@ -125,8 +124,7 @@ public abstract class VertexCovers
      * @return a set of vertices which is a vertex cover for the specified
      *         graph.
      */
-    public static <V, E extends Edge<V>> Set<V> findGreedyCover(
-        UndirectedGraph<V, E> g)
+    public static <V, E extends Edge<V>> Set<V> findGreedyCover(UndirectedGraph<V, E> g)
     {
         // C <-- {}
         Set<V> cover = new HashSet();

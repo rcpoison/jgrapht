@@ -30,7 +30,8 @@
  * Original Author:  Marden Neubert
  * Contributor(s):   Barak Naveh, John V. Sichi
  *
- * $Id$
+ * $Id: TopologicalOrderIterator.java,v 1.4 2005/09/05 04:00:57 perfecthash Exp
+ * $
  *
  * Changes
  * -------
@@ -96,8 +97,7 @@ public class TopologicalOrderIterator<V, E extends Edge<V>, D>
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
-    private TopologicalOrderIterator(
-        DirectedGraph<V, E> dg,
+    private TopologicalOrderIterator(DirectedGraph<V, E> dg,
         LinkedList<V> queue,
         Map inDegreeMap)
     {
@@ -181,8 +181,7 @@ public class TopologicalOrderIterator<V, E extends Edge<V>, D>
      *
      * @return start vertex
      */
-    private static <V, E extends Edge<V>> V initialize(
-        DirectedGraph<V, E> dg,
+    private static <V, E extends Edge<V>> V initialize(DirectedGraph<V, E> dg,
         LinkedList<V> queue,
         Map inDegreeMap)
     {

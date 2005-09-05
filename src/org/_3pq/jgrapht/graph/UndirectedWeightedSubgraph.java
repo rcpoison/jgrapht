@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: UndirectedWeightedSubgraph.java,v 1.7 2005/09/05 04:00:57 perfecthash
+ * Exp $
  *
  * Changes
  * -------
@@ -71,8 +72,7 @@ public class UndirectedWeightedSubgraph<V, E extends Edge<V>>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public UndirectedWeightedSubgraph(
-        WeightedGraph<V, E> base,
+    public UndirectedWeightedSubgraph(WeightedGraph<V, E> base,
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {

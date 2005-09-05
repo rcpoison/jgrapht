@@ -270,8 +270,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
 
     private void checkRadiusTraversal(boolean crossComponentTraversal)
     {
-        if (
-            crossComponentTraversal && (m_radius != Double.POSITIVE_INFINITY)) {
+        if (crossComponentTraversal && (m_radius != Double.POSITIVE_INFINITY)) {
             throw new IllegalArgumentException(
                 "radius may not be specified for cross-component traversal");
         }

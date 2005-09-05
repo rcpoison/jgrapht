@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
@@ -34,33 +35,45 @@
  */
 package org._3pq.jgrapht.alg.isomorphism.comparators;
 
-import org._3pq.jgrapht.util.equivalence.EquivalenceComparator;
+import org._3pq.jgrapht.util.equivalence.*;
 
 
-/** comparator which defines two groups of integers.
- * Odds (mod2=1) and Evens(mod2=0)
- * Works only on Integers.
- *  @author Assaf
- *	@since	Jul 22, 2005
+/**
+ * Comparator which defines two groups of integers. Odds (mod2=1) and
+ * Evens(mod2=0). Works only on Integers.
  *
+ * @author Assaf
+ * @since Jul 22, 2005
  */
 public class OddEvenGroupComparator implements EquivalenceComparator
 {
 
-	public boolean equivalenceCompare(Object arg1, Object arg2, Object context1, Object context2) {
-		int int1=((Integer)arg1).intValue();
-		int int2=((Integer)arg2).intValue();
-		
-		boolean result = (int1 % 2 == int2 %2);
-		return result;
-	}
+    //~ Methods ---------------------------------------------------------------
 
-	/* odd and even must have unique values
-	 * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object)
-	 */
-	public int equivalenceHashcode(Object arg1, Object context) {
-		int int1=((Integer)arg1).intValue();
-		return int1%2;
-	}
-	
+    public boolean equivalenceCompare(
+        Object arg1,
+        Object arg2,
+        Object context1,
+        Object context2)
+    {
+        int int1 = ((Integer) arg1).intValue();
+        int int2 = ((Integer) arg2).intValue();
+
+        boolean result = ((int1 % 2) == (int2 % 2));
+        return result;
+    }
+
+    /* Odd and even must have unique values.
+     * @see
+     *
+     *
+     *
+     *
+     * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object)
+     */
+    public int equivalenceHashcode(Object arg1, Object context)
+    {
+        int int1 = ((Integer) arg1).intValue();
+        return int1 % 2;
+    }
 }

@@ -248,8 +248,7 @@ public class JGraphModelAdapter extends DefaultGraphModel
     {
         super();
 
-        if (
-            (jGraphTGraph == null) || (defaultVertexAttributes == null)
+        if ((jGraphTGraph == null) || (defaultVertexAttributes == null)
             || (defaultEdgeAttributes == null) || (cellFactory == null)) {
             throw new IllegalArgumentException("null is NOT permitted");
         }
@@ -484,8 +483,7 @@ public class JGraphModelAdapter extends DefaultGraphModel
                 Object jtSource = m_cellToVertex.get(jSource);
                 Object jtTarget = m_cellToVertex.get(jTarget);
 
-                if (
-                    (jtEdge.getSource() == jtSource)
+                if ((jtEdge.getSource() == jtSource)
                     && (jtEdge.getTarget() == jtTarget)) {
                     // no change in edge's endpoints -- nothing to do.
                 } else {
@@ -953,8 +951,7 @@ public class JGraphModelAdapter extends DefaultGraphModel
                     // vertex.
                     // Note: do not change the order of following conditions;
                     // the code uses the short-circuit evaluation of ||.
-                    if (
-                        graphCell.isLeaf()
+                    if (graphCell.isLeaf()
                         || (graphCell.getFirstChild() instanceof Port)) {
                         jVertices.add(cell);
                     }

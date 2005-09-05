@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: ListenableDirectedGraph.java,v 1.4 2005/09/05 04:00:57 perfecthash Exp
+ * $
  *
  * Changes
  * -------

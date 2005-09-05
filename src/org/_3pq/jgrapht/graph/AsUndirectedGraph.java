@@ -212,8 +212,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
 
         while (iter.hasNext()) {
             Edge edge = iter.next();
-            edgeSet.add(
-                new UndirectedEdge(edge.getSource(),
+            edgeSet.add(new UndirectedEdge(edge.getSource(),
                     edge.getTarget()));
         }
 

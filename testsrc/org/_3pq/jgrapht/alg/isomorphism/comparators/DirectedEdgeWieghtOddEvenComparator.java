@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * DirectedEdgeWieghtOddEvenComparator.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -34,37 +35,57 @@
  */
 package org._3pq.jgrapht.alg.isomorphism.comparators;
 
-import org._3pq.jgrapht.edge.DirectedWeightedEdge;
-import org._3pq.jgrapht.util.equivalence.EquivalenceComparator;
+import org._3pq.jgrapht.edge.*;
+import org._3pq.jgrapht.util.equivalence.*;
+
 
 /**
- *  eq.set according to the weights of the edges.
- * Uses (int)Edge.getWeight() and checks odd/even.
- *	@author Assaf
- *	@since	Aug 12, 2005
+ * eq.set according to the weights of the edges. Uses (int)Edge.getWeight() and
+ * checks odd/even.
  *
+ * @author Assaf
+ * @since Aug 12, 2005
  */
-public class DirectedEdgeWieghtOddEvenComparator 
-		implements EquivalenceComparator {
+public class DirectedEdgeWieghtOddEvenComparator
+    implements EquivalenceComparator
+{
 
-	/* (non-Javadoc)
-	 * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
-	 */
-	public boolean equivalenceCompare(Object arg1, Object arg2, Object context1, Object context2) {
-		int int1=(int) ((DirectedWeightedEdge)arg1).getWeight();
-		int int2=(int) ((DirectedWeightedEdge)arg2).getWeight();
-		
-		boolean result = (int1 % 2 == int2 %2);
-		return result;
-	}
+    //~ Methods ---------------------------------------------------------------
 
-	/* (non-Javadoc)
-	 * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object, java.lang.Object)
-	 */
-	public int equivalenceHashcode(Object arg1, Object context) {
-		int int1=(int) ((DirectedWeightedEdge)arg1).getWeight();
-		return int1%2;
-	}
-	
+    /* (non-Javadoc)
+     * @see
+     *
+     *
+     *
+     *
+     * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
+     * java.lang.Object, java.lang.Object, java.lang.Object)
+     */
+    public boolean equivalenceCompare(
+        Object arg1,
+        Object arg2,
+        Object context1,
+        Object context2)
+    {
+        int int1 = (int) ((DirectedWeightedEdge) arg1).getWeight();
+        int int2 = (int) ((DirectedWeightedEdge) arg2).getWeight();
 
+        boolean result = ((int1 % 2) == (int2 % 2));
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see
+     *
+     *
+     *
+     *
+     * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
+     * java.lang.Object)
+     */
+    public int equivalenceHashcode(Object arg1, Object context)
+    {
+        int int1 = (int) ((DirectedWeightedEdge) arg1).getWeight();
+        return int1 % 2;
+    }
 }

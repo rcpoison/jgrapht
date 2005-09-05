@@ -126,8 +126,7 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
         return biggest_cliques;
     }
 
-    private void findCliques(
-        List<V> potential_clique,
+    private void findCliques(List<V> potential_clique,
         List<V> candidates,
         List<V> already_found)
     {

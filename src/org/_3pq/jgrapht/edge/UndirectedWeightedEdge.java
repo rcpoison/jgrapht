@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: UndirectedWeightedEdge.java,v 1.11 2005/09/05 04:00:56 perfecthash Exp
+ * $
  *
  * Changes
  * -------

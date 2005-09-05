@@ -74,13 +74,11 @@ public class NearestNeighborTSPAlgorithm extends WeightedGraphAlgorithm
             double min = Double.POSITIVE_INFINITY;
             Edge next = null;
 
-            for (
-                Iterator it = _wgraph.edgesOf(posVertex).iterator();
+            for (Iterator it = _wgraph.edgesOf(posVertex).iterator();
                 it.hasNext();) {
                 Edge edge = (Edge) it.next();
 
-                if (
-                    !used.contains(edge.oppositeVertex(posVertex))
+                if (!used.contains(edge.oppositeVertex(posVertex))
                     && (edge.getWeight() < min)) {
                     min = edge.getWeight();
                     next = edge;

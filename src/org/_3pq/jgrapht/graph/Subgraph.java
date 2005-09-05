@@ -149,8 +149,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         m_base = base;
 
         if (m_base instanceof ListenableGraph) {
-            ((ListenableGraph<V, E>) m_base).addGraphListener(
-                new BaseGraphListener());
+            ((ListenableGraph<V, E>) m_base).addGraphListener(new BaseGraphListener());
         }
 
         addVerticesUsingFilter(base.vertexSet(), vertexSubset);

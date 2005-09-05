@@ -615,7 +615,7 @@
           <after>
             <argument>true</argument>
             <assignment>true</assignment>
-            <leftParenthesis>true</leftParenthesis>
+            <leftParenthesis>false</leftParenthesis>
             <param>true</param>
             <parameter>false</parameter>
             <return>true</return>

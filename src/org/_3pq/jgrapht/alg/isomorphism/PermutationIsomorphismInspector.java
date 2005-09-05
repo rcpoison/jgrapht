@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * PermutationIsomorphismInspector.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -34,89 +35,102 @@
  */
 package org._3pq.jgrapht.alg.isomorphism;
 
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.util.equivalence.EquivalenceComparator;
-import org._3pq.jgrapht.util.permutation.CollectionPermutationIter;
+import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.util.equivalence.*;
+import org._3pq.jgrapht.util.permutation.*;
+
 
 /**
- *  Check every possible permutation. 
- *  <p> It does not uses the graph topology to enhance the performance.
- *  It is recommended to use only if there cannot be a useful division 
- *  to equivalence sets.
- *	@author Assaf
- *	@since	Jul 29, 2005
+ * Checks every possible permutation.
  *
+ * <p>It does not uses the graph topology to enhance the performance. It is
+ * recommended to use only if there cannot be a useful division into
+ * equivalence sets.
+ *
+ * @author Assaf
+ * @since Jul 29, 2005
  */
-class PermutationIsomorphismInspector extends
-		AbstractExhaustiveIsomorphismInspector {
-	
-	/**
-	 * @param graph1
-	 * @param graph2
-	 * @param vertexChecker	eq. group checker for vertexes . If null , UniformEquivalenceComparator
-	 * will be used as default (always return true)
-	 * @param edgeChecker eq. group checker for edges . If null , UniformEquivalenceComparator
-	 * will be used as default (always return true)
-	 */
-	public PermutationIsomorphismInspector(Graph graph1,Graph graph2,EquivalenceComparator vertexChecker,
-			EquivalenceComparator edgeChecker)
-	{ 
-		super(graph1,graph2,vertexChecker,edgeChecker);
-	} 
-	/**
-	 * constructor. Uses the default comparators.
-	 * @see ExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
-	 */
-	public PermutationIsomorphismInspector(Graph graph1,Graph graph2)
-	{
-		super(graph1,graph2);
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * create the permuatation iterator , not dependant on equilty group , or the
-	 * other vertexset.
-	 * @param vertexSet
-	 * @return
-	 */
-	protected CollectionPermutationIter createPermutationIterator(Set vertexSet1,Set vertexSet2)
-	{
-		return  new CollectionPermutationIter(vertexSet2);	
-	}
-	
-	/** 
-	 * 
-	 * @param vertexSet1
-	 * @param vertexSet2
-	 * @return
-	 */
-	protected boolean areVertexSetsOfTheSameEqualityGroup(Set vertexSet1,Set vertexSet2)
-	{
-		
-			if (vertexSet1.size()!=vertexSet2.size())
-			{
-				return false;
-			}
-			Iterator iter2 = vertexSet2.iterator();
-			//only check hasNext() of one , cause they are of the same size
-			for (Iterator iter1 = vertexSet1.iterator(); iter1.hasNext();) {
-				Object vertex1 = (Object) iter1.next();
-				Object vertex2 = (Object) iter2.next();
-				if (!this.vertexComparator.equivalenceCompare(vertex1,vertex2, this.graph1, this.graph2))
-				{
-					return false;
-				}
-				
-			}
-			return true;
-			
-		}
+class PermutationIsomorphismInspector
+    extends AbstractExhaustiveIsomorphismInspector
+{
 
+    //~ Constructors ----------------------------------------------------------
+
+    /**
+     * @param graph1
+     * @param graph2
+     * @param vertexChecker eq. group checker for vertexes. If null,
+     *                      UniformEquivalenceComparator will be used as
+     *                      default (always return true)
+     * @param edgeChecker eq. group checker for edges. If null,
+     *                    UniformEquivalenceComparator will be used as default
+     *                    (always return true)
+     */
+    public PermutationIsomorphismInspector(
+        Graph graph1,
+        Graph graph2,
+        EquivalenceComparator vertexChecker,
+        EquivalenceComparator edgeChecker)
+    {
+        super(graph1, graph2, vertexChecker, edgeChecker);
+    }
+
+    /**
+     * Constructor which uses the default comparators.
+     *
+     * @see ExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
+     */
+    public PermutationIsomorphismInspector(Graph graph1, Graph graph2)
+    {
+        super(graph1, graph2);
+    }
+
+    //~ Methods ---------------------------------------------------------------
+
+    /**
+     * Creates the permutation iterator, not dependant on equality group, or
+     * the other vertexset.
+     *
+     * @param vertexSet
+     *
+     * @return
+     */
+    protected CollectionPermutationIter createPermutationIterator(
+        Set vertexSet1,
+        Set vertexSet2)
+    {
+        return new CollectionPermutationIter(vertexSet2);
+    }
+
+    /**
+     * @param vertexSet1
+     * @param vertexSet2
+     *
+     * @return
+     */
+    protected boolean areVertexSetsOfTheSameEqualityGroup(
+        Set vertexSet1,
+        Set vertexSet2)
+    {
+        if (vertexSet1.size() != vertexSet2.size()) {
+            return false;
+        }
+        Iterator iter2 = vertexSet2.iterator();
+
+        // only check hasNext() of one , cause they are of the same size
+        for (Iterator iter1 = vertexSet1.iterator(); iter1.hasNext();) {
+            Object vertex1 = (Object) iter1.next();
+            Object vertex2 = (Object) iter2.next();
+            if (!this.vertexComparator.equivalenceCompare(
+                    vertex1,
+                    vertex2,
+                    this.graph1,
+                    this.graph2)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

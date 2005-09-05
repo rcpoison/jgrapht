@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * IntegerVertexFactory.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -34,39 +35,49 @@
  */
 package org._3pq.jgrapht.alg.isomorphism;
 
-import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.*;
+
 
 /**
- *  use createVertex() to get the next Integers , their value start with One after the constructor
- *  value. 
- * <p>for example : IntegerVertexFactory(10);  the first createVertex() will return Integer=11
- *	@author Assaf
- *	@since	May 25, 2005
+ * Implements createVertex() by producing a sequence of Integers; their values
+ * start with the successor to the constructor value.
  *
+ * <p>for example : IntegerVertexFactory(10);  the first createVertex() will
+ * return Integer=11
+ *
+ * @author Assaf
+ * @since May 25, 2005
  */
-public class IntegerVertexFactory implements VertexFactory {
-	private int counter; 
+public class IntegerVertexFactory implements VertexFactory
+{
 
-	/**
-	 * same as IntegerVertexFactory(0);
-	 * 
-	 *	@author Assaf
-	 *	@since	Aug 6, 2005
-	 *
-	 */
-	public IntegerVertexFactory()
-	{	
-		this(0);
-	}
-	public IntegerVertexFactory(int oneBeforeFirstValue)
-	{
-		this.counter = oneBeforeFirstValue;
-	}
-	
-	
-	public Object createVertex() {
-		this.counter++;
-		return new Integer(this.counter);
-	}
+    //~ Instance fields -------------------------------------------------------
 
+    private int counter;
+
+    //~ Constructors ----------------------------------------------------------
+
+    /**
+     * Equivalent to IntegerVertexFactory(0);
+     *
+     * @author Assaf
+     * @since Aug 6, 2005
+     */
+    public IntegerVertexFactory()
+    {
+        this(0);
+    }
+
+    public IntegerVertexFactory(int oneBeforeFirstValue)
+    {
+        this.counter = oneBeforeFirstValue;
+    }
+
+    //~ Methods ---------------------------------------------------------------
+
+    public Object createVertex()
+    {
+        this.counter++;
+        return new Integer(this.counter);
+    }
 }

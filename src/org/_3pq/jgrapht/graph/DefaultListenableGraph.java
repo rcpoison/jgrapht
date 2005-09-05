@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: DefaultListenableGraph.java,v 1.15 2005/09/05 04:00:57 perfecthash Exp
+ * $
  *
  * Changes
  * -------
@@ -385,8 +386,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
         }
     }
 
-    private static <L extends EventListener> void addToListenerList(
-        List<L> list,
+    private static <L extends EventListener> void addToListenerList(List<L> list,
         L l)
     {
         if (!list.contains(l)) {

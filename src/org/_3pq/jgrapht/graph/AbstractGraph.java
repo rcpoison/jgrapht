@@ -211,8 +211,7 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @return a string representation of (V,E)
      */
-    protected String toStringFromSets(
-        Collection<V> vertexSet,
+    protected String toStringFromSets(Collection<V> vertexSet,
         Collection<E> edgeSet)
     {
         return "(" + vertexSet.toString() + ", " + edgeSet.toString() + ")";

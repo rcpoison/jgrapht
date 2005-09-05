@@ -112,8 +112,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      * @throws NullPointerException if the specified edge factory is <code>
      *                              null</code>.
      */
-    public AbstractBaseGraph(
-        EdgeFactory<V, E> ef,
+    public AbstractBaseGraph(EdgeFactory<V, E> ef,
         boolean allowMultipleEdges,
         boolean allowLoops)
     {
@@ -207,8 +206,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         assertVertexExist(sourceVertex);
         assertVertexExist(targetVertex);
 
-        if (
-            !m_allowingMultipleEdges
+        if (!m_allowingMultipleEdges
             && containsEdge(sourceVertex, targetVertex)) {
             return null;
         }
@@ -249,8 +247,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
 
         assertCompatibleWithEdgeFactory(e);
 
-        if (
-            !m_allowingMultipleEdges
+        if (!m_allowingMultipleEdges
             && containsEdge(sourceVertex, targetVertex)) {
             return false;
         }

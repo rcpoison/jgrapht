@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: TraversalListenerAdapter.java,v 1.4 2005/09/05 04:00:56 perfecthash Exp
+ * $
  *
  * Changes
  * -------

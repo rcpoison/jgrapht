@@ -34,8 +34,7 @@ public final class GraphTests
 
         if (numEdges < (numVertices - 1))
             return false;
-        if (
-            (numVertices < 2)
+        if ((numVertices < 2)
             || (numEdges > ((numVertices - 1) * (numVertices - 2) / 2)))
             return true;
 
@@ -48,8 +47,7 @@ public final class GraphTests
 
         while (!queue.isEmpty()) {
             v = queue.removeFirst();
-            for (
-                Iterator it = GraphHelper.neighborListOf(g, v).iterator();
+            for (Iterator it = GraphHelper.neighborListOf(g, v).iterator();
                 it.hasNext();) {
                 v = it.next();
                 if (!known.contains(v)) {
@@ -70,8 +68,7 @@ public final class GraphTests
 
     public static boolean isBipartite(Graph g)
     {
-        if (
-            (4 * g.edgeSet().size())
+        if ((4 * g.edgeSet().size())
             > (g.vertexSet().size() * g.vertexSet().size()))
             return false;
         if (isEmpty(g))
@@ -92,8 +89,7 @@ public final class GraphTests
             v = queue.removeFirst();
             unknown.remove(v);
 
-            for (
-                Iterator it = GraphHelper.neighborListOf(g, v).iterator();
+            for (Iterator it = GraphHelper.neighborListOf(g, v).iterator();
                 it.hasNext();) {
                 Object n = it.next();
                 if (unknown.contains(n)) {

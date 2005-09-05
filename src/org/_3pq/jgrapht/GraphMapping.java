@@ -18,7 +18,8 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
@@ -26,7 +27,7 @@
  * -----------------
  * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
- * Original Author:  Assaf Lehr 
+ * Original Author:  Assaf Lehr
  * Contributor(s):   John V. Sichi
  *
  * Changes
@@ -35,23 +36,28 @@
 package org._3pq.jgrapht;
 
 /**
- * GraphMapping is a bidirectional mapping between two graphs , which allows
- * the caller to obtain the matching vertex or edge in either direction,
- * from graph1 to graph2 , or from graph2 to graph2.
- * It does not have to always be a complete bidirectional mapping (it
- * could return null for some lookups)
- *	@author Assaf Lehr 
- *	@since	Jul 30, 2005
+ * GraphMapping represents a bidirectional mapping between two graphs (called
+ * graph1 and graph2), which allows the caller to obtain the matching vertex or
+ * edge in either direction, from graph1 to graph2, or from graph2 to graph1.
+ * It does not have to always be a complete bidirectional mapping (it could
+ * return null for some lookups).
  *
+ * @author Assaf Lehr
+ * @since Jul 30, 2005
  */
-public interface GraphMapping 
+public interface GraphMapping
 {
-	/**
-	 * get the mapped value where the key is <code>ertexOrEdge</code> 
-	 * @param vertexOrEdge 
-	 * @param forward if true , uses mapping from graph1 to graph2. if false , use
-	 * the oppoiste.
-	 * @return
-	 */
-    public Object getCorrespondence(Object vertexOrEdge,boolean forward);
+
+    //~ Methods ---------------------------------------------------------------
+
+    /**
+     * Gets the mapped value where the key is <code>vertexOrEdge</code>
+     *
+     * @param vertexOrEdge component in one of the graphs
+     * @param forward if true, uses mapping from graph1 to graph2; if false,
+     *                use mapping from graph2 to graph1
+     *
+     * @return corresponding component in other graph
+     */
+    public Object getCorrespondence(Object vertexOrEdge, boolean forward);
 }

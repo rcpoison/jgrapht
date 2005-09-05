@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * AllIsomorphismTests.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -34,37 +35,41 @@
  */
 package org._3pq.jgrapht.alg.isomorphism;
 
+import junit.framework.*;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org._3pq.jgrapht.generate.*;
+import org._3pq.jgrapht.util.equivalence.*;
+import org._3pq.jgrapht.util.permutation.*;
 
-import org._3pq.jgrapht.generate.RandomGraphGeneratorTest;
-import org._3pq.jgrapht.util.equivalence.EquivalenceGroupCreatorTest;
-import org._3pq.jgrapht.util.permutation.CompoundPermutationIterTest;
 
 /**
- * 
- *	@author Assaf
- *	@since	May 27, 2005
- *
+ * @author Assaf
+ * @since May 27, 2005
  */
-public class AllIsomorphismTests {
+public class AllIsomorphismTests
+{
 
-	public static void main(String[] args) {
-		junit.textui.TestRunner.run(AllIsomorphismTests.suite());
-	}
+    //~ Methods ---------------------------------------------------------------
 
-	public static Test suite() {
-		TestSuite suite = new TestSuite(
-				"Test for org._3pq.jgrapht.alg.isomorphism.tests");
-		//$JUnit-BEGIN$
-		suite.addTestSuite(IsomorphismInspectorTest.class);
-		suite.addTestSuite(CompoundPermutationIterTest.class);
-		suite.addTestSuite(RandomGraphGeneratorTest.class);
+    public static void main(String [] args)
+    {
+        junit.textui.TestRunner.run(AllIsomorphismTests.suite());
+    }
 
-		suite.addTestSuite(EquivalenceGroupCreatorTest.class);
-				
-		//$JUnit-END$
-		return suite;
-	}
+    public static Test suite()
+    {
+        TestSuite suite =
+            new TestSuite(
+                "Test for org._3pq.jgrapht.alg.isomorphism.tests");
+
+        // $JUnit-BEGIN$
+        suite.addTestSuite(IsomorphismInspectorTest.class);
+        suite.addTestSuite(CompoundPermutationIterTest.class);
+        suite.addTestSuite(RandomGraphGeneratorTest.class);
+
+        suite.addTestSuite(EquivalenceGroupCreatorTest.class);
+
+        // $JUnit-END$
+        return suite;
+    }
 }

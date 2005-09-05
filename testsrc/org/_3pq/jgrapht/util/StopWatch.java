@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * StopWatch.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -34,34 +35,38 @@
  */
 package org._3pq.jgrapht.util;
 
-
 /**
- * 
- *	@author Assaf
- *	@since	May 30, 2005
- *
+ * @author Assaf
+ * @since May 30, 2005
  */
-public class StopWatch {
+public class StopWatch
+{
 
-	long beforeTime;
-	
-	public void start()
-	{
-		this.beforeTime=System.currentTimeMillis();
-	}
-	public void stopAndReport()
-	{
-		long deltaTime=System.currentTimeMillis()-beforeTime;
-		if (deltaTime > 9999)
-		{
-			double deltaTimeSec = deltaTime / 1000.0;
-			System.out.println("# Performence: "+deltaTimeSec + " full Seconds");
-		}
-		else
-		{
-		String timeDesc;
-		timeDesc= deltaTime<=10 ?  "<10ms [less than minumun measurement time]": String.valueOf(deltaTime);
-		System.out.println("# Performence:  in MiliSeconds:"+timeDesc);
-		}
-	}
+    //~ Instance fields -------------------------------------------------------
+
+    long beforeTime;
+
+    //~ Methods ---------------------------------------------------------------
+
+    public void start()
+    {
+        this.beforeTime = System.currentTimeMillis();
+    }
+
+    public void stopAndReport()
+    {
+        long deltaTime = System.currentTimeMillis() - beforeTime;
+        if (deltaTime > 9999) {
+            double deltaTimeSec = deltaTime / 1000.0;
+            System.out.println(
+                "# Performence: " + deltaTimeSec + " full Seconds");
+        } else {
+            String timeDesc;
+            timeDesc =
+                (deltaTime <= 10)
+                ? "<10ms [less than minumun measurement time]"
+                : String.valueOf(deltaTime);
+            System.out.println("# Performence:  in MiliSeconds:" + timeDesc);
+        }
+    }
 }

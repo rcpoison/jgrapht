@@ -71,8 +71,7 @@ public class DirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public DirectedSubgraph(
-        DirectedGraph<V, E> base,
+    public DirectedSubgraph(DirectedGraph<V, E> base,
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {

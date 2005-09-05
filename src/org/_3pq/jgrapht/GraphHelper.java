@@ -79,8 +79,7 @@ public final class GraphHelper
      *
      * @see Graph#addEdge(Object, Object)
      */
-    public static <V, E extends Edge<V>> E addEdge(
-        Graph<V, E> g,
+    public static <V, E extends Edge<V>> E addEdge(Graph<V, E> g,
         V sourceVertex,
         V targetVertex,
         double weight)
@@ -106,8 +105,7 @@ public final class GraphHelper
      * @return <code>true</code> if and only if the specified edge was not
      *         already contained in the graph.
      */
-    public static <V, E extends Edge<V>> boolean addEdgeWithVertices(
-        Graph<V, E> g,
+    public static <V, E extends Edge<V>> boolean addEdgeWithVertices(Graph<V, E> g,
         E e)
     {
         g.addVertex(e.getSource());
@@ -128,8 +126,7 @@ public final class GraphHelper
      * @return The newly created edge if added to the graph, otherwise <code>
      *         null</code>.
      */
-    public static <V, E extends Edge<V>> E addEdgeWithVertices(
-        Graph<V, E> g,
+    public static <V, E extends Edge<V>> E addEdgeWithVertices(Graph<V, E> g,
         V sourceVertex,
         V targetVertex)
     {
@@ -153,8 +150,7 @@ public final class GraphHelper
      * @return The newly created edge if added to the graph, otherwise <code>
      *         null</code>.
      */
-    public static <V, E extends Edge<V>> E addEdgeWithVertices(
-        Graph<V, E> g,
+    public static <V, E extends Edge<V>> E addEdgeWithVertices(Graph<V, E> g,
         V sourceVertex,
         V targetVertex,
         double weight)
@@ -182,8 +178,7 @@ public final class GraphHelper
      * @return <code>true</code> if and only if the destination graph has been
      *         changed as a result of this operation.
      */
-    public static <V, E extends Edge<V>> boolean addGraph(
-        Graph<V, E> destination,
+    public static <V, E extends Edge<V>> boolean addGraph(Graph<V, E> destination,
         Graph<? extends V, ? extends E> source)
     {
         boolean modified = destination.addAllVertices(source.vertexSet());
@@ -229,8 +224,7 @@ public final class GraphHelper
      * @return a list of the vertices that are the neighbors of the specified
      *         vertex.
      */
-    public static <V, E extends Edge<V>> List<V> neighborListOf(
-        Graph<V, E> g,
+    public static <V, E extends Edge<V>> List<V> neighborListOf(Graph<V, E> g,
         V vertex)
     {
         List neighbors = new ArrayList();
@@ -254,8 +248,7 @@ public final class GraphHelper
      * @return a list of the vertices that are the predecessors of the
      *         specified vertex.
      */
-    public static <V, E extends Edge<V>> List<V> predecessorListOf(
-        DirectedGraph<V, E> g,
+    public static <V, E extends Edge<V>> List<V> predecessorListOf(DirectedGraph<V, E> g,
         V vertex)
     {
         List predecessors = new ArrayList();
@@ -280,8 +273,7 @@ public final class GraphHelper
      * @return a list of the vertices that are the successors of the specified
      *         vertex.
      */
-    public static <V, E extends Edge<V>> List<V> successorListOf(
-        DirectedGraph<V, E> g,
+    public static <V, E extends Edge<V>> List<V> successorListOf(DirectedGraph<V, E> g,
         V vertex)
     {
         List successors = new ArrayList();

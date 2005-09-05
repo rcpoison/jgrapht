@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * EquivalenceComparatorChain.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -35,29 +36,32 @@
 package org._3pq.jgrapht.util.equivalence;
 
 /**
- * A container of comparators , which are tested in a chain until the first 
- * result can be supplied. It implements the EquivalenceComparator and can be
- * and it adds EquivalenceComparator , so containers can include other containers.
- * the first check will use the current
- * comparator and not the new one. 
- * so ,Make sure to use the one which has better performance first.
- * 
- * (according to "Composite" design-pattern)
- *	@author Assaf
- *	@since	Jul 22, 2005
+ * A container of comparators, which are tested in a chain until the first
+ * result can be supplied. It implements the EquivalenceComparator, so chains
+ * can include other chains. The first check will use the current comparator
+ * and not the next one. So, make sure to use the one which has better
+ * performance first.  (This class follows the "Composite" design-pattern).
  *
+ * @author Assaf
+ * @since Jul 22, 2005
  */
-public interface EquivalenceComparatorChain extends EquivalenceComparator {
-	
-	/** Adds a comparator which will also test equivalence.
-	 * equivalenceCompare() - The return value is a logical
-	 * AND of the two comparators.the first check will use the current
-	 * comparator before the new one. 
-	 * Make sure to use the one which has better performance first.
-	 * equivalenceHashcode() - The resulting hashes will be rehashed together.
-	 * 
-	 * This method may be used multiple times to create a long "chain" of
-	 * comparators. 
-	 */
-	public void addComparatorAfter(EquivalenceComparator comparatorAfter);
+public interface EquivalenceComparatorChain extends EquivalenceComparator
+{
+
+    //~ Methods ---------------------------------------------------------------
+
+    // REVIEW jvs 5-Sept-2005:  I think the comment below is trying to say that
+    // addComparatorAfter appends its argument to the end of the chain.  Is
+    // that true?  If so, maybe just call it append?
+
+    /**
+     * Adds a comparator which will also test equivalence. For
+     * equivalenceCompare(), the return value is a logical AND of the two
+     * comparators.  The first check will use the first comparator before the
+     * next one. Make sure to put the one which has better performance first.
+     * For equivalenceHashcode(), the resulting hashes will be rehashed
+     * together. This method may be used multiple times to create a long
+     * "chain" of comparators.
+     */
+    public void addComparatorAfter(EquivalenceComparator comparatorAfter);
 }

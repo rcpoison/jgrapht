@@ -74,8 +74,7 @@ public class GraphSquare extends AbstractBaseGraph
         addSquareEdges(g, createLoops);
 
         if (g instanceof ListenableGraph) {
-            ((ListenableGraph) g).addGraphListener(
-                new GraphListener() {
+            ((ListenableGraph) g).addGraphListener(new GraphListener() {
                     public void edgeAdded(GraphEdgeChangeEvent e)
                     {
                         Edge edge = e.getEdge();

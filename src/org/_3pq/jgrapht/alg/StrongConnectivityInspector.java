@@ -211,8 +211,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
             Iterator<Set<V>> iter = sets.iterator();
 
             while (iter.hasNext()) {
-                m_stronglyConnectedSubgraphs.add(
-                    new DirectedSubgraph(
+                m_stronglyConnectedSubgraphs.add(new DirectedSubgraph(
                         m_graph,
                         iter.next(),
                         null));
@@ -247,8 +246,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-    private void dfsVisit(
-        DirectedGraph<V, E> graph,
+    private void dfsVisit(DirectedGraph<V, E> graph,
         VertexData vertexData,
         Set<V> vertices)
     {

@@ -18,13 +18,14 @@
  * License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
  * ArrayPermutationsIter.java
  * -----------------
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
@@ -35,14 +36,18 @@
 package org._3pq.jgrapht.util.permutation;
 
 /**
- *  An interface to iterate on array permutations.
- *  Similiar to Iterator , but with specific return types and without the remove()
- *  method.
- *	@author Assaf
- *	@since	Jul 29, 2005
+ * An interface to iterate over array permutations. Similiar to Iterator, but
+ * with specific return types and without the remove() method.
  *
+ * @author Assaf
+ * @since Jul 29, 2005
  */
-public interface ArrayPermutationsIter {
-	public int[] nextPermutation();
-	public boolean hasNextPermutaions();
+public interface ArrayPermutationsIter
+{
+
+    //~ Methods ---------------------------------------------------------------
+
+    public int [] nextPermutation();
+
+    public boolean hasNextPermutaions();
 }

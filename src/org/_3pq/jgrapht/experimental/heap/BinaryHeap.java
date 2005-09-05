@@ -156,8 +156,7 @@ public class BinaryHeap extends AbstractHeap
             int i = 1;
             Elem c = (Elem) _elems.get((2 * pos) + i);
 
-            if (
-                (((2 * pos) + 2) < size())
+            if ((((2 * pos) + 2) < size())
                 && isSmaller(((Elem) _elems.get((2 * pos) + 2)).x, c.x)) {
                 i++;
                 c = (Elem) _elems.get((2 * pos) + i);
@@ -180,8 +179,7 @@ public class BinaryHeap extends AbstractHeap
     {
         Elem h = (Elem) _elems.get(pos);
 
-        while (
-            (pos != 0)
+        while ((pos != 0)
             && isSmaller(h.x,
                 ((Elem) _elems.get(((pos + 1) / 2) - 1)).x)) {
             Elem p = (Elem) _elems.get(((pos + 1) / 2) - 1);
