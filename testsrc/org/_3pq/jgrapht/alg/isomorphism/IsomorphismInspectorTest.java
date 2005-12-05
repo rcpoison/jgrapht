@@ -352,7 +352,7 @@ public class IsomorphismInspectorTest extends TestCase
 
         // create a functor according to odd even
         EquivalenceComparator edgeEqChecker =
-            new DirectedEdgeWieghtOddEvenComparator();
+            new DirectedEdgeWeightOddEvenComparator();
         assertIsomorphic(new Graph [] {
                 graphsArray[0], graphsArray[1]
             },

@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
- * DirectedEdgeWieghtOddEvenComparator.java
+ * DirectedEdgeWeightOddEvenComparator.java
  * -----------------
  * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
@@ -46,7 +46,7 @@ import org._3pq.jgrapht.util.equivalence.*;
  * @author Assaf
  * @since Aug 12, 2005
  */
-public class DirectedEdgeWieghtOddEvenComparator
+public class DirectedEdgeWeightOddEvenComparator
     implements EquivalenceComparator
 {
 
