@@ -49,7 +49,7 @@ import org._3pq.jgrapht.*;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-class ListenableUndirectedGraph<V, E extends Edge<V>>
+public class ListenableUndirectedGraph<V, E extends Edge<V>>
     extends DefaultListenableGraph<V, E> implements UndirectedGraph<V, E>
 {
 
