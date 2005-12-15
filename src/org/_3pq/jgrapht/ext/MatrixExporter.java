@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* ------------------
  * MatrixExporter.java
  * ------------------
- * (C) Copyright 2005, by Charles Fry
+ * (C) Copyright 2005, by Charles Fry and Contributors.
  *
  * Original Author:  Charles Fry
  *
@@ -43,11 +43,13 @@ import java.io.*;
 import java.util.*;
 
 import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.util.*;
 
 
 /**
  * Exports a graph to a plain text matrix format, which can be processed
  * by matrix manipulation software, such as
+ * <a href="http://rs.cipr.uib.no/mtj/">MTJ</a> or
  * <a href="http://www.mathworks.com/products/matlab/">MATLAB</a>.
  *
  * @author Charles Fry
@@ -140,20 +142,24 @@ public class MatrixExporter
             VertexNameProvider nameProvider, Object from, List neighbors)
     {
         String fromName = nameProvider.getVertexName(from);
-        Map<String,Integer> counts = new LinkedHashMap<String,Integer>();
+        Map<String,ModifiableInteger> counts = new LinkedHashMap<String,ModifiableInteger>();
         for (Object to : neighbors) {
             String toName = nameProvider.getVertexName(to);
-            Integer count = counts.get(toName);
+            ModifiableInteger count = counts.get(toName);
             if (count == null) {
-                count = 0;
+                count = new ModifiableInteger(0);
+                counts.put(toName, count);
             }
-            // count loops twice
-            count += from.equals(to) ? 2 : 1;
-            counts.put(toName, count);
+
+            count.increment();
+            if (from.equals(to) ) {
+                // count loops twice, once for each end
+                count.increment();
+            }
         }
-        for (Map.Entry<String,Integer> entry : counts.entrySet()) {
+        for (Map.Entry<String,ModifiableInteger> entry : counts.entrySet()) {
             String toName = entry.getKey();
-            Integer count = entry.getValue();
+            ModifiableInteger count = entry.getValue();
             println(out, fromName,  toName, count.toString());
         }
     }
@@ -235,39 +241,6 @@ public class MatrixExporter
         }
 
         out.flush();
-    }
-
-    //~ Inner Classes ---------------------------------------------------------
-
-    /**
-     * Assigns a unique integer to represent each vertex. Each instance
-     * of IntegerNameProvider maintains an internal map between every
-     * vertex it has ever seen and the unique integer representing that
-     * vertex.
-     */
-    public class IntegerNameProvider implements VertexNameProvider
-    {
-        private int nextID = 1;
-        private Map<Object,Integer> idMap = new HashMap<Object,Integer>();
-
-        /**
-         * Returns the String representation of the unique integer representing
-         * a vertex.
-         *
-         * @param vertex the vertex to be named
-         * @return the name of
-         * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
-         */
-        public String getVertexName(Object vertex)
-        {
-            Integer id = idMap.get(vertex);
-            if (id == null) {
-                id = nextID++;
-                idMap.put(vertex, id);
-            }
-
-            return id.toString();
-        }
     }
 
 }
