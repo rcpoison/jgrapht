@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* --------------------------
  * NeighborIndex.java
  * --------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+ * (C) Copyright 2005, by Charles Fry and Contributors.
  *
  * Original Author:  Charles Fry
  *
@@ -43,6 +43,7 @@ import java.util.*;
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.event.*;
 import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.util.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
@@ -178,7 +179,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
      */
     static class Neighbors<V, E extends Edge<V>>
     {
-        private Map<V,Count> m_neighborCounts = new LinkedHashMap<V,Count>();
+        private Map<V,ModifiableInteger> m_neighborCounts = new LinkedHashMap<V,ModifiableInteger>();
         // TODO could eventually make neighborSet modifiable, resulting
         //      in edge removals from the graph
         private Set<V> m_neighborSet = Collections.unmodifiableSet(
@@ -194,21 +195,25 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
 
         public void addNeighbor(V v)
         {
-            Count count = m_neighborCounts.get(v);
+            ModifiableInteger count = m_neighborCounts.get(v);
             if (count == null) {
-                count = new Count();
+                count = new ModifiableInteger(1);
                 m_neighborCounts.put(v, count);
             }
-            count.incrementAndGet();
+            else {
+                count.increment();
+            }
         }
 
         public void removeNeighbor(V v)
         {
-            Count count = m_neighborCounts.get(v);
+            ModifiableInteger count = m_neighborCounts.get(v);
             if (count == null) {
                 throw new IllegalArgumentException("Attempting to remove a neighbor that wasn't present");
             }
-            if (count.decrementAndGet() == 0) {
+
+            count.decrement();
+            if (count.getValue() == 0) {
                 m_neighborCounts.remove(v);
             }
         }
@@ -221,7 +226,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
         public List<V> getNeighborList()
         {
             List neighbors = new ArrayList();
-            for (Map.Entry<V,Count> entry : m_neighborCounts.entrySet()) {
+            for (Map.Entry<V,ModifiableInteger> entry : m_neighborCounts.entrySet()) {
                 V v = entry.getKey();
                 int count = entry.getValue().intValue();
                 for (int i = 0; i < count; i++) {
@@ -229,29 +234,6 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
                 }
             }
             return neighbors;
-        }
-    }
-
-    /**
-     * Mutable integer counter.
-     */
-    private static class Count
-    {
-        private int m_count = 0;
-
-        public int intValue()
-        {
-            return m_count;
-        }
-
-        public int incrementAndGet()
-        {
-            return ++m_count;
-        }
-
-        public int decrementAndGet()
-        {
-            return --m_count;
         }
     }
 
