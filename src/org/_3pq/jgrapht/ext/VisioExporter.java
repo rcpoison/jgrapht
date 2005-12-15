@@ -65,17 +65,6 @@ import org._3pq.jgrapht.*;
 public class VisioExporter
 {
 
-    //~ Static fields/initializers --------------------------------------------
-
-    private static final VertexNameProvider DEFAULT_VERTEX_NAME_PROVIDER =
-        new VertexNameProvider() {
-            public String getVertexName(Object vertex)
-            {
-                return vertex.toString();
-            }
-        };
-
-
     //~ Instance fields -------------------------------------------------------
 
     private VertexNameProvider m_vertexNameProvider;
@@ -98,7 +87,7 @@ public class VisioExporter
      */
     public VisioExporter()
     {
-        this(DEFAULT_VERTEX_NAME_PROVIDER);
+        this(StringNameProvider.getInstance());
     }
 
     //~ Methods ---------------------------------------------------------------
