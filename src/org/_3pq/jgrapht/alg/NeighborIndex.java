@@ -232,6 +232,9 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
         }
     }
 
+    /**
+     * Mutable integer counter.
+     */
     private static class Count
     {
         private int m_count = 0;
