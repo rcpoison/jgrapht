@@ -157,21 +157,4 @@ public class VisioExporter
         out.print("\n");
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
-
-    /**
-     * Assigns a display name for each of the graph vertices.
-     */
-    public interface VertexNameProvider
-    {
-        /**
-         * Returns the shape name for the vertex as to be appeared in the Visio
-         * diagram.
-         *
-         * @param vertex the vertex
-         *
-         * @return vertex display name for Visio shape.
-         */
-        public String getVertexName(Object vertex);
-    }
 }
