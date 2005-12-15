@@ -129,6 +129,22 @@ public class ModifiableInteger extends Number implements Comparable
     }
 
     /**
+     * Adds one to the value of this modifiable integer.
+     */
+    public void increment()
+    {
+        this.value++;
+    }
+
+    /**
+     * Subtracts one from the value of this modifiable integer.
+     */
+    public void decrement()
+    {
+        this.value--;
+    }
+
+    /**
      * Compares two <code>ModifiableInteger</code> objects numerically.
      *
      * @param anotherInteger the <code>ModifiableInteger</code> to be compared.
