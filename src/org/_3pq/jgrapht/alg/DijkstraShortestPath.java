@@ -73,6 +73,22 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      * @param graph the graph to be searched
      * @param startVertex the vertex at which the path should start
      * @param endVertex the vertex at which the path should end
+     */
+    public DijkstraShortestPath(Graph<V, E> graph,
+        V startVertex,
+        V endVertex)
+    {
+        this(graph, startVertex, endVertex, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * Creates and executes a new DijkstraShortestPath algorithm instance. An
+     * instance is only good for a single search; after construction, it can be
+     * accessed to retrieve information about the path found.
+     *
+     * @param graph the graph to be searched
+     * @param startVertex the vertex at which the path should start
+     * @param endVertex the vertex at which the path should end
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
      *               unbounded search
      */
@@ -106,7 +122,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      *
      * @return List of Edges, or null if no path exists
      */
-    public List getPathEdgeList()
+    public List<E> getPathEdgeList()
     {
         return m_edgeList;
     }
@@ -132,7 +148,8 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      *
      * @return List of Edges, or null if no path exists
      */
-    public static <V, E extends Edge<V>> List findPathBetween(Graph<V, E> graph,
+    public static <V, E extends Edge<V>> List<E> findPathBetween(
+        Graph<V, E> graph,
         V startVertex,
         V endVertex)
     {
@@ -140,8 +157,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
             new DijkstraShortestPath(
                 graph,
                 startVertex,
-                endVertex,
-                Double.POSITIVE_INFINITY);
+                endVertex);
 
         return alg.getPathEdgeList();
     }

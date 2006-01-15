@@ -48,10 +48,10 @@ import org._3pq.jgrapht.graph.*;
 /**
  * Maintains a cache of each vertex's neighbors. While
  * lists of neighbors can be obtained from {@link GraphHelper}, they are
- * re-calculated at each invocation by walking a vertex's incident edges. Which
+ * re-calculated at each invocation by walking a vertex's incident edges, which
  * becomes inordinately expensive when performed often.
  *
- * <p>A verteces' neighbors are cached the first time they are asked for (i.e.
+ * <p>A vertex's neighbors are cached the first time they are asked for (i.e.
  * the index is built on demand). The index will only be updated automatically
  * if it is added to the associated grpah as a listener. If it is added as a
  * listener to a graph other than the one it indexes, results are

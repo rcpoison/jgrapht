@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -23,9 +23,9 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------------------
- * DijkstraShortestPathTest.java
+ * BellmanFordShortestPathTest.java
  * ------------------------------
- * (C) Copyright 2003-2006, by John V. Sichi and Contributors.
+ * (C) Copyright 2006, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -
@@ -35,8 +35,7 @@
  *
  * Changes
  * -------
- * 03-Sept-2003 : Initial revision (JVS);
- * 14-Jan-2006 : Factored out ShortestPathTestCase (JVS);
+ * 14-Jan-2006 : Initial revision (JVS);
  *
  */
 package org._3pq.jgrapht.alg;
@@ -48,40 +47,62 @@ import junit.framework.*;
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.graph.*;
 
-
 /**
  * .
  *
  * @author John V. Sichi
  */
-public class DijkstraShortestPathTest extends ShortestPathTestCase
+public class BellmanFordShortestPathTest extends ShortestPathTestCase
 {
-
-    //~ Methods ---------------------------------------------------------------
-
     /**
      * .
      */
     public void testConstructor()
     {
-        DijkstraShortestPath path;
+        BellmanFordShortestPath path;
         Graph g = create();
 
-        path = new DijkstraShortestPath(g, V3, V4, Double.POSITIVE_INFINITY);
+        path = new BellmanFordShortestPath(g, V3);
+
+        // find best path with no constraint on number of hops
         assertEquals(
             Arrays.asList(new Edge [] {
-                    m_e13, m_e12, m_e24
-                }),
-            path.getPathEdgeList());
-        assertEquals(10.0, path.getPathLength(), 0);
+                m_e13, m_e12, m_e24, m_e45
+            }),
+            path.getPathEdgeList(V5));
+        assertEquals(15.0, path.getCost(V5), 0);
 
-        path = new DijkstraShortestPath(g, V3, V4, 7);
-        assertNull(path.getPathEdgeList());
-        assertEquals(Double.POSITIVE_INFINITY, path.getPathLength(), 0);
+        // find best path within 2 hops (less than optimal)
+        path = new BellmanFordShortestPath(g, V3, 2);
+        assertEquals(
+            Arrays.asList(new Edge [] {
+                m_e34, m_e45
+            }),
+            path.getPathEdgeList(V5));
+        assertEquals(25.0, path.getCost(V5), 0);
+
+        // find best path within 1 hop (doesn't exist!)
+        path = new BellmanFordShortestPath(g, V3, 1);
+        assertNull(path.getPathEdgeList(V5));
     }
 
     protected List findPathBetween(Graph g, String src, String dest)
     {
-        return DijkstraShortestPath.findPathBetween(g, src, dest);
+        return BellmanFordShortestPath.findPathBetween(g, src, dest);
+    }
+
+    public void testWithNegativeEdges()
+    {
+        Graph g = createWithBias(true);
+
+        List path;
+        
+        path = findPathBetween(g, V1, V4);
+        assertEquals(Arrays.asList(new Edge [] { m_e13, m_e34 }), path);
+        
+        path = findPathBetween(g, V1, V5);
+        assertEquals(Arrays.asList(new Edge [] { m_e15 }), path);
     }
 }
+
+// End BellmanFordShortestPathTest.java
