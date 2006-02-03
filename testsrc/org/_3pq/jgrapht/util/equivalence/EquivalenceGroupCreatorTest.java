@@ -84,7 +84,7 @@ public class EquivalenceGroupCreatorTest extends TestCase
     {
         EquivalenceComparatorChain comparatorChain =
             new EquivalenceComparatorChainBase(new OddEvenGroupComparator());
-        comparatorChain.addComparatorAfter(new Mod3GroupComparator());
+        comparatorChain.appendComparator(new Mod3GroupComparator());
 
         // for (int i=0 ; i<INTEGER_ARRAY_SIZE ; i++)
         // {

@@ -49,11 +49,7 @@ public interface EquivalenceComparatorChain extends EquivalenceComparator
 {
 
     //~ Methods ---------------------------------------------------------------
-
-    // REVIEW jvs 5-Sept-2005:  I think the comment below is trying to say that
-    // addComparatorAfter appends its argument to the end of the chain.  Is
-    // that true?  If so, maybe just call it append?
-
+ 
     /**
      * Adds a comparator which will also test equivalence. For
      * equivalenceCompare(), the return value is a logical AND of the two
@@ -63,5 +59,5 @@ public interface EquivalenceComparatorChain extends EquivalenceComparator
      * together. This method may be used multiple times to create a long
      * "chain" of comparators.
      */
-    public void addComparatorAfter(EquivalenceComparator comparatorAfter);
+    public void appendComparator(EquivalenceComparator comparatorAfter);
 }

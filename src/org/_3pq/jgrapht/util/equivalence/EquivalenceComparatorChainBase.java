@@ -90,7 +90,7 @@ public class EquivalenceComparatorChainBase
      *
      * org._3pq.jgrapht.util.equivalence.EquivalenceComparatorChain#addComparatorAfter(org._3pq.jgrapht.util.equivalence.EquivalenceComparator)
      */
-    public void addComparatorAfter(EquivalenceComparator comparatorAfter)
+    public void appendComparator(EquivalenceComparator comparatorAfter)
     {
         if (comparatorAfter != null) {
             this.chain.add(comparatorAfter);

@@ -35,6 +35,8 @@
  */
 package org._3pq.jgrapht.alg.isomorphism;
 
+import java.security.InvalidParameterException;
+
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.graph.*;
 import org._3pq.jgrapht.util.equivalence.*;
@@ -63,11 +65,7 @@ public class AdaptiveIsomorphismInspectorFactory
 
     //~ Static fields/initializers --------------------------------------------
 
-    // REVIEW jvs 5-Sept-2005:  the term "regular" has a specific meaning in
-    // graph theory (a graph where every vertex has the same degree).  I don't
-    // think that's what you mean here; probably should be
-    // GRAPH_TYPE_ARBITRARY instead?
-    public static final int GRAPH_TYPE_REGULAR = 0;
+    public static final int GRAPH_TYPE_ARBITRARY = 0;
     public static final int GRAPH_TYPE_PLANAR = 1;
     public static final int GRAPH_TYPE_TREE = 2;
     public static final int GRAPH_TYPE_MULTIGRAPH = 3;
@@ -191,7 +189,7 @@ public class AdaptiveIsomorphismInspectorFactory
         switch (graphType) {
         case GRAPH_TYPE_PLANAR:
         case GRAPH_TYPE_TREE:
-        case GRAPH_TYPE_REGULAR:
+        case GRAPH_TYPE_ARBITRARY:
             currentInspector =
                 createTopologicalExhaustiveInspector(
                     graph1,
@@ -202,10 +200,7 @@ public class AdaptiveIsomorphismInspectorFactory
 
         default:
 
-        // REVIEW jvs 5-Sept-2005:  Why is this commented out?  Shouldn't
-        // it be returning something instead of null?
-        // currentInspector = new
-        // EquivalenceIsomorphismInspector(graph1,graph2,vertexChecker,edgeChecker);
+        	throw new IllegalArgumentException("The type was not one of the supported types.");
         }
         return currentInspector;
     }
@@ -241,7 +236,7 @@ public class AdaptiveIsomorphismInspectorFactory
 
     protected static int checkGraphsType(Graph graph1, Graph graph2)
     {
-        return GRAPH_TYPE_REGULAR;
+        return GRAPH_TYPE_ARBITRARY;
     }
 
     /**
@@ -260,7 +255,7 @@ public class AdaptiveIsomorphismInspectorFactory
             new VertexDegreeEquivalenceComparator();
         EquivalenceComparatorChain vertexChainedChecker =
             new EquivalenceComparatorChainBase(degreeComparator);
-        vertexChainedChecker.addComparatorAfter(vertexChecker);
+        vertexChainedChecker.appendComparator(vertexChecker);
 
         GraphIsomorphismInspector inspector =
             new EquivalenceIsomorphismInspector(
