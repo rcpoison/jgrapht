@@ -35,6 +35,8 @@
  */
 package org._3pq.jgrapht.util.equivalence;
 
+import java.util.Arrays;
+
 import junit.framework.*;
 
 import org._3pq.jgrapht.alg.isomorphism.comparators.*;
@@ -63,14 +65,25 @@ public class EquivalenceGroupCreatorTest extends TestCase
         super.setUp();
     }
 
+    
+    public void testUniformGroup()
+    {
+    	//expecting two seperate groups , one with odd , one with even nubmers"
+        testOneComparator(new UniformEquivalenceComparator(),    1      );
+        //" expecting 3 seperate groups , one for each mod3
+        testOneComparator(new org._3pq.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator(),
+            3) ;
+    }
+    
     public void testOddEvenGroup()
     {
+        //" expecting two seperate groups , one with odd , one with even nubmers");
         testOneComparator(new org._3pq.jgrapht.alg.isomorphism.comparators.OddEvenGroupComparator(),
-            2,
-            " expecting two seperate groups , one with odd , one with even nubmers");
+            2);
+        //  " expecting 3 seperate groups , one for each mod3");  
         testOneComparator(new org._3pq.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator(),
-            3,
-            " expecting 3 seperate groups , one for each mod3");
+            3);
+          
     }
 
     /**
@@ -93,16 +106,31 @@ public class EquivalenceGroupCreatorTest extends TestCase
         //
         //
         // }
+        // expecting six seperate groups , with the different mod6 values");
         testOneComparator(
             comparatorChain,
-            6,
-            " expecting six seperate groups , with the different mod6 values");
+            6);
+            
+    }
+    
+    public void testComparatorChainSameComparatorTwice()
+    {
+        EquivalenceComparatorChain comparatorChain =
+            new EquivalenceComparatorChainBase(new OddEvenGroupComparator());
+        comparatorChain.appendComparator(new UniformEquivalenceComparator());
+        comparatorChain.appendComparator(new OddEvenGroupComparator());
+
+        // still expecting 2 groups "
+         testOneComparator(
+            comparatorChain,
+            2);
+            
     }
 
     private void testOneComparator(
         EquivalenceComparator comparator,
-        int expectedNumOfGroups,
-        String expectedResult)
+        int expectedNumOfGroups)
+   
     {
         Integer [] integerArray = new Integer [INTEGER_ARRAY_SIZE];
         for (int i = 0; i < INTEGER_ARRAY_SIZE; i++) {
@@ -115,6 +143,11 @@ public class EquivalenceGroupCreatorTest extends TestCase
                 comparator,
                 null);
         assertEquals(expectedNumOfGroups, eqGroupArray.length);
+        //assert the group order size is sorted.
+        for (int i = 1; i < eqGroupArray.length; i++) {
+			EquivalenceSet set = eqGroupArray[i];
+			assertTrue(eqGroupArray[i].size() >= eqGroupArray[i-1].size());
+		}
         // System.out.println("\nTesting the EquivalenceSet[] returned from
         // Integer["
         // +INTEGER_ARRAY_SIZE+"] filled with the integers as the indexes. \n"
