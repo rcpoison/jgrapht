@@ -65,7 +65,7 @@ import java.util.*;
                 public Object nextElement() throws NoSuchElementException {
                     counter++;
                     if (counter>=100)
-                        return new NoSuchElementException();
+                        throw new NoSuchElementException();
                     else
                         return new Integer(counter);
                 }
@@ -191,7 +191,7 @@ public class PrefetchIterator implements Iterator, Enumeration
 
     public Object next()
     {
-        return this.hasNext();
+        return this.nextElement();
     }
 
     /**
