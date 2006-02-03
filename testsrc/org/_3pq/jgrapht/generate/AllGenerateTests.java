@@ -69,7 +69,7 @@ public final class AllGenerateTests
 
         // $JUnit-BEGIN$
         suite.addTest(new TestSuite(GraphGeneratorTest.class));
-
+        suite.addTestSuite(RandomGraphGeneratorTest.class);
         // $JUnit-END$
         return suite;
     }

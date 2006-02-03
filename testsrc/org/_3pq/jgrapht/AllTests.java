@@ -48,6 +48,7 @@ import org._3pq.jgrapht.edge.*;
 import org._3pq.jgrapht.generate.*;
 import org._3pq.jgrapht.graph.*;
 import org._3pq.jgrapht.traverse.*;
+import org._3pq.jgrapht.util.AllUtilTests;
 
 
 /**
@@ -81,7 +82,8 @@ public final class AllTests
         suite.addTestSuit((TestSuite) AllGenerateTests.suite());
         suite.addTestSuit((TestSuite) AllGraphTests.suite());
         suite.addTestSuit((TestSuite) AllTraverseTests.suite());
-
+        suite.addTestSuit((TestSuite) AllUtilTests.suite());
+        
         return suite;
     }
 
