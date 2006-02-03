@@ -58,7 +58,7 @@ public class RandomGraphGeneratorTest extends TestCase
         assertTrue(EdgeTopologyCompare.compare(graphArray[0], graphArray[1]));
         // cannot assert false , cause it may be true once in a while (random)
         // but it generally should work.
-        // assertFalse(EdgeTopologyCompare.compare(graphArray[0],graphArray[1]));
+        // assertFalse(EdgeTopologyCompare.compare(graphArray[1],graphArray[2]));
     }
 
     /**
