@@ -50,7 +50,8 @@ import org._3pq.jgrapht.util.*;
  * @author Assaf
  * @since May 20, 2005
  */
-public class CollectionPermutationIter
+// TODO hb 280106 Convert internals to generics
+public class CollectionPermutationIter<E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -153,14 +154,14 @@ public class CollectionPermutationIter
      *
      * @return null if we overflowed! the set otherwise
      */
-    public Set getNextSet()
+    public Set<E> getNextSet()
     {
         Object [] result = getNextArray();
         if (result == null) {
             return null;
         } else // wrap in a SET
         {
-            Set resultSet = new LinkedHashSet(Arrays.asList(result));
+            Set<E> resultSet = new LinkedHashSet(Arrays.asList(result));
             return resultSet;
         }
     }

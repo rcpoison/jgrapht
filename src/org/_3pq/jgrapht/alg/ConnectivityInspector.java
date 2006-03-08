@@ -102,10 +102,10 @@ public class ConnectivityInspector<V, E extends Edge<V>>
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public ConnectivityInspector(DirectedGraph<V, E> g)
+    public <EE extends E & DirEdge<V>> ConnectivityInspector(DirectedGraph<V, EE> g)
     {
         init();
-        m_graph = new AsUndirectedGraph(g);
+        m_graph = new AsUndirectedGraph<V,E>(g);
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -138,10 +138,10 @@ public class ConnectivityInspector<V, E extends Edge<V>>
         Set<V> connectedSet = m_vertexToConnectedSet.get(vertex);
 
         if (connectedSet == null) {
-            connectedSet = new HashSet();
+            connectedSet = new HashSet<V>();
 
             BreadthFirstIterator<V, E, Object> i =
-                new BreadthFirstIterator(m_graph, vertex);
+                new BreadthFirstIterator<V, E, Object>(m_graph, vertex);
 
             while (i.hasNext()) {
                 connectedSet.add(i.next());
@@ -233,19 +233,19 @@ public class ConnectivityInspector<V, E extends Edge<V>>
     private void init()
     {
         m_connectedSets = null;
-        m_vertexToConnectedSet = new HashMap();
+        m_vertexToConnectedSet = new HashMap<V, Set<V>>();
     }
 
     private List<Set<V>> lazyFindConnectedSets()
     {
         if (m_connectedSets == null) {
-            m_connectedSets = new ArrayList();
+            m_connectedSets = new ArrayList<Set<V>>();
 
             Set vertexSet = m_graph.vertexSet();
 
             if (vertexSet.size() > 0) {
-                BreadthFirstIterator i =
-                    new BreadthFirstIterator(m_graph, null);
+                BreadthFirstIterator<V,E,Object> i =
+                    new BreadthFirstIterator<V,E,Object>(m_graph, null);
                 i.addTraversalListener(new MyTraversalListener());
 
                 while (i.hasNext()) {
@@ -268,7 +268,7 @@ public class ConnectivityInspector<V, E extends Edge<V>>
      */
     private class MyTraversalListener extends TraversalListenerAdapter<V, E>
     {
-        private Set m_currentConnectedSet;
+        private Set<V> m_currentConnectedSet;
 
         /**
          * @see TraversalListenerAdapter#connectedComponentFinished(ConnectedComponentTraversalEvent)
@@ -285,11 +285,11 @@ public class ConnectivityInspector<V, E extends Edge<V>>
         public void connectedComponentStarted(
             ConnectedComponentTraversalEvent e)
         {
-            m_currentConnectedSet = new HashSet();
+            m_currentConnectedSet = new HashSet<V>();
         }
 
         /**
-         * @see TraversalListenerAdapter#vertexTraversed(Object)
+         * @see TraversalListenerAdapter#vertexTraversed(VertexTraversalEvent)
          */
         public void vertexTraversed(VertexTraversalEvent<V> e)
         {

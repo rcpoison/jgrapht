@@ -58,25 +58,27 @@ import java.util.*;
  * <p>eqChain.addComparatorAfter(slowestBuisnessContentsComparator);</code>
  * </blockquote>
  *
+ * @param <E> the type of the elements in the set
+ * @param <C> the type of the context the element is compared against, e.g. a Graph
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class EquivalenceComparatorChainBase
-    implements EquivalenceComparatorChain
+public class EquivalenceComparatorChainBase<E,C>
+    implements EquivalenceComparatorChain<E,C>
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    private List chain;
+    private List<EquivalenceComparator<? super E, ? super C>> chain;
 
     //~ Constructors ----------------------------------------------------------
 
     /**
      */
     public EquivalenceComparatorChainBase(
-        EquivalenceComparator firstComaparator)
+        EquivalenceComparator<E,C> firstComaparator)
     {
-        this.chain = new LinkedList();
+        this.chain = new LinkedList<EquivalenceComparator<? super E, ? super C>>();
         this.chain.add(firstComaparator);
     }
 
@@ -106,14 +108,12 @@ public class EquivalenceComparatorChainBase
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
-        Object arg1,
-        Object arg2,
-        Object context1,
-        Object context2)
+        E arg1,
+        E arg2,
+        C context1,
+        C context2)
     {
-        for (ListIterator iter = this.chain.listIterator(); iter.hasNext();) {
-            EquivalenceComparator currentComparator =
-                (EquivalenceComparator) iter.next();
+        for (EquivalenceComparator<? super E, ? super C> currentComparator : this.chain) {
             if (!currentComparator.equivalenceCompare(
                     arg1,
                     arg2,
@@ -131,12 +131,13 @@ public class EquivalenceComparatorChainBase
      * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
-    public int equivalenceHashcode(Object arg1, Object context)
+    public int equivalenceHashcode(E arg1, C context)
     {
         StringBuffer hashStringBuffer = new StringBuffer();
-        for (ListIterator iter = this.chain.listIterator(); iter.hasNext();) {
-            EquivalenceComparator currentComparator =
-                (EquivalenceComparator) iter.next();
+        for (ListIterator<EquivalenceComparator<? super E, ? super C>> iter = this.chain.listIterator();
+             iter.hasNext();) {
+            EquivalenceComparator<? super E, ? super C> currentComparator =
+                iter.next();
             int currentHashCode =
                 currentComparator.equivalenceHashcode(arg1, context);
             hashStringBuffer.append(currentHashCode);

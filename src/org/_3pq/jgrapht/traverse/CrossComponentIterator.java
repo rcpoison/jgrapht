@@ -52,6 +52,10 @@ import org._3pq.jgrapht.event.*;
 /**
  * Provides a cross-connected-component traversal functionality for iterator
  * subclasses.
+ * 
+ * @param <V> vertex type
+ * @param <E> edge type
+ * @param <D> type of data associated to seen vertices 
  *
  * @author Barak Naveh
  * @since Jan 31, 2004
@@ -88,7 +92,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * Stores the vertices that have been seen during iteration and
      * (optionally) some additional traversal info regarding each vertex.
      */
-    private Map<V, D> m_seen = new HashMap();
+    private Map<V, D> m_seen = new HashMap<V, D>();
     private V m_startVertex;
     private Specifics<V, E> m_specifics;
 
@@ -107,23 +111,23 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      *
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
+     * @throws IllegalArgumentException if <code>g==null</code>
+     *              or does not contain <code>startVertex</code> 
      */
     public CrossComponentIterator(Graph<V, E> g, V startVertex)
     {
         super();
 
         if (g == null) {
-            throw new NullPointerException("graph must not be null");
+            throw new IllegalArgumentException("graph must not be null");
         }
 
         m_specifics = createGraphSpecifics(g);
         m_vertexIterator = g.vertexSet().iterator();
         setCrossComponentTraversal(startVertex == null);
 
-        m_reusableEdgeEvent = new FlyweightEdgeEvent(this, null);
-        m_reusableVertexEvent = new FlyweightVertexEvent(this, null);
+        m_reusableEdgeEvent = new FlyweightEdgeEvent<V, E>(this, null);
+        m_reusableVertexEvent = new FlyweightVertexEvent<V>(this, null);
 
         if (startVertex == null) {
             // pick a start vertex if graph not empty
@@ -283,52 +287,58 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         return m_seen.put(vertex, data);
     }
 
-    static Specifics createGraphSpecifics(Graph g)
+    //-------------------------------------------------------------------------
+    /**
+     * @param <V>
+     * @param <E>
+     * @param g
+     * @return TODO Document me
+     */
+    @SuppressWarnings("unchecked")	// TODO hb 27-Nov-05: See FIXME below
+	static <V, E extends Edge<V>> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
+            // TODO hb 27-Nov-05: I don't understand, yet, how to cast this nicely
             return new DirectedSpecifics((DirectedGraph) g);
         } else {
-            return new UndirectedSpecifics(g);
+            return new UndirectedSpecifics<V, E>(g);
         }
     }
 
     private void addUnseenChildrenOf(V vertex)
     {
-        List<E> edges = m_specifics.edgesOf(vertex);
-
-        for (Iterator<E> i = edges.iterator(); i.hasNext();) {
-            E e = i.next();
-            fireEdgeTraversed(createEdgeTraversalEvent(e));
-
-            V v = e.oppositeVertex(vertex);
-
-            if (isSeenVertex(v)) {
-                encounterVertexAgain(v, e);
-            } else {
-                encounterVertex(v, e);
-            }
-        }
+    	for (E edge : m_specifics.edgesOf(vertex)) {
+    		fireEdgeTraversed(createEdgeTraversalEvent(edge));
+    		
+    		V oppositeV = edge.oppositeVertex(vertex);
+    		
+    		if (isSeenVertex(oppositeV)) {
+    			encounterVertexAgain(oppositeV, edge);
+    		} else {
+    			encounterVertex(oppositeV, edge);
+    		}
+    	}
     }
 
-    private EdgeTraversalEvent createEdgeTraversalEvent(E edge)
+    private EdgeTraversalEvent<V, E> createEdgeTraversalEvent(E edge)
     {
         if (isReuseEvents()) {
             m_reusableEdgeEvent.setEdge(edge);
 
             return m_reusableEdgeEvent;
         } else {
-            return new EdgeTraversalEvent(this, edge);
+            return new EdgeTraversalEvent<V, E>(this, edge);
         }
     }
 
-    private VertexTraversalEvent createVertexTraversalEvent(V vertex)
+    private VertexTraversalEvent<V> createVertexTraversalEvent(V vertex)
     {
         if (isReuseEvents()) {
             m_reusableVertexEvent.setVertex(vertex);
 
             return m_reusableVertexEvent;
         } else {
-            return new VertexTraversalEvent(this, vertex);
+            return new VertexTraversalEvent<V>(this, vertex);
         }
     }
 
@@ -370,7 +380,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * Provides unified interface for operations that are different in directed
      * graphs and in undirected graphs.
      */
-    abstract static class Specifics<V, E extends Edge<V>>
+    abstract static class Specifics<VV, EE extends Edge<VV>>
     {
         /**
          * Returns the edges outgoing from the specified vertex in case of
@@ -383,7 +393,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
          *         directed graph, and the edge touching the specified vertex
          *         in case of undirected graph.
          */
-        public abstract List<E> edgesOf(V vertex);
+        public abstract List<? extends EE> edgesOf(VV vertex);
     }
 
     /**
@@ -392,15 +402,15 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @author Barak Naveh
      * @since Aug 11, 2003
      */
-    static class FlyweightEdgeEvent<V, E extends Edge<V>>
-        extends EdgeTraversalEvent<V, E>
+    static class FlyweightEdgeEvent<VV, localE extends Edge<VV>>
+        extends EdgeTraversalEvent<VV, localE>
     {
         private static final long serialVersionUID = 4051327833765000755L;
 
         /**
          * @see EdgeTraversalEvent#EdgeTraversalEvent(Object, Edge)
          */
-        public FlyweightEdgeEvent(Object eventSource, E edge)
+        public FlyweightEdgeEvent(Object eventSource, localE edge)
         {
             super(eventSource, edge);
         }
@@ -410,7 +420,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
          *
          * @param edge the edge to be set.
          */
-        protected void setEdge(E edge)
+        protected void setEdge(localE edge)
         {
             m_edge = edge;
         }
@@ -422,14 +432,14 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @author Barak Naveh
      * @since Aug 11, 2003
      */
-    static class FlyweightVertexEvent<V> extends VertexTraversalEvent<V>
+    static class FlyweightVertexEvent<VV> extends VertexTraversalEvent<VV>
     {
         private static final long serialVersionUID = 3834024753848399924L;
 
         /**
          * @see VertexTraversalEvent#VertexTraversalEvent(Object, Object)
          */
-        public FlyweightVertexEvent(Object eventSource, V vertex)
+        public FlyweightVertexEvent(Object eventSource, VV vertex)
         {
             super(eventSource, vertex);
         }
@@ -439,27 +449,27 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
          *
          * @param vertex the vertex to be set.
          */
-        protected void setVertex(V vertex)
+        protected void setVertex(VV vertex)
         {
             m_vertex = vertex;
         }
     }
 
     /**
-     * An implementation of {@link TraverseUtils.Specifics} for a directed
+     * An implementation of {@link Specifics} for a directed
      * graph.
      */
-    private static class DirectedSpecifics<V, E extends Edge<V>>
-        extends Specifics<V, E>
+    private static class DirectedSpecifics<VV, EE extends DirEdge<VV>>
+        extends Specifics<VV, EE>
     {
-        private DirectedGraph<V, E> m_graph;
+        private DirectedGraph<VV, EE> m_graph;
 
         /**
          * Creates a new DirectedSpecifics object.
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public DirectedSpecifics(DirectedGraph<V, E> g)
+        public DirectedSpecifics(DirectedGraph<VV, EE> g)
         {
             m_graph = g;
         }
@@ -467,27 +477,27 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<E> edgesOf(V vertex)
+        public List<? extends EE> edgesOf(VV vertex)
         {
             return m_graph.outgoingEdgesOf(vertex);
         }
     }
 
     /**
-     * An implementation of {@link TraverseUtils.Specifics} in which edge
+     * An implementation of {@link Specifics} in which edge
      * direction (if any) is ignored.
      */
-    private static class UndirectedSpecifics<V, E extends Edge<V>>
-        extends Specifics<V, E>
+    private static class UndirectedSpecifics<VV, EE extends Edge<VV>>
+        extends Specifics<VV, EE>
     {
-        private Graph<V, E> m_graph;
+        private Graph<VV, EE> m_graph;
 
         /**
          * Creates a new UndirectedSpecifics object.
          *
          * @param g the graph for which this specifics object to be created.
          */
-        public UndirectedSpecifics(Graph<V, E> g)
+        public UndirectedSpecifics(Graph<VV, EE> g)
         {
             m_graph = g;
         }
@@ -495,7 +505,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<E> edgesOf(V vertex)
+        public List<EE> edgesOf(VV vertex)
         {
             return m_graph.edgesOf(vertex);
         }

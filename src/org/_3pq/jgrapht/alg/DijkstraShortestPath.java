@@ -98,7 +98,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
         double radius)
     {
         ClosestFirstIterator<V, E> iter =
-            new ClosestFirstIterator(graph, startVertex, radius);
+            new ClosestFirstIterator<V, E>(graph, startVertex, radius);
 
         while (iter.hasNext()) {
             V vertex = iter.next();
@@ -153,8 +153,8 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
         V startVertex,
         V endVertex)
     {
-        DijkstraShortestPath alg =
-            new DijkstraShortestPath(
+        DijkstraShortestPath<V, E> alg =
+            new DijkstraShortestPath<V, E>(
                 graph,
                 startVertex,
                 endVertex);
@@ -164,7 +164,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
 
     private void createEdgeList(ClosestFirstIterator<V, E> iter, V endVertex)
     {
-        m_edgeList = new ArrayList();
+        m_edgeList = new ArrayList<E>();
 
         while (true) {
             E edge = iter.getSpanningTreeEdge(endVertex);

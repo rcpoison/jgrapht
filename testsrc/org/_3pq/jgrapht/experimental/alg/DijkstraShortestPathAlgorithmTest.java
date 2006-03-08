@@ -43,6 +43,7 @@ package org._3pq.jgrapht.experimental.alg;
 import junit.framework.*;
 
 import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.*;
 
 
@@ -77,9 +78,10 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
      */
     public void testShortestPath()
     {
-        WeightedGraph g = create();
-        ShortestPathAlgorithm alg = new DijkstraShortestPathAlgorithm(g);
-        WeightedGraph pathTree = alg.shortestPathTree(V1);
+        WeightedGraph<String,DirectedEdge<String>> g = create();
+        ShortestPathAlgorithm<String,DirectedEdge<String>>
+        	alg = new DijkstraShortestPathAlgorithm<String,DirectedEdge<String>>(g);
+        WeightedGraph<String,DirectedEdge<String>> pathTree = alg.shortestPathTree(V1);
 
         assertEquals(4, pathTree.vertexSet().size());
         assertEquals(3, pathTree.edgeSet().size());
@@ -88,9 +90,10 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
         assertTrue(pathTree.containsEdge(m_e4));
     }
 
-    private WeightedGraph create()
+    private WeightedGraph<String,DirectedEdge<String>> create()
     {
-        WeightedGraph g = new WeightedPseudograph();
+        WeightedGraph<String,DirectedEdge<String>>
+        	g = new WeightedPseudograph<String,DirectedEdge<String>>();
 
         g.addVertex(V1);
         g.addVertex(V2);

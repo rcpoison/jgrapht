@@ -46,7 +46,7 @@ package org._3pq.jgrapht.edge;
  * @author Barak Naveh
  * @since Jul 24, 2003
  */
-public class DirectedEdgeTest extends DefaultEdgeTest
+public class DirectedEdgeTest extends DefaultEdgeTest<DirectedEdge<String>>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -63,12 +63,14 @@ public class DirectedEdgeTest extends DefaultEdgeTest
     /**
      * @see DefaultEdgeTest#setUp()
      */
-    protected void setUp()
+    @SuppressWarnings("unchecked")
+	protected void setUp()
         throws Exception
     {
-        m_e1 = new DirectedEdge(m_source1, m_target1);
-        m_e3 = new DirectedEdge(new Object(), new Object());
+        m_e1 = new DirectedEdge<String>(m_source1, m_target1);
+        m_e3 = new DirectedEdge<String>(new String(), new String());
 
-        m_e1Clone = (DirectedEdge) m_e1.clone();
+        m_e1Clone = (DirectedEdge<String>) m_e1.clone();	// Type-safety warning OK
+        m_e1ConstructorCopy = new DirectedEdge<String>( m_e1 );
     }
 }

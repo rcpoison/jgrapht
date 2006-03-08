@@ -34,7 +34,7 @@ import org._3pq.jgrapht.*;
  *
  * @author Michael Behrisch
  */
-public abstract class WeightedGraphAlgorithm implements Serializable
+public abstract class WeightedGraphAlgorithm<V,E extends Edge<V>> implements Serializable
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -42,7 +42,7 @@ public abstract class WeightedGraphAlgorithm implements Serializable
     /**
      * The WeightedGraph object that the algorithm uses.
      */
-    protected final WeightedGraph _wgraph;
+    protected final WeightedGraph<V,E> _wgraph;
 
     /**
      * whether the stored graph is directed
@@ -56,7 +56,7 @@ public abstract class WeightedGraphAlgorithm implements Serializable
      *
      * @param wgraph
      */
-    public WeightedGraphAlgorithm(WeightedGraph wgraph)
+    public WeightedGraphAlgorithm(WeightedGraph<V,E> wgraph)
     {
         _wgraph = wgraph;
         _directed = wgraph instanceof DirectedGraph;

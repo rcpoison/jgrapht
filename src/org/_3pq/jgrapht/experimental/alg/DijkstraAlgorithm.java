@@ -46,7 +46,7 @@ import org._3pq.jgrapht.graph.*;
  *
  * @author Michael Behrisch
  */
-public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
+public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGraphAlgorithm<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -62,7 +62,7 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
      * algorithm. Future implementations may use Listeners to keep this map up
      * to date.
      */
-    private final Map _heapVertices = new HashMap();
+    private final Map<Object, HeapVertex> _heapVertices = new HashMap<Object, HeapVertex>();
 
     /**
      * in which direction to compare. 1 (or any other positive value) means the
@@ -82,7 +82,7 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
      *               be determined.
      * @param maximum
      */
-    public DijkstraAlgorithm(WeightedGraph wgraph, boolean maximum)
+    public DijkstraAlgorithm(WeightedGraph<V,E> wgraph, boolean maximum)
     {
         this(wgraph, BinaryHeap.getFactory(), maximum);
     }
@@ -97,7 +97,7 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
      * @param maximum
      */
     protected DijkstraAlgorithm(
-        WeightedGraph wgraph,
+        WeightedGraph<V,E> wgraph,
         HeapFactory factory,
         boolean maximum)
     {
@@ -118,20 +118,21 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
      *
      * @return A WeightedGraph comprising of the optimum path spanning tree.
      */
-    public final WeightedGraph optimumPathTree(Object from)
+    public final WeightedGraph<V,E> optimumPathTree(V from)
     {
-        WeightedGraph optimumPathTree;
+        WeightedGraph<V,E> optimumPathTree;
 
         if (_directed) {
-            optimumPathTree = new SimpleDirectedWeightedGraph();
+        	//FIXME hb 051124: I would like to pass Edge<V> instead of DirectedEdge and remove the cast
+            optimumPathTree = (WeightedGraph<V,E>)new SimpleDirectedWeightedGraph<V,DirEdge<V>>();
         } else {
-            optimumPathTree = new SimpleWeightedGraph();
+            optimumPathTree = new SimpleWeightedGraph<V,E>();
         }
 
         _heap.clear();
         _heapVertices.clear();
 
-        for (Iterator it = _wgraph.vertexSet().iterator(); it.hasNext();) {
+        for (Iterator<V> it = _wgraph.vertexSet().iterator(); it.hasNext();) {
             Object vertex = it.next();
             HeapVertex heapV;
 
@@ -154,24 +155,24 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
 
         while (!_heap.isEmpty()) {
             HeapVertex hv = heapVertex(_heap.extractTop());
-            Object v = hv.getVertex();
-            Edge treeEdge = (Edge) hv.getAdditional();
+            V v = (V)hv.getVertex();				//FIXME hb 051124: Remove cast
+            E treeEdge = (E) hv.getAdditional();	//FIXME hb 051124: Remove cast
 
             if (treeEdge != null) {
                 GraphHelper.addEdgeWithVertices(optimumPathTree, treeEdge);
             }
 
-            Iterator edges;
+            Iterator<? extends Edge<V>> edges;
 
             if (_directed) {
                 edges =
-                    ((DirectedGraph) _wgraph).outgoingEdgesOf(v).iterator();
+                    ((DirectedGraph<V,DirEdge<V>>) _wgraph).outgoingEdgesOf(v).iterator();
             } else {
                 edges = _wgraph.edgesOf(v).iterator();
             }
 
             while (edges.hasNext()) {
-                Edge e = (Edge) edges.next();
+                Edge<V> e = edges.next();
                 HeapVertex u = heapVertex(e.oppositeVertex(v));
                 double newPrio =
                     priorityFunction(hv.getPriority(), e.getWeight());
@@ -199,12 +200,17 @@ public abstract class DijkstraAlgorithm extends WeightedGraphAlgorithm
         double vertexPrio,
         double edgeWeight);
 
+
+    /**
+     * @param v
+     * @return
+     */
     private final HeapVertex heapVertex(Object v)
     {
         if (v instanceof HeapVertex) {
             return (HeapVertex) v;
         }
 
-        return (HeapVertex) _heapVertices.get(v);
+        return _heapVertices.get(v);
     }
 }

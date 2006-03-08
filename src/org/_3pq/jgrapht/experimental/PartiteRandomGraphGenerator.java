@@ -57,7 +57,8 @@ import org._3pq.jgrapht.generate.*;
  * @author Michael Behrisch
  * @since Sep 13, 2004
  */
-public class PartiteRandomGraphGenerator implements GraphGenerator
+public class PartiteRandomGraphGenerator<V,E extends Edge<V>>
+    implements GraphGenerator<V,E,Object[]>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -131,12 +132,17 @@ public class PartiteRandomGraphGenerator implements GraphGenerator
     //~ Methods ---------------------------------------------------------------
 
     /**
+     * TODO hb 30-nov-05: document me
+     * 
+     * @param target
+     * @param vertexFactory
+     * @param resultMap some array of vertices
      * @see GraphGenerator#generateGraph
      */
     public void generateGraph(
-        Graph target,
-        VertexFactory vertexFactory,
-        Map resultMap)
+            Graph<V,E> target,
+            VertexFactory<V> vertexFactory,
+            Map<String,Object[]> resultMap)
     {
         Object [][] vertices = new Object [m_numVertices.length][];
 

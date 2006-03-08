@@ -61,7 +61,7 @@ import org._3pq.jgrapht.util.*;
  * @since Sep 2, 2003
  */
 public class ClosestFirstIterator<V, E extends Edge<V>>
-    extends CrossComponentIterator<V, E, ClosestFirstIterator.QueueEntry>
+    extends CrossComponentIterator<V, E, ClosestFirstIterator.QueueEntry<V,E>>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -201,7 +201,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
      */
     protected void encounterVertex(V vertex, E edge)
     {
-        QueueEntry entry = createSeenData(vertex, edge);
+        QueueEntry<V,E> entry = createSeenData(vertex, edge);
         putSeenData(vertex, entry);
         m_heap.insert(entry, entry.getShortestPathLength());
     }
@@ -215,7 +215,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
-        QueueEntry entry = getSeenData(vertex);
+        QueueEntry<V,E> entry = getSeenData(vertex);
 
         if (entry.m_frozen) {
             // no improvement for this vertex possible
@@ -235,7 +235,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
      */
     protected V provideNextVertex()
     {
-        QueueEntry<V, E> entry = (QueueEntry) m_heap.removeMin();
+        QueueEntry<V, E> entry = (QueueEntry<V,E>) m_heap.removeMin();
         entry.m_frozen = true;
 
         return entry.m_vertex;
@@ -284,7 +284,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
      *
      * @return the new queue entry.
      */
-    private QueueEntry createSeenData(V vertex, E edge)
+    private QueueEntry<V,E> createSeenData(V vertex, E edge)
     {
         double shortestPathLength;
 
@@ -294,7 +294,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
             shortestPathLength = calculatePathLength(vertex, edge);
         }
 
-        QueueEntry entry = new QueueEntry(shortestPathLength);
+        QueueEntry<V,E> entry = new QueueEntry<V,E>(shortestPathLength);
         entry.m_vertex = vertex;
         entry.m_spanningTreeEdge = edge;
 
@@ -306,17 +306,17 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    static class QueueEntry<V, E extends Edge<V>> extends FibonacciHeap.Node
+    static class QueueEntry<VV, EE extends Edge<VV>> extends FibonacciHeap.Node
     {
         /**
          * Best spanning tree edge to vertex seen so far.
          */
-        E m_spanningTreeEdge;
+        EE m_spanningTreeEdge;
 
         /**
          * The vertex reached.
          */
-        V m_vertex;
+        VV m_vertex;
 
         /**
          * True once m_spanningTreeEdge is guaranteed to be the true minimum.

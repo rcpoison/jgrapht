@@ -41,13 +41,15 @@
  */
 package org._3pq.jgrapht.edge;
 
+import org._3pq.jgrapht.DirEdge;
+
 /**
  * A implementation of directed edge.
  *
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public class DirectedEdge<V> extends DefaultEdge<V>
+public class DirectedEdge<V> extends DefaultEdge<V> implements DirEdge<V>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -57,11 +59,19 @@ public class DirectedEdge<V> extends DefaultEdge<V>
     //~ Constructors ----------------------------------------------------------
 
     /**
-     * @see DefaultEdge#DefaultEdge(Object, Object)
+     * @see DefaultEdge#DefaultEdge(V, V)
      */
     public DirectedEdge(V sourceVertex, V targetVertex)
     {
         super(sourceVertex, targetVertex);
+    }
+
+    /**
+     * @see DefaultEdge#DefaultEdge(DefaultEdge)
+     */
+    public DirectedEdge(DirEdge<V> edge)
+    {
+        super(edge);
     }
 
     //~ Methods ---------------------------------------------------------------

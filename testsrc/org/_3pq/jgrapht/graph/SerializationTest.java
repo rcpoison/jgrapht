@@ -39,10 +39,13 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.DirEdge;
+import org._3pq.jgrapht.EnhancedTestCase;
 
 
 /**
@@ -76,10 +79,12 @@ public class SerializationTest extends EnhancedTestCase
     /**
      * Tests serialization of DirectedMultigraph.
      */
-    public void testDirectedMultigraph()
+    @SuppressWarnings("unchecked")
+	public void testDirectedMultigraph()
         throws Exception
     {
-        DirectedMultigraph graph = new DirectedMultigraph();
+        DirectedMultigraph<String,DirEdge<String>> graph =
+        	new DirectedMultigraph<String,DirEdge<String>>();
         graph.addVertex(m_v1);
         graph.addVertex(m_v2);
         graph.addVertex(m_v3);
@@ -87,7 +92,7 @@ public class SerializationTest extends EnhancedTestCase
         graph.addEdge(m_v2, m_v3);
         graph.addEdge(m_v2, m_v3);
 
-        graph = (DirectedMultigraph) serializeAndDeserialize(graph);
+        graph = (DirectedMultigraph<String,DirEdge<String>>) serializeAndDeserialize(graph);
         assertTrue(graph.containsVertex(m_v1));
         assertTrue(graph.containsVertex(m_v2));
         assertTrue(graph.containsVertex(m_v3));

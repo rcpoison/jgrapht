@@ -44,7 +44,7 @@ package org._3pq.jgrapht.util.equivalence;
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class UniformEquivalenceComparator implements EquivalenceComparator
+public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<E,C>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -56,10 +56,10 @@ public class UniformEquivalenceComparator implements EquivalenceComparator
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
-        Object arg1,
-        Object arg2,
-        Object context1,
-        Object context2)
+            E arg1,
+            E arg2,
+            C context1,
+            C context2)
     {
         return true;
     }
@@ -70,7 +70,7 @@ public class UniformEquivalenceComparator implements EquivalenceComparator
      * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
-    public int equivalenceHashcode(Object arg1, Object context)
+    public int equivalenceHashcode(E arg1, C context)
     {
         return 0;
     }

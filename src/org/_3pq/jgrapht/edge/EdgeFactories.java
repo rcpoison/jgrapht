@@ -74,16 +74,16 @@ public final class EdgeFactories
      * @author Barak Naveh
      * @since Jul 14, 2003
      */
-    public static class DirectedEdgeFactory<V> extends AbstractEdgeFactory<V, DirectedEdge<V>>
+    public static class DirectedEdgeFactory<V> extends AbstractEdgeFactory<V, DirEdge<V>>
     {
         private static final long serialVersionUID = 3618135658586388792L;
 
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public DirectedEdge<V> createEdge(V source, V target)
+        public DirEdge<V> createEdge(V source, V target)
         {
-            return new DirectedEdge(source, target);
+            return new DirectedEdge<V>(source, target);
         }
     }
 
@@ -101,9 +101,9 @@ public final class EdgeFactories
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public DirectedWeightedEdge createEdge(V source, V target)
+        public DirectedWeightedEdge<V> createEdge(V source, V target)
         {
-            return new DirectedWeightedEdge(source, target);
+            return new DirectedWeightedEdge<V>(source, target);
         }
     }
 
@@ -120,9 +120,9 @@ public final class EdgeFactories
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public UndirectedEdge createEdge(V source, V target)
+        public UndirectedEdge<V> createEdge(V source, V target)
         {
-            return new UndirectedEdge(source, target);
+            return new UndirectedEdge<V>(source, target);
         }
     }
 
@@ -140,9 +140,9 @@ public final class EdgeFactories
         /**
          * @see EdgeFactory#createEdge(Object, Object)
          */
-        public UndirectedWeightedEdge createEdge(V source, V target)
+        public UndirectedWeightedEdge<V> createEdge(V source, V target)
         {
-            return new UndirectedWeightedEdge(source, target);
+            return new UndirectedWeightedEdge<V>(source, target);
         }
     }
 

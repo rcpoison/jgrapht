@@ -103,13 +103,18 @@ import org._3pq.jgrapht.event.*;
  * @see org._3pq.jgrapht.Graph
  * @see java.util.Set
  * @since Jul 18, 2003
+ * 
+ * <p>
+ * TODO hb 27-Nov-05: Subgraph features the code for a directed graph without specifying the interface.
+ * This makes types/typecasting problematic. The class does not even test
+ * whether a directed graph is stored in m_base when executing direction-related methods.
+ * My guess is that all direction-related methods should move to DirectedSubgraph.
  */
 public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     implements Serializable
 {
-
     //~ Static fields/initializers --------------------------------------------
-
+    private static final long serialVersionUID = 3208313055169665387L;
     private static final String NO_SUCH_EDGE_IN_BASE =
         "no such edge in base graph";
     private static final String NO_SUCH_VERTEX_IN_BASE =
@@ -118,8 +123,8 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     //~ Instance fields -------------------------------------------------------
 
     //
-    Set<E> m_edgeSet = new LinkedHashSet(); // friendly to improve performance
-    Set<V> m_vertexSet = new LinkedHashSet(); // friendly to improve
+    Set<E> m_edgeSet = new LinkedHashSet<E>(); // friendly to improve performance
+    Set<V> m_vertexSet = new LinkedHashSet<V>(); // friendly to improve
                                               // performance
 
     //
@@ -184,7 +189,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         List<E> edges = null;
 
         if (containsVertex(sourceVertex) && containsVertex(targetVertex)) {
-            edges = new ArrayList();
+            edges = new ArrayList<E>();
 
             List<E> baseEdges = m_base.getAllEdges(sourceVertex, targetVertex);
 
@@ -348,7 +353,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see org._3pq.jgrapht.Graph#containsEdge(Edge)
      */
-    public boolean containsEdge(E e)
+    public boolean containsEdge(Edge e)
     {
         return m_edgeSet.contains(e);
     }
@@ -364,12 +369,14 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf(V vertex)
-    {
+    public int degreeOf(V vertex) {
         assertVertexExist(vertex);
 
+        // TODO hb 27-Nov-05: Check/understand this sophistication
+        // could the intend be to throw a ClassCastException
+        // for non-directed graphs?
         // sophisticated way to check runtime class of base ;-)
-        ((UndirectedGraph) m_base).degreeOf(vertex);
+        ((UndirectedGraph<V,E>) m_base).degreeOf(vertex);
 
         int degree = 0;
 
@@ -405,7 +412,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     {
         assertVertexExist(vertex);
 
-        ArrayList edges = new ArrayList();
+        ArrayList<E> edges = new ArrayList<E>();
         List<E> baseEdges = m_base.edgesOf(vertex);
 
         for (E e : baseEdges) {
@@ -426,7 +433,8 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex)) {
+        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
+        for (DirEdge e : ((DirectedGraph<V, ? extends E>) m_base).incomingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -442,9 +450,10 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     {
         assertVertexExist(vertex);
 
-        ArrayList edges = new ArrayList();
-        List<E> baseEdges =
-            ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex);
+        ArrayList<E> edges = new ArrayList<E>();
+        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
+        List<? extends E> baseEdges =
+            ((DirectedGraph<V, ? extends E>) m_base).incomingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -464,7 +473,8 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex)) {
+        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
+        for (E e : ((DirectedGraph<V, ? extends E>) m_base).outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -480,9 +490,10 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     {
         assertVertexExist(vertex);
 
-        ArrayList edges = new ArrayList();
-        List<E> baseEdges =
-            ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex);
+        ArrayList<E> edges = new ArrayList<E>();
+        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
+        List<? extends E> baseEdges =
+            ((DirectedGraph<V, ? extends E>) m_base).outgoingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -585,6 +596,8 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     private class BaseGraphListener implements GraphListener<V, E>,
         Serializable
     {
+        private static final long serialVersionUID = 4343535244243546391L;
+
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */

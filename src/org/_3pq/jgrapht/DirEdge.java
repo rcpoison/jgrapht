@@ -22,58 +22,34 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------------------
- * ListenableDirectedGraph.java
- * ----------------------------
+/* ---------
+ * Edge.java
+ * ---------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: ListenableDirectedGraph.java,v 1.4 2005/09/05 04:00:57 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------
- * 05-Aug-2003 : Initial revision (BN);
+ * 24-Jul-2003 : Initial revision (BN);
+ * 06-Nov-2003 : Change edge sharing semantics (JVS);
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
-
-import org._3pq.jgrapht.*;
-
+package org._3pq.jgrapht;
 
 /**
- * A directed graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
- *
- * @see org._3pq.jgrapht.graph.DefaultListenableGraph
+ * Interface for directed edges.
+ * 
+ * The class is not called <i>DirectedEdge</i> to avoid a name clash with
+ * a previous implementation and to save characters (generics are a bit verbose).
+ * 
+ * @author Hartmut Benz
+ * @since 0.7.0
  */
-public class ListenableDirectedGraph<V, E extends DirEdge<V>>
-    extends DefaultListenableGraph<V, E> implements DirectedGraph<V, E>
+public interface DirEdge<V> extends Edge<V>
 {
-
-    //~ Static fields/initializers --------------------------------------------
-
-    private static final long serialVersionUID = 3257571698126368824L;
-
-    //~ Constructors ----------------------------------------------------------
-
-    /**
-     * Creates a new listenable directed graph.
-     */
-    public ListenableDirectedGraph()
-    {
-        this(new DefaultDirectedGraph<V,E>());
-    }
-
-    /**
-     * Creates a new listenable directed graph.
-     *
-     * @param base the backing graph.
-     */
-    public ListenableDirectedGraph(DirectedGraph<V, E> base)
-    {
-        super(base);
-    }
 }

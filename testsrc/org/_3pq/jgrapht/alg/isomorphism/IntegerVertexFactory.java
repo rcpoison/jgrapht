@@ -48,7 +48,7 @@ import org._3pq.jgrapht.*;
  * @author Assaf
  * @since May 25, 2005
  */
-public class IntegerVertexFactory implements VertexFactory
+public class IntegerVertexFactory implements VertexFactory<Integer>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -75,7 +75,7 @@ public class IntegerVertexFactory implements VertexFactory
 
     //~ Methods ---------------------------------------------------------------
 
-    public Object createVertex()
+    public Integer createVertex()
     {
         this.counter++;
         return new Integer(this.counter);

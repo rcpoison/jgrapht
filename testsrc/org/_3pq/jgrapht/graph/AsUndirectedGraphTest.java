@@ -54,13 +54,13 @@ public class AsUndirectedGraphTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private DirectedGraph m_directed;
-    private Edge m_loop;
+    private DirectedGraph<String, DirEdge<String>> m_directed;
+    private Edge<String> m_loop;
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
     private String m_v4 = "v4";
-    private UndirectedGraph m_undirected;
+    private UndirectedGraph<String, Edge<String>> m_undirected;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -115,7 +115,7 @@ public class AsUndirectedGraphTest extends EnhancedTestCase
      */
     public void testGetAllEdges()
     {
-        List edges = m_undirected.getAllEdges(m_v3, m_v2);
+        List<Edge<String>> edges = m_undirected.getAllEdges(m_v3, m_v2);
         assertEquals(1, edges.size());
         assertEquals(m_directed.getEdge(m_v2, m_v3),
             edges.iterator().next());
@@ -167,8 +167,8 @@ public class AsUndirectedGraphTest extends EnhancedTestCase
      */
     protected void setUp()
     {
-        m_directed = new DefaultDirectedGraph();
-        m_undirected = new AsUndirectedGraph(m_directed);
+        m_directed = new DefaultDirectedGraph<String, DirEdge<String>>();
+        m_undirected = new AsUndirectedGraph<String, Edge<String>>(m_directed);
 
         m_directed.addVertex(m_v1);
         m_directed.addVertex(m_v2);

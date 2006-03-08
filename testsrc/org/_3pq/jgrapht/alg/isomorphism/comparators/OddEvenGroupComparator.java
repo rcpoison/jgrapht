@@ -45,19 +45,19 @@ import org._3pq.jgrapht.util.equivalence.*;
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class OddEvenGroupComparator implements EquivalenceComparator
+public class OddEvenGroupComparator implements EquivalenceComparator<Integer,Object>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     public boolean equivalenceCompare(
-        Object arg1,
-        Object arg2,
+        Integer arg1,
+        Integer arg2,
         Object context1,
         Object context2)
     {
-        int int1 = ((Integer) arg1).intValue();
-        int int2 = ((Integer) arg2).intValue();
+        int int1 = arg1.intValue();
+        int int2 = arg2.intValue();
 
         boolean result = ((int1 % 2) == (int2 % 2));
         return result;
@@ -71,9 +71,9 @@ public class OddEvenGroupComparator implements EquivalenceComparator
      *
      * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object)
      */
-    public int equivalenceHashcode(Object arg1, Object context)
+    public int equivalenceHashcode(Integer arg1, Object context)
     {
-        int int1 = ((Integer) arg1).intValue();
+        int int1 = arg1.intValue();
         return int1 % 2;
     }
 }

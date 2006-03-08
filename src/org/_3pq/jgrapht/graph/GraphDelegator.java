@@ -84,14 +84,14 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
      *
      * @param g the backing graph (the delegate).
      *
-     * @throws NullPointerException
+     * @throws IllegalArgumentException iff <code>g==null</code>
      */
     public GraphDelegator(Graph<V, E> g)
     {
         super();
 
         if (g == null) {
-            throw new NullPointerException();
+            throw new IllegalArgumentException("g must not be null.");
         }
 
         m_delegate = g;
@@ -150,7 +150,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see Graph#containsEdge(Edge)
      */
-    public boolean containsEdge(E e)
+    public boolean containsEdge(Edge e)
     {
         return m_delegate.containsEdge(e);
     }
@@ -168,7 +168,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
      */
     public int degreeOf(V vertex)
     {
-        return ((UndirectedGraph) m_delegate).degreeOf(vertex);
+        return ((UndirectedGraph<V,E>) m_delegate).degreeOf(vertex);
     }
 
     /**
@@ -192,15 +192,15 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
      */
     public int inDegreeOf(V vertex)
     {
-        return ((DirectedGraph) m_delegate).inDegreeOf(vertex);
+        return ((DirectedGraph<V,? extends E>) m_delegate).inDegreeOf(vertex);
     }
 
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf(V vertex)
+    public List<? extends E> incomingEdgesOf(V vertex)
     {
-        return ((DirectedGraph) m_delegate).incomingEdgesOf(vertex);
+        return ((DirectedGraph<V,? extends E>) m_delegate).incomingEdgesOf(vertex);
     }
 
     /**
@@ -208,15 +208,15 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
      */
     public int outDegreeOf(V vertex)
     {
-        return ((DirectedGraph) m_delegate).outDegreeOf(vertex);
+        return ((DirectedGraph<V,? extends E>) m_delegate).outDegreeOf(vertex);
     }
 
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf(V vertex)
+    public List<? extends E> outgoingEdgesOf(V vertex)
     {
-        return ((DirectedGraph) m_delegate).outgoingEdgesOf(vertex);
+        return ((DirectedGraph<V,? extends E>) m_delegate).outgoingEdgesOf(vertex);
     }
 
     /**

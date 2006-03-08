@@ -64,6 +64,11 @@ import java.util.*;
  * edges represent the relationships between them.  Vertex and edge instances
  * may be shared by more than one graph.</p>
  *
+ * Through generics, a graph can be typed to specific classes for vertices
+ * <code>V</code> and edges <code>E&lt;T&gt;</code>. Such a graph can contain
+ * vertices of type <code>V</code> and all sub-types and Edges of type <code>E</code>
+ * and all sub-types.
+ * 
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
@@ -265,8 +270,10 @@ public interface Graph<V, E extends Edge<V>>
      * @param e edge whose presence in this graph is to be tested.
      *
      * @return <tt>true</tt> if this graph contains the specified edge.
+     * FIXME hb 051124: Discussion needed if v should be restricted to V or can be Object (HB)
+     * FIXME hb 051124: If Object, then a number of other non-inserting methods should follow suit
      */
-    public boolean containsEdge(E e);
+    public boolean containsEdge(Edge e);
 
     /**
      * Returns <tt>true</tt> if this graph contains the specified vertex.  More
@@ -277,6 +284,8 @@ public interface Graph<V, E extends Edge<V>>
      * @param v vertex whose presence in this graph is to be tested.
      *
      * @return <tt>true</tt> if this graph contains the specified vertex.
+     * FIXME hb 051124: Discussion needed if v should be restricted to V or can be Object (HB)
+     * FIXME hb 051124: If Object, then a number of other non-inserting methods should follow suit
      */
     public boolean containsVertex(V v);
 
@@ -337,7 +346,7 @@ public interface Graph<V, E extends Edge<V>>
      *
      * @return The removed edge, or <code>null</code> if no edge removed.
      */
-    public List removeAllEdges(V sourceVertex, V targetVertex);
+    public List<E> removeAllEdges(V sourceVertex, V targetVertex);
 
     /**
      * Removes all the vertices in this graph that are also contained in the

@@ -65,7 +65,7 @@ public class DepthFirstIterator<V, E extends Edge<V>, D>
 
     //~ Instance fields -------------------------------------------------------
 
-    private List<V> m_stack = new ArrayList();
+    private List<V> m_stack = new ArrayList<V>();
 
     //~ Constructors ----------------------------------------------------------
 

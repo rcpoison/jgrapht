@@ -40,9 +40,11 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
-import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.Graph;
 
 
 /**
@@ -122,7 +124,7 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges(V sourceVertex, V targetVertex)
+    public List<E> removeAllEdges(V sourceVertex, V targetVertex)
     {
         List<E> removed = getAllEdges(sourceVertex, targetVertex);
         removeAllEdges(removed);
@@ -211,8 +213,8 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @return a string representation of (V,E)
      */
-    protected String toStringFromSets(Collection<V> vertexSet,
-        Collection<E> edgeSet)
+    protected String toStringFromSets(Collection<? extends V> vertexSet,
+        Collection<? extends Edge<V>> edgeSet)
     {
         return "(" + vertexSet.toString() + ", " + edgeSet.toString() + ")";
     }

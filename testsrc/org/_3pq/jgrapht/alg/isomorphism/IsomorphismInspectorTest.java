@@ -41,6 +41,7 @@ import junit.framework.*;
 
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.alg.isomorphism.comparators.*;
+import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.generate.*;
 import org._3pq.jgrapht.graph.*;
 import org._3pq.jgrapht.util.equivalence.*;
@@ -82,21 +83,21 @@ public class IsomorphismInspectorTest extends TestCase
      * edgeChecker     =   null
      */
     private void assertIsomorphic(
-        Graph [] graphs,
+        Graph<Integer,DirectedEdge<Integer>> [] graphs,
         boolean shouldTheyBeIsomorphic)
     {
         assertIsomorphic(graphs, shouldTheyBeIsomorphic, null, null);
     }
 
     private void assertIsomorphic(
-        Graph [] graphs,
+        Graph<Integer,DirectedEdge<Integer>> [] graphs,
         boolean shouldTheyBeIsomorphic,
         EquivalenceComparator vertexChecker,
         EquivalenceComparator edgeChecker)
     {
         // System.out.println("\nassertIsomorphic:"+shouldTheyBeIsomorphic);
-        Graph g1 = graphs[0];
-        Graph g2 = graphs[1];
+        Graph<Integer,DirectedEdge<Integer>> g1 = graphs[0];
+        Graph<Integer,DirectedEdge<Integer>> g2 = graphs[1];
 
         // System.out.println("g1:"+g1);
         // System.out.println("g2:"+g2);
@@ -139,12 +140,12 @@ public class IsomorphismInspectorTest extends TestCase
     }
 
     private void checkRelation(
-        Graph [] graphs,
+        Graph<Integer,DirectedEdge<Integer>> [] graphs,
         EquivalenceComparator vertexChecker,
         EquivalenceComparator edgeChecker)
     {
-        Graph g1 = graphs[0];
-        Graph g2 = graphs[1];
+        Graph<Integer,DirectedEdge<Integer>> g1 = graphs[0];
+        Graph<Integer,DirectedEdge<Integer>> g2 = graphs[1];
 
         GraphIsomorphismInspector iso =
             AdaptiveIsomorphismInspectorFactory.createIsomorphismInspector(
@@ -185,10 +186,10 @@ public class IsomorphismInspectorTest extends TestCase
         final int NUM_OF_VERTEXES_IN_WHEEL = 6;
         final int FIRST_INTEGER_FOR_G2 = 13;
 
-        Graph g1 = new DefaultDirectedGraph();
-        Graph g2 = new DefaultDirectedGraph();
-        WheelGraphGenerator gen1 =
-            new WheelGraphGenerator(NUM_OF_VERTEXES_IN_WHEEL);
+        Graph<Integer,DirectedEdge<Integer>> g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+        Graph<Integer,DirectedEdge<Integer>> g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+        WheelGraphGenerator<Integer,DirectedEdge<Integer>>  gen1 =
+            new WheelGraphGenerator<Integer,DirectedEdge<Integer>> (NUM_OF_VERTEXES_IN_WHEEL);
         gen1.generateGraph(g1, new IntegerVertexFactory(), null);
 
         // FIRST_INTEGER_FOR_G2-1 , cause first integer is always the next one.
@@ -221,11 +222,13 @@ public class IsomorphismInspectorTest extends TestCase
 
     public void testLinear4vertexIsomorphicGraph()
     {
-        Graph g1 = new DefaultDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         LinearGraphGenerator gen1 = new LinearGraphGenerator(4);
         gen1.generateGraph(g1, new IntegerVertexFactory(), null);
 
-        Graph g2 = new DefaultDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         LinearGraphGenerator gen2 = new LinearGraphGenerator(4);
         gen2.generateGraph(g2, new IntegerVertexFactory(5), null); // start vertex from number 6
         assertIsomorphic(new Graph [] {
@@ -246,15 +249,19 @@ public class IsomorphismInspectorTest extends TestCase
      */
     public void testLinear4vertexNonIsomorphicCauseOfVertexEqGroup()
     {
-        LinearGraphGenerator gen4 = new LinearGraphGenerator(4);
+        LinearGraphGenerator<Integer,DirectedEdge<Integer>>
+        	gen4 = new LinearGraphGenerator<Integer,DirectedEdge<Integer>>(4);
 
-        Graph g1 = new DefaultDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g1, new IntegerVertexFactory(), null);
 
-        Graph g2 = new DefaultDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g2, new IntegerVertexFactory(1), null); // start vertex from number 2
 
-        Graph g3 = new DefaultDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	g3 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g3, new IntegerVertexFactory(2), null); // start vertex from number 3
 
         // first assert all are isomorphic (if vertexChecker is not used)
@@ -319,15 +326,15 @@ public class IsomorphismInspectorTest extends TestCase
             };
 
         for (int i = 0; i < graphsArray.length; i++) {
-            Graph currGraph =
-                graphsArray[i] = new DefaultDirectedWeightedGraph();
+            Graph<Character,DirectedEdge<Character>> currGraph =
+                graphsArray[i] = new DefaultDirectedWeightedGraph<Character,DirectedEdge<Character>>();
             for (int j = 0; j < LINEAR_GRAPH_VERTEX_NUM; j++) {
                 currGraph.addVertex(charArray[j]);
             }
 
             // create the 3 edges with weights
             for (int j = 0; j < 3; j++) {
-                Edge e =
+                DirectedEdge<Character> e =
                     currGraph.getEdgeFactory().createEdge(
                         charArray[j],
                         charArray[j + 1]);

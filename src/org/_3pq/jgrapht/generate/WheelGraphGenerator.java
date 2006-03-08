@@ -54,7 +54,7 @@ import org._3pq.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class WheelGraphGenerator implements GraphGenerator
+public class WheelGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -108,9 +108,9 @@ public class WheelGraphGenerator implements GraphGenerator
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph target,
-        final VertexFactory vertexFactory,
-        Map resultMap)
+        Graph<V,E> target,
+        final VertexFactory<V> vertexFactory,
+        Map<String,V> resultMap)
     {
         if (m_size < 1) {
             return;
@@ -119,38 +119,34 @@ public class WheelGraphGenerator implements GraphGenerator
         // A little trickery to intercept the rim generation.  This is
         // necessary since target may be initially non-empty, meaning we can't
         // rely on its vertex set after the rim is generated.
-        final Collection rim = new ArrayList();
-        VertexFactory rimVertexFactory =
-            new VertexFactory() {
-                public Object createVertex()
+        final Collection<V> rim = new ArrayList<V>();
+        VertexFactory<V> rimVertexFactory =
+            new VertexFactory<V>() {
+                public V createVertex()
                 {
-                    Object vertex = vertexFactory.createVertex();
+                    V vertex = vertexFactory.createVertex();
                     rim.add(vertex);
 
                     return vertex;
                 }
             };
 
-        RingGraphGenerator ringGenerator = new RingGraphGenerator(m_size - 1);
+        RingGraphGenerator<V,E> ringGenerator = new RingGraphGenerator<V,E>(m_size - 1);
         ringGenerator.generateGraph(target, rimVertexFactory, resultMap);
 
-        Object hubVertex = vertexFactory.createVertex();
+        V hubVertex = vertexFactory.createVertex();
         target.addVertex(hubVertex);
 
         if (resultMap != null) {
             resultMap.put(HUB_VERTEX, hubVertex);
         }
 
-        Iterator rimIter = rim.iterator();
-
-        while (rimIter.hasNext()) {
-            Object rimVertex = rimIter.next();
-
-            if (m_inwardSpokes) {
-                target.addEdge(rimVertex, hubVertex);
-            } else {
-                target.addEdge(hubVertex, rimVertex);
-            }
+        for( V rimVertex : rim ) {
+        	if (m_inwardSpokes) {
+        		target.addEdge(rimVertex, hubVertex);
+        	} else {
+        		target.addEdge(hubVertex, rimVertex);
+        	}
         }
     }
 }

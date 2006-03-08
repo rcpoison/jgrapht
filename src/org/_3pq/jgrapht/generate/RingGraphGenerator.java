@@ -53,7 +53,7 @@ import org._3pq.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class RingGraphGenerator implements GraphGenerator
+public class RingGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -84,21 +84,21 @@ public class RingGraphGenerator implements GraphGenerator
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph target,
-        VertexFactory vertexFactory,
-        Map resultMap)
+        Graph<V,E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String,V> resultMap)
     {
         if (m_size < 1) {
             return;
         }
 
-        LinearGraphGenerator linearGenerator =
-            new LinearGraphGenerator(m_size);
-        Map privateMap = new HashMap();
+        LinearGraphGenerator<V,E> linearGenerator =
+            new LinearGraphGenerator<V,E>(m_size);
+        Map<String,V> privateMap = new HashMap<String,V>();
         linearGenerator.generateGraph(target, vertexFactory, privateMap);
 
-        Object startVertex = privateMap.get(LinearGraphGenerator.START_VERTEX);
-        Object endVertex = privateMap.get(LinearGraphGenerator.END_VERTEX);
+        V startVertex = privateMap.get(LinearGraphGenerator.START_VERTEX);
+        V endVertex = privateMap.get(LinearGraphGenerator.END_VERTEX);
         target.addEdge(endVertex, startVertex);
     }
 }

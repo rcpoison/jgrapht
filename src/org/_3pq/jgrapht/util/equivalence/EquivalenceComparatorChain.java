@@ -42,14 +42,16 @@ package org._3pq.jgrapht.util.equivalence;
  * and not the next one. So, make sure to use the one which has better
  * performance first.  (This class follows the "Composite" design-pattern).
  *
+ * @param <E> the type of the elements in the set
+ * @param <C> the type of the context the element is compared against, e.g. a Graph
  * @author Assaf
  * @since Jul 22, 2005
  */
-public interface EquivalenceComparatorChain extends EquivalenceComparator
+public interface EquivalenceComparatorChain<E,C> extends EquivalenceComparator<E,C>
 {
 
     //~ Methods ---------------------------------------------------------------
- 
+
     /**
      * Adds a comparator which will also test equivalence. For
      * equivalenceCompare(), the return value is a logical AND of the two

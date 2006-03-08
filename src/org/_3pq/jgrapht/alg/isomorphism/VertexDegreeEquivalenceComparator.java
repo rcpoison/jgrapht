@@ -52,8 +52,8 @@ import org._3pq.jgrapht.util.equivalence.*;
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class VertexDegreeEquivalenceComparator
-    implements EquivalenceComparator
+public class VertexDegreeEquivalenceComparator<V,E extends Edge<V>>
+    implements EquivalenceComparator<V,Graph<V,E>>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -76,15 +76,15 @@ public class VertexDegreeEquivalenceComparator
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
-        Object vertex1,
-        Object vertex2,
-        Object context1,
-        Object context2)
+        V vertex1,
+        V vertex2,
+        Graph<V,E> context1,
+        Graph<V,E> context2)
     {
         // note that VertexDegreeComparator cannot be used. It supports only
         // directed graphs.
-        InOutDegrees inOut1 = getInOutDegrees((Graph) context1, vertex1);
-        InOutDegrees inOut2 = getInOutDegrees((Graph) context2, vertex2);
+        InOutDegrees inOut1 = getInOutDegrees(context1, vertex1);
+        InOutDegrees inOut2 = getInOutDegrees(context2, vertex2);
         boolean result = inOut1.equals(inOut2);
         return result;
     }
@@ -95,9 +95,9 @@ public class VertexDegreeEquivalenceComparator
      * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
-    public int equivalenceHashcode(Object vertex, Object context)
+    public int equivalenceHashcode(V vertex, Graph<V,E> context)
     {
-        InOutDegrees inOut = getInOutDegrees((Graph) context, vertex);
+        InOutDegrees inOut = getInOutDegrees(context, vertex);
 
         // hash it using the string hash. use the format N '-' N
         StringBuffer sb = new StringBuffer();
@@ -116,18 +116,17 @@ public class VertexDegreeEquivalenceComparator
      * @param vertex
      */
     protected InOutDegrees getInOutDegrees(
-        Graph aContextGraph,
-        Object vertex)
+        Graph<V,E> aContextGraph,
+        V vertex)
     {
         int inVertexDegree = 0;
         int outVertexDegree = 0;
-        int uniqueId = -1;
         if (aContextGraph instanceof UndirectedGraph) {
-            UndirectedGraph undirectedGraph = (UndirectedGraph) aContextGraph;
+            UndirectedGraph<V,E> undirectedGraph = (UndirectedGraph<V,E>) aContextGraph;
             inVertexDegree = undirectedGraph.degreeOf(vertex);
             outVertexDegree = inVertexDegree; // it is UNdirected
         } else if (aContextGraph instanceof DirectedGraph) {
-            DirectedGraph directedGraph = (DirectedGraph) aContextGraph;
+            DirectedGraph<V,? extends E> directedGraph = (DirectedGraph<V,? extends E>) aContextGraph;
             inVertexDegree = directedGraph.inDegreeOf(vertex);
             outVertexDegree = directedGraph.outDegreeOf(vertex);
         } else {

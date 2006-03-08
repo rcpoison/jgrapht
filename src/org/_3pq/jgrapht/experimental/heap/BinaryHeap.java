@@ -38,6 +38,9 @@ public class BinaryHeap extends AbstractHeap
 
     //~ Static fields/initializers --------------------------------------------
 
+    protected static final int INITIAL_SIZE = 10;
+
+
     private static final HeapFactory FACTORY =
         new AbstractHeapFactory() {
             public Heap createHeap(
@@ -52,7 +55,7 @@ public class BinaryHeap extends AbstractHeap
 
     //~ Instance fields -------------------------------------------------------
 
-    private final List _elems;
+    private final List<Elem> _elems;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -66,8 +69,12 @@ public class BinaryHeap extends AbstractHeap
     public BinaryHeap(Collection c, Comparator comp, boolean maximum)
     {
         super(comp, maximum);
-        _elems = new ArrayList(Math.max(c.size(), 10));
-        addAll(c);
+        if(c!=null) {
+            _elems = new ArrayList<Elem>(Math.max(c.size(), INITIAL_SIZE));
+            addAll(c);
+        } else {
+            _elems = new ArrayList<Elem>(INITIAL_SIZE);
+        }
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -97,8 +104,8 @@ public class BinaryHeap extends AbstractHeap
      */
     public Object extractTop()
     {
-        Elem z = (Elem) _elems.get(0);
-        Elem e = (Elem) _elems.remove(_elems.size() - 1);
+        Elem z = _elems.get(0);
+        Elem e = _elems.remove(_elems.size() - 1);
 
         if (!isEmpty()) {
             _elems.set(0, e);

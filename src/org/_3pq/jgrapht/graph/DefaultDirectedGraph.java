@@ -40,6 +40,8 @@
  */
 package org._3pq.jgrapht.graph;
 
+import java.io.Serializable;
+
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.edge.*;
 
@@ -52,7 +54,7 @@ import org._3pq.jgrapht.edge.*;
  * <p>prefixed 'Default' to avoid name collision with the DirectedGraph
  * interface.</p>
  */
-public class DefaultDirectedGraph<V, E extends Edge<V>>
+public class DefaultDirectedGraph<V, E extends DirEdge<V>>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -67,6 +69,7 @@ public class DefaultDirectedGraph<V, E extends Edge<V>>
      */
     public DefaultDirectedGraph()
     {
+
         this(new EdgeFactories.DirectedEdgeFactory());
     }
 
@@ -79,4 +82,5 @@ public class DefaultDirectedGraph<V, E extends Edge<V>>
     {
         super(ef, false, true);
     }
+    
 }

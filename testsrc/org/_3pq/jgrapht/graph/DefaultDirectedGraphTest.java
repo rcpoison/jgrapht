@@ -67,8 +67,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testEdgeListFactory()
     {
-        DirectedMultigraph g = new DirectedMultigraph();
-        g.setEdgeListFactory(new LinkedListFactory());
+        DirectedMultigraph<String, DirEdge<String>> g = new DirectedMultigraph<String, DirEdge<String>>();
+        g.setEdgeListFactory(new LinkedListFactory<String, DirEdge<String>>());
         initMultiTriangleWithMultiLoop(g);
     }
 
@@ -77,7 +77,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testEdgeOrderDeterminism()
     {
-        DirectedGraph g = new DirectedMultigraph();
+        DirectedGraph<String, DirEdge<String>> g = new DirectedMultigraph<String, DirEdge<String>>();
         g.addVertex(m_v1);
         g.addVertex(m_v2);
         g.addVertex(m_v3);
@@ -86,7 +86,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
         Edge e2 = g.addEdge(m_v2, m_v3);
         Edge e3 = g.addEdge(m_v3, m_v1);
 
-        Iterator iter = g.edgeSet().iterator();
+        Iterator<DirEdge<String>> iter = g.edgeSet().iterator();
         assertEquals(e1, iter.next());
         assertEquals(e2, iter.next());
         assertEquals(e3, iter.next());
@@ -97,7 +97,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testEdgesOf()
     {
-        DirectedGraph g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
 
         assertEquals(3, g.edgesOf(m_v1).size());
         assertEquals(2, g.edgesOf(m_v2).size());
@@ -108,9 +108,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testGetAllEdges()
     {
-        DirectedGraph g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
 
-        List loops = g.getAllEdges(m_v1, m_v1);
+        List<DirEdge<String>> loops = g.getAllEdges(m_v1, m_v1);
         assertEquals(1, loops.size());
     }
 
@@ -119,7 +119,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testInDegreeOf()
     {
-        DirectedGraph g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
 
         assertEquals(2, g.inDegreeOf(m_v1));
         assertEquals(1, g.inDegreeOf(m_v2));
@@ -130,7 +130,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testOutDegreeOf()
     {
-        DirectedGraph g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
 
         assertEquals(2, g.outDegreeOf(m_v1));
         assertEquals(1, g.outDegreeOf(m_v2));
@@ -141,22 +141,22 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testVertexOrderDeterminism()
     {
-        DirectedGraph g = createMultiTriangleWithMultiLoop();
-        Iterator iter = g.vertexSet().iterator();
+        DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
+        Iterator<String> iter = g.vertexSet().iterator();
         assertEquals(m_v1, iter.next());
         assertEquals(m_v2, iter.next());
         assertEquals(m_v3, iter.next());
     }
 
-    private DirectedGraph createMultiTriangleWithMultiLoop()
+    private DirectedGraph<String, DirEdge<String>> createMultiTriangleWithMultiLoop()
     {
-        DirectedGraph g = new DirectedMultigraph();
+        DirectedGraph<String, DirEdge<String>> g = new DirectedMultigraph<String, DirEdge<String>>();
         initMultiTriangleWithMultiLoop(g);
 
         return g;
     }
 
-    private void initMultiTriangleWithMultiLoop(DirectedGraph g)
+    private void initMultiTriangleWithMultiLoop(DirectedGraph<String, DirEdge<String>> g)
     {
         g.addVertex(m_v1);
         g.addVertex(m_v2);
@@ -170,18 +170,18 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private static class LinkedListFactory implements EdgeListFactory
+    private static class LinkedListFactory<V,E extends Edge<V>> implements EdgeListFactory<V,E>
     {
         /**
          * .
          *
          * @param vertex
          *
-         * @return
+         * @return an empty list.
          */
-        public List createEdgeList(Object vertex)
+        public List<E> createEdgeList(V vertex)
         {
-            return new LinkedList();
+            return new LinkedList<E>();
         }
     }
 }

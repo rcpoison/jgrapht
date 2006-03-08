@@ -100,10 +100,11 @@ public class JGraphAdapterDemo extends JApplet
     public void init()
     {
         // create a JGraphT graph
-        ListenableGraph g = new ListenableDirectedMultigraph();
+        ListenableGraph<String,DirEdge<String>> g =
+        	new ListenableDirectedMultigraph<String,DirEdge<String>>();
 
         // create a visualization using JGraph, via an adapter
-        m_jgAdapter = new JGraphModelAdapter(g);
+        m_jgAdapter = new JGraphModelAdapter<String,DirEdge<String>>(g);
 
         JGraph jgraph = new JGraph(m_jgAdapter);
 
@@ -111,10 +112,10 @@ public class JGraphAdapterDemo extends JApplet
         getContentPane().add(jgraph);
         resize(DEFAULT_SIZE);
 
-        Object v1 = "v1";
-        Object v2 = "v2";
-        Object v3 = "v3";
-        Object v4 = "v4";
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
 
         // add some sample data (graph manipulated via JGraphT)
         g.addVertex(v1);
@@ -155,7 +156,8 @@ public class JGraphAdapterDemo extends JApplet
         jg.setBackground(c);
     }
 
-    private void positionVertexAt(Object vertex, int x, int y)
+    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME below
+	private void positionVertexAt(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = m_jgAdapter.getVertexCell(vertex);
         AttributeMap attr = cell.getAttributes();
@@ -170,6 +172,7 @@ public class JGraphAdapterDemo extends JApplet
 
         GraphConstants.setBounds(attr, newBounds);
 
+        //TODO: Clean up generics once JGraph goes generic
         AttributeMap cellAttr = new AttributeMap();
         cellAttr.put(cell, attr);
         m_jgAdapter.edit(cellAttr, null, null, null);
@@ -180,14 +183,14 @@ public class JGraphAdapterDemo extends JApplet
     /**
      * a listenable directed multigraph that allows loops and parallel edges.
      */
-    private static class ListenableDirectedMultigraph
-        extends DefaultListenableGraph implements DirectedGraph
+    private static class ListenableDirectedMultigraph<V,E extends DirEdge<V>>
+        extends DefaultListenableGraph<V,E> implements DirectedGraph<V,E>
     {
         private static final long serialVersionUID = 1L;
 
         ListenableDirectedMultigraph()
         {
-            super(new DirectedMultigraph());
+            super(new DirectedMultigraph<V,E>());
         }
     }
 }

@@ -53,34 +53,32 @@ import org._3pq.jgrapht.util.permutation.*;
  * @author Assaf Lehr
  * @since May 20, 2005 ver5.3
  */
-abstract class AbstractExhaustiveIsomorphismInspector
-    implements GraphIsomorphismInspector
+abstract class AbstractExhaustiveIsomorphismInspector<V,E extends Edge<V>>
+    implements GraphIsomorphismInspector<IsomorphismRelation>
 {
 
     //~ Static fields/initializers --------------------------------------------
-
-    public static EquivalenceComparator edgeDefaultIsomorphismComparator =
-        new UniformEquivalenceComparator();
-    public static EquivalenceComparator vertexDefaultIsomorphismComparator =
-        new UniformEquivalenceComparator();
+    public static EquivalenceComparator<Object, Object> edgeDefaultIsomorphismComparator =
+        new UniformEquivalenceComparator<Object, Object>();
+    public static EquivalenceComparator<Object, Object> vertexDefaultIsomorphismComparator =
+        new UniformEquivalenceComparator<Object, Object>();
 
     //~ Instance fields -------------------------------------------------------
 
-    protected EquivalenceComparator edgeComparator;
-    protected EquivalenceComparator vertexComparator;
+    protected EquivalenceComparator<? super E,? super Graph<V,? super E>> edgeComparator;
+    protected EquivalenceComparator<? super V,? super Graph<? super V,E>> vertexComparator;
 
-    protected Graph graph1;
-    protected Graph graph2;
+    protected Graph<V,E> graph1;
+    protected Graph<V,E> graph2;
 
-    private PrefetchIterator nextSupplier;
-    private boolean wasIsomorphismFound;
+    private PrefetchIterator<IsomorphismRelation> nextSupplier;
 
     // kept as member, to ease computations
     private GraphOrdering lableGraph1;
-    private LinkedHashSet graph1VertexSet;
-    private LinkedHashSet graph2EdgeSet;
-    private CollectionPermutationIter vertexPermuteIter;
-    private Set currVertexPermutation; // filled every iteration, used in the
+    private LinkedHashSet<V> graph1VertexSet;
+    private LinkedHashSet<E> graph2EdgeSet;
+    private CollectionPermutationIter<V> vertexPermuteIter;
+    private Set<V> currVertexPermutation; // filled every iteration, used in the
                                        // result relation.
 
     //~ Constructors ----------------------------------------------------------
@@ -96,10 +94,11 @@ abstract class AbstractExhaustiveIsomorphismInspector
      *                    (always return true)
      */
     public AbstractExhaustiveIsomorphismInspector(
-        Graph graph1,
-        Graph graph2,
-        EquivalenceComparator vertexChecker,
-        EquivalenceComparator edgeChecker)
+        Graph<V,E> graph1,
+        Graph<V,E> graph2,
+        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super E>
+        EquivalenceComparator<? super V,? super Graph<? super V,? super E>> vertexChecker,
+        EquivalenceComparator<? super E,? super Graph<? super V,? super E>> edgeChecker)
     {
         this.graph1 = graph1;
         this.graph2 = graph2;
@@ -124,9 +123,11 @@ abstract class AbstractExhaustiveIsomorphismInspector
     /**
      * Constructor which uses the default comparators.
      *
-     * @see ExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
+     * @param graph1
+     * @param graph2
+     * @see #AbstractExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
      */
-    public AbstractExhaustiveIsomorphismInspector(Graph graph1, Graph graph2)
+    public AbstractExhaustiveIsomorphismInspector(Graph<V,E> graph1, Graph<V,E> graph2)
     {
         this(
             graph1,
@@ -154,9 +155,12 @@ abstract class AbstractExhaustiveIsomorphismInspector
     private void init()
     {
         this.nextSupplier =
-            new PrefetchIterator(new AbstractExhaustiveIsomorphismInspector.NextFunctor());
+            new PrefetchIterator<IsomorphismRelation>(
+                    // XXX hb 280106: I don't understand this warning, yet :-)
+                    new AbstractExhaustiveIsomorphismInspector.NextFunctor()
+                    );
 
-        this.graph1VertexSet = new LinkedHashSet(this.graph1.vertexSet());
+        this.graph1VertexSet = new LinkedHashSet<V>(this.graph1.vertexSet());
 
         // vertexPermuteIter will be null, if there is no match
         this.vertexPermuteIter =
@@ -165,9 +169,9 @@ abstract class AbstractExhaustiveIsomorphismInspector
                 this.graph2.vertexSet());
 
         this.lableGraph1 =
-            new GraphOrdering(this.graph1VertexSet, this.graph1.edgeSet());
+            new GraphOrdering<V,E>(this.graph1VertexSet, this.graph1.edgeSet());
 
-        this.graph2EdgeSet = new LinkedHashSet(this.graph2.edgeSet());
+        this.graph2EdgeSet = new LinkedHashSet<E>(this.graph2.edgeSet());
     }
 
     /**
@@ -180,9 +184,9 @@ abstract class AbstractExhaustiveIsomorphismInspector
      *
      * @return permutation iterator
      */
-    protected abstract CollectionPermutationIter createPermutationIterator(
-        Set vertexSet1,
-        Set vertexset2);
+    protected abstract CollectionPermutationIter<V> createPermutationIterator(
+        Set<V> vertexSet1,
+        Set<V> vertexSet2);
 
     /**
      * <p>1. Creates a LabelsGraph of graph1 which will serve as a source to
@@ -242,8 +246,8 @@ abstract class AbstractExhaustiveIsomorphismInspector
                 }
 
                 // compare edges
-                GraphOrdering currPermuteGraph =
-                    new GraphOrdering(
+                GraphOrdering<V,E> currPermuteGraph =
+                    new GraphOrdering<V,E>(
                         currVertexPermutation,
                         this.graph2EdgeSet);
 
@@ -254,8 +258,8 @@ abstract class AbstractExhaustiveIsomorphismInspector
                         new IsomorphismRelation(
                             graph1VertexSet.toArray(),
                             currVertexPermutation.toArray(),
-                            (Graph) graph1,
-                            (Graph) graph2);
+                            graph1,
+                            graph2);
 
                     // if the edge comparator exists, check equivalence by it
                     boolean edgeEq =
@@ -285,12 +289,12 @@ abstract class AbstractExhaustiveIsomorphismInspector
      * true methods only if they make sure that the permutationIterator will
      * always be already equivalent.
      *
-     * @param vertexSet1
-     * @param vertexSet2
+     * @param vertexSet1    FIXME Document me
+     * @param vertexSet2    FIXME Document me
      */
     protected abstract boolean areVertexSetsOfTheSameEqualityGroup(
-        Set vertexSet1,
-        Set vertexSet2);
+        Set<V> vertexSet1,
+        Set<V> vertexSet2);
 
     /**
      * For each edge in g1, get the Correspondence edge and test the pair.
@@ -300,7 +304,7 @@ abstract class AbstractExhaustiveIsomorphismInspector
      */
     protected boolean areAllEdgesEquivalent(
         IsomorphismRelation resultRelation,
-        EquivalenceComparator edgeComparator)
+        EquivalenceComparator<? super E,? super Graph<V,E>> edgeComparator)
     {
         boolean checkResult = true;
 
@@ -310,12 +314,12 @@ abstract class AbstractExhaustiveIsomorphismInspector
         }
 
         try {
-            Set edgeSet = this.graph1.edgeSet();
+            Set<E> edgeSet = this.graph1.edgeSet();
 
-            for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-                Edge currEdge = (Edge) iter.next();
-                Edge correspondingEdge =
-                    (Edge) resultRelation.getCorrespondence(currEdge, true);
+            for ( E currEdge : edgeSet ) {
+                E correspondingEdge =
+                    // XXX hb 060128: Waiting for GraphMapping to go generic
+                    (E) resultRelation.getCorrespondence(currEdge, true);
 
                 // if one edge test fail , fail the whole method
                 if (!edgeComparator.equivalenceCompare(
@@ -339,7 +343,7 @@ abstract class AbstractExhaustiveIsomorphismInspector
      */
     public IsomorphismRelation nextIsoRelation()
     {
-        return (IsomorphismRelation) next();
+        return next();
     }
 
     /**
@@ -347,7 +351,7 @@ abstract class AbstractExhaustiveIsomorphismInspector
      * activated on this class and returned there after in O(1). If called on a
      * new ("virgin") class, it activates 1 iso-check.
      *
-     * @return
+     * @return <code>true</code> iff the two graphs are isomorphic 
      */
     public boolean isIsomorphic()
     {
@@ -367,7 +371,7 @@ abstract class AbstractExhaustiveIsomorphismInspector
     /**
      * @see java.util.Iterator#next()
      */
-    public Object next()
+    public IsomorphismRelation next()
     {
         return this.nextSupplier.nextElement();
     }
@@ -384,15 +388,13 @@ abstract class AbstractExhaustiveIsomorphismInspector
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private class NextFunctor implements PrefetchIterator.NextElementFunctor
+    private class NextFunctor implements PrefetchIterator.NextElementFunctor<IsomorphismRelation>
     {
-        public Object nextElement()
+        public IsomorphismRelation nextElement()
             throws NoSuchElementException
         {
             IsomorphismRelation resultRelation = findNextIsomorphicGraph();
             if (resultRelation != null) {
-                // if it worked , even once , chage the flag to true
-                wasIsomorphismFound = true;
                 return resultRelation;
             } else {
                 throw new NoSuchElementException(

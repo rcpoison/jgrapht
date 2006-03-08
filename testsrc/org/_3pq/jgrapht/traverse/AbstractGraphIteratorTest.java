@@ -41,9 +41,14 @@
  */
 package org._3pq.jgrapht.traverse;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.event.*;
-import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.EnhancedTestCase;
+import org._3pq.jgrapht.edge.DirectedEdge;
+import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
+import org._3pq.jgrapht.event.EdgeTraversalEvent;
+import org._3pq.jgrapht.event.TraversalListener;
+import org._3pq.jgrapht.event.VertexTraversalEvent;
+import org._3pq.jgrapht.graph.DefaultDirectedWeightedGraph;
 
 
 /**
@@ -69,13 +74,13 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
     {
         m_result = new StringBuffer();
 
-        DirectedGraph graph = createDirectedGraph();
+        DirectedGraph<String, DirectedEdge<String>> graph = createDirectedGraph();
 
-        AbstractGraphIterator iterator = createIterator(graph, "1");
+        AbstractGraphIterator<String,DirectedEdge<String>> iterator = createIterator(graph, "1");
         iterator.addTraversalListener(new MyTraversalListener());
 
         while (iterator.hasNext()) {
-            m_result.append((String) iterator.next());
+            m_result.append(iterator.next());
 
             if (iterator.hasNext()) {
                 m_result.append(',');
@@ -89,9 +94,10 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
 
     abstract String getExpectedStr2();
 
-    DirectedGraph createDirectedGraph()
+    DirectedGraph<String, DirectedEdge<String>> createDirectedGraph()
     {
-        DirectedGraph graph = new DefaultDirectedWeightedGraph();
+        DirectedGraph<String, DirectedEdge<String>> graph =
+        	new DefaultDirectedWeightedGraph<String, DirectedEdge<String>>();
 
         //
         String v1 = "1";
@@ -135,9 +141,9 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         return graph;
     }
 
-    abstract AbstractGraphIterator createIterator(
-        DirectedGraph g,
-        Object startVertex);
+    abstract AbstractGraphIterator<String, DirectedEdge<String>> createIterator(
+        DirectedGraph<String, DirectedEdge<String>> g,
+        String startVertex);
 
     //~ Inner Classes ---------------------------------------------------------
 
@@ -146,7 +152,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
      *
      * @author Barak Naveh
      */
-    private class MyTraversalListener implements TraversalListener
+    private class MyTraversalListener implements TraversalListener<String,DirectedEdge<String>>
     {
         private int m_componentNumber = 0;
         private int m_numComponentVertices = 0;
@@ -191,7 +197,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         /**
          * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
          */
-        public void edgeTraversed(EdgeTraversalEvent e)
+        public void edgeTraversed(EdgeTraversalEvent<String,DirectedEdge<String>> e)
         {
             // to be tested...
         }
@@ -199,7 +205,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         /**
          * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
          */
-        public void vertexTraversed(VertexTraversalEvent e)
+        public void vertexTraversed(VertexTraversalEvent<String> e)
         {
             m_numComponentVertices++;
         }

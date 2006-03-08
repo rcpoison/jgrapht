@@ -79,6 +79,20 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
         m_target = targetVertex;
     }
 
+    //-------------------------------------------------------------------------
+    /**
+     * Constructor for DefaultEdge from an existing edge.
+     * The result is a shallow copy similar to {@link #clone()},
+     * but provides type safey with generic classes.
+     * 
+     * @param edge
+     */
+    public DefaultEdge(Edge<V> edge)
+    {
+    	m_source = edge.getSource();
+    	m_target = edge.getTarget();
+    }
+
     //~ Methods ---------------------------------------------------------------
 
     /**
@@ -127,7 +141,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#containsVertex(java.lang.Object)
+     * @see org._3pq.jgrapht.Edge#containsVertex(Object)
      */
     public boolean containsVertex(V v)
     {

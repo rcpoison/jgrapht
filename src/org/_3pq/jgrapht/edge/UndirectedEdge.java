@@ -57,11 +57,19 @@ public class UndirectedEdge<V> extends DefaultEdge<V>
     //~ Constructors ----------------------------------------------------------
 
     /**
-     * @see DefaultEdge#DefaultEdge(Object, Object)
+     * @see DefaultEdge#DefaultEdge(V, V)
      */
     public UndirectedEdge(V sourceVertex, V targetVertex)
     {
         super(sourceVertex, targetVertex);
+    }
+
+    /**
+     * @see DefaultEdge#DefaultEdge(DefaultEdge)
+     */
+    public UndirectedEdge(UndirectedEdge<V> edge)
+    {
+        super(edge);
     }
 
     //~ Methods ---------------------------------------------------------------

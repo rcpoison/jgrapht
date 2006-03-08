@@ -93,9 +93,10 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
      * @param g the backing directed graph over which an undirected view is to
      *          be created.
      */
-    public AsUndirectedGraph(DirectedGraph<V, E> g)
+    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: Don't know how to fix this, yet
+	public <ED extends E & DirEdge<V>> AsUndirectedGraph(DirectedGraph<V,ED> g)
     {
-        super(g);
+        super((Graph<V,E>)g);
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -113,7 +114,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
         }
 
         List<E> reverseList = super.getAllEdges(targetVertex, sourceVertex);
-        List<E> list = new ArrayList(forwardList.size() + reverseList.size());
+        List<E> list = new ArrayList<E>(forwardList.size() + reverseList.size());
         list.addAll(forwardList);
         list.addAll(reverseList);
 
@@ -206,14 +207,10 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     public String toString()
     {
         // take care to print edges using the undirected convention
-        Collection edgeSet = new ArrayList();
+    	Collection<UndirectedEdge<V>> edgeSet = new ArrayList<UndirectedEdge<V>>();
 
-        Iterator<E> iter = edgeSet().iterator();
-
-        while (iter.hasNext()) {
-            Edge edge = iter.next();
-            edgeSet.add(new UndirectedEdge(edge.getSource(),
-                    edge.getTarget()));
+        for( E edge : edgeSet() ) {
+            edgeSet.add(new UndirectedEdge<V>(edge.getSource(),edge.getTarget()));
         }
 
         return super.toStringFromSets(vertexSet(), edgeSet);

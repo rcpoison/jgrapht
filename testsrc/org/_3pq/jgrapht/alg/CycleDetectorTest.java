@@ -71,7 +71,7 @@ public class CycleDetectorTest extends TestCase
      *
      * @param g
      */
-    public void createGraph(Graph g)
+    public void createGraph(Graph<String,DirEdge<String>> g)
     {
         g.addVertex(V1);
         g.addVertex(V2);
@@ -94,16 +94,17 @@ public class CycleDetectorTest extends TestCase
      */
     public void testDirectedWithCycle()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<String,DirEdge<String>> g =
+            new DefaultDirectedGraph<String,DirEdge<String>>();
         createGraph(g);
 
-        Set cyclicSet = new HashSet();
+        Set<String> cyclicSet = new HashSet<String>();
         cyclicSet.add(V1);
         cyclicSet.add(V2);
         cyclicSet.add(V3);
         cyclicSet.add(V4);
 
-        Set acyclicSet = new HashSet();
+        Set<String> acyclicSet = new HashSet<String>();
         acyclicSet.add(V5);
         acyclicSet.add(V6);
 
@@ -113,21 +114,26 @@ public class CycleDetectorTest extends TestCase
     /**
      * .
      */
+    @SuppressWarnings("unchecked")
     public void testDirectedWithoutCycle()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<String,DirEdge<String>> g =
+            new DefaultDirectedGraph<String,DirEdge<String>>();
         createGraph(g);
         g.removeVertex(V2);
 
-        Set cyclicSet = Collections.EMPTY_SET;
-        Set acyclicSet = g.vertexSet();
+        Set<String> cyclicSet = Collections.EMPTY_SET;  // hb: I would like EMPTY_SET to be typed as well...
+        Set<String> acyclicSet = g.vertexSet();
 
         runTest(g, cyclicSet, acyclicSet);
     }
 
-    private void runTest(DirectedGraph g, Set cyclicSet, Set acyclicSet)
+    private void runTest( DirectedGraph<String,DirEdge<String>> g,
+                          Set<String> cyclicSet,
+                          Set<String> acyclicSet )
     {
-        CycleDetector detector = new CycleDetector(g);
+        CycleDetector<String,DirEdge<String>> detector =
+            new CycleDetector<String,DirEdge<String>>(g);
 
         Set emptySet = Collections.EMPTY_SET;
 
@@ -135,18 +141,12 @@ public class CycleDetectorTest extends TestCase
 
         assertEquals(cyclicSet, detector.findCycles());
 
-        Iterator iter = cyclicSet.iterator();
-
-        while (iter.hasNext()) {
-            Object v = iter.next();
+        for ( String v : cyclicSet ) {
             assertEquals(true, detector.detectCyclesContainingVertex(v));
             assertEquals(cyclicSet, detector.findCyclesContainingVertex(v));
         }
 
-        iter = acyclicSet.iterator();
-
-        while (iter.hasNext()) {
-            Object v = iter.next();
+        for ( String v : acyclicSet ) {
             assertEquals(false, detector.detectCyclesContainingVertex(v));
             assertEquals(emptySet, detector.findCyclesContainingVertex(v));
         }

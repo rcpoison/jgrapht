@@ -58,7 +58,8 @@ import org._3pq.jgrapht.traverse.*;
  * @author John V. Sichi
  * @since Sep 2, 2003
  */
-public abstract class ProximityIterator extends CrossComponentIterator
+public abstract class ProximityIterator<V, E extends Edge<V>>
+    extends CrossComponentIterator<V,E,HeapVertex<E>>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -89,8 +90,8 @@ public abstract class ProximityIterator extends CrossComponentIterator
      * @param startVertex the vertex iteration to be started.
      */
     protected ProximityIterator(
-        Graph g,
-        Object startVertex,
+        Graph<V,E> g,
+        V startVertex,
         HeapFactory factory,
         boolean maximum)
     {
@@ -113,9 +114,9 @@ public abstract class ProximityIterator extends CrossComponentIterator
      * @return the spanning tree edge, or null if the vertex either has not
      *         been seen yet or is the start vertex.
      */
-    public final Edge getSpanningTreeEdge(Object vertex)
+    public final E getSpanningTreeEdge(V vertex)
     {
-        return (Edge) getHeapVertex(vertex).getAdditional();
+        return getHeapVertex(vertex).getAdditional();
     }
 
     /**
@@ -130,7 +131,7 @@ public abstract class ProximityIterator extends CrossComponentIterator
      * @return the spanning tree edge, or null if the vertex either has not
      *         been seen yet or is the start vertex.
      */
-    public final double getPrio(Object vertex)
+    public final double getPrio(V vertex)
     {
         return getHeapVertex(vertex).getPriority();
     }
@@ -147,14 +148,14 @@ public abstract class ProximityIterator extends CrossComponentIterator
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
      *      org._3pq.jgrapht.Edge)
      */
-    protected final void encounterVertex(Object vertex, Edge edge)
+    protected final void encounterVertex(V vertex, E edge)
     {
-        HeapVertex heapV;
+        HeapVertex<E> heapV;
 
         if (vertex instanceof HeapVertex) {
-            heapV = (HeapVertex) vertex;
+            heapV = (HeapVertex<E>) vertex;
         } else {
-            heapV = new HeapVertex(vertex);
+            heapV = new HeapVertex<E>(vertex);
             putSeenData(vertex, heapV);
         }
         heapV.setPriority((_compare > 0) ? 0 : Double.POSITIVE_INFINITY);
@@ -173,12 +174,12 @@ public abstract class ProximityIterator extends CrossComponentIterator
      * @param vertex the vertex re-encountered
      * @param edge the edge via which the vertex was re-encountered
      */
-    protected final void encounterVertexAgain(Object vertex, Edge edge)
+    protected final void encounterVertexAgain(V vertex, E edge)
     {
-        HeapVertex heapV = getHeapVertex(vertex);
+        HeapVertex<E> heapV = getHeapVertex(vertex);
         if (heapV.getPeer() == null)
             return;
-        HeapVertex heapPre = getHeapVertex(edge.oppositeVertex(vertex));
+        HeapVertex<E> heapPre = getHeapVertex(edge.oppositeVertex(vertex));
 
         double newPrio =
             priorityFunction(heapPre.getPriority(), edge.getWeight());
@@ -190,13 +191,13 @@ public abstract class ProximityIterator extends CrossComponentIterator
         }
     }
 
-    private final HeapVertex getHeapVertex(Object v)
+    private final HeapVertex<E> getHeapVertex(Object v)
     {
         if (v instanceof HeapVertex) {
-            return (HeapVertex) v;
+            return (HeapVertex<E>) v;
         }
 
-        return (HeapVertex) getSeenData(v);
+        return getSeenData((V)v);
     }
 
     protected abstract double priorityFunction(
@@ -206,8 +207,8 @@ public abstract class ProximityIterator extends CrossComponentIterator
     /**
      * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
-    protected final Object provideNextVertex()
+    protected final V provideNextVertex()
     {
-        return ((HeapVertex) m_heap.extractTop()).getVertex();
+        return (V)((HeapVertex<E>) m_heap.extractTop()).getVertex();
     }
 }

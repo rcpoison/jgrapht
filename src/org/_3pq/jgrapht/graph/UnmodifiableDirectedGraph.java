@@ -49,7 +49,7 @@ import org._3pq.jgrapht.*;
  *
  * @see org._3pq.jgrapht.graph.UnmodifiableGraph
  */
-public class UnmodifiableDirectedGraph<V, E extends Edge<V>>
+public class UnmodifiableDirectedGraph<V, E extends DirEdge<V>>
     extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>
 {
 

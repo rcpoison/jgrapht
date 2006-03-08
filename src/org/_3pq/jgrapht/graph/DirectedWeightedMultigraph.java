@@ -50,7 +50,7 @@ import org._3pq.jgrapht.edge.*;
  * non-simple directed graph in which loops and multiple edges between any two
  * vertices are permitted, and edges have weights.
  */
-public class DirectedWeightedMultigraph<V, E extends Edge<V>>
+public class DirectedWeightedMultigraph<V, E extends DirEdge<V>>
     extends DirectedMultigraph<V, E> implements WeightedGraph<V, E>
 {
 

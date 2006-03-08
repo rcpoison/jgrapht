@@ -124,6 +124,8 @@ public interface Edge<V> extends Cloneable
      * @param v vertex whose presence in this edge is to be tested.
      *
      * @return <tt>true</tt> if this edge contains the specified vertex.
+     * FIXME hb 051124: Discussion needed if v should be restricted to V or can be Object (HB)
+     * FIXME hb 051124: If Object, then a number of other non-inserting methods should follow suit
      */
     public boolean containsVertex(V v);
 

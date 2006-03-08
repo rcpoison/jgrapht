@@ -79,13 +79,13 @@ import java.util.*;
 // REVIEW jvs 5-Sept-2005:  Since we're using JDK1.5 now, we should be
 // able to declare this as Iterator<GraphMapping>, correct?  Otherwise
 // the caller doesn't even know what they're getting back.
-public interface GraphIsomorphismInspector extends Iterator
+public interface GraphIsomorphismInspector<E> extends Iterator<E>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @return true if the two graphs are isomorphic.
+     * @return <code>true</code> iff the two graphs are isomorphic 
      */
     public boolean isIsomorphic();
 }

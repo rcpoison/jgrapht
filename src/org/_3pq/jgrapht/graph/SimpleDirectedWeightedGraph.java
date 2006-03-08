@@ -49,7 +49,7 @@ import org._3pq.jgrapht.edge.*;
  * A simple directed weighted graph. A simple directed weighted graph is a
  * simple directed graph for which edges are assigned weights.
  */
-public class SimpleDirectedWeightedGraph<V, E extends Edge<V>>
+public class SimpleDirectedWeightedGraph<V, E extends DirEdge<V>>
     extends SimpleDirectedGraph<V, E> implements WeightedGraph<V, E>
 {
 

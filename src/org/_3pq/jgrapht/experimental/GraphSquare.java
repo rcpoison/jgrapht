@@ -52,11 +52,12 @@ import org._3pq.jgrapht.graph.*;
  * @author Michael Behrisch
  * @since Sep 14, 2004
  */
-public class GraphSquare extends AbstractBaseGraph
+public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
 
+    private static final long serialVersionUID = -2642034600395594304L;
     private static final String UNMODIFIABLE = "this graph is unmodifiable";
 
     //~ Constructors ----------------------------------------------------------
@@ -67,17 +68,17 @@ public class GraphSquare extends AbstractBaseGraph
      * @param g the graph of which a square is to be created.
      * @param createLoops
      */
-    public GraphSquare(final Graph g, final boolean createLoops)
+    public GraphSquare(final Graph<V,E> g, final boolean createLoops)
     {
         super(g.getEdgeFactory(), false, createLoops);
         super.addAllVertices(g.vertexSet());
         addSquareEdges(g, createLoops);
 
         if (g instanceof ListenableGraph) {
-            ((ListenableGraph) g).addGraphListener(new GraphListener() {
-                    public void edgeAdded(GraphEdgeChangeEvent e)
+            ((ListenableGraph<V,E>) g).addGraphListener(new GraphListener<V,E>() {
+                    public void edgeAdded(GraphEdgeChangeEvent<V,E> e)
                     {
-                        Edge edge = e.getEdge();
+                        E edge = e.getEdge();
                         addEdgesStartingAt(
                             g,
                             edge.getSource(),
@@ -90,17 +91,17 @@ public class GraphSquare extends AbstractBaseGraph
                             createLoops);
                     }
 
-                    public void edgeRemoved(GraphEdgeChangeEvent e)
+                    public void edgeRemoved(GraphEdgeChangeEvent<V,E> e)
                     { // this is not a very performant implementation
                         GraphSquare.super.removeAllEdges(edgeSet());
                         addSquareEdges(g, createLoops);
                     }
 
-                    public void vertexAdded(GraphVertexChangeEvent e)
+                    public void vertexAdded(GraphVertexChangeEvent<V> e)
                     {
                     }
 
-                    public void vertexRemoved(GraphVertexChangeEvent e)
+                    public void vertexRemoved(GraphVertexChangeEvent<V> e)
                     {
                     }
                 });
@@ -112,7 +113,7 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#addAllEdges(Collection)
      */
-    public boolean addAllEdges(Collection edges)
+    public boolean addAllEdges(Collection<? extends E> edges)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -128,7 +129,7 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#addEdge(Edge)
      */
-    public boolean addEdge(Edge e)
+    public boolean addEdge(E e)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -136,7 +137,7 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#addEdge(Object, Object)
      */
-    public Edge addEdge(Object sourceVertex, Object targetVertex)
+    public E addEdge(V sourceVertex, V targetVertex)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -144,7 +145,7 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#addVertex(Object)
      */
-    public boolean addVertex(Object v)
+    public boolean addVertex(V v)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -152,15 +153,15 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#removeAllEdges(Collection)
      */
-    public boolean removeAllEdges(Collection edges)
+    public boolean removeAllEdges(Collection<? extends E> edges)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 
     /**
-     * @see Graph#removeAllEdges(Object, Object)
+     * @see Graph#removeAllEdges(V, V)
      */
-    public List removeAllEdges(Object sourceVertex, Object targetVertex)
+    public List<E> removeAllEdges(V sourceVertex, V targetVertex)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -168,49 +169,49 @@ public class GraphSquare extends AbstractBaseGraph
     /**
      * @see Graph#removeAllVertices(Collection)
      */
-    public boolean removeAllVertices(Collection vertices)
+    public boolean removeAllVertices(Collection<? extends V> vertices)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 
     /**
-     * @see Graph#removeEdge(Edge)
+     * @see Graph#removeEdge(E)
      */
-    public boolean removeEdge(Edge e)
+    public boolean removeEdge(E e)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 
     /**
-     * @see Graph#removeEdge(Object, Object)
+     * @see Graph#removeEdge(V, V)
      */
-    public Edge removeEdge(Object sourceVertex, Object targetVertex)
+    public E removeEdge(V sourceVertex, V targetVertex)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 
     /**
-     * @see Graph#removeVertex(Object)
+     * @see Graph#removeVertex(V)
      */
-    public boolean removeVertex(Object v)
+    public boolean removeVertex(V v)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 
     private void addEdgesStartingAt(
-        final Graph g,
-        final Object v,
-        final Object u,
+        final Graph<V,E> g,
+        final V v,
+        final V u,
         boolean createLoops)
     {
         if (!g.containsEdge(v, u)) {
             return;
         }
 
-        final List adjVertices = GraphHelper.neighborListOf(g, u);
+        final List<V> adjVertices = GraphHelper.neighborListOf(g, u);
 
         for (int i = 0; i < adjVertices.size(); i++) {
-            final Object w = adjVertices.get(i);
+            final V w = adjVertices.get(i);
 
             if (g.containsEdge(u, w) && ((v != w) || createLoops)) {
                 super.addEdge(v, w);
@@ -218,11 +219,10 @@ public class GraphSquare extends AbstractBaseGraph
         }
     }
 
-    private void addSquareEdges(Graph g, boolean createLoops)
+    private void addSquareEdges(Graph<V,E> g, boolean createLoops)
     {
-        for (Iterator it = g.vertexSet().iterator(); it.hasNext();) {
-            Object v = it.next();
-            List adjVertices = GraphHelper.neighborListOf(g, v);
+        for (V v: g.vertexSet()) {
+            List<V> adjVertices = GraphHelper.neighborListOf(g, v);
 
             for (int i = 0; i < adjVertices.size(); i++) {
                 addEdgesStartingAt(g, v, adjVertices.get(i), createLoops);

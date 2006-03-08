@@ -51,14 +51,15 @@ import org._3pq.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 24, 2003
  */
-public abstract class DefaultEdgeTest extends TestCase
+public abstract class DefaultEdgeTest<E extends Edge<String>> extends TestCase
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    Edge m_e1;
-    Edge m_e1Clone;
-    Edge m_e3;
+    E m_e1;
+    E m_e1Clone;
+    E m_e1ConstructorCopy;
+    E m_e3;
     String m_source1 = "s1";
     String m_target1 = "t1";
     String m_target2 = "t2";
@@ -72,6 +73,15 @@ public abstract class DefaultEdgeTest extends TestCase
     {
         assertEquals(m_e1Clone.getSource(), m_e1.getSource());
         assertEquals(m_e1Clone.getTarget(), m_e1.getTarget());
+    }
+
+    /**
+     * .
+     */
+    public void testConstructorCopy()
+    {
+        assertEquals(m_e1ConstructorCopy.getSource(), m_e1.getSource());
+        assertEquals(m_e1ConstructorCopy.getTarget(), m_e1.getTarget());
     }
 
     /**

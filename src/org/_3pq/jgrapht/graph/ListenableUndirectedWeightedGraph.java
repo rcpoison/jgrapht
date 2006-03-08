@@ -65,7 +65,7 @@ public class ListenableUndirectedWeightedGraph<V, E extends Edge<V>>
      */
     public ListenableUndirectedWeightedGraph()
     {
-        this(new SimpleWeightedGraph());
+        this(new SimpleWeightedGraph<V,E>());
     }
 
     /**
@@ -75,6 +75,6 @@ public class ListenableUndirectedWeightedGraph<V, E extends Edge<V>>
      */
     public ListenableUndirectedWeightedGraph(WeightedGraph<V, E> base)
     {
-        super((UndirectedGraph) base);
+        super((UndirectedGraph<V,E>) base);
     }
 }

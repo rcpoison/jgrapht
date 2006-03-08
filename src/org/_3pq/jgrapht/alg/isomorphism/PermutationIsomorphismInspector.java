@@ -52,8 +52,8 @@ import org._3pq.jgrapht.util.permutation.*;
  * @author Assaf
  * @since Jul 29, 2005
  */
-class PermutationIsomorphismInspector
-    extends AbstractExhaustiveIsomorphismInspector
+class PermutationIsomorphismInspector<V,E extends Edge<V>>
+    extends AbstractExhaustiveIsomorphismInspector<V,E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -69,10 +69,11 @@ class PermutationIsomorphismInspector
      *                    (always return true)
      */
     public PermutationIsomorphismInspector(
-        Graph graph1,
-        Graph graph2,
-        EquivalenceComparator vertexChecker,
-        EquivalenceComparator edgeChecker)
+        Graph<V,E> graph1,
+        Graph<V,E> graph2,
+        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super E>
+        EquivalenceComparator<? super V,? super Graph<? super V,? super E>> vertexChecker,
+        EquivalenceComparator<? super E,? super Graph<? super V,? super E>> edgeChecker)
     {
         super(graph1, graph2, vertexChecker, edgeChecker);
     }
@@ -80,9 +81,9 @@ class PermutationIsomorphismInspector
     /**
      * Constructor which uses the default comparators.
      *
-     * @see ExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
+     * @see AbstractExhaustiveIsomorphismInspector#AbstractExhaustiveIsomorphismInspector(Graph, Graph)
      */
-    public PermutationIsomorphismInspector(Graph graph1, Graph graph2)
+    public PermutationIsomorphismInspector(Graph<V,E> graph1, Graph<V,E> graph2)
     {
         super(graph1, graph2);
     }
@@ -93,36 +94,39 @@ class PermutationIsomorphismInspector
      * Creates the permutation iterator, not dependant on equality group, or
      * the other vertexset.
      *
-     * @param vertexSet
+     * @param vertexSet1    FIXME Document me
+     * @param vertexSet2    FIXME Document me
      *
-     * @return
+     * @return the permutation iterator
      */
-    protected CollectionPermutationIter createPermutationIterator(
-        Set vertexSet1,
-        Set vertexSet2)
+    protected CollectionPermutationIter<V> createPermutationIterator(
+        Set<V> vertexSet1,
+        Set<V> vertexSet2)
     {
-        return new CollectionPermutationIter(vertexSet2);
+        return new CollectionPermutationIter<V>(vertexSet2);
     }
 
     /**
-     * @param vertexSet1
-     * @param vertexSet2
+     * FIXME Document me
+     * FIXME Document me
+     * @param vertexSet1    FIXME Document me
+     * @param vertexSet2    FIXME Document me
      *
-     * @return
+     * @return FIXME Document me
      */
     protected boolean areVertexSetsOfTheSameEqualityGroup(
-        Set vertexSet1,
-        Set vertexSet2)
+        Set<V> vertexSet1,
+        Set<V> vertexSet2)
     {
         if (vertexSet1.size() != vertexSet2.size()) {
             return false;
         }
-        Iterator iter2 = vertexSet2.iterator();
+        Iterator<V> iter2 = vertexSet2.iterator();
 
         // only check hasNext() of one , cause they are of the same size
-        for (Iterator iter1 = vertexSet1.iterator(); iter1.hasNext();) {
-            Object vertex1 = (Object) iter1.next();
-            Object vertex2 = (Object) iter2.next();
+        for (Iterator<V> iter1 = vertexSet1.iterator(); iter1.hasNext();) {
+            V vertex1 = iter1.next();
+            V vertex2 = iter2.next();
             if (!this.vertexComparator.equivalenceCompare(
                     vertex1,
                     vertex2,

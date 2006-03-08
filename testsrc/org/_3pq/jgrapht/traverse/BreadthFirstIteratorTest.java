@@ -42,6 +42,7 @@
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.DirectedEdge;
 
 
 /**
@@ -69,9 +70,10 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest
         return "1,2,3,4,5,6,7,8,9,orphan";
     }
 
-    AbstractGraphIterator createIterator(DirectedGraph g, Object vertex)
+    AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
     {
-        AbstractGraphIterator i = new BreadthFirstIterator(g, vertex);
+        AbstractGraphIterator<String, DirectedEdge<String>> i =
+        	new BreadthFirstIterator<String, DirectedEdge<String>, Object>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

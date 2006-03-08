@@ -39,7 +39,8 @@
  */
 package org._3pq.jgrapht.graph;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 
 /**
@@ -75,6 +76,7 @@ public final class AllGraphTests
         suite.addTest(new TestSuite(AsUndirectedGraphTest.class));
         suite.addTest(new TestSuite(CloneTest.class));
         suite.addTest(new TestSuite(SerializationTest.class));
+        suite.addTest(new TestSuite(GenericGraphsTest.class));
 
         // $JUnit-END$
         return suite;

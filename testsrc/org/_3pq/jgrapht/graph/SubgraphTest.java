@@ -79,8 +79,8 @@ public class SubgraphTest extends TestCase
      */
     public void testInducedSubgraphListener()
     {
-        Graph g = init(true);
-        Subgraph sub = new Subgraph(g, null);
+        Graph<String, Edge<String>> g = init(true);
+        Subgraph<String, Edge<String>> sub = new Subgraph<String, Edge<String>>(g, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -96,27 +96,27 @@ public class SubgraphTest extends TestCase
      */
     public void testSubgraph()
     {
-        Graph g = init(false);
-        Subgraph sub = new Subgraph(g, null, null);
+        Graph<String, Edge<String>> g = init(false);
+        Subgraph<String, Edge<String>> sub = new Subgraph<String, Edge<String>>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
 
-        Set vset = new HashSet(g.vertexSet());
+        Set<String> vset = new HashSet<String>(g.vertexSet());
         g.removeVertex(_v1);
         assertEquals(vset, sub.vertexSet()); // losing track
 
         g = init(false);
-        vset = new HashSet();
+        vset = new HashSet<String>();
         vset.add(_v1);
-        sub = new Subgraph(g, vset, null);
+        sub = new Subgraph<String, Edge<String>>(g, vset, null);
         assertEquals(vset, sub.vertexSet());
         assertEquals(0, sub.degreeOf(_v1));
         assertEquals(Collections.EMPTY_SET, sub.edgeSet());
 
         vset.add(_v2);
         vset.add(_v3);
-        sub = new Subgraph(g, vset, new HashSet(g.getAllEdges(_v1, _v2)));
+        sub = new Subgraph<String, Edge<String>>(g, vset, new HashSet<Edge<String>>(g.getAllEdges(_v1, _v2)));
         assertEquals(vset, sub.vertexSet());
         assertEquals(1, sub.edgeSet().size());
     }
@@ -126,27 +126,27 @@ public class SubgraphTest extends TestCase
      */
     public void testSubgraphListener()
     {
-        Graph g = init(true);
-        Subgraph sub = new Subgraph(g, null, null);
+        Graph<String, Edge<String>> g = init(true);
+        Subgraph<String, Edge<String>> sub = new Subgraph<String, Edge<String>>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
 
-        Set vset = new HashSet(g.vertexSet());
+        Set<String> vset = new HashSet<String>(g.vertexSet());
         g.removeVertex(_v1);
         vset.remove(_v1);
         assertEquals(vset, sub.vertexSet()); // not losing track
         assertEquals(g.edgeSet(), sub.edgeSet());
     }
 
-    private Graph init(boolean listenable)
+    private Graph<String, Edge<String>> init(boolean listenable)
     {
-        Graph g;
+        Graph<String,Edge<String>> g;
 
         if (listenable) {
-            g = new ListenableUndirectedGraph();
+            g = new ListenableUndirectedGraph<String, Edge<String>>();
         } else {
-            g = new SimpleGraph();
+            g = new SimpleGraph<String, Edge<String>>();
         }
 
         g.addVertex(_v1);

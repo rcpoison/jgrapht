@@ -68,19 +68,21 @@ package org._3pq.jgrapht.util.equivalence;
  * examples: Nodes with the same degree, Edges with the same weight, Graphs
  * with the same number of nodes and edges.
  *
+ * @param <E> the type of the elements in the set
+ * @param <C> the type of the context the element is compared against, e.g. a Graph
  * @author Assaf
  * @since Jul 15, 2005
  */
-public interface EquivalenceComparator
+public interface EquivalenceComparator<E,C>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     public boolean equivalenceCompare(
-        Object arg1,
-        Object arg2,
-        Object context1,
-        Object context2);
+        E arg1,
+        E arg2,
+        C context1,
+        C context2);
 
-    public int equivalenceHashcode(Object arg1, Object context);
+    public int equivalenceHashcode(E arg1, C context);
 }

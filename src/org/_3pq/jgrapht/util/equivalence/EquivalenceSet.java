@@ -48,10 +48,13 @@ import java.util.*;
  * of the group members, thus it is actually checking whether the "other" is in
  * the same group.
  *
+ * @param <E> the type of the elements in the set
+ * @param <C> the type of the context the element is compared against, e.g. a Graph
+ * 
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class EquivalenceSet
+public class EquivalenceSet<E,C>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -59,13 +62,13 @@ public class EquivalenceSet
     /**
      * The comparator used to define the group
      */
-    protected EquivalenceComparator eqComparator;
-    protected Object comparatorContext;
+    protected EquivalenceComparator<? super E,? super C> eqComparator;
+    protected C comparatorContext;
 
     /**
      * Contains the current elements of the group
      */
-    protected Set elementsSet;
+    protected Set<E> elementsSet;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -83,14 +86,14 @@ public class EquivalenceSet
      * a reference to the comparator which is used.
      */
     public EquivalenceSet(
-        Object aElement,
-        EquivalenceComparator aEqComparator,
-        Object aComparatorContext)
+        E aElement,
+        EquivalenceComparator<? super E,? super C> aEqComparator,
+        C aComparatorContext)
     {
         this.eqComparator = aEqComparator;
         this.comparatorContext = aComparatorContext;
 
-        this.elementsSet = new HashSet();
+        this.elementsSet = new HashSet<E>();
         this.elementsSet.add(aElement);
     }
 
@@ -101,12 +104,12 @@ public class EquivalenceSet
      * which will be returned, and whether the same will be returned on the
      * next call.
      */
-    public Object getRepresentative()
+    public E getRepresentative()
     {
         return elementsSet.iterator().next();
     }
 
-    public Object getContext()
+    public C getContext()
     {
         return this.comparatorContext;
     }
@@ -120,12 +123,12 @@ public class EquivalenceSet
      * Adds an element to the group. It does not check it for equivalance . You
      * must make sure it does, using equals().
      */
-    public void add(Object element)
+    public void add(E element)
     {
         this.elementsSet.add(element);
     }
 
-    public boolean equivalentTo(Object aOther, Object aOtherContext)
+    public boolean equivalentTo(E aOther, C aOtherContext)
     {
         boolean result =
             this.eqComparator.equivalenceCompare(
@@ -142,13 +145,22 @@ public class EquivalenceSet
      * a representation of the other object, which may be the object itself,
      * or, if it is an equivalence group too, other.getRepresentative()
      */
+    // FIXME REVIEW hb 26-Jan-2006: I think throwing the exception is kind of odd,
+    // - it feels like violating the contract of Object.equals()
+    // From what I understand, comparing any object to any other object should be
+    // possible at all times and simply return false if they are not equal.
+    // Uncomparable objects beeing unequal.
+    // Suggestion: remove the exception, at best, test on this specific class and
+    // write a warning or some such.
+    
+    @SuppressWarnings("unchecked")
     public boolean equals(Object other)
     {
-        Object otherRepresentative = null;
-        Object otherContext = null;
+        E otherRepresentative = null;
+        C otherContext = null;
         if (other instanceof EquivalenceSet) {
-            otherRepresentative = ((EquivalenceSet) other).getRepresentative();
-            otherContext = ((EquivalenceSet) other).getContext();
+            otherRepresentative = ((EquivalenceSet<E,C>) other).getRepresentative();
+            otherContext = ((EquivalenceSet<E,C>) other).getContext();
         } else {
             throw new ClassCastException(
                 "can check equal() only of EqualityGroup");

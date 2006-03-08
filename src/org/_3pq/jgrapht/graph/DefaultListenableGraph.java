@@ -76,11 +76,11 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
 
     //~ Instance fields -------------------------------------------------------
 
-    private ArrayList<GraphListener<V, E>> m_graphListeners = new ArrayList();
+    private ArrayList<GraphListener<V, E>> m_graphListeners = new ArrayList<GraphListener<V, E>>();
     private ArrayList<VertexSetListener<V>> m_vertexSetListeners =
-        new ArrayList();
-    private FlyweightEdgeEvent m_reuseableEdgeEvent;
-    private FlyweightVertexEvent m_reuseableVertexEvent;
+        new ArrayList<VertexSetListener<V>>();
+    private FlyweightEdgeEvent<V,E> m_reuseableEdgeEvent;
+    private FlyweightVertexEvent<V> m_reuseableVertexEvent;
     private boolean m_reuseEvents;
 
     //~ Constructors ----------------------------------------------------------
@@ -114,8 +114,8 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
     {
         super(g);
         m_reuseEvents = reuseEvents;
-        m_reuseableEdgeEvent = new FlyweightEdgeEvent(this, -1, null);
-        m_reuseableVertexEvent = new FlyweightVertexEvent(this, -1, null);
+        m_reuseableEdgeEvent = new FlyweightEdgeEvent<V,E>(this, -1, null);
+        m_reuseableVertexEvent = new FlyweightVertexEvent<V>(this, -1, null);
 
         // the following restriction could be probably relaxed in the future.
         if (g instanceof ListenableGraph) {
@@ -219,9 +219,9 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
     public Object clone()
     {
         try {
-            DefaultListenableGraph g = (DefaultListenableGraph) super.clone();
-            g.m_graphListeners = new ArrayList();
-            g.m_vertexSetListeners = new ArrayList();
+            DefaultListenableGraph<V,E> g = (DefaultListenableGraph) super.clone();
+            g.m_graphListeners = new ArrayList<GraphListener<V, E>>();
+            g.m_vertexSetListeners = new ArrayList<VertexSetListener<V>>();
 
             return g;
         } catch (CloneNotSupportedException e) {
@@ -273,14 +273,14 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
     public boolean removeVertex(V v)
     {
         if (containsVertex(v)) {
-            List touchingEdgesList = edgesOf(v);
+            List<E> touchingEdgesList = edgesOf(v);
 
             // cannot iterate over list - will cause
             // ConcurrentModificationException
             // Edge[] touchingEdges = new Edge[ touchingEdgesList.size(  ) ];
             // touchingEdgesList.toArray( touchingEdges );
 
-            removeAllEdges(new ArrayList(touchingEdgesList));
+            removeAllEdges(new ArrayList<E>(touchingEdgesList));
 
             super.removeVertex(v); // remove the vertex itself
 
@@ -330,7 +330,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
                 edge);
 
         for (int i = 0; i < m_graphListeners.size(); i++) {
-            GraphListener l = m_graphListeners.get(i);
+            GraphListener<V,E> l = m_graphListeners.get(i);
 
             l.edgeRemoved(e);
         }
@@ -404,13 +404,13 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
 
             return m_reuseableEdgeEvent;
         } else {
-            return new GraphEdgeChangeEvent(this, eventType, edge);
+            return new GraphEdgeChangeEvent<V,E>(this, eventType, edge);
         }
     }
 
     private GraphVertexChangeEvent<V> createGraphVertexChangeEvent(
         int eventType,
-        Object vertex)
+        V vertex)
     {
         if (m_reuseEvents) {
             m_reuseableVertexEvent.setType(eventType);
@@ -418,7 +418,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
 
             return m_reuseableVertexEvent;
         } else {
-            return new GraphVertexChangeEvent(this, eventType, vertex);
+            return new GraphVertexChangeEvent<V>(this, eventType, vertex);
         }
     }
 
@@ -430,15 +430,15 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
      * @author Barak Naveh
      * @since Aug 10, 2003
      */
-    private static class FlyweightEdgeEvent<V, E extends Edge<V>>
-        extends GraphEdgeChangeEvent<V, E>
+    private static class FlyweightEdgeEvent<VV, EE extends Edge<VV>>
+        extends GraphEdgeChangeEvent<VV, EE>
     {
         private static final long serialVersionUID = 3907207152526636089L;
 
         /**
          * @see GraphEdgeChangeEvent#GraphEdgeChangeEvent(Object, int, Edge)
          */
-        public FlyweightEdgeEvent(Object eventSource, int type, E e)
+        public FlyweightEdgeEvent(Object eventSource, int type, EE e)
         {
             super(eventSource, type, e);
         }
@@ -448,7 +448,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
          *
          * @param e the edge to be set.
          */
-        protected void setEdge(E e)
+        protected void setEdge(EE e)
         {
             m_edge = e;
         }
@@ -470,8 +470,8 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
      * @author Barak Naveh
      * @since Aug 10, 2003
      */
-    private static class FlyweightVertexEvent<V>
-        extends GraphVertexChangeEvent<V>
+    private static class FlyweightVertexEvent<VV>
+        extends GraphVertexChangeEvent<VV>
     {
         private static final long serialVersionUID = 3257848787857585716L;
 
@@ -479,7 +479,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
          * @see GraphVertexChangeEvent#GraphVertexChangeEvent(Object, int,
          *      Object)
          */
-        public FlyweightVertexEvent(Object eventSource, int type, V vertex)
+        public FlyweightVertexEvent(Object eventSource, int type, VV vertex)
         {
             super(eventSource, type, vertex);
         }
@@ -499,7 +499,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
          *
          * @param vertex the vertex to be set.
          */
-        protected void setVertex(V vertex)
+        protected void setVertex(VV vertex)
         {
             m_vertex = vertex;
         }

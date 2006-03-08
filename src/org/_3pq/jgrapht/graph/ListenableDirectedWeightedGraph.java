@@ -50,7 +50,7 @@ import org._3pq.jgrapht.*;
  *
  * @see org._3pq.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableDirectedWeightedGraph<V, E extends Edge<V>>
+public class ListenableDirectedWeightedGraph<V, E extends DirEdge<V>>
     extends ListenableDirectedGraph<V, E> implements WeightedGraph<V, E>
 {
 
@@ -65,7 +65,7 @@ public class ListenableDirectedWeightedGraph<V, E extends Edge<V>>
      */
     public ListenableDirectedWeightedGraph()
     {
-        this(new DefaultDirectedWeightedGraph());
+        this(new DefaultDirectedWeightedGraph<V,E>());
     }
 
     /**
@@ -75,6 +75,6 @@ public class ListenableDirectedWeightedGraph<V, E extends Edge<V>>
      */
     public ListenableDirectedWeightedGraph(WeightedGraph<V, E> base)
     {
-        super((DirectedGraph) base);
+        super((DirectedGraph<V, E>) base);
     }
 }

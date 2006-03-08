@@ -196,20 +196,20 @@ public final class GraphHelper
      *
      * @param destination the graph to which vertices and edges are added.
      * @param source the graph used as source for vertices and edges to add.
+     //FIXME hb 26-Nov-05: How to achieve type-safty here if dst is a super-type of src?
      */
-    public static void addGraphReversed(
-        DirectedGraph destination,
-        DirectedGraph source)
+    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See below
+	public static <V, E extends DirEdge<V>> void addGraphReversed(
+        DirectedGraph<V,E> destination,
+        DirectedGraph<V,E> source)
     {
         destination.addAllVertices(source.vertexSet());
 
-        Iterator edgesIter = source.edgeSet().iterator();
-
-        while (edgesIter.hasNext()) {
-            DirectedEdge edge = (DirectedEdge) edgesIter.next();
-            DirectedEdge reversedEdge =
-                new DirectedEdge(edge.getTarget(), edge.getSource());
-            destination.addEdge(reversedEdge);
+        for (E edge : source.edgeSet()) {
+        	//FIXME hb 26-Nov-05: Use the edge factory of src, dst, or passed as a parameter to create edges
+        	E reversedEdge =
+        		(E)new DirectedEdge<V>(edge.getTarget(), edge.getSource());
+        	destination.addEdge(reversedEdge);
         }
     }
 
@@ -227,11 +227,10 @@ public final class GraphHelper
     public static <V, E extends Edge<V>> List<V> neighborListOf(Graph<V, E> g,
         V vertex)
     {
-        List neighbors = new ArrayList();
+        List<V> neighbors = new ArrayList<V>();
 
-        for (Iterator i = g.edgesOf(vertex).iterator(); i.hasNext();) {
-            Edge e = (Edge) i.next();
-            neighbors.add(e.oppositeVertex(vertex));
+        for( E e : g.edgesOf(vertex) ) {
+        	neighbors.add(e.oppositeVertex(vertex));        	
         }
 
         return neighbors;
@@ -248,15 +247,14 @@ public final class GraphHelper
      * @return a list of the vertices that are the predecessors of the
      *         specified vertex.
      */
-    public static <V, E extends Edge<V>> List<V> predecessorListOf(DirectedGraph<V, E> g,
+    public static <V, E extends DirEdge<V>> List<V> predecessorListOf(DirectedGraph<V, E> g,
         V vertex)
     {
-        List predecessors = new ArrayList();
-        List edges = g.incomingEdgesOf(vertex);
+        List<V> predecessors = new ArrayList<V>();
+        List<? extends E> edges = g.incomingEdgesOf(vertex);
 
-        for (Iterator i = edges.iterator(); i.hasNext();) {
-            Edge e = (Edge) i.next();
-            predecessors.add(e.oppositeVertex(vertex));
+        for( E e : edges ) {
+        	predecessors.add(e.oppositeVertex(vertex));        	
         }
 
         return predecessors;
@@ -273,17 +271,16 @@ public final class GraphHelper
      * @return a list of the vertices that are the successors of the specified
      *         vertex.
      */
-    public static <V, E extends Edge<V>> List<V> successorListOf(DirectedGraph<V, E> g,
+    public static <V, E extends DirEdge<V>> List<V> successorListOf(DirectedGraph<V, E> g,
         V vertex)
     {
-        List successors = new ArrayList();
-        List edges = g.outgoingEdgesOf(vertex);
+        List<V> successors = new ArrayList<V>();
+        List<? extends E> edges = g.outgoingEdgesOf(vertex);
 
-        for (Iterator i = edges.iterator(); i.hasNext();) {
-            Edge e = (Edge) i.next();
-            successors.add(e.oppositeVertex(vertex));
+        for( E e : edges ) {
+        	successors.add(e.oppositeVertex(vertex));
         }
-
+        
         return successors;
     }
 
@@ -302,13 +299,14 @@ public final class GraphHelper
      *
      * @see AsUndirectedGraph
      */
-    public static <V, E extends Edge<V>> UndirectedGraph<V, E> undirectedGraph(
+    @SuppressWarnings("unchecked")
+	public static <V, E extends DirEdge<V>> UndirectedGraph<V, Edge<V>> undirectedGraph(
         Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
-            return new AsUndirectedGraph((DirectedGraph) g);
+            return new AsUndirectedGraph<V,Edge<V>>((DirectedGraph)g);
         } else if (g instanceof UndirectedGraph) {
-            return (UndirectedGraph) g;
+            return (UndirectedGraph<V,Edge<V>>) g;
         } else {
             throw new IllegalArgumentException(
                 "Graph must be either DirectedGraph or UndirectedGraph");

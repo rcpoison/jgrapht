@@ -40,6 +40,7 @@
 package org._3pq.jgrapht.traverse;
 
 import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.*;
 
 
@@ -68,12 +69,13 @@ public class IgnoreDirectionTest extends AbstractGraphIteratorTest
         return "4,9,7,8,5,6,1,3,2,orphan";
     }
 
-    AbstractGraphIterator createIterator(DirectedGraph g, Object vertex)
+    AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
     {
         // ignore the passed in vertex and always start from v4, since that's
         // the only vertex without out-edges
-        UndirectedGraph undirectedView = new AsUndirectedGraph(g);
-        AbstractGraphIterator i = new DepthFirstIterator(undirectedView, "4");
+        UndirectedGraph<String, DirectedEdge<String>> undirectedView =
+        	new AsUndirectedGraph<String, DirectedEdge<String>>(g);
+        AbstractGraphIterator<String, DirectedEdge<String>> i = new DepthFirstIterator<String, DirectedEdge<String>,Object>(undirectedView, "4");
         i.setCrossComponentTraversal(true);
 
         return i;

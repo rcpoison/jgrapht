@@ -48,7 +48,7 @@ import org._3pq.jgrapht.edge.*;
  * A directed multigraph. A directed multigraph is a non-simple directed graph
  * in which loops and multiple edges between any two vertices are permitted.
  */
-public class DirectedMultigraph<V, E extends Edge<V>>
+public class DirectedMultigraph<V, E extends DirEdge<V>>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 

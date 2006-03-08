@@ -176,6 +176,7 @@
 
         <!-- compile the source -->
         <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+        	<compilerarg line="-Xlint:unchecked"/>
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>

@@ -60,7 +60,7 @@ import org._3pq.jgrapht.graph.*;
  * @author Charles Fry
  * @since Dec 13, 2005
  */
-public class DirectedNeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
+public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphListener<V, E>
 {
     //~ Instance fields -------------------------------------------------------
 

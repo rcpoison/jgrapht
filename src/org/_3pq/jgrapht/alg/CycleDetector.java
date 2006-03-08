@@ -72,9 +72,10 @@ public class CycleDetector<V, E extends Edge<V>>
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
-    public CycleDetector(DirectedGraph<V, E> graph)
+    @SuppressWarnings("unchecked")    // FIXME hb 28-Nov-05: Don't know how to solve this, yet
+	public <EE extends E & DirEdge<V>> CycleDetector(DirectedGraph<V, EE> graph)
     {
-        m_graph = graph;
+        m_graph = (Graph<V,E>)graph;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -121,7 +122,7 @@ public class CycleDetector<V, E extends Edge<V>>
      */
     public Set<V> findCycles()
     {
-        Set set = new HashSet();
+        Set<V> set = new HashSet<V>();
         execute(set, null);
 
         return set;
@@ -135,9 +136,9 @@ public class CycleDetector<V, E extends Edge<V>>
      *
      * @return set of all vertices reachable from v via at least one cycle
      */
-    public Set findCyclesContainingVertex(V v)
+    public Set<V> findCyclesContainingVertex(V v)
     {
-        Set set = new HashSet();
+        Set<V> set = new HashSet<V>();
         execute(set, v);
 
         return set;
@@ -176,7 +177,7 @@ public class CycleDetector<V, E extends Edge<V>>
         {
             super(m_graph, startVertex);
             m_cycleSet = cycleSet;
-            m_path = new ArrayList();
+            m_path = new ArrayList<V>();
         }
 
         /**

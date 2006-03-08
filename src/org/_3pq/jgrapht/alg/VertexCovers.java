@@ -84,10 +84,10 @@ public abstract class VertexCovers
     public static <V, E extends Edge<V>> Set<V> find2ApproximationCover(Graph<V, E> g)
     {
         // C <-- {}
-        Set<V> cover = new HashSet();
+        Set<V> cover = new HashSet<V>();
 
         // G'=(V',E') <-- G(V,E)
-        Subgraph<V, E> sg = new Subgraph(g, null, null);
+        Subgraph<V, E> sg = new Subgraph<V, E>(g, null, null);
 
         // while E' is non-empty
         while (sg.edgeSet().size() > 0) {
@@ -127,13 +127,13 @@ public abstract class VertexCovers
     public static <V, E extends Edge<V>> Set<V> findGreedyCover(UndirectedGraph<V, E> g)
     {
         // C <-- {}
-        Set<V> cover = new HashSet();
+        Set<V> cover = new HashSet<V>();
 
         // G' <-- G
-        UndirectedGraph<V, E> sg = new UndirectedSubgraph(g, null, null);
+        UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
 
         // compare vertices in descending order of degree
-        VertexDegreeComparator<V, E> comp = new VertexDegreeComparator(sg);
+        VertexDegreeComparator<V, E> comp = new VertexDegreeComparator<V, E>(sg);
 
         // while G' != {}
         while (sg.edgeSet().size() > 0) {

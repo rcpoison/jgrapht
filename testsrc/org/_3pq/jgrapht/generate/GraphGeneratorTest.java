@@ -39,12 +39,19 @@
  */
 package org._3pq.jgrapht.generate;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.Edge;
+import org._3pq.jgrapht.VertexFactory;
+import org._3pq.jgrapht.edge.DirectedEdge;
+import org._3pq.jgrapht.graph.DefaultDirectedGraph;
 
 
 /**
@@ -62,8 +69,8 @@ public class GraphGeneratorTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private VertexFactory m_vertexFactory =
-        new VertexFactory() {
+    private VertexFactory<Object> m_vertexFactory =
+        new VertexFactory<Object>() {
             private int m_i;
 
             public Object createVertex()
@@ -80,9 +87,11 @@ public class GraphGeneratorTest extends TestCase
      */
     public void testEmptyGraphGenerator()
     {
-        GraphGenerator gen = new EmptyGraphGenerator(SIZE);
-        DirectedGraph g = new DefaultDirectedGraph();
-        Map resultMap = new HashMap();
+        GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
+        		new EmptyGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+        DirectedGraph<Object,DirectedEdge<Object>> g =
+        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+        Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(0, g.edgeSet().size());
@@ -94,9 +103,11 @@ public class GraphGeneratorTest extends TestCase
      */
     public void testLinearGraphGenerator()
     {
-        GraphGenerator gen = new LinearGraphGenerator(SIZE);
-        DirectedGraph g = new DefaultDirectedGraph();
-        Map resultMap = new HashMap();
+        GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
+        		new LinearGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+        DirectedGraph<Object,DirectedEdge<Object>> g =
+        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+        Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(SIZE - 1, g.edgeSet().size());
@@ -132,9 +143,11 @@ public class GraphGeneratorTest extends TestCase
      */
     public void testRingGraphGenerator()
     {
-        GraphGenerator gen = new RingGraphGenerator(SIZE);
-        DirectedGraph g = new DefaultDirectedGraph();
-        Map resultMap = new HashMap();
+        GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
+        		new RingGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+        DirectedGraph<Object,DirectedEdge<Object>> g =
+        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+        Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(SIZE, g.edgeSet().size());
@@ -143,10 +156,10 @@ public class GraphGeneratorTest extends TestCase
         assertEquals(1, g.outDegreeOf(startVertex));
 
         Object nextVertex = startVertex;
-        Set seen = new HashSet();
+        Set<Object> seen = new HashSet<Object>();
 
         for (int i = 0; i < SIZE; ++i) {
-            Edge nextEdge = (Edge) g.outgoingEdgesOf(nextVertex).get(0);
+            Edge<Object> nextEdge = g.outgoingEdgesOf(nextVertex).get(0);
             nextVertex = nextEdge.getTarget();
             assertEquals(1, g.inDegreeOf(nextVertex));
             assertEquals(1, g.outDegreeOf(nextVertex));

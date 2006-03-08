@@ -43,6 +43,7 @@ package org._3pq.jgrapht.traverse;
 import java.util.*;
 
 import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.edge.DirectedEdge;
 import org._3pq.jgrapht.graph.*;
 
 
@@ -62,7 +63,8 @@ public class TopologicalOrderIteratorTest extends EnhancedTestCase
      */
     public void testRecipe()
     {
-        DirectedGraph graph = new DefaultDirectedGraph();
+        DirectedGraph<String, DirectedEdge<String>> graph =
+        	new DefaultDirectedGraph<String, DirectedEdge<String>>();
 
         String [] v = new String [9];
 
@@ -100,7 +102,8 @@ public class TopologicalOrderIteratorTest extends EnhancedTestCase
         graph.addEdge(v[7], v[8]);
         graph.addEdge(v[6], v[8]);
 
-        Iterator iter = new TopologicalOrderIterator(graph);
+        Iterator<String> iter =
+        	new TopologicalOrderIterator<String, DirectedEdge<String>,Object>(graph);
         int i = 0;
 
         while (iter.hasNext()) {

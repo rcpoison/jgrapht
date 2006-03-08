@@ -35,11 +35,12 @@
  */
 package org._3pq.jgrapht.util.equivalence;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
-import org._3pq.jgrapht.alg.isomorphism.comparators.*;
+import org._3pq.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator;
+import org._3pq.jgrapht.alg.isomorphism.comparators.OddEvenGroupComparator;
 
 
 /**
@@ -95,8 +96,8 @@ public class EquivalenceGroupCreatorTest extends TestCase
      */
     public void testComparatorChain()
     {
-        EquivalenceComparatorChain comparatorChain =
-            new EquivalenceComparatorChainBase(new OddEvenGroupComparator());
+        EquivalenceComparatorChain<Integer,Object> comparatorChain =
+            new EquivalenceComparatorChainBase<Integer,Object>(new OddEvenGroupComparator());
         comparatorChain.appendComparator(new Mod3GroupComparator());
 
         // for (int i=0 ; i<INTEGER_ARRAY_SIZE ; i++)
@@ -112,7 +113,7 @@ public class EquivalenceGroupCreatorTest extends TestCase
             6);
             
     }
-    
+
     public void testComparatorChainSameComparatorTwice()
     {
         EquivalenceComparatorChain comparatorChain =
@@ -132,9 +133,9 @@ public class EquivalenceGroupCreatorTest extends TestCase
         int expectedNumOfGroups)
    
     {
-        Integer [] integerArray = new Integer [INTEGER_ARRAY_SIZE];
+        ArrayList<Integer> integerArray = new ArrayList<Integer>(INTEGER_ARRAY_SIZE);
         for (int i = 0; i < INTEGER_ARRAY_SIZE; i++) {
-            integerArray[i] = Integer.valueOf(i);
+            integerArray.add( i );
         }
 
         EquivalenceSet [] eqGroupArray =

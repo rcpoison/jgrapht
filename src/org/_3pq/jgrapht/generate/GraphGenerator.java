@@ -50,7 +50,7 @@ import org._3pq.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public interface GraphGenerator
+public interface GraphGenerator<V,E extends Edge<V>,T>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -75,7 +75,7 @@ public interface GraphGenerator
      *                  graph elements)
      */
     public void generateGraph(
-        Graph target,
-        VertexFactory vertexFactory,
-        Map resultMap);
+        Graph<V,E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String,T> resultMap);
 }

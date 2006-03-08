@@ -51,8 +51,8 @@ import org._3pq.jgrapht.util.permutation.*;
  * @author Assaf
  * @since Jul 29, 2005
  */
-class EquivalenceIsomorphismInspector
-    extends AbstractExhaustiveIsomorphismInspector
+class EquivalenceIsomorphismInspector<V,E extends Edge<V>>
+    extends AbstractExhaustiveIsomorphismInspector<V,E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -68,10 +68,11 @@ class EquivalenceIsomorphismInspector
      *                    (always return true)
      */
     public EquivalenceIsomorphismInspector(
-        Graph graph1,
-        Graph graph2,
-        EquivalenceComparator vertexChecker,
-        EquivalenceComparator edgeChecker)
+        Graph<V,E> graph1,
+        Graph<V,E> graph2,
+        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super E>
+        EquivalenceComparator<? super V,? super Graph<? super V,? super E>> vertexChecker,
+        EquivalenceComparator<? super E,? super Graph<? super V,? super E>> edgeChecker)
     {
         super(graph1, graph2, vertexChecker, edgeChecker);
     }
@@ -81,7 +82,7 @@ class EquivalenceIsomorphismInspector
      *
      * @see ExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
      */
-    public EquivalenceIsomorphismInspector(Graph graph1, Graph graph2)
+    public EquivalenceIsomorphismInspector(Graph<V,E> graph1, Graph<V,E> graph2)
     {
         super(graph1, graph2);
     }
@@ -123,9 +124,9 @@ class EquivalenceIsomorphismInspector
      * @see org._3pq.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#createPermutationIterator(java.util.Set,
      *      java.util.Set)
      */
-    protected CollectionPermutationIter createPermutationIterator(
-        Set vertexSet1,
-        Set vertexSet2)
+    protected CollectionPermutationIter<V> createPermutationIterator(
+        Set<V> vertexSet1,
+        Set<V> vertexSet2)
     {
         if (vertexSet1.size() != vertexSet2.size()) {
             // throw new IllegalArgumentException("the two vertx-sets
@@ -138,14 +139,14 @@ class EquivalenceIsomorphismInspector
         // 1//
         EquivalenceSet [] eqGroupArray1 =
             EquivalenceSetCreator.createEqualityGroupOrderedArray(
-                vertexSet1.toArray(),
+                vertexSet1,
                 this.vertexComparator,
                 this.graph1);
 
         // 2//
         EquivalenceSet [] eqGroupArray2 =
             EquivalenceSetCreator.createEqualityGroupOrderedArray(
-                vertexSet2.toArray(),
+                vertexSet2,
                 this.vertexComparator,
                 this.graph2);
 
@@ -157,11 +158,13 @@ class EquivalenceIsomorphismInspector
             return null;
         }
 
-        // reorder set1 (source) , so when we work with the flat array of the
+        // reorder set1 (source), so when we work with the flat array of the
         // second array,
         // the permutations will be relevant.
         // note that it does not start in any way related to eqGroup sizes.
-        Object [] reorderingVertexSet1Temp = new Object [vertexSet1.size()];
+        
+        // TODO hb 060208: REVIEW: Should the array be changed to an arrayList?
+        V [] reorderingVertexSet1Temp = (V[])new Object [vertexSet1.size()];
         fillElementsflatArray(eqGroupArray1, reorderingVertexSet1Temp);
         vertexSet1.clear();
         vertexSet1.addAll(Arrays.asList(reorderingVertexSet1Temp));
@@ -189,8 +192,8 @@ class EquivalenceIsomorphismInspector
 
         ArrayPermutationsIter arrayPermIter =
             PermutationFactory.createByGroups(groupSizesArray);
-        CollectionPermutationIter vertexPermIter =
-            new CollectionPermutationIter(flatVertexArray, arrayPermIter);
+        CollectionPermutationIter<V> vertexPermIter =
+            new CollectionPermutationIter<V>(flatVertexArray, arrayPermIter);
 
         return vertexPermIter;
     }

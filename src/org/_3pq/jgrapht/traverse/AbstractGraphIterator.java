@@ -61,7 +61,7 @@ public abstract class AbstractGraphIterator<V, E extends Edge<V>>
     //~ Instance fields -------------------------------------------------------
 
     private List<TraversalListener<V, E>> m_traversalListeners =
-        new ArrayList();
+        new ArrayList<TraversalListener<V, E>>();
     private boolean m_crossComponentTraversal = true;
     private boolean m_reuseEvents = false;
 
@@ -183,7 +183,7 @@ public abstract class AbstractGraphIterator<V, E extends Edge<V>>
         int len = m_traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = m_traversalListeners.get(i);
+            TraversalListener<V, E> l = m_traversalListeners.get(i);
             l.edgeTraversed(e);
         }
     }
@@ -198,7 +198,7 @@ public abstract class AbstractGraphIterator<V, E extends Edge<V>>
         int len = m_traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = m_traversalListeners.get(i);
+            TraversalListener<V, E> l = m_traversalListeners.get(i);
             l.vertexTraversed(e);
         }
     }

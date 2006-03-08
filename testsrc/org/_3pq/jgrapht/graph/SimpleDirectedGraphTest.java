@@ -40,9 +40,12 @@
  */
 package org._3pq.jgrapht.graph;
 
-import java.util.*;
+import java.util.Iterator;
 
-import org._3pq.jgrapht.*;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.EdgeFactory;
+import org._3pq.jgrapht.EnhancedTestCase;
+import org._3pq.jgrapht.edge.DirectedEdge;
 
 
 /**
@@ -56,13 +59,13 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    DirectedGraph m_gEmpty;
-    private DirectedGraph m_g1;
-    private DirectedGraph m_g2;
-    private DirectedGraph m_g3;
-    private DirectedGraph m_g4;
-    private Edge m_eLoop;
-    private EdgeFactory m_eFactory;
+    DirectedGraph<String,DirectedEdge<String>> m_gEmpty;
+    private DirectedGraph<String,DirectedEdge<String>> m_g1;
+    private DirectedGraph<String,DirectedEdge<String>> m_g2;
+    private DirectedGraph<String,DirectedEdge<String>> m_g3;
+    private DirectedGraph<String,DirectedEdge<String>> m_g4;
+    private DirectedEdge<String> m_eLoop;
+    private EdgeFactory<String,DirectedEdge<String>> m_eFactory;
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
@@ -101,7 +104,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
             assertTrue();
         }
 
-        Edge e = m_eFactory.createEdge(m_v2, m_v1);
+        DirectedEdge<String> e = m_eFactory.createEdge(m_v2, m_v1);
 
         try {
             m_g1.addEdge(e); // no such vertex in graph
@@ -233,7 +236,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
         assertEquals(m_g4.edgesOf(m_v1).size(), 2);
         assertEquals(m_g3.edgesOf(m_v1).size(), 4);
 
-        Iterator iter = m_g3.edgesOf(m_v1).iterator();
+        Iterator<DirectedEdge<String>> iter = m_g3.edgesOf(m_v1).iterator();
         int count = 0;
 
         while (iter.hasNext()) {
@@ -290,7 +293,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
         assertEquals(1, m_g4.inDegreeOf(m_v4));
 
         try {
-            m_g3.inDegreeOf(new Object());
+            m_g3.inDegreeOf(new String());
             assertFalse();
         } catch (IllegalArgumentException e) {
             assertTrue();
@@ -382,11 +385,11 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
 
     private void init()
     {
-        m_gEmpty = new SimpleDirectedGraph();
-        m_g1 = new SimpleDirectedGraph();
-        m_g2 = new SimpleDirectedGraph();
-        m_g3 = new SimpleDirectedGraph();
-        m_g4 = new SimpleDirectedGraph();
+        m_gEmpty = new SimpleDirectedGraph<String, DirectedEdge<String>>();
+        m_g1 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
+        m_g2 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
+        m_g3 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
+        m_g4 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
 
         m_eFactory = m_g1.getEdgeFactory();
         m_eLoop = m_eFactory.createEdge(m_v1, m_v1);

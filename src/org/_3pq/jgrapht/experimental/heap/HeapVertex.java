@@ -26,17 +26,21 @@ package org._3pq.jgrapht.experimental.heap;
 
 /**
  * .
+ * 
+ * FIXME Document me!
+ * 
+ * @param <T> Type of the additional object
  *
  * @author Michael Behrisch
  * @version 1.0
  */
-public class HeapVertex implements HeapElement, Comparable
+public class HeapVertex <T> implements HeapElement, Comparable
 {
 
     //~ Instance fields -------------------------------------------------------
 
     private ElementPeer _p;
-    private Object _additional;
+    private T _additional;
     private final Object _vertex;
     private double _priority;
 
@@ -67,7 +71,7 @@ public class HeapVertex implements HeapElement, Comparable
      *
      * @param add
      */
-    public void setAdditional(Object add)
+    public void setAdditional(T add)
     {
         _additional = add;
     }
@@ -77,7 +81,7 @@ public class HeapVertex implements HeapElement, Comparable
      *
      * @return
      */
-    public Object getAdditional()
+    public T getAdditional()
     {
         return _additional;
     }

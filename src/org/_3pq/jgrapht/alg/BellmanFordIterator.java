@@ -144,7 +144,7 @@ class BellmanFordIterator<V,E extends Edge<V>>
             List<V> improvedVertices = new ArrayList<V>();
             for (int i = this.prevImprovedVertices.size() - 1; i >= 0; i--) {
                 V vertex = this.prevImprovedVertices.get(i);
-                for (Iterator<E> iter = edgesOfIterator(vertex); iter.hasNext();) {
+                for (Iterator<? extends E> iter = edgesOfIterator(vertex); iter.hasNext();) {
                     E edge = iter.next();
                     V oppositeVertex = edge.oppositeVertex(vertex);
                     if (getPathElement(oppositeVertex) != null) {
@@ -224,9 +224,9 @@ class BellmanFordIterator<V,E extends Edge<V>>
      * @return .
      *  
      */
-    protected Iterator<E> edgesOfIterator(V vertex) {
+    protected Iterator<? extends E> edgesOfIterator(V vertex) {
         if (this.graph instanceof DirectedGraph) {
-            return ((DirectedGraph<V,E>) this.graph).outgoingEdgesOf(vertex)
+            return ((DirectedGraph<V,? extends E>) this.graph).outgoingEdgesOf(vertex)
                     .iterator();
         } else {
             return this.graph.edgesOf(vertex).iterator();
@@ -394,6 +394,7 @@ class BellmanFordIterator<V,E extends Edge<V>>
         return pathElement.improve(oppositePrevData, edge, candidateCost);
     }
 
+    @SuppressWarnings("unchecked")
     private void savePassData(List<V> improvedVertices) {
 
         for (V vertex : improvedVertices) {

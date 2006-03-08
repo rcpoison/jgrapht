@@ -54,7 +54,7 @@ import java.util.*;
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E>
+public interface DirectedGraph<V, E extends DirEdge<V>> extends Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -79,7 +79,7 @@ public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E>
      *
      * @return a list of all edges incoming into the specified vertex.
      */
-    public List<E> incomingEdgesOf(V vertex);
+    public List<? extends E> incomingEdgesOf(V vertex);
 
     /**
      * Returns the "out degree" of the specified vertex. An out degree of a
@@ -101,5 +101,6 @@ public interface DirectedGraph<V, E extends Edge<V>> extends Graph<V, E>
      *
      * @return a list of all edges outgoing from the specified vertex.
      */
-    public List<E> outgoingEdgesOf(V vertex);
+    public List<? extends E> outgoingEdgesOf(V vertex);
+
 }

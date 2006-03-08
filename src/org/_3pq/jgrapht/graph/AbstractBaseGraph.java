@@ -80,6 +80,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     /**
      * default: HashMap may be reinitialized to some other map (eg. a TreeMap
      * with a comparator for the used node type)
+     * FIXME hb 051124: Is it necessary to map to Object?
      */
     protected Map<V, Object> m_vertexMap;
     boolean m_allowingLoops;
@@ -87,7 +88,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     // private
     // private Class           m_factoryEdgeClass;
     private EdgeFactory<V, E> m_edgeFactory;
-    private EdgeListFactory m_edgeListFactory;
+    private EdgeListFactory<V,E> m_edgeListFactory;
     private Set<E> m_edgeSet;
     private transient Set<E> m_unmodifiableEdgeSet = null;
     private transient Set<V> m_unmodifiableVertexSet = null;
@@ -119,9 +120,9 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         if (ef == null) {
             throw new NullPointerException();
         }
-
-        m_vertexMap = new LinkedHashMap();
-        m_edgeSet = new LinkedHashSet();
+        
+        m_vertexMap = new LinkedHashMap<V,Object>();
+        m_edgeSet = new LinkedHashSet<E>();
         m_edgeFactory = ef;
         m_allowingLoops = allowLoops;
         m_allowingMultipleEdges = allowMultipleEdges;
@@ -131,7 +132,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         // Edge e = ef.createEdge( new Object(  ), new Object(  ) );
         // m_factoryEdgeClass = e.getClass(  );
 
-        m_edgeListFactory = new ArrayListFactory();
+        m_edgeListFactory = new ArrayListFactory<V,E>();
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -179,7 +180,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     /**
      * @see Graph#getEdgeFactory()
      */
-    public EdgeFactory getEdgeFactory()
+    public EdgeFactory<V,E> getEdgeFactory()
     {
         return m_edgeFactory;
     }
@@ -193,7 +194,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *                        lists (this call has no effect on existing edge
      *                        lists)
      */
-    public void setEdgeListFactory(EdgeListFactory edgeListFactory)
+    public void setEdgeListFactory(EdgeListFactory<V,E> edgeListFactory)
     {
         m_edgeListFactory = edgeListFactory;
     }
@@ -288,14 +289,16 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *
      * @see java.lang.Object#clone()
      */
-    public Object clone()
+    @SuppressWarnings("unchecked")	//FIXME hb 28-nov-05: See FIXME below
+	public Object clone()
     {
         try {
+        	//FIXME hb 28-nov-05: In order to flow with Java-Generics, an appropriate constructor should be created (cf. Collections)
             AbstractBaseGraph<V, E> newGraph =
                 (AbstractBaseGraph) super.clone();
 
-            newGraph.m_vertexMap = new LinkedHashMap();
-            newGraph.m_edgeSet = new LinkedHashSet();
+            newGraph.m_vertexMap = new LinkedHashMap<V, Object>();
+            newGraph.m_edgeSet = new LinkedHashSet<E>();
 
             // newGraph.m_factoryEdgeClass          = this.m_factoryEdgeClass;
             newGraph.m_edgeFactory = this.m_edgeFactory;
@@ -319,7 +322,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     /**
      * @see Graph#containsEdge(Edge)
      */
-    public boolean containsEdge(E e)
+    public boolean containsEdge(Edge e)
     {
         return m_edgeSet.contains(e);
     }
@@ -428,11 +431,11 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     public boolean removeVertex(V v)
     {
         if (containsVertex(v)) {
-            List touchingEdgesList = edgesOf(v);
+            List<E> touchingEdgesList = edgesOf(v);
 
             // cannot iterate over list - will cause
             // ConcurrentModificationException
-            removeAllEdges(new ArrayList(touchingEdgesList));
+            removeAllEdges(new ArrayList<E>(touchingEdgesList));
 
             m_vertexMap.remove(v); // remove the vertex itself
 
@@ -445,7 +448,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     /**
      * @see Graph#vertexSet()
      */
-    public Set vertexSet()
+    public Set<V> vertexSet()
     {
         if (m_unmodifiableVertexSet == null) {
             m_unmodifiableVertexSet =
@@ -580,17 +583,19 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         public abstract void removeEdgeFromTouchingVertices(E e);
     }
 
-    private static class ArrayListFactory implements EdgeListFactory,
+    private static class ArrayListFactory<VV, EE extends Edge<VV>> implements EdgeListFactory<VV,EE>,
         Serializable
     {
-        /**
+		private static final long serialVersionUID = 5936902837403445985L;
+
+		/**
          * @see EdgeListFactory.createEdgeList
          */
-        public List createEdgeList(Object vertex)
+        public List<EE> createEdgeList(VV vertex)
         {
             // NOTE:  use size 1 to keep memory usage under control
             // for the common case of vertices with low degree
-            return new ArrayList(1);
+            return new ArrayList<EE>(1);
         }
     }
 
@@ -603,15 +608,16 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *
      * @author Barak Naveh
      */
-    private static class DirectedEdgeContainer<V, E extends Edge<V>>
+    private static class DirectedEdgeContainer<VV, EE extends Edge<VV>>
         implements Serializable
     {
-        List<E> m_incoming;
-        List<E> m_outgoing;
-        private transient List<E> m_unmodifiableIncoming = null;
-        private transient List<E> m_unmodifiableOutgoing = null;
+		private static final long serialVersionUID = 7494242245729767106L;
+		List<EE> m_incoming;
+        List<EE> m_outgoing;
+        private transient List<EE> m_unmodifiableIncoming = null;
+        private transient List<EE> m_unmodifiableOutgoing = null;
 
-        DirectedEdgeContainer(EdgeListFactory edgeListFactory, Object vertex)
+        DirectedEdgeContainer(EdgeListFactory<VV,EE> edgeListFactory, VV vertex)
         {
             m_incoming = edgeListFactory.createEdgeList(vertex);
             m_outgoing = edgeListFactory.createEdgeList(vertex);
@@ -622,7 +628,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return
          */
-        public List<E> getUnmodifiableIncomingEdges()
+        public List<EE> getUnmodifiableIncomingEdges()
         {
             if (m_unmodifiableIncoming == null) {
                 m_unmodifiableIncoming =
@@ -637,7 +643,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return
          */
-        public List<E> getUnmodifiableOutgoingEdges()
+        public List<EE> getUnmodifiableOutgoingEdges()
         {
             if (m_unmodifiableOutgoing == null) {
                 m_unmodifiableOutgoing =
@@ -652,7 +658,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void addIncomingEdge(E e)
+        public void addIncomingEdge(EE e)
         {
             m_incoming.add(e);
         }
@@ -662,7 +668,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void addOutgoingEdge(E e)
+        public void addOutgoingEdge(EE e)
         {
             m_outgoing.add(e);
         }
@@ -672,7 +678,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void removeIncomingEdge(E e)
+        public void removeIncomingEdge(EE e)
         {
             m_incoming.remove(e);
         }
@@ -682,7 +688,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void removeOutgoingEdge(E e)
+        public void removeOutgoingEdge(EE e)
         {
             m_outgoing.remove(e);
         }
@@ -695,7 +701,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      */
     private class DirectedSpecifics extends Specifics implements Serializable
     {
-        private static final String NOT_IN_DIRECTED_GRAPH =
+		private static final long serialVersionUID = 8971725103718958232L;
+		private static final String NOT_IN_DIRECTED_GRAPH =
             "no such operation in a directed graph";
 
         /**
@@ -707,9 +714,9 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
 
             if (containsVertex(sourceVertex)
                 && containsVertex(targetVertex)) {
-                edges = new ArrayList();
+                edges = new ArrayList<E>();
 
-                DirectedEdgeContainer ec = getEdgeContainer(sourceVertex);
+                DirectedEdgeContainer<V,E> ec = getEdgeContainer(sourceVertex);
 
                 Iterator<E> iter = ec.m_outgoing.iterator();
 
@@ -732,7 +739,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         {
             if (containsVertex(sourceVertex)
                 && containsVertex(targetVertex)) {
-                DirectedEdgeContainer ec = getEdgeContainer(sourceVertex);
+                DirectedEdgeContainer<V,E> ec = getEdgeContainer(sourceVertex);
 
                 Iterator<E> iter = ec.m_outgoing.iterator();
 
@@ -773,8 +780,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          */
         public List<E> edgesOf(V vertex)
         {
-            ArrayList inAndOut =
-                new ArrayList(getEdgeContainer(vertex).m_incoming);
+            ArrayList<E> inAndOut =
+                new ArrayList<E>(getEdgeContainer(vertex).m_incoming);
             inAndOut.addAll(getEdgeContainer(vertex).m_outgoing);
 
             // we have two copies for each self-loop - remove one of them.
@@ -847,15 +854,16 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return EdgeContainer
          */
-        private DirectedEdgeContainer getEdgeContainer(V vertex)
+        @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
+		private DirectedEdgeContainer<V,E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);
 
-            DirectedEdgeContainer ec =
+            DirectedEdgeContainer<V,E> ec =
                 (DirectedEdgeContainer) m_vertexMap.get(vertex);
 
             if (ec == null) {
-                ec = new DirectedEdgeContainer(m_edgeListFactory, vertex);
+                ec = new DirectedEdgeContainer<V,E>(m_edgeListFactory, vertex);
                 m_vertexMap.put(vertex, ec);
             }
 
@@ -872,15 +880,16 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *
      * @author Barak Naveh
      */
-    private static class UndirectedEdgeContainer<V, E extends Edge<V>>
+    private static class UndirectedEdgeContainer<VV, EE extends Edge<VV>>
         implements Serializable
     {
-        List<E> m_vertexEdges;
-        private transient List<E> m_unmodifiableVertexEdges = null;
+		private static final long serialVersionUID = -6623207588411170010L;
+		List<EE> m_vertexEdges;
+        private transient List<EE> m_unmodifiableVertexEdges = null;
 
         UndirectedEdgeContainer(
-            EdgeListFactory edgeListFactory,
-            Object vertex)
+            EdgeListFactory<VV,EE> edgeListFactory,
+            VV vertex)
         {
             m_vertexEdges = edgeListFactory.createEdgeList(vertex);
         }
@@ -890,7 +899,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return
          */
-        public List<E> getUnmodifiableVertexEdges()
+        public List<EE> getUnmodifiableVertexEdges()
         {
             if (m_unmodifiableVertexEdges == null) {
                 m_unmodifiableVertexEdges =
@@ -905,7 +914,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void addEdge(E e)
+        public void addEdge(EE e)
         {
             m_vertexEdges.add(e);
         }
@@ -925,7 +934,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @param e
          */
-        public void removeEdge(E e)
+        public void removeEdge(EE e)
         {
             m_vertexEdges.remove(e);
         }
@@ -939,7 +948,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     private class UndirectedSpecifics extends Specifics
         implements Serializable
     {
-        private static final String NOT_IN_UNDIRECTED_GRAPH =
+		private static final long serialVersionUID = 6494588405178655873L;
+		private static final String NOT_IN_UNDIRECTED_GRAPH =
             "no such operation in an undirected graph";
 
         /**
@@ -951,7 +961,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
 
             if (containsVertex(sourceVertex)
                 && containsVertex(targetVertex)) {
-                edges = new ArrayList();
+                edges = new ArrayList<E>();
 
                 Iterator<E> iter =
                     getEdgeContainer(sourceVertex).m_vertexEdges.iterator();
@@ -1022,17 +1032,16 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         }
 
         /**
-         * @see UndirectedGraph#degree(Object)
+         * @see UndirectedGraph#degreeOf(V)
          */
         public int degreeOf(V vertex)
         {
             if (m_allowingLoops) { // then we must count, and add loops twice
 
                 int degree = 0;
-                List edges = getEdgeContainer(vertex).m_vertexEdges;
+                List<E> edges = getEdgeContainer(vertex).m_vertexEdges;
 
-                for (Iterator iter = edges.iterator(); iter.hasNext();) {
-                    Edge e = (Edge) iter.next();
+                for (E e : edges ) {
 
                     if (e.getSource().equals(e.getTarget())) {
                         degree += 2;
@@ -1048,7 +1057,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         }
 
         /**
-         * @see Graph#edges(Object)
+         * @see Graph#edgesOf(V)
          */
         public List<E> edgesOf(V vertex)
         {
@@ -1109,6 +1118,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return EdgeContainer
          */
+        @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
         private UndirectedEdgeContainer<V, E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);
@@ -1117,7 +1127,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
                 (UndirectedEdgeContainer) m_vertexMap.get(vertex);
 
             if (ec == null) {
-                ec = new UndirectedEdgeContainer(m_edgeListFactory, vertex);
+                ec = new UndirectedEdgeContainer<V,E>(m_edgeListFactory, vertex);
                 m_vertexMap.put(vertex, ec);
             }
 

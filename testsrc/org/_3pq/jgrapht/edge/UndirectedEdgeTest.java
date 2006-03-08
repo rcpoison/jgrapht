@@ -40,8 +40,6 @@
  */
 package org._3pq.jgrapht.edge;
 
-import org._3pq.jgrapht.*;
-
 
 /**
  * Tests for the {@link UndirectedEdge} class.
@@ -49,7 +47,7 @@ import org._3pq.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 24, 2003
  */
-public class UndirectedEdgeTest extends DefaultEdgeTest
+public class UndirectedEdgeTest extends DefaultEdgeTest<UndirectedEdge<String>>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -66,12 +64,14 @@ public class UndirectedEdgeTest extends DefaultEdgeTest
     /**
      * @see junit.framework.TestCase#setUp()
      */
-    protected void setUp()
+    @SuppressWarnings("unchecked")
+	protected void setUp()
         throws Exception
     {
-        m_e1 = new UndirectedEdge(m_source1, m_target1);
-        m_e3 = new UndirectedEdge(new Object(), new Object());
+        m_e1 = new UndirectedEdge<String>(m_source1, m_target1);
+        m_e3 = new UndirectedEdge<String>(new String(), new String());
 
-        m_e1Clone = (Edge) m_e1.clone();
+        m_e1Clone = (UndirectedEdge<String>) m_e1.clone();	// Type-safety warning OK
+        m_e1ConstructorCopy = new UndirectedEdge<String>( m_e1 );
     }
 }

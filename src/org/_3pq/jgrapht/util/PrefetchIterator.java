@@ -84,13 +84,13 @@ import java.util.*;
  *
  * @author Assaf_Lehr
  */
-public class PrefetchIterator implements Iterator, Enumeration
+public class PrefetchIterator<E> implements Iterator<E>, Enumeration<E>
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    private NextElementFunctor innerEnum;
-    private Object getNextLastResult;
+    private NextElementFunctor<E> innerEnum;
+    private E getNextLastResult;
     private boolean isGetNextLastResultUpToDate = false;
     private boolean endOfEnumerationReached = false;
     private boolean flagIsEnumerationStartedEmpty = true;
@@ -98,7 +98,7 @@ public class PrefetchIterator implements Iterator, Enumeration
 
     //~ Constructors ----------------------------------------------------------
 
-    public PrefetchIterator(NextElementFunctor aEnum)
+    public PrefetchIterator(NextElementFunctor<E> aEnum)
     {
         innerEnum = aEnum;
     }
@@ -109,10 +109,10 @@ public class PrefetchIterator implements Iterator, Enumeration
      * Serves as one contact place to the functor; all must use it and not
      * directly the NextElementFunctor.
      */
-    private Object getNextElementFromInnerFunctor()
+    private E getNextElementFromInnerFunctor()
     {
         innerFunctorUsageCounter++;
-        Object result = this.innerEnum.nextElement();
+        E result = this.innerEnum.nextElement();
 
         // if we got here , an exception was not thrown, so at least
         // one time a good value returned
@@ -125,9 +125,9 @@ public class PrefetchIterator implements Iterator, Enumeration
      * Changes isGetNextLastResultUpToDate to false. (Because it does not save
      * the NEXT element now; it saves the current one!)
      */
-    public Object nextElement()
+    public E nextElement()
     {
-        Object result = null;
+        E result = null;
         if (this.isGetNextLastResultUpToDate) {
             result = this.getNextLastResult;
         } else {
@@ -189,7 +189,7 @@ public class PrefetchIterator implements Iterator, Enumeration
         return this.hasMoreElements();
     }
 
-    public Object next()
+    public E next()
     {
         return this.nextElement();
     }
@@ -205,13 +205,13 @@ public class PrefetchIterator implements Iterator, Enumeration
 
     //~ Inner Interfaces ------------------------------------------------------
 
-    public interface NextElementFunctor
+    public interface NextElementFunctor<EE>
     {
         /**
          * You must implement that NoSuchElementException is thrown on
          * nextElement() if it is out of bound.
          */
-        public Object nextElement()
+        public EE nextElement()
             throws NoSuchElementException;
     }
 }

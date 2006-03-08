@@ -38,8 +38,9 @@ import org._3pq.jgrapht.experimental.heap.*;
  *
  * @author Michael Behrisch
  */
-public final class DijkstraShortestPathAlgorithm extends DijkstraAlgorithm
-    implements ShortestPathAlgorithm
+public final class DijkstraShortestPathAlgorithm<V, E extends Edge<V>>
+	extends DijkstraAlgorithm<V, E>
+    implements ShortestPathAlgorithm<V,E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -51,7 +52,7 @@ public final class DijkstraShortestPathAlgorithm extends DijkstraAlgorithm
      * @param wgraph The WeightedGraph where a shortest path spanning tree will
      *               be determined.
      */
-    public DijkstraShortestPathAlgorithm(WeightedGraph wgraph)
+    public DijkstraShortestPathAlgorithm(WeightedGraph<V, E> wgraph)
     {
         super(wgraph, false);
     }
@@ -65,7 +66,7 @@ public final class DijkstraShortestPathAlgorithm extends DijkstraAlgorithm
      * @param factory The factory to be used for creating heaps.
      */
     public DijkstraShortestPathAlgorithm(
-        WeightedGraph wgraph,
+        WeightedGraph<V, E> wgraph,
         HeapFactory factory)
     {
         super(wgraph, factory, false);
@@ -83,7 +84,7 @@ public final class DijkstraShortestPathAlgorithm extends DijkstraAlgorithm
      *
      * @return A WeightedGraph comprising of the shortest path spanning tree.
      */
-    public final WeightedGraph shortestPathTree(Object from)
+    public final WeightedGraph<V, E> shortestPathTree(V from)
     {
         return optimumPathTree(from);
     }

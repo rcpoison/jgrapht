@@ -54,21 +54,21 @@ import org._3pq.jgrapht.util.*;
  * @author Assaf
  * @since May 20, 2005
  */
-public class GraphOrdering
+public class GraphOrdering<V,E extends Edge<V>>
 {
 
     //~ Instance fields -------------------------------------------------------
 
     /**
-     * Holds a mapping between key=Object(vertex) and value=Integer(vertex
+     * Holds a mapping between key=V(vertex) and value=Integer(vertex
      * order). It can be used for identifying the order of regular vertex/edge.
      */
-    private Map mapVertexToOrder;
+    private Map<V, Integer> mapVertexToOrder;
 
     /**
      * Holds a HashSet of all LabelsGraph of the graph.
      */
-    private Set labelsEdgesSet;
+    private Set<LabelsEdge> labelsEdgesSet;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -79,10 +79,10 @@ public class GraphOrdering
      *
      * @param regularGraph
      */
-    public GraphOrdering(Graph regularGraph)
+    public GraphOrdering(Graph<V,E> regularGraph)
     {
-        Set vertexSet = regularGraph.vertexSet();
-        Set edgeSet = regularGraph.edgeSet();
+        Set<V> vertexSet = regularGraph.vertexSet();
+        Set<E> edgeSet = regularGraph.edgeSet();
 
         init(vertexSet, edgeSet);
     }
@@ -95,23 +95,22 @@ public class GraphOrdering
      * @param vertexSet
      * @param edgeSet
      */
-    public GraphOrdering(Set vertexSet, Set edgeSet)
+    public GraphOrdering(Set<V> vertexSet, Set<E> edgeSet)
     {
         init(vertexSet, edgeSet);
     }
 
     //~ Methods ---------------------------------------------------------------
 
-    private void init(Set vertexSet, Set edgeSet)
+    private void init(Set<V> vertexSet, Set<E> edgeSet)
     {
         // create a map between vertex value to its order(1st,2nd,etc)
         // "CAT"=1 "DOG"=2 "RHINO"=3
 
-        this.mapVertexToOrder = new HashMap(vertexSet.size());
+        this.mapVertexToOrder = new HashMap<V, Integer>(vertexSet.size());
 
         int counter = 0;
-        for (Iterator iter = vertexSet.iterator(); iter.hasNext();) {
-            Object vertex = iter.next();
+        for (V vertex : vertexSet) {
             mapVertexToOrder.put(vertex, new Integer(counter));
             counter++;
         }
@@ -122,15 +121,13 @@ public class GraphOrdering
         // on directed graph, edge A->B must be (A,B)
         // on undirected graph, edge A-B can be (A,B) or (B,A)
 
-        this.labelsEdgesSet = new HashSet(edgeSet.size());
-        for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-            Edge edge = (Edge) iter.next();
-
-            Object sourceVertex = edge.getSource();
-            Integer sourceOrder = (Integer) mapVertexToOrder.get(sourceVertex);
+        this.labelsEdgesSet = new HashSet<LabelsEdge>(edgeSet.size());
+        for (E edge : edgeSet) {
+            V sourceVertex = edge.getSource();
+            Integer sourceOrder = mapVertexToOrder.get(sourceVertex);
             int sourceLabel = sourceOrder.intValue();
             int targetLabel =
-                ((Integer) (mapVertexToOrder.get(edge.getTarget())))
+                (mapVertexToOrder.get(edge.getTarget()))
                 .intValue();
 
             LabelsEdge lablesEdge = new LabelsEdge(sourceLabel, targetLabel);
@@ -155,7 +152,7 @@ public class GraphOrdering
         return result;
     }
 
-    public Set getLabelsEdgesSet()
+    public Set<LabelsEdge> getLabelsEdgesSet()
     {
         return labelsEdgesSet;
     }
@@ -173,12 +170,10 @@ public class GraphOrdering
         sb.append("mapVertexToOrder=");
 
         // vertex will be printed in their order
-        int numberOfVertexInMap = this.mapVertexToOrder.size();
         Object [] vertexArray = new Object [this.mapVertexToOrder.size()];
-        Set keySet = this.mapVertexToOrder.keySet();
-        for (Iterator iter = keySet.iterator(); iter.hasNext();) {
-            Object currVertex = (Object) iter.next();
-            Integer index = (Integer) this.mapVertexToOrder.get(currVertex);
+        Set<V> keySet = this.mapVertexToOrder.keySet();
+        for (V currVertex : keySet) {
+            Integer index = this.mapVertexToOrder.get(currVertex);
             vertexArray[index.intValue()] = currVertex;
         }
         sb.append(ArrayUtil.toString(vertexArray));
@@ -190,9 +185,9 @@ public class GraphOrdering
 
     private class LabelsEdge
     {
-        int source;
-        int target;
-        int hashCode;
+        private int source;
+        private int target;
+        private int hashCode;
 
         public LabelsEdge(int aSource, int aTarget)
         {

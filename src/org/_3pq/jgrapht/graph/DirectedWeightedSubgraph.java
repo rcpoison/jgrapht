@@ -51,7 +51,7 @@ import org._3pq.jgrapht.*;
  *
  * @see Subgraph
  */
-public class DirectedWeightedSubgraph<V, E extends Edge<V>>
+public class DirectedWeightedSubgraph<V, E extends DirEdge<V>>
     extends DirectedSubgraph<V, E> implements WeightedGraph<V, E>
 {
 

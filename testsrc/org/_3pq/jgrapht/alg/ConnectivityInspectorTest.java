@@ -67,11 +67,11 @@ public class ConnectivityInspectorTest extends TestCase
     //~ Instance fields -------------------------------------------------------
 
     //
-    Edge m_e1;
-    Edge m_e2;
-    Edge m_e3;
-    Edge m_e3_b;
-    Edge m_u;
+    Edge<String> m_e1;
+    Edge<String> m_e2;
+    Edge<String> m_e3;
+    Edge<String> m_e3_b;
+    Edge<String> m_u;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -80,9 +80,9 @@ public class ConnectivityInspectorTest extends TestCase
      *
      * @return a graph
      */
-    public Pseudograph create()
+    public Pseudograph<String,Edge<String>> create()
     {
-        Pseudograph g = new Pseudograph();
+        Pseudograph<String,Edge<String>> g = new Pseudograph<String,Edge<String>>();
 
         assertEquals(0, g.vertexSet().size());
         g.addVertex(V1);
@@ -122,14 +122,16 @@ public class ConnectivityInspectorTest extends TestCase
      */
     public void testDirectedGraph()
     {
-        ListenableDirectedGraph g = new ListenableDirectedGraph();
+        ListenableDirectedGraph<String,DirEdge<String>>
+                g = new ListenableDirectedGraph<String,DirEdge<String>>();
         g.addVertex(V1);
         g.addVertex(V2);
         g.addVertex(V3);
 
         g.addEdge(V1, V2);
 
-        ConnectivityInspector inspector = new ConnectivityInspector(g);
+        ConnectivityInspector<String,DirEdge<String>>
+                inspector = new ConnectivityInspector<String,DirEdge<String>>(g);
         g.addGraphListener(inspector);
 
         assertEquals(false, inspector.isGraphConnected());
@@ -144,13 +146,14 @@ public class ConnectivityInspectorTest extends TestCase
      */
     public void testIsGraphConnected()
     {
-        Pseudograph g = create();
-        ConnectivityInspector inspector = new ConnectivityInspector(g);
+        Pseudograph<String,Edge<String>> g = create();
+        ConnectivityInspector<String,Edge<String>>
+                inspector = new ConnectivityInspector<String,Edge<String>>(g);
 
         assertEquals(false, inspector.isGraphConnected());
 
         g.removeVertex(V4);
-        inspector = new ConnectivityInspector(g);
+        inspector = new ConnectivityInspector<String,Edge<String>>(g);
         assertEquals(true, inspector.isGraphConnected());
 
         g.removeVertex(V1);
@@ -160,7 +163,7 @@ public class ConnectivityInspectorTest extends TestCase
         g.addEdge(V2, V2);
         assertEquals(1, g.edgeSet().size());
 
-        inspector = new ConnectivityInspector(g);
+        inspector = new ConnectivityInspector<String,Edge<String>>(g);
         assertEquals(false, inspector.isGraphConnected());
     }
 
@@ -169,7 +172,8 @@ public class ConnectivityInspectorTest extends TestCase
      */
     public void testStronglyConnected1()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<String,DirEdge<String>>
+                g = new DefaultDirectedGraph<String,DirEdge<String>>();
         g.addVertex(V1);
         g.addVertex(V2);
         g.addVertex(V3);
@@ -180,23 +184,23 @@ public class ConnectivityInspectorTest extends TestCase
 
         g.addEdge(V3, V4); // only weakly connected
 
-        StrongConnectivityInspector inspector =
-            new StrongConnectivityInspector(g);
+        StrongConnectivityInspector<String,DirEdge<String>>
+                inspector = new StrongConnectivityInspector<String,DirEdge<String>>(g);
 
         // convert from List to Set because we need to ignore order
         // during comparison
-        Set actualSets = new HashSet(inspector.stronglyConnectedSets());
+        Set<Set<String>> actualSets = new HashSet<Set<String>>(inspector.stronglyConnectedSets());
 
         // construct the expected answer
-        Set expectedSets = new HashSet();
-        Set set = new HashSet();
+        Set<Set<String>> expectedSets = new HashSet<Set<String>>();
+        Set<String> set = new HashSet<String>();
         set.add(V1);
         set.add(V2);
         expectedSets.add(set);
-        set = new HashSet();
+        set = new HashSet<String>();
         set.add(V3);
         expectedSets.add(set);
-        set = new HashSet();
+        set = new HashSet<String>();
         set.add(V4);
         expectedSets.add(set);
 
@@ -204,18 +208,16 @@ public class ConnectivityInspectorTest extends TestCase
 
         actualSets.clear();
 
-        List subgraphs = inspector.stronglyConnectedSubgraphs();
-        Iterator iter = subgraphs.iterator();
-
-        while (iter.hasNext()) {
-            DirectedSubgraph sg = (DirectedSubgraph) iter.next();
+        List<DirectedSubgraph<String,DirEdge<String>>>
+                subgraphs = inspector.stronglyConnectedSubgraphs();
+        for (DirectedSubgraph<String, DirEdge<String>> sg : subgraphs) {
             actualSets.add(sg.vertexSet());
 
-            StrongConnectivityInspector ci =
-                new StrongConnectivityInspector(sg);
+            StrongConnectivityInspector<String,DirEdge<String>> ci =
+                new StrongConnectivityInspector<String,DirEdge<String>>(sg);
             assertTrue(ci.isStronglyConnected());
         }
-
+        
         assertEquals(expectedSets, actualSets);
     }
 
@@ -224,7 +226,8 @@ public class ConnectivityInspectorTest extends TestCase
      */
     public void testStronglyConnected2()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<String,DirEdge<String>>
+                g = new DefaultDirectedGraph<String,DirEdge<String>>();
         g.addVertex(V1);
         g.addVertex(V2);
         g.addVertex(V3);
@@ -236,23 +239,23 @@ public class ConnectivityInspectorTest extends TestCase
         g.addEdge(V4, V3); // only weakly connected
         g.addEdge(V3, V2); // only weakly connected
 
-        StrongConnectivityInspector inspector =
-            new StrongConnectivityInspector(g);
+        StrongConnectivityInspector<String,DirEdge<String>> inspector =
+            new StrongConnectivityInspector<String,DirEdge<String>>(g);
 
         // convert from List to Set because we need to ignore order
         // during comparison
-        Set actualSets = new HashSet(inspector.stronglyConnectedSets());
+        Set<Set<String>> actualSets = new HashSet<Set<String>>(inspector.stronglyConnectedSets());
 
         // construct the expected answer
-        Set expectedSets = new HashSet();
-        Set set = new HashSet();
+        Set<Set<String>> expectedSets = new HashSet<Set<String>>();
+        Set<String> set = new HashSet<String>();
         set.add(V1);
         set.add(V2);
         expectedSets.add(set);
-        set = new HashSet();
+        set = new HashSet<String>();
         set.add(V3);
         expectedSets.add(set);
-        set = new HashSet();
+        set = new HashSet<String>();
         set.add(V4);
         expectedSets.add(set);
 
@@ -260,15 +263,13 @@ public class ConnectivityInspectorTest extends TestCase
 
         actualSets.clear();
 
-        List subgraphs = inspector.stronglyConnectedSubgraphs();
-        Iterator iter = subgraphs.iterator();
-
-        while (iter.hasNext()) {
-            DirectedSubgraph sg = (DirectedSubgraph) iter.next();
+        List<DirectedSubgraph<String,DirEdge<String>>>
+                subgraphs = inspector.stronglyConnectedSubgraphs();
+        for (DirectedSubgraph<String, DirEdge<String>> sg : subgraphs) {
             actualSets.add(sg.vertexSet());
 
-            StrongConnectivityInspector ci =
-                new StrongConnectivityInspector(sg);
+            StrongConnectivityInspector<String,DirEdge<String>> ci =
+                new StrongConnectivityInspector<String,DirEdge<String>>(sg);
             assertTrue(ci.isStronglyConnected());
         }
 
@@ -280,7 +281,8 @@ public class ConnectivityInspectorTest extends TestCase
      */
     public void testStronglyConnected3()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<String,DirEdge<String>>
+                g = new DefaultDirectedGraph<String,DirEdge<String>>();
         g.addVertex(V1);
         g.addVertex(V2);
         g.addVertex(V3);
@@ -294,21 +296,21 @@ public class ConnectivityInspectorTest extends TestCase
         g.addEdge(V2, V4);
         g.addEdge(V3, V4); // weakly connected
 
-        StrongConnectivityInspector inspector =
-            new StrongConnectivityInspector(g);
+        StrongConnectivityInspector<String,DirEdge<String>> inspector =
+            new StrongConnectivityInspector<String,DirEdge<String>>(g);
 
         // convert from List to Set because we need to ignore order
         // during comparison
-        Set actualSets = new HashSet(inspector.stronglyConnectedSets());
+        Set<Set<String>> actualSets = new HashSet<Set<String>>(inspector.stronglyConnectedSets());
 
         // construct the expected answer
-        Set expectedSets = new HashSet();
-        Set set = new HashSet();
+        Set<Set<String>> expectedSets = new HashSet<Set<String>>();
+        Set<String> set = new HashSet<String>();
         set.add(V1);
         set.add(V2);
         set.add(V3);
         expectedSets.add(set);
-        set = new HashSet();
+        set = new HashSet<String>();
         set.add(V4);
         expectedSets.add(set);
 
@@ -316,15 +318,14 @@ public class ConnectivityInspectorTest extends TestCase
 
         actualSets.clear();
 
-        List subgraphs = inspector.stronglyConnectedSubgraphs();
-        Iterator iter = subgraphs.iterator();
+        List<DirectedSubgraph<String,DirEdge<String>>>
+                subgraphs = inspector.stronglyConnectedSubgraphs();
 
-        while (iter.hasNext()) {
-            DirectedSubgraph sg = (DirectedSubgraph) iter.next();
+        for (DirectedSubgraph<String, DirEdge<String>> sg : subgraphs) {
             actualSets.add(sg.vertexSet());
 
-            StrongConnectivityInspector ci =
-                new StrongConnectivityInspector(sg);
+            StrongConnectivityInspector<String, DirEdge<String>> ci =
+                new StrongConnectivityInspector<String, DirEdge<String>>(sg);
             assertTrue(ci.isStronglyConnected());
         }
 

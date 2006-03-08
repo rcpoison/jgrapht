@@ -70,7 +70,7 @@ import org._3pq.jgrapht.util.*;
  * @author Marden Neubert
  * @since Dec 18, 2004
  */
-public class TopologicalOrderIterator<V, E extends Edge<V>, D>
+public class TopologicalOrderIterator<V, E extends DirEdge<V>, D>
     extends CrossComponentIterator<V, E, D>
 {
 
@@ -92,14 +92,14 @@ public class TopologicalOrderIterator<V, E extends Edge<V>, D>
      */
     public TopologicalOrderIterator(DirectedGraph<V, E> dg)
     {
-        this(dg, new LinkedList(), new HashMap());
+        this(dg, new LinkedList<V>(), new HashMap<V, ModifiableInteger>());
     }
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
     private TopologicalOrderIterator(DirectedGraph<V, E> dg,
         LinkedList<V> queue,
-        Map inDegreeMap)
+        Map<V, ModifiableInteger> inDegreeMap)
     {
         this(dg, initialize(dg, queue, inDegreeMap));
         m_queue = queue;
@@ -181,9 +181,9 @@ public class TopologicalOrderIterator<V, E extends Edge<V>, D>
      *
      * @return start vertex
      */
-    private static <V, E extends Edge<V>> V initialize(DirectedGraph<V, E> dg,
+    private static <V, E extends DirEdge<V>> V initialize(DirectedGraph<V, E> dg,
         LinkedList<V> queue,
-        Map inDegreeMap)
+        Map<V, ModifiableInteger> inDegreeMap)
     {
         for (Iterator<V> i = dg.vertexSet().iterator(); i.hasNext();) {
             V vertex = i.next();

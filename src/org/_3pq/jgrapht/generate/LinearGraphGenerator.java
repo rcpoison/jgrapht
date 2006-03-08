@@ -51,7 +51,7 @@ import org._3pq.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class LinearGraphGenerator implements GraphGenerator
+public class LinearGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -94,14 +94,14 @@ public class LinearGraphGenerator implements GraphGenerator
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph target,
-        VertexFactory vertexFactory,
-        Map resultMap)
+        Graph<V,E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String,V> resultMap)
     {
-        Object lastVertex = null;
+        V lastVertex = null;
 
         for (int i = 0; i < m_size; ++i) {
-            Object newVertex = vertexFactory.createVertex();
+            V newVertex = vertexFactory.createVertex();
             target.addVertex(newVertex);
 
             if (lastVertex == null) {

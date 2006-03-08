@@ -51,7 +51,7 @@ import org._3pq.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class EmptyGraphGenerator implements GraphGenerator
+public class EmptyGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -82,9 +82,9 @@ public class EmptyGraphGenerator implements GraphGenerator
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph target,
-        VertexFactory vertexFactory,
-        Map resultMap)
+        Graph<V,E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String,V> resultMap)
     {
         for (int i = 0; i < m_size; ++i) {
             target.addVertex(vertexFactory.createVertex());

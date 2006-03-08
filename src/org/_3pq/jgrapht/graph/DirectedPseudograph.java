@@ -50,7 +50,7 @@ import org._3pq.jgrapht.edge.*;
  * href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class DirectedPseudograph<V, E extends Edge<V>>
+public class DirectedPseudograph<V, E extends DirEdge<V>>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 

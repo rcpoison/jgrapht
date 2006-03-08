@@ -80,7 +80,7 @@ public final class PerformanceDemo
 
         reportPerformanceFor("starting at", time);
 
-        Graph g = new Pseudograph();
+        Graph<Object,Edge<Object>> g = new Pseudograph<Object,Edge<Object>>();
         Object prev;
         Object curr;
 
@@ -110,7 +110,7 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new BreadthFirstIterator(g); i.hasNext();) {
+        for (Iterator i = new BreadthFirstIterator<Object,Edge<Object>,Object>(g); i.hasNext();) {
             i.next();
         }
 
@@ -118,7 +118,7 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new DepthFirstIterator(g); i.hasNext();) {
+        for (Iterator i = new DepthFirstIterator<Object,Edge<Object>,Object>(g); i.hasNext();) {
             i.next();
         }
 

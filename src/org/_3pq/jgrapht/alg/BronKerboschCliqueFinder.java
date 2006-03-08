@@ -59,7 +59,7 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
 
     //~ Instance fields -------------------------------------------------------
 
-    private final Graph m_graph;
+    private final Graph<V,E> m_graph;
 
     private Collection<Set<V>> m_cliques;
 
@@ -71,7 +71,7 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
      * @param graph the graph in which cliques are to be found; graph must be
      *              simple
      */
-    public BronKerboschCliqueFinder(Graph<V, E> graph)
+    public BronKerboschCliqueFinder(Graph<V,E> graph)
     {
         m_graph = graph;
     }
@@ -126,7 +126,8 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
         return biggest_cliques;
     }
 
-    private void findCliques(List<V> potential_clique,
+    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME's below
+	private void findCliques(List<V> potential_clique,
         List<V> candidates,
         List<V> already_found)
     {
@@ -136,6 +137,7 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
             for (int i = 0; i < candidates_array.length; i++) {
                 List<V> new_candidates = new ArrayList<V>();
                 List<V> new_already_found = new ArrayList<V>();
+                // FIXME hb 28-Nov-05: V-array is not possible, either use candidates.get(i) or accept the cast
                 V candidate = (V) candidates_array[i];
 
                 // move candidate node to potential_clique

@@ -47,7 +47,7 @@ import org._3pq.jgrapht.Edge;
  * for general use.
  */
 final class BellmanFordPathElement<V,E extends Edge<V>>
-    extends AbstractPathElement implements Cloneable
+    extends AbstractPathElement<V,E> implements Cloneable
 {
     private double cost = 0;
 
@@ -117,7 +117,7 @@ final class BellmanFordPathElement<V,E extends Edge<V>>
      */
     protected boolean improve(
         BellmanFordPathElement<V,E> candidatePrevPathElement,
-        Edge candidateEdge, double candidateCost) {
+        E candidateEdge, double candidateCost) {
         // to avoid improvement only due to rounding errors.
         if (candidateCost < getCost() - this.epsilon) {
             this.prevPathElement = candidatePrevPathElement;

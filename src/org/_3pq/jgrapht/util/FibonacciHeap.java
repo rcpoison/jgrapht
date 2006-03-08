@@ -357,7 +357,7 @@ public class FibonacciHeap
         }
 
         // create a new stack and put root on it
-        Stack stack = new Stack();
+        Stack<Node> stack = new Stack<Node>();
         stack.push(m_min);
 
         StringBuffer buf = new StringBuffer(512);
@@ -365,7 +365,7 @@ public class FibonacciHeap
 
         // do a simple breadth-first traversal on the tree
         while (!stack.empty()) {
-            Node curr = (Node) stack.pop();
+            Node curr = stack.pop();
             buf.append(curr);
             buf.append(", ");
 
@@ -433,12 +433,11 @@ public class FibonacciHeap
     protected void consolidate()
     {
         int arraySize = m_n + 1;
-        Node [] array = new Node [arraySize];
+        List<Node> array = new ArrayList<Node>(arraySize);
 
         // Initialize degree array
-        for (int i = 0; i < arraySize; i++) {
-            array[i] = null;
-        }
+        for (int i=0; i<arraySize; i++)
+        	array.add(null);
 
         // Find the number of root nodes.
         int numRoots = 0;
@@ -461,9 +460,9 @@ public class FibonacciHeap
             Node next = x.m_right;
 
             // ..and see if there's another of the same degree.
-            while (array[d] != null) {
+            while (array.get(d) != null) {
                 // There is, make one of the nodes a child of the other.
-                Node y = array[d];
+                Node y = array.get(d);
 
                 // Do this based on the key value.
                 if (x.m_key > y.m_key) {
@@ -476,13 +475,13 @@ public class FibonacciHeap
                 link(y, x);
 
                 // We've handled this degree, go to next one.
-                array[d] = null;
+                array.set(d,null);
                 d++;
             }
 
             // Save this node for later when we might encounter another
             // of the same degree.
-            array[d] = x;
+            array.set(d,x);
 
             // Move forward through list.
             x = next;
@@ -494,25 +493,25 @@ public class FibonacciHeap
         m_min = null;
 
         for (int i = 0; i < arraySize; i++) {
-            if (array[i] != null) {
+            if (array.get(i) != null) {
                 // We've got a live one, add it to root list.
                 if (m_min != null) {
                     // First remove node from root list.
-                    array[i].m_left.m_right = array[i].m_right;
-                    array[i].m_right.m_left = array[i].m_left;
+                    array.get(i).m_left.m_right = array.get(i).m_right;
+                    array.get(i).m_right.m_left = array.get(i).m_left;
 
                     // Now add to root list, again.
-                    array[i].m_left = m_min;
-                    array[i].m_right = m_min.m_right;
-                    m_min.m_right = array[i];
-                    array[i].m_right.m_left = array[i];
+                    array.get(i).m_left = m_min;
+                    array.get(i).m_right = m_min.m_right;
+                    m_min.m_right = array.get(i);
+                    array.get(i).m_right.m_left = array.get(i);
 
                     // Check if this is a new min.
-                    if (array[i].m_key < m_min.m_key) {
-                        m_min = array[i];
+                    if (array.get(i).m_key < m_min.m_key) {
+                        m_min = array.get(i);
                     }
                 } else {
-                    m_min = array[i];
+                    m_min = array.get(i);
                 }
             }
         }

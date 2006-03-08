@@ -39,7 +39,8 @@
  */
 package org._3pq.jgrapht.demo;
 
-import java.net.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org._3pq.jgrapht.*;
 import org._3pq.jgrapht.graph.*;
@@ -89,7 +90,7 @@ public final class HelloJGraphT
      */
     private static DirectedGraph createHrefGraph()
     {
-        DirectedGraph g = new DefaultDirectedGraph();
+        DirectedGraph<URL,DirEdge<URL>> g = new DefaultDirectedGraph<URL,DirEdge<URL>>();
 
         try {
             URL amazon = new URL("http://www.amazon.com");
@@ -118,7 +119,7 @@ public final class HelloJGraphT
      */
     private static UndirectedGraph createStringGraph()
     {
-        UndirectedGraph g = new SimpleGraph();
+        UndirectedGraph<String,Edge<String>> g = new SimpleGraph<String,Edge<String>>();
 
         String v1 = "v1";
         String v2 = "v2";

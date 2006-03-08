@@ -35,11 +35,13 @@
  */
 package org._3pq.jgrapht.generate;
 
-import junit.framework.*;
+import junit.framework.TestCase;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.alg.isomorphism.*;
-import org._3pq.jgrapht.graph.*;
+import org._3pq.jgrapht.Graph;
+import org._3pq.jgrapht.alg.isomorphism.EdgeTopologyCompare;
+import org._3pq.jgrapht.alg.isomorphism.IntegerVertexFactory;
+import org._3pq.jgrapht.edge.DirectedEdge;
+import org._3pq.jgrapht.graph.SimpleDirectedGraph;
 
 
 /**
@@ -66,33 +68,41 @@ public class RandomGraphGeneratorTest extends TestCase
      * are generated using the same RandomGraphGenerator; the third is
      * generated using a new instance.
      *
-     * @param g1 graph reference
-     * @param g2
-     * @param g3
+     * The graphs are <code>directedGragh1, directedGragh2, directedGragh3</code>
      */
     private static Graph [] testGenerateDirectedGraph()
     {
         final int numOfVertex = 11;
         final int numOfEdges = 110; // simple undirected max = N(v)x(N(v)-1)
-        RandomGraphGenerator randomGen =
-            new RandomGraphGenerator(numOfVertex, numOfEdges);
-        Graph directedGragh1 = new SimpleDirectedGraph();
+        RandomGraphGenerator<Integer,DirectedEdge<Integer>>
+        	randomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
+
+        Graph<Integer,DirectedEdge<Integer>>
+        	directedGragh1 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+
         randomGen.generateGraph(
             directedGragh1,
             new IntegerVertexFactory(),
             null);
 
+        
         // use the same randomGen
-        Graph directedGragh2 = new SimpleDirectedGraph();
+        Graph<Integer,DirectedEdge<Integer>>
+        	directedGragh2 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+
         randomGen.generateGraph(
             directedGragh2,
             new IntegerVertexFactory(),
             null);
 
+        
         // use new randomGen here
-        RandomGraphGenerator newRandomGen =
-            new RandomGraphGenerator(numOfVertex, numOfEdges);
-        Graph directedGragh3 = new SimpleDirectedGraph();
+        RandomGraphGenerator<Integer,DirectedEdge<Integer>>
+        	newRandomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
+        
+        Graph<Integer,DirectedEdge<Integer>>
+        	directedGragh3 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+        
         newRandomGen.generateGraph(
             directedGragh3,
             new IntegerVertexFactory(),

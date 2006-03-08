@@ -50,7 +50,7 @@ import org._3pq.jgrapht.*;
  *
  * @see org._3pq.jgrapht.graph.Subgraph
  */
-public class DirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E>
+public class DirectedSubgraph<V, E extends DirEdge<V>> extends Subgraph<V, E>
     implements DirectedGraph<V, E>
 {
 

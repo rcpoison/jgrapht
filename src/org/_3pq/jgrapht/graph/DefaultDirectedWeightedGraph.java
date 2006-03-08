@@ -55,7 +55,7 @@ import org._3pq.jgrapht.edge.*;
  *
  * @see org._3pq.jgrapht.graph.DefaultDirectedGraph
  */
-public class DefaultDirectedWeightedGraph<V, E extends Edge<V>>
+public class DefaultDirectedWeightedGraph<V, E extends DirEdge<V>>
     extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>
 {
 

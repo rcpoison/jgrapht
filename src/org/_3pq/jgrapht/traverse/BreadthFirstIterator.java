@@ -67,7 +67,7 @@ public class BreadthFirstIterator<V, E extends Edge<V>, D>
      * of GC efficiency. If you need it to be improved either let us know or
      * use the source...
      */
-    private LinkedList<V> m_queue = new LinkedList();
+    private LinkedList<V> m_queue = new LinkedList<V>();
 
     //~ Constructors ----------------------------------------------------------
 

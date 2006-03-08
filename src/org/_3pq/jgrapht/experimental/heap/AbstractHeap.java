@@ -29,7 +29,18 @@ import java.util.*;
 
 /**
  * .
- *
+ * FIXME Document me!
+ * <p>
+ * This appears to be a heap of (simple)
+ * <code>{@link org._3pq.jgrapht.experimental.heap.ElementPeer}</code>
+ * or (more comples) V{@link org._3pq.jgrapht.experimental.heap.HeapElement}</code>.
+ * It is not immediately clear if Michael intended both to be possible in the same heap.
+ * Anyway, the use of Object in <code>{@link #add(Object)}</code> and
+ * <code>{@link #update(Object)}</code> to cover
+ * both <code>{@link org._3pq.jgrapht.experimental.heap.ElementPeer}</code> and
+ * <code>{@link org._3pq.jgrapht.experimental.heap.HeapElement}</code>
+ * prevents a simple modification to Generics.
+ * 
  * @author Michael Behrisch
  * @version 1.0
  */

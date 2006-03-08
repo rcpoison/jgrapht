@@ -32,7 +32,7 @@ import org._3pq.jgrapht.*;
  *
  * @author Michael Behrisch
  */
-public interface ShortestPathAlgorithm
+public interface ShortestPathAlgorithm<V,E extends Edge<V>>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -47,5 +47,5 @@ public interface ShortestPathAlgorithm
      *
      * @return A WeightedGraph comprising of the shortest path spanning tree.
      */
-    public WeightedGraph shortestPathTree(Object from);
+    public WeightedGraph<V,E> shortestPathTree(V from);
 }

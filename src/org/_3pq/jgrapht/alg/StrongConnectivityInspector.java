@@ -63,7 +63,7 @@ import org._3pq.jgrapht.graph.*;
  * @author Christian Hammer
  * @since Feb 2, 2005
  */
-public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
+public class StrongConnectivityInspector<V, E extends DirEdge<V>>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -78,7 +78,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
     private List<Set<V>> m_stronglyConnectedSets;
 
     // the result of the computation, cached for future calls
-    private List<DirectedSubgraph> m_stronglyConnectedSubgraphs;
+    private List<DirectedSubgraph<V,E>> m_stronglyConnectedSubgraphs;
 
     // maps vertices to their VertexData object
     private Map<V, VertexData> m_vertexToVertexData;
@@ -139,8 +139,8 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
     public List<Set<V>> stronglyConnectedSets()
     {
         if (m_stronglyConnectedSets == null) {
-            m_orderedVertices = new LinkedList();
-            m_stronglyConnectedSets = new Vector();
+            m_orderedVertices = new LinkedList<VertexData>();
+            m_stronglyConnectedSets = new Vector<Set<V>>();
 
             // create VertexData objects for all vertices, store them
             createVertexData();
@@ -159,7 +159,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
             }
 
             // calculate inverse graph (i.e. every edge is reversed)
-            DirectedGraph inverseGraph = new DefaultDirectedGraph();
+            DirectedGraph<V, E> inverseGraph = new DefaultDirectedGraph<V, E>();
             GraphHelper.addGraphReversed(inverseGraph, m_graph);
 
             // get ready for next dfs round
@@ -175,7 +175,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
 
                 if (!data.m_discovered) {
                     // new strongly connected set
-                    Set set = new HashSet();
+                    Set<V> set = new HashSet<V>();
                     m_stronglyConnectedSets.add(set);
                     dfsVisit(inverseGraph, data, set);
                 }
@@ -202,16 +202,16 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
      * @return a list of subgraphs representing the strongly connected
      *         components
      */
-    public List<DirectedSubgraph> stronglyConnectedSubgraphs()
+    public List<DirectedSubgraph<V,E>> stronglyConnectedSubgraphs()
     {
         if (m_stronglyConnectedSubgraphs == null) {
             List<Set<V>> sets = stronglyConnectedSets();
-            m_stronglyConnectedSubgraphs = new Vector(sets.size());
+            m_stronglyConnectedSubgraphs = new Vector<DirectedSubgraph<V, E>>(sets.size());
 
             Iterator<Set<V>> iter = sets.iterator();
 
             while (iter.hasNext()) {
-                m_stronglyConnectedSubgraphs.add(new DirectedSubgraph(
+                m_stronglyConnectedSubgraphs.add(new DirectedSubgraph<V, E>(
                         m_graph,
                         iter.next(),
                         null));
@@ -228,7 +228,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
      */
     private void createVertexData()
     {
-        m_vertexToVertexData = new HashMap(m_graph.vertexSet().size());
+        m_vertexToVertexData = new HashMap<V, VertexData>(m_graph.vertexSet().size());
 
         Iterator<V> iter = m_graph.vertexSet().iterator();
 
@@ -246,11 +246,12 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-    private void dfsVisit(DirectedGraph<V, E> graph,
+	@SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME's below
+	private void dfsVisit(DirectedGraph<V, E> graph,
         VertexData vertexData,
         Set<V> vertices)
     {
-        Stack<VertexData> stack = new Stack();
+        Stack<VertexData> stack = new Stack<VertexData>();
         stack.push(vertexData);
 
         while (!stack.isEmpty()) {
@@ -260,18 +261,21 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
                 data.m_discovered = true;
 
                 if (vertices != null) {
+                	// FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
                     vertices.add((V) data.m_vertex);
                 }
 
                 // TODO: other way to identify when this vertex is finished!?
+                // TODO: until only vertices are used as 1st parameter, type-saftey is difficult to realize (i.e, VertexData<V>
                 stack.push(new VertexData(data, true, true));
 
                 // follow all edges
-                Iterator<E> iter =
+            	// FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
+                Iterator<? extends E> iter =
                     graph.outgoingEdgesOf((V) data.m_vertex).iterator();
 
                 while (iter.hasNext()) {
-                    DirectedEdge edge = iter.next();
+                    Edge<V> edge = iter.next();
                     VertexData targetData =
                         m_vertexToVertexData.get(edge.getTarget());
 
@@ -310,6 +314,7 @@ public class StrongConnectivityInspector<V, E extends DirectedEdge<V>>
      */
     private final class VertexData
     {
+    	//TODO: change to VertextData<V> and replace Object once only vertices are put in here
         private final Object m_vertex;
         private boolean m_discovered;
         private boolean m_finished;
