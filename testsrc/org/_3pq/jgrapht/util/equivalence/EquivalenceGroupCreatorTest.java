@@ -69,7 +69,7 @@ public class EquivalenceGroupCreatorTest extends TestCase
     
     public void testUniformGroup()
     {
-    	//expecting two seperate groups , one with odd , one with even nubmers"
+        //expecting two seperate groups , one with odd , one with even nubmers"
         testOneComparator(new UniformEquivalenceComparator(),    1      );
         //" expecting 3 seperate groups , one for each mod3
         testOneComparator(new org._3pq.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator(),
@@ -146,9 +146,9 @@ public class EquivalenceGroupCreatorTest extends TestCase
         assertEquals(expectedNumOfGroups, eqGroupArray.length);
         //assert the group order size is sorted.
         for (int i = 1; i < eqGroupArray.length; i++) {
-			EquivalenceSet set = eqGroupArray[i];
-			assertTrue(eqGroupArray[i].size() >= eqGroupArray[i-1].size());
-		}
+            EquivalenceSet set = eqGroupArray[i];
+            assertTrue(eqGroupArray[i].size() >= eqGroupArray[i-1].size());
+        }
         // System.out.println("\nTesting the EquivalenceSet[] returned from
         // Integer["
         // +INTEGER_ARRAY_SIZE+"] filled with the integers as the indexes. \n"

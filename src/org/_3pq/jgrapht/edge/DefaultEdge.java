@@ -89,8 +89,8 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
      */
     public DefaultEdge(Edge<V> edge)
     {
-    	m_source = edge.getSource();
-    	m_target = edge.getTarget();
+        m_source = edge.getSource();
+        m_target = edge.getTarget();
     }
 
     //~ Methods ---------------------------------------------------------------

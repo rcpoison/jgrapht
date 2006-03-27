@@ -246,8 +246,8 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-	@SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME's below
-	private void dfsVisit(DirectedGraph<V, E> graph,
+    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME's below
+    private void dfsVisit(DirectedGraph<V, E> graph,
         VertexData vertexData,
         Set<V> vertices)
     {
@@ -261,7 +261,7 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
                 data.m_discovered = true;
 
                 if (vertices != null) {
-                	// FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
+                    // FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
                     vertices.add((V) data.m_vertex);
                 }
 
@@ -270,7 +270,7 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
                 stack.push(new VertexData(data, true, true));
 
                 // follow all edges
-            	// FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
+                // FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
                 Iterator<? extends E> iter =
                     graph.outgoingEdgesOf((V) data.m_vertex).iterator();
 
@@ -314,7 +314,7 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
      */
     private final class VertexData
     {
-    	//TODO: change to VertextData<V> and replace Object once only vertices are put in here
+        //TODO: change to VertextData<V> and replace Object once only vertices are put in here
         private final Object m_vertex;
         private boolean m_discovered;
         private boolean m_finished;

@@ -57,7 +57,7 @@ public class ListenableGraphTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-	Edge<Object> m_lastAddedEdge;
+    Edge<Object> m_lastAddedEdge;
     Edge<Object> m_lastRemovedEdge;
     Object m_lastAddedVertex;
     Object m_lastRemovedVertex;
@@ -140,7 +140,7 @@ public class ListenableGraphTest extends TestCase
         init();
 
         ListenableGraph<Object, Edge<Object>> g =
-        	new ListenableUndirectedGraph<Object, Edge<Object>>();
+            new ListenableUndirectedGraph<Object, Edge<Object>>();
         VertexSetListener<Object> listener = new MyGraphListner();
         g.addVertexSetListener(listener);
 

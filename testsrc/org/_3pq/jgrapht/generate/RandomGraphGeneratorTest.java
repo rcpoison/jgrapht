@@ -75,10 +75,10 @@ public class RandomGraphGeneratorTest extends TestCase
         final int numOfVertex = 11;
         final int numOfEdges = 110; // simple undirected max = N(v)x(N(v)-1)
         RandomGraphGenerator<Integer,DirectedEdge<Integer>>
-        	randomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
+            randomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
 
         Graph<Integer,DirectedEdge<Integer>>
-        	directedGragh1 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+            directedGragh1 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
 
         randomGen.generateGraph(
             directedGragh1,
@@ -88,7 +88,7 @@ public class RandomGraphGeneratorTest extends TestCase
         
         // use the same randomGen
         Graph<Integer,DirectedEdge<Integer>>
-        	directedGragh2 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+            directedGragh2 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
 
         randomGen.generateGraph(
             directedGragh2,
@@ -98,10 +98,10 @@ public class RandomGraphGeneratorTest extends TestCase
         
         // use new randomGen here
         RandomGraphGenerator<Integer,DirectedEdge<Integer>>
-        	newRandomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
+            newRandomGen = new RandomGraphGenerator<Integer,DirectedEdge<Integer>>(numOfVertex, numOfEdges);
         
         Graph<Integer,DirectedEdge<Integer>>
-        	directedGragh3 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
+            directedGragh3 = new SimpleDirectedGraph<Integer,DirectedEdge<Integer>>();
         
         newRandomGen.generateGraph(
             directedGragh3,

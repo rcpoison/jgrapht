@@ -123,7 +123,7 @@ public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGr
         WeightedGraph<V,E> optimumPathTree;
 
         if (_directed) {
-        	//FIXME hb 051124: I would like to pass Edge<V> instead of DirectedEdge and remove the cast
+            //FIXME hb 051124: I would like to pass Edge<V> instead of DirectedEdge and remove the cast
             optimumPathTree = (WeightedGraph<V,E>)new SimpleDirectedWeightedGraph<V,DirEdge<V>>();
         } else {
             optimumPathTree = new SimpleWeightedGraph<V,E>();
@@ -155,8 +155,8 @@ public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGr
 
         while (!_heap.isEmpty()) {
             HeapVertex hv = heapVertex(_heap.extractTop());
-            V v = (V)hv.getVertex();				//FIXME hb 051124: Remove cast
-            E treeEdge = (E) hv.getAdditional();	//FIXME hb 051124: Remove cast
+            V v = (V)hv.getVertex();                //FIXME hb 051124: Remove cast
+            E treeEdge = (E) hv.getAdditional();    //FIXME hb 051124: Remove cast
 
             if (treeEdge != null) {
                 GraphHelper.addEdgeWithVertices(optimumPathTree, treeEdge);

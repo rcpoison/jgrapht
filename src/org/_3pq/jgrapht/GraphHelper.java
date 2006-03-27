@@ -198,18 +198,18 @@ public final class GraphHelper
      * @param source the graph used as source for vertices and edges to add.
      //FIXME hb 26-Nov-05: How to achieve type-safty here if dst is a super-type of src?
      */
-    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See below
-	public static <V, E extends DirEdge<V>> void addGraphReversed(
+    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See below
+    public static <V, E extends DirEdge<V>> void addGraphReversed(
         DirectedGraph<V,E> destination,
         DirectedGraph<V,E> source)
     {
         destination.addAllVertices(source.vertexSet());
 
         for (E edge : source.edgeSet()) {
-        	//FIXME hb 26-Nov-05: Use the edge factory of src, dst, or passed as a parameter to create edges
-        	E reversedEdge =
-        		(E)new DirectedEdge<V>(edge.getTarget(), edge.getSource());
-        	destination.addEdge(reversedEdge);
+            //FIXME hb 26-Nov-05: Use the edge factory of src, dst, or passed as a parameter to create edges
+            E reversedEdge =
+                (E)new DirectedEdge<V>(edge.getTarget(), edge.getSource());
+            destination.addEdge(reversedEdge);
         }
     }
 
@@ -230,7 +230,7 @@ public final class GraphHelper
         List<V> neighbors = new ArrayList<V>();
 
         for( E e : g.edgesOf(vertex) ) {
-        	neighbors.add(e.oppositeVertex(vertex));        	
+            neighbors.add(e.oppositeVertex(vertex));            
         }
 
         return neighbors;
@@ -254,7 +254,7 @@ public final class GraphHelper
         List<? extends E> edges = g.incomingEdgesOf(vertex);
 
         for( E e : edges ) {
-        	predecessors.add(e.oppositeVertex(vertex));        	
+            predecessors.add(e.oppositeVertex(vertex));            
         }
 
         return predecessors;
@@ -278,7 +278,7 @@ public final class GraphHelper
         List<? extends E> edges = g.outgoingEdgesOf(vertex);
 
         for( E e : edges ) {
-        	successors.add(e.oppositeVertex(vertex));
+            successors.add(e.oppositeVertex(vertex));
         }
         
         return successors;
@@ -300,7 +300,7 @@ public final class GraphHelper
      * @see AsUndirectedGraph
      */
     @SuppressWarnings("unchecked")
-	public static <V, E extends DirEdge<V>> UndirectedGraph<V, Edge<V>> undirectedGraph(
+    public static <V, E extends Edge<V>> UndirectedGraph<V, Edge<V>> undirectedGraph(
         Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {

@@ -39,7 +39,7 @@ import org._3pq.jgrapht.experimental.heap.*;
  * @author Michael Behrisch
  */
 public final class DijkstraShortestPathAlgorithm<V, E extends Edge<V>>
-	extends DijkstraAlgorithm<V, E>
+    extends DijkstraAlgorithm<V, E>
     implements ShortestPathAlgorithm<V,E>
 {
 

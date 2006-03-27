@@ -223,12 +223,12 @@ public class IsomorphismInspectorTest extends TestCase
     public void testLinear4vertexIsomorphicGraph()
     {
         Graph<Integer,DirectedEdge<Integer>>
-        	g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+            g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         LinearGraphGenerator gen1 = new LinearGraphGenerator(4);
         gen1.generateGraph(g1, new IntegerVertexFactory(), null);
 
         Graph<Integer,DirectedEdge<Integer>>
-        	g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+            g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         LinearGraphGenerator gen2 = new LinearGraphGenerator(4);
         gen2.generateGraph(g2, new IntegerVertexFactory(5), null); // start vertex from number 6
         assertIsomorphic(new Graph [] {
@@ -250,18 +250,18 @@ public class IsomorphismInspectorTest extends TestCase
     public void testLinear4vertexNonIsomorphicCauseOfVertexEqGroup()
     {
         LinearGraphGenerator<Integer,DirectedEdge<Integer>>
-        	gen4 = new LinearGraphGenerator<Integer,DirectedEdge<Integer>>(4);
+            gen4 = new LinearGraphGenerator<Integer,DirectedEdge<Integer>>(4);
 
         Graph<Integer,DirectedEdge<Integer>>
-        	g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+            g1 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g1, new IntegerVertexFactory(), null);
 
         Graph<Integer,DirectedEdge<Integer>>
-        	g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+            g2 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g2, new IntegerVertexFactory(1), null); // start vertex from number 2
 
         Graph<Integer,DirectedEdge<Integer>>
-        	g3 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
+            g3 = new DefaultDirectedGraph<Integer,DirectedEdge<Integer>>();
         gen4.generateGraph(g3, new IntegerVertexFactory(2), null); // start vertex from number 3
 
         // first assert all are isomorphic (if vertexChecker is not used)

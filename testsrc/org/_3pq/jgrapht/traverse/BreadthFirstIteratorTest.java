@@ -73,7 +73,7 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest
     AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
     {
         AbstractGraphIterator<String, DirectedEdge<String>> i =
-        	new BreadthFirstIterator<String, DirectedEdge<String>, Object>(g, vertex);
+            new BreadthFirstIterator<String, DirectedEdge<String>, Object>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

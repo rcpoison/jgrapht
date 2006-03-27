@@ -437,7 +437,7 @@ public class FibonacciHeap
 
         // Initialize degree array
         for (int i=0; i<arraySize; i++)
-        	array.add(null);
+            array.add(null);
 
         // Find the number of root nodes.
         int numRoots = 0;

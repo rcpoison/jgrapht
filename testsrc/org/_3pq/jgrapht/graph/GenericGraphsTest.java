@@ -57,10 +57,10 @@ public class GenericGraphsTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-	Graph<Object,? extends Edge<Object>> objectGraph;
-	Graph<FooVertex,FooEdge<FooVertex>> fooFooGraph;
-	Graph<BarVertex,BarEdge<BarVertex>> barBarGraph;
-	Graph<FooVertex,BarEdge<FooVertex>> fooBarGraph;
+    Graph<Object,? extends Edge<Object>> objectGraph;
+    Graph<FooVertex,FooEdge<FooVertex>> fooFooGraph;
+    Graph<BarVertex,BarEdge<BarVertex>> barBarGraph;
+    Graph<FooVertex,BarEdge<FooVertex>> fooBarGraph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -74,143 +74,144 @@ public class GenericGraphsTest extends EnhancedTestCase
 
     // ~ Methods ---------------------------------------------------------------
 
-	public void testLegalInsertStringGraph() {
-		try {
-			String v1 = "Vertex1";
-			Object v2 = "Vertex2";
-			objectGraph.addVertex(v1);
-			objectGraph.addVertex(v2);
-			objectGraph.addEdge(v1, v2);
-		} catch (Throwable e) {
-			assertFalse();
-		}
-		assertTrue();
-	}
+    public void testLegalInsertStringGraph() {
+        try {
+            String v1 = "Vertex1";
+            Object v2 = "Vertex2";
+            objectGraph.addVertex(v1);
+            objectGraph.addVertex(v2);
+            objectGraph.addEdge(v1, v2);
+        } catch (Throwable e) {
+            assertFalse();
+        }
+        assertTrue();
+    }
 
-	public void testLegalInsertFooGraph() {
-		try {
-			FooVertex v1 = new FooVertex();
-			FooVertex v2 = new FooVertex();
-			BarVertex vb1 = new BarVertex();
-			BarVertex vb2 = new BarVertex();
-			fooFooGraph.addVertex(v1);
-			fooFooGraph.addVertex(v2);
-			fooFooGraph.addVertex(vb1);
-			fooFooGraph.addVertex(vb2);
-			fooFooGraph.addEdge(v1, v2);
-			fooFooGraph.addEdge(vb1, vb2);
-			fooFooGraph.addEdge(v1, vb2);
-			fooFooGraph.addEdge( new BarEdge<FooVertex>(v1,v2) );
-			fooFooGraph.addEdge( new BarEdge<FooVertex>(v1,vb2) );
-			//FIXME hb 051124: Basically, I think this should work, but it doesn't :-(
-			//FIXME hb 051124: fooFooGraph.addEdge( new BarEdge<BarVertex>(vb1, vb2) );
-		} catch (Throwable e) {
-			assertFalse();
-		}
-		assertTrue();
-	}
+    public void testLegalInsertFooGraph() {
+        try {
+            FooVertex v1 = new FooVertex();
+            FooVertex v2 = new FooVertex();
+            BarVertex vb1 = new BarVertex();
+            BarVertex vb2 = new BarVertex();
+            fooFooGraph.addVertex(v1);
+            fooFooGraph.addVertex(v2);
+            fooFooGraph.addVertex(vb1);
+            fooFooGraph.addVertex(vb2);
+            fooFooGraph.addEdge(v1, v2);
+            fooFooGraph.addEdge(vb1, vb2);
+            fooFooGraph.addEdge(v1, vb2);
+            fooFooGraph.addEdge( new BarEdge<FooVertex>(v1,v2) );
+            fooFooGraph.addEdge( new BarEdge<FooVertex>(v1,vb2) );
+            //FIXME hb 051124: Basically, I think this should work, but it doesn't :-(
+            //FIXME hb 051124: fooFooGraph.addEdge( new BarEdge<BarVertex>(vb1, vb2) );
+        } catch (Throwable e) {
+            assertFalse();
+        }
+        assertTrue();
+    }
 
-	public void testLegalInsertBarGraph() {
-		try {
-			BarVertex v1 = new BarVertex();
-			BarVertex v2 = new BarVertex();
-			barBarGraph.addVertex(v1);
-			barBarGraph.addVertex(v2);
-			barBarGraph.addEdge(v1, v2);
-		} catch (Throwable e) {
-			assertFalse();
-		}
-		assertTrue();
-	}
+    public void testLegalInsertBarGraph() {
+        try {
+            BarVertex v1 = new BarVertex();
+            BarVertex v2 = new BarVertex();
+            barBarGraph.addVertex(v1);
+            barBarGraph.addVertex(v2);
+            barBarGraph.addEdge(v1, v2);
+        } catch (Throwable e) {
+            assertFalse();
+        }
+        assertTrue();
+    }
 
-	public void testLegalInsertFooBarGraph() {
-		try {
-			FooVertex v1 = new FooVertex();
-			FooVertex v2 = new FooVertex();
-			BarVertex vb1 = new BarVertex();
-			BarVertex vb2 = new BarVertex();
-			fooFooGraph.addVertex(v1);
-			fooFooGraph.addVertex(v2);
-			fooFooGraph.addVertex(vb1);
-			fooFooGraph.addVertex(vb2);
-			fooFooGraph.addEdge(v1, v2);
-			fooFooGraph.addEdge(vb1, vb2);
-			fooFooGraph.addEdge(v1, vb2);
-		} catch (Throwable e) {
-			assertFalse();
-		}
-		assertTrue();
-	}
+    public void testLegalInsertFooBarGraph() {
+        try {
+            FooVertex v1 = new FooVertex();
+            FooVertex v2 = new FooVertex();
+            BarVertex vb1 = new BarVertex();
+            BarVertex vb2 = new BarVertex();
+            fooFooGraph.addVertex(v1);
+            fooFooGraph.addVertex(v2);
+            fooFooGraph.addVertex(vb1);
+            fooFooGraph.addVertex(vb2);
+            fooFooGraph.addEdge(v1, v2);
+            fooFooGraph.addEdge(vb1, vb2);
+            fooFooGraph.addEdge(v1, vb2);
+        } catch (Throwable e) {
+            assertFalse();
+        }
+        assertTrue();
+    }
 
-	public void testAlissaHacker() {
-		
-		DirectedGraph<String,CustomEdge> g = 
-			new DefaultDirectedGraph<String,CustomEdge>();
-		g.addVertex("a");
-		g.addVertex("b");
-		g.addEdge("a", "b");
-		DirectedEdge custom = g.getEdge("a", "b");
-		System.err.println(custom);
-	}
+    public void testAlissaHacker() {
+        
+        DirectedGraph<String,CustomEdge> g = 
+            new DefaultDirectedGraph<String,CustomEdge>();
+        g.addVertex("a");
+        g.addVertex("b");
+        g.addEdge("a", "b");
+        DirectedEdge custom = g.getEdge("a", "b");
+                String s = custom.toString();
+                assertEquals("(a,b)",s);
+    }
 
-	class CustomEdge extends DirectedEdge<String> {
-		private static final long serialVersionUID = 1L;
-		public CustomEdge(CustomEdge edge) {
-			super(edge);
-		}
+    class CustomEdge extends DirectedEdge<String> {
+        private static final long serialVersionUID = 1L;
+        public CustomEdge(CustomEdge edge) {
+            super(edge);
+        }
 
-		public CustomEdge(String sourceVertex, String targetVertex) {
-			super(sourceVertex, targetVertex);
-		}
+        public CustomEdge(String sourceVertex, String targetVertex) {
+            super(sourceVertex, targetVertex);
+        }
 
 
-	}
+    }
     /**
-	 * .
-	 */
+     * .
+     */
     protected void setUp()
     {
-    	objectGraph = new DefaultDirectedGraph<Object,DirEdge<Object>>();
-    	fooFooGraph = new SimpleGraph<FooVertex,FooEdge<FooVertex>>();
-    	barBarGraph = new SimpleGraph<BarVertex,BarEdge<BarVertex>>();
+        objectGraph = new DefaultDirectedGraph<Object,DirEdge<Object>>();
+        fooFooGraph = new SimpleGraph<FooVertex,FooEdge<FooVertex>>();
+        barBarGraph = new SimpleGraph<BarVertex,BarEdge<BarVertex>>();
    }
     
     
     private class FooEdge<V> extends DefaultEdge<V>
     {
-    	private static final long serialVersionUID = 1L;
-		public FooEdge(V sourceVertex, V targetVertex) {
-			super(sourceVertex, targetVertex);
-		}
+        private static final long serialVersionUID = 1L;
+        public FooEdge(V sourceVertex, V targetVertex) {
+            super(sourceVertex, targetVertex);
+        }
     }
     
     private class FooVertex {
-    	String str;
-    	public FooVertex(){
-    		super();
-    		str="empty foo";
-    	}
+        String str;
+        public FooVertex(){
+            super();
+            str="empty foo";
+        }
         
-    	public FooVertex( String s ) {
-    		str = s;
-    	}
+        public FooVertex( String s ) {
+            str = s;
+        }
     } 
     
     private class BarEdge<V> extends FooEdge<V> {
-    	private static final long serialVersionUID = 1L;
-		public BarEdge(V sourceVertex, V targetVertex) {
-			super(sourceVertex, targetVertex);
-		}
+        private static final long serialVersionUID = 1L;
+        public BarEdge(V sourceVertex, V targetVertex) {
+            super(sourceVertex, targetVertex);
+        }
     }
     
     private class BarVertex extends FooVertex {
-		public BarVertex() {
-			super("empty bar");
-		}
+        public BarVertex() {
+            super("empty bar");
+        }
 
-		public BarVertex(String s) {
-			super(s);
-		}
-    	
+        public BarVertex(String s) {
+            super(s);
+        }
+        
     }
 }

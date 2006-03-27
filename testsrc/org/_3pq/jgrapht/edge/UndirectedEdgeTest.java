@@ -65,13 +65,13 @@ public class UndirectedEdgeTest extends DefaultEdgeTest<UndirectedEdge<String>>
      * @see junit.framework.TestCase#setUp()
      */
     @SuppressWarnings("unchecked")
-	protected void setUp()
+    protected void setUp()
         throws Exception
     {
         m_e1 = new UndirectedEdge<String>(m_source1, m_target1);
         m_e3 = new UndirectedEdge<String>(new String(), new String());
 
-        m_e1Clone = (UndirectedEdge<String>) m_e1.clone();	// Type-safety warning OK
+        m_e1Clone = (UndirectedEdge<String>) m_e1.clone();    // Type-safety warning OK
         m_e1ConstructorCopy = new UndirectedEdge<String>( m_e1 );
     }
 }

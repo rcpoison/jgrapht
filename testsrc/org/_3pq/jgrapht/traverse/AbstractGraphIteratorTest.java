@@ -97,7 +97,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
     DirectedGraph<String, DirectedEdge<String>> createDirectedGraph()
     {
         DirectedGraph<String, DirectedEdge<String>> graph =
-        	new DefaultDirectedWeightedGraph<String, DirectedEdge<String>>();
+            new DefaultDirectedWeightedGraph<String, DirectedEdge<String>>();
 
         //
         String v1 = "1";

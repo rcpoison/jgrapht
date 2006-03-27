@@ -64,13 +64,13 @@ public class DirectedEdgeTest extends DefaultEdgeTest<DirectedEdge<String>>
      * @see DefaultEdgeTest#setUp()
      */
     @SuppressWarnings("unchecked")
-	protected void setUp()
+    protected void setUp()
         throws Exception
     {
         m_e1 = new DirectedEdge<String>(m_source1, m_target1);
         m_e3 = new DirectedEdge<String>(new String(), new String());
 
-        m_e1Clone = (DirectedEdge<String>) m_e1.clone();	// Type-safety warning OK
+        m_e1Clone = (DirectedEdge<String>) m_e1.clone();    // Type-safety warning OK
         m_e1ConstructorCopy = new DirectedEdge<String>( m_e1 );
     }
 }

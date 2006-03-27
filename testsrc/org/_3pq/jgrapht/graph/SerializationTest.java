@@ -80,11 +80,11 @@ public class SerializationTest extends EnhancedTestCase
      * Tests serialization of DirectedMultigraph.
      */
     @SuppressWarnings("unchecked")
-	public void testDirectedMultigraph()
+    public void testDirectedMultigraph()
         throws Exception
     {
         DirectedMultigraph<String,DirEdge<String>> graph =
-        	new DirectedMultigraph<String,DirEdge<String>>();
+            new DirectedMultigraph<String,DirEdge<String>>();
         graph.addVertex(m_v1);
         graph.addVertex(m_v2);
         graph.addVertex(m_v3);

@@ -88,9 +88,9 @@ public class GraphGeneratorTest extends TestCase
     public void testEmptyGraphGenerator()
     {
         GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
-        		new EmptyGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+                new EmptyGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
         DirectedGraph<Object,DirectedEdge<Object>> g =
-        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+                new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
         Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
@@ -104,9 +104,9 @@ public class GraphGeneratorTest extends TestCase
     public void testLinearGraphGenerator()
     {
         GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
-        		new LinearGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+                new LinearGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
         DirectedGraph<Object,DirectedEdge<Object>> g =
-        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+                new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
         Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
@@ -144,9 +144,9 @@ public class GraphGeneratorTest extends TestCase
     public void testRingGraphGenerator()
     {
         GraphGenerator<Object,DirectedEdge<Object>,Object> gen =
-        		new RingGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
+                new RingGraphGenerator<Object,DirectedEdge<Object>>(SIZE);
         DirectedGraph<Object,DirectedEdge<Object>> g =
-        		new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
+                new DefaultDirectedGraph<Object,DirectedEdge<Object>>();
         Map<String,Object> resultMap = new HashMap<String,Object>();
         gen.generateGraph(g, m_vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());

@@ -199,7 +199,7 @@ public class AdaptiveIsomorphismInspectorFactory
 
         default:
 
-        	throw new IllegalArgumentException("The type was not one of the supported types.");
+            throw new IllegalArgumentException("The type was not one of the supported types.");
         }
         return currentInspector;
     }

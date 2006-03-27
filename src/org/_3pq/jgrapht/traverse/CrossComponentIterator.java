@@ -294,8 +294,8 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @param g
      * @return TODO Document me
      */
-    @SuppressWarnings("unchecked")	// TODO hb 27-Nov-05: See FIXME below
-	static <V, E extends Edge<V>> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
+    @SuppressWarnings("unchecked")    // TODO hb 27-Nov-05: See FIXME below
+    static <V, E extends Edge<V>> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
             // TODO hb 27-Nov-05: I don't understand, yet, how to cast this nicely
@@ -307,17 +307,17 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
 
     private void addUnseenChildrenOf(V vertex)
     {
-    	for (E edge : m_specifics.edgesOf(vertex)) {
-    		fireEdgeTraversed(createEdgeTraversalEvent(edge));
-    		
-    		V oppositeV = edge.oppositeVertex(vertex);
-    		
-    		if (isSeenVertex(oppositeV)) {
-    			encounterVertexAgain(oppositeV, edge);
-    		} else {
-    			encounterVertex(oppositeV, edge);
-    		}
-    	}
+        for (E edge : m_specifics.edgesOf(vertex)) {
+            fireEdgeTraversed(createEdgeTraversalEvent(edge));
+            
+            V oppositeV = edge.oppositeVertex(vertex);
+            
+            if (isSeenVertex(oppositeV)) {
+                encounterVertexAgain(oppositeV, edge);
+            } else {
+                encounterVertex(oppositeV, edge);
+            }
+        }
     }
 
     private EdgeTraversalEvent<V, E> createEdgeTraversalEvent(E edge)

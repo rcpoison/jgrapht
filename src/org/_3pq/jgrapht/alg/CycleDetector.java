@@ -72,8 +72,9 @@ public class CycleDetector<V, E extends Edge<V>>
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
-    @SuppressWarnings("unchecked")    // FIXME hb 28-Nov-05: Don't know how to solve this, yet
-	public <EE extends E & DirEdge<V>> CycleDetector(DirectedGraph<V, EE> graph)
+    @SuppressWarnings("unchecked")    // FIXME hb 28-Nov-05: Don't know how to
+                                      // solve this, yet
+    public <EE extends DirEdge<V>> CycleDetector(DirectedGraph<V, EE> graph)
     {
         m_graph = (Graph<V,E>)graph;
     }

@@ -289,11 +289,11 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *
      * @see java.lang.Object#clone()
      */
-    @SuppressWarnings("unchecked")	//FIXME hb 28-nov-05: See FIXME below
-	public Object clone()
+    @SuppressWarnings("unchecked")    //FIXME hb 28-nov-05: See FIXME below
+    public Object clone()
     {
         try {
-        	//FIXME hb 28-nov-05: In order to flow with Java-Generics, an appropriate constructor should be created (cf. Collections)
+            //FIXME hb 28-nov-05: In order to flow with Java-Generics, an appropriate constructor should be created (cf. Collections)
             AbstractBaseGraph<V, E> newGraph =
                 (AbstractBaseGraph) super.clone();
 
@@ -586,9 +586,9 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     private static class ArrayListFactory<VV, EE extends Edge<VV>> implements EdgeListFactory<VV,EE>,
         Serializable
     {
-		private static final long serialVersionUID = 5936902837403445985L;
+        private static final long serialVersionUID = 5936902837403445985L;
 
-		/**
+        /**
          * @see EdgeListFactory.createEdgeList
          */
         public List<EE> createEdgeList(VV vertex)
@@ -611,8 +611,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     private static class DirectedEdgeContainer<VV, EE extends Edge<VV>>
         implements Serializable
     {
-		private static final long serialVersionUID = 7494242245729767106L;
-		List<EE> m_incoming;
+        private static final long serialVersionUID = 7494242245729767106L;
+        List<EE> m_incoming;
         List<EE> m_outgoing;
         private transient List<EE> m_unmodifiableIncoming = null;
         private transient List<EE> m_unmodifiableOutgoing = null;
@@ -701,8 +701,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      */
     private class DirectedSpecifics extends Specifics implements Serializable
     {
-		private static final long serialVersionUID = 8971725103718958232L;
-		private static final String NOT_IN_DIRECTED_GRAPH =
+        private static final long serialVersionUID = 8971725103718958232L;
+        private static final String NOT_IN_DIRECTED_GRAPH =
             "no such operation in a directed graph";
 
         /**
@@ -854,8 +854,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return EdgeContainer
          */
-        @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
-		private DirectedEdgeContainer<V,E> getEdgeContainer(V vertex)
+        @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
+        private DirectedEdgeContainer<V,E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);
 
@@ -883,8 +883,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     private static class UndirectedEdgeContainer<VV, EE extends Edge<VV>>
         implements Serializable
     {
-		private static final long serialVersionUID = -6623207588411170010L;
-		List<EE> m_vertexEdges;
+        private static final long serialVersionUID = -6623207588411170010L;
+        List<EE> m_vertexEdges;
         private transient List<EE> m_unmodifiableVertexEdges = null;
 
         UndirectedEdgeContainer(
@@ -948,8 +948,8 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     private class UndirectedSpecifics extends Specifics
         implements Serializable
     {
-		private static final long serialVersionUID = 6494588405178655873L;
-		private static final String NOT_IN_UNDIRECTED_GRAPH =
+        private static final long serialVersionUID = 6494588405178655873L;
+        private static final String NOT_IN_UNDIRECTED_GRAPH =
             "no such operation in an undirected graph";
 
         /**
@@ -1118,7 +1118,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
          *
          * @return EdgeContainer
          */
-        @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
+        @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
         private UndirectedEdgeContainer<V, E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);

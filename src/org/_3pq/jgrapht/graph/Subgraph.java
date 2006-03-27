@@ -451,9 +451,8 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         assertVertexExist(vertex);
 
         ArrayList<E> edges = new ArrayList<E>();
-        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
-        List<? extends E> baseEdges =
-            ((DirectedGraph<V, ? extends E>) m_base).incomingEdgesOf(vertex);
+        List<E> baseEdges =
+            ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -474,7 +473,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         int degree = 0;
 
         // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
-        for (E e : ((DirectedGraph<V, ? extends E>) m_base).outgoingEdgesOf(vertex)) {
+        for (E e : ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -493,7 +492,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         ArrayList<E> edges = new ArrayList<E>();
         // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
         List<? extends E> baseEdges =
-            ((DirectedGraph<V, ? extends E>) m_base).outgoingEdgesOf(vertex);
+            ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {

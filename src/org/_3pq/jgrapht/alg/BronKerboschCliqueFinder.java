@@ -126,8 +126,8 @@ public class BronKerboschCliqueFinder<V, E extends Edge<V>>
         return biggest_cliques;
     }
 
-    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME's below
-	private void findCliques(List<V> potential_clique,
+    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME's below
+    private void findCliques(List<V> potential_clique,
         List<V> candidates,
         List<V> already_found)
     {

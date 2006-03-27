@@ -198,9 +198,9 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<? extends E> incomingEdgesOf(V vertex)
+    public List<E> incomingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) m_delegate).incomingEdgesOf(vertex);
+        return ((DirectedGraph<V,E>) m_delegate).incomingEdgesOf(vertex);
     }
 
     /**
@@ -214,9 +214,9 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<? extends E> outgoingEdgesOf(V vertex)
+    public List<E> outgoingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) m_delegate).outgoingEdgesOf(vertex);
+        return ((DirectedGraph<V,E>) m_delegate).outgoingEdgesOf(vertex);
     }
 
     /**

@@ -224,9 +224,9 @@ class BellmanFordIterator<V,E extends Edge<V>>
      * @return .
      *  
      */
-    protected Iterator<? extends E> edgesOfIterator(V vertex) {
+    protected Iterator<E> edgesOfIterator(V vertex) {
         if (this.graph instanceof DirectedGraph) {
-            return ((DirectedGraph<V,? extends E>) this.graph).outgoingEdgesOf(vertex)
+            return ((DirectedGraph<V,E>) this.graph).outgoingEdgesOf(vertex)
                     .iterator();
         } else {
             return this.graph.edgesOf(vertex).iterator();

@@ -101,7 +101,7 @@ public class JGraphAdapterDemo extends JApplet
     {
         // create a JGraphT graph
         ListenableGraph<String,DirEdge<String>> g =
-        	new ListenableDirectedMultigraph<String,DirEdge<String>>();
+            new ListenableDirectedMultigraph<String,DirEdge<String>>();
 
         // create a visualization using JGraph, via an adapter
         m_jgAdapter = new JGraphModelAdapter<String,DirEdge<String>>(g);
@@ -156,8 +156,8 @@ public class JGraphAdapterDemo extends JApplet
         jg.setBackground(c);
     }
 
-    @SuppressWarnings("unchecked")	// FIXME hb 28-nov-05: See FIXME below
-	private void positionVertexAt(Object vertex, int x, int y)
+    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME below
+    private void positionVertexAt(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = m_jgAdapter.getVertexCell(vertex);
         AttributeMap attr = cell.getAttributes();

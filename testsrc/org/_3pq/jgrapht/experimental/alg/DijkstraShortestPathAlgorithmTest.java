@@ -80,7 +80,7 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
     {
         WeightedGraph<String,DirectedEdge<String>> g = create();
         ShortestPathAlgorithm<String,DirectedEdge<String>>
-        	alg = new DijkstraShortestPathAlgorithm<String,DirectedEdge<String>>(g);
+            alg = new DijkstraShortestPathAlgorithm<String,DirectedEdge<String>>(g);
         WeightedGraph<String,DirectedEdge<String>> pathTree = alg.shortestPathTree(V1);
 
         assertEquals(4, pathTree.vertexSet().size());
@@ -93,7 +93,7 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
     private WeightedGraph<String,DirectedEdge<String>> create()
     {
         WeightedGraph<String,DirectedEdge<String>>
-        	g = new WeightedPseudograph<String,DirectedEdge<String>>();
+            g = new WeightedPseudograph<String,DirectedEdge<String>>();
 
         g.addVertex(V1);
         g.addVertex(V2);

@@ -126,7 +126,7 @@ public class VertexDegreeEquivalenceComparator<V,E extends Edge<V>>
             inVertexDegree = undirectedGraph.degreeOf(vertex);
             outVertexDegree = inVertexDegree; // it is UNdirected
         } else if (aContextGraph instanceof DirectedGraph) {
-            DirectedGraph<V,? extends E> directedGraph = (DirectedGraph<V,? extends E>) aContextGraph;
+            DirectedGraph directedGraph = (DirectedGraph<V,E>) aContextGraph;
             inVertexDegree = directedGraph.inDegreeOf(vertex);
             outVertexDegree = directedGraph.outDegreeOf(vertex);
         } else {

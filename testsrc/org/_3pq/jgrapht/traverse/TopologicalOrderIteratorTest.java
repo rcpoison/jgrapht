@@ -64,7 +64,7 @@ public class TopologicalOrderIteratorTest extends EnhancedTestCase
     public void testRecipe()
     {
         DirectedGraph<String, DirectedEdge<String>> graph =
-        	new DefaultDirectedGraph<String, DirectedEdge<String>>();
+            new DefaultDirectedGraph<String, DirectedEdge<String>>();
 
         String [] v = new String [9];
 
@@ -103,7 +103,7 @@ public class TopologicalOrderIteratorTest extends EnhancedTestCase
         graph.addEdge(v[6], v[8]);
 
         Iterator<String> iter =
-        	new TopologicalOrderIterator<String, DirectedEdge<String>,Object>(graph);
+            new TopologicalOrderIterator<String, DirectedEdge<String>,Object>(graph);
         int i = 0;
 
         while (iter.hasNext()) {

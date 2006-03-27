@@ -142,11 +142,11 @@ public class WheelGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<
         }
 
         for( V rimVertex : rim ) {
-        	if (m_inwardSpokes) {
-        		target.addEdge(rimVertex, hubVertex);
-        	} else {
-        		target.addEdge(hubVertex, rimVertex);
-        	}
+            if (m_inwardSpokes) {
+                target.addEdge(rimVertex, hubVertex);
+            } else {
+                target.addEdge(hubVertex, rimVertex);
+            }
         }
     }
 }
