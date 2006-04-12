@@ -169,7 +169,7 @@ public class CycleDetector<V, E extends Edge<V>>
      * Version of DFS which maintains a backtracking path used to probe for
      * cycles.
      */
-    private class ProbeIterator extends DepthFirstIterator<V, E, Object>
+    private class ProbeIterator extends DepthFirstIterator<V, E>
     {
         private List<V> m_path;
         private Set<V> m_cycleSet;

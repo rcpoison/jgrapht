@@ -47,9 +47,9 @@ import org._3pq.jgrapht.graph.*;
 /**
  * Tests for the ignoreDirection parameter to XXFirstIterator.
  *
- * <p>NOTE: This test uses hard-coded expected ordering isn't really guaranteed
- * by the specification of the algorithm. This could cause false failures if
- * the traversal implementation changes.</p>
+ * <p>NOTE: This test uses hard-coded expected ordering which isn't really
+ * guaranteed by the specification of the algorithm. This could cause spurious
+ * failures if the traversal implementation changes.</p>
  *
  * @author John V. Sichi
  * @since Aug 8, 2003
@@ -75,7 +75,7 @@ public class IgnoreDirectionTest extends AbstractGraphIteratorTest
         // the only vertex without out-edges
         UndirectedGraph<String, DirectedEdge<String>> undirectedView =
             new AsUndirectedGraph<String, DirectedEdge<String>>(g);
-        AbstractGraphIterator<String, DirectedEdge<String>> i = new DepthFirstIterator<String, DirectedEdge<String>,Object>(undirectedView, "4");
+        AbstractGraphIterator<String, DirectedEdge<String>> i = new DepthFirstIterator<String, DirectedEdge<String>>(undirectedView, "4");
         i.setCrossComponentTraversal(true);
 
         return i;

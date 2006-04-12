@@ -72,7 +72,7 @@ public class DepthFirstIteratorTest extends AbstractGraphIteratorTest
     AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
     {
         AbstractGraphIterator<String, DirectedEdge<String>> i =
-            new DepthFirstIterator<String, DirectedEdge<String>,Object>(g, vertex);
+            new DepthFirstIterator<String, DirectedEdge<String>>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

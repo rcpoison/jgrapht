@@ -59,8 +59,8 @@ import org._3pq.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 29, 2003
  */
-public class DepthFirstIterator<V, E extends Edge<V>, D>
-    extends CrossComponentIterator<V, E, D>
+public class DepthFirstIterator<V, E extends Edge<V>>
+    extends CrossComponentIterator<V, E, Object>
 {
 
     //~ Instance fields -------------------------------------------------------

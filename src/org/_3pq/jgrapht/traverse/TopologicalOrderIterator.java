@@ -70,8 +70,8 @@ import org._3pq.jgrapht.util.*;
  * @author Marden Neubert
  * @since Dec 18, 2004
  */
-public class TopologicalOrderIterator<V, E extends DirEdge<V>, D>
-    extends CrossComponentIterator<V, E, D>
+public class TopologicalOrderIterator<V, E extends DirEdge<V>>
+    extends CrossComponentIterator<V, E, Object>
 {
 
     //~ Instance fields -------------------------------------------------------

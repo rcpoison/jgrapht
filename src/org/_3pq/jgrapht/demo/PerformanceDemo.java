@@ -110,7 +110,7 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new BreadthFirstIterator<Object,Edge<Object>,Object>(g); i.hasNext();) {
+        for (Iterator i = new BreadthFirstIterator<Object,Edge<Object>>(g); i.hasNext();) {
             i.next();
         }
 
@@ -118,7 +118,7 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new DepthFirstIterator<Object,Edge<Object>,Object>(g); i.hasNext();) {
+        for (Iterator i = new DepthFirstIterator<Object,Edge<Object>>(g); i.hasNext();) {
             i.next();
         }
 

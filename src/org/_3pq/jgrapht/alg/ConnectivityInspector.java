@@ -140,8 +140,8 @@ public class ConnectivityInspector<V, E extends Edge<V>>
         if (connectedSet == null) {
             connectedSet = new HashSet<V>();
 
-            BreadthFirstIterator<V, E, Object> i =
-                new BreadthFirstIterator<V, E, Object>(m_graph, vertex);
+            BreadthFirstIterator<V, E> i =
+                new BreadthFirstIterator<V, E>(m_graph, vertex);
 
             while (i.hasNext()) {
                 connectedSet.add(i.next());
@@ -244,8 +244,8 @@ public class ConnectivityInspector<V, E extends Edge<V>>
             Set vertexSet = m_graph.vertexSet();
 
             if (vertexSet.size() > 0) {
-                BreadthFirstIterator<V,E,Object> i =
-                    new BreadthFirstIterator<V,E,Object>(m_graph, null);
+                BreadthFirstIterator<V,E> i =
+                    new BreadthFirstIterator<V,E>(m_graph, null);
                 i.addTraversalListener(new MyTraversalListener());
 
                 while (i.hasNext()) {
