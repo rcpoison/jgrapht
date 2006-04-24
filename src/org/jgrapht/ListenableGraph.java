@@ -75,7 +75,7 @@ public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E>
     /**
      * Removes the specified graph listener from this graph, if present.
      *
-     * @param l he listener to be removed.
+     * @param l the listener to be removed.
      */
     public void removeGraphListener(GraphListener<V, E> l);
 
