@@ -39,11 +39,11 @@
  * 06-Aug-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

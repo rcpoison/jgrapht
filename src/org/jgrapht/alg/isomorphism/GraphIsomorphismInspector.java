@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
 import java.util.*;
 

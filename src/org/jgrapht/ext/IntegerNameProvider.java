@@ -36,13 +36,13 @@
  * 13-Dec-2005 : Initial Version (CF);
  *
  */
-package org._3pq.jgrapht.ext;
+package org.jgrapht.ext;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 /**
  * Assigns a unique integer to represent each vertex. Each instance

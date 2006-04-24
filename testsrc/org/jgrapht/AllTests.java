@@ -37,18 +37,18 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 import java.util.*;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.alg.*;
-import org._3pq.jgrapht.edge.*;
-import org._3pq.jgrapht.generate.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.traverse.*;
-import org._3pq.jgrapht.util.AllUtilTests;
+import org.jgrapht.alg.*;
+import org.jgrapht.edge.*;
+import org.jgrapht.generate.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.traverse.*;
+import org.jgrapht.util.AllUtilTests;
 
 
 /**

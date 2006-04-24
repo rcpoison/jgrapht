@@ -39,9 +39,9 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.event;
+package org.jgrapht.event;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
@@ -51,7 +51,7 @@ import org._3pq.jgrapht.*;
  * efficient to use the VertexSetListener.</p>
  *
  * @author Barak Naveh
- * @see org._3pq.jgrapht.event.VertexSetListener
+ * @see org.jgrapht.event.VertexSetListener
  * @since Jul 18, 2003
  */
 public interface GraphListener<V, E extends Edge<V>>

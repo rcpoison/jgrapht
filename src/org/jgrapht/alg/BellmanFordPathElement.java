@@ -38,9 +38,9 @@
  * 14-Jan-2006 : Added support for generics (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
-import org._3pq.jgrapht.Edge;
+import org.jgrapht.Edge;
 
 /**
  * Helper class for {@link BellmanFordShortestPath}; not intended

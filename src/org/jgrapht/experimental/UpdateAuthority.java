@@ -37,13 +37,13 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
@@ -62,7 +62,7 @@ import org._3pq.jgrapht.*;
  * restrictions it tries to maintain.</p>
  *
  * @author Barak Naveh
- * @see org._3pq.jgrapht.graph.MandatedGraph
+ * @see org.jgrapht.graph.MandatedGraph
  * @since Jul 21, 2003
  * @deprecated Thought it will become useful but don't have any use for now.
  *             Will be un-deprecated if a decent use is suggested, or will be

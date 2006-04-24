@@ -40,7 +40,7 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 import java.util.*;
 
@@ -57,7 +57,7 @@ import java.util.*;
  * href="http://mathworld.wolfram.com/topics/GraphTheory.html">
  * http://mathworld.wolfram.com/topics/GraphTheory.html</a>. Implementation of
  * this interface can provide simple-graphs, multigraphs, pseudographs etc. The
- * package <code>org._3pq.jgrapht.graph</code> provides a gallery of abstract
+ * package <code>org.jgrapht.graph</code> provides a gallery of abstract
  * and concrete graph implementations.</p>
  *
  * <p>This library works best when vertices represent arbitrary objects and

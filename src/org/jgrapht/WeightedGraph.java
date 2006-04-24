@@ -39,7 +39,7 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 /**
  * A tagging interface for a graph whose all edges have weights.

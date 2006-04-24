@@ -37,7 +37,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 import junit.framework.*;
 

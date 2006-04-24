@@ -38,13 +38,13 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.Collection;
 import java.util.List;
 
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
+import org.jgrapht.Edge;
+import org.jgrapht.Graph;
 
 
 /**
@@ -53,9 +53,9 @@ import org._3pq.jgrapht.Graph;
  * applicable to both: directed graphs and undirected graphs.
  *
  * @author Barak Naveh
- * @see org._3pq.jgrapht.Graph
- * @see org._3pq.jgrapht.DirectedGraph
- * @see org._3pq.jgrapht.UndirectedGraph
+ * @see org.jgrapht.Graph
+ * @see org.jgrapht.DirectedGraph
+ * @see org.jgrapht.UndirectedGraph
  */
 public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
 {

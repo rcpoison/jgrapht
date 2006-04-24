@@ -39,7 +39,7 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 /**
  * An implementation of directed weighted edge.
@@ -87,7 +87,7 @@ public class DirectedWeightedEdge<V> extends DirectedEdge<V>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org._3pq.jgrapht.Edge#setWeight(double)
+     * @see org.jgrapht.Edge#setWeight(double)
      */
     public void setWeight(double weight)
     {
@@ -95,7 +95,7 @@ public class DirectedWeightedEdge<V> extends DirectedEdge<V>
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#getWeight()
+     * @see org.jgrapht.Edge#getWeight()
      */
     public double getWeight()
     {

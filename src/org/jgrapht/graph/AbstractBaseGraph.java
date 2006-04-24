@@ -43,17 +43,17 @@
  * 01-Jun-2005 : Added EdgeListFactory (JVS);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
- * The most general implementation of the {@link org._3pq.jgrapht.Graph}
+ * The most general implementation of the {@link org.jgrapht.Graph}
  * interface. Its subclasses add various restrictions to get more specific
  * graphs. The decision whether it is directed or undirected is decided at
  * construction time and cannot be later modified (see constructor for
@@ -336,7 +336,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.UndirectedGraph#degreeOf(java.lang.Object)
+     * @see org.jgrapht.UndirectedGraph#degreeOf(java.lang.Object)
      */
     public int degreeOf(V vertex)
     {
@@ -364,7 +364,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.DirectedGraph#inDegreeOf(java.lang.Object)
+     * @see org.jgrapht.DirectedGraph#inDegreeOf(java.lang.Object)
      */
     public int inDegreeOf(V vertex)
     {
@@ -372,7 +372,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.DirectedGraph#incomingEdgesOf(java.lang.Object)
+     * @see org.jgrapht.DirectedGraph#incomingEdgesOf(java.lang.Object)
      */
     public List<E> incomingEdgesOf(V vertex)
     {
@@ -380,7 +380,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.DirectedGraph#outDegreeOf(java.lang.Object)
+     * @see org.jgrapht.DirectedGraph#outDegreeOf(java.lang.Object)
      */
     public int outDegreeOf(V vertex)
     {
@@ -388,7 +388,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.DirectedGraph#outgoingEdgesOf(java.lang.Object)
+     * @see org.jgrapht.DirectedGraph#outgoingEdgesOf(java.lang.Object)
      */
     public List<E> outgoingEdgesOf(V vertex)
     {

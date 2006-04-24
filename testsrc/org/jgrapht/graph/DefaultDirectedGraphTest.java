@@ -38,11 +38,11 @@
  * 09-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

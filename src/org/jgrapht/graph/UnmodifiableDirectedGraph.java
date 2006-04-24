@@ -39,15 +39,15 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
  * A directed graph that cannot be modified.
  *
- * @see org._3pq.jgrapht.graph.UnmodifiableGraph
+ * @see org.jgrapht.graph.UnmodifiableGraph
  */
 public class UnmodifiableDirectedGraph<V, E extends DirEdge<V>>
     extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>

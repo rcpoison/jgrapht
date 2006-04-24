@@ -38,13 +38,13 @@
  * 14-Jan-2006 : Added support for generics (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org._3pq.jgrapht.Edge;
+import org.jgrapht.Edge;
 
 /**
  * A new path is created from a path concatenated to an edge. It's like a linked

@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.equivalence;
+package org.jgrapht.util.equivalence;
 
 /**
  * A container of comparators, which are tested in a chain until the first

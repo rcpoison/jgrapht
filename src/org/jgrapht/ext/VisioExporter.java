@@ -37,13 +37,13 @@
  * 27-May-2004 : Initial Version (AL);
  *
  */
-package org._3pq.jgrapht.ext;
+package org.jgrapht.ext;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

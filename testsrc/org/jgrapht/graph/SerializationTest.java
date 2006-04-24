@@ -37,15 +37,15 @@
  * 06-Oct-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org._3pq.jgrapht.DirEdge;
-import org._3pq.jgrapht.EnhancedTestCase;
+import org.jgrapht.DirEdge;
+import org.jgrapht.EnhancedTestCase;
 
 
 /**

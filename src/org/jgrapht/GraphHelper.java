@@ -40,12 +40,12 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 import java.util.*;
 
-import org._3pq.jgrapht.edge.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.edge.*;
+import org.jgrapht.graph.*;
 
 
 /**

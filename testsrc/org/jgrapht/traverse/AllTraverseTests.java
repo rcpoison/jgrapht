@@ -37,7 +37,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
 import junit.framework.*;
 

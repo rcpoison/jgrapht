@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.permutation;
+package org.jgrapht.util.permutation;
 
 import junit.framework.*;
 

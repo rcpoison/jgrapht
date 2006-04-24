@@ -33,14 +33,14 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.util.*;
-import org._3pq.jgrapht.util.equivalence.*;
-import org._3pq.jgrapht.util.permutation.*;
+import org.jgrapht.*;
+import org.jgrapht.util.*;
+import org.jgrapht.util.equivalence.*;
+import org.jgrapht.util.permutation.*;
 
 
 /**

@@ -39,12 +39,12 @@
  * 07-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.traverse.*;
 
 
 /**

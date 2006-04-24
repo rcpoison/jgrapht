@@ -40,9 +40,9 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.event;
+package org.jgrapht.event;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

@@ -38,7 +38,7 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 import java.util.*;
 

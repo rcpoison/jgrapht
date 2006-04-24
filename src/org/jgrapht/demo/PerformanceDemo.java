@@ -37,15 +37,15 @@
  * 10-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.demo;
+package org.jgrapht.demo;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.traverse.*;
 
 
 /**

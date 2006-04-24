@@ -40,14 +40,14 @@
  * 07-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.event.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.event.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.traverse.*;
 
 
 /**
@@ -62,7 +62,7 @@ import org._3pq.jgrapht.traverse.*;
  * unless immediately necessary. Computation are done once and results and
  * cached within this class for future need.</p>
  *
- * <p>The inspector is also a {@link org._3pq.jgrapht.event.GraphListener}. If
+ * <p>The inspector is also a {@link org.jgrapht.event.GraphListener}. If
  * added as a listener to the inspected graph, the inspector will amend
  * internal cached results instead of recomputing them. It is efficient when a
  * few modifications are applied to a large graph. If many modifications are
@@ -213,7 +213,7 @@ public class ConnectivityInspector<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
     public void vertexAdded(GraphVertexChangeEvent<V> e)
     {
@@ -222,7 +222,7 @@ public class ConnectivityInspector<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {

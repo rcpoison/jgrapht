@@ -42,7 +42,7 @@
  * 29-Jan-2005 : Added support for JGraph dangling edges (BN);
  *
  */
-package org._3pq.jgrapht.ext;
+package org.jgrapht.ext;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -59,14 +59,14 @@ import java.util.Set;
 
 import javax.swing.BorderFactory;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.ListenableGraph;
-import org._3pq.jgrapht.event.GraphEdgeChangeEvent;
-import org._3pq.jgrapht.event.GraphListener;
-import org._3pq.jgrapht.event.GraphVertexChangeEvent;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Edge;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.Graph;
+import org.jgrapht.ListenableGraph;
+import org.jgrapht.event.GraphEdgeChangeEvent;
+import org.jgrapht.event.GraphListener;
+import org.jgrapht.event.GraphVertexChangeEvent;
 import org.jgraph.event.GraphModelEvent;
 import org.jgraph.event.GraphModelListener;
 import org.jgraph.event.GraphModelEvent.GraphModelChange;
@@ -89,7 +89,7 @@ import org.jgraph.graph.Port;
  *
  * <p>Modifications made to the underlying JGraphT graph are reflected to this
  * JGraph model if and only if the underlying JGraphT graph is a {@link
- * org._3pq.jgrapht.ListenableGraph}. If the underlying JGraphT graph is <i>
+ * org.jgrapht.ListenableGraph}. If the underlying JGraphT graph is <i>
  * not</i> ListenableGraph, then this JGraph model represent a snapshot if the
  * graph at the time of its creation.</p>
  *
@@ -393,7 +393,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
      * @return the JGraph edge cell that corresponds to the specified JGraphT
      *         edge, or <code>null</code> if no corresponding cell found.
      */
-    public DefaultEdge getEdgeCell(org._3pq.jgrapht.Edge jGraphTEdge)
+    public DefaultEdge getEdgeCell(org.jgrapht.Edge jGraphTEdge)
     {
         return (DefaultEdge) m_edgeToCell.get(jGraphTEdge);
     }
@@ -847,7 +847,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
         private static final long serialVersionUID = 3690194343461861173L;
 
         /**
-         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(org._3pq.jgrapht.Edge)
+         * @see org.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(org.jgrapht.Edge)
          */
         public DefaultEdge createEdgeCell(EE jGraphTEdge)
         {
@@ -855,7 +855,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
         }
 
         /**
-         * @see org._3pq.jgrapht.ext.JGraphModelAdapter.CellFactory#createVertexCell(Object)
+         * @see org.jgrapht.ext.JGraphModelAdapter.CellFactory#createVertexCell(Object)
          */
         public DefaultGraphCell createVertexCell(VV jGraphTVertex)
         {
@@ -1066,7 +1066,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
         }
 
         /**
-         * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+         * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
         public void vertexAdded(GraphVertexChangeEvent<V> e)
         {
@@ -1078,7 +1078,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
         }
 
         /**
-         * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+         * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
         public void vertexRemoved(GraphVertexChangeEvent<V> e)
         {

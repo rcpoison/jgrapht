@@ -37,7 +37,7 @@
  * 13-Dec-2005 : Split out of VisioExporter (CF);
  *
  */
-package org._3pq.jgrapht.ext;
+package org.jgrapht.ext;
 
 
 /**

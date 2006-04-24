@@ -37,23 +37,23 @@
  * 2-Feb-2005 : Initial revision (CS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.*;
+import org.jgrapht.graph.*;
 
 
 /**
- * <p>Complements the {@link org._3pq.jgrapht.alg.ConnectivityInspector} class
+ * <p>Complements the {@link org.jgrapht.alg.ConnectivityInspector} class
  * with the capability to compute the strongly connected components of a
  * directed graph. The algorithm is implemented after "Corman et al:
  * Introduction to agorithms", Chapter 25.2. It has a running time of O(V + E).
  * </p>
  *
- * <p>Unlike {@link org._3pq.jgrapht.alg.ConnectivityInspector}, this class
+ * <p>Unlike {@link org.jgrapht.alg.ConnectivityInspector}, this class
  * does not implement incremental inspection. The full algorithm is executed at
  * the first call of {@link
  * StrongConnectivityInspector#stronglyConnectedSets()} or {@link

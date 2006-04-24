@@ -36,14 +36,14 @@
  * 13-Dec-2005 : Initial revision (CF);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.alg.NeighborIndex.Neighbors;
-import org._3pq.jgrapht.event.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.alg.NeighborIndex.Neighbors;
+import org.jgrapht.event.*;
+import org.jgrapht.graph.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
@@ -174,7 +174,7 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
     public void vertexAdded(GraphVertexChangeEvent<V> e)
     {
@@ -182,7 +182,7 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {

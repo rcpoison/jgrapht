@@ -38,14 +38,14 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.*;
 
 
 /**
@@ -103,7 +103,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org._3pq.jgrapht.Graph#getAllEdges(Object, Object)
+     * @see org.jgrapht.Graph#getAllEdges(Object, Object)
      */
     public List<E> getAllEdges(V sourceVertex, V targetVertex)
     {
@@ -123,7 +123,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     }
 
     /**
-     * @see org._3pq.jgrapht.Graph#getEdge(Object, Object)
+     * @see org.jgrapht.Graph#getEdge(Object, Object)
      */
     public E getEdge(V sourceVertex, V targetVertex)
     {
@@ -138,7 +138,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     }
 
     /**
-     * @see org._3pq.jgrapht.Graph#addAllEdges(Collection)
+     * @see org.jgrapht.Graph#addAllEdges(Collection)
      */
     public boolean addAllEdges(Collection<? extends E> edges)
     {
@@ -146,7 +146,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     }
 
     /**
-     * @see org._3pq.jgrapht.Graph#addEdge(Edge)
+     * @see org.jgrapht.Graph#addEdge(Edge)
      */
     public boolean addEdge(E e)
     {
@@ -154,7 +154,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     }
 
     /**
-     * @see org._3pq.jgrapht.Graph#addEdge(Object, Object)
+     * @see org.jgrapht.Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
     {

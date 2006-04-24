@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util;
+package org.jgrapht.util;
 
 /**
  * Math Utilities. Currently contains the following:

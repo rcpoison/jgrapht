@@ -1,4 +1,4 @@
-package org._3pq.jgrapht.experimental.heap;
+package org.jgrapht.experimental.heap;
 
 import junit.framework.TestCase;
 

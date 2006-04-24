@@ -36,14 +36,14 @@
  * 13-Dec-2005 : Initial revision (CF);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.event.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.util.*;
+import org.jgrapht.*;
+import org.jgrapht.event.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.util.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
@@ -147,7 +147,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
     public void vertexAdded(GraphVertexChangeEvent<V> e)
     {
@@ -155,7 +155,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
     }
 
     /**
-     * @see org._3pq.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {

@@ -33,11 +33,11 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.permutation;
+package org.jgrapht.util.permutation;
 
 import java.util.*;
 
-import org._3pq.jgrapht.util.*;
+import org.jgrapht.util.*;
 
 
 /**

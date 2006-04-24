@@ -1,4 +1,4 @@
-package org._3pq.jgrapht.util;
+package org.jgrapht.util;
 
 import java.util.Enumeration;
 import java.util.Iterator;

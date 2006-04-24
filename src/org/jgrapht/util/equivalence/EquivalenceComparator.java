@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.equivalence;
+package org.jgrapht.util.equivalence;
 
 /**
  * This interface distinguishes between Equivalence sets.

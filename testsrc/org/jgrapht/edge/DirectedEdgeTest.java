@@ -38,7 +38,7 @@
  * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 /**
  * Tests for the {@link DirectedEdge} class.

@@ -33,13 +33,13 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.util.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -120,10 +120,10 @@ public class IsomorphismRelation implements GraphMapping
 
     /**
      * Assumption: if vertexOrEdge should be treated as vertex, it may not be
-     * of the class "org._3pq.jgrapht.Edge". (It will fail in cases the
-     * org._3pq.jgrapht.Edge is the vertex type).
+     * of the class "org.jgrapht.Edge". (It will fail in cases the
+     * org.jgrapht.Edge is the vertex type).
      *
-     * @see org._3pq.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
+     * @see org.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
      *      boolean)
      */
     public Object getCorrespondence(Object vertexOrEdge, boolean forward)

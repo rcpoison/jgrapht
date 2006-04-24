@@ -37,7 +37,7 @@
  * 10-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.event;
+package org.jgrapht.event;
 
 import java.util.*;
 

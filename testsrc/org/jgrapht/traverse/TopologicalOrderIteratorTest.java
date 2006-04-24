@@ -38,13 +38,13 @@
  * 25-Apr-2005 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.*;
 
 
 /**

@@ -39,10 +39,10 @@
  * 29-May-2005 : Test radius support (JVS);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.edge.DirectedEdge;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.edge.DirectedEdge;
 
 
 /**

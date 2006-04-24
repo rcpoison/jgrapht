@@ -39,16 +39,16 @@
  * 06-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
  * A directed weighted graph which is also {@link
- * org._3pq.jgrapht.ListenableGraph}.
+ * org.jgrapht.ListenableGraph}.
  *
- * @see org._3pq.jgrapht.graph.DefaultListenableGraph
+ * @see org.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableDirectedWeightedGraph<V, E extends DirEdge<V>>
     extends ListenableDirectedGraph<V, E> implements WeightedGraph<V, E>

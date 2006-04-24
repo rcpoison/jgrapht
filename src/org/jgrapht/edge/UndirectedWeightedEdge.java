@@ -40,7 +40,7 @@
  * 11-Mar-2004 : Made generic (CH)
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 /**
  * An implementation of undirected weighted edge.
@@ -88,7 +88,7 @@ public class UndirectedWeightedEdge<V> extends UndirectedEdge<V>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org._3pq.jgrapht.Edge#setWeight(double)
+     * @see org.jgrapht.Edge#setWeight(double)
      */
     public void setWeight(double weight)
     {
@@ -96,7 +96,7 @@ public class UndirectedWeightedEdge<V> extends UndirectedEdge<V>
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#getWeight()
+     * @see org.jgrapht.Edge#getWeight()
      */
     public double getWeight()
     {

@@ -37,15 +37,15 @@
  * 14-Aug-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.DirEdge;
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.edge.DefaultEdge;
-import org._3pq.jgrapht.edge.DirectedEdge;
+import org.jgrapht.DirEdge;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Edge;
+import org.jgrapht.EnhancedTestCase;
+import org.jgrapht.Graph;
+import org.jgrapht.edge.DefaultEdge;
+import org.jgrapht.edge.DirectedEdge;
 
 /**
  * A unit test for the AsDirectedGraph view.

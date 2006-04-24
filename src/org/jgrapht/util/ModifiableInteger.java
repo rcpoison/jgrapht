@@ -38,7 +38,7 @@
  * 2004-05-27 : Initial version (BN);
  *
  */
-package org._3pq.jgrapht.util;
+package org.jgrapht.util;
 
 /**
  * The <code>ModifiableInteger</code> class wraps a value of the primitive type

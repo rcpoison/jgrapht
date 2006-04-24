@@ -38,13 +38,13 @@
  * 13-Sep-2004 : Initial revision (MB);
  *
  */
-// package org._3pq.jgrapht.generate;
-package org._3pq.jgrapht.experimental;
+// package org.jgrapht.generate;
+package org.jgrapht.experimental;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.generate.*;
+import org.jgrapht.*;
+import org.jgrapht.generate.*;
 
 
 /**

@@ -37,7 +37,7 @@
  * 03-Aug-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

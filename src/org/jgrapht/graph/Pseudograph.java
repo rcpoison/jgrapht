@@ -38,10 +38,10 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.*;
 
 
 /**

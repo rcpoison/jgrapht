@@ -37,11 +37,11 @@
  * 16-Sep-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.generate;
+package org.jgrapht.generate;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

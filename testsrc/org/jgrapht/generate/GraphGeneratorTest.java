@@ -37,7 +37,7 @@
  * 17-Sep-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.generate;
+package org.jgrapht.generate;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -47,11 +47,11 @@ import java.util.Set;
 
 import junit.framework.TestCase;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.VertexFactory;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Edge;
+import org.jgrapht.VertexFactory;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.DefaultDirectedGraph;
 
 
 /**

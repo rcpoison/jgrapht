@@ -33,10 +33,10 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism.comparators;
+package org.jgrapht.alg.isomorphism.comparators;
 
-import org._3pq.jgrapht.edge.*;
-import org._3pq.jgrapht.util.equivalence.*;
+import org.jgrapht.edge.*;
+import org.jgrapht.util.equivalence.*;
 
 
 /**
@@ -58,7 +58,7 @@ public class DirectedEdgeWeightOddEvenComparator
      *
      *
      *
-     * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
+     * org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
      * java.lang.Object, java.lang.Object, java.lang.Object)
      */
     public boolean equivalenceCompare(
@@ -80,7 +80,7 @@ public class DirectedEdgeWeightOddEvenComparator
      *
      *
      *
-     * org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
+     * org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      * java.lang.Object)
      */
     public int equivalenceHashcode(Object arg1, Object context)

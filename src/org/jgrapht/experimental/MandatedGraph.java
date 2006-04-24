@@ -37,12 +37,12 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**

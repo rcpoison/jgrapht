@@ -33,11 +33,11 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.permutation;
+package org.jgrapht.util.permutation;
 
 import java.util.*;
 
-import org._3pq.jgrapht.util.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -271,7 +271,7 @@ public class CompoundPermutationIter implements ArrayPermutationsIter,
     }
 
     /* (non-Javadoc)
-     * @see org._3pq.jgrapht.util.ArrayPermutationsIter#nextPermutation()
+     * @see org.jgrapht.util.ArrayPermutationsIter#nextPermutation()
      */
     public int [] nextPermutation()
     {
@@ -279,7 +279,7 @@ public class CompoundPermutationIter implements ArrayPermutationsIter,
     }
 
     /* (non-Javadoc)
-     * @see org._3pq.jgrapht.util.ArrayPermutationsIter#hasNextPermutaions()
+     * @see org.jgrapht.util.ArrayPermutationsIter#hasNextPermutaions()
      */
     public boolean hasNextPermutaions()
     {

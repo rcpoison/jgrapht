@@ -33,11 +33,11 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
@@ -106,10 +106,10 @@ public class DefaultGraphMapping implements GraphMapping
      * there is an edge between them in the graph, returns it. If there exists
      * more than one, returns an arbitrary one. If there are none, returns
      * null. Assumption: if vertexOrEdge should be treated as vertex, it may
-     * not be of the class "org._3pq.jgrapht.Edge". (It will fail in cases the
-     * org._3pq.jgrapht.Edge is the vertex type).
+     * not be of the class "org.jgrapht.Edge". (It will fail in cases the
+     * org.jgrapht.Edge is the vertex type).
      *
-     * @see org._3pq.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
+     * @see org.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
      *      boolean)
      */
     public Object getCorrespondence(Object vertexOrEdge, boolean forward)

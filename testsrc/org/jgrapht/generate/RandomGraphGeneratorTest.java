@@ -33,15 +33,15 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.generate;
+package org.jgrapht.generate;
 
 import junit.framework.TestCase;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.alg.isomorphism.EdgeTopologyCompare;
-import org._3pq.jgrapht.alg.isomorphism.IntegerVertexFactory;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.graph.SimpleDirectedGraph;
+import org.jgrapht.Graph;
+import org.jgrapht.alg.isomorphism.EdgeTopologyCompare;
+import org.jgrapht.alg.isomorphism.IntegerVertexFactory;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 
 /**

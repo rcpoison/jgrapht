@@ -33,10 +33,10 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.util.equivalence.*;
+import org.jgrapht.*;
+import org.jgrapht.util.equivalence.*;
 
 
 /**
@@ -72,7 +72,7 @@ public class VertexDegreeEquivalenceComparator<V,E extends Edge<V>>
      * <p>One may reside in an Undirected Graph and the other in a Directed
      * graph, or both on the same graph type.
      *
-     * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
+     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
@@ -92,7 +92,7 @@ public class VertexDegreeEquivalenceComparator<V,E extends Edge<V>>
     /**
      * Hashes using the in & out degree of a vertex
      *
-     * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
+     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
     public int equivalenceHashcode(V vertex, Graph<V,E> context)

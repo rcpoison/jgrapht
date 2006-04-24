@@ -38,12 +38,12 @@
  * 10-Aug-2003 : Adaptation to new event model (BN);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.event.*;
+import org.jgrapht.*;
+import org.jgrapht.event.*;
 
 
 /**

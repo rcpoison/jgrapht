@@ -39,7 +39,7 @@
  * 11-Mar-2004 : Made generic (CH)
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 /**
  * A implementation for an undirected edge.

@@ -40,10 +40,10 @@
  * 06-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.util.*;
+import org.jgrapht.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -178,7 +178,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     * @see org.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted()
     {
@@ -196,8 +196,8 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
-     *      org._3pq.jgrapht.Edge)
+     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
+     *      org.jgrapht.Edge)
      */
     protected void encounterVertex(V vertex, E edge)
     {
@@ -231,7 +231,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
+     * @see org.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected V provideNextVertex()
     {

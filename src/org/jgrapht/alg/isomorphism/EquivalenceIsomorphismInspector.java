@@ -33,13 +33,13 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.util.equivalence.*;
-import org._3pq.jgrapht.util.permutation.*;
+import org.jgrapht.*;
+import org.jgrapht.util.equivalence.*;
+import org.jgrapht.util.permutation.*;
 
 
 /**
@@ -121,7 +121,7 @@ class EquivalenceIsomorphismInspector<V,E extends Edge<V>>
      *         permutation for eq.groups) or the sets do not match in size;
      *         otherwise, the permutationiterator otherwise
      *
-     * @see org._3pq.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#createPermutationIterator(java.util.Set,
+     * @see org.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#createPermutationIterator(java.util.Set,
      *      java.util.Set)
      */
     protected CollectionPermutationIter<V> createPermutationIterator(
@@ -296,7 +296,7 @@ class EquivalenceIsomorphismInspector<V,E extends Edge<V>>
      * We know for sure, that the sets are alreay checked for equivalence , so
      * it will return true without any further checks.
      *
-     * @see org._3pq.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#areVertexSetsOfTheSameEqualityGroup(java.util.Set,
+     * @see org.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#areVertexSetsOfTheSameEqualityGroup(java.util.Set,
      *      java.util.Set)
      */
     protected boolean areVertexSetsOfTheSameEqualityGroup(

@@ -38,15 +38,15 @@
  * 10-Aug-2003 : General edge refactoring (BN);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
- * Tests for the {@link org._3pq.jgrapht.edge.DefaultEdge} class.
+ * Tests for the {@link org.jgrapht.edge.DefaultEdge} class.
  *
  * @author Barak Naveh
  * @since Jul 24, 2003

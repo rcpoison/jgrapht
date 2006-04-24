@@ -33,12 +33,12 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.generate;
+package org.jgrapht.generate;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -113,11 +113,11 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
      *                                  graph of the concrete type with
      *                                  aNumOfVertexes.
      *                                  
-     *                                  org._3pq.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory#isNumberOfEdgesValid(org._3pq.jgrapht.Graph,
+     *                                  org.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
      *                                  int)
      *
-     * @see org._3pq.jgrapht.generate.GraphGenerator#generateGraph(org._3pq.jgrapht.Graph,
-     *      org._3pq.jgrapht.VertexFactory, java.util.Map)
+     * @see org.jgrapht.generate.GraphGenerator#generateGraph(org.jgrapht.Graph,
+     *      org.jgrapht.VertexFactory, java.util.Map)
      */
     public void generateGraph(
         Graph<V,E> target,
@@ -147,7 +147,7 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
                 + " graph type=" + target.getClass()
                 + " ,number Of Vertexes=" + this.numOfVertexes
                 + "\n-> Advice: For the Max value , check the javadoc for"
-                + " org._3pq.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory");
+                + " org.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory");
         }
 
         edgesFactory.createEdges(
@@ -323,7 +323,7 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
          * </tr>
          * </table>
          *
-         * @see org._3pq.jgrapht.generate.RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(org._3pq.jgrapht.Graph,
+         * @see org.jgrapht.generate.RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
          *      int)
          */
         public boolean isNumberOfEdgesValid(

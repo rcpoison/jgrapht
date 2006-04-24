@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
 /**
  * GraphMapping represents a bidirectional mapping between two graphs (called

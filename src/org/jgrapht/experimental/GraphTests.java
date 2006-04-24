@@ -1,8 +1,8 @@
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 public final class GraphTests<V, E extends Edge<V>>

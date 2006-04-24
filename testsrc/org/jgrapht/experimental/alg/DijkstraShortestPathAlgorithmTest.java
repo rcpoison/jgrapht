@@ -38,13 +38,13 @@
  * 06-Sep-2003 : Initial revision (MB);
  *
  */
-package org._3pq.jgrapht.experimental.alg;
+package org.jgrapht.experimental.alg;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.*;
 
 
 /**

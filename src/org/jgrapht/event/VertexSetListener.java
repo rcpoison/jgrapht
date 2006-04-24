@@ -39,7 +39,7 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.event;
+package org.jgrapht.event;
 
 import java.util.*;
 
@@ -51,7 +51,7 @@ import java.util.*;
  * GraphListener</code>.
  *
  * @author Barak Naveh
- * @see org._3pq.jgrapht.event.GraphListener
+ * @see org.jgrapht.event.GraphListener
  * @since Jul 18, 2003
  */
 public interface VertexSetListener<V> extends EventListener

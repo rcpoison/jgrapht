@@ -40,16 +40,16 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 import java.io.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
  * This utility class is a container of various {@link
- * org._3pq.jgrapht.EdgeFactory} classes.
+ * org.jgrapht.EdgeFactory} classes.
  *
  * <p>Classes included here do not have substantial logic. They are grouped
  * together in this container in order to avoid clutter.</p>

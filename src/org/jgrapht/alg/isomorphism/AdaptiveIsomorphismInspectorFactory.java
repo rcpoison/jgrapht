@@ -33,11 +33,11 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.util.equivalence.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.util.equivalence.*;
 
 
 /**

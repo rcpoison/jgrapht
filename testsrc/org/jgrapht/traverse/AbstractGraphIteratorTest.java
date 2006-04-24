@@ -39,21 +39,21 @@
  * 06-Aug-2003 : Test traversal listener & extract a shared superclass (BN);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.event.ConnectedComponentTraversalEvent;
-import org._3pq.jgrapht.event.EdgeTraversalEvent;
-import org._3pq.jgrapht.event.TraversalListener;
-import org._3pq.jgrapht.event.VertexTraversalEvent;
-import org._3pq.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.EnhancedTestCase;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.event.ConnectedComponentTraversalEvent;
+import org.jgrapht.event.EdgeTraversalEvent;
+import org.jgrapht.event.TraversalListener;
+import org.jgrapht.event.VertexTraversalEvent;
+import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 
 
 /**
- * A basis for testing {@link org._3pq.jgrapht.traverse.BreadthFirstIterator}
- * and {@link org._3pq.jgrapht.traverse.DepthFirstIterator} classes.
+ * A basis for testing {@link org.jgrapht.traverse.BreadthFirstIterator}
+ * and {@link org.jgrapht.traverse.DepthFirstIterator} classes.
  *
  * @author Liviu Rau
  * @since Jul 30, 2003

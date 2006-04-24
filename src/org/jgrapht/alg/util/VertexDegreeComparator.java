@@ -38,9 +38,9 @@
  * 07-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.alg.util;
+package org.jgrapht.alg.util;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

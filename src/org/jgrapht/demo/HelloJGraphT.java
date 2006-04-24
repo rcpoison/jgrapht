@@ -37,13 +37,13 @@
  * 27-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.demo;
+package org.jgrapht.demo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**

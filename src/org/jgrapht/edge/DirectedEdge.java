@@ -39,9 +39,9 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
-import org._3pq.jgrapht.DirEdge;
+import org.jgrapht.DirEdge;
 
 /**
  * A implementation of directed edge.

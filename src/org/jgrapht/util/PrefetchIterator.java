@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util;
+package org.jgrapht.util;
 
 import java.util.*;
 

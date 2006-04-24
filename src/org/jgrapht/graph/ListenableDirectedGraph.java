@@ -39,15 +39,15 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
- * A directed graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
+ * A directed graph which is also {@link org.jgrapht.ListenableGraph}.
  *
- * @see org._3pq.jgrapht.graph.DefaultListenableGraph
+ * @see org.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableDirectedGraph<V, E extends DirEdge<V>>
     extends DefaultListenableGraph<V, E> implements DirectedGraph<V, E>

@@ -39,17 +39,17 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht;
+package org.jgrapht;
 
-import org._3pq.jgrapht.event.*;
+import org.jgrapht.event.*;
 
 
 /**
  * A graph that supports listeners on structural change events.
  *
  * @author Barak Naveh
- * @see org._3pq.jgrapht.event.GraphListener
- * @see org._3pq.jgrapht.event.VertexSetListener
+ * @see org.jgrapht.event.GraphListener
+ * @see org.jgrapht.event.VertexSetListener
  * @since Jul 20, 2003
  */
 public interface ListenableGraph<V, E extends Edge<V>> extends Graph<V, E>

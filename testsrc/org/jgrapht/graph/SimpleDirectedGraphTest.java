@@ -38,14 +38,14 @@
  * 25-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.Iterator;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.EdgeFactory;
-import org._3pq.jgrapht.EnhancedTestCase;
-import org._3pq.jgrapht.edge.DirectedEdge;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.EnhancedTestCase;
+import org.jgrapht.edge.DirectedEdge;
 
 
 /**

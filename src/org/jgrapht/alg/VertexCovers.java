@@ -39,13 +39,13 @@
  * 07-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.alg.util.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.alg.util.*;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -116,8 +116,8 @@ public abstract class VertexCovers
      * <p>The algorithm works on undirected graphs, but can also work on
      * directed graphs when their edge-directions are ignored. To ignore edge
      * directions you can use {@link
-     * org._3pq.jgrapht.GraphHelper#undirectedGraph(Graph)} or {@link
-     * org._3pq.jgrapht.graph.AsUndirectedGraph}.</p>
+     * org.jgrapht.GraphHelper#undirectedGraph(Graph)} or {@link
+     * org.jgrapht.graph.AsUndirectedGraph}.</p>
      *
      * @param g the graph for which vertex cover approximation is to be found.
      *

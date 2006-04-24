@@ -37,9 +37,9 @@
  * 06-Oct-2003 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**

@@ -39,11 +39,11 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.edge;
+package org.jgrapht.edge;
 
 import java.io.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
@@ -96,7 +96,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org._3pq.jgrapht.Edge#getSource()
+     * @see org.jgrapht.Edge#getSource()
      */
     public V getSource()
     {
@@ -104,7 +104,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#getTarget()
+     * @see org.jgrapht.Edge#getTarget()
      */
     public V getTarget()
     {
@@ -112,7 +112,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#setWeight(double)
+     * @see org.jgrapht.Edge#setWeight(double)
      */
     public void setWeight(double weight)
     {
@@ -120,7 +120,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#getWeight()
+     * @see org.jgrapht.Edge#getWeight()
      */
     public double getWeight()
     {
@@ -141,7 +141,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#containsVertex(Object)
+     * @see org.jgrapht.Edge#containsVertex(Object)
      */
     public boolean containsVertex(V v)
     {
@@ -149,7 +149,7 @@ public class DefaultEdge<V> implements Edge<V>, Cloneable, Serializable
     }
 
     /**
-     * @see org._3pq.jgrapht.Edge#oppositeVertex(java.lang.Object)
+     * @see org.jgrapht.Edge#oppositeVertex(java.lang.Object)
      */
     public V oppositeVertex(V v)
     {

@@ -1,7 +1,7 @@
-package org._3pq.jgrapht.util;
+package org.jgrapht.util;
 
-import org._3pq.jgrapht.util.equivalence.EquivalenceGroupCreatorTest;
-import org._3pq.jgrapht.util.permutation.CompoundPermutationIterTest;
+import org.jgrapht.util.equivalence.EquivalenceGroupCreatorTest;
+import org.jgrapht.util.permutation.CompoundPermutationIterTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 public class AllUtilTests {
 
     public static Test suite() {
-        TestSuite suite = new TestSuite("Test for org._3pq.jgrapht.util");
+        TestSuite suite = new TestSuite("Test for org.jgrapht.util");
         //$JUnit-BEGIN$
         suite.addTestSuite(PrefetchIteratorTest.class);
         suite.addTestSuite(CompoundPermutationIterTest.class);

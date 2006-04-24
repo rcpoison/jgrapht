@@ -22,15 +22,15 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
 import java.io.*;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.traverse.*;
 
 
 /**
@@ -83,7 +83,7 @@ public class GraphReader
                 new ShortestPathIterator(
                     g,
                     g.vertexSet().iterator().next(),
-                    org._3pq.jgrapht.experimental.heap.FibonacciHeap
+                    org.jgrapht.experimental.heap.FibonacciHeap
                     .getFactory());
             while (spi.hasNext()) {
                 Object v = spi.next();
@@ -106,7 +106,7 @@ public class GraphReader
                 new ShortestPathIterator(
                     g,
                     g.vertexSet().iterator().next(),
-                    org._3pq.jgrapht.experimental.heap.FibonacciHeap
+                    org.jgrapht.experimental.heap.FibonacciHeap
                     .getFactory());
             while (spi.hasNext()) {
                 Object v = spi.next();
@@ -128,7 +128,7 @@ public class GraphReader
             new ShortestPathIterator(
                 g,
                 g.vertexSet().iterator().next(),
-                org._3pq.jgrapht.experimental.heap.FibonacciHeap.getFactory());
+                org.jgrapht.experimental.heap.FibonacciHeap.getFactory());
         while (spi.hasNext()) {
             Object v = spi.next();
             // System.out.println( v + " " + spi.getSpanningTreeEdge(v) + " " +

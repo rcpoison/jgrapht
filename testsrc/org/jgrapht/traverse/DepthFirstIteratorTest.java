@@ -38,10 +38,10 @@
  * 06-Aug-2003 : Test traversal listener & extract a shared superclass (BN);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.DirectedEdge;
+import org.jgrapht.*;
+import org.jgrapht.edge.DirectedEdge;
 
 
 /**

@@ -37,9 +37,9 @@
  * 24-Jul-2003 : Initial revision (BN);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
-import org._3pq.jgrapht.alg.isomorphism.IsomorphismInspectorTest;
+import org.jgrapht.alg.isomorphism.IsomorphismInspectorTest;
 
 import junit.framework.*;
 

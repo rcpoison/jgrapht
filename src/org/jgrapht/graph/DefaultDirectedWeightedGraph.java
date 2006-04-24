@@ -39,10 +39,10 @@
  * 06-Jun-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.edge.*;
+import org.jgrapht.*;
+import org.jgrapht.edge.*;
 
 
 /**
@@ -53,7 +53,7 @@ import org._3pq.jgrapht.edge.*;
  * <p>prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
  * interface.</p>
  *
- * @see org._3pq.jgrapht.graph.DefaultDirectedGraph
+ * @see org.jgrapht.graph.DefaultDirectedGraph
  */
 public class DefaultDirectedWeightedGraph<V, E extends DirEdge<V>>
     extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>

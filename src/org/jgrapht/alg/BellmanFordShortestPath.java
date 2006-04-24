@@ -38,12 +38,12 @@
  * 14-Jan-2006 : Added support for generics (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.List;
 
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.Edge;
+import org.jgrapht.Graph;
+import org.jgrapht.Edge;
 
 /**
  * <a href="http://www.nist.gov/dads/HTML/dijkstraalgo.html">Bellman-Ford

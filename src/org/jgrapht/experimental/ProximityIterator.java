@@ -38,11 +38,11 @@
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  *
  */
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.experimental.heap.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.experimental.heap.*;
+import org.jgrapht.traverse.*;
 
 
 /**
@@ -137,7 +137,7 @@ public abstract class ProximityIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     * @see org.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected final boolean isConnectedComponentExhausted()
     {
@@ -145,8 +145,8 @@ public abstract class ProximityIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
-     *      org._3pq.jgrapht.Edge)
+     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
+     *      org.jgrapht.Edge)
      */
     protected final void encounterVertex(V vertex, E edge)
     {
@@ -205,7 +205,7 @@ public abstract class ProximityIterator<V, E extends Edge<V>>
         double edgeWeight);
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
+     * @see org.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected final V provideNextVertex()
     {

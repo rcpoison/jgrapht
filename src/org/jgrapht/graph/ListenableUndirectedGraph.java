@@ -39,15 +39,15 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
- * An undirected graph which is also {@link org._3pq.jgrapht.ListenableGraph}.
+ * An undirected graph which is also {@link org.jgrapht.ListenableGraph}.
  *
- * @see org._3pq.jgrapht.graph.DefaultListenableGraph
+ * @see org.jgrapht.graph.DefaultListenableGraph
  */
 public class ListenableUndirectedGraph<V, E extends Edge<V>>
     extends DefaultListenableGraph<V, E> implements UndirectedGraph<V, E>

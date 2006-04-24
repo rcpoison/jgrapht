@@ -22,7 +22,7 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-package org._3pq.jgrapht.experimental.heap;
+package org.jgrapht.experimental.heap;
 
 import java.util.*;
 
@@ -32,13 +32,13 @@ import java.util.*;
  * FIXME Document me!
  * <p>
  * This appears to be a heap of (simple)
- * <code>{@link org._3pq.jgrapht.experimental.heap.ElementPeer}</code>
- * or (more comples) V{@link org._3pq.jgrapht.experimental.heap.HeapElement}</code>.
+ * <code>{@link org.jgrapht.experimental.heap.ElementPeer}</code>
+ * or (more comples) V{@link org.jgrapht.experimental.heap.HeapElement}</code>.
  * It is not immediately clear if Michael intended both to be possible in the same heap.
  * Anyway, the use of Object in <code>{@link #add(Object)}</code> and
  * <code>{@link #update(Object)}</code> to cover
- * both <code>{@link org._3pq.jgrapht.experimental.heap.ElementPeer}</code> and
- * <code>{@link org._3pq.jgrapht.experimental.heap.HeapElement}</code>
+ * both <code>{@link org.jgrapht.experimental.heap.ElementPeer}</code> and
+ * <code>{@link org.jgrapht.experimental.heap.HeapElement}</code>
  * prevents a simple modification to Generics.
  * 
  * @author Michael Behrisch

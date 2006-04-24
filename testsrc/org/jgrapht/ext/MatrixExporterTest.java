@@ -36,15 +36,15 @@
  * 12-Dec-2005 : Initial revision (CF);
  *
  */
-package org._3pq.jgrapht.ext;
+package org.jgrapht.ext;
 
 import java.io.*;
 import java.util.*;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**

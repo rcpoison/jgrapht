@@ -38,14 +38,14 @@
  * 11-Mar-2004 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.event;
+package org.jgrapht.event;
 
 /**
  * An event which indicates that a graph vertex has changed, or is about to
  * change. The event can be used either as an indication <i>after</i> the
  * vertex has  been added or removed, or <i>before</i> it is added. The type of
  * the event can be tested using the {@link
- * org._3pq.jgrapht.event.GraphChangeEvent#getType()} method.
+ * org.jgrapht.event.GraphChangeEvent#getType()} method.
  *
  * @author Barak Naveh
  * @since Aug 10, 2003

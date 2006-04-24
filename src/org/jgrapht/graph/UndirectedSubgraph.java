@@ -38,17 +38,17 @@
  * 06-Aug-2005 : Made generic (CH);
  *
  */
-package org._3pq.jgrapht.graph;
+package org.jgrapht.graph;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
  * An undirected graph that is a subgraph on other graph.
  *
- * @see org._3pq.jgrapht.graph.Subgraph
+ * @see org.jgrapht.graph.Subgraph
  */
 public class UndirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E>
     implements UndirectedGraph<V, E>

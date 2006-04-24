@@ -33,18 +33,18 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.alg.isomorphism;
+package org.jgrapht.alg.isomorphism;
 
 import java.util.*;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.alg.isomorphism.comparators.*;
-import org._3pq.jgrapht.edge.DirectedEdge;
-import org._3pq.jgrapht.generate.*;
-import org._3pq.jgrapht.graph.*;
-import org._3pq.jgrapht.util.equivalence.*;
+import org.jgrapht.*;
+import org.jgrapht.alg.isomorphism.comparators.*;
+import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.generate.*;
+import org.jgrapht.graph.*;
+import org.jgrapht.util.equivalence.*;
 
 
 /**
@@ -453,11 +453,11 @@ public class IsomorphismInspectorTest extends TestCase
             new RandomGraphGenerator [NUM_OF_GENERATORS];
 
         String [] graphConctereClassesFullName =
-            new String [] { // "org._3pq.jgrapht.graph.SimpleGraph" ,
-                "org._3pq.jgrapht.graph.SimpleDirectedGraph",
-                "org._3pq.jgrapht.graph.DefaultDirectedGraph",
-                // "org._3pq.jgrapht.graph.Multigraph",
-                // "org._3pq.jgrapht.graph.Pseudograph"
+            new String [] { // "org.jgrapht.graph.SimpleGraph" ,
+                "org.jgrapht.graph.SimpleDirectedGraph",
+                "org.jgrapht.graph.DefaultDirectedGraph",
+                // "org.jgrapht.graph.Multigraph",
+                // "org.jgrapht.graph.Pseudograph"
             };
 
         // 3 graphs. 1st,2nd must be isomorphic .3rd probably not iso.

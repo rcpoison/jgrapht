@@ -38,16 +38,16 @@
  * 07-Nov-2003 : Adaptation to JGraph 3.0 (BN);
  *
  */
-package org._3pq.jgrapht.demo;
+package org.jgrapht.demo;
 
 import java.awt.*;
 import java.awt.geom.*;
 
 import javax.swing.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.ext.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.ext.*;
+import org.jgrapht.graph.*;
 
 import org.jgraph.*;
 import org.jgraph.graph.*;

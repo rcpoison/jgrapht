@@ -38,7 +38,7 @@
  * 14-Jan-2006 : Added support for generics (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,10 +47,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.Edge;
-import org._3pq.jgrapht.Graph;
-import org._3pq.jgrapht.UndirectedGraph;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Edge;
+import org.jgrapht.Graph;
+import org.jgrapht.UndirectedGraph;
 
 /**
  * Helper class for {@link BellmanFordShortestPath}; not intended
@@ -198,7 +198,7 @@ class BellmanFordIterator<V,E extends Edge<V>>
      * @param edge
      *            the edge via which the vertex was encountered.
      * @return the cost obtained by concatenation.
-     * @see org._3pq.jgrapht.Edge#getWeight()
+     * @see org.jgrapht.Edge#getWeight()
      */
     protected double calculatePathCost(V vertex, E edge) {
         V oppositeVertex = edge.oppositeVertex(vertex);

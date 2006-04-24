@@ -37,14 +37,14 @@
  * 16-Sept-2004 : Initial revision (JVS);
  *
  */
-package org._3pq.jgrapht.alg;
+package org.jgrapht.alg;
 
 import java.util.*;
 
 import junit.framework.*;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.graph.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**

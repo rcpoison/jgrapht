@@ -33,7 +33,7 @@
  * Changes
  * -------
  */
-package org._3pq.jgrapht.util.equivalence;
+package org.jgrapht.util.equivalence;
 
 /**
  * This Equivalence comparator acts as if all elements are in one big global
@@ -52,7 +52,7 @@ public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<
     /**
      * Always returns true.
      *
-     * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
+     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
@@ -67,7 +67,7 @@ public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<
     /**
      * Always returns 0.
      *
-     * @see org._3pq.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
+     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
     public int equivalenceHashcode(E arg1, C context)

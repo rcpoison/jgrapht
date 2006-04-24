@@ -40,11 +40,11 @@
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  *
  */
-package org._3pq.jgrapht.traverse;
+package org.jgrapht.traverse;
 
 import java.util.*;
 
-import org._3pq.jgrapht.*;
+import org.jgrapht.*;
 
 
 /**
@@ -100,7 +100,7 @@ public class BreadthFirstIterator<V, E extends Edge<V>>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     * @see org.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted()
     {
@@ -108,8 +108,8 @@ public class BreadthFirstIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
-     *      org._3pq.jgrapht.Edge)
+     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
+     *      org.jgrapht.Edge)
      */
     protected void encounterVertex(V vertex, E edge)
     {
@@ -118,15 +118,15 @@ public class BreadthFirstIterator<V, E extends Edge<V>>
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
-     *      org._3pq.jgrapht.Edge)
+     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
+     *      org.jgrapht.Edge)
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
     }
 
     /**
-     * @see org._3pq.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
+     * @see org.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
      */
     protected V provideNextVertex()
     {

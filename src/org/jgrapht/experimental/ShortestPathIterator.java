@@ -38,11 +38,11 @@
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  *
  */
-package org._3pq.jgrapht.experimental;
+package org.jgrapht.experimental;
 
-import org._3pq.jgrapht.*;
-import org._3pq.jgrapht.experimental.heap.*;
-import org._3pq.jgrapht.traverse.*;
+import org.jgrapht.*;
+import org.jgrapht.experimental.heap.*;
+import org.jgrapht.traverse.*;
 
 
 /**

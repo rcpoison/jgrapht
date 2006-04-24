@@ -25,7 +25,7 @@
 /* ~~~~~~~~~
  * build.xml
  * ~~~~~~~~~
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
@@ -44,6 +44,7 @@
  * 06-Mar-2004 : Added tasks for building a release by CVS tag (BN);
  * 13-Oct-2004 : Added task for building experimental package (MB);
  * 31-Jul-2005 : Added support for retroweaver (JVS);
+ * 23-Apr-2006 : Renamed package to org.jgrapht (JVS);
  *
  */
 -->
@@ -179,7 +180,7 @@
             <!-- compilerarg line="-Xlint:unchecked"/ -->
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
-            <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+            <exclude name="org/jgrapht/experimental/**/*.java"/>
         </javac>
     </target>
 
@@ -194,7 +195,7 @@
         <!-- compile the source -->
         <javac srcdir="${src.dir}" destdir="${expbuild.dir}" source="1.5">
             <classpath refid="testbuild.classpath" />
-            <include name="org/_3pq/jgrapht/experimental/**/*.java"/>
+            <include name="org/jgrapht/experimental/**/*.java"/>
         </javac>
     </target>
 
@@ -203,7 +204,7 @@
     <target name="jar" depends="compile">
         <jar jarfile="${project.jar}" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
+                <attribute name="Main-Class" value="org.jgrapht.demo.JGraphAdapterDemo"/>
                 <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
                 <attribute name="Specification-Title" value="${project.name}"/>
                 <attribute name="Specification-Version" value="${project.version}"/>
@@ -216,7 +217,7 @@
     <target name="jar.retro" depends="compile">
         <jar jarfile="${retro.jar}" basedir="${build.dir}">
             <manifest>
-                <attribute name="Main-Class" value="org._3pq.jgrapht.demo.JGraphAdapterDemo"/>
+                <attribute name="Main-Class" value="org.jgrapht.demo.JGraphAdapterDemo"/>
                 <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
                 <attribute name="Specification-Title" value="${project.name}"/>
                 <attribute name="Specification-Version" value="${project.version}"/>
@@ -235,8 +236,8 @@
         <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.5"
                debug="on">
             <classpath refid="testbuild.classpath" />
-            <include name="org/_3pq/jgrapht/**"/>
-            <exclude name="org/_3pq/jgrapht/experimental/**"/>
+            <include name="org/jgrapht/**"/>
+            <exclude name="org/jgrapht/experimental/**"/>
         </javac>
     </target>
 
@@ -258,7 +259,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                     <exclude name="**/DefaultEdgeTest.java"/>
-                    <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                    <exclude name="org/jgrapht/experimental/**/*.java"/>
                 </fileset>
             </batchtest>
         </junit>
@@ -280,11 +281,11 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <checkstyle config="${checkstyle.settings}">
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                <exclude name="org/jgrapht/experimental/**/*.java"/>
             </fileset>
             <fileset dir="${testsrc.dir}">
                 <include name="**/*.java"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**/*.java"/>
+                <exclude name="org/jgrapht/experimental/**/*.java"/>
             </fileset>
         </checkstyle>
     </target>
@@ -352,7 +353,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             
             <packageset dir="${src.dir}" defaultexcludes="yes">
                 <include name="**"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**"/>
+                <exclude name="org/jgrapht/experimental/**"/>
             </packageset>
         </javadoc>
     </target>
@@ -383,7 +384,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 <include name="overview.html"/>
                 <include name="**/*.java"/>
                 <include name="**/package.html"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**"/>
+                <exclude name="org/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
@@ -391,7 +392,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <copy todir="${distrib.dir}/testsrc">
             <fileset dir="${testsrc.dir}">
                 <include name="**"/>
-                <exclude name="org/_3pq/jgrapht/experimental/**"/>
+                <exclude name="org/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
