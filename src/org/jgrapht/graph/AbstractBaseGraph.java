@@ -626,7 +626,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         }
 
         /**
-         * A lazy build of unmodifiable incoming edge list.
+         * A lazy build of unmodifiable incoming edge set.
          *
          * @return
          */
@@ -641,7 +641,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         }
 
         /**
-         * A lazy build of unmodifiable outgoing edge list.
+         * A lazy build of unmodifiable outgoing edge set.
          *
          * @return
          */
