@@ -36,6 +36,7 @@
  * -------
  * 01-Jun-2005 : Initial revision (JVS);
  * 06-Aug-2005 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -70,7 +71,7 @@ public interface EdgeListFactory<V, E extends Edge<V>>
      *
      * @return new list
      */
-    public List<E> createEdgeList(V vertex);
+    public Set<E> createEdgeList(V vertex);
 }
 
 // End EdgeListFactory.java

@@ -36,6 +36,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht;
@@ -72,14 +73,14 @@ public interface DirectedGraph<V, E extends DirEdge<V>> extends Graph<V, E>
     public int inDegreeOf(V vertex);
 
     /**
-     * Returns a list of all edges incoming into the specified vertex.
+     * Returns a set of all edges incoming into the specified vertex.
      *
      * @param vertex the vertex for which the list of incoming edges to be
      *               returned.
      *
-     * @return a list of all edges incoming into the specified vertex.
+     * @return a set of all edges incoming into the specified vertex.
      */
-    public List<E> incomingEdgesOf(V vertex);
+    public Set<E> incomingEdgesOf(V vertex);
 
     /**
      * Returns the "out degree" of the specified vertex. An out degree of a
@@ -94,13 +95,13 @@ public interface DirectedGraph<V, E extends DirEdge<V>> extends Graph<V, E>
     public int outDegreeOf(V vertex);
 
     /**
-     * Returns a list of all edges outgoing from the specified vertex.
+     * Returns a set of all edges outgoing from the specified vertex.
      *
      * @param vertex the vertex for which the list of outgoing edges to be
      *               returned.
      *
-     * @return a list of all edges outgoing from the specified vertex.
+     * @return a set of all edges outgoing from the specified vertex.
      */
-    public List<E> outgoingEdgesOf(V vertex);
+    public Set<E> outgoingEdgesOf(V vertex);
 
 }

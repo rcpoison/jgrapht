@@ -40,7 +40,7 @@
  */
 package org.jgrapht.graph;
 
-import java.util.Iterator;
+import java.util.*;
 
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
@@ -310,9 +310,13 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
     /**
      * .
      */
-    public void testIncomingEdgesOf()
+    public void testIncomingOutgoingEdgesOf()
     {
-        init(); // TODO Implement incomingEdgesOf().
+        init();
+
+        Set<DirectedEdge<String>> e1to2 = m_g2.outgoingEdgesOf(m_v1);
+        Set<DirectedEdge<String>> e2from1 = m_g2.incomingEdgesOf(m_v2);
+        assertEquals(e1to2, e2from1);
     }
 
     /**

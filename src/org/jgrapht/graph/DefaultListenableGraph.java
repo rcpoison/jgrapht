@@ -40,6 +40,7 @@
  * 10-Aug-2003 : Adaptation to new event model (BN);
  * 07-Mar-2004 : Fixed unnecessary clone bug #819075 (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -273,13 +274,9 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
     public boolean removeVertex(V v)
     {
         if (containsVertex(v)) {
-            List<E> touchingEdgesList = edgesOf(v);
+            Set<E> touchingEdgesList = edgesOf(v);
 
-            // cannot iterate over list - will cause
-            // ConcurrentModificationException
-            // Edge[] touchingEdges = new Edge[ touchingEdgesList.size(  ) ];
-            // touchingEdgesList.toArray( touchingEdges );
-
+            // copy set to avoid ConcurrentModificationException
             removeAllEdges(new ArrayList<E>(touchingEdgesList));
 
             super.removeVertex(v); // remove the vertex itself

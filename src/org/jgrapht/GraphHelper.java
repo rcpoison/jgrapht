@@ -38,6 +38,7 @@
  * 10-Jul-2003 : Initial revision (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht;
@@ -251,7 +252,7 @@ public final class GraphHelper
         V vertex)
     {
         List<V> predecessors = new ArrayList<V>();
-        List<? extends E> edges = g.incomingEdgesOf(vertex);
+        Set<? extends E> edges = g.incomingEdgesOf(vertex);
 
         for( E e : edges ) {
             predecessors.add(e.oppositeVertex(vertex));            
@@ -275,7 +276,7 @@ public final class GraphHelper
         V vertex)
     {
         List<V> successors = new ArrayList<V>();
-        List<? extends E> edges = g.outgoingEdgesOf(vertex);
+        Set<? extends E> edges = g.outgoingEdgesOf(vertex);
 
         for( E e : edges ) {
             successors.add(e.oppositeVertex(vertex));

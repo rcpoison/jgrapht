@@ -36,12 +36,12 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 import org.jgrapht.Edge;
 import org.jgrapht.Graph;
@@ -124,9 +124,9 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List<E> removeAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> removeAllEdges(V sourceVertex, V targetVertex)
     {
-        List<E> removed = getAllEdges(sourceVertex, targetVertex);
+        Set<E> removed = getAllEdges(sourceVertex, targetVertex);
         removeAllEdges(removed);
 
         return removed;

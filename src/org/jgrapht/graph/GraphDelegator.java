@@ -36,6 +36,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -102,7 +103,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see Graph#getAllEdges(Object, Object)
      */
-    public List<E> getAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
         return m_delegate.getAllEdges(sourceVertex, targetVertex);
     }
@@ -182,7 +183,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see Graph#edgesOf(Object)
      */
-    public List<E> edgesOf(V vertex)
+    public Set<E> edgesOf(V vertex)
     {
         return m_delegate.edgesOf(vertex);
     }
@@ -198,7 +199,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf(V vertex)
+    public Set<E> incomingEdgesOf(V vertex)
     {
         return ((DirectedGraph<V,E>) m_delegate).incomingEdgesOf(vertex);
     }
@@ -214,7 +215,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf(V vertex)
+    public Set<E> outgoingEdgesOf(V vertex)
     {
         return ((DirectedGraph<V,E>) m_delegate).outgoingEdgesOf(vertex);
     }

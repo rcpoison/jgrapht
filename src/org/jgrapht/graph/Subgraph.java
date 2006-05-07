@@ -42,7 +42,8 @@
  * 11-Mar-2004 : Made generic (CH);
  * 15-Mar-2004 : Integrity is now checked using Maps (CH);
  * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
- * 21-Sep-2004 : Added induced subgraph
+ * 21-Sep-2004 : Added induced subgraph (who?)
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -53,6 +54,7 @@ import java.util.*;
 
 import org.jgrapht.*;
 import org.jgrapht.event.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -184,14 +186,14 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see org.jgrapht.Graph#getAllEdges(Object, Object)
      */
-    public List<E> getAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
-        List<E> edges = null;
+        Set<E> edges = null;
 
         if (containsVertex(sourceVertex) && containsVertex(targetVertex)) {
-            edges = new ArrayList<E>();
+            edges = new ArrayUnenforcedSet<E>();
 
-            List<E> baseEdges = m_base.getAllEdges(sourceVertex, targetVertex);
+            Set<E> baseEdges = m_base.getAllEdges(sourceVertex, targetVertex);
 
             for (Iterator<E> iter = baseEdges.iterator(); iter.hasNext();) {
                 E e = iter.next();
@@ -211,12 +213,12 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
      */
     public E getEdge(V sourceVertex, V targetVertex)
     {
-        List<E> edges = getAllEdges(sourceVertex, targetVertex);
+        Set<E> edges = getAllEdges(sourceVertex, targetVertex);
 
         if ((edges == null) || edges.isEmpty()) {
             return null;
         } else {
-            return edges.get(0);
+            return edges.iterator().next();
         }
     }
 
@@ -266,7 +268,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
             throw new IllegalArgumentException(NO_SUCH_EDGE_IN_BASE);
         }
 
-        List<E> edges = m_base.getAllEdges(sourceVertex, targetVertex);
+        Set<E> edges = m_base.getAllEdges(sourceVertex, targetVertex);
 
         for (Iterator<E> iter = edges.iterator(); iter.hasNext();) {
             E e = iter.next();
@@ -408,12 +410,12 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see org.jgrapht.Graph#edgesOf(Object)
      */
-    public List<E> edgesOf(V vertex)
+    public Set<E> edgesOf(V vertex)
     {
         assertVertexExist(vertex);
 
-        ArrayList<E> edges = new ArrayList<E>();
-        List<E> baseEdges = m_base.edgesOf(vertex);
+        Set<E> edges = new ArrayUnenforcedSet<E>();
+        Set<E> baseEdges = m_base.edgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -446,12 +448,12 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf(V vertex)
+    public Set<E> incomingEdgesOf(V vertex)
     {
         assertVertexExist(vertex);
 
-        ArrayList<E> edges = new ArrayList<E>();
-        List<E> baseEdges =
+        Set<E> edges = new ArrayUnenforcedSet<E>();
+        Set<E> baseEdges =
             ((DirectedGraph<V, E>) m_base).incomingEdgesOf(vertex);
 
         for (E e : baseEdges) {
@@ -485,13 +487,12 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf(V vertex)
+    public Set<E> outgoingEdgesOf(V vertex)
     {
         assertVertexExist(vertex);
 
-        ArrayList<E> edges = new ArrayList<E>();
-        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
-        List<? extends E> baseEdges =
+        Set<E> edges = new ArrayUnenforcedSet<E>();
+        Set<? extends E> baseEdges =
             ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex);
 
         for (E e : baseEdges) {

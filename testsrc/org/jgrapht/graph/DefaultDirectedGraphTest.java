@@ -68,7 +68,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     public void testEdgeListFactory()
     {
         DirectedMultigraph<String, DirEdge<String>> g = new DirectedMultigraph<String, DirEdge<String>>();
-        g.setEdgeListFactory(new LinkedListFactory<String, DirEdge<String>>());
+        g.setEdgeListFactory(new LinkedHashSetFactory<String, DirEdge<String>>());
         initMultiTriangleWithMultiLoop(g);
     }
 
@@ -110,7 +110,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DirEdge<String>> g = createMultiTriangleWithMultiLoop();
 
-        List<DirEdge<String>> loops = g.getAllEdges(m_v1, m_v1);
+        Set<DirEdge<String>> loops = g.getAllEdges(m_v1, m_v1);
         assertEquals(1, loops.size());
     }
 
@@ -170,7 +170,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private static class LinkedListFactory<V,E extends Edge<V>> implements EdgeListFactory<V,E>
+    private static class LinkedHashSetFactory<V,E extends Edge<V>> implements EdgeListFactory<V,E>
     {
         /**
          * .
@@ -179,9 +179,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
          *
          * @return an empty list.
          */
-        public List<E> createEdgeList(V vertex)
+        public Set<E> createEdgeList(V vertex)
         {
-            return new LinkedList<E>();
+            return new LinkedHashSet<E>();
         }
     }
 }

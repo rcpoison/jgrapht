@@ -36,6 +36,7 @@
  * -------
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -137,7 +138,7 @@ public class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List<E> removeAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> removeAllEdges(V sourceVertex, V targetVertex)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }

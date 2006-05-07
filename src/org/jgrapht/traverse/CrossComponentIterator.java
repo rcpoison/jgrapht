@@ -39,6 +39,7 @@
  * 11-Aug-2003 : Adaptation to new event model (BN);
  * 31-Jan-2004 : Extracted cross-component traversal functionality (BN);
  * 04-May-2004 : Made generic (CH)
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.traverse;
@@ -393,7 +394,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
          *         directed graph, and the edge touching the specified vertex
          *         in case of undirected graph.
          */
-        public abstract List<? extends EE> edgesOf(VV vertex);
+        public abstract Set<? extends EE> edgesOf(VV vertex);
     }
 
     /**
@@ -477,7 +478,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<? extends EE> edgesOf(VV vertex)
+        public Set<? extends EE> edgesOf(VV vertex)
         {
             return m_graph.outgoingEdgesOf(vertex);
         }
@@ -505,7 +506,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         /**
          * @see CrossComponentIterator.Specifics#edgesOf(Object)
          */
-        public List<EE> edgesOf(VV vertex)
+        public Set<EE> edgesOf(VV vertex)
         {
             return m_graph.edgesOf(vertex);
         }

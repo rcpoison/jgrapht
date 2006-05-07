@@ -38,6 +38,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht;
@@ -78,21 +79,21 @@ public interface Graph<V, E extends Edge<V>>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Returns a list of all edges connecting source vertex to target vertex if
+     * Returns a set of all edges connecting source vertex to target vertex if
      * such vertices exist in this graph. If any of the vertices does not exist
      * or is <code>null</code>, returns <code>null</code>. If both vertices
-     * exist but no edges found, returns an empty list.
+     * exist but no edges found, returns an empty set.
      *
      * <p>In undirected graphs, some of the returned edges may have their
      * source and target vertices in the opposite order. In simple graphs the
-     * returned list is either singleton list or empty list.</p>
+     * returned set is either singleton set or empty set.</p>
      *
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      *
-     * @return a list of all edges connecting source vertex to target vertex.
+     * @return a set of all edges connecting source vertex to target vertex.
      */
-    public List<E> getAllEdges(V sourceVertex, V targetVertex);
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex);
 
     /**
      * Returns an edge connecting source vertex to target vertex if such
@@ -270,8 +271,6 @@ public interface Graph<V, E extends Edge<V>>
      * @param e edge whose presence in this graph is to be tested.
      *
      * @return <tt>true</tt> if this graph contains the specified edge.
-     * FIXME hb 051124: Discussion needed if v should be restricted to V or can be Object (HB)
-     * FIXME hb 051124: If Object, then a number of other non-inserting methods should follow suit
      */
     public boolean containsEdge(Edge e);
 
@@ -284,8 +283,6 @@ public interface Graph<V, E extends Edge<V>>
      * @param v vertex whose presence in this graph is to be tested.
      *
      * @return <tt>true</tt> if this graph contains the specified vertex.
-     * FIXME hb 051124: Discussion needed if v should be restricted to V or can be Object (HB)
-     * FIXME hb 051124: If Object, then a number of other non-inserting methods should follow suit
      */
     public boolean containsVertex(V v);
 
@@ -305,15 +302,15 @@ public interface Graph<V, E extends Edge<V>>
     public Set<E> edgeSet();
 
     /**
-     * Returns a list of all edges touching the specified vertex. If no edges
-     * are touching the specified vertex returns an empty list.
+     * Returns a set of all edges touching the specified vertex. If no edges
+     * are touching the specified vertex returns an empty set.
      *
-     * @param vertex the vertex for which a list of touching edges to be
+     * @param vertex the vertex for which a set of touching edges is to be
      *               returned.
      *
-     * @return a list of all edges touching the specified vertex.
+     * @return a set of all edges touching the specified vertex.
      */
-    public List<E> edgesOf(V vertex);
+    public Set<E> edgesOf(V vertex);
 
     /**
      * Removes all the edges in this graph that are also contained in the
@@ -335,18 +332,20 @@ public interface Graph<V, E extends Edge<V>>
 
     /**
      * Removes all the edges going from the specified source vertex to the
-     * specified target vertex, and returns a list of all removed edges.
-     * Returns <code>null</code> if any of the specified vertices does exist in
-     * the graph. If both vertices exist but no edge found, returns an empty
-     * list. This method will either invoke the {@link #removeEdge(Edge)}
-     * method, or the {@link #removeEdge(Object, Object)} method.
+     * specified target vertex, and returns a set of all removed edges.
+     * Returns <code>null</code> if any of the specified vertices does not
+     * exist in the graph. If both vertices exist but no edge is found, returns
+     * an empty set. This method will either invoke the {@link
+     * #removeEdge(Edge)} method, or the {@link #removeEdge(Object, Object)}
+     * method.
      *
      * @param sourceVertex source vertex of the edge.
      * @param targetVertex target vertex of the edge.
      *
-     * @return The removed edge, or <code>null</code> if no edge removed.
+     * @return the removed edges, or <code>null</code> if no either
+     * vertex not part of graph
      */
-    public List<E> removeAllEdges(V sourceVertex, V targetVertex);
+    public Set<E> removeAllEdges(V sourceVertex, V targetVertex);
 
     /**
      * Removes all the vertices in this graph that are also contained in the

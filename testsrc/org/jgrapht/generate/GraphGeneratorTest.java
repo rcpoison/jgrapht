@@ -35,6 +35,7 @@
  * Changes
  * -------
  * 17-Sep-2003 : Initial revision (JVS);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.generate;
@@ -159,7 +160,8 @@ public class GraphGeneratorTest extends TestCase
         Set<Object> seen = new HashSet<Object>();
 
         for (int i = 0; i < SIZE; ++i) {
-            Edge<Object> nextEdge = g.outgoingEdgesOf(nextVertex).get(0);
+            Edge<Object> nextEdge =
+                g.outgoingEdgesOf(nextVertex).iterator().next();
             nextVertex = nextEdge.getTarget();
             assertEquals(1, g.inDegreeOf(nextVertex));
             assertEquals(1, g.outDegreeOf(nextVertex));

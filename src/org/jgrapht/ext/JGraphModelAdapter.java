@@ -40,6 +40,7 @@
  * 12-Dec-2003 : Added CellFactory support (BN);
  * 27-Jan-2004 : Added support for JGraph->JGraphT change propagation (EP);
  * 29-Jan-2005 : Added support for JGraph dangling edges (BN);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.ext;
@@ -639,7 +640,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
     {
         if (m_cellToVertex.containsKey(jVertex)) {
             V jtVertex = m_cellToVertex.get(jVertex);
-            List<E> jtIncidentEdges = m_jtGraph.edgesOf(jtVertex);
+            Set<E> jtIncidentEdges = m_jtGraph.edgesOf(jtVertex);
 
             if (!jtIncidentEdges.isEmpty()) {
                 // We can't just call removeAllEdges with this list: that
@@ -1124,7 +1125,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
             m_jtElementsBeingAdded.remove(jtVertex);
         }
 
-        List<E> edgesOf(V vertex)
+        Set<E> edgesOf(V vertex)
         {
             return m_graph.edgesOf(vertex);
         }

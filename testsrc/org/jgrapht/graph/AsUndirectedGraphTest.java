@@ -115,7 +115,7 @@ public class AsUndirectedGraphTest extends EnhancedTestCase
      */
     public void testGetAllEdges()
     {
-        List<Edge<String>> edges = m_undirected.getAllEdges(m_v3, m_v2);
+        Set<Edge<String>> edges = m_undirected.getAllEdges(m_v3, m_v2);
         assertEquals(1, edges.size());
         assertEquals(m_directed.getEdge(m_v2, m_v3),
             edges.iterator().next());

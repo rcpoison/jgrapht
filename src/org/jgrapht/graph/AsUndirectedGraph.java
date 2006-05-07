@@ -36,6 +36,7 @@
  * -------
  * 14-Aug-2003 : Initial revision (JVS);
  * 11-Mar-2004 : Made generic (CH);
+ * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -46,6 +47,7 @@ import java.util.*;
 
 import org.jgrapht.*;
 import org.jgrapht.edge.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -105,17 +107,18 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     /**
      * @see org.jgrapht.Graph#getAllEdges(Object, Object)
      */
-    public List<E> getAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
-        List<E> forwardList = super.getAllEdges(sourceVertex, targetVertex);
-
+        Set<E> forwardList = super.getAllEdges(sourceVertex, targetVertex);
+        
         if (sourceVertex.equals(targetVertex)) {
             // avoid duplicating loops
             return forwardList;
         }
-
-        List<E> reverseList = super.getAllEdges(targetVertex, sourceVertex);
-        List<E> list = new ArrayList<E>(forwardList.size() + reverseList.size());
+        
+        Set<E> reverseList = super.getAllEdges(targetVertex, sourceVertex);
+        Set<E> list = new ArrayUnenforcedSet<E>(
+            forwardList.size() + reverseList.size());
         list.addAll(forwardList);
         list.addAll(reverseList);
 
@@ -181,7 +184,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     /**
      * @see DirectedGraph#incomingEdgesOf(Object)
      */
-    public List<E> incomingEdgesOf(V vertex)
+    public Set<E> incomingEdgesOf(V vertex)
     {
         throw new UnsupportedOperationException(UNDIRECTED);
     }
@@ -197,7 +200,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     /**
      * @see DirectedGraph#outgoingEdgesOf(Object)
      */
-    public List<E> outgoingEdgesOf(V vertex)
+    public Set<E> outgoingEdgesOf(V vertex)
     {
         throw new UnsupportedOperationException(UNDIRECTED);
     }
