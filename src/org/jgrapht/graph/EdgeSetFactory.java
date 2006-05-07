@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ----------------
- * EdgeListFactory.java
+ * EdgeSetFactory.java
  * ----------------
  * (C) Copyright 2005, by John V. Sichi and Contributors.
  *
@@ -36,7 +36,7 @@
  * -------
  * 01-Jun-2005 : Initial revision (JVS);
  * 06-Aug-2005 : Made generic (CH);
- * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 07-May-2006 : Renamed and changed from List<Edge> to Set<Edge> (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -55,7 +55,7 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @version $Id$
  */
-public interface EdgeListFactory<V, E extends Edge<V>>
+public interface EdgeSetFactory<V, E extends Edge<V>>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -71,7 +71,7 @@ public interface EdgeListFactory<V, E extends Edge<V>>
      *
      * @return new list
      */
-    public Set<E> createEdgeList(V vertex);
+    public Set<E> createEdgeSet(V vertex);
 }
 
-// End EdgeListFactory.java
+// End EdgeSetFactory.java

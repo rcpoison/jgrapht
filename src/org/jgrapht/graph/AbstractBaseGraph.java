@@ -90,7 +90,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     // private
     // private Class           m_factoryEdgeClass;
     private EdgeFactory<V, E> m_edgeFactory;
-    private EdgeListFactory<V,E> m_edgeListFactory;
+    private EdgeSetFactory<V,E> m_edgeListFactory;
     private Set<E> m_edgeSet;
     private transient Set<E> m_unmodifiableEdgeSet = null;
     private transient Set<V> m_unmodifiableVertexSet = null;
@@ -188,7 +188,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     /**
-     * Set the {@link EdgeListFactory} to use for this graph. Initially, a
+     * Set the {@link EdgeSetFactory} to use for this graph. Initially, a
      * graph is created with a default implementation which always supplies an
      * {@link java.util.ArrayList} with capacity 1.
      *
@@ -196,7 +196,7 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
      *                        lists (this call has no effect on existing edge
      *                        lists)
      */
-    public void setEdgeListFactory(EdgeListFactory<V,E> edgeListFactory)
+    public void setEdgeSetFactory(EdgeSetFactory<V,E> edgeListFactory)
     {
         m_edgeListFactory = edgeListFactory;
     }
@@ -586,14 +586,14 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
     }
 
     private static class ArrayListFactory<VV, EE extends Edge<VV>>
-        implements EdgeListFactory<VV,EE>, Serializable
+        implements EdgeSetFactory<VV,EE>, Serializable
     {
         private static final long serialVersionUID = 5936902837403445985L;
 
         /**
-         * @see EdgeListFactory.createEdgeList
+         * @see EdgeSetFactory.createEdgeSet
          */
-        public Set<EE> createEdgeList(VV vertex)
+        public Set<EE> createEdgeSet(VV vertex)
         {
             // NOTE:  use size 1 to keep memory usage under control
             // for the common case of vertices with low degree
@@ -619,10 +619,10 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         private transient Set<EE> m_unmodifiableIncoming = null;
         private transient Set<EE> m_unmodifiableOutgoing = null;
 
-        DirectedEdgeContainer(EdgeListFactory<VV,EE> edgeListFactory, VV vertex)
+        DirectedEdgeContainer(EdgeSetFactory<VV,EE> edgeListFactory, VV vertex)
         {
-            m_incoming = edgeListFactory.createEdgeList(vertex);
-            m_outgoing = edgeListFactory.createEdgeList(vertex);
+            m_incoming = edgeListFactory.createEdgeSet(vertex);
+            m_outgoing = edgeListFactory.createEdgeSet(vertex);
         }
 
         /**
@@ -890,10 +890,10 @@ public abstract class AbstractBaseGraph<V, E extends Edge<V>>
         private transient Set<EE> m_unmodifiableVertexEdges = null;
 
         UndirectedEdgeContainer(
-            EdgeListFactory<VV,EE> edgeListFactory,
+            EdgeSetFactory<VV,EE> edgeListFactory,
             VV vertex)
         {
-            m_vertexEdges = edgeListFactory.createEdgeList(vertex);
+            m_vertexEdges = edgeListFactory.createEdgeSet(vertex);
         }
 
         /**
