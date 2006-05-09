@@ -41,7 +41,7 @@
 package org.jgrapht.experimental.touchgraph;
 
 import java.applet.Applet;
-import java.awt.BorderLayout;
+import java.awt.*;
 
 import javax.swing.*;
 
@@ -65,7 +65,7 @@ public class SimpleTouchgraphApplet extends Applet
     /**
      * create a graph: code taken from non-visible org._3pq.jgrapht.demo.createStringGraph()
      * */
-    public Graph createSamplegraph()
+    public static Graph createSamplegraph()
     {
         UndirectedGraph<String,Edge<String>> g = new SimpleGraph<String,Edge<String>>();
 
@@ -104,12 +104,16 @@ public class SimpleTouchgraphApplet extends Applet
     
     public static void main(String [] args)
     {
-        SimpleTouchgraphApplet applet = new SimpleTouchgraphApplet();
-        
-        applet.init();
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(applet);
-        frame.setTitle("JGraphT to Touchgraph Converter Demo");
+        Graph g = createSamplegraph();
+        boolean selfReferencesAllowed = false;
+
+        JFrame frame = new
+            JFrame();
+        frame.getContentPane().add(
+            new TouchgraphPanel(g,selfReferencesAllowed));
+        frame.setPreferredSize(new Dimension(800,800));
+        frame.setTitle("JGraphT to Touchgraph Converter Demo"
+            );
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
