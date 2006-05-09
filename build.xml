@@ -123,6 +123,7 @@
         <property name="license.file.name"   value="license-LGPL.txt" />
         <property name="junit.jar.name"      value="junit.jar" />
         <property name="jgraph.jar.name"     value="jgraph.jar" />
+        <property name="touchgraph.jar.name" value="TGGraphLayout.jar" />
         <property name="checkstyle.jar.name" value="checkstyle-all-3.3.jar" />
 
         <!-- Files -->
@@ -133,6 +134,7 @@
         <property name="project.zip"      value="${basedir}/${project.zip.name}" />
         <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
         <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
+        <property name="touchgraph.jar"   value="${lib.dir}/${touchgraph.jar.name}"/>
         <property name="checkstyle.jar"   value="${lib.dir}/${checkstyle.jar.name}"/>
         <property name="build.file"       value="${basedir}/${build.file.name}"/>
         <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
@@ -142,6 +144,7 @@
         <path id="build.classpath">
             <pathelement location="${junit.jar}"/>
             <pathelement location="${jgraph.jar}"/>
+            <pathelement location="${touchgraph.jar}"/>
         </path>
         <property name="build.classpath" refid="build.classpath"/>
 
@@ -197,6 +200,15 @@
             <classpath refid="testbuild.classpath" />
             <include name="org/jgrapht/experimental/**/*.java"/>
         </javac>
+    </target>
+
+
+    <!-- Run the experimental touchgraph demo -->
+    <target name="exp.touchgraph" depends="exp.compile"
+                           description="Runs the experimental Touchgraph demo.">
+        <java classname="org.jgrapht.experimental.touchgraph.SimpleTouchgraphApplet">
+            <classpath refid="exp.classpath" />
+        </java>
     </target>
 
 

@@ -116,7 +116,7 @@ public interface UpdateAuthority extends Serializable
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges(Object sourceVertex, Object targetVertex);
+    public Set removeAllEdges(Object sourceVertex, Object targetVertex);
 
     /**
      * @see Graph#removeAllVertices(Collection)

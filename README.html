@@ -207,12 +207,14 @@
       <td valign="top"><b><code>lib/</code></b></td>
 
       <td>
-        required libraries:
+        libraries required for build:
 
         <ul compact>
           <li><code>junit.jar</code></li>
 
           <li><code>jgraph.jar</code></li>
+
+          <li><code>TGGraphLayout.jar</code></li>
         </ul>
       </td>
     </tr>
@@ -337,7 +339,17 @@
     under the terms of the GNU Lesser General Public License
     (LGPL). You can find more about JGraph and/or download the latest
     version from <a href=
-    "http://www.sourceforge.net/projects/jgraph">http://www.sourceforge.net/projects/jgraph</a>.</li>
+    "http://sourceforge.net/projects/jgraph">http://www.sourceforge.net/projects/jgraph</a>.</li>
+
+    <li>Touchgraph is a graph visualization and layout component. You
+    need Touchgraph only if you want to create graph visualizations
+    using the JGraphT-to-Touchgraph converter. The
+    <code>TGGraphLayout.jar</code> runtime file of Touchgraph is included
+    in this distribution (file lib/lib-readme.txt has version
+    information). Touchgraph is licensed under the terms of an Apache-style
+    License. You can find more about Touchgraph
+    and/or download the latest version from <a href=
+    "http://sourceforge.net/projects/touchgraph">http://sourceforge.net/projects/touchgraph</a>.</li>
   </ul>
 
   <h2>Online Resources</h2>
@@ -380,7 +392,8 @@
     contributed by Guillaume Boulmier of France Telecom.
     Removed never-used LabeledElement.  Renamed package from
     org._3pq.jgrapht to org.jgrapht.  Made breaking change to
-    interfaces; edge collections are now Sets, not Lists.</li>
+    interfaces; edge collections are now Sets, not Lists.
+    Added Touchgraph converter, contributed by Carl Anderson</li>
 
     <li><b>version 0.6.0</b> (July-2005) : Upgraded to JDK 1.4, taking
     advantage of its new linked hash set/map containers to make
@@ -473,6 +486,8 @@
     Fry</a></li>
 
     <li>Guillaume Boulmi</li>
+
+    <li>Carl Anderson</li>
 
   </ul>
 

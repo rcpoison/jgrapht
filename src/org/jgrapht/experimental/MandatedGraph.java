@@ -154,7 +154,7 @@ public class MandatedGraph extends GraphDelegator
     /**
      * @see Graph#removeAllEdges(Object, Object)
      */
-    public List removeAllEdges(Object sourceVertex, Object targetVertex)
+    public Set removeAllEdges(Object sourceVertex, Object targetVertex)
     {
         return m_updateAuthority.removeAllEdges(sourceVertex, targetVertex);
     }

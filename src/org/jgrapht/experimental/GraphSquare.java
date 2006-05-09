@@ -161,7 +161,7 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
     /**
      * @see Graph#removeAllEdges(V, V)
      */
-    public List<E> removeAllEdges(V sourceVertex, V targetVertex)
+    public Set<E> removeAllEdges(V sourceVertex, V targetVertex)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
