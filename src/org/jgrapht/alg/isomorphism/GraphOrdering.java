@@ -38,7 +38,7 @@ package org.jgrapht.alg.isomorphism;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
+import org.jgrapht.graph.*;
 import org.jgrapht.util.*;
 
 
@@ -54,7 +54,7 @@ import org.jgrapht.util.*;
  * @author Assaf
  * @since May 20, 2005
  */
-public class GraphOrdering<V,E extends Edge<V>>
+public class GraphOrdering<V,E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -81,10 +81,7 @@ public class GraphOrdering<V,E extends Edge<V>>
      */
     public GraphOrdering(Graph<V,E> regularGraph)
     {
-        Set<V> vertexSet = regularGraph.vertexSet();
-        Set<E> edgeSet = regularGraph.edgeSet();
-
-        init(vertexSet, edgeSet);
+        this(regularGraph, regularGraph.vertexSet(), regularGraph.edgeSet());
     }
 
     /**
@@ -92,17 +89,19 @@ public class GraphOrdering<V,E extends Edge<V>>
      * creation they will no longer be linked, thus changes to one will not
      * affect the other.
      *
+     * @param regularGraph
      * @param vertexSet
      * @param edgeSet
      */
-    public GraphOrdering(Set<V> vertexSet, Set<E> edgeSet)
+    public GraphOrdering(
+        Graph<V,E> regularGraph, Set<V> vertexSet, Set<E> edgeSet)
     {
-        init(vertexSet, edgeSet);
+        init(regularGraph, vertexSet, edgeSet);
     }
 
     //~ Methods ---------------------------------------------------------------
 
-    private void init(Set<V> vertexSet, Set<E> edgeSet)
+    private void init(Graph<V,E> g, Set<V> vertexSet, Set<E> edgeSet)
     {
         // create a map between vertex value to its order(1st,2nd,etc)
         // "CAT"=1 "DOG"=2 "RHINO"=3
@@ -123,17 +122,17 @@ public class GraphOrdering<V,E extends Edge<V>>
 
         this.labelsEdgesSet = new HashSet<LabelsEdge>(edgeSet.size());
         for (E edge : edgeSet) {
-            V sourceVertex = edge.getSource();
+            V sourceVertex = g.getEdgeSource(edge);
             Integer sourceOrder = mapVertexToOrder.get(sourceVertex);
             int sourceLabel = sourceOrder.intValue();
             int targetLabel =
-                (mapVertexToOrder.get(edge.getTarget()))
+                (mapVertexToOrder.get(g.getEdgeTarget(edge)))
                 .intValue();
 
             LabelsEdge lablesEdge = new LabelsEdge(sourceLabel, targetLabel);
             this.labelsEdgesSet.add(lablesEdge);
 
-            if (edge instanceof UndirectedEdge) {
+            if (g instanceof UndirectedGraph) {
                 LabelsEdge oppositeEdge =
                     new LabelsEdge(targetLabel, sourceLabel);
                 this.labelsEdgesSet.add(oppositeEdge);

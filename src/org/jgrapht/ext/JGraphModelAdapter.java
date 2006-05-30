@@ -41,6 +41,7 @@
  * 27-Jan-2004 : Added support for JGraph->JGraphT change propagation (EP);
  * 29-Jan-2005 : Added support for JGraph dangling edges (BN);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.ext;
@@ -61,7 +62,6 @@ import java.util.Set;
 import javax.swing.BorderFactory;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.Edge;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
 import org.jgrapht.ListenableGraph;
@@ -118,7 +118,7 @@ import org.jgraph.graph.Port;
  * todo and fixme marks in the code indicate where the possible improvements
  * could be made to realize that.
  */
-public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
+public class JGraphModelAdapter<V,E> extends DefaultGraphModel
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -287,7 +287,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
      *
      * @return a map of attributes to be used as default for edge attributes.
      */
-    public static <V, E extends Edge<V>> AttributeMap createDefaultEdgeAttributes(
+    public static <V, E> AttributeMap createDefaultEdgeAttributes(
         Graph<V, E> jGraphTGraph)
     {
         AttributeMap map = new AttributeMap();
@@ -394,7 +394,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
      * @return the JGraph edge cell that corresponds to the specified JGraphT
      *         edge, or <code>null</code> if no corresponding cell found.
      */
-    public DefaultEdge getEdgeCell(org.jgrapht.Edge jGraphTEdge)
+    public DefaultEdge getEdgeCell(E jGraphTEdge)
     {
         return (DefaultEdge) m_edgeToCell.get(jGraphTEdge);
     }
@@ -485,8 +485,8 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
                 Object jtSource = m_cellToVertex.get(jSource);
                 Object jtTarget = m_cellToVertex.get(jTarget);
 
-                if ((jtEdge.getSource() == jtSource)
-                    && (jtEdge.getTarget() == jtTarget)) {
+                if ((m_jtGraph.getEdgeSource(jtEdge) == jtSource)
+                    && (m_jtGraph.getEdgeTarget(jtEdge) == jtTarget)) {
                     // no change in edge's endpoints -- nothing to do.
                 } else {
                     // edge's end-points have changed -- need to refresh the
@@ -527,12 +527,9 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
             V jtSource = m_cellToVertex.get(jSource);
             V jtTarget = m_cellToVertex.get(jTarget);
 
-            E jtEdge =
-                m_jtGraph.getEdgeFactory().createEdge(jtSource, jtTarget);
+            E jtEdge = m_jtGraph.addEdge(jtSource, jtTarget);
 
-            boolean added = m_jtGraph.addEdge(jtEdge);
-
-            if (added) {
+            if (jtEdge != null) {
                 m_cellToEdge.put(jEdge, jtEdge);
                 m_edgeToCell.put(jtEdge, jEdge);
             } else {
@@ -673,8 +670,8 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
         ConnectionSet cs = new ConnectionSet();
         cs.connect(
             edgeCell,
-            getVertexPort(jtEdge.getSource()),
-            getVertexPort(jtEdge.getTarget()));
+            getVertexPort(m_jtGraph.getEdgeSource(jtEdge)),
+            getVertexPort(m_jtGraph.getEdgeTarget(jtEdge)));
 
         internalInsertCell(edgeCell, createEdgeAttributeMap(edgeCell), cs);
     }
@@ -813,7 +810,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
      * @author Barak Naveh
      * @since Dec 12, 2003
      */
-    public static interface CellFactory<VV, EE extends Edge<VV>>
+    public static interface CellFactory<VV, EE>
     {
         /**
          * Creates an edge cell that contains its respective JGraphT edge.
@@ -842,7 +839,7 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
      * @author Barak Naveh
      * @since Dec 12, 2003
      */
-    public static class DefaultCellFactory<VV, EE extends Edge<VV>> implements CellFactory<VV,EE>,
+    public static class DefaultCellFactory<VV, EE> implements CellFactory<VV,EE>,
         Serializable
     {
         private static final long serialVersionUID = 3690194343461861173L;
@@ -1108,14 +1105,25 @@ public class JGraphModelAdapter<V,E extends Edge<V>> extends DefaultGraphModel
             return m_graph.getEdgeFactory();
         }
 
-        boolean addEdge(E jtEdge)
+        E addEdge(V jtSource, V jtTarget) 
         {
+            E jtEdge = m_graph.getEdgeFactory().createEdge(jtSource, jtTarget);
             m_jtElementsBeingAdded.add(jtEdge);
 
-            boolean added = m_graph.addEdge(jtEdge);
+            boolean added = m_graph.addEdge(jtSource, jtTarget, jtEdge);
             m_jtElementsBeingAdded.remove(jtEdge);
 
-            return added;
+            return added ? jtEdge : null;
+        }
+
+        V getEdgeSource(E e)
+        {
+            return m_graph.getEdgeSource(e);
+        }
+
+        V getEdgeTarget(E e)
+        {
+            return m_graph.getEdgeTarget(e);
         }
 
         void addVertex(V jtVertex)

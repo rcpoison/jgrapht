@@ -70,7 +70,8 @@ public class CloneTest extends EnhancedTestCase
     @SuppressWarnings("unchecked")
     public void testCloneSpecificsBug()
     {
-        SimpleGraph<String,Edge<String>> g1 = new SimpleGraph<String,Edge<String>>();
+        SimpleGraph<String,DefaultEdge> g1 =
+            new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
         String one = "1";
         String two = "2";
         String three = "3";
@@ -80,8 +81,8 @@ public class CloneTest extends EnhancedTestCase
         g1.addEdge(one, two);
         g1.addEdge(two, three);
 
-        SimpleGraph<String,Edge<String>> g2 =
-            (SimpleGraph<String,Edge<String>>) g1.clone();    // Type-safty warning OK with clone
+        SimpleGraph<String,DefaultEdge> g2 =
+            (SimpleGraph<String,DefaultEdge>) g1.clone();    // Type-safty warning OK with clone
         assertEquals(2, g2.edgeSet().size());
         assertNotNull(g2.getEdge(one, two));
         assertTrue(g2.removeEdge(g2.getEdge(one, two)));

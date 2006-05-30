@@ -53,14 +53,14 @@ import org.jgrapht.util.*;
  * of such modifications are undefined.
  *
  * <p>The metric for <i>closest</i> here is the path length from a start
- * vertex. Edge.getWeight() is summed to calculate path length. Negative edge
- * weights will result in an IllegalArgumentException.  Optionally, path length
- * may be bounded by a finite radius.</p>
+ * vertex. Graph.getEdgeWeight(Edge) is summed to calculate path
+ * length. Negative edge weights will result in an IllegalArgumentException.
+ * Optionally, path length may be bounded by a finite radius.</p>
  *
  * @author John V. Sichi
  * @since Sep 2, 2003
  */
-public class ClosestFirstIterator<V, E extends Edge<V>>
+public class ClosestFirstIterator<V, E>
     extends CrossComponentIterator<V, E, ClosestFirstIterator.QueueEntry<V,E>>
 {
 
@@ -243,7 +243,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
 
     private void assertNonNegativeEdge(E edge)
     {
-        if (edge.getWeight() < 0) {
+        if (getGraph().getEdgeWeight(edge) < 0) {
             throw new IllegalArgumentException(
                 "negative edge weights not allowed");
         }
@@ -262,10 +262,11 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     {
         assertNonNegativeEdge(edge);
 
-        V otherVertex = edge.oppositeVertex(vertex);
+        V otherVertex = Graphs.getOppositeVertex(getGraph(), edge, vertex);
         QueueEntry otherEntry = getSeenData(otherVertex);
 
-        return otherEntry.getShortestPathLength() + edge.getWeight();
+        return otherEntry.getShortestPathLength()
+            + getGraph().getEdgeWeight(edge);
     }
 
     private void checkRadiusTraversal(boolean crossComponentTraversal)
@@ -306,7 +307,7 @@ public class ClosestFirstIterator<V, E extends Edge<V>>
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    static class QueueEntry<VV, EE extends Edge<VV>> extends FibonacciHeap.Node
+    static class QueueEntry<VV, EE> extends FibonacciHeap.Node
     {
         /**
          * Best spanning tree edge to vertex seen so far.

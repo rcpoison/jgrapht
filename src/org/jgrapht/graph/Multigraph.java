@@ -36,12 +36,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -51,7 +51,7 @@ import org.jgrapht.edge.*;
  * href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class Multigraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+public class Multigraph<V, E> extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
 
@@ -63,10 +63,12 @@ public class Multigraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
 
     /**
      * Creates a new multigraph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public Multigraph()
+    public Multigraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.UndirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

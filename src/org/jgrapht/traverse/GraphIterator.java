@@ -53,7 +53,7 @@ import org.jgrapht.event.*;
  * @author Barak Naveh
  * @since Jul 31, 2003
  */
-public interface GraphIterator<V, E extends Edge<V>> extends Iterator<V>
+public interface GraphIterator<V, E> extends Iterator<V>
 {
 
     //~ Methods ---------------------------------------------------------------

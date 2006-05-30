@@ -43,7 +43,6 @@ package org.jgrapht.experimental.alg;
 import junit.framework.*;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.DirectedEdge;
 import org.jgrapht.graph.*;
 
 
@@ -78,10 +77,10 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
      */
     public void testShortestPath()
     {
-        WeightedGraph<String,DirectedEdge<String>> g = create();
-        ShortestPathAlgorithm<String,DirectedEdge<String>>
-            alg = new DijkstraShortestPathAlgorithm<String,DirectedEdge<String>>(g);
-        WeightedGraph<String,DirectedEdge<String>> pathTree = alg.shortestPathTree(V1);
+        WeightedGraph<String,DefaultEdge> g = create();
+        ShortestPathAlgorithm<String,DefaultEdge>
+            alg = new DijkstraShortestPathAlgorithm<String,DefaultEdge>(g);
+        WeightedGraph<String,DefaultEdge> pathTree = alg.shortestPathTree(V1);
 
         assertEquals(4, pathTree.vertexSet().size());
         assertEquals(3, pathTree.edgeSet().size());
@@ -90,20 +89,20 @@ public class DijkstraShortestPathAlgorithmTest extends TestCase
         assertTrue(pathTree.containsEdge(m_e4));
     }
 
-    private WeightedGraph<String,DirectedEdge<String>> create()
+    private WeightedGraph<String,DefaultEdge> create()
     {
-        WeightedGraph<String,DirectedEdge<String>>
-            g = new WeightedPseudograph<String,DirectedEdge<String>>();
+        WeightedGraph<String,DefaultEdge>
+            g = new WeightedPseudograph<String,DefaultEdge>();
 
         g.addVertex(V1);
         g.addVertex(V2);
         g.addVertex(V3);
         g.addVertex(V4);
-        m_e1 = GraphHelper.addEdge(g, V1, V2, 1);
-        m_e2 = GraphHelper.addEdge(g, V2, V3, 2);
-        m_e3 = GraphHelper.addEdge(g, V3, V1, 4);
-        m_e4 = GraphHelper.addEdge(g, V3, V4, 10);
-        m_u = GraphHelper.addEdge(g, V3, V3, 5);
+        m_e1 = Graphs.addEdge(g, V1, V2, 1);
+        m_e2 = Graphs.addEdge(g, V2, V3, 2);
+        m_e3 = Graphs.addEdge(g, V3, V1, 4);
+        m_e4 = Graphs.addEdge(g, V3, V4, 10);
+        m_u = Graphs.addEdge(g, V3, V3, 5);
 
         return g;
     }

@@ -51,7 +51,7 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class LinearGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
+public class LinearGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 {
 
     //~ Static fields/initializers --------------------------------------------

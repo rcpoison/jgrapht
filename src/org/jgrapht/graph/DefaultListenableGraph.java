@@ -41,6 +41,7 @@
  * 07-Mar-2004 : Fixed unnecessary clone bug #819075 (BN);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -67,7 +68,7 @@ import org.jgrapht.event.*;
  * @see VertexSetListener
  * @since Jul 20, 2003
  */
-public class DefaultListenableGraph<V, E extends Edge<V>>
+public class DefaultListenableGraph<V, E>
     extends GraphDelegator<V, E> implements ListenableGraph<V, E>, Cloneable
 {
 
@@ -171,17 +172,17 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
     }
 
     /**
-     * @see Graph#addEdge(Edge)
+     * @see Graph#addEdge(Object, Object, E)
      */
-    public boolean addEdge(E e)
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
-        boolean modified = super.addEdge(e);
+        boolean added = super.addEdge(sourceVertex, targetVertex, e);
 
-        if (modified) {
+        if (added) {
             fireEdgeAdded(e);
         }
 
-        return modified;
+        return added;
     }
 
     /**
@@ -427,7 +428,7 @@ public class DefaultListenableGraph<V, E extends Edge<V>>
      * @author Barak Naveh
      * @since Aug 10, 2003
      */
-    private static class FlyweightEdgeEvent<VV, EE extends Edge<VV>>
+    private static class FlyweightEdgeEvent<VV, EE>
         extends GraphEdgeChangeEvent<VV, EE>
     {
         private static final long serialVersionUID = 3907207152526636089L;

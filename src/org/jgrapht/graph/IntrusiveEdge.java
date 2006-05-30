@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,52 +22,55 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------------
- * UnmodifiableDirectedGraph.java
- * ------------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+/* -------------------
+ * IntrusiveEdge.java
+ * -------------------
+ * (C) Copyright 2006, by John V. Sichi and Contributors.
  *
- * Original Author:  Barak Naveh
- * Contributor(s):   Christian Hammer
+ * Original Author:  John V. Sichi
+ * Contributor(s):   -
  *
- * $Id: UnmodifiableDirectedGraph.java,v 1.4 2005/08/01 05:54:07 perfecthash
- * Exp $
+ * $Id: GraphDelegator.java 460 2006-05-07 22:22:10Z perfecthash $
  *
  * Changes
  * -------
- * 05-Aug-2003 : Initial revision (BN);
- * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Initial revision (JVS);
  *
  */
 package org.jgrapht.graph;
 
-import org.jgrapht.*;
-
+import java.io.*;
 
 /**
- * A directed graph that cannot be modified.
+ * IntrusiveEdge encapsulates the internals for the default edge
+ * implementation.  It is not intended to be referenced directly
+ * (which is why it's not public); use DefaultEdge for that.
  *
- * @see org.jgrapht.graph.UnmodifiableGraph
+ * @author John V. Sichi
+ * @version $Id:$
  */
-public class UnmodifiableDirectedGraph<V, E>
-    extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>
+class IntrusiveEdge implements Cloneable, Serializable
 {
-
     //~ Static fields/initializers --------------------------------------------
 
-    private static final long serialVersionUID = 3978701783725913906L;
+    private static final long serialVersionUID = 3258408452177932855L;
+    
+    Object source;
 
-    //~ Constructors ----------------------------------------------------------
+    Object target;
 
     /**
-     * Creates a new unmodifiable directed graph based on the specified backing
-     * graph.
-     *
-     * @param g the backing graph on which an unmodifiable graph is to be
-     *          created.
+     * @see Edge#clone()
      */
-    public UnmodifiableDirectedGraph(DirectedGraph<V, E> g)
+    public Object clone()
     {
-        super(g);
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            // shouldn't happen as we are Cloneable
+            throw new InternalError();
+        }
     }
 }
+
+// End IntrusiveEdge.java

@@ -71,7 +71,7 @@ public class CycleDetectorTest extends TestCase
      *
      * @param g
      */
-    public void createGraph(Graph<String,DirEdge<String>> g)
+    public void createGraph(Graph<String,DefaultEdge> g)
     {
         g.addVertex(V1);
         g.addVertex(V2);
@@ -94,8 +94,9 @@ public class CycleDetectorTest extends TestCase
      */
     public void testDirectedWithCycle()
     {
-        DirectedGraph<String,DirEdge<String>> g =
-            new DefaultDirectedGraph<String,DirEdge<String>>();
+        DirectedGraph<String,DefaultEdge> g =
+            new DefaultDirectedGraph<String,DefaultEdge>(
+                DefaultEdge.class);
         createGraph(g);
 
         Set<String> cyclicSet = new HashSet<String>();
@@ -117,8 +118,9 @@ public class CycleDetectorTest extends TestCase
     @SuppressWarnings("unchecked")
     public void testDirectedWithoutCycle()
     {
-        DirectedGraph<String,DirEdge<String>> g =
-            new DefaultDirectedGraph<String,DirEdge<String>>();
+        DirectedGraph<String,DefaultEdge> g =
+            new DefaultDirectedGraph<String,DefaultEdge>(
+                DefaultEdge.class);
         createGraph(g);
         g.removeVertex(V2);
 
@@ -128,12 +130,12 @@ public class CycleDetectorTest extends TestCase
         runTest(g, cyclicSet, acyclicSet);
     }
 
-    private void runTest( DirectedGraph<String,DirEdge<String>> g,
+    private void runTest( DirectedGraph<String,DefaultEdge> g,
                           Set<String> cyclicSet,
                           Set<String> acyclicSet )
     {
-        CycleDetector<String,DirEdge<String>> detector =
-            new CycleDetector<String,DirEdge<String>>(g);
+        CycleDetector<String,DefaultEdge> detector =
+            new CycleDetector<String,DefaultEdge>(g);
 
         Set emptySet = Collections.EMPTY_SET;
 

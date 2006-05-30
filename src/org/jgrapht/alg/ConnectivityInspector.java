@@ -74,7 +74,7 @@ import org.jgrapht.traverse.*;
  * @author John V. Sichi
  * @since Aug 6, 2003
  */
-public class ConnectivityInspector<V, E extends Edge<V>>
+public class ConnectivityInspector<V, E>
     implements GraphListener<V, E>
 {
 
@@ -102,7 +102,7 @@ public class ConnectivityInspector<V, E extends Edge<V>>
      *
      * @param g the graph for which a connectivity inspector to be created.
      */
-    public <EE extends DirEdge<V>> ConnectivityInspector(DirectedGraph<V, EE> g)
+    public ConnectivityInspector(DirectedGraph<V, E> g)
     {
         init();
         m_graph = new AsUndirectedGraph<V,E>(g);

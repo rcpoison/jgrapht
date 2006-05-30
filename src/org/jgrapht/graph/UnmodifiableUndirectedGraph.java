@@ -49,7 +49,7 @@ import org.jgrapht.*;
  *
  * @see UnmodifiableGraph
  */
-public class UnmodifiableUndirectedGraph<V, E extends Edge<V>>
+public class UnmodifiableUndirectedGraph<V, E>
     extends UnmodifiableGraph<V, E> implements UndirectedGraph<V, E>
 {
 

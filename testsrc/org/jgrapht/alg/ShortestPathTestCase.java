@@ -66,12 +66,12 @@ public abstract class ShortestPathTestCase extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    Edge m_e12;
-    Edge m_e13;
-    Edge m_e15;
-    Edge m_e24;
-    Edge m_e34;
-    Edge m_e45;
+    DefaultEdge m_e12;
+    DefaultEdge m_e13;
+    DefaultEdge m_e15;
+    DefaultEdge m_e24;
+    DefaultEdge m_e34;
+    DefaultEdge m_e45;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -84,20 +84,20 @@ public abstract class ShortestPathTestCase extends TestCase
         Graph g = create();
 
         path = findPathBetween(g, V1, V2);
-        assertEquals(Arrays.asList(new Edge [] { m_e12 }), path);
+        assertEquals(Arrays.asList(new DefaultEdge [] { m_e12 }), path);
 
         path = findPathBetween(g, V1, V4);
-        assertEquals(Arrays.asList(new Edge [] {
+        assertEquals(Arrays.asList(new DefaultEdge [] {
                     m_e12, m_e24
                 }), path);
 
         path = findPathBetween(g, V1, V5);
-        assertEquals(Arrays.asList(new Edge [] {
+        assertEquals(Arrays.asList(new DefaultEdge [] {
                     m_e12, m_e24, m_e45
                 }), path);
 
         path = findPathBetween(g, V3, V4);
-        assertEquals(Arrays.asList(new Edge [] {
+        assertEquals(Arrays.asList(new DefaultEdge [] {
                     m_e13, m_e12, m_e24
                 }), path);
     }
@@ -111,16 +111,16 @@ public abstract class ShortestPathTestCase extends TestCase
     
     protected Graph createWithBias(boolean negate)
     {
-        Graph g;
+        Graph<String,DefaultEdge> g;
         double bias = 1;
         if (negate) {
             // negative-weight edges are being tested, so only a directed graph
             // makes sense
-            g = new SimpleDirectedWeightedGraph();
+            g = new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);
             bias = -1;
         } else {
             // by default, use an undirected graph
-            g = new SimpleWeightedGraph();
+            g = new SimpleWeightedGraph(DefaultWeightedEdge.class);
         }
 
         g.addVertex(V1);
@@ -129,23 +129,17 @@ public abstract class ShortestPathTestCase extends TestCase
         g.addVertex(V4);
         g.addVertex(V5);
 
-        m_e12 = g.addEdge(V1, V2);
-        m_e12.setWeight(bias * 2);
+        m_e12 = Graphs.addEdge(g, V1, V2, bias * 2);
 
-        m_e13 = g.addEdge(V1, V3);
-        m_e13.setWeight(bias * 3);
+        m_e13 = Graphs.addEdge(g, V1, V3, bias * 3);
 
-        m_e24 = g.addEdge(V2, V4);
-        m_e24.setWeight(bias * 5);
+        m_e24 = Graphs.addEdge(g, V2, V4, bias * 5);
 
-        m_e34 = g.addEdge(V3, V4);
-        m_e34.setWeight(bias * 20);
+        m_e34 = Graphs.addEdge(g, V3, V4, bias * 20);
 
-        m_e45 = g.addEdge(V4, V5);
-        m_e45.setWeight(bias * 5);
+        m_e45 = Graphs.addEdge(g, V4, V5, bias * 5);
 
-        m_e15 = g.addEdge(V1, V5);
-        m_e15.setWeight(bias * 100);
+        m_e15 = Graphs.addEdge(g, V1, V5, bias * 100);
 
         return g;
     }

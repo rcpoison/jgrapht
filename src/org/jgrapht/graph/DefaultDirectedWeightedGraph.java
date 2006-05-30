@@ -37,12 +37,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Jun-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -55,7 +55,7 @@ import org.jgrapht.edge.*;
  *
  * @see org.jgrapht.graph.DefaultDirectedGraph
  */
-public class DefaultDirectedWeightedGraph<V, E extends DirEdge<V>>
+public class DefaultDirectedWeightedGraph<V, E>
     extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>
 {
 
@@ -67,10 +67,12 @@ public class DefaultDirectedWeightedGraph<V, E extends DirEdge<V>>
 
     /**
      * Creates a new directed weighted graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public DefaultDirectedWeightedGraph()
+    public DefaultDirectedWeightedGraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.DirectedWeightedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

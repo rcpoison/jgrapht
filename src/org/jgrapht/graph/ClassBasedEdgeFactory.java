@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,20 +22,21 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ------------------------------
- * ListenableUndirectedGraph.java
- * ------------------------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+/* ------------------
+ * ClassBasedEdgeFactory.java
+ * ------------------
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: ListenableUndirectedGraph.java,v 1.4 2005/09/05 04:00:57 perfecthash
- * Exp $
+ * $Id: EdgeFactories.java 456 2006-04-24 00:32:26Z perfecthash $
  *
  * Changes
  * -------
- * 05-Aug-2003 : Initial revision (BN);
+ * 24-Jul-2003 : Initial revision (BN);
+ * 04-Aug-2003 : Renamed from EdgeFactoryFactory & made utility class (BN);
+ * 03-Nov-2003 : Made edge factories serializable (BN);
  * 11-Mar-2004 : Made generic (CH);
  * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
@@ -44,39 +45,35 @@ package org.jgrapht.graph;
 
 import org.jgrapht.*;
 
+import java.io.*;
 
 /**
- * An undirected graph which is also {@link org.jgrapht.ListenableGraph}.
+ * An EdgeFactory for producing edges by using a class as a factory.
  *
- * @see org.jgrapht.graph.DefaultListenableGraph
+ * @author Barak Naveh
+ * @since Jul 14, 2003
  */
-public class ListenableUndirectedGraph<V, E>
-    extends DefaultListenableGraph<V, E> implements UndirectedGraph<V, E>
+public class ClassBasedEdgeFactory<V, E>
+    implements EdgeFactory<V, E>, Serializable
 {
+    private static final long serialVersionUID = 3618135658586388792L;
 
-    //~ Static fields/initializers --------------------------------------------
+    private final Class<? extends E> edgeClass;
 
-    private static final long serialVersionUID = 3256999969193145905L;
-
-    //~ Constructors ----------------------------------------------------------
-
-    /**
-     * Creates a new listenable undirected simple graph.
-     *
-     * @param edgeClass class on which to base factory for edges
-     */
-    public ListenableUndirectedGraph(Class<? extends E> edgeClass)
+    public ClassBasedEdgeFactory(Class<? extends E> edgeClass)
     {
-        this(new SimpleGraph<V,E>(edgeClass));
+        this.edgeClass = edgeClass;
     }
-
+        
     /**
-     * Creates a new listenable undirected graph.
-     *
-     * @param base the backing graph.
+     * @see EdgeFactory#createEdge(Object, Object)
      */
-    public ListenableUndirectedGraph(UndirectedGraph<V, E> base)
+    public E createEdge(V source, V target)
     {
-        super(base);
+        try {
+            return edgeClass.newInstance();
+        } catch (Exception ex) {
+            throw new RuntimeException("Edge factory failed", ex);
+        }
     }
 }

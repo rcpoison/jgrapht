@@ -46,7 +46,7 @@ package org.jgrapht;
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface EdgeFactory<V, E extends Edge<V>>
+public interface EdgeFactory<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

@@ -37,19 +37,19 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
  * A simple directed weighted graph. A simple directed weighted graph is a
  * simple directed graph for which edges are assigned weights.
  */
-public class SimpleDirectedWeightedGraph<V, E extends DirEdge<V>>
+public class SimpleDirectedWeightedGraph<V, E>
     extends SimpleDirectedGraph<V, E> implements WeightedGraph<V, E>
 {
 
@@ -72,9 +72,11 @@ public class SimpleDirectedWeightedGraph<V, E extends DirEdge<V>>
 
     /**
      * Creates a new simple directed weighted graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public SimpleDirectedWeightedGraph()
+    public SimpleDirectedWeightedGraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.DirectedWeightedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }

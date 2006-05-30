@@ -74,7 +74,7 @@ public class BronKerboschCliqueFinderTest extends TestCase
      *
      * @param g
      */
-    public void createGraph(Graph<String, Edge<String>> g)
+    public void createGraph(Graph<String, DefaultEdge> g)
     {
         g.addVertex(V1);
         g.addVertex(V2);
@@ -108,12 +108,12 @@ public class BronKerboschCliqueFinderTest extends TestCase
 
     public void testFindBiggest()
     {
-        SimpleGraph<String, Edge<String>> g =
-            new SimpleGraph<String, Edge<String>>();
+        SimpleGraph<String, DefaultEdge> g =
+            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
         createGraph(g);
 
-        BronKerboschCliqueFinder<String, Edge<String>> finder =
-            new BronKerboschCliqueFinder<String, Edge<String>>(g);
+        BronKerboschCliqueFinder<String, DefaultEdge> finder =
+            new BronKerboschCliqueFinder<String, DefaultEdge>(g);
 
         Collection<Set<String>> cliques = finder.getBiggestMaximalCliques();
 
@@ -132,12 +132,12 @@ public class BronKerboschCliqueFinderTest extends TestCase
 
     public void testFindAll()
     {
-        SimpleGraph<String, Edge<String>> g =
-            new SimpleGraph<String, Edge<String>>();
+        SimpleGraph<String, DefaultEdge> g =
+            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
         createGraph(g);
 
-        BronKerboschCliqueFinder<String, Edge<String>> finder =
-            new BronKerboschCliqueFinder<String, Edge<String>>(g);
+        BronKerboschCliqueFinder<String, DefaultEdge> finder =
+            new BronKerboschCliqueFinder<String, DefaultEdge>(g);
 
         Collection<Set<String>> cliques = finder.getAllMaximalCliques();
 

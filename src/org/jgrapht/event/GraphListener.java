@@ -54,7 +54,7 @@ import org.jgrapht.*;
  * @see org.jgrapht.event.VertexSetListener
  * @since Jul 18, 2003
  */
-public interface GraphListener<V, E extends Edge<V>>
+public interface GraphListener<V, E>
     extends VertexSetListener<V>
 {
 

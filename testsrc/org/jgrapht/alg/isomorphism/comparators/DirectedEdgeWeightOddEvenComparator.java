@@ -35,13 +35,14 @@
  */
 package org.jgrapht.alg.isomorphism.comparators;
 
-import org.jgrapht.edge.*;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 import org.jgrapht.util.equivalence.*;
 
 
 /**
- * eq.set according to the weights of the edges. Uses (int)Edge.getWeight() and
- * checks odd/even.
+ * eq.set according to the weights of the edges. Uses Graph.getEdgeWeight(Edge)
+ * (cast to integer) and checks odd/even.
  *
  * @author Assaf
  * @since Aug 12, 2005
@@ -50,8 +51,15 @@ public class DirectedEdgeWeightOddEvenComparator
     implements EquivalenceComparator
 {
 
+    private final Graph graph;
+    
     //~ Methods ---------------------------------------------------------------
 
+    public DirectedEdgeWeightOddEvenComparator(Graph graph)
+    {
+        this.graph = graph;
+    }
+    
     /* (non-Javadoc)
      * @see
      *
@@ -67,8 +75,8 @@ public class DirectedEdgeWeightOddEvenComparator
         Object context1,
         Object context2)
     {
-        int int1 = (int) ((DirectedWeightedEdge) arg1).getWeight();
-        int int2 = (int) ((DirectedWeightedEdge) arg2).getWeight();
+        int int1 = (int) graph.getEdgeWeight(arg1);
+        int int2 = (int) graph.getEdgeWeight(arg2);
 
         boolean result = ((int1 % 2) == (int2 % 2));
         return result;
@@ -85,7 +93,7 @@ public class DirectedEdgeWeightOddEvenComparator
      */
     public int equivalenceHashcode(Object arg1, Object context)
     {
-        int int1 = (int) ((DirectedWeightedEdge) arg1).getWeight();
+        int int1 = (int) graph.getEdgeWeight(arg1);
         return int1 % 2;
     }
 }

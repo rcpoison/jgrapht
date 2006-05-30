@@ -51,7 +51,7 @@ import org.jgrapht.*;
  *
  * @see Subgraph
  */
-public class UndirectedWeightedSubgraph<V, E extends Edge<V>>
+public class UndirectedWeightedSubgraph<V, E>
     extends UndirectedSubgraph<V, E> implements WeightedGraph<V, E>
 {
 

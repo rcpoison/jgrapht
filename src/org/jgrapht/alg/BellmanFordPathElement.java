@@ -40,13 +40,13 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.Edge;
+import org.jgrapht.*;
 
 /**
  * Helper class for {@link BellmanFordShortestPath}; not intended
  * for general use.
  */
-final class BellmanFordPathElement<V,E extends Edge<V>>
+final class BellmanFordPathElement<V,E>
     extends AbstractPathElement<V,E> implements Cloneable
 {
     private double cost = 0;
@@ -63,9 +63,12 @@ final class BellmanFordPathElement<V,E extends Edge<V>>
      *            total cost of the created path element.
      *  
      */
-    protected BellmanFordPathElement(BellmanFordPathElement<V,E> pathElement,
-            E edge, double cost) {
-        super(pathElement, edge);
+    protected BellmanFordPathElement(
+        Graph<V,E> graph,
+        BellmanFordPathElement<V,E> pathElement,
+        E edge, double cost)
+    {
+        super(graph, pathElement, edge);
 
         this.cost = cost;
     }

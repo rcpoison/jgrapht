@@ -36,6 +36,7 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -50,7 +51,7 @@ import org.jgrapht.*;
  *
  * @see org.jgrapht.graph.Subgraph
  */
-public class DirectedSubgraph<V, E extends DirEdge<V>> extends Subgraph<V, E>
+public class DirectedSubgraph<V, E> extends Subgraph<V, E>
     implements DirectedGraph<V, E>
 {
 

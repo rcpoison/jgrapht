@@ -53,7 +53,7 @@ import org.jgrapht.util.permutation.*;
  * @author Assaf Lehr
  * @since May 20, 2005 ver5.3
  */
-abstract class AbstractExhaustiveIsomorphismInspector<V,E extends Edge<V>>
+abstract class AbstractExhaustiveIsomorphismInspector<V,E>
     implements GraphIsomorphismInspector<IsomorphismRelation>
 {
 
@@ -169,7 +169,9 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E extends Edge<V>>
                 this.graph2.vertexSet());
 
         this.lableGraph1 =
-            new GraphOrdering<V,E>(this.graph1VertexSet, this.graph1.edgeSet());
+            new GraphOrdering<V,E>(
+                this.graph1,
+                this.graph1VertexSet, this.graph1.edgeSet());
 
         this.graph2EdgeSet = new LinkedHashSet<E>(this.graph2.edgeSet());
     }
@@ -248,6 +250,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E extends Edge<V>>
                 // compare edges
                 GraphOrdering<V,E> currPermuteGraph =
                     new GraphOrdering<V,E>(
+                        this.graph2,
                         currVertexPermutation,
                         this.graph2EdgeSet);
 

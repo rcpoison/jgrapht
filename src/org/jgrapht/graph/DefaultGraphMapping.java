@@ -129,12 +129,14 @@ public class DefaultGraphMapping implements GraphMapping
 
         Object resultObject = null;
 
-        if (vertexOrEdge instanceof Edge) {
-            Edge currEdge = (Edge) vertexOrEdge;
+        if (sourceGraph.containsEdge(vertexOrEdge)) {
+            Object currEdge = vertexOrEdge;
             Object mappedSourceVertex =
-                getCorrespondenceVertex(currEdge.getSource(), forward);
+                getCorrespondenceVertex(
+                    sourceGraph.getEdgeSource(currEdge), forward);
             Object mappedTargetVertex =
-                getCorrespondenceVertex(currEdge.getTarget(), forward);
+                getCorrespondenceVertex(
+                    sourceGraph.getEdgeTarget(currEdge), forward);
             if ((mappedSourceVertex == null) || (mappedTargetVertex == null)) {
                 resultObject = null;
             } else {

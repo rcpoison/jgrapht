@@ -34,7 +34,7 @@ import org.jgrapht.*;
  *
  * @author Michael Behrisch
  */
-public abstract class WeightedGraphAlgorithm<V,E extends Edge<V>> implements Serializable
+public abstract class WeightedGraphAlgorithm<V,E> implements Serializable
 {
 
     //~ Instance fields -------------------------------------------------------

@@ -36,12 +36,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -51,7 +51,7 @@ import org.jgrapht.edge.*;
  * href="http://mathworld.wolfram.com/SimpleGraph.html">
  * http://mathworld.wolfram.com/SimpleGraph.html</a>.
  */
-public class SimpleGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+public class SimpleGraph<V, E> extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
 
@@ -73,9 +73,11 @@ public class SimpleGraph<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
 
     /**
      * Creates a new simple graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public SimpleGraph()
+    public SimpleGraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.UndirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }

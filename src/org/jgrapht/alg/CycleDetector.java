@@ -54,7 +54,7 @@ import org.jgrapht.traverse.*;
  * @author John V. Sichi
  * @since Sept 16, 2004
  */
-public class CycleDetector<V, E extends Edge<V>>
+public class CycleDetector<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -74,7 +74,7 @@ public class CycleDetector<V, E extends Edge<V>>
      */
     @SuppressWarnings("unchecked")    // FIXME hb 28-Nov-05: Don't know how to
                                       // solve this, yet
-    public <EE extends DirEdge<V>> CycleDetector(DirectedGraph<V, EE> graph)
+    public CycleDetector(DirectedGraph<V, E> graph)
     {
         m_graph = (Graph<V,E>)graph;
     }

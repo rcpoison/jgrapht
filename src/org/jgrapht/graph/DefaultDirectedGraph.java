@@ -36,6 +36,7 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -43,18 +44,17 @@ package org.jgrapht.graph;
 import java.io.Serializable;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
- * A directed graph. A directed graph is a non-simple directed graph in which
- * multiple edges between any two vertices are <i>not</i> permitted, but loops
- * are.
+ * A directed graph. A default directed graph is a non-simple directed graph in
+ * which multiple edges between any two vertices are <i>not</i> permitted, but
+ * loops are.
  *
  * <p>prefixed 'Default' to avoid name collision with the DirectedGraph
  * interface.</p>
  */
-public class DefaultDirectedGraph<V, E extends DirEdge<V>>
+public class DefaultDirectedGraph<V, E>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -63,14 +63,15 @@ public class DefaultDirectedGraph<V, E extends DirEdge<V>>
     private static final long serialVersionUID = 3544953246956466230L;
 
     //~ Constructors ----------------------------------------------------------
-
+    
     /**
      * Creates a new directed graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public DefaultDirectedGraph()
+    public DefaultDirectedGraph(Class<? extends E> edgeClass)
     {
-
-        this(new EdgeFactories.DirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**
@@ -82,5 +83,4 @@ public class DefaultDirectedGraph<V, E extends DirEdge<V>>
     {
         super(ef, false, true);
     }
-    
 }

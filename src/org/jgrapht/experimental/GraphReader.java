@@ -166,13 +166,13 @@ public class GraphReader
 
                     if (x != y) {
                         if (cols.length > 3) {
-                            GraphHelper.addEdgeWithVertices(
+                            Graphs.addEdgeWithVertices(
                                 g,
                                 new Integer(x),
                                 new Integer(y),
                                 Double.parseDouble(cols[3]));
                         } else {
-                            GraphHelper.addEdgeWithVertices(
+                            Graphs.addEdgeWithVertices(
                                 g,
                                 new Integer(x),
                                 new Integer(y));

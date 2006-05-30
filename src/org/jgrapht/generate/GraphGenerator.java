@@ -50,7 +50,7 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public interface GraphGenerator<V,E extends Edge<V>,T>
+public interface GraphGenerator<V,E,T>
 {
 
     //~ Methods ---------------------------------------------------------------

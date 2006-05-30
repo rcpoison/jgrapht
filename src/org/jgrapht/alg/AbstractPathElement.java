@@ -40,11 +40,11 @@
  */
 package org.jgrapht.alg;
 
+import org.jgrapht.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import org.jgrapht.Edge;
 
 /**
  * A new path is created from a path concatenated to an edge. It's like a linked
@@ -59,7 +59,7 @@ import org.jgrapht.Edge;
  * in algorithms.  If we want to promote it to public, we should first clean it
  * up and move it to the parent package, making a Path a first-class concept.
  */
-abstract class AbstractPathElement<V, E extends Edge<V>> {
+abstract class AbstractPathElement<V, E> {
 
     /**
      * Number of hops of the path.
@@ -89,8 +89,11 @@ abstract class AbstractPathElement<V, E extends Edge<V>> {
      *            edge reaching the end vertex of the path element created.
      */
     protected AbstractPathElement(
-        AbstractPathElement<V,E> pathElement, E edge) {
-        this.vertex = edge.oppositeVertex(pathElement.getVertex());
+        Graph<V,E> graph,
+        AbstractPathElement<V,E> pathElement, E edge)
+    {
+        this.vertex = Graphs.getOppositeVertex(
+            graph, edge, pathElement.getVertex());
         this.prevEdge = edge;
         this.prevPathElement = pathElement;
 

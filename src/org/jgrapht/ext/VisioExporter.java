@@ -107,18 +107,18 @@ public class VisioExporter
         }
 
         for (Iterator i = g.edgeSet().iterator(); i.hasNext();) {
-            exportEdge(out, (Edge) i.next());
+            exportEdge(out, i.next(), g);
         }
 
         out.flush();
     }
 
-    private void exportEdge(PrintStream out, Edge edge)
+    private void exportEdge(PrintStream out, Object edge, Graph g)
     {
         String sourceName =
-            m_vertexNameProvider.getVertexName(edge.getSource());
+            m_vertexNameProvider.getVertexName(g.getEdgeSource(edge));
         String targetName =
-            m_vertexNameProvider.getVertexName(edge.getTarget());
+            m_vertexNameProvider.getVertexName(g.getEdgeTarget(edge));
 
         out.print("Link,");
 

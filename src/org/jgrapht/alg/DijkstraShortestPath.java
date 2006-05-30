@@ -55,7 +55,7 @@ import org.jgrapht.traverse.*;
  * @author John V. Sichi
  * @since Sep 2, 2003
  */
-public final class DijkstraShortestPath<V, E extends Edge<V>>
+public final class DijkstraShortestPath<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -104,7 +104,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
             V vertex = iter.next();
 
             if (vertex.equals(endVertex)) {
-                createEdgeList(iter, endVertex);
+                createEdgeList(graph, iter, endVertex);
                 m_pathLength = iter.getShortestPathLength(endVertex);
 
                 return;
@@ -148,7 +148,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
      *
      * @return List of Edges, or null if no path exists
      */
-    public static <V, E extends Edge<V>> List<E> findPathBetween(
+    public static <V, E> List<E> findPathBetween(
         Graph<V, E> graph,
         V startVertex,
         V endVertex)
@@ -162,7 +162,10 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
         return alg.getPathEdgeList();
     }
 
-    private void createEdgeList(ClosestFirstIterator<V, E> iter, V endVertex)
+    private void createEdgeList(
+        Graph<V, E> graph,
+        ClosestFirstIterator<V, E> iter,
+        V endVertex)
     {
         m_edgeList = new ArrayList<E>();
 
@@ -174,7 +177,7 @@ public final class DijkstraShortestPath<V, E extends Edge<V>>
             }
 
             m_edgeList.add(edge);
-            endVertex = edge.oppositeVertex(endVertex);
+            endVertex = Graphs.getOppositeVertex(graph, edge, endVertex);
         }
 
         Collections.reverse(m_edgeList);

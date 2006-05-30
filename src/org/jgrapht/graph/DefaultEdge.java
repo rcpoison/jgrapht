@@ -22,34 +22,38 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ---------
- * Edge.java
- * ---------
+/* ----------------
+ * DefaultEdge.java
+ * ----------------
  * (C) Copyright 2003, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: DefaultEdge.java 456 2006-04-24 00:32:26Z perfecthash $
  *
  * Changes
  * -------
  * 24-Jul-2003 : Initial revision (BN);
- * 06-Nov-2003 : Change edge sharing semantics (JVS);
+ * 10-Aug-2003 : General edge refactoring (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
-package org.jgrapht;
+package org.jgrapht.graph;
+
+import org.jgrapht.*;
+
 
 /**
- * Interface for directed edges.
- * 
- * The class is not called <i>DirectedEdge</i> to avoid a name clash with
- * a previous implementation and to save characters (generics are a bit verbose).
- * 
- * @author Hartmut Benz
- * @since 0.7.0
+ * A default implementation for edges in a {@link Graph}.
+ *
+ * @author Barak Naveh
+ * @since Jul 14, 2003
  */
-public interface DirEdge<V> extends Edge<V>
+public class DefaultEdge extends IntrusiveEdge
 {
+    //~ Static fields/initializers --------------------------------------------
+
+    private static final long serialVersionUID = 3258408452177932855L;
 }

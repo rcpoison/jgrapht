@@ -50,7 +50,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 19, 2003
  */
-public interface TraversalListener<V, E extends Edge<V>>
+public interface TraversalListener<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

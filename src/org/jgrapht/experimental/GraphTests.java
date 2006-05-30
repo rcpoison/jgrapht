@@ -5,7 +5,7 @@ import java.util.*;
 import org.jgrapht.*;
 
 
-public final class GraphTests<V, E extends Edge<V>>
+public final class GraphTests<V, E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -16,18 +16,18 @@ public final class GraphTests<V, E extends Edge<V>>
 
     //~ Methods ---------------------------------------------------------------
 
-    public static <V, E extends Edge<V>> boolean isEmpty(Graph<V,E> g)
+    public static <V, E> boolean isEmpty(Graph<V,E> g)
     {
         return g.edgeSet().isEmpty();
     }
 
-    public static <V, E extends Edge<V>> boolean isComplete(Graph<V,E> g)
+    public static <V, E> boolean isComplete(Graph<V,E> g)
     {
         int n = g.vertexSet().size();
         return g.edgeSet().size() == (n * (n - 1) / 2);
     }
 
-    public static <V, E extends Edge<V>> boolean isConnected(Graph<V,E> g)
+    public static <V, E> boolean isConnected(Graph<V,E> g)
     {
         int numVertices = g.vertexSet().size();
         int numEdges = g.edgeSet().size();
@@ -47,7 +47,7 @@ public final class GraphTests<V, E extends Edge<V>>
 
         while (!queue.isEmpty()) {
             v = queue.removeFirst();
-            for (Iterator<V> it = GraphHelper.neighborListOf(g, v).iterator();
+            for (Iterator<V> it = Graphs.neighborListOf(g, v).iterator();
                 it.hasNext();) {
                 v = it.next();
                 if (!known.contains(v)) {
@@ -59,14 +59,14 @@ public final class GraphTests<V, E extends Edge<V>>
         return known.size() == numVertices;
     }
 
-    public static <V, E extends Edge<V>> boolean isTree(Graph<V,E> g)
+    public static <V, E> boolean isTree(Graph<V,E> g)
     {
         return
             isConnected(g)
             && (g.edgeSet().size() == (g.vertexSet().size() - 1));
     }
 
-    public static <V, E extends Edge<V>> boolean isBipartite(Graph<V,E> g)
+    public static <V, E> boolean isBipartite(Graph<V,E> g)
     {
         if ((4 * g.edgeSet().size())
             > (g.vertexSet().size() * g.vertexSet().size()))
@@ -89,7 +89,7 @@ public final class GraphTests<V, E extends Edge<V>>
             v = queue.removeFirst();
             unknown.remove(v);
 
-            for (Iterator<V> it = GraphHelper.neighborListOf(g, v).iterator();
+            for (Iterator<V> it = Graphs.neighborListOf(g, v).iterator();
                 it.hasNext();) {
                 V n = it.next();
                 if (unknown.contains(n)) {

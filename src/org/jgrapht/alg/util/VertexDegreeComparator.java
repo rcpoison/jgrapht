@@ -52,7 +52,7 @@ import org.jgrapht.*;
  * @author Linda Buisman
  * @since Nov 6, 2003
  */
-public class VertexDegreeComparator<V, E extends Edge<V>>
+public class VertexDegreeComparator<V, E>
     implements java.util.Comparator<V>
 {
 

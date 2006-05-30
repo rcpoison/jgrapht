@@ -47,16 +47,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.Edge;
-import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
+import org.jgrapht.*;
 
 /**
  * Helper class for {@link BellmanFordShortestPath}; not intended
  * for general use.
  */
-class BellmanFordIterator<V,E extends Edge<V>>
+class BellmanFordIterator<V,E>
     implements Iterator<List<V>> {
 
     /**
@@ -146,7 +143,8 @@ class BellmanFordIterator<V,E extends Edge<V>>
                 V vertex = this.prevImprovedVertices.get(i);
                 for (Iterator<? extends E> iter = edgesOfIterator(vertex); iter.hasNext();) {
                     E edge = iter.next();
-                    V oppositeVertex = edge.oppositeVertex(vertex);
+                    V oppositeVertex = Graphs.getOppositeVertex(
+                        graph, edge, vertex);
                     if (getPathElement(oppositeVertex) != null) {
                         boolean relaxed = relaxVertexAgain(oppositeVertex, edge);
                         if (relaxed) {
@@ -183,7 +181,7 @@ class BellmanFordIterator<V,E extends Edge<V>>
      */
     protected void assertValidEdge(E edge) {
         if (this.graph instanceof UndirectedGraph) {
-            if (edge.getWeight() < 0) {
+            if (graph.getEdgeWeight(edge) < 0) {
                 throw new IllegalArgumentException(NEGATIVE_UNDIRECTED_EDGE);
             }
         }
@@ -198,14 +196,14 @@ class BellmanFordIterator<V,E extends Edge<V>>
      * @param edge
      *            the edge via which the vertex was encountered.
      * @return the cost obtained by concatenation.
-     * @see org.jgrapht.Edge#getWeight()
+     * @see org.jgrapht.Graph#getEdgeWeight(E)
      */
     protected double calculatePathCost(V vertex, E edge) {
-        V oppositeVertex = edge.oppositeVertex(vertex);
+        V oppositeVertex = Graphs.getOppositeVertex(graph, edge, vertex);
         // we get the data of the previous pass.
         BellmanFordPathElement<V,E> oppositePrevData = getPrevSeenData(oppositeVertex);
 
-        double pathCost = edge.getWeight();
+        double pathCost = graph.getEdgeWeight(edge);
 
         if (!oppositePrevData.getVertex().equals(this.startVertex)) {
             // if it's not the start vertex, we add the cost of the previous
@@ -328,11 +326,11 @@ class BellmanFordIterator<V,E extends Edge<V>>
      */
     private BellmanFordPathElement<V,E> createSeenData(V vertex, E edge,
             double cost) {
-        BellmanFordPathElement<V,E> prevPathElement = getPrevSeenData(edge
-                .oppositeVertex(vertex));
+        BellmanFordPathElement<V,E> prevPathElement = getPrevSeenData(
+            Graphs.getOppositeVertex(graph, edge, vertex));
 
         BellmanFordPathElement<V,E> data = new BellmanFordPathElement<V,E>(
-                prevPathElement, edge, cost);
+                graph, prevPathElement, edge, cost);
 
         return data;
     }
@@ -387,8 +385,8 @@ class BellmanFordIterator<V,E extends Edge<V>>
         double candidateCost = calculatePathCost(vertex, edge);
 
         // we get the data of the previous pass.
-        BellmanFordPathElement<V,E> oppositePrevData = getPrevSeenData(edge
-                .oppositeVertex(vertex));
+        BellmanFordPathElement<V,E> oppositePrevData = getPrevSeenData(
+            Graphs.getOppositeVertex(graph, edge, vertex));
 
         BellmanFordPathElement<V,E> pathElement = getSeenData(vertex);
         return pathElement.improve(oppositePrevData, edge, candidateCost);

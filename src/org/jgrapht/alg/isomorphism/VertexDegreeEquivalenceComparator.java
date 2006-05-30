@@ -52,7 +52,7 @@ import org.jgrapht.util.equivalence.*;
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class VertexDegreeEquivalenceComparator<V,E extends Edge<V>>
+public class VertexDegreeEquivalenceComparator<V,E>
     implements EquivalenceComparator<V,Graph<V,E>>
 {
 

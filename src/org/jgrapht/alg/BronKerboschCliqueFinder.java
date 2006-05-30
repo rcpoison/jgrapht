@@ -54,7 +54,7 @@ import org.jgrapht.*;
  *
  * @author Ewgenij Proschak
  */
-public class BronKerboschCliqueFinder<V, E extends Edge<V>>
+public class BronKerboschCliqueFinder<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------

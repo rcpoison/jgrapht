@@ -51,7 +51,7 @@ import org.jgrapht.util.permutation.*;
  * @author Assaf
  * @since Jul 29, 2005
  */
-class EquivalenceIsomorphismInspector<V,E extends Edge<V>>
+class EquivalenceIsomorphismInspector<V,E>
     extends AbstractExhaustiveIsomorphismInspector<V,E>
 {
 

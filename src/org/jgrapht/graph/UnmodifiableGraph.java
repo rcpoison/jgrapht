@@ -37,6 +37,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -63,7 +64,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 24, 2003
  */
-public class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E>
+public class UnmodifiableGraph<V, E> extends GraphDelegator<V, E>
     implements Serializable
 {
 
@@ -88,33 +89,17 @@ public class UnmodifiableGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection<? extends E> edges)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
-     * @see Graph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices(Collection<? extends V> vertices)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
-     * @see Graph#addEdge(Edge)
-     */
-    public boolean addEdge(E e)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
+    {
+        throw new UnsupportedOperationException(UNMODIFIABLE);
+    }
+
+    /**
+     * @see Graph#addEdge(Object, Object, E)
+     */
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }

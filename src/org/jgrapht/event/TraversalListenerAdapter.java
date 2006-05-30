@@ -52,7 +52,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Aug 6, 2003
  */
-public class TraversalListenerAdapter<V, E extends Edge<V>>
+public class TraversalListenerAdapter<V, E>
     implements TraversalListener<V, E>
 {
 

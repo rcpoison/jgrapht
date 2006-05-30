@@ -36,12 +36,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -52,7 +52,7 @@ import org.jgrapht.edge.*;
  * href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class WeightedMultigraph<V, E extends Edge<V>> extends Multigraph<V, E>
+public class WeightedMultigraph<V, E> extends Multigraph<V, E>
     implements WeightedGraph<V, E>
 {
 
@@ -74,9 +74,11 @@ public class WeightedMultigraph<V, E extends Edge<V>> extends Multigraph<V, E>
 
     /**
      * Creates a new weighted multigraph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public WeightedMultigraph()
+    public WeightedMultigraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }

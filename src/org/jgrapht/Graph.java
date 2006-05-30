@@ -39,6 +39,7 @@
  * 06-Nov-2003 : Change edge sharing semantics (JVS);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht;
@@ -67,13 +68,13 @@ import java.util.*;
  *
  * Through generics, a graph can be typed to specific classes for vertices
  * <code>V</code> and edges <code>E&lt;T&gt;</code>. Such a graph can contain
- * vertices of type <code>V</code> and all sub-types and Edges of type <code>E</code>
- * and all sub-types.
+ * vertices of type <code>V</code> and all sub-types and Edges of type
+ * <code>E</code> and all sub-types.
  * 
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface Graph<V, E extends Edge<V>>
+public interface Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -121,42 +122,6 @@ public interface Graph<V, E extends Edge<V>>
     public EdgeFactory<V, E> getEdgeFactory();
 
     /**
-     * Adds all of the specified edges to this graph. The behavior of this
-     * operation is undefined if the specified vertex collection is modified
-     * while the operation is in progress. This method will invoke the {@link
-     * #addEdge(Edge)} method.
-     *
-     * @param edges the edges to be added to this graph.
-     *
-     * @return <tt>true</tt> if this graph changed as a result of the call
-     *
-     * @throws NullPointerException if the specified edges contains one or more
-     *                              null edges, or if the specified vertex
-     *                              collection is <tt>null</tt>.
-     *
-     * @see #addVertex(Object)
-     */
-    public boolean addAllEdges(Collection<? extends E> edges);
-
-    /**
-     * Adds all of the specified vertices to this graph. The behavior of this
-     * operation is undefined if the specified vertex collection is modified
-     * while the operation is in progress. This method will invoke the {@link
-     * #addVertex(Object)} method.
-     *
-     * @param vertices the vertices to be added to this graph.
-     *
-     * @return <tt>true</tt> if this graph changed as a result of the call
-     *
-     * @throws NullPointerException if the specified vertices contains one or
-     *                              more null vertices, or if the specified
-     *                              vertex collection is <tt>null</tt>.
-     *
-     * @see #addVertex(Object)
-     */
-    public boolean addAllVertices(Collection<? extends V> vertices);
-
-    /**
      * Creates a new edge in this graph, going from the source vertex to the
      * target vertex, and returns the created edge. Some graphs do not allow
      * edge-multiplicity. In such cases, if the graph already contains an edge
@@ -192,43 +157,41 @@ public interface Graph<V, E extends Edge<V>>
     public E addEdge(V sourceVertex, V targetVertex);
 
     /**
-     * Adds the specified edge to this graph. More formally, adds the specified
-     * edge, <code>e</code>, to this graph if this graph contains no edge
+     * Adds the specified edge to this graph, going from the source vertex to
+     * the target vertex. More formally, adds the specified edge,
+     * <code>e</code>, to this graph if this graph contains no edge
      * <code>e2</code> such that <code>e2.equals(e)</code>. If this graph
-     * already contains such edge, the call leaves this graph unchanged and
-     * returns <tt>false</tt>. If the edge was added to the graph, returns
-     * <code>true</code>.
+     * already contains such an edge, the call leaves this graph unchanged and
+     * returns <tt>false</tt>. Some graphs do not allow edge-multiplicity. In
+     * such cases, if the graph already contains an edge from the specified
+     * source to the specified target, than this method does not change the
+     * graph and returns <code>false</code>.  If the edge was added to the
+     * graph, returns <code>true</code>.
      *
-     * <p>Some graphs do not allow edge-multiplicity. In such cases, if the
-     * graph already contains an edge going from <code>e.getSource()</code>
-     * vertex to <code>e.getTarget()</code> vertex, than this method does not
-     * change the graph and returns <code>false</code>.</p>
+     * <p>The source and target vertices must already be contained in this
+     * graph. If they are not found in graph IllegalArgumentException is
+     * thrown.</p>
      *
-     * <p>The source and target vertices of the specified edge must already be
-     * in this graph. If this is not the case, IllegalArgumentException is
-     * thrown. The edge must also be assignment compatible with the class of
-     * the edges produced by the edge factory of this graph. If this is not the
-     * case ClassCastException is thrown.</p>
-     *
+     * @param sourceVertex source vertex of the edge.
+     * @param targetVertex target vertex of the edge.
      * @param e edge to be added to this graph.
      *
      * @return <tt>true</tt> if this graph did not already contain the
      *         specified edge.
      *
-     * @throws IllegalArgumentException if source or target vertices of
-     *                                  specified edge are not found in this
-     *                                  graph.
+     * @throws IllegalArgumentException if source or target vertices are not
+     *                                  found in the graph.
      * @throws ClassCastException if the specified edge is not assignment
      *                            compatible with the class of edges produced
      *                            by the edge factory of this graph.
-     * @throws NullPointerException if the specified edge is <code>null</code>.
+     * @throws NullPointerException if any of the specified vertices is <code>
+     *                              null</code>.
      *
-     * @see #addEdge(Object, Object)
+     * @see #addEdge(V, V)
      * @see #getEdgeFactory()
-     * @see EdgeFactory
      */
-    public boolean addEdge(E e);
-
+    public boolean addEdge(V sourceVertex, V targetVertex, E e);
+    
     /**
      * Adds the specified vertex to this graph if not already present. More
      * formally, adds the specified vertex, <code>v</code>, to this graph if
@@ -272,7 +235,7 @@ public interface Graph<V, E extends Edge<V>>
      *
      * @return <tt>true</tt> if this graph contains the specified edge.
      */
-    public boolean containsEdge(Edge e);
+    public boolean containsEdge(E e);
 
     /**
      * Returns <tt>true</tt> if this graph contains the specified vertex.  More
@@ -428,4 +391,40 @@ public interface Graph<V, E extends Edge<V>>
      * @return a set view of the vertices contained in this graph.
      */
     public Set<V> vertexSet();
+
+    /**
+     * Returns the source vertex of an edge.  For an undirected graph, source
+     * and target are distinguishable designations (but without any
+     * mathematical meaning).
+     *
+     * @param e edge of interest
+     *
+     * @return source vertex
+     */
+    public V getEdgeSource(E e);
+
+    /**
+     * Returns the target vertex of an edge.  For an undirected graph, source
+     * and target are distinguishable designations (but without any
+     * mathematical meaning).
+     *
+     * @param e edge of interest
+     *
+     * @return target vertex
+     */
+    public V getEdgeTarget(E e);
+
+    /**
+     * Returns the weight assigned to a given edge.  Unweighted graphs return
+     * 1.0 (as defined by {@link WeightedGraph#DEFAULT_EDGE_WEIGHT}),
+     * allowing weighted-graph algorithms to apply to them where
+     * meaningful.
+     *
+     * @param e edge of interest
+     *
+     * @return edge weight
+     *
+     * @see WeightedGraph
+     */
+    public double getEdgeWeight(E e);
 }

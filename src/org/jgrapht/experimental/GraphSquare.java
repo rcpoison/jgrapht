@@ -52,7 +52,7 @@ import org.jgrapht.graph.*;
  * @author Michael Behrisch
  * @since Sep 14, 2004
  */
-public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
+public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -71,7 +71,7 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
     public GraphSquare(final Graph<V,E> g, final boolean createLoops)
     {
         super(g.getEdgeFactory(), false, createLoops);
-        super.addAllVertices(g.vertexSet());
+        Graphs.addAllVertices(this, g.vertexSet());
         addSquareEdges(g, createLoops);
 
         if (g instanceof ListenableGraph) {
@@ -81,13 +81,13 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
                         E edge = e.getEdge();
                         addEdgesStartingAt(
                             g,
-                            edge.getSource(),
-                            edge.getTarget(),
+                            g.getEdgeSource(edge),
+                            g.getEdgeTarget(edge),
                             createLoops);
                         addEdgesStartingAt(
                             g,
-                            edge.getTarget(),
-                            edge.getSource(),
+                            g.getEdgeTarget(edge),
+                            g.getEdgeSource(edge),
                             createLoops);
                     }
 
@@ -111,33 +111,17 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection<? extends E> edges)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
-     * @see Graph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices(Collection vertices)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
-     * @see Graph#addEdge(Edge)
-     */
-    public boolean addEdge(E e)
-    {
-        throw new UnsupportedOperationException(UNMODIFIABLE);
-    }
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
+    {
+        throw new UnsupportedOperationException(UNMODIFIABLE);
+    }
+
+    /**
+     * @see Graph#addEdge(Object, Object, E)
+     */
+    public E addEdge(V sourceVertex, V targetVertex, E e)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
@@ -208,7 +192,7 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
             return;
         }
 
-        final List<V> adjVertices = GraphHelper.neighborListOf(g, u);
+        final List<V> adjVertices = Graphs.neighborListOf(g, u);
 
         for (int i = 0; i < adjVertices.size(); i++) {
             final V w = adjVertices.get(i);
@@ -222,7 +206,7 @@ public class GraphSquare<V, E extends Edge<V>> extends AbstractBaseGraph<V, E>
     private void addSquareEdges(Graph<V,E> g, boolean createLoops)
     {
         for (V v: g.vertexSet()) {
-            List<V> adjVertices = GraphHelper.neighborListOf(g, v);
+            List<V> adjVertices = Graphs.neighborListOf(g, v);
 
             for (int i = 0; i < adjVertices.size(); i++) {
                 addEdgesStartingAt(g, v, adjVertices.get(i), createLoops);

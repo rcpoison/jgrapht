@@ -111,7 +111,7 @@ public class TouchgraphConverter
                     if (graph.getEdge(jgtNodes[i], jgtNodes[j]) != null) {
                         
                         //add TG directed edge from i to j
-                        tgPanel.addEdge(new Edge(tgNodes[i], tgNodes[j]));
+                        tgPanel.addEdge(tgNodes[i], tgNodes[j]);
                     }
                 }
             }

@@ -58,7 +58,7 @@ import org.jgrapht.traverse.*;
  * @author John V. Sichi
  * @since Sep 2, 2003
  */
-public abstract class ProximityIterator<V, E extends Edge<V>>
+public abstract class ProximityIterator<V, E>
     extends CrossComponentIterator<V,E,HeapVertex<E>>
 {
 

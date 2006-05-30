@@ -42,7 +42,7 @@
 package org.jgrapht.traverse;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -70,10 +70,10 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest
         return "1,2,3,4,5,6,7,8,9,orphan";
     }
 
-    AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
+    AbstractGraphIterator<String, DefaultEdge> createIterator(DirectedGraph<String, DefaultEdge> g, String vertex)
     {
-        AbstractGraphIterator<String, DirectedEdge<String>> i =
-            new BreadthFirstIterator<String, DirectedEdge<String>>(g, vertex);
+        AbstractGraphIterator<String, DefaultEdge> i =
+            new BreadthFirstIterator<String, DefaultEdge>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

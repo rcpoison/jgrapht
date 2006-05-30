@@ -52,6 +52,9 @@ import org.jgrapht.graph.*;
 import org.jgraph.*;
 import org.jgraph.graph.*;
 
+// resolve ambiguity
+import org.jgrapht.graph.DefaultEdge;
+
 
 /**
  * A demo applet that shows how to use JGraph to visualize JGraphT graphs.
@@ -100,11 +103,12 @@ public class JGraphAdapterDemo extends JApplet
     public void init()
     {
         // create a JGraphT graph
-        ListenableGraph<String,DirEdge<String>> g =
-            new ListenableDirectedMultigraph<String,DirEdge<String>>();
+        ListenableGraph<String,DefaultEdge> g =
+            new ListenableDirectedMultigraph<String,DefaultEdge>(
+                DefaultEdge.class);
 
         // create a visualization using JGraph, via an adapter
-        m_jgAdapter = new JGraphModelAdapter<String,DirEdge<String>>(g);
+        m_jgAdapter = new JGraphModelAdapter<String,DefaultEdge>(g);
 
         JGraph jgraph = new JGraph(m_jgAdapter);
 
@@ -183,14 +187,14 @@ public class JGraphAdapterDemo extends JApplet
     /**
      * a listenable directed multigraph that allows loops and parallel edges.
      */
-    private static class ListenableDirectedMultigraph<V,E extends DirEdge<V>>
+    private static class ListenableDirectedMultigraph<V,E>
         extends DefaultListenableGraph<V,E> implements DirectedGraph<V,E>
     {
         private static final long serialVersionUID = 1L;
 
-        ListenableDirectedMultigraph()
+        ListenableDirectedMultigraph(Class<E> edgeClass)
         {
-            super(new DirectedMultigraph<V,E>());
+            super(new DirectedMultigraph<V,E>(edgeClass));
         }
     }
 }

@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,30 +22,36 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-package org.jgrapht.experimental.alg;
+/* ----------------
+ * DefaultWeightedEdge.java
+ * ----------------
+ * (C) Copyright 2006, by John V. Sichi and Contributors.
+ *
+ * Original Author:  John V. Sichi
+ * Contributor(s):   -
+ *
+ * $Id: DefaultEdge.java 456 2006-04-24 00:32:26Z perfecthash $
+ *
+ * Changes
+ * -------
+ * 29-May-2006 : Initial revision (JVS);
+ *
+ */
+package org.jgrapht.graph;
 
 import org.jgrapht.*;
 
-
 /**
- * A ShortestPathAlgorithm.
+ * A default implementation for edges in a {@link WeightedGraph}.
+ * All access to the weight of an edge must go through the graph
+ * interface, which is why this class doesn't expose any public methods.
  *
- * @author Michael Behrisch
+ * @author John V. Sichi
+ * @version $Id:$
  */
-public interface ShortestPathAlgorithm<V,E>
+public class DefaultWeightedEdge extends DefaultEdge
 {
-
-    //~ Methods ---------------------------------------------------------------
-
-    /**
-     * Determines the shortest path from a given vertex to all other vertices
-     * that are in the same connected set as the given vertex in the weighted
-     * graph.
-     *
-     * @param from The Vertex from where we want to obtain the shortest path to
-     *             all other vertices.
-     *
-     * @return A WeightedGraph comprising of the shortest path spanning tree.
-     */
-    public WeightedGraph<V,E> shortestPathTree(V from);
+    double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
 }
+
+// End DefaultWeightedEdge.java

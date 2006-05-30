@@ -43,7 +43,6 @@ package org.jgrapht.alg;
 import java.util.List;
 
 import org.jgrapht.Graph;
-import org.jgrapht.Edge;
 
 /**
  * <a href="http://www.nist.gov/dads/HTML/dijkstraalgo.html">Bellman-Ford
@@ -51,7 +50,7 @@ import org.jgrapht.Edge;
  * maximum number of edges.
  *  
  */
-public class BellmanFordShortestPath<V,E extends Edge<V>> {
+public class BellmanFordShortestPath<V,E> {
 
     /**
      * Graph on which shortest paths are searched.
@@ -189,7 +188,7 @@ public class BellmanFordShortestPath<V,E extends Edge<V>> {
      *
      * @return List of Edges, or null if no path exists
      */
-    public static <V, E extends Edge<V>> List<E> findPathBetween(
+    public static <V, E> List<E> findPathBetween(
         Graph<V, E> graph,
         V startVertex,
         V endVertex)

@@ -55,7 +55,7 @@ import java.util.*;
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface DirectedGraph<V, E extends DirEdge<V>> extends Graph<V, E>
+public interface DirectedGraph<V, E> extends Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

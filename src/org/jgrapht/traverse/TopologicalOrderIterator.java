@@ -70,7 +70,7 @@ import org.jgrapht.util.*;
  * @author Marden Neubert
  * @since Dec 18, 2004
  */
-public class TopologicalOrderIterator<V, E extends DirEdge<V>>
+public class TopologicalOrderIterator<V, E>
     extends CrossComponentIterator<V, E, Object>
 {
 
@@ -181,7 +181,7 @@ public class TopologicalOrderIterator<V, E extends DirEdge<V>>
      *
      * @return start vertex
      */
-    private static <V, E extends DirEdge<V>> V initialize(DirectedGraph<V, E> dg,
+    private static <V, E> V initialize(DirectedGraph<V, E> dg,
         LinkedList<V> queue,
         Map<V, ModifiableInteger> inDegreeMap)
     {

@@ -67,7 +67,8 @@ public class SimpleTouchgraphApplet extends Applet
      * */
     public static Graph createSamplegraph()
     {
-        UndirectedGraph<String,Edge<String>> g = new SimpleGraph<String,Edge<String>>();
+        UndirectedGraph<String,DefaultEdge> g =
+            new SimpleGraph<String,DefaultEdge>();
 
         String v1 = "v1";
         String v2 = "v2";

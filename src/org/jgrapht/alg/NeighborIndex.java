@@ -47,7 +47,7 @@ import org.jgrapht.util.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
- * lists of neighbors can be obtained from {@link GraphHelper}, they are
+ * lists of neighbors can be obtained from {@link Graphs}, they are
  * re-calculated at each invocation by walking a vertex's incident edges, Which
  * becomes inordinately expensive when performed often.
  *
@@ -64,7 +64,7 @@ import org.jgrapht.util.*;
  * @author Charles Fry
  * @since Dec 13, 2005
  */
-public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
+public class NeighborIndex<V, E> implements GraphListener<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -124,8 +124,8 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
     public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = edge.getSource();
-        V target = edge.getTarget();
+        V source = m_graph.getEdgeSource(edge);
+        V target = m_graph.getEdgeTarget(edge);
         getNeighbors(source).addNeighbor(target);
         getNeighbors(target).addNeighbor(source);
     }
@@ -136,8 +136,8 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
     public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = edge.getSource();
-        V target = edge.getTarget();
+        V source = m_graph.getEdgeSource(edge);
+        V target = m_graph.getEdgeTarget(edge);
         if (m_neighborMap.containsKey(source)) {
             m_neighborMap.get(source).removeNeighbor(target);
         }
@@ -167,7 +167,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
         Neighbors neighbors = m_neighborMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    GraphHelper.neighborListOf(m_graph, v));
+                    Graphs.neighborListOf(m_graph, v));
             m_neighborMap.put(v, neighbors);
         }
         return neighbors;
@@ -179,7 +179,7 @@ public class NeighborIndex<V, E extends Edge<V>> implements GraphListener<V, E>
      * Stores cached neighbors  for a single vertex. Includes support for
      * live neighbor sets and duplicate neighbors.
      */
-    static class Neighbors<V, E extends Edge<V>>
+    static class Neighbors<V, E>
     {
         private Map<V,ModifiableInteger> m_neighborCounts = new LinkedHashMap<V,ModifiableInteger>();
         // TODO could eventually make neighborSet modifiable, resulting

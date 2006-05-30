@@ -52,7 +52,7 @@ import org.jgrapht.traverse.*;
  * of such modifications are undefined.
  *
  * <p>The metric for <i>closest</i> here is the path length from a start
- * vertex. Edge.getWeight() is summed to calculate path length. Negative edge
+ * vertex. Graph.getWeight(e) is summed to calculate path length. Negative edge
  * weights will result in an IllegalArgumentException.</p>
  *
  * @author John V. Sichi

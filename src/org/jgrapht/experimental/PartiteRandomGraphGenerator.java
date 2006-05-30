@@ -57,7 +57,7 @@ import org.jgrapht.generate.*;
  * @author Michael Behrisch
  * @since Sep 13, 2004
  */
-public class PartiteRandomGraphGenerator<V,E extends Edge<V>>
+public class PartiteRandomGraphGenerator<V,E>
     implements GraphGenerator<V,E,Object[]>
 {
 
@@ -148,7 +148,7 @@ public class PartiteRandomGraphGenerator<V,E extends Edge<V>>
 
         for (int i = 0; i < m_numVertices.length; i++) {
             vertices[i] =
-                RandomGraphHelper.addVertices(
+                RandomGraphs.addVertices(
                     target,
                     vertexFactory,
                     m_numVertices[i]);
@@ -158,7 +158,7 @@ public class PartiteRandomGraphGenerator<V,E extends Edge<V>>
             }
 
             for (int j = 0; j < i; j++) {
-                RandomGraphHelper.addEdges(
+                RandomGraphs.addEdges(
                     target,
                     Arrays.asList(vertices[i]),
                     Arrays.asList(vertices[j]),

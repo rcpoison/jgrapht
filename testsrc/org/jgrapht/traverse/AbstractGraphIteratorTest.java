@@ -41,14 +41,12 @@
  */
 package org.jgrapht.traverse;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.EnhancedTestCase;
-import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.*;
 import org.jgrapht.event.ConnectedComponentTraversalEvent;
 import org.jgrapht.event.EdgeTraversalEvent;
 import org.jgrapht.event.TraversalListener;
 import org.jgrapht.event.VertexTraversalEvent;
-import org.jgrapht.graph.DefaultDirectedWeightedGraph;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -74,9 +72,9 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
     {
         m_result = new StringBuffer();
 
-        DirectedGraph<String, DirectedEdge<String>> graph = createDirectedGraph();
+        DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
 
-        AbstractGraphIterator<String,DirectedEdge<String>> iterator = createIterator(graph, "1");
+        AbstractGraphIterator<String,DefaultEdge> iterator = createIterator(graph, "1");
         iterator.addTraversalListener(new MyTraversalListener());
 
         while (iterator.hasNext()) {
@@ -94,10 +92,11 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
 
     abstract String getExpectedStr2();
 
-    DirectedGraph<String, DirectedEdge<String>> createDirectedGraph()
+    DirectedGraph<String, DefaultEdge> createDirectedGraph()
     {
-        DirectedGraph<String, DirectedEdge<String>> graph =
-            new DefaultDirectedWeightedGraph<String, DirectedEdge<String>>();
+        DirectedGraph<String, DefaultEdge> graph =
+            new DefaultDirectedWeightedGraph<String, DefaultEdge>(
+                DefaultWeightedEdge.class);
 
         //
         String v1 = "1";
@@ -126,14 +125,14 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         // ClosestFirstIterator where it matters.  For other traversals, it
         // will be ignored.  Rely on the default edge weight being 1.
         graph.addEdge(v1, v2);
-        graph.addEdge(v1, v3).setWeight(100);
-        graph.addEdge(v2, v4).setWeight(1000);
+        Graphs.addEdge(graph, v1, v3, 100);
+        Graphs.addEdge(graph, v2, v4, 1000);
         graph.addEdge(v3, v5);
-        graph.addEdge(v3, v6).setWeight(100);
+        Graphs.addEdge(graph, v3, v6, 100);
         graph.addEdge(v5, v6);
-        graph.addEdge(v5, v7).setWeight(200);
+        Graphs.addEdge(graph, v5, v7, 200);
         graph.addEdge(v6, v1);
-        graph.addEdge(v7, v8).setWeight(100);
+        Graphs.addEdge(graph, v7, v8, 100);
         graph.addEdge(v7, v9);
         graph.addEdge(v8, v2);
         graph.addEdge(v9, v4);
@@ -141,8 +140,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         return graph;
     }
 
-    abstract AbstractGraphIterator<String, DirectedEdge<String>> createIterator(
-        DirectedGraph<String, DirectedEdge<String>> g,
+    abstract AbstractGraphIterator<String, DefaultEdge> createIterator(
+        DirectedGraph<String, DefaultEdge> g,
         String startVertex);
 
     //~ Inner Classes ---------------------------------------------------------
@@ -152,7 +151,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
      *
      * @author Barak Naveh
      */
-    private class MyTraversalListener implements TraversalListener<String,DirectedEdge<String>>
+    private class MyTraversalListener implements TraversalListener<String,DefaultEdge>
     {
         private int m_componentNumber = 0;
         private int m_numComponentVertices = 0;
@@ -197,7 +196,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         /**
          * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
          */
-        public void edgeTraversed(EdgeTraversalEvent<String,DirectedEdge<String>> e)
+        public void edgeTraversed(EdgeTraversalEvent<String,DefaultEdge> e)
         {
             // to be tested...
         }

@@ -45,7 +45,6 @@ import junit.framework.*;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
-
 /**
  * .
  *
@@ -65,7 +64,8 @@ public class NeighborIndexTest extends TestCase
 
     public void testNeighborSet()
     {
-        ListenableUndirectedGraph g = new ListenableUndirectedGraph();
+        ListenableUndirectedGraph g = new ListenableUndirectedGraph(
+            DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 
@@ -97,7 +97,8 @@ public class NeighborIndexTest extends TestCase
 
     public void testDirectedNeighborSet()
     {
-        ListenableDirectedGraph g = new ListenableDirectedGraph();
+        ListenableDirectedGraph g = new ListenableDirectedGraph(
+            DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 

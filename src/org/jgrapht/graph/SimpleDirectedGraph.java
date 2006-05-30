@@ -36,12 +36,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -49,7 +49,7 @@ import org.jgrapht.edge.*;
  * which neither multiple edges between any two vertices nor loops are
  * permitted.
  */
-public class SimpleDirectedGraph<V, E extends DirEdge<V>>
+public class SimpleDirectedGraph<V, E>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -61,10 +61,12 @@ public class SimpleDirectedGraph<V, E extends DirEdge<V>>
 
     /**
      * Creates a new simple directed graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public SimpleDirectedGraph()
+    public SimpleDirectedGraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.DirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

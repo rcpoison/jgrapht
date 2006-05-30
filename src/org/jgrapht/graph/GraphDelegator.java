@@ -37,6 +37,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -63,7 +64,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 20, 2003
  */
-public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
+public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     implements Graph<V, E>, Serializable
 {
 
@@ -125,19 +126,19 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#addEdge(Edge)
-     */
-    public boolean addEdge(E e)
-    {
-        return m_delegate.addEdge(e);
-    }
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
     {
         return m_delegate.addEdge(sourceVertex, targetVertex);
+    }
+
+    /**
+     * @see Graph#addEdge(Object, Object, E)
+     */
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
+    {
+        return m_delegate.addEdge(sourceVertex, targetVertex, e);
     }
 
     /**
@@ -151,7 +152,7 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see Graph#containsEdge(Edge)
      */
-    public boolean containsEdge(Edge e)
+    public boolean containsEdge(E e)
     {
         return m_delegate.containsEdge(e);
     }
@@ -258,5 +259,37 @@ public class GraphDelegator<V, E extends Edge<V>> extends AbstractGraph<V, E>
     public Set<V> vertexSet()
     {
         return m_delegate.vertexSet();
+    }
+    
+    /**
+     * @see Graph#getEdgeSource(E)
+     */
+    public V getEdgeSource(E e)
+    {
+        return m_delegate.getEdgeSource(e);
+    }
+
+    /**
+     * @see Graph#getEdgeTarget(E)
+     */
+    public V getEdgeTarget(E e)
+    {
+        return m_delegate.getEdgeTarget(e);
+    }
+    
+    /**
+     * @see Graph#getEdgeWeight(E)
+     */
+    public double getEdgeWeight(E e)
+    {
+        return m_delegate.getEdgeWeight(e);
+    }
+
+    /**
+     * @see WeightedGraph#setEdgeWeight(E)
+     */
+    public void setEdgeWeight(E e, double weight)
+    {
+        ((WeightedGraph<V, E>) m_delegate).setEdgeWeight(e, weight);
     }
 }

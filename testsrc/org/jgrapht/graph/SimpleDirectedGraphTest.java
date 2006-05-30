@@ -45,7 +45,6 @@ import java.util.*;
 import org.jgrapht.DirectedGraph;
 import org.jgrapht.EdgeFactory;
 import org.jgrapht.EnhancedTestCase;
-import org.jgrapht.edge.DirectedEdge;
 
 
 /**
@@ -59,13 +58,13 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    DirectedGraph<String,DirectedEdge<String>> m_gEmpty;
-    private DirectedGraph<String,DirectedEdge<String>> m_g1;
-    private DirectedGraph<String,DirectedEdge<String>> m_g2;
-    private DirectedGraph<String,DirectedEdge<String>> m_g3;
-    private DirectedGraph<String,DirectedEdge<String>> m_g4;
-    private DirectedEdge<String> m_eLoop;
-    private EdgeFactory<String,DirectedEdge<String>> m_eFactory;
+    DirectedGraph<String,DefaultEdge> m_gEmpty;
+    private DirectedGraph<String,DefaultEdge> m_g1;
+    private DirectedGraph<String,DefaultEdge> m_g2;
+    private DirectedGraph<String,DefaultEdge> m_g3;
+    private DirectedGraph<String,DefaultEdge> m_g4;
+    private DefaultEdge m_eLoop;
+    private EdgeFactory<String,DefaultEdge> m_eFactory;
     private String m_v1 = "v1";
     private String m_v2 = "v2";
     private String m_v3 = "v3";
@@ -84,38 +83,38 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Class to test for boolean addEdge(Edge)
+     * Class to test for boolean addEdge(V, V, E)
      */
     public void testAddEdgeEdge()
     {
         init();
 
         try {
-            m_g1.addEdge(m_eLoop); // loops not allowed
+            m_g1.addEdge(m_v1, m_v1, m_eLoop); // loops not allowed
             assertFalse();
         } catch (IllegalArgumentException e) {
             assertTrue();
         }
 
         try {
-            m_g3.addEdge(null);
+            m_g3.addEdge(m_v1, m_v1, null);
             assertFalse(); // NPE
         } catch (NullPointerException e) {
             assertTrue();
         }
 
-        DirectedEdge<String> e = m_eFactory.createEdge(m_v2, m_v1);
+        DefaultEdge e = m_eFactory.createEdge(m_v2, m_v1);
 
         try {
-            m_g1.addEdge(e); // no such vertex in graph
+            m_g1.addEdge("ya", "ya", e); // no such vertex in graph
             assertFalse();
         } catch (IllegalArgumentException ile) {
             assertTrue();
         }
 
-        assertEquals(false, m_g2.addEdge(e));
-        assertEquals(false, m_g3.addEdge(e));
-        assertEquals(true, m_g4.addEdge(e));
+        assertEquals(false, m_g2.addEdge(m_v2, m_v1, e));
+        assertEquals(false, m_g3.addEdge(m_v2, m_v1, e));
+        assertEquals(true, m_g4.addEdge(m_v2, m_v1, e));
     }
 
     /**
@@ -236,7 +235,7 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
         assertEquals(m_g4.edgesOf(m_v1).size(), 2);
         assertEquals(m_g3.edgesOf(m_v1).size(), 4);
 
-        Iterator<DirectedEdge<String>> iter = m_g3.edgesOf(m_v1).iterator();
+        Iterator<DefaultEdge> iter = m_g3.edgesOf(m_v1).iterator();
         int count = 0;
 
         while (iter.hasNext()) {
@@ -314,8 +313,8 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
     {
         init();
 
-        Set<DirectedEdge<String>> e1to2 = m_g2.outgoingEdgesOf(m_v1);
-        Set<DirectedEdge<String>> e2from1 = m_g2.incomingEdgesOf(m_v2);
+        Set<DefaultEdge> e1to2 = m_g2.outgoingEdgesOf(m_v1);
+        Set<DefaultEdge> e2from1 = m_g2.incomingEdgesOf(m_v2);
         assertEquals(e1to2, e2from1);
     }
 
@@ -389,11 +388,16 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
 
     private void init()
     {
-        m_gEmpty = new SimpleDirectedGraph<String, DirectedEdge<String>>();
-        m_g1 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
-        m_g2 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
-        m_g3 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
-        m_g4 = new SimpleDirectedGraph<String, DirectedEdge<String>>();
+        m_gEmpty = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+        m_g1 = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+        m_g2 = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+        m_g3 = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
+        m_g4 = new SimpleDirectedGraph<String, DefaultEdge>(
+            DefaultEdge.class);
 
         m_eFactory = m_g1.getEdgeFactory();
         m_eLoop = m_eFactory.createEdge(m_v1, m_v1);

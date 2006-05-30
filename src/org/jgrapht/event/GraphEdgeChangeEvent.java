@@ -53,7 +53,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Aug 10, 2003
  */
-public class GraphEdgeChangeEvent<V, E extends Edge<V>>
+public class GraphEdgeChangeEvent<V, E>
     extends GraphChangeEvent
 {
 

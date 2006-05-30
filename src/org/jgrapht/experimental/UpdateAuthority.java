@@ -84,24 +84,9 @@ public interface UpdateAuthority extends Serializable
     public boolean isUpdateAuthorityOf(Graph g);
 
     /**
-     * @see Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection edges);
-
-    /**
-     * @see Graph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices(Collection vertices);
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public Edge addEdge(Object sourceVertex, Object targetVertex);
-
-    /**
-     * @see Graph#addEdge(Edge)
-     */
-    public boolean addEdge(Edge e);
 
     /**
      * @see Graph#addVertex(Object)

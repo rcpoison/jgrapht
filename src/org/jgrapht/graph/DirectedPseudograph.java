@@ -35,12 +35,12 @@
  * Changes
  * -------
  * 11-Mar-2004 : Initial revision: generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -50,7 +50,7 @@ import org.jgrapht.edge.*;
  * href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class DirectedPseudograph<V, E extends DirEdge<V>>
+public class DirectedPseudograph<V, E>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -59,9 +59,9 @@ public class DirectedPseudograph<V, E extends DirEdge<V>>
     /**
      * @see AbstractBaseGraph
      */
-    public DirectedPseudograph()
+    public DirectedPseudograph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.DirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

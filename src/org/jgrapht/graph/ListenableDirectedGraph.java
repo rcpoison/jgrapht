@@ -37,6 +37,7 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -49,7 +50,7 @@ import org.jgrapht.*;
  *
  * @see org.jgrapht.graph.DefaultListenableGraph
  */
-public class ListenableDirectedGraph<V, E extends DirEdge<V>>
+public class ListenableDirectedGraph<V, E>
     extends DefaultListenableGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -61,10 +62,12 @@ public class ListenableDirectedGraph<V, E extends DirEdge<V>>
 
     /**
      * Creates a new listenable directed graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public ListenableDirectedGraph()
+    public ListenableDirectedGraph(Class<? extends E> edgeClass)
     {
-        this(new DefaultDirectedGraph<V,E>());
+        this(new DefaultDirectedGraph<V,E>(edgeClass));
     }
 
     /**

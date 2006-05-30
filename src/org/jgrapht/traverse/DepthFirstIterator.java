@@ -59,7 +59,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 29, 2003
  */
-public class DepthFirstIterator<V, E extends Edge<V>>
+public class DepthFirstIterator<V, E>
     extends CrossComponentIterator<V, E, Object>
 {
 

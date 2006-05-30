@@ -81,7 +81,7 @@ public abstract class VertexCovers
      * @return a set of vertices which is a vertex cover for the specified
      *         graph.
      */
-    public static <V, E extends Edge<V>> Set<V> find2ApproximationCover(Graph<V, E> g)
+    public static <V, E> Set<V> find2ApproximationCover(Graph<V, E> g)
     {
         // C <-- {}
         Set<V> cover = new HashSet<V>();
@@ -95,8 +95,8 @@ public abstract class VertexCovers
             E e = sg.edgeSet().iterator().next();
 
             // C <-- C U {u,v}
-            V u = e.getSource();
-            V v = e.getTarget();
+            V u = g.getEdgeSource(e);
+            V v = g.getEdgeTarget(e);
             cover.add(u);
             cover.add(v);
 
@@ -116,7 +116,7 @@ public abstract class VertexCovers
      * <p>The algorithm works on undirected graphs, but can also work on
      * directed graphs when their edge-directions are ignored. To ignore edge
      * directions you can use {@link
-     * org.jgrapht.GraphHelper#undirectedGraph(Graph)} or {@link
+     * org.jgrapht.Graphs#undirectedGraph(Graph)} or {@link
      * org.jgrapht.graph.AsUndirectedGraph}.</p>
      *
      * @param g the graph for which vertex cover approximation is to be found.
@@ -124,7 +124,7 @@ public abstract class VertexCovers
      * @return a set of vertices which is a vertex cover for the specified
      *         graph.
      */
-    public static <V, E extends Edge<V>> Set<V> findGreedyCover(UndirectedGraph<V, E> g)
+    public static <V, E> Set<V> findGreedyCover(UndirectedGraph<V, E> g)
     {
         // C <-- {}
         Set<V> cover = new HashSet<V>();

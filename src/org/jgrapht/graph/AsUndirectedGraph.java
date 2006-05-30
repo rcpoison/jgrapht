@@ -37,6 +37,7 @@
  * 14-Aug-2003 : Initial revision (JVS);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -46,7 +47,6 @@ import java.io.*;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 import org.jgrapht.util.*;
 
 
@@ -75,7 +75,7 @@ import org.jgrapht.util.*;
  * @author John V. Sichi
  * @since Aug 14, 2003
  */
-public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E>
+public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     implements Serializable, UndirectedGraph<V, E>
 {
 
@@ -97,7 +97,7 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
      */
     @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: Don't know how
                                         // to fix this, yet
-    public <ED extends DirEdge<V>> AsUndirectedGraph(DirectedGraph<V,ED> g)
+    public <ED> AsUndirectedGraph(DirectedGraph<V,ED> g)
     {
         super((Graph<V,E>)g);
     }
@@ -141,25 +141,17 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
     }
 
     /**
-     * @see org.jgrapht.Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection<? extends E> edges)
-    {
-        throw new UnsupportedOperationException(NO_EDGE_ADD);
-    }
-
-    /**
-     * @see org.jgrapht.Graph#addEdge(Edge)
-     */
-    public boolean addEdge(E e)
-    {
-        throw new UnsupportedOperationException(NO_EDGE_ADD);
-    }
-
-    /**
      * @see org.jgrapht.Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
+    {
+        throw new UnsupportedOperationException(NO_EDGE_ADD);
+    }
+
+    /**
+     * @see org.jgrapht.Graph#addEdge(Object, Object, E)
+     */
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
         throw new UnsupportedOperationException(NO_EDGE_ADD);
     }
@@ -210,13 +202,6 @@ public class AsUndirectedGraph<V, E extends Edge<V>> extends GraphDelegator<V, E
      */
     public String toString()
     {
-        // take care to print edges using the undirected convention
-        Collection<UndirectedEdge<V>> edgeSet = new ArrayList<UndirectedEdge<V>>();
-
-        for( E edge : edgeSet() ) {
-            edgeSet.add(new UndirectedEdge<V>(edge.getSource(),edge.getTarget()));
-        }
-
-        return super.toStringFromSets(vertexSet(), edgeSet);
+        return super.toStringFromSets(vertexSet(), edgeSet(), false);
     }
 }

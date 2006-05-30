@@ -42,7 +42,7 @@
 package org.jgrapht.traverse;
 
 import org.jgrapht.DirectedGraph;
-import org.jgrapht.edge.DirectedEdge;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -63,12 +63,12 @@ public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
     {
         m_result = new StringBuffer();
 
-        DirectedGraph<String, DirectedEdge<String>> graph = createDirectedGraph();
+        DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
 
         // NOTE:  pick 301 as the radius because it discriminates
         // the boundary case edge between v7 and v9
         AbstractGraphIterator<String, ?> iterator =
-            new ClosestFirstIterator<String, DirectedEdge<String>>(graph, "1", 301);
+            new ClosestFirstIterator<String, DefaultEdge>(graph, "1", 301);
 
         while (iterator.hasNext()) {
             m_result.append(iterator.next());
@@ -92,9 +92,9 @@ public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
         return getExpectedStr1() + ",orphan";
     }
 
-    AbstractGraphIterator<String, DirectedEdge<String>> createIterator(DirectedGraph<String, DirectedEdge<String>> g, String vertex)
+    AbstractGraphIterator<String, DefaultEdge> createIterator(DirectedGraph<String, DefaultEdge> g, String vertex)
     {
-        AbstractGraphIterator<String, DirectedEdge<String>> i = new ClosestFirstIterator<String, DirectedEdge<String>>(g, vertex);
+        AbstractGraphIterator<String, DefaultEdge> i = new ClosestFirstIterator<String, DefaultEdge>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

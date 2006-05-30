@@ -90,7 +90,8 @@ public final class HelloJGraphT
      */
     private static DirectedGraph createHrefGraph()
     {
-        DirectedGraph<URL,DirEdge<URL>> g = new DefaultDirectedGraph<URL,DirEdge<URL>>();
+        DirectedGraph<URL,DefaultEdge> g =
+            new DefaultDirectedGraph<URL,DefaultEdge>(DefaultEdge.class);
 
         try {
             URL amazon = new URL("http://www.amazon.com");
@@ -119,7 +120,8 @@ public final class HelloJGraphT
      */
     private static UndirectedGraph createStringGraph()
     {
-        UndirectedGraph<String,Edge<String>> g = new SimpleGraph<String,Edge<String>>();
+        UndirectedGraph<String,DefaultEdge> g =
+            new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
 
         String v1 = "v1";
         String v2 = "v2";

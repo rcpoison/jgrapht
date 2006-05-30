@@ -36,12 +36,12 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
@@ -51,7 +51,7 @@ import org.jgrapht.edge.*;
  * see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class WeightedPseudograph<V, E extends Edge<V>> extends Pseudograph<V, E>
+public class WeightedPseudograph<V, E> extends Pseudograph<V, E>
     implements WeightedGraph<V, E>
 {
 
@@ -73,9 +73,11 @@ public class WeightedPseudograph<V, E extends Edge<V>> extends Pseudograph<V, E>
 
     /**
      * Creates a new weighted pseudograph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public WeightedPseudograph()
+    public WeightedPseudograph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }

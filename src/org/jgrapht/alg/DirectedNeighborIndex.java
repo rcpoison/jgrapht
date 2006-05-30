@@ -47,7 +47,7 @@ import org.jgrapht.graph.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
- * lists of neighbors can be obtained from {@link GraphHelper}, they are
+ * lists of neighbors can be obtained from {@link Graphs}, they are
  * re-calculated at each invocation by walking a vertex's incident edges, which
  * becomes inordinately expensive when performed often.
  *
@@ -60,7 +60,7 @@ import org.jgrapht.graph.*;
  * @author Charles Fry
  * @since Dec 13, 2005
  */
-public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphListener<V, E>
+public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 {
     //~ Instance fields -------------------------------------------------------
 
@@ -151,8 +151,8 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
     public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = edge.getSource();
-        V target = edge.getTarget();
+        V source = m_graph.getEdgeSource(edge);
+        V target = m_graph.getEdgeTarget(edge);
         getSuccessors(source).addNeighbor(target);
         getPredecessors(target).addNeighbor(source);
     }
@@ -163,8 +163,8 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
     public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = edge.getSource();
-        V target = edge.getTarget();
+        V source = m_graph.getEdgeSource(edge);
+        V target = m_graph.getEdgeTarget(edge);
         if (m_successorMap.containsKey(source)) {
             m_successorMap.get(source).removeNeighbor(target);
         }
@@ -195,7 +195,7 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
         Neighbors neighbors = m_predecessorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    GraphHelper.predecessorListOf(m_graph, v));
+                    Graphs.predecessorListOf(m_graph, v));
             m_predecessorMap.put(v, neighbors);
         }
         return neighbors;
@@ -206,7 +206,7 @@ public class DirectedNeighborIndex<V, E extends DirEdge<V>> implements GraphList
         Neighbors neighbors = m_successorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    GraphHelper.successorListOf(m_graph, v));
+                    Graphs.successorListOf(m_graph, v));
             m_successorMap.put(v, neighbors);
         }
         return neighbors;

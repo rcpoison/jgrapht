@@ -51,7 +51,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Aug 11, 2003
  */
-public class EdgeTraversalEvent<V, E extends Edge<V>> extends EventObject
+public class EdgeTraversalEvent<V, E> extends EventObject
 {
 
     //~ Static fields/initializers --------------------------------------------

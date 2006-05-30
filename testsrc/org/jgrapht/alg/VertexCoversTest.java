@@ -85,7 +85,7 @@ public class VertexCoversTest extends TestCase
             Graph g = createRandomGraph();
             Set c =
                 VertexCovers.findGreedyCover(
-                    GraphHelper.undirectedGraph(g));
+                    Graphs.undirectedGraph(g));
             assertTrue(isCover(c, g));
         }
     }
@@ -121,7 +121,7 @@ public class VertexCoversTest extends TestCase
     {
         // TODO: move random graph generator to be under GraphGenerator
         // framework.
-        Pseudograph g = new Pseudograph();
+        Pseudograph g = new Pseudograph(DefaultEdge.class);
 
         for (int i = 0; i < TEST_GRAPH_SIZE; i++) {
             g.addVertex(new Integer(i));

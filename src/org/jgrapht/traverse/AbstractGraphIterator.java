@@ -54,7 +54,7 @@ import org.jgrapht.event.*;
  * @author Barak Naveh
  * @since Jul 19, 2003
  */
-public abstract class AbstractGraphIterator<V, E extends Edge<V>>
+public abstract class AbstractGraphIterator<V, E>
     implements GraphIterator<V, E>
 {
 

@@ -104,33 +104,17 @@ public class MandatedGraph extends GraphDelegator
     }
 
     /**
-     * @see Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection edges)
-    {
-        return m_updateAuthority.addAllEdges(edges);
-    }
-
-    /**
-     * @see Graph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices(Collection vertices)
-    {
-        return m_updateAuthority.addAllVertices(vertices);
-    }
-
-    /**
-     * @see Graph#addEdge(Edge)
-     */
-    public boolean addEdge(Edge e)
-    {
-        return m_updateAuthority.addEdge(e);
-    }
-
-    /**
      * @see Graph#addEdge(Object, Object)
      */
     public Edge addEdge(Object sourceVertex, Object targetVertex)
+    {
+        return m_updateAuthority.addEdge(sourceVertex, targetVertex);
+    }
+
+    /**
+     * @see Graph#addEdge(Object, Object, E e)
+     */
+    public Edge addEdge(Object sourceVertex, Object targetVertex, Object e)
     {
         return m_updateAuthority.addEdge(sourceVertex, targetVertex);
     }

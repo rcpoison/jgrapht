@@ -37,14 +37,14 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import java.util.*;
 
-import org.jgrapht.Edge;
-import org.jgrapht.Graph;
+import org.jgrapht.*;
 
 
 /**
@@ -57,7 +57,7 @@ import org.jgrapht.Graph;
  * @see org.jgrapht.DirectedGraph
  * @see org.jgrapht.UndirectedGraph
  */
-public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
+public abstract class AbstractGraph<V, E> implements Graph<V, E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -70,34 +70,6 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
     }
 
     //~ Methods ---------------------------------------------------------------
-
-    /**
-     * @see Graph#addAllEdges(Collection)
-     */
-    public boolean addAllEdges(Collection<? extends E> edges)
-    {
-        boolean modified = false;
-
-        for (E e : edges) {
-            modified |= addEdge(e);
-        }
-
-        return modified;
-    }
-
-    /**
-     * @see Graph#addAllVertices(Collection)
-     */
-    public boolean addAllVertices(Collection<? extends V> vertices)
-    {
-        boolean modified = false;
-
-        for (V v : vertices) {
-            modified |= addVertex(v);
-        }
-
-        return modified;
-    }
 
     /**
      * @see Graph#containsEdge(Object, Object)
@@ -155,7 +127,10 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      */
     public String toString()
     {
-        return toStringFromSets(vertexSet(), edgeSet());
+        return toStringFromSets(
+            vertexSet(),
+            edgeSet(),
+            (this instanceof DirectedGraph));
     }
 
     /**
@@ -210,12 +185,44 @@ public abstract class AbstractGraph<V, E extends Edge<V>> implements Graph<V, E>
      *
      * @param vertexSet the vertex set V to be printed
      * @param edgeSet the edge set E to be printed
+     * @param directed true to use parens for each edge (representing directed);
+     * false to use curly braces (representing undirected)
      *
      * @return a string representation of (V,E)
      */
-    protected String toStringFromSets(Collection<? extends V> vertexSet,
-        Collection<? extends Edge<V>> edgeSet)
+    protected String toStringFromSets(
+        Collection<? extends V> vertexSet,
+        Collection<? extends E> edgeSet,
+        boolean directed)
     {
-        return "(" + vertexSet.toString() + ", " + edgeSet.toString() + ")";
+        List<String> renderedEdges = new ArrayList<String>();
+
+        StringBuffer sb = new StringBuffer();
+        for (E e : edgeSet) {
+            if ((e.getClass() != DefaultEdge.class)
+                && (e.getClass() != DefaultWeightedEdge.class))
+            {
+                sb.append(e.toString());
+                sb.append("=");
+            }
+            if (directed) {
+                sb.append("(");
+            } else {
+                sb.append("{");
+            }
+            sb.append(getEdgeSource(e));
+            sb.append(",");
+            sb.append(getEdgeTarget(e));
+            if (directed) {
+                sb.append(")");
+            } else {
+                sb.append("}");
+            }
+            // REVIEW jvs 29-May-2006:  dump weight somewhere?
+            renderedEdges.add(sb.toString());
+            sb.setLength(0);
+        }
+        
+        return "(" + vertexSet + ", " + renderedEdges + ")";
     }
 }

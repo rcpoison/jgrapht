@@ -102,9 +102,9 @@ public class MatrixExporter
         }
 
         for (Object from : g.vertexSet()) {
-            // TODO modify GraphHelper to return neighbor sets
+            // TODO modify Graphs to return neighbor sets
             exportAdjacencyMatrixVertex(out, nameProvider, from,
-                    GraphHelper.neighborListOf(g, from));
+                    Graphs.neighborListOf(g, from));
         }
 
         out.flush();
@@ -130,9 +130,9 @@ public class MatrixExporter
         }
 
         for (Object from : g.vertexSet()) {
-            // TODO modify GraphHelper to return neighbor sets
+            // TODO modify Graphs to return neighbor sets
             exportAdjacencyMatrixVertex(out, nameProvider, from,
-                    GraphHelper.successorListOf(g, from));
+                    Graphs.successorListOf(g, from));
         }
 
         out.flush();
@@ -188,8 +188,8 @@ public class MatrixExporter
 
         for (Object from : g.vertexSet()) {
             String fromName = nameProvider.getVertexName(from);
-            // TODO modify GraphHelper to return neighbor sets
-            List neighbors = GraphHelper.neighborListOf(g, from);
+            // TODO modify Graphs to return neighbor sets
+            List neighbors = Graphs.neighborListOf(g, from);
             println(out, fromName, fromName, Integer.toString(neighbors.size()));
             for (Object to : neighbors) {
                 String toName = nameProvider.getVertexName(to);
@@ -224,8 +224,8 @@ public class MatrixExporter
 
         for (Object from : g.vertexSet()) {
             String fromName = nameProvider.getVertexName(from);
-            // TODO modify GraphHelper to return neighbor sets
-            Set neighbors = new LinkedHashSet(GraphHelper.neighborListOf(g, from));
+            // TODO modify Graphs to return neighbor sets
+            Set neighbors = new LinkedHashSet(Graphs.neighborListOf(g, from));
             if (neighbors.isEmpty()) {
                 println(out, fromName, fromName, "0");
             }

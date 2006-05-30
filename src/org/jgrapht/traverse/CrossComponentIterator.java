@@ -61,7 +61,7 @@ import org.jgrapht.event.*;
  * @author Barak Naveh
  * @since Jan 31, 2004
  */
-public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
+public abstract class CrossComponentIterator<V, E, D>
     extends AbstractGraphIterator<V, E>
 {
 
@@ -97,6 +97,8 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
     private V m_startVertex;
     private Specifics<V, E> m_specifics;
 
+    private final Graph<V, E> m_graph;
+
     /**
      * The connected component state
      */
@@ -122,6 +124,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         if (g == null) {
             throw new IllegalArgumentException("graph must not be null");
         }
+        m_graph = g;
 
         m_specifics = createGraphSpecifics(g);
         m_vertexIterator = g.vertexSet().iterator();
@@ -147,6 +150,14 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
 
     //~ Methods ---------------------------------------------------------------
 
+    /**
+     * @return the graph being traversed
+     */
+    public Graph<V, E> getGraph()
+    {
+        return m_graph;
+    }
+    
     /**
      * @see java.util.Iterator#hasNext()
      */
@@ -296,7 +307,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @return TODO Document me
      */
     @SuppressWarnings("unchecked")    // TODO hb 27-Nov-05: See FIXME below
-    static <V, E extends Edge<V>> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
+    static <V, E> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
             // TODO hb 27-Nov-05: I don't understand, yet, how to cast this nicely
@@ -311,7 +322,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
         for (E edge : m_specifics.edgesOf(vertex)) {
             fireEdgeTraversed(createEdgeTraversalEvent(edge));
             
-            V oppositeV = edge.oppositeVertex(vertex);
+            V oppositeV = Graphs.getOppositeVertex(m_graph, edge, vertex);
             
             if (isSeenVertex(oppositeV)) {
                 encounterVertexAgain(oppositeV, edge);
@@ -381,7 +392,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * Provides unified interface for operations that are different in directed
      * graphs and in undirected graphs.
      */
-    abstract static class Specifics<VV, EE extends Edge<VV>>
+    abstract static class Specifics<VV, EE>
     {
         /**
          * Returns the edges outgoing from the specified vertex in case of
@@ -403,7 +414,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * @author Barak Naveh
      * @since Aug 11, 2003
      */
-    static class FlyweightEdgeEvent<VV, localE extends Edge<VV>>
+    static class FlyweightEdgeEvent<VV, localE>
         extends EdgeTraversalEvent<VV, localE>
     {
         private static final long serialVersionUID = 4051327833765000755L;
@@ -460,7 +471,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * An implementation of {@link Specifics} for a directed
      * graph.
      */
-    private static class DirectedSpecifics<VV, EE extends DirEdge<VV>>
+    private static class DirectedSpecifics<VV, EE>
         extends Specifics<VV, EE>
     {
         private DirectedGraph<VV, EE> m_graph;
@@ -488,7 +499,7 @@ public abstract class CrossComponentIterator<V, E extends Edge<V>, D>
      * An implementation of {@link Specifics} in which edge
      * direction (if any) is ignored.
      */
-    private static class UndirectedSpecifics<VV, EE extends Edge<VV>>
+    private static class UndirectedSpecifics<VV, EE>
         extends Specifics<VV, EE>
     {
         private Graph<VV, EE> m_graph;

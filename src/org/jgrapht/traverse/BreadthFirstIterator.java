@@ -56,7 +56,7 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Jul 19, 2003
  */
-public class BreadthFirstIterator<V, E extends Edge<V>>
+public class BreadthFirstIterator<V, E>
     extends CrossComponentIterator<V, E, Object>
 {
 

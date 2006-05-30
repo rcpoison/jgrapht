@@ -44,6 +44,7 @@
  * 20-Mar-2004 : Cancelled verification of element identity to base graph (BN);
  * 21-Sep-2004 : Added induced subgraph (who?)
  * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
@@ -112,7 +113,7 @@ import org.jgrapht.util.*;
  * whether a directed graph is stored in m_base when executing direction-related methods.
  * My guess is that all direction-related methods should move to DirectedSubgraph.
  */
-public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
+public class Subgraph<V, E> extends AbstractGraph<V, E>
     implements Serializable
 {
     //~ Static fields/initializers --------------------------------------------
@@ -284,20 +285,9 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     }
 
     /**
-     * Adds the specified edge to this subgraph.
-     *
-     * @param e the edge to be added.
-     *
-     * @return <code>true</code> if the edge was added, otherwise <code>
-     *         false</code>.
-     *
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
-     *
-     * @see Subgraph
-     * @see org.jgrapht.Graph#addEdge(Edge)
+     * @see org.jgrapht.Graph#addEdge(V, V, E)
      */
-    public boolean addEdge(E e)
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
         if (e == null) {
             throw new NullPointerException();
@@ -307,8 +297,11 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
             throw new IllegalArgumentException(NO_SUCH_EDGE_IN_BASE);
         }
 
-        assertVertexExist(e.getSource());
-        assertVertexExist(e.getTarget());
+        assertVertexExist(sourceVertex);
+        assertVertexExist(targetVertex);
+
+        assert(m_base.getEdgeSource(e) == sourceVertex);
+        assert(m_base.getEdgeTarget(e) == targetVertex);
 
         if (containsEdge(e)) {
             return false;
@@ -355,7 +348,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
     /**
      * @see org.jgrapht.Graph#containsEdge(Edge)
      */
-    public boolean containsEdge(Edge e)
+    public boolean containsEdge(E e)
     {
         return m_edgeSet.contains(e);
     }
@@ -386,7 +379,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
             if (containsEdge(e)) {
                 degree++;
 
-                if (e.getSource().equals(e.getTarget())) {
+                if (getEdgeSource(e).equals(getEdgeTarget(e))) {
                     degree++;
                 }
             }
@@ -435,8 +428,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
-        for (DirEdge e : ((DirectedGraph<V, ? extends E>) m_base).incomingEdgesOf(vertex)) {
+        for (E e : ((DirectedGraph<V,E>)m_base).incomingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -474,8 +466,7 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        // XXX hb 27-Nov-05: I have no clue why this cast works without raising a warning
-        for (E e : ((DirectedGraph<V, E>) m_base).outgoingEdgesOf(vertex)) {
+        for (E e : ((DirectedGraph<V,E>)m_base).outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -549,6 +540,22 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         return m_unmodifiableVertexSet;
     }
 
+    /**
+     * @see Graph#getEdgeSource(E)
+     */
+    public V getEdgeSource(E e)
+    {
+        return m_base.getEdgeSource(e);
+    }
+
+    /**
+     * @see Graph#getEdgeTarget(E)
+     */
+    public V getEdgeTarget(E e)
+    {
+        return m_base.getEdgeTarget(e);
+    }
+
     private void addEdgesUsingFilter(Set<E> edgeSet, Set<E> filter)
     {
         E e;
@@ -558,15 +565,17 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         for (Iterator<E> iter = edgeSet.iterator(); iter.hasNext();) {
             e = iter.next();
 
+            V sourceVertex = m_base.getEdgeSource(e);
+            V targetVertex = m_base.getEdgeTarget(e);
             containsVertices =
-                containsVertex(e.getSource())
-                && containsVertex(e.getTarget());
+                containsVertex(sourceVertex)
+                && containsVertex(targetVertex);
 
             // note the use of short circuit evaluation
             edgeIncluded = (filter == null) || filter.contains(e);
 
             if (containsVertices && edgeIncluded) {
-                addEdge(e);
+                addEdge(sourceVertex, targetVertex, e);
             }
         }
     }
@@ -585,6 +594,27 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         }
     }
 
+    protected Graph<V,E> getBase()
+    {
+        return m_base;
+    }
+
+    /**
+     * @see Graph#getEdgeWeight(E)
+     */
+    public double getEdgeWeight(E e)
+    {
+        return m_base.getEdgeWeight(e);
+    }
+
+    /**
+     * @see WeightedGraph#setEdgeWeight(E)
+     */
+    public void setEdgeWeight(E e, double weight)
+    {
+        ((WeightedGraph<V, E>) m_base).setEdgeWeight(e, weight);
+    }
+    
     //~ Inner Classes ---------------------------------------------------------
 
     /**
@@ -604,7 +634,11 @@ public class Subgraph<V, E extends Edge<V>> extends AbstractGraph<V, E>
         public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
         {
             if (m_isInduced) {
-                addEdge(e.getEdge());
+                E edge = e.getEdge();
+                addEdge(
+                    m_base.getEdgeSource(edge),
+                    m_base.getEdgeTarget(edge),
+                    edge);
             }
         }
 

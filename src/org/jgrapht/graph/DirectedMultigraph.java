@@ -36,19 +36,19 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 11-Mar-2004 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
  * A directed multigraph. A directed multigraph is a non-simple directed graph
  * in which loops and multiple edges between any two vertices are permitted.
  */
-public class DirectedMultigraph<V, E extends DirEdge<V>>
+public class DirectedMultigraph<V, E>
     extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
 {
 
@@ -60,10 +60,12 @@ public class DirectedMultigraph<V, E extends DirEdge<V>>
 
     /**
      * Creates a new directed multigraph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public DirectedMultigraph()
+    public DirectedMultigraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.DirectedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

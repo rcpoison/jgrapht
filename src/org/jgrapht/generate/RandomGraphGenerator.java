@@ -55,7 +55,7 @@ import org.jgrapht.graph.*;
  * @author Assaf Lehr
  * @since Aug 6, 2005
  */
-public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator<V,E,V>
+public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -180,7 +180,7 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
      * @author Assaf
      * @since Aug 6, 2005
      */
-    public interface EdgeTopologyFactory<VV,EE extends Edge<VV>>
+    public interface EdgeTopologyFactory<VV,EE>
     {
         /**
          * Two different calls to the createEdges() with the same parameters
@@ -233,7 +233,7 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
      * @author Assaf
      * @since Aug 6, 2005
      */
-    public class DefaultEdgeTopologyFactory<VV,EE extends Edge<VV>> implements EdgeTopologyFactory<VV,EE>
+    public class DefaultEdgeTopologyFactory<VV,EE> implements EdgeTopologyFactory<VV,EE>
     {
         public void createEdges(
             Graph<VV,EE> targetGraph,
@@ -267,7 +267,7 @@ public class RandomGraphGenerator<V,E extends Edge<V>> implements GraphGenerator
         }
 
         /**
-         * checks if the numOfEdges is smalelr than the Max edges according to
+         * checks if the numOfEdges is smaller than the Max edges according to
          * the following table:
          *
          * <p>

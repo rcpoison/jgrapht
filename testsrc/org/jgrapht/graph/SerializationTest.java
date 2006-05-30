@@ -44,7 +44,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import org.jgrapht.DirEdge;
 import org.jgrapht.EnhancedTestCase;
 
 
@@ -83,8 +82,9 @@ public class SerializationTest extends EnhancedTestCase
     public void testDirectedMultigraph()
         throws Exception
     {
-        DirectedMultigraph<String,DirEdge<String>> graph =
-            new DirectedMultigraph<String,DirEdge<String>>();
+        DirectedMultigraph<String,DefaultEdge> graph =
+            new DirectedMultigraph<String,DefaultEdge>(
+                DefaultEdge.class);
         graph.addVertex(m_v1);
         graph.addVertex(m_v2);
         graph.addVertex(m_v3);
@@ -92,7 +92,7 @@ public class SerializationTest extends EnhancedTestCase
         graph.addEdge(m_v2, m_v3);
         graph.addEdge(m_v2, m_v3);
 
-        graph = (DirectedMultigraph<String,DirEdge<String>>) serializeAndDeserialize(graph);
+        graph = (DirectedMultigraph<String,DefaultEdge>) serializeAndDeserialize(graph);
         assertTrue(graph.containsVertex(m_v1));
         assertTrue(graph.containsVertex(m_v2));
         assertTrue(graph.containsVertex(m_v3));

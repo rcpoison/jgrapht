@@ -46,7 +46,7 @@ import org.jgrapht.graph.*;
  *
  * @author Michael Behrisch
  */
-public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGraphAlgorithm<V, E>
+public abstract class DijkstraAlgorithm<V, E> extends WeightedGraphAlgorithm<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -124,7 +124,7 @@ public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGr
 
         if (_directed) {
             //FIXME hb 051124: I would like to pass Edge<V> instead of DirectedEdge and remove the cast
-            optimumPathTree = (WeightedGraph<V,E>)new SimpleDirectedWeightedGraph<V,DirEdge<V>>();
+            optimumPathTree = (WeightedGraph<V,E>)new SimpleDirectedWeightedGraph<V,E>();
         } else {
             optimumPathTree = new SimpleWeightedGraph<V,E>();
         }
@@ -159,23 +159,23 @@ public abstract class DijkstraAlgorithm<V, E extends Edge<V>> extends WeightedGr
             E treeEdge = (E) hv.getAdditional();    //FIXME hb 051124: Remove cast
 
             if (treeEdge != null) {
-                GraphHelper.addEdgeWithVertices(optimumPathTree, treeEdge);
+                Graphs.addEdgeWithVertices(optimumPathTree, treeEdge);
             }
 
-            Iterator<? extends Edge<V>> edges;
+            Iterator<E> edges;
 
             if (_directed) {
                 edges =
-                    ((DirectedGraph<V,DirEdge<V>>) _wgraph).outgoingEdgesOf(v).iterator();
+                    ((DirectedGraph<V,E>) _wgraph).outgoingEdgesOf(v).iterator();
             } else {
                 edges = _wgraph.edgesOf(v).iterator();
             }
 
             while (edges.hasNext()) {
-                Edge<V> e = edges.next();
+                E e = edges.next();
                 HeapVertex u = heapVertex(e.oppositeVertex(v));
                 double newPrio =
-                    priorityFunction(hv.getPriority(), e.getWeight());
+                    priorityFunction(hv.getPriority(), _wgraph.getWeight(e));
 
                 if ((_compare * (u.getPriority() - newPrio)) > 0) {
                     u.setPriority(newPrio);

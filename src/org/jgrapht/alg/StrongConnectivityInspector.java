@@ -42,7 +42,6 @@ package org.jgrapht.alg;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 import org.jgrapht.graph.*;
 
 
@@ -63,7 +62,7 @@ import org.jgrapht.graph.*;
  * @author Christian Hammer
  * @since Feb 2, 2005
  */
-public class StrongConnectivityInspector<V, E extends DirEdge<V>>
+public class StrongConnectivityInspector<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -159,8 +158,9 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
             }
 
             // calculate inverse graph (i.e. every edge is reversed)
-            DirectedGraph<V, E> inverseGraph = new DefaultDirectedGraph<V, E>();
-            GraphHelper.addGraphReversed(inverseGraph, m_graph);
+            DirectedGraph<V, E> inverseGraph =
+                new DefaultDirectedGraph<V, E>(m_graph.getEdgeFactory());
+            Graphs.addGraphReversed(inverseGraph, m_graph);
 
             // get ready for next dfs round
             resetVertexData();
@@ -275,9 +275,9 @@ public class StrongConnectivityInspector<V, E extends DirEdge<V>>
                     graph.outgoingEdgesOf((V) data.m_vertex).iterator();
 
                 while (iter.hasNext()) {
-                    Edge<V> edge = iter.next();
+                    E edge = iter.next();
                     VertexData targetData =
-                        m_vertexToVertexData.get(edge.getTarget());
+                        m_vertexToVertexData.get(m_graph.getEdgeTarget(edge));
 
                     if (!targetData.m_discovered) {
                         // the "recursion"

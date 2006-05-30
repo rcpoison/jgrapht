@@ -50,7 +50,7 @@ import org.jgrapht.*;
  *
  * @see org.jgrapht.graph.Subgraph
  */
-public class UndirectedSubgraph<V, E extends Edge<V>> extends Subgraph<V, E>
+public class UndirectedSubgraph<V, E> extends Subgraph<V, E>
     implements UndirectedGraph<V, E>
 {
 

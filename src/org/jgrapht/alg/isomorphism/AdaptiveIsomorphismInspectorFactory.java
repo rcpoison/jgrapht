@@ -79,7 +79,7 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker may be null
      * @param edgeChecker may be null
      */
-    public static <V,E extends Edge<V>> GraphIsomorphismInspector createIsomorphismInspector(
+    public static <V,E> GraphIsomorphismInspector createIsomorphismInspector(
         Graph<V,E> graph1,
         Graph<V,E> graph2,
         EquivalenceComparator<? super V,? super Graph<V,E>> vertexChecker,
@@ -104,7 +104,7 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param graph1
      * @param graph2
      */
-    public static <V,E extends Edge<V>> GraphIsomorphismInspector createIsomorphismInspector(
+    public static <V,E> GraphIsomorphismInspector createIsomorphismInspector(
         Graph<V,E> graph1,
         Graph<V,E> graph2)
     {
@@ -121,7 +121,7 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker - can be null
      * @param edgeChecker - can be null
      */
-    public static <V,E extends Edge<V>> GraphIsomorphismInspector createIsomorphismInspectorByType(
+    public static <V,E> GraphIsomorphismInspector createIsomorphismInspectorByType(
         int type,
         Graph<V,E> graph1,
         Graph<V,E> graph2,
@@ -148,7 +148,7 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param graph1
      * @param graph2
      */
-    public static <V,E extends Edge<V>> GraphIsomorphismInspector createIsomorphismInspectorByType(
+    public static <V,E> GraphIsomorphismInspector createIsomorphismInspectorByType(
         int type,
         Graph<V,E> graph1,
         Graph<V,E> graph2)
@@ -173,7 +173,7 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker
      * @param edgeChecker
      */
-    protected static <V,E extends Edge<V>> GraphIsomorphismInspector
+    protected static <V,E> GraphIsomorphismInspector
     createAppropriateConcreteInspector(
         int graphType,
         Graph<V,E> graph1,
@@ -235,7 +235,7 @@ public class AdaptiveIsomorphismInspectorFactory
      *         with a topological comparator. This implementation uses:
      *         <li>vertex degree size comparator
      */
-    protected static <V,E extends Edge<V>> GraphIsomorphismInspector
+    protected static <V,E> GraphIsomorphismInspector
         createTopologicalExhaustiveInspector(
                 Graph<V,E> graph1,
                 Graph<V,E> graph2,

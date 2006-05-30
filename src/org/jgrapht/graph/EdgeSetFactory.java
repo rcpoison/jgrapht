@@ -55,7 +55,7 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @version $Id$
  */
-public interface EdgeSetFactory<V, E extends Edge<V>>
+public interface EdgeSetFactory<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

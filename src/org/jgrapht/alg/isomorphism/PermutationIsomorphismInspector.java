@@ -52,7 +52,7 @@ import org.jgrapht.util.permutation.*;
  * @author Assaf
  * @since Jul 29, 2005
  */
-class PermutationIsomorphismInspector<V,E extends Edge<V>>
+class PermutationIsomorphismInspector<V,E>
     extends AbstractExhaustiveIsomorphismInspector<V,E>
 {
 

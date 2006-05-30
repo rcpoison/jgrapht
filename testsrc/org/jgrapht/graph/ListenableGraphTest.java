@@ -57,8 +57,8 @@ public class ListenableGraphTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    Edge<Object> m_lastAddedEdge;
-    Edge<Object> m_lastRemovedEdge;
+    DefaultEdge m_lastAddedEdge;
+    DefaultEdge m_lastRemovedEdge;
     Object m_lastAddedVertex;
     Object m_lastRemovedVertex;
 
@@ -81,8 +81,10 @@ public class ListenableGraphTest extends TestCase
     {
         init();
 
-        ListenableGraph<Object,Edge<Object>> g = new ListenableUndirectedGraph<Object, Edge<Object>>();
-        GraphListener<Object, Edge<Object>> listener = new MyGraphListner();
+        ListenableGraph<Object,DefaultEdge> g =
+            new ListenableUndirectedGraph<Object, DefaultEdge>(
+                DefaultEdge.class);
+        GraphListener<Object, DefaultEdge> listener = new MyGraphListner();
         g.addGraphListener(listener);
 
         String v1 = new String("v1");
@@ -104,7 +106,7 @@ public class ListenableGraphTest extends TestCase
 
         init();
 
-        Edge<Object> e = g.addEdge(v1, v2);
+        DefaultEdge e = g.addEdge(v1, v2);
         assertEquals(e, m_lastAddedEdge);
         assertEquals(null, m_lastRemovedEdge);
 
@@ -139,8 +141,9 @@ public class ListenableGraphTest extends TestCase
     {
         init();
 
-        ListenableGraph<Object, Edge<Object>> g =
-            new ListenableUndirectedGraph<Object, Edge<Object>>();
+        ListenableGraph<Object, DefaultEdge> g =
+            new ListenableUndirectedGraph<Object, DefaultEdge>(
+                DefaultEdge.class);
         VertexSetListener<Object> listener = new MyGraphListner();
         g.addVertexSetListener(listener);
 
@@ -163,7 +166,7 @@ public class ListenableGraphTest extends TestCase
 
         init();
 
-        Edge<Object> e = g.addEdge(v1, v2);
+        DefaultEdge e = g.addEdge(v1, v2);
         assertEquals(null, m_lastAddedEdge);
         assertEquals(null, m_lastRemovedEdge);
 
@@ -207,12 +210,12 @@ public class ListenableGraphTest extends TestCase
      * @author Barak Naveh
      * @since Aug 3, 2003
      */
-    private class MyGraphListner implements GraphListener<Object,Edge<Object>>
+    private class MyGraphListner implements GraphListener<Object,DefaultEdge>
     {
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded(GraphEdgeChangeEvent<Object,Edge<Object>> e)
+        public void edgeAdded(GraphEdgeChangeEvent<Object,DefaultEdge> e)
         {
             m_lastAddedEdge = e.getEdge();
         }
@@ -220,7 +223,7 @@ public class ListenableGraphTest extends TestCase
         /**
          * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved(GraphEdgeChangeEvent<Object,Edge<Object>> e)
+        public void edgeRemoved(GraphEdgeChangeEvent<Object,DefaultEdge> e)
         {
             m_lastRemovedEdge = e.getEdge();
         }

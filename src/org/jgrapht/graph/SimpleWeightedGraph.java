@@ -36,19 +36,19 @@
  * -------
  * 05-Aug-2003 : Initial revision (BN);
  * 06-Aug-2005 : Made generic (CH);
+ * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
  *
  */
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
-import org.jgrapht.edge.*;
 
 
 /**
  * A simple weighted graph. A simple weighted graph is a simple graph  for
  * which edges are assigned weights.
  */
-public class SimpleWeightedGraph<V, E extends Edge<V>> extends SimpleGraph<V, E>
+public class SimpleWeightedGraph<V, E> extends SimpleGraph<V, E>
     implements WeightedGraph<V, E>
 {
 
@@ -70,9 +70,11 @@ public class SimpleWeightedGraph<V, E extends Edge<V>> extends SimpleGraph<V, E>
 
     /**
      * Creates a new simple weighted graph.
+     *
+     * @param edgeClass class on which to base factory for edges
      */
-    public SimpleWeightedGraph()
+    public SimpleWeightedGraph(Class<? extends E> edgeClass)
     {
-        this(new EdgeFactories.UndirectedWeightedEdgeFactory());
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }
