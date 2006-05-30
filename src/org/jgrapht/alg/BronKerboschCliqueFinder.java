@@ -126,19 +126,16 @@ public class BronKerboschCliqueFinder<V, E>
         return biggest_cliques;
     }
 
-    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME's below
     private void findCliques(List<V> potential_clique,
         List<V> candidates,
         List<V> already_found)
     {
-        Object [] candidates_array = candidates.toArray();
+        List<V> candidates_array = new ArrayList<V>(candidates);
         if (!end(candidates, already_found)) {
             // for each candidate_node in candidates do
-            for (int i = 0; i < candidates_array.length; i++) {
+            for (V candidate : candidates_array) {
                 List<V> new_candidates = new ArrayList<V>();
                 List<V> new_already_found = new ArrayList<V>();
-                // FIXME hb 28-Nov-05: V-array is not possible, either use candidates.get(i) or accept the cast
-                V candidate = (V) candidates_array[i];
 
                 // move candidate node to potential_clique
                 potential_clique.add(candidate);

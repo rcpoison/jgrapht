@@ -227,7 +227,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
 
         public List<V> getNeighborList()
         {
-            List neighbors = new ArrayList();
+            List<V> neighbors = new ArrayList<V>();
             for (Map.Entry<V,ModifiableInteger> entry : m_neighborCounts.entrySet()) {
                 V v = entry.getKey();
                 int count = entry.getValue().intValue();

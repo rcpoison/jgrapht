@@ -174,9 +174,7 @@ public abstract class Graphs
      *
      * @param destination the graph to which vertices and edges are added.
      * @param source the graph used as source for vertices and edges to add.
-     //FIXME hb 26-Nov-05: How to achieve type-safty here if dst is a super-type of src?
      */
-    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See below
     public static <V, E> void addGraphReversed(
         DirectedGraph<V,E> destination,
         DirectedGraph<V,E> source)
@@ -340,12 +338,11 @@ public abstract class Graphs
      *
      * @see AsUndirectedGraph
      */
-    @SuppressWarnings("unchecked")
     public static <V, E> UndirectedGraph<V, E> undirectedGraph(
         Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
-            return new AsUndirectedGraph<V,E>((DirectedGraph)g);
+            return new AsUndirectedGraph<V,E>((DirectedGraph<V,E>)g);
         } else if (g instanceof UndirectedGraph) {
             return (UndirectedGraph<V,E>) g;
         } else {

@@ -306,12 +306,10 @@ public abstract class CrossComponentIterator<V, E, D>
      * @param g
      * @return TODO Document me
      */
-    @SuppressWarnings("unchecked")    // TODO hb 27-Nov-05: See FIXME below
     static <V, E> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
-            // TODO hb 27-Nov-05: I don't understand, yet, how to cast this nicely
-            return new DirectedSpecifics((DirectedGraph) g);
+            return new DirectedSpecifics((DirectedGraph<V, E>) g);
         } else {
             return new UndirectedSpecifics<V, E>(g);
         }
