@@ -64,8 +64,10 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 {
     //~ Instance fields -------------------------------------------------------
 
-    Map<V, Neighbors> m_predecessorMap = new HashMap<V, Neighbors>();
-    Map<V, Neighbors> m_successorMap = new HashMap<V, Neighbors>();
+    Map<V, Neighbors<V,E>> m_predecessorMap =
+        new HashMap<V, Neighbors<V,E>>();
+    Map<V, Neighbors<V,E>> m_successorMap =
+        new HashMap<V, Neighbors<V,E>>();
     private DirectedGraph<V, E> m_graph;
 
 
@@ -190,9 +192,9 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
         m_successorMap.remove(e.getVertex());
     }
 
-    private Neighbors getPredecessors(V v)
+    private Neighbors<V,E> getPredecessors(V v)
     {
-        Neighbors neighbors = m_predecessorMap.get(v);
+        Neighbors<V,E> neighbors = m_predecessorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
                     Graphs.predecessorListOf(m_graph, v));
@@ -201,9 +203,9 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
         return neighbors;
     }
 
-    private Neighbors getSuccessors(V v)
+    private Neighbors<V,E> getSuccessors(V v)
     {
-        Neighbors neighbors = m_successorMap.get(v);
+        Neighbors<V,E> neighbors = m_successorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
                     Graphs.successorListOf(m_graph, v));

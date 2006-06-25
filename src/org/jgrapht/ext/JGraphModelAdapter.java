@@ -434,21 +434,6 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * Applies the specified attributes to the model, as in the {@link
-     * DefaultGraphModel#edit(java.util.Map, org.jgraph.graph.ConnectionSet,
-     * org.jgraph.graph.ParentMap, javax.swing.undo.UndoableEdit[])} method.
-     *
-     * @param attrs the attributes to be applied to the model.
-     *
-     * @deprecated this method will be deleted in the future. Use
-     *             DefaultGraphModel#edit instead.
-     */
-    public void edit(Map attrs)
-    {
-        edit(attrs, null, null, null);
-    }
-
-    /**
      * Adds/removes an edge to/from the underlying JGraphT graph according to
      * the change in the specified JGraph edge. If both vertices are connected,
      * we ensure to have a corresponding JGraphT edge. Otherwise, we ensure NOT

@@ -74,6 +74,7 @@ public class EquivalenceSetCreator<E, C>
      * @deprecated To improve type-safety when using generics, use 
      *             {@link #createEqualityGroupOrderedArray(Collection, EquivalenceComparator, Object)}
      */
+    @Deprecated
     public static <EE, CC> EquivalenceSet [] createEqualityGroupOrderedArray(
         EE [] aElementsArray,
         EquivalenceComparator<? super EE,? super CC> aEqComparator,

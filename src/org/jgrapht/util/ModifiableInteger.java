@@ -88,6 +88,7 @@ public class ModifiableInteger extends Number implements Comparable
      *
      * @deprecated not really deprecated, just marked so to avoid mistaken use.
      */
+    @Deprecated
     public ModifiableInteger()
     {
     }

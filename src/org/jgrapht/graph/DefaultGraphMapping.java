@@ -42,32 +42,21 @@ import org.jgrapht.*;
 
 /**
  * Implementation of the GraphMapping interface. The performance of <code>
- * getCorrespondence</code> is the based on the performance of the concrete Map
- * class which is passed in the constructor. For example, using hashmaps will
- * provide O(1) performence.
+ * getVertex/EdgeCorrespondence</code> is based on the performance of the
+ * concrete Map class which is passed in the constructor. For example, using
+ * hashmaps will provide O(1) performence.
  *
  * @author Assaf
  * @since Jul 30, 2005
  */
-public class DefaultGraphMapping implements GraphMapping
+public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
 {
 
-    //~ Static fields/initializers --------------------------------------------
+    private Map<V,V> graphMappingForward;
+    private Map<V,V> graphMappingReverse;
 
-    private static int FORWARD = 0;
-    private static int REVERSE = 1;
-
-    //~ Instance fields -------------------------------------------------------
-
-    /**
-     * forward / reversemapping . will be lazy filled by two maps:
-     * <li>graphMapping[FORWARD] maps from graph1 to graph2
-     * <li>graphMapping{REVERSE] maps from graph2 to graph1
-     */
-    private Map [] graphMapping;
-
-    private Graph graph1;
-    private Graph graph2;
+    private Graph<V,E> graph1;
+    private Graph<V,E> graph2;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -81,114 +70,56 @@ public class DefaultGraphMapping implements GraphMapping
      * @param g1
      * @param g2
      */
-    public DefaultGraphMapping(Map g1ToG2, Map g2ToG1, Graph g1, Graph g2)
+    public DefaultGraphMapping(
+        Map<V,V> g1ToG2, Map<V,V> g2ToG1, Graph<V,E> g1, Graph<V,E> g2)
     {
         this.graph1 = g1;
         this.graph2 = g2;
-        this.graphMapping = new Map [2];
-        this.graphMapping[FORWARD] = g1ToG2;
-        this.graphMapping[REVERSE] = g2ToG1;
+        this.graphMappingForward = g1ToG2;
+        this.graphMappingReverse = g2ToG1;
     }
 
     //~ Methods ---------------------------------------------------------------
 
-    /**
-     * Two cases: vertexOrEdge is a vertex - if it is a key in the mapping,
-     * returns the value, which can be null. If it is not a key or not is the
-     * source graph, throws IllegalArgumentException.
-     *
-     * <p>vertexOrEdge instanceof Edge - if the source and target vertexes are
-     * not both:
-     * <li>in the source graph and
-     * <li>in the mapping throws IllegalArgumentException. if source/target is
-     * null, throws NullPointerException, otherwise, checks the corresponding
-     * vertexes. If one or more does not exist, returns null, otherwise if
-     * there is an edge between them in the graph, returns it. If there exists
-     * more than one, returns an arbitrary one. If there are none, returns
-     * null. Assumption: if vertexOrEdge should be treated as vertex, it may
-     * not be of the class "org.jgrapht.Edge". (It will fail in cases the
-     * org.jgrapht.Edge is the vertex type).
-     *
-     * @see org.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
-     *      boolean)
-     */
-    public Object getCorrespondence(Object vertexOrEdge, boolean forward)
+    public E getEdgeCorrespondence(E currEdge, boolean forward)
     {
-        Graph sourceGraph, targetGraph;
-        int direction;
+        Graph<V,E> sourceGraph, targetGraph;
 
         if (forward) {
             sourceGraph = this.graph1;
             targetGraph = this.graph2;
-            direction = FORWARD;
         } else {
             sourceGraph = this.graph2;
             targetGraph = this.graph1;
-            direction = REVERSE;
         }
 
-        Object resultObject = null;
-
-        if (sourceGraph.containsEdge(vertexOrEdge)) {
-            Object currEdge = vertexOrEdge;
-            Object mappedSourceVertex =
-                getCorrespondenceVertex(
-                    sourceGraph.getEdgeSource(currEdge), forward);
-            Object mappedTargetVertex =
-                getCorrespondenceVertex(
-                    sourceGraph.getEdgeTarget(currEdge), forward);
-            if ((mappedSourceVertex == null) || (mappedTargetVertex == null)) {
-                resultObject = null;
-            } else {
-                resultObject =
-                    targetGraph.getEdge(
-                        mappedSourceVertex,
-                        mappedTargetVertex);
-            }
+        V mappedSourceVertex =
+            getVertexCorrespondence(
+                sourceGraph.getEdgeSource(currEdge), forward);
+        V mappedTargetVertex =
+            getVertexCorrespondence(
+                sourceGraph.getEdgeTarget(currEdge), forward);
+        if ((mappedSourceVertex == null) || (mappedTargetVertex == null)) {
+            return null;
         } else {
-            resultObject = getCorrespondenceVertex(vertexOrEdge, forward);
+            return
+                targetGraph.getEdge(
+                    mappedSourceVertex,
+                    mappedTargetVertex);
         }
-        return resultObject;
     }
 
-    /**
-     * @param keyVertex
-     * @param forward
-     *
-     * @throws IllegalArgumentException if the keyVertex is not found in the
-     *                                  sourceGraph, or if it is not found in
-     *                                  the mapping
-     * @throws NullPointerException if the keyVertex is null
-     */
-    protected Object getCorrespondenceVertex(
-        Object keyVertex,
+    public V getVertexCorrespondence(
+        V keyVertex,
         boolean forward)
     {
-        Graph sourceGraph;
-        int direction;
-        Object resultObject = null;
-
-        if (keyVertex == null) {
-            throw new NullPointerException(
-                "keyVertex parameter may not be null!");
-        }
+        Map<V,V> graphMapping;
         if (forward) {
-            sourceGraph = this.graph1;
-            direction = FORWARD;
+            graphMapping = graphMappingForward;
         } else {
-            sourceGraph = this.graph2;
-            direction = REVERSE;
+            graphMapping = graphMappingReverse;
         }
 
-        if (!sourceGraph.containsVertex(keyVertex)) {
-            throw new IllegalArgumentException(
-                "The vertex cannot be found in the source graph");
-        } else if (!this.graphMapping[direction].containsKey(keyVertex)) {
-            throw new IllegalArgumentException(
-                "The vertex cannot be found in the mapping");
-        } else {
-            resultObject = this.graphMapping[direction].get(keyVertex);
-        }
-        return resultObject;
+        return graphMapping.get(keyVertex);
     }
 }

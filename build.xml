@@ -180,7 +180,21 @@
 
         <!-- compile the source -->
         <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
-            <!-- compilerarg line="-Xlint:unchecked"/ -->
+            <classpath refid="build.classpath" />
+            <include name="org/jgrapht/util/TypeUtil.java"/>
+        </javac>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+            <compilerarg line="-Xlint:all" />
+            <classpath refid="build.classpath" />
+            <include name="**/*.java"/>
+            <exclude name="org/jgrapht/experimental/**/*.java"/>
+            <exclude name="org/jgrapht/alg/isomorphism/**/*.java"/>
+            <exclude name="org/jgrapht/util/TypeUtil.java"/>
+            <exclude name="org/jgrapht/util/equivalence/**/*.java"/>
+            <exclude name="org/jgrapht/ext/JGraphModelAdapter.java"/>
+            <exclude name="org/jgrapht/demo/JGraphAdapterDemo.java"/>
+        </javac>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/jgrapht/experimental/**/*.java"/>

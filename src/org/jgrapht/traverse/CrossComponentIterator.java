@@ -309,7 +309,7 @@ public abstract class CrossComponentIterator<V, E, D>
     static <V, E> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
-            return new DirectedSpecifics((DirectedGraph<V, E>) g);
+            return new DirectedSpecifics<V,E>((DirectedGraph<V, E>) g);
         } else {
             return new UndirectedSpecifics<V, E>(g);
         }

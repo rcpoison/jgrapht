@@ -49,6 +49,7 @@ package org.jgrapht.graph;
 import java.util.*;
 
 import org.jgrapht.*;
+import org.jgrapht.util.*;
 import org.jgrapht.event.*;
 
 
@@ -221,7 +222,10 @@ public class DefaultListenableGraph<V, E>
     public Object clone()
     {
         try {
-            DefaultListenableGraph<V,E> g = (DefaultListenableGraph) super.clone();
+            TypeUtil<DefaultListenableGraph<V,E>> typeDecl = null;
+
+            DefaultListenableGraph<V,E> g =
+                TypeUtil.uncheckedCast(super.clone(), typeDecl);
             g.m_graphListeners = new ArrayList<GraphListener<V, E>>();
             g.m_vertexSetListeners = new ArrayList<VertexSetListener<V>>();
 

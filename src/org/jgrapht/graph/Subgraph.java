@@ -135,7 +135,6 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     private transient Set<V> m_unmodifiableVertexSet = null;
     private Graph<V, E> m_base;
     private boolean m_isInduced = false;
-    private boolean m_verifyIntegrity = true;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -229,32 +228,6 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     public EdgeFactory<V, E> getEdgeFactory()
     {
         return m_base.getEdgeFactory();
-    }
-
-    /**
-     * Sets the the check integrity flag.
-     *
-     * @param verifyIntegrity
-     *
-     * @see Subgraph
-     * @deprecated method will be deleted in future versions. verifyIntegrity
-     *             flag has no effect now.
-     */
-    public void setVerifyIntegrity(boolean verifyIntegrity)
-    {
-        m_verifyIntegrity = verifyIntegrity;
-    }
-
-    /**
-     * Returns the value of the verifyIntegrity flag.
-     *
-     * @return the value of the verifyIntegrity flag.
-     *
-     * @deprecated method will be deleted in future versions.
-     */
-    public boolean isVerifyIntegrity()
-    {
-        return m_verifyIntegrity;
     }
 
     /**

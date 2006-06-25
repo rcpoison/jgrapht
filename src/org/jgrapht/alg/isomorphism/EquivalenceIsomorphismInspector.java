@@ -163,7 +163,6 @@ class EquivalenceIsomorphismInspector<V,E>
         // the permutations will be relevant.
         // note that it does not start in any way related to eqGroup sizes.
         
-        // TODO hb 060208: REVIEW: Should the array be changed to an arrayList?
         V [] reorderingVertexSet1Temp = (V[])new Object [vertexSet1.size()];
         fillElementsflatArray(eqGroupArray1, reorderingVertexSet1Temp);
         vertexSet1.clear();
@@ -176,7 +175,7 @@ class EquivalenceIsomorphismInspector<V,E>
         // 1. create array of the vertexes , by flattening the eq.group array
         // contents
 
-        Object [] flatVertexArray = new Object [vertexSet2.size()];
+        V [] flatVertexArray = (V[]) new Object [vertexSet2.size()];
         fillElementsflatArray(eqGroupArray2, flatVertexArray);
 
         // 2. make the permuter according to the groups size
@@ -193,7 +192,8 @@ class EquivalenceIsomorphismInspector<V,E>
         ArrayPermutationsIter arrayPermIter =
             PermutationFactory.createByGroups(groupSizesArray);
         CollectionPermutationIter<V> vertexPermIter =
-            new CollectionPermutationIter<V>(flatVertexArray, arrayPermIter);
+            new CollectionPermutationIter<V>(
+                Arrays.asList(flatVertexArray), arrayPermIter);
 
         return vertexPermIter;
     }
@@ -224,16 +224,16 @@ class EquivalenceIsomorphismInspector<V,E>
     {
         boolean result = true;
         for (int sourceIndex = 0; sourceIndex < sourceArray.length;
-            sourceIndex++) {
+            sourceIndex++)
+        {
             int currTargetIndex = sourceIndex;
 
             // if they are already equivalent do nothing.
             EquivalenceSet sourceEqGroup = sourceArray[sourceIndex];
             EquivalenceSet targetEqGroup = targetArray[currTargetIndex];
             if (!sourceEqGroup.equals(targetEqGroup)) {
-                // iterate through the next group in the targetArray, as long
-                // you
-                // do not pass to another size/hashcode
+                // iterate through the next group in the targetArray until
+                // a new size or hashcode is seen
                 boolean foundMatch = false;
                 int sourceSize = sourceEqGroup.size();
                 int sourceHashCode = sourceEqGroup.hashCode();

@@ -69,7 +69,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    Map<V, Neighbors> m_neighborMap = new HashMap<V, Neighbors>();
+    Map<V, Neighbors<V,E>> m_neighborMap = new HashMap<V, Neighbors<V,E>>();
     private Graph<V, E> m_graph;
 
     //~ Constructors ----------------------------------------------------------
@@ -162,9 +162,9 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
         m_neighborMap.remove(e.getVertex());
     }
 
-    private Neighbors getNeighbors(V v)
+    private Neighbors<V,E> getNeighbors(V v)
     {
-        Neighbors neighbors = m_neighborMap.get(v);
+        Neighbors<V,E> neighbors = m_neighborMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
                     Graphs.neighborListOf(m_graph, v));

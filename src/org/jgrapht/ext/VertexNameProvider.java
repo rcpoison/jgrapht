@@ -43,7 +43,7 @@ package org.jgrapht.ext;
 /**
  * Assigns a display name for each of the graph vertices.
  */
-public interface VertexNameProvider
+public interface VertexNameProvider<V>
 {
     //~ Methods ---------------------------------------------------------------
 
@@ -55,6 +55,6 @@ public interface VertexNameProvider
      * @param vertex the vertex to be named
      * @return the name of the vertex
      */
-    public String getVertexName(Object vertex);
+    public String getVertexName(V vertex);
 
 }

@@ -95,11 +95,9 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
      * @param g the backing directed graph over which an undirected view is to
      *          be created.
      */
-    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: Don't know how
-                                        // to fix this, yet
-    public <ED> AsUndirectedGraph(DirectedGraph<V,ED> g)
+    public AsUndirectedGraph(DirectedGraph<V,E> g)
     {
-        super((Graph<V,E>)g);
+        super(g);
     }
 
     //~ Methods ---------------------------------------------------------------

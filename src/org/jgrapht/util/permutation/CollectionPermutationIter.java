@@ -50,14 +50,13 @@ import org.jgrapht.util.*;
  * @author Assaf
  * @since May 20, 2005
  */
-// TODO hb 280106 Convert internals to generics
 public class CollectionPermutationIter<E>
 {
 
     //~ Instance fields -------------------------------------------------------
 
     private ArrayPermutationsIter permOrder;
-    private Object [] sourceArray;
+    private List<E> sourceArray;
 
     /**
      * change everry calculation.can be retrieved publicly
@@ -76,21 +75,11 @@ public class CollectionPermutationIter<E>
      *
      * @param objectsSet
      */
-    public CollectionPermutationIter(Set objectsSet)
+    public CollectionPermutationIter(Set<E> objectsSet)
     {
-        this(objectsSet.toArray());
-    }
-
-    public CollectionPermutationIter(Object [] objectsArray)
-    {
-        this.permOrder = new IntegerPermutationIter(objectsArray.length);
-        this.sourceArray = new Object [objectsArray.length];
-        System.arraycopy(
-            objectsArray,
-            0,
-            this.sourceArray,
-            0,
-            objectsArray.length);
+        this(
+            new ArrayList<E>(objectsSet),
+            new IntegerPermutationIter(objectsSet.size()));
     }
 
     /**
@@ -101,18 +90,19 @@ public class CollectionPermutationIter<E>
      * @param objectsArray
      * @param permuter
      */
+    public CollectionPermutationIter(List<E> objectsArray)
+    {
+        this(
+            objectsArray,
+            new IntegerPermutationIter(objectsArray.size()));
+    }
+    
     public CollectionPermutationIter(
-        Object [] objectsArray,
+        List<E> objectsArray,
         ArrayPermutationsIter permuter)
     {
         this.permOrder = permuter;
-        this.sourceArray = new Object [objectsArray.length];
-        System.arraycopy(
-            objectsArray,
-            0,
-            this.sourceArray,
-            0,
-            objectsArray.length);
+        this.sourceArray = objectsArray;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -128,25 +118,32 @@ public class CollectionPermutationIter<E>
      *
      * @return null if we overflowed! the array otherwise
      */
-    public Object [] getNextArray()
+    public List<E> getNextArray()
     {
-        Object [] permutationResult; // will hold the array result
+        List<E> permutationResult; // will hold the array result
         if (this.permOrder.hasNextPermutaions()) {
             this.currPermutationArray = this.permOrder.nextPermutation();
-            permutationResult = new Object [this.sourceArray.length];
-
-            // Example : this.sourceArray = ["A","B","C","D"]
-            // perOrder:                  = [ 1 , 0 , 3 , 2 ]
-            // result  :                  = ["B","A","D","C"]
-            for (int i = 0; i < permutationResult.length; i++) {
-                permutationResult[i] =
-                    this.sourceArray[this.currPermutationArray[i]];
-            }
+            permutationResult = applyPermutation();
         } else {
-            return permutationResult = null;
+            permutationResult = null;
         }
 
         return permutationResult;
+    }
+
+    private List<E> applyPermutation()
+    {
+        ArrayList<E> output = new ArrayList<E>(sourceArray);
+
+        // Example : this.sourceArray = ["A","B","C","D"]
+        // perOrder:                  = [ 1 , 0 , 3 , 2 ]
+        // result  :                  = ["B","A","D","C"]
+        for (int i = 0; i < output.size(); i++) {
+            output.set(
+                i,
+                this.sourceArray.get(this.currPermutationArray[i]));
+        }
+        return output;
     }
 
     /**
@@ -156,12 +153,12 @@ public class CollectionPermutationIter<E>
      */
     public Set<E> getNextSet()
     {
-        Object [] result = getNextArray();
+        List<E> result = getNextArray();
         if (result == null) {
             return null;
         } else // wrap in a SET
         {
-            Set<E> resultSet = new LinkedHashSet(Arrays.asList(result));
+            Set<E> resultSet = new LinkedHashSet<E>(result);
             return resultSet;
         }
     }
@@ -177,19 +174,11 @@ public class CollectionPermutationIter<E>
         sb.append("Permutation int[]=");
         sb.append(ArrayUtil.toString(getCurrentPermutationArray()));
 
-        Object [] permutationResult = new Object [this.sourceArray.length];
-
-        // Example : this.sourceArray = ["A","B","C","D"]
-        // perOrder:                  = [ 1 , 0 , 3 , 2 ]
-        // result  :                  = ["B","A","D","C"]
-        for (int i = 0; i < permutationResult.length; i++) {
-            permutationResult[i] =
-                this.sourceArray[this.currPermutationArray[i]];
-        }
+        List<E> permutationResult = applyPermutation();
         sb.append("\nPermutationSet Source Object[]=");
-        sb.append(ArrayUtil.toString(this.sourceArray));
+        sb.append(this.sourceArray.toString());
         sb.append("\nPermutationSet Result Object[]=");
-        sb.append(ArrayUtil.toString(permutationResult));
+        sb.append(permutationResult.toString());
         return sb.toString();
     }
 }

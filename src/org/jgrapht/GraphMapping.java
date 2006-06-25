@@ -45,19 +45,30 @@ package org.jgrapht;
  * @author Assaf Lehr
  * @since Jul 30, 2005
  */
-public interface GraphMapping
+public interface GraphMapping<V,E>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Gets the mapped value where the key is <code>vertexOrEdge</code>
+     * Gets the mapped value where the key is <code>vertex</code>
      *
-     * @param vertexOrEdge component in one of the graphs
+     * @param vertex vertex in one of the graphs
      * @param forward if true, uses mapping from graph1 to graph2; if false,
      *                use mapping from graph2 to graph1
      *
-     * @return corresponding component in other graph
+     * @return corresponding vertex in other graph, or null if none
      */
-    public Object getCorrespondence(Object vertexOrEdge, boolean forward);
+    public V getVertexCorrespondence(V vertex, boolean forward);
+
+    /**
+     * Gets the mapped value where the key is <code>edge</code>
+     *
+     * @param edge edge in one of the graphs
+     * @param forward if true, uses mapping from graph1 to graph2; if false,
+     *                use mapping from graph2 to graph1
+     *
+     * @return corresponding edge in other graph, or null if none
+     */
+    public E getEdgeCorrespondence(E edge, boolean forward);
 }

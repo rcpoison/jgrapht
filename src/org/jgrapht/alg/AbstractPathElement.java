@@ -101,6 +101,20 @@ abstract class AbstractPathElement<V, E> {
     }
 
     /**
+     * Copy constructor.
+     *
+     * @param original source to copy from
+     */
+    protected AbstractPathElement(
+        AbstractPathElement<V,E> original)
+    {
+        this.nHops = original.nHops;
+        this.prevEdge = original.prevEdge;
+        this.prevPathElement = original.prevPathElement;
+        this.vertex = original.vertex;
+    }
+    
+    /**
      * Creates an empty path element.
      * 
      * @param vertex

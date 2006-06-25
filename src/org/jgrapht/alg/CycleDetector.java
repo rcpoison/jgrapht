@@ -72,8 +72,6 @@ public class CycleDetector<V, E>
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
-    @SuppressWarnings("unchecked")    // FIXME hb 28-Nov-05: Don't know how to
-                                      // solve this, yet
     public CycleDetector(DirectedGraph<V, E> graph)
     {
         m_graph = (Graph<V,E>)graph;

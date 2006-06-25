@@ -157,7 +157,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
         this.nextSupplier =
             new PrefetchIterator<IsomorphismRelation>(
                     // XXX hb 280106: I don't understand this warning, yet :-)
-                    new AbstractExhaustiveIsomorphismInspector.NextFunctor()
+                    new NextFunctor()
                     );
 
         this.graph1VertexSet = new LinkedHashSet<V>(this.graph1.vertexSet());
@@ -231,10 +231,10 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * @return IsomorphismRelation for a permutation found, or null if no
      *         permutation was isomorphic
      */
-    private IsomorphismRelation findNextIsomorphicGraph()
+    private IsomorphismRelation<V,E> findNextIsomorphicGraph()
     {
         boolean result = false;
-        IsomorphismRelation resultRelation = null;
+        IsomorphismRelation<V,E> resultRelation = null;
         if (this.vertexPermuteIter != null) {
             // System.out.println("Souce  LabelsGraph="+this.lableGraph1);
             while (this.vertexPermuteIter.hasNext()) {
@@ -258,9 +258,9 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
                 if (this.lableGraph1.equalsByEdgeOrder(currPermuteGraph)) {
                     // create result object.
                     resultRelation =
-                        new IsomorphismRelation(
-                            graph1VertexSet.toArray(),
-                            currVertexPermutation.toArray(),
+                        new IsomorphismRelation<V,E>(
+                            new ArrayList<V>(graph1VertexSet),
+                            new ArrayList<V>(currVertexPermutation),
                             graph1,
                             graph2);
 
@@ -306,7 +306,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * @param edgeComparator if null, always return true.
      */
     protected boolean areAllEdgesEquivalent(
-        IsomorphismRelation resultRelation,
+        IsomorphismRelation<V,E> resultRelation,
         EquivalenceComparator<? super E,? super Graph<V,E>> edgeComparator)
     {
         boolean checkResult = true;
@@ -321,8 +321,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
 
             for ( E currEdge : edgeSet ) {
                 E correspondingEdge =
-                    // XXX hb 060128: Waiting for GraphMapping to go generic
-                    (E) resultRelation.getCorrespondence(currEdge, true);
+                    resultRelation.getEdgeCorrespondence(currEdge, true);
 
                 // if one edge test fail , fail the whole method
                 if (!edgeComparator.equivalenceCompare(
@@ -391,7 +390,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private class NextFunctor implements PrefetchIterator.NextElementFunctor<IsomorphismRelation>
+    private class NextFunctor
+        implements PrefetchIterator.NextElementFunctor<IsomorphismRelation>
     {
         public IsomorphismRelation nextElement()
             throws NoSuchElementException

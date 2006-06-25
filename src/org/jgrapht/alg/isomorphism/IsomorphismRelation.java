@@ -49,11 +49,9 @@ import org.jgrapht.util.*;
  * <p>Usage:
  *
  * <ol>
- * <li>use <code>getCorrespondence()</code> to get the mapped object in the
+ * <li>use <code>getVertexCorrespondence()</code> or
+ * <code>getEdgeCorrespondence()</code> to get the mapped object in the
  * other graph.
- * <li>use <code>getGraph1vertexArray(), getGraph2vertexArray()</code> to see
- * the full vertex arrays order , in which the i-th vertex in the 1st array is
- * the isomorphic eqv. of the i-th in 2nd array.
  * </ol>
  *
  * <p>
@@ -64,31 +62,31 @@ import org.jgrapht.util.*;
  * @author Assaf
  * @since May 27, 2005
  */
-public class IsomorphismRelation implements GraphMapping
+public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    private Object [] graph1vertexArray;
-    private Object [] graph2vertexArray;
+    private List<V> vertexList1;
+    private List<V> vertexList2;
 
-    private GraphMapping graphMapping = null;
+    private GraphMapping<V,E> graphMapping = null;
 
-    private Graph graph1;
-    private Graph graph2;
+    private Graph<V,E> graph1;
+    private Graph<V,E> graph2;
 
     //~ Constructors ----------------------------------------------------------
 
     /**
      */
     public IsomorphismRelation(
-        Object [] aGraph1vertexArray,
-        Object [] aGraph2vertexArray,
-        Graph g1,
-        Graph g2)
+        List<V> aGraph1vertexArray,
+        List<V> aGraph2vertexArray,
+        Graph<V,E> g1,
+        Graph<V,E> g2)
     {
-        this.graph1vertexArray = aGraph1vertexArray;
-        this.graph2vertexArray = aGraph2vertexArray;
+        this.vertexList1 = aGraph1vertexArray;
+        this.vertexList2 = aGraph2vertexArray;
         this.graph1 = g1;
         this.graph2 = g2;
     }
@@ -98,44 +96,31 @@ public class IsomorphismRelation implements GraphMapping
     public String toString()
     {
         StringBuffer sb = new StringBuffer();
-        sb.append("graph1vertexArray: ").append(
-            ArrayUtil.toString(this.graph1vertexArray));
-        sb.append("\tgraph2vertexArray: ").append(
-            ArrayUtil.toString(this.graph2vertexArray));
+        sb.append("vertexList1: ").append(
+            this.vertexList1.toString());
+        sb.append("\tvertexList2: ").append(
+            this.vertexList2.toString());
         return sb.toString();
     }
 
-    public Object [] getGraph1vertexArray()
+    public V getVertexCorrespondence(V vertex, boolean forward)
     {
-        return graph1vertexArray;
-    }
-
-    public Object [] getGraph2vertexArray()
-    {
-        return graph2vertexArray;
-    }
-
-    /**
-     */
-
-    /**
-     * Assumption: if vertexOrEdge should be treated as vertex, it may not be
-     * of the class "org.jgrapht.Edge". (It will fail in cases the
-     * org.jgrapht.Edge is the vertex type).
-     *
-     * @see org.jgrapht.GraphMapping#getCorrespondence(java.lang.Object,
-     *      boolean)
-     */
-    public Object getCorrespondence(Object vertexOrEdge, boolean forward)
-    {
-        // lazy initiliazer for graphMapping
+        // lazy initializer for graphMapping
         if (graphMapping == null) {
             initGraphMapping();
         }
 
-        Object resultObject =
-            this.graphMapping.getCorrespondence(vertexOrEdge, forward);
-        return resultObject;
+        return graphMapping.getVertexCorrespondence(vertex, forward);
+    }
+
+    public E getEdgeCorrespondence(E edge, boolean forward)
+    {
+        // lazy initializer for graphMapping
+        if (graphMapping == null) {
+            initGraphMapping();
+        }
+
+        return graphMapping.getEdgeCorrespondence(edge, forward);
     }
 
     /**
@@ -144,17 +129,18 @@ public class IsomorphismRelation implements GraphMapping
      */
     private void initGraphMapping()
     {
-        int mapSize = graph1vertexArray.length;
-        Map g1ToG2 = new HashMap(mapSize);
-        Map g2ToG1 = new HashMap(mapSize);
+        int mapSize = vertexList1.size();
+        Map<V,V> g1ToG2 = new HashMap<V,V>(mapSize);
+        Map<V,V> g2ToG1 = new HashMap<V,V>(mapSize);
 
         for (int i = 0; i < mapSize; i++) {
-            Object source = this.graph1vertexArray[i];
-            Object target = this.graph2vertexArray[i];
+            V source = this.vertexList1.get(i);
+            V target = this.vertexList2.get(i);
             g1ToG2.put(source, target);
             g2ToG1.put(target, source);
         }
         this.graphMapping =
-            new DefaultGraphMapping(g1ToG2, g2ToG1, this.graph1, this.graph2);
+            new DefaultGraphMapping<V,E>(
+                g1ToG2, g2ToG1, this.graph1, this.graph2);
     }
 }

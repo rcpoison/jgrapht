@@ -79,13 +79,6 @@ public abstract class AbstractBaseGraph<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    // friendly (to improve performance)
-    /**
-     * default: HashMap may be reinitialized to some other map (eg. a TreeMap
-     * with a comparator for the used node type)
-     * FIXME hb 051124: Is it necessary to map to Object?
-     */
-    protected Map<V, Object> m_vertexMap;
     boolean m_allowingLoops;
 
     private EdgeFactory<V, E> m_edgeFactory;
@@ -96,16 +89,13 @@ public abstract class AbstractBaseGraph<V, E>
     private Specifics m_specifics;
     private boolean m_allowingMultipleEdges;
 
+    private transient TypeUtil<V> m_vertexTypeDecl = null;
+
     //~ Constructors ----------------------------------------------------------
 
     /**
      * Construct a new pseudograph. The pseudograph can either be directed or
-     * undirected, depending on the specified edge factory. A sample edge is
-     * created using the edge factory to see if the factory is compatible with
-     * this class of  graph. For example, if this graph is a <code>
-     * DirectedGraph</code> the edge factory must produce <code>
-     * DirectedEdge</code> s. If this is not the case, an <code>
-     * IllegalArgumentException</code> is thrown.
+     * undirected, depending on the specified edge factory.
      *
      * @param ef the edge factory of the new graph.
      * @param allowMultipleEdges whether to allow multiple edges or not.
@@ -122,7 +112,6 @@ public abstract class AbstractBaseGraph<V, E>
             throw new NullPointerException();
         }
         
-        m_vertexMap = new LinkedHashMap<V,Object>();
         m_edgeMap = new LinkedHashMap<E, IntrusiveEdge>();
         m_edgeFactory = ef;
         m_allowingLoops = allowLoops;
@@ -286,7 +275,7 @@ public abstract class AbstractBaseGraph<V, E>
         } else if (containsVertex(v)) {
             return false;
         } else {
-            m_vertexMap.put(v, null); // add with a lazy edge container entry
+            m_specifics.addVertex(v);
 
             return true;
         }
@@ -297,7 +286,9 @@ public abstract class AbstractBaseGraph<V, E>
      */
     public V getEdgeSource(E e)
     {
-        return (V) getIntrusiveEdge(e).source;
+        return TypeUtil.uncheckedCast(
+            getIntrusiveEdge(e).source,
+            m_vertexTypeDecl);
     }
 
     /**
@@ -305,7 +296,9 @@ public abstract class AbstractBaseGraph<V, E>
      */
     public V getEdgeTarget(E e)
     {
-        return (V) getIntrusiveEdge(e).target;
+        return TypeUtil.uncheckedCast(
+            getIntrusiveEdge(e).target,
+            m_vertexTypeDecl);
     }
 
     private IntrusiveEdge getIntrusiveEdge(E e)
@@ -327,15 +320,14 @@ public abstract class AbstractBaseGraph<V, E>
      *
      * @see java.lang.Object#clone()
      */
-    @SuppressWarnings("unchecked")    //FIXME hb 28-nov-05: See FIXME below
     public Object clone()
     {
         try {
-            //FIXME hb 28-nov-05: In order to flow with Java-Generics, an appropriate constructor should be created (cf. Collections)
+            TypeUtil<AbstractBaseGraph<V,E>> typeDecl = null;
+            
             AbstractBaseGraph<V, E> newGraph =
-                (AbstractBaseGraph) super.clone();
+                TypeUtil.uncheckedCast(super.clone(), typeDecl);
 
-            newGraph.m_vertexMap = new LinkedHashMap<V, Object>();
             newGraph.m_edgeMap = new LinkedHashMap<E, IntrusiveEdge>();
 
             newGraph.m_edgeFactory = this.m_edgeFactory;
@@ -369,7 +361,7 @@ public abstract class AbstractBaseGraph<V, E>
      */
     public boolean containsVertex(V v)
     {
-        return m_vertexMap.containsKey(v);
+        return m_specifics.getVertexSet().contains(v);
     }
 
     /**
@@ -475,7 +467,7 @@ public abstract class AbstractBaseGraph<V, E>
             // ConcurrentModificationException
             removeAllEdges(new ArrayList<E>(touchingEdgesList));
 
-            m_vertexMap.remove(v); // remove the vertex itself
+            m_specifics.getVertexSet().remove(v); // remove the vertex itself
 
             return true;
         } else {
@@ -490,7 +482,7 @@ public abstract class AbstractBaseGraph<V, E>
     {
         if (m_unmodifiableVertexSet == null) {
             m_unmodifiableVertexSet =
-                Collections.unmodifiableSet(m_vertexMap.keySet());
+                Collections.unmodifiableSet(m_specifics.getVertexSet());
         }
 
         return m_unmodifiableVertexSet;
@@ -538,6 +530,10 @@ public abstract class AbstractBaseGraph<V, E>
      */
     private abstract class Specifics implements Serializable
     {
+        public abstract void addVertex(V vertex);
+        
+        public abstract Set<V> getVertexSet();
+        
         /**
          * .
          *
@@ -647,7 +643,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * A container of for vertex edges.
+     * A container for vertex edges.
      *
      * <p>In this edge container we use array lists to minimize memory toll.
      * However, for high-degree vertices we replace the entire edge container
@@ -752,6 +748,20 @@ public abstract class AbstractBaseGraph<V, E>
         private static final String NOT_IN_DIRECTED_GRAPH =
             "no such operation in a directed graph";
 
+        private Map<V, DirectedEdgeContainer<V,E>> m_vertexMapDirected
+            = new LinkedHashMap<V, DirectedEdgeContainer<V,E>>();
+
+        public void addVertex(V v)
+        {
+            // add with a lazy edge container entry
+            m_vertexMapDirected.put(v, null);
+        }
+
+        public Set<V> getVertexSet()
+        {
+            return m_vertexMapDirected.keySet();
+        }
+        
         /**
          * @see Graph#getAllEdges(Object, Object)
          */
@@ -901,17 +911,15 @@ public abstract class AbstractBaseGraph<V, E>
          *
          * @return EdgeContainer
          */
-        @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
         private DirectedEdgeContainer<V,E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);
 
-            DirectedEdgeContainer<V,E> ec =
-                (DirectedEdgeContainer) m_vertexMap.get(vertex);
+            DirectedEdgeContainer<V,E> ec = m_vertexMapDirected.get(vertex);
 
             if (ec == null) {
                 ec = new DirectedEdgeContainer<V,E>(m_edgeListFactory, vertex);
-                m_vertexMap.put(vertex, ec);
+                m_vertexMapDirected.put(vertex, ec);
             }
 
             return ec;
@@ -999,6 +1007,20 @@ public abstract class AbstractBaseGraph<V, E>
         private static final String NOT_IN_UNDIRECTED_GRAPH =
             "no such operation in an undirected graph";
 
+        private Map<V, UndirectedEdgeContainer<V,E>> m_vertexMapUndirected
+            = new LinkedHashMap<V, UndirectedEdgeContainer<V,E>>();
+
+        public void addVertex(V v)
+        {
+            // add with a lazy edge container entry
+            m_vertexMapUndirected.put(v, null);
+        }
+
+        public Set<V> getVertexSet()
+        {
+            return m_vertexMapUndirected.keySet();
+        }
+        
         /**
          * @see Graph#getAllEdges(Object, Object)
          */
@@ -1165,17 +1187,17 @@ public abstract class AbstractBaseGraph<V, E>
          *
          * @return EdgeContainer
          */
-        @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: see FIXME at decleration m_vertexMap
         private UndirectedEdgeContainer<V, E> getEdgeContainer(V vertex)
         {
             assertVertexExist(vertex);
 
             UndirectedEdgeContainer<V, E> ec =
-                (UndirectedEdgeContainer) m_vertexMap.get(vertex);
+                m_vertexMapUndirected.get(vertex);
 
             if (ec == null) {
-                ec = new UndirectedEdgeContainer<V,E>(m_edgeListFactory, vertex);
-                m_vertexMap.put(vertex, ec);
+                ec = new UndirectedEdgeContainer<V,E>(
+                    m_edgeListFactory, vertex);
+                m_vertexMapUndirected.put(vertex, ec);
             }
 
             return ec;

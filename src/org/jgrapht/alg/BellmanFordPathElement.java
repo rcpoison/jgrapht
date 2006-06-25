@@ -47,11 +47,11 @@ import org.jgrapht.*;
  * for general use.
  */
 final class BellmanFordPathElement<V,E>
-    extends AbstractPathElement<V,E> implements Cloneable
+    extends AbstractPathElement<V,E>
 {
     private double cost = 0;
 
-    private double epsilon = 0.000000001;
+    private static final double epsilon = 0.000000001;
 
     /**
      * Creates a path element by concatenation of an edge to a path element.
@@ -74,6 +74,18 @@ final class BellmanFordPathElement<V,E>
     }
 
     /**
+     * Copy constructor.
+     *
+     * @param original source to copy from
+     */
+    BellmanFordPathElement(
+        BellmanFordPathElement<V,E> original)
+    {
+        super(original);
+        this.cost = original.cost;
+    }
+
+    /**
      * Creates an empty path element.
      * 
      * @param vertex
@@ -83,18 +95,6 @@ final class BellmanFordPathElement<V,E>
         super(vertex);
 
         this.cost = 0;
-    }
-
-    /**
-     * @see java.lang.Object#clone()
-     */
-    public Object clone() {
-        BellmanFordPathElement clonedObject = null;
-        try {
-            clonedObject = (BellmanFordPathElement) super.clone();
-        } catch (CloneNotSupportedException e) {
-        }
-        return clonedObject;
     }
 
     /**
@@ -122,7 +122,7 @@ final class BellmanFordPathElement<V,E>
         BellmanFordPathElement<V,E> candidatePrevPathElement,
         E candidateEdge, double candidateCost) {
         // to avoid improvement only due to rounding errors.
-        if (candidateCost < getCost() - this.epsilon) {
+        if (candidateCost < getCost() - epsilon) {
             this.prevPathElement = candidatePrevPathElement;
             this.prevEdge = candidateEdge;
             this.cost = candidateCost;

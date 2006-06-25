@@ -324,8 +324,10 @@ class BellmanFordIterator<V,E>
      *            cost of the created path element.
      * @return the new entry.
      */
-    private BellmanFordPathElement<V,E> createSeenData(V vertex, E edge,
-            double cost) {
+    private BellmanFordPathElement<V,E> createSeenData(
+        V vertex, E edge,
+        double cost)
+    {
         BellmanFordPathElement<V,E> prevPathElement = getPrevSeenData(
             Graphs.getOppositeVertex(graph, edge, vertex));
 
@@ -392,12 +394,12 @@ class BellmanFordIterator<V,E>
         return pathElement.improve(oppositePrevData, edge, candidateCost);
     }
 
-    @SuppressWarnings("unchecked")
     private void savePassData(List<V> improvedVertices) {
 
         for (V vertex : improvedVertices) {
+            BellmanFordPathElement<V,E> orig = getSeenData(vertex);
             BellmanFordPathElement<V,E> clonedData =
-                (BellmanFordPathElement<V,E>) getSeenData(vertex).clone();
+                new BellmanFordPathElement<V,E>(orig);
             putPrevSeenData(vertex, clonedData);
         }
 

@@ -53,10 +53,10 @@ import org.jgrapht.*;
  *
  * @author Charles Fry
  */
-public class IntegerNameProvider implements VertexNameProvider
+public class IntegerNameProvider<V> implements VertexNameProvider<V>
 {
     private int m_nextID = 1;
-    private final Map<Object,Integer> m_idMap = new HashMap<Object,Integer>();
+    private final Map<V,Integer> m_idMap = new HashMap<V,Integer>();
 
     /**
      * Clears all cached identifiers, and resets the unique identifier counter.
@@ -75,7 +75,7 @@ public class IntegerNameProvider implements VertexNameProvider
      * @return the name of
      * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
-    public String getVertexName(Object vertex)
+    public String getVertexName(V vertex)
     {
         Integer id = m_idMap.get(vertex);
         if (id == null) {

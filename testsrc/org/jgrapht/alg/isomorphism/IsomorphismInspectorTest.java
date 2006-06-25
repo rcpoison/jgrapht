@@ -152,21 +152,25 @@ public class IsomorphismInspectorTest extends TestCase
                 g2,
                 vertexChecker,
                 edgeChecker);
-        IsomorphismRelation isoResult;
+        IsomorphismRelation<Integer,DefaultEdge> isoResult;
         int counter = 0;
         if (iso.hasNext()) {
             isoResult = (IsomorphismRelation) iso.next();
 
-            Set vertexSet = g1.vertexSet();
-            for (Iterator iter = vertexSet.iterator(); iter.hasNext();) {
-                Object v1 = iter.next();
-                Object v2 = isoResult.getCorrespondence(v1, true);
+            Set<Integer> vertexSet = g1.vertexSet();
+            for (Iterator<Integer> iter =
+                     vertexSet.iterator(); iter.hasNext();)
+            {
+                Integer v1 = iter.next();
+                Integer v2 = isoResult.getVertexCorrespondence(v1, true);
                 // System.out.println("Vertex relation "+v1+" to " +v2);
             }
-            Set edgeSet = g1.edgeSet();
-            for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-                DefaultEdge e1 = (DefaultEdge) iter.next();
-                DefaultEdge e2 = (DefaultEdge) isoResult.getCorrespondence(e1, true);
+            Set<DefaultEdge> edgeSet = g1.edgeSet();
+            for (Iterator<DefaultEdge> iter = edgeSet.iterator();
+                 iter.hasNext();)
+            {
+                DefaultEdge e1 = iter.next();
+                DefaultEdge e2 = isoResult.getEdgeCorrespondence(e1, true);
                 // System.out.println("Vertex relation "+e1+" to " +e2);
             }
 

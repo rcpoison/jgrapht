@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2004, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -22,41 +22,45 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
-/* ----------------
- * GraphHelper.java
- * ----------------
- * (C) Copyright 2003, by Barak Naveh and Contributors.
+/* -----------------
+ * TypeUtil.java
+ * -----------------
+ * (C) Copyright 2006, by John V. Sichi and Contributors.
  *
- * Original Author:  Barak Naveh
- * Contributor(s):   Christian Hammer
- *                   Mikael Hansen
- *
- * $Id$
+ * Original Author:  John V. Sichi
+ * Contributor(s):   -
  *
  * Changes
  * -------
- * 10-Jul-2003 : Initial revision (BN);
- * 06-Nov-2003 : Change edge sharing semantics (JVS);
- * 11-Mar-2004 : Made generic (CH);
- * 07-May-2006 : Changed from List<Edge> to Set<Edge> (JVS);
- * 28-May-2006 : Moved connectivity info from edge to graph (JVS);
- *
+ * 07-May-2006 : Initial version (JVS);
  */
-package org.jgrapht;
-
-import java.util.*;
-
-import org.jgrapht.graph.*;
-
+package org.jgrapht.util;
 
 /**
- * A collection of utilities to assist the working with graphs.
+ * TypeUtil isolates type-unsafety so that code that which uses it
+ * for legitimate reasons can stay warning-free.
  *
- * @author Barak Naveh
- * @since Jul 31, 2003
- * @deprecated Use {@link Graphs} instead.
+ * @author John V. Sichi
+ * @version $Id:$
  */
-@Deprecated
-public abstract class GraphHelper extends Graphs
+public class TypeUtil<T>
 {
+    /**
+     * Casts an object to a type.
+     *
+     * @param o object to be cast
+     *
+     * @param typeDecl conveys the target type information; the actual
+     * value is unused and can be null since this is all just
+     * stupid compiler tricks
+     *
+     * @return the result of the cast
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T uncheckedCast(Object o, TypeUtil<T> typeDecl)
+    {
+        return (T) o;
+    }
 }
+
+// End TypeUtil.java

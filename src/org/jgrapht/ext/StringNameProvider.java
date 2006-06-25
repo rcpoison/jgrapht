@@ -51,22 +51,14 @@ import org.jgrapht.*;
  *
  * @author Charles Fry
  */
-public class StringNameProvider implements VertexNameProvider
+public class StringNameProvider<V> implements VertexNameProvider<V>
 {
     //~ Static fields/initializers --------------------------------------------
 
-    private static final StringNameProvider SINGLETON = new StringNameProvider();
-
-    public static StringNameProvider getInstance()
-    {
-        return SINGLETON;
-    }
-
     //~ Constructors ----------------------------------------------------------
 
-    protected StringNameProvider()
+    public StringNameProvider()
     {
-        // obtain singleton instance through factory method
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -79,7 +71,7 @@ public class StringNameProvider implements VertexNameProvider
      * @return the name of
      * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
-    public String getVertexName(Object vertex)
+    public String getVertexName(V vertex)
     {
         return vertex.toString();
     }

@@ -76,6 +76,6 @@ public class UndirectedWeightedSubgraph<V, E>
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {
-        super((UndirectedGraph) base, vertexSubset, edgeSubset);
+        super((UndirectedGraph<V,E>) base, vertexSubset, edgeSubset);
     }
 }

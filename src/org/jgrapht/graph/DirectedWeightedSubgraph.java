@@ -77,6 +77,6 @@ public class DirectedWeightedSubgraph<V, E>
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {
-        super((DirectedGraph) base, vertexSubset, edgeSubset);
+        super((DirectedGraph<V,E>) base, vertexSubset, edgeSubset);
     }
 }

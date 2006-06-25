@@ -71,7 +71,7 @@ public class StrongConnectivityInspector<V, E>
     private final DirectedGraph<V, E> m_graph;
 
     // stores the vertices, ordered by their finishing time in first dfs
-    private LinkedList<VertexData> m_orderedVertices;
+    private LinkedList<VertexData<V>> m_orderedVertices;
 
     // the result of the computation, cached for future calls
     private List<Set<V>> m_stronglyConnectedSets;
@@ -80,7 +80,7 @@ public class StrongConnectivityInspector<V, E>
     private List<DirectedSubgraph<V,E>> m_stronglyConnectedSubgraphs;
 
     // maps vertices to their VertexData object
-    private Map<V, VertexData> m_vertexToVertexData;
+    private Map<V, VertexData<V>> m_vertexToVertexData;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -138,7 +138,7 @@ public class StrongConnectivityInspector<V, E>
     public List<Set<V>> stronglyConnectedSets()
     {
         if (m_stronglyConnectedSets == null) {
-            m_orderedVertices = new LinkedList<VertexData>();
+            m_orderedVertices = new LinkedList<VertexData<V>>();
             m_stronglyConnectedSets = new Vector<Set<V>>();
 
             // create VertexData objects for all vertices, store them
@@ -146,11 +146,11 @@ public class StrongConnectivityInspector<V, E>
 
             // perform the first round of DFS, result is an ordering
             // of the vertices by decreasing finishing time
-            Iterator<VertexData> iter =
+            Iterator<VertexData<V>> iter =
                 m_vertexToVertexData.values().iterator();
 
             while (iter.hasNext()) {
-                VertexData data = iter.next();
+                VertexData<V> data = iter.next();
 
                 if (!data.m_discovered) {
                     dfsVisit(m_graph, data, null);
@@ -171,7 +171,7 @@ public class StrongConnectivityInspector<V, E>
             iter = m_orderedVertices.iterator();
 
             while (iter.hasNext()) {
-                VertexData data = iter.next();
+                VertexData<V> data = iter.next();
 
                 if (!data.m_discovered) {
                     // new strongly connected set
@@ -228,7 +228,8 @@ public class StrongConnectivityInspector<V, E>
      */
     private void createVertexData()
     {
-        m_vertexToVertexData = new HashMap<V, VertexData>(m_graph.vertexSet().size());
+        m_vertexToVertexData =
+            new HashMap<V, VertexData<V>>(m_graph.vertexSet().size());
 
         Iterator<V> iter = m_graph.vertexSet().iterator();
 
@@ -236,7 +237,7 @@ public class StrongConnectivityInspector<V, E>
             V vertex = iter.next();
             m_vertexToVertexData.put(
                 vertex,
-                new VertexData(vertex, false, false));
+                new VertexData<V>(null, vertex, false, false));
         }
     }
 
@@ -246,37 +247,32 @@ public class StrongConnectivityInspector<V, E>
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME's below
     private void dfsVisit(DirectedGraph<V, E> graph,
-        VertexData vertexData,
+        VertexData<V> vertexData,
         Set<V> vertices)
     {
-        Stack<VertexData> stack = new Stack<VertexData>();
+        Stack<VertexData<V>> stack = new Stack<VertexData<V>>();
         stack.push(vertexData);
 
         while (!stack.isEmpty()) {
-            VertexData data = stack.pop();
+            VertexData<V> data = stack.pop();
 
             if (!data.m_discovered) {
                 data.m_discovered = true;
 
                 if (vertices != null) {
-                    // FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
-                    vertices.add((V) data.m_vertex);
+                    vertices.add(data.m_vertex);
                 }
 
-                // TODO: other way to identify when this vertex is finished!?
-                // TODO: until only vertices are used as 1st parameter, type-saftey is difficult to realize (i.e, VertexData<V>
-                stack.push(new VertexData(data, true, true));
+                stack.push(new VertexData<V>(data, null, true, true));
 
                 // follow all edges
-                // FIXME hb 28-Nov-05: Clean after the fixme in VertexData below is solved
                 Iterator<? extends E> iter =
-                    graph.outgoingEdgesOf((V) data.m_vertex).iterator();
+                    graph.outgoingEdgesOf(data.m_vertex).iterator();
 
                 while (iter.hasNext()) {
                     E edge = iter.next();
-                    VertexData targetData =
+                    VertexData<V> targetData =
                         m_vertexToVertexData.get(m_graph.getEdgeTarget(edge));
 
                     if (!targetData.m_discovered) {
@@ -286,8 +282,7 @@ public class StrongConnectivityInspector<V, E>
                 }
             } else if (data.m_finished) {
                 if (vertices == null) {
-                    // see TODO above
-                    m_orderedVertices.addFirst((VertexData) data.m_vertex);
+                    m_orderedVertices.addFirst(data.m_finishedData);
                 }
             }
         }
@@ -298,10 +293,10 @@ public class StrongConnectivityInspector<V, E>
      */
     private void resetVertexData()
     {
-        Iterator<VertexData> iter = m_vertexToVertexData.values().iterator();
+        Iterator<VertexData<V>> iter = m_vertexToVertexData.values().iterator();
 
         while (iter.hasNext()) {
-            VertexData data = iter.next();
+            VertexData<V> data = iter.next();
             data.m_discovered = false;
             data.m_finished = false;
         }
@@ -310,20 +305,24 @@ public class StrongConnectivityInspector<V, E>
     //~ Inner Classes ---------------------------------------------------------
 
     /*
-     * Lightweight class storing some data vor every vertex.
+     * Lightweight class storing some data for every vertex.
      */
-    private final class VertexData
+    private final class VertexData<V>
     {
-        //TODO: change to VertextData<V> and replace Object once only vertices are put in here
-        private final Object m_vertex;
+        // TODO jvs 24-June-2006:  more compact representation;
+        // I added m_finishedData to clean up the generics warnings
+        private final VertexData<V> m_finishedData;
+        private final V m_vertex;
         private boolean m_discovered;
         private boolean m_finished;
 
         private VertexData(
-            Object vertex,
+            VertexData<V> finishedData,
+            V vertex,
             boolean discovered,
             boolean finished)
         {
+            m_finishedData = finishedData;
             m_vertex = vertex;
             m_discovered = discovered;
             m_finished = finished;

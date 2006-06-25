@@ -61,7 +61,9 @@ import org.jgrapht.util.*;
  * @since Sep 2, 2003
  */
 public class ClosestFirstIterator<V, E>
-    extends CrossComponentIterator<V, E, ClosestFirstIterator.QueueEntry<V,E>>
+    extends CrossComponentIterator<
+        V, E,
+        FibonacciHeapNode<ClosestFirstIterator.QueueEntry<V,E>>>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -69,7 +71,8 @@ public class ClosestFirstIterator<V, E>
     /**
      * Priority queue of fringe vertices.
      */
-    private FibonacciHeap m_heap = new FibonacciHeap();
+    private FibonacciHeap<QueueEntry<V,E>> m_heap =
+        new FibonacciHeap<QueueEntry<V,E>>();
 
     /**
      * Maximum distance to search.
@@ -145,13 +148,13 @@ public class ClosestFirstIterator<V, E>
      */
     public double getShortestPathLength(V vertex)
     {
-        QueueEntry entry = getSeenData(vertex);
+        FibonacciHeapNode<QueueEntry<V,E>> node = getSeenData(vertex);
 
-        if (entry == null) {
+        if (node == null) {
             return Double.POSITIVE_INFINITY;
         }
 
-        return entry.getShortestPathLength();
+        return node.getKey();
     }
 
     /**
@@ -168,13 +171,13 @@ public class ClosestFirstIterator<V, E>
      */
     public E getSpanningTreeEdge(V vertex)
     {
-        QueueEntry<V, E> entry = getSeenData(vertex);
+        FibonacciHeapNode<QueueEntry<V, E>> node = getSeenData(vertex);
 
-        if (entry == null) {
+        if (node == null) {
             return null;
         }
 
-        return entry.m_spanningTreeEdge;
+        return node.getData().m_spanningTreeEdge;
     }
 
     /**
@@ -201,9 +204,9 @@ public class ClosestFirstIterator<V, E>
      */
     protected void encounterVertex(V vertex, E edge)
     {
-        QueueEntry<V,E> entry = createSeenData(vertex, edge);
-        putSeenData(vertex, entry);
-        m_heap.insert(entry, entry.getShortestPathLength());
+        FibonacciHeapNode<QueueEntry<V,E>> node = createSeenData(vertex, edge);
+        putSeenData(vertex, node);
+        m_heap.insert(node, node.getKey());
     }
 
     /**
@@ -215,18 +218,18 @@ public class ClosestFirstIterator<V, E>
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
-        QueueEntry<V,E> entry = getSeenData(vertex);
+        FibonacciHeapNode<QueueEntry<V,E>> node = getSeenData(vertex);
 
-        if (entry.m_frozen) {
+        if (node.getData().m_frozen) {
             // no improvement for this vertex possible
             return;
         }
 
         double candidatePathLength = calculatePathLength(vertex, edge);
 
-        if (candidatePathLength < entry.getShortestPathLength()) {
-            entry.m_spanningTreeEdge = edge;
-            m_heap.decreaseKey(entry, candidatePathLength);
+        if (candidatePathLength < node.getKey()) {
+            node.getData().m_spanningTreeEdge = edge;
+            m_heap.decreaseKey(node, candidatePathLength);
         }
     }
 
@@ -235,10 +238,10 @@ public class ClosestFirstIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        QueueEntry<V, E> entry = (QueueEntry<V,E>) m_heap.removeMin();
-        entry.m_frozen = true;
+        FibonacciHeapNode<QueueEntry<V, E>> node = m_heap.removeMin();
+        node.getData().m_frozen = true;
 
-        return entry.m_vertex;
+        return node.getData().m_vertex;
     }
 
     private void assertNonNegativeEdge(E edge)
@@ -263,9 +266,10 @@ public class ClosestFirstIterator<V, E>
         assertNonNegativeEdge(edge);
 
         V otherVertex = Graphs.getOppositeVertex(getGraph(), edge, vertex);
-        QueueEntry otherEntry = getSeenData(otherVertex);
+        FibonacciHeapNode<QueueEntry<V,E>> otherEntry =
+            getSeenData(otherVertex);
 
-        return otherEntry.getShortestPathLength()
+        return otherEntry.getKey()
             + getGraph().getEdgeWeight(edge);
     }
 
@@ -278,14 +282,14 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * The first time we see a vertex, make up a new queue entry for it.
+     * The first time we see a vertex, make up a new heap node for it.
      *
      * @param vertex a vertex which has just been encountered.
      * @param edge the edge via which the vertex was encountered.
      *
-     * @return the new queue entry.
+     * @return the new heap node.
      */
-    private QueueEntry<V,E> createSeenData(V vertex, E edge)
+    private FibonacciHeapNode<QueueEntry<V,E>> createSeenData(V vertex, E edge)
     {
         double shortestPathLength;
 
@@ -295,11 +299,12 @@ public class ClosestFirstIterator<V, E>
             shortestPathLength = calculatePathLength(vertex, edge);
         }
 
-        QueueEntry<V,E> entry = new QueueEntry<V,E>(shortestPathLength);
+        QueueEntry<V,E> entry = new QueueEntry<V,E>();
         entry.m_vertex = vertex;
         entry.m_spanningTreeEdge = edge;
 
-        return entry;
+        return new FibonacciHeapNode<QueueEntry<V,E>>(
+            entry, shortestPathLength);
     }
 
     //~ Inner Classes ---------------------------------------------------------
@@ -307,31 +312,25 @@ public class ClosestFirstIterator<V, E>
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    static class QueueEntry<VV, EE> extends FibonacciHeap.Node
+    static class QueueEntry<V,E>
     {
         /**
          * Best spanning tree edge to vertex seen so far.
          */
-        EE m_spanningTreeEdge;
+        E m_spanningTreeEdge;
 
         /**
          * The vertex reached.
          */
-        VV m_vertex;
+        V m_vertex;
 
         /**
          * True once m_spanningTreeEdge is guaranteed to be the true minimum.
          */
         boolean m_frozen;
 
-        QueueEntry(double key)
+        QueueEntry()
         {
-            super(key);
-        }
-
-        double getShortestPathLength()
-        {
-            return getKey();
         }
     }
 }
