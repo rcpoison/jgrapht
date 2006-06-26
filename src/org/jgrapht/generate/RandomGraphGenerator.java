@@ -64,6 +64,8 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
     protected int numOfEdges;
     protected Random randomizer;
     private long randomizerSeed;
+    
+    private static long seedUniquifier = 8682522807148012L;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -90,10 +92,8 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * @author Assaf
      * @since Aug 6, 2005
      */
-    private long chooseRandomSeedOnce()
+    private synchronized static long chooseRandomSeedOnce()
     {
-        long seedUniquifier = 8682522807148012L;
-
         return (++seedUniquifier + System.nanoTime());
     }
 
