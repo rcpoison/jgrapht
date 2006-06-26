@@ -30,8 +30,7 @@
  * Original Author:  Liviu Rau
  * Contributor(s):   Barak Naveh
  *
- * $Id: BreadthFirstIteratorTest.java,v 1.8 2004/05/01 12:27:51 barak_naveh Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

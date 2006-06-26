@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id: ConnectedComponentTraversalEvent.java,v 1.2 2004/11/18 21:55:00
- * barak_naveh Exp $
+ * $Id$
  *
  * Changes
  * -------

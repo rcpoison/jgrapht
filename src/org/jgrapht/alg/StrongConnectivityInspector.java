@@ -29,8 +29,7 @@
  *
  * Original Author:  Christian Soltenborn
  *
- * $Id: StrongConnectivityInspector.java,v 1.7 2005/07/19 09:03:29 hammerc Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

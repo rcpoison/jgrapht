@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: DirectedWeightedSubgraph.java,v 1.7 2005/09/05 04:00:57 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

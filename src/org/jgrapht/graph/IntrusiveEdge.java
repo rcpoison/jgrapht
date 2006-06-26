@@ -30,7 +30,7 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id: GraphDelegator.java 460 2006-05-07 22:22:10Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------
@@ -47,7 +47,6 @@ import java.io.*;
  * (which is why it's not public); use DefaultEdge for that.
  *
  * @author John V. Sichi
- * @version $Id:$
  */
 class IntrusiveEdge implements Cloneable, Serializable
 {

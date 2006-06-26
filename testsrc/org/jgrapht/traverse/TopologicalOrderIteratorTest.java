@@ -30,8 +30,7 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id: TopologicalOrderIteratorTest.java,v 1.1 2005/04/26 06:46:38 perfecthash
- * Exp $
+ * $Id$
  *
  * Changes
  * -------

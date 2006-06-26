@@ -30,8 +30,7 @@
  * Original Author:  Carl Anderson
  * Contributor(s):   -
  *
- * $Id: UniformRandomGraphGenerator.java,v 1.2 2004/10/13 08:09:59 behrisch Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

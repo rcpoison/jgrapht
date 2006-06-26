@@ -30,8 +30,7 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id: ClosestFirstIteratorTest.java,v 1.4 2005/05/30 05:37:29 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

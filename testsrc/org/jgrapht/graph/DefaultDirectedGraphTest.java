@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id: DefaultDirectedGraphTest.java,v 1.5 2005/06/08 22:24:57 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
  *
- * $Id: ConnectivityInspectorTest.java,v 1.11 2005/05/25 00:38:37 perfecthash
- * Exp $
+ * $Id$
  *
  * Changes
  * -------

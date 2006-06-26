@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: UnmodifiableDirectedGraph.java,v 1.4 2005/08/01 05:54:07 perfecthash
- * Exp $
+ * $Id$
  *
  * Changes
  * -------

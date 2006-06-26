@@ -30,8 +30,7 @@
  * Original Author:  Liviu Rau
  * Contributor(s):   Barak Naveh
  *
- * $Id: AbstractGraphIteratorTest.java,v 1.8 2005/05/30 05:37:29 perfecthash
- * Exp $
+ * $Id$
  *
  * Changes
  * -------

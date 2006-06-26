@@ -30,8 +30,7 @@
  * Original Author:  Marden Neubert
  * Contributor(s):   Barak Naveh, John V. Sichi
  *
- * $Id: TopologicalOrderIterator.java,v 1.4 2005/09/05 04:00:57 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

@@ -30,7 +30,7 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * $Id: DefaultEdge.java 456 2006-04-24 00:32:26Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------
@@ -47,7 +47,6 @@ import org.jgrapht.*;
  * interface, which is why this class doesn't expose any public methods.
  *
  * @author John V. Sichi
- * @version $Id:$
  */
 public class DefaultWeightedEdge extends DefaultEdge
 {

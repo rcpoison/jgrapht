@@ -30,6 +30,8 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
+ * @version $Id$
+ *
  * Changes
  * -------
  * 07-May-2006 : Initial version (JVS);
@@ -41,7 +43,6 @@ package org.jgrapht.util;
  * for legitimate reasons can stay warning-free.
  *
  * @author John V. Sichi
- * @version $Id:$
  */
 public class TypeUtil<T>
 {

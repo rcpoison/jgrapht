@@ -30,7 +30,7 @@
  * Original Author:  Nathan Fiedler
  * Contributor(s):   John V. Sichi
  *
- * $Id: FibonacciHeap.java 456 2006-04-24 00:32:26Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------
@@ -58,7 +58,6 @@ package org.jgrapht.util;
  * structure).
  *
  * @author Nathan Fiedler
- * @version $Id:$
  */
 public class FibonacciHeapNode<T>
 {

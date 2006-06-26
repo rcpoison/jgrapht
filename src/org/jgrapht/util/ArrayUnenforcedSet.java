@@ -30,6 +30,8 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
+ * $Id$
+ *
  * Changes
  * -------
  * 07-May-2006 : Initial version (JVS);
@@ -50,7 +52,6 @@ import java.util.*;
  * subclasses ArrayList should be considered an implementation detail.
  *
  * @author John V. Sichi
- * @version $Id:$
  */
 public class ArrayUnenforcedSet<E>
     extends ArrayList<E> implements Set<E>

@@ -52,7 +52,6 @@ import org.jgrapht.EnhancedTestCase;
  * objects.
  *
  * @author John V. Sichi
- * @version $Id$
  */
 public class SerializationTest extends EnhancedTestCase
 {

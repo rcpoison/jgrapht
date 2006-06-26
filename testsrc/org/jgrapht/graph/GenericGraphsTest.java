@@ -30,7 +30,7 @@
  * Original Author:  Hartmut Benz
  * Contributor(s):   John V. Sichi
  *
- * $Id$
+ * $Id:$
  *
  * Changes
  * -------

@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id: SimpleDirectedGraphTest.java,v 1.7 2004/05/01 12:24:01 barak_naveh Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

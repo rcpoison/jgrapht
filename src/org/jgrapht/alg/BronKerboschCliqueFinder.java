@@ -30,8 +30,7 @@
  * Original Author:  Ewgenij Proschak
  * Contributor(s):   John V. Sichi
  *
- * $Id: BronKerboschCliqueFinder.java,v 1.1 2005/07/26 09:56:01 perfecthash Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

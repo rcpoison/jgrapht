@@ -30,8 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: DefaultDirectedWeightedGraph.java,v 1.3 2005/07/19 09:03:31 hammerc Exp
- * $
+ * $Id$
  *
  * Changes
  * -------

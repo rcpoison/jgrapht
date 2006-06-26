@@ -51,7 +51,6 @@ import java.util.*;
  * tradeoffs between memory and CPU usage.
  *
  * @author John V. Sichi
- * @version $Id$
  */
 public interface EdgeSetFactory<V, E>
 {
