@@ -45,6 +45,7 @@
  * 13-Oct-2004 : Added task for building experimental package (MB);
  * 31-Jul-2005 : Added support for retroweaver (JVS);
  * 23-Apr-2006 : Renamed package to org.jgrapht (JVS);
+ * 25-Jun-2006 : Fold experimental into main build (JVS);
  *
  */
 -->
@@ -105,7 +106,6 @@
         <!-- Directories -->
         <property name="build.dir"        value="${basedir}/build" />
         <property name="testbuild.dir"    value="${basedir}/testbuild" />
-        <property name="expbuild.dir"     value="${basedir}/expbuild" />
         <property name="distrib.dir"      value="${basedir}/distribution"/>
         <property name="src.dir"          value="${basedir}/src"/>
         <property name="testsrc.dir"      value="${basedir}/testsrc"/>
@@ -161,13 +161,6 @@
             <pathelement location="${testbuild.dir}"/>
         </path>
         <property name="test.classpath" refid="test.classpath"/>
-
-        <!-- Classpath for running experimental code. -->
-        <path id="exp.classpath">
-            <pathelement path="${test.classpath}"/>
-            <pathelement location="${expbuild.dir}"/>
-        </path>
-        <property name="exp.classpath" refid="exp.classpath"/>
     </target>
 
 
@@ -197,31 +190,14 @@
         <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
-            <exclude name="org/jgrapht/experimental/**/*.java"/>
         </javac>
     </target>
-
-
-    <!-- Compile the experimental classes -->
-    <target name="exp.compile" depends="compile"
-                           description="Compiles the experimental JGraphT source code.">
-
-        <!-- create a build directory -->
-        <mkdir dir="${expbuild.dir}" />
-
-        <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${expbuild.dir}" source="1.5">
-            <classpath refid="testbuild.classpath" />
-            <include name="org/jgrapht/experimental/**/*.java"/>
-        </javac>
-    </target>
-
 
     <!-- Run the experimental touchgraph demo -->
-    <target name="exp.touchgraph" depends="exp.compile"
+    <target name="touchgraph.demo" depends="compile"
                            description="Runs the experimental Touchgraph demo.">
         <java classname="org.jgrapht.experimental.touchgraph.SimpleTouchgraphApplet">
-            <classpath refid="exp.classpath" />
+            <classpath refid="test.classpath" />
         </java>
     </target>
 
@@ -263,7 +239,6 @@
                debug="on">
             <classpath refid="testbuild.classpath" />
             <include name="org/jgrapht/**"/>
-            <exclude name="org/jgrapht/experimental/**"/>
         </javac>
     </target>
 
@@ -285,7 +260,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*Test.java"/>
                     <exclude name="**/DefaultEdgeTest.java"/>
-                    <exclude name="org/jgrapht/experimental/**/*.java"/>
                 </fileset>
             </batchtest>
         </junit>
@@ -307,18 +281,16 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <checkstyle config="${checkstyle.settings}">
             <fileset dir="${src.dir}">
                 <include name="**/*.java"/>
-                <exclude name="org/jgrapht/experimental/**/*.java"/>
             </fileset>
             <fileset dir="${testsrc.dir}">
                 <include name="**/*.java"/>
-                <exclude name="org/jgrapht/experimental/**/*.java"/>
             </fileset>
         </checkstyle>
     </target>
 
     <!-- Run jalopy on source code                                         -->
     <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
-    <target name="jalopy" depends="exp.compile"
+    <target name="jalopy" depends="test.compile"
             description="Runs jalopy on all source code.">
         <taskdef name="jalopy" 
                  classname="com.triemax.JalopyTask">
@@ -329,7 +301,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             </classpath>
         </taskdef>
         <jalopy backup="true" convention="${jalopy.settings}"
-                classpathref="exp.classpath" history="CRC32">
+                classpathref="test.classpath" history="CRC32">
             <fileset dir="${basedir}">
                 <include name="src/**/*.java"/>
                 <include name="testsrc/**/*.java"/>
@@ -410,7 +382,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                 <include name="overview.html"/>
                 <include name="**/*.java"/>
                 <include name="**/package.html"/>
-                <exclude name="org/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
@@ -418,7 +389,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <copy todir="${distrib.dir}/testsrc">
             <fileset dir="${testsrc.dir}">
                 <include name="**"/>
-                <exclude name="org/jgrapht/experimental/**"/>
             </fileset>
         </copy>
 
@@ -497,7 +467,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             description="Cleans all outputs from previous builds">
         <delete dir="${distrib.dir}" />
         <delete dir="${build.dir}" />
-        <delete dir="${expbuild.dir}" />
         <delete dir="${testbuild.dir}" />
         <delete dir="${javadoc.dir}" />
         <delete file="${project.jar}" />
