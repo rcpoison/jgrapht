@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ---------------------------
- * IgnoreDirectionTest.java
+ * TopologicalOrderIteratorTest.java
  * ---------------------------
  * (C) Copyright 2005, by John V. Sichi and Contributors.
  *

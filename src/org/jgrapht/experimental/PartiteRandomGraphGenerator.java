@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
- * UniformRandomGraphGenerator.java
+ * PartiteRandomGraphGenerator.java
  * -------------------
  * (C) Copyright 2003, by Michael Behrisch and Contributors.
  *
@@ -48,8 +48,8 @@ import org.jgrapht.generate.*;
 
 /**
  * PartiteRandomGraphGenerator generates a <a
- * href="http://mathworld.wolfram.com/RandomGraph.html">uniform random
- * graph</a> of any size. A uniform random graph contains edges chosen
+ * href="http://mathworld.wolfram.com/RandomGraph.html">partite uniform random
+ * graph</a> of any size. A partite uniform random graph contains edges chosen
  * independently uniformly at random from the set of possible edges between
  * partition classes.
  *

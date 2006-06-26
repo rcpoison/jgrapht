@@ -27,6 +27,8 @@
  * -----------------
  * (C) Copyright 2005, by Assaf Lehr and Contributors.
  *
+ * $Id$
+ *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *

@@ -30,7 +30,7 @@
  * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
- * @version $Id$
+ * $Id$
  *
  * Changes
  * -------

@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
- * UniformRandomGraphGenerator.java
+ * RandomGraphHelper.java
  * -------------------
  * (C) Copyright 2003, by Michael Behrisch and Contributors.
  *
