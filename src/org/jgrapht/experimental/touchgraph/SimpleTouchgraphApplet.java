@@ -45,9 +45,8 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 /**
  * SimpleTouchgraphApplet 
@@ -67,7 +66,7 @@ public class SimpleTouchgraphApplet extends Applet
     public static Graph createSamplegraph()
     {
         UndirectedGraph<String,DefaultEdge> g =
-            new SimpleGraph<String,DefaultEdge>();
+            new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
 
         String v1 = "v1";
         String v2 = "v2";
