@@ -40,7 +40,6 @@
 package org.jgrapht.graph;
 
 import java.io.*;
-import java.util.*;
 
 /**
  * IntrusiveEdge encapsulates the internals for the default edge

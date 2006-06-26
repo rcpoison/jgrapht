@@ -44,10 +44,6 @@
  */
 package org.jgrapht;
 
-import java.util.*;
-
-import org.jgrapht.graph.*;
-
 
 /**
  * A collection of utilities to assist the working with graphs.

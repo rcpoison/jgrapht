@@ -43,8 +43,6 @@ package org.jgrapht.graph;
 
 import java.util.*;
 
-import org.jgrapht.*;
-
 
 /**
  * A factory for edge sets.  This interface allows the creator of a graph to

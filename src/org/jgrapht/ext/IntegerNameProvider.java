@@ -38,11 +38,7 @@
  */
 package org.jgrapht.ext;
 
-import java.io.*;
-
 import java.util.*;
-
-import org.jgrapht.*;
 
 /**
  * Assigns a unique integer to represent each vertex. Each instance

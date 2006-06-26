@@ -41,8 +41,6 @@
  */
 package org.jgrapht.event;
 
-import org.jgrapht.*;
-
 
 /**
  * A listener that is notified when the graph changes.

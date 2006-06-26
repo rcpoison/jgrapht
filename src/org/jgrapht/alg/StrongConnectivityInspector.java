@@ -307,7 +307,7 @@ public class StrongConnectivityInspector<V, E>
     /*
      * Lightweight class storing some data for every vertex.
      */
-    private final class VertexData<V>
+    private static final class VertexData<V>
     {
         // TODO jvs 24-June-2006:  more compact representation;
         // I added m_finishedData to clean up the generics warnings

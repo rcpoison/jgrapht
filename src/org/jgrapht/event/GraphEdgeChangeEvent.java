@@ -40,8 +40,6 @@
  */
 package org.jgrapht.event;
 
-import org.jgrapht.*;
-
 
 /**
  * An event which indicates that a graph edge has changed, or is about to

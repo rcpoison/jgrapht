@@ -38,12 +38,6 @@
  */
 package org.jgrapht.ext;
 
-import java.io.*;
-
-import java.util.*;
-
-import org.jgrapht.*;
-
 /**
  * Generates vertex names by invoking {@link toString()} on them. This assumes
  * that the vertex's {@link toString()} method returns a unique String

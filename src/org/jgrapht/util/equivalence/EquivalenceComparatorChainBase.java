@@ -92,7 +92,8 @@ public class EquivalenceComparatorChainBase<E,C>
      *
      * org.jgrapht.util.equivalence.EquivalenceComparatorChain#addComparatorAfter(org.jgrapht.util.equivalence.EquivalenceComparator)
      */
-    public void appendComparator(EquivalenceComparator comparatorAfter)
+    @SuppressWarnings("unchecked")
+	public void appendComparator(EquivalenceComparator comparatorAfter)
     {
         if (comparatorAfter != null) {
             this.chain.add(comparatorAfter);

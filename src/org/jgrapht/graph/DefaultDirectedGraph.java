@@ -41,8 +41,6 @@
  */
 package org.jgrapht.graph;
 
-import java.io.Serializable;
-
 import org.jgrapht.*;
 
 

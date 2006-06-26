@@ -124,7 +124,8 @@ class EquivalenceIsomorphismInspector<V,E>
      * @see org.jgrapht.alg.isomorphism.AbstractExhaustiveIsomorphismInspector#createPermutationIterator(java.util.Set,
      *      java.util.Set)
      */
-    protected CollectionPermutationIter<V> createPermutationIterator(
+    @SuppressWarnings("unchecked")
+	protected CollectionPermutationIter<V> createPermutationIterator(
         Set<V> vertexSet1,
         Set<V> vertexSet2)
     {

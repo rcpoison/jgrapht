@@ -333,7 +333,6 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             boolean result;
 
             boolean infinite = false;
-            int numOfVertexes = targetGraph.vertexSet().size();
             int maxAllowedEdges = getMaxEdgesForVertexNum(targetGraph);
             if (maxAllowedEdges == -1) {
                 infinite = true;

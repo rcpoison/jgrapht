@@ -235,7 +235,8 @@ public class AdaptiveIsomorphismInspectorFactory
      *         with a topological comparator. This implementation uses:
      *         <li>vertex degree size comparator
      */
-    protected static <V,E> GraphIsomorphismInspector
+    @SuppressWarnings("unchecked")
+	protected static <V,E> GraphIsomorphismInspector
         createTopologicalExhaustiveInspector(
                 Graph<V,E> graph1,
                 Graph<V,E> graph2,

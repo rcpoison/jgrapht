@@ -42,7 +42,6 @@ import java.util.*;
 
 import org.jgrapht.*;
 import org.jgrapht.event.*;
-import org.jgrapht.graph.*;
 import org.jgrapht.util.*;
 
 /**

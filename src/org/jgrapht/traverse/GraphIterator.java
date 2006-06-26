@@ -43,7 +43,6 @@ package org.jgrapht.traverse;
 
 import java.util.*;
 
-import org.jgrapht.*;
 import org.jgrapht.event.*;
 
 

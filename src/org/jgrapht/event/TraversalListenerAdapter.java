@@ -42,8 +42,6 @@
  */
 package org.jgrapht.event;
 
-import org.jgrapht.*;
-
 
 /**
  * An empty do-nothing implementation of the {@link TraversalListener}

@@ -38,7 +38,6 @@ package org.jgrapht.alg.isomorphism;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.graph.*;
 import org.jgrapht.util.*;
 
 

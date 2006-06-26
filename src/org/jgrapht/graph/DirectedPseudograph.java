@@ -56,7 +56,9 @@ public class DirectedPseudograph<V, E>
 
     //~ Constructors ----------------------------------------------------------
 
-    /**
+	private static final long serialVersionUID = -8300409752893486415L;
+
+	/**
      * @see AbstractBaseGraph
      */
     public DirectedPseudograph(Class<? extends E> edgeClass)

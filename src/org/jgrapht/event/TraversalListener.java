@@ -41,8 +41,6 @@
  */
 package org.jgrapht.event;
 
-import org.jgrapht.*;
-
 
 /**
  * A listener on graph iterator or on a graph traverser.

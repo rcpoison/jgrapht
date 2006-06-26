@@ -37,8 +37,6 @@ package org.jgrapht.util.permutation;
 
 import java.util.*;
 
-import org.jgrapht.util.*;
-
 
 /**
  * Iterates through permutations of N elements.
@@ -61,7 +59,6 @@ public class IntegerPermutationIter implements Iterator,
     private int [] Value;
     private int N;
     private long permutationCounter;
-    private long totalNumberOfPermutations;
     private boolean endWasReached = false;
     private boolean wasNextValueCalculatedAlready = false;
 
@@ -113,7 +110,6 @@ public class IntegerPermutationIter implements Iterator,
         this.N = array.length;
         this.Value = array;
         this.currentValueBackup = this.Value;
-        totalNumberOfPermutations = MathUtil.factorial(N);
         permutationCounter = 0;
     }
 

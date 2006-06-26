@@ -42,8 +42,6 @@ package org.jgrapht.event;
 
 import java.util.*;
 
-import org.jgrapht.*;
-
 
 /**
  * A traversal event for a graph edge.

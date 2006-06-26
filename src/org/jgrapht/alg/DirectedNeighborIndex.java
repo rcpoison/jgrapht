@@ -43,7 +43,6 @@ import java.util.*;
 import org.jgrapht.*;
 import org.jgrapht.alg.NeighborIndex.Neighbors;
 import org.jgrapht.event.*;
-import org.jgrapht.graph.*;
 
 /**
  * Maintains a cache of each vertex's neighbors. While
