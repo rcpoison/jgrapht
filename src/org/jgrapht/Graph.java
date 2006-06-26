@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -187,7 +187,7 @@ public interface Graph<V, E>
      * @throws NullPointerException if any of the specified vertices is <code>
      *                              null</code>.
      *
-     * @see #addEdge(V, V)
+     * @see #addEdge(Object, Object)
      * @see #getEdgeFactory()
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e);
@@ -279,7 +279,7 @@ public interface Graph<V, E>
      * Removes all the edges in this graph that are also contained in the
      * specified edge collection.  After this call returns, this graph will
      * contain no edges in common with the specified edges. This method will
-     * invoke the {@link #removeEdge(Edge)} method.
+     * invoke the {@link #removeEdge(Object)} method.
      *
      * @param edges edges to be removed from this graph.
      *
@@ -288,8 +288,8 @@ public interface Graph<V, E>
      * @throws NullPointerException if the specified edge collection is <tt>
      *                              null</tt>.
      *
-     * @see #removeEdge(Edge)
-     * @see #containsEdge(Edge)
+     * @see #removeEdge(Object)
+     * @see #containsEdge(Object)
      */
     public boolean removeAllEdges(Collection<? extends E> edges);
 
@@ -299,7 +299,7 @@ public interface Graph<V, E>
      * Returns <code>null</code> if any of the specified vertices does not
      * exist in the graph. If both vertices exist but no edge is found, returns
      * an empty set. This method will either invoke the {@link
-     * #removeEdge(Edge)} method, or the {@link #removeEdge(Object, Object)}
+     * #removeEdge(Object)} method, or the {@link #removeEdge(Object, Object)}
      * method.
      *
      * @param sourceVertex source vertex of the edge.

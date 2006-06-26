@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -52,7 +52,7 @@ import org.jgrapht.*;
  * <p>prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
  * interface.</p>
  *
- * @see org.jgrapht.graph.DefaultDirectedGraph
+ * @see DefaultDirectedGraph
  */
 public class DefaultDirectedWeightedGraph<V, E>
     extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>

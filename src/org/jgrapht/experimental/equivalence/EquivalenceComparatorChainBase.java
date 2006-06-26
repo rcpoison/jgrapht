@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -107,8 +107,8 @@ public class EquivalenceComparatorChainBase<E,C>
      * the comparators chain until one of them returns false. If none returns
      * false, this method returns true.
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
-     *      java.lang.Object, Object, Object)
+     * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
+     * Object)
      */
     public boolean equivalenceCompare(
         E arg1,
@@ -131,8 +131,7 @@ public class EquivalenceComparatorChainBase<E,C>
     /**
      * Rehashes the concatenation of the results of all single hashcodes.
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
-     *      Object)
+     * @see EquivalenceComparator#equivalenceHashcode(Object, Object)
      */
     public int equivalenceHashcode(E arg1, C context)
     {

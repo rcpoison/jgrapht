@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (barak_naveh@users.sourceforge.net)
+ * Project Creator:  Barak Naveh (barak_naveh@users.sourceforge.net)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *

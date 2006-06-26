@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -290,7 +290,7 @@ public class IntegerPermutationIter implements Iterator,
     }
 
     /* (non-Javadoc)
-     * @see org.jgrapht.util.ArrayPermutationsIter#nextPermutation()
+     * @see ArrayPermutationsIter#nextPermutation()
      */
     public int [] nextPermutation()
     {
@@ -298,7 +298,7 @@ public class IntegerPermutationIter implements Iterator,
     }
 
     /* (non-Javadoc)
-     * @see org.jgrapht.util.ArrayPermutationsIter#hasNextPermutaions()
+     * @see ArrayPermutationsIter#hasNextPermutaions()
      */
     public boolean hasNextPermutaions()
     {

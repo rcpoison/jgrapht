@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -830,7 +830,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         private static final long serialVersionUID = 3690194343461861173L;
 
         /**
-         * @see org.jgrapht.ext.JGraphModelAdapter.CellFactory#createEdgeCell(org.jgrapht.Edge)
+         * @see JGraphModelAdapter.CellFactory#createEdgeCell(Object)
          */
         public DefaultEdge createEdgeCell(EE jGraphTEdge)
         {
@@ -838,7 +838,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         }
 
         /**
-         * @see org.jgrapht.ext.JGraphModelAdapter.CellFactory#createVertexCell(Object)
+         * @see JGraphModelAdapter.CellFactory#createVertexCell(Object)
          */
         public DefaultGraphCell createVertexCell(VV jGraphTVertex)
         {
@@ -1049,7 +1049,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         }
 
         /**
-         * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+         * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
          */
         public void vertexAdded(GraphVertexChangeEvent<V> e)
         {
@@ -1061,7 +1061,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         }
 
         /**
-         * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+         * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
          */
         public void vertexRemoved(GraphVertexChangeEvent<V> e)
         {

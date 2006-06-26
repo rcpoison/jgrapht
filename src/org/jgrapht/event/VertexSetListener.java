@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -51,7 +51,7 @@ import java.util.*;
  * GraphListener</code>.
  *
  * @author Barak Naveh
- * @see org.jgrapht.event.GraphListener
+ * @see GraphListener
  * @since Jul 18, 2003
  */
 public interface VertexSetListener<V> extends EventListener

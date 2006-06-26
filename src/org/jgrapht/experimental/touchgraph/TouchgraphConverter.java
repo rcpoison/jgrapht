@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -74,7 +74,8 @@ public class TouchgraphConverter
      * @throws TGException
      * @return first node of the TouchGraph graph
      */
-    public Node convertToTouchGraph(Graph graph, TGPanel tgPanel,boolean selfReferencesAllowed) throws TGException
+    @SuppressWarnings("unchecked")
+	public Node convertToTouchGraph(Graph graph, TGPanel tgPanel,boolean selfReferencesAllowed) throws TGException
     {
         Object[] jgtNodes = graph.vertexSet().toArray();
         Node[] tgNodes = new Node[jgtNodes.length];

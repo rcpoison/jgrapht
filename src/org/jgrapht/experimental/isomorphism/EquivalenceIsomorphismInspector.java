@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -123,8 +123,9 @@ class EquivalenceIsomorphismInspector<V,E>
      *         permutation for eq.groups) or the sets do not match in size;
      *         otherwise, the permutationiterator otherwise
      *
-     * @see org.jgrapht.experimental.isomorphism.AbstractExhaustiveIsomorphismInspector#createPermutationIterator(java.util.Set,
-     *      java.util.Set)
+     * @see
+     * AbstractExhaustiveIsomorphismInspector#createPermutationIterator(Set,
+     * Set)
      */
     @SuppressWarnings("unchecked")
 	protected CollectionPermutationIter<V> createPermutationIterator(
@@ -299,8 +300,9 @@ class EquivalenceIsomorphismInspector<V,E>
      * We know for sure, that the sets are alreay checked for equivalence , so
      * it will return true without any further checks.
      *
-     * @see org.jgrapht.experimental.isomorphism.AbstractExhaustiveIsomorphismInspector#areVertexSetsOfTheSameEqualityGroup(java.util.Set,
-     *      java.util.Set)
+     * @see
+     * AbstractExhaustiveIsomorphismInspector#areVertexSetsOfTheSameEqualityGroup(
+     * Set, Set)
      */
     protected boolean areVertexSetsOfTheSameEqualityGroup(
         Set vertexSet1,

@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -38,9 +38,11 @@
  */
 package org.jgrapht.ext;
 
+import org.jgrapht.event.*;
+
 /**
- * Generates vertex names by invoking {@link toString()} on them. This assumes
- * that the vertex's {@link toString()} method returns a unique String
+ * Generates vertex names by invoking {@link #toString()} on them. This assumes
+ * that the vertex's {@link #toString()} method returns a unique String
  * representation for each vertex.
  *
  * @author Charles Fry

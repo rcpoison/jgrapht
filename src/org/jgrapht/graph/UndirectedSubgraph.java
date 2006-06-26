@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -48,7 +48,7 @@ import org.jgrapht.*;
 /**
  * An undirected graph that is a subgraph on other graph.
  *
- * @see org.jgrapht.graph.Subgraph
+ * @see Subgraph
  */
 public class UndirectedSubgraph<V, E> extends Subgraph<V, E>
     implements UndirectedGraph<V, E>

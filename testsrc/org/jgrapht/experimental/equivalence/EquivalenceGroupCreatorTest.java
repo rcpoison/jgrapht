@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -149,7 +149,7 @@ public class EquivalenceGroupCreatorTest extends TestCase
         //assert the group order size is sorted.
         for (int i = 1; i < eqGroupArray.length; i++) {
             EquivalenceSet set = eqGroupArray[i];
-            assertTrue(eqGroupArray[i].size() >= eqGroupArray[i-1].size());
+            assertTrue(set.size() >= eqGroupArray[i-1].size());
         }
         // System.out.println("\nTesting the EquivalenceSet[] returned from
         // Integer["

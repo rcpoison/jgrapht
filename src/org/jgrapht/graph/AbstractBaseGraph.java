@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -220,7 +220,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#addEdge(V, V, E)
+     * @see Graph#addEdge(Object, Object, Object)
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
@@ -282,7 +282,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeSource(E)
+     * @see Graph#getEdgeSource(Object)
      */
     public V getEdgeSource(E e)
     {
@@ -292,7 +292,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeTarget(E)
+     * @see Graph#getEdgeTarget(Object)
      */
     public V getEdgeTarget(E e)
     {
@@ -349,7 +349,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#containsEdge(Edge)
+     * @see Graph#containsEdge(Object)
      */
     public boolean containsEdge(E e)
     {
@@ -365,7 +365,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.UndirectedGraph#degreeOf(java.lang.Object)
+     * @see UndirectedGraph#degreeOf(Object)
      */
     public int degreeOf(V vertex)
     {
@@ -394,7 +394,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.DirectedGraph#inDegreeOf(java.lang.Object)
+     * @see DirectedGraph#inDegreeOf(Object)
      */
     public int inDegreeOf(V vertex)
     {
@@ -402,7 +402,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.DirectedGraph#incomingEdgesOf(java.lang.Object)
+     * @see DirectedGraph#incomingEdgesOf(Object)
      */
     public Set<E> incomingEdgesOf(V vertex)
     {
@@ -410,7 +410,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.DirectedGraph#outDegreeOf(java.lang.Object)
+     * @see DirectedGraph#outDegreeOf(Object)
      */
     public int outDegreeOf(V vertex)
     {
@@ -418,7 +418,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.DirectedGraph#outgoingEdgesOf(java.lang.Object)
+     * @see DirectedGraph#outgoingEdgesOf(Object)
      */
     public Set<E> outgoingEdgesOf(V vertex)
     {
@@ -441,7 +441,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#removeEdge(Edge)
+     * @see Graph#removeEdge(Object)
      */
     public boolean removeEdge(E e)
     {
@@ -489,7 +489,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeWeight(E)
+     * @see Graph#getEdgeWeight(Object)
      */
     public double getEdgeWeight(E e)
     {
@@ -501,7 +501,7 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * @see WeightedGraph#setEdgeWeight(E)
+     * @see WeightedGraph#setEdgeWeight(Object, double)
      */
     public void setEdgeWeight(E e, double weight)
     {

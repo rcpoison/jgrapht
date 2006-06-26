@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -53,9 +53,9 @@ import org.jgrapht.*;
  * applicable to both: directed graphs and undirected graphs.
  *
  * @author Barak Naveh
- * @see org.jgrapht.Graph
- * @see org.jgrapht.DirectedGraph
- * @see org.jgrapht.UndirectedGraph
+ * @see Graph
+ * @see DirectedGraph
+ * @see UndirectedGraph
  */
 public abstract class AbstractGraph<V, E> implements Graph<V, E>
 {
@@ -160,14 +160,14 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E>
      * Removes all the edges in this graph that are also contained in the
      * specified edge array.  After this call returns, this graph will contain
      * no edges in common with the specified edges. This method will invoke the
-     * {@link Graph#removeEdge(Edge)} method.
+     * {@link Graph#removeEdge(Object)} method.
      *
      * @param edges edges to be removed from this graph.
      *
      * @return <tt>true</tt> if this graph changed as a result of the call.
      *
-     * @see Graph#removeEdge(Edge)
-     * @see Graph#containsEdge(Edge)
+     * @see Graph#removeEdge(Object)
+     * @see Graph#containsEdge(Object)
      */
     protected boolean removeAllEdges(E [] edges)
     {

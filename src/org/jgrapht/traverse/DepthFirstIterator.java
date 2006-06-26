@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -98,7 +98,7 @@ public class DepthFirstIterator<V, E>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     * @see CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted()
     {
@@ -106,8 +106,7 @@ public class DepthFirstIterator<V, E>
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
-     *      org.jgrapht.Edge)
+     * @see CrossComponentIterator#encounterVertex(Object, Object)
      */
     protected void encounterVertex(V vertex, E edge)
     {
@@ -116,15 +115,14 @@ public class DepthFirstIterator<V, E>
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertexAgain(java.lang.Object,
-     *      org.jgrapht.Edge)
+     * @see CrossComponentIterator#encounterVertexAgain(Object, Object)
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
+     * @see CrossComponentIterator#provideNextVertex()
      */
     protected V provideNextVertex()
     {

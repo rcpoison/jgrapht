@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -54,8 +54,8 @@ public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<
     /**
      * Always returns true.
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
-     *      java.lang.Object, Object, Object)
+     * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
+     * Object)
      */
     public boolean equivalenceCompare(
             E arg1,
@@ -69,8 +69,7 @@ public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<
     /**
      * Always returns 0.
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
-     *      Object)
+     * @see EquivalenceComparator#equivalenceHashcode(Object, Object)
      */
     public int equivalenceHashcode(E arg1, C context)
     {

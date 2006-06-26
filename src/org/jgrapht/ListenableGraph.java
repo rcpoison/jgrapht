@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -48,8 +48,8 @@ import org.jgrapht.event.*;
  * A graph that supports listeners on structural change events.
  *
  * @author Barak Naveh
- * @see org.jgrapht.event.GraphListener
- * @see org.jgrapht.event.VertexSetListener
+ * @see GraphListener
+ * @see VertexSetListener
  * @since Jul 20, 2003
  */
 public interface ListenableGraph<V, E> extends Graph<V, E>

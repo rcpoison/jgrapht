@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -42,7 +42,6 @@ import java.util.*;
 
 import junit.framework.*;
 
-import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
 /**
@@ -58,10 +57,7 @@ public class NeighborIndexTest extends TestCase
     private static final String V1 = new String("v1");
     private static final String V2 = new String("v2");
     private static final String V3 = new String("v3");
-    private static final String V4 = new String("v4");
-
-    //~ Methods ---------------------------------------------------------------
-
+    
     public void testNeighborSet()
     {
         ListenableUndirectedGraph g = new ListenableUndirectedGraph(

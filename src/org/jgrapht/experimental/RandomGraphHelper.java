@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -75,7 +75,8 @@ public final class RandomGraphHelper
     /**
      * @see GraphGenerator#generateGraph
      */
-    public static void addEdges(
+    @SuppressWarnings("unchecked")
+	public static void addEdges(
         Graph target,
         List sourceVertices,
         List destVertices,
@@ -104,7 +105,8 @@ public final class RandomGraphHelper
      *
      * @return
      */
-    public static Object [] addVertices(
+    @SuppressWarnings("unchecked")
+	public static Object [] addVertices(
         Graph target,
         VertexFactory vertexFactory,
         int numVertices)

@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -103,8 +103,8 @@ import org.jgrapht.util.*;
  * ordering (via {@link LinkedHashSet}).</p>
  *
  * @author Barak Naveh
- * @see org.jgrapht.Graph
- * @see java.util.Set
+ * @see Graph
+ * @see Set
  * @since Jul 18, 2003
  * 
  * <p>
@@ -184,7 +184,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org.jgrapht.Graph#getAllEdges(Object, Object)
+     * @see Graph#getAllEdges(Object, Object)
      */
     public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
@@ -209,7 +209,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#getEdge(Object, Object)
+     * @see Graph#getEdge(Object, Object)
      */
     public E getEdge(V sourceVertex, V targetVertex)
     {
@@ -223,7 +223,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#getEdgeFactory()
+     * @see Graph#getEdgeFactory()
      */
     public EdgeFactory<V, E> getEdgeFactory()
     {
@@ -231,7 +231,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#addEdge(Object, Object)
+     * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
     {
@@ -258,7 +258,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#addEdge(V, V, E)
+     * @see Graph#addEdge(Object, Object, Object)
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
@@ -297,7 +297,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
      * @throws IllegalArgumentException
      *
      * @see Subgraph
-     * @see org.jgrapht.Graph#addVertex(Object)
+     * @see Graph#addVertex(Object)
      */
     public boolean addVertex(V v)
     {
@@ -319,7 +319,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#containsEdge(Edge)
+     * @see Graph#containsEdge(Object)
      */
     public boolean containsEdge(E e)
     {
@@ -327,7 +327,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#containsVertex(Object)
+     * @see Graph#containsVertex(Object)
      */
     public boolean containsVertex(V v)
     {
@@ -362,7 +362,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#edgeSet()
+     * @see Graph#edgeSet()
      */
     public Set<E> edgeSet()
     {
@@ -374,7 +374,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#edgesOf(Object)
+     * @see Graph#edgesOf(Object)
      */
     public Set<E> edgesOf(V vertex)
     {
@@ -469,7 +469,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#removeEdge(Edge)
+     * @see Graph#removeEdge(Object)
      */
     public boolean removeEdge(E e)
     {
@@ -477,7 +477,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#removeEdge(Object, Object)
+     * @see Graph#removeEdge(Object, Object)
      */
     public E removeEdge(V sourceVertex, V targetVertex)
     {
@@ -487,7 +487,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#removeVertex(Object)
+     * @see Graph#removeVertex(Object)
      */
     public boolean removeVertex(V v)
     {
@@ -502,7 +502,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#vertexSet()
+     * @see Graph#vertexSet()
      */
     public Set<V> vertexSet()
     {
@@ -514,7 +514,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeSource(E)
+     * @see Graph#getEdgeSource(Object)
      */
     public V getEdgeSource(E e)
     {
@@ -522,7 +522,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeTarget(E)
+     * @see Graph#getEdgeTarget(Object)
      */
     public V getEdgeTarget(E e)
     {
@@ -573,7 +573,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeWeight(E)
+     * @see Graph#getEdgeWeight(Object)
      */
     public double getEdgeWeight(E e)
     {
@@ -581,7 +581,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see WeightedGraph#setEdgeWeight(E)
+     * @see WeightedGraph#setEdgeWeight(Object, double)
      */
     public void setEdgeWeight(E e, double weight)
     {

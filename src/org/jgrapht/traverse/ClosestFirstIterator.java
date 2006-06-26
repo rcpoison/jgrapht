@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -181,7 +181,7 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#isConnectedComponentExhausted()
+     * @see CrossComponentIterator#isConnectedComponentExhausted()
      */
     protected boolean isConnectedComponentExhausted()
     {
@@ -199,8 +199,7 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#encounterVertex(java.lang.Object,
-     *      org.jgrapht.Edge)
+     * @see CrossComponentIterator#encounterVertex(Object, Object)
      */
     protected void encounterVertex(V vertex, E edge)
     {
@@ -234,7 +233,7 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * @see org.jgrapht.traverse.CrossComponentIterator#provideNextVertex()
+     * @see CrossComponentIterator#provideNextVertex()
      */
     protected V provideNextVertex()
     {

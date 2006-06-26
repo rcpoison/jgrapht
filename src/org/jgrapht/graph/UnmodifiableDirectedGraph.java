@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -46,7 +46,7 @@ import org.jgrapht.*;
 /**
  * A directed graph that cannot be modified.
  *
- * @see org.jgrapht.graph.UnmodifiableGraph
+ * @see UnmodifiableGraph
  */
 public class UnmodifiableDirectedGraph<V, E>
     extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>

@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -118,8 +118,7 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      *                                  org.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
      *                                  int)
      *
-     * @see org.jgrapht.generate.GraphGenerator#generateGraph(org.jgrapht.Graph,
-     *      org.jgrapht.VertexFactory, java.util.Map)
+     * @see GraphGenerator#generateGraph(Graph, VertexFactory, Map)
      */
     public void generateGraph(
         Graph<V,E> target,
@@ -325,8 +324,9 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
          * </tr>
          * </table>
          *
-         * @see org.jgrapht.generate.RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
-         *      int)
+         * @see
+         * RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(Graph,
+         * int)
          */
         public boolean isNumberOfEdgesValid(
             Graph<VV,EE> targetGraph,

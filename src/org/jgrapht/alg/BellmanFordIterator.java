@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -196,7 +196,7 @@ class BellmanFordIterator<V,E>
      * @param edge
      *            the edge via which the vertex was encountered.
      * @return the cost obtained by concatenation.
-     * @see org.jgrapht.Graph#getEdgeWeight(E)
+     * @see Graph#getEdgeWeight(E)
      */
     protected double calculatePathCost(V vertex, E edge) {
         V oppositeVertex = Graphs.getOppositeVertex(graph, edge, vertex);

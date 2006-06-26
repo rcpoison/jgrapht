@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -31,7 +31,7 @@
  * Contributor(s):   Christian Hammer
  *                   Mikael Hansen
  *
- * $Id: GraphHelper.java 460 2006-05-07 22:22:10Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------

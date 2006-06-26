@@ -181,9 +181,7 @@
             <classpath refid="build.classpath" />
             <include name="**/*.java"/>
             <exclude name="org/jgrapht/experimental/**/*.java"/>
-            <exclude name="org/jgrapht/alg/isomorphism/**/*.java"/>
             <exclude name="org/jgrapht/util/TypeUtil.java"/>
-            <exclude name="org/jgrapht/util/equivalence/**/*.java"/>
             <exclude name="org/jgrapht/ext/JGraphModelAdapter.java"/>
             <exclude name="org/jgrapht/demo/JGraphAdapterDemo.java"/>
         </javac>
@@ -343,7 +341,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <target name="javadoc" depends="init" description="Creates the Javadocs.">
         <delete dir="${javadoc.dir}" />
         <mkdir dir="${javadoc.dir}" />
-        <javadoc destdir="${javadoc.dir}" 
+        <javadoc destdir="${javadoc.dir}" source="1.5"
                  access="protected" 
                  windowtitle="JGraphT : a free Java graph library"
                  overview="${src.dir}/overview.html">

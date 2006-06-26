@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -106,7 +106,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
      * the returned list. Because a list of neighbors
      * can not be efficiently maintained, it is reconstructed on every
      * invocation, by duplicating entries in the neighbor set.
-     * It is thus more effecient to use {@link neighborsOf(V)}
+     * It is thus more effecient to use {@link #neighborsOf(Object)}
      * unless dupliate neighbors are important.
      *
      * @param v the vertex whose neighbors are desired
@@ -146,7 +146,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
     }
 
     /**
-     * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
     public void vertexAdded(GraphVertexChangeEvent<V> e)
     {
@@ -154,7 +154,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
     }
 
     /**
-     * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {

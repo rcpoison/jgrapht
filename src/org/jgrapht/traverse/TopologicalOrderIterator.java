@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -127,7 +127,7 @@ public class TopologicalOrderIterator<V, E>
     }
 
     /**
-     * @see CrossComponentIterator#encounterVertex(Object, Edge)
+     * @see CrossComponentIterator#encounterVertex(Object, Object)
      */
     protected void encounterVertex(V vertex, E edge)
     {
@@ -136,7 +136,7 @@ public class TopologicalOrderIterator<V, E>
     }
 
     /**
-     * @see CrossComponentIterator#encounterVertexAgain(Object, Edge)
+     * @see CrossComponentIterator#encounterVertexAgain(Object, Object)
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {

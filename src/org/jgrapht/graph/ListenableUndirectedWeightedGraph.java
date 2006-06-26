@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -48,7 +48,7 @@ import org.jgrapht.*;
  * An undirected weighted graph which is also {@link
  * org.jgrapht.ListenableGraph}.
  *
- * @see org.jgrapht.graph.DefaultListenableGraph
+ * @see DefaultListenableGraph
  */
 public class ListenableUndirectedWeightedGraph<V, E>
     extends ListenableUndirectedGraph<V, E> implements WeightedGraph<V, E>

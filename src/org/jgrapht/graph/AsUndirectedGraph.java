@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -103,7 +103,7 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @see org.jgrapht.Graph#getAllEdges(Object, Object)
+     * @see Graph#getAllEdges(Object, Object)
      */
     public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
@@ -124,7 +124,7 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#getEdge(Object, Object)
+     * @see Graph#getEdge(Object, Object)
      */
     public E getEdge(V sourceVertex, V targetVertex)
     {
@@ -139,7 +139,7 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#addEdge(Object, Object)
+     * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)
     {
@@ -147,7 +147,7 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     }
 
     /**
-     * @see org.jgrapht.Graph#addEdge(Object, Object, E)
+     * @see Graph#addEdge(Object, Object, Object)
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {

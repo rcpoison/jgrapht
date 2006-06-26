@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -134,7 +134,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#addEdge(Object, Object, E)
+     * @see Graph#addEdge(Object, Object, Object)
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
@@ -150,7 +150,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#containsEdge(Edge)
+     * @see Graph#containsEdge(Object)
      */
     public boolean containsEdge(E e)
     {
@@ -222,7 +222,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#removeEdge(Edge)
+     * @see Graph#removeEdge(Object)
      */
     public boolean removeEdge(E e)
     {
@@ -262,7 +262,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
     
     /**
-     * @see Graph#getEdgeSource(E)
+     * @see Graph#getEdgeSource(Object)
      */
     public V getEdgeSource(E e)
     {
@@ -270,7 +270,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see Graph#getEdgeTarget(E)
+     * @see Graph#getEdgeTarget(Object)
      */
     public V getEdgeTarget(E e)
     {
@@ -278,7 +278,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
     
     /**
-     * @see Graph#getEdgeWeight(E)
+     * @see Graph#getEdgeWeight(Object)
      */
     public double getEdgeWeight(E e)
     {
@@ -286,7 +286,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     }
 
     /**
-     * @see WeightedGraph#setEdgeWeight(E)
+     * @see WeightedGraph#setEdgeWeight(Object, double)
      */
     public void setEdgeWeight(E e, double weight)
     {

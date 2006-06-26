@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -213,7 +213,7 @@ public class ConnectivityInspector<V, E>
     }
 
     /**
-     * @see org.jgrapht.event.VertexSetListener#vertexAdded(GraphVertexChangeEvent)
+     * @see VertexSetListener#vertexAdded(GraphVertexChangeEvent)
      */
     public void vertexAdded(GraphVertexChangeEvent<V> e)
     {
@@ -222,7 +222,7 @@ public class ConnectivityInspector<V, E>
     }
 
     /**
-     * @see org.jgrapht.event.VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
+     * @see VertexSetListener#vertexRemoved(GraphVertexChangeEvent)
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {

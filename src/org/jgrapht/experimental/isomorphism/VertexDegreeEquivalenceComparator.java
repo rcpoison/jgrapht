@@ -3,7 +3,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -74,8 +74,8 @@ public class VertexDegreeEquivalenceComparator<V,E>
      * <p>One may reside in an Undirected Graph and the other in a Directed
      * graph, or both on the same graph type.
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
-     *      java.lang.Object, Object, Object)
+     * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
+     * Object)
      */
     public boolean equivalenceCompare(
         V vertex1,
@@ -94,8 +94,7 @@ public class VertexDegreeEquivalenceComparator<V,E>
     /**
      * Hashes using the in & out degree of a vertex
      *
-     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
-     *      Object)
+     * @see EquivalenceComparator#equivalenceHashcode(Object, Object)
      */
     public int equivalenceHashcode(V vertex, Graph<V,E> context)
     {
