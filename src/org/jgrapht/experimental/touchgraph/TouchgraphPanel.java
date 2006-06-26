@@ -25,7 +25,7 @@
 /* -------------------
  * TouchgraphPanel.java
  * -------------------
- * (C) Copyright 2006, by Carl Anderson and Contributors.
+ * (C) Copyright 2006-2006, by Carl Anderson and Contributors.
  *
  * Original Author:  Carl Anderson
  * Contributor(s):   -

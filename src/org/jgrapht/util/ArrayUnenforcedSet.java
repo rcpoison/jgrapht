@@ -25,7 +25,7 @@
 /* -----------------
  * ArrayUnenforcedSet.java
  * -----------------
- * (C) Copyright 2006, by John V. Sichi and Contributors.
+ * (C) Copyright 2006-2006, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
  * Contributor(s):   -

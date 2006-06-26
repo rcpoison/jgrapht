@@ -25,12 +25,12 @@
 /* --------------------------
  * GenericGraphsTest.java
  * --------------------------
- * (C) Copyright 2006, by HartmutBenz and Contributors.
+ * (C) Copyright 2006-2006, by HartmutBenz and Contributors.
  *
  * Original Author:  Hartmut Benz
  * Contributor(s):   John V. Sichi
  *
- * $Id:$
+ * $Id$
  *
  * Changes
  * -------

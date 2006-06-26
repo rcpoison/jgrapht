@@ -25,7 +25,7 @@
 /* -------------------------
  * BellmanFordIterator.java
  * -------------------------
- * (C) Copyright 2006, by France Telecom and Contributors.
+ * (C) Copyright 2006-2006, by France Telecom and Contributors.
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi

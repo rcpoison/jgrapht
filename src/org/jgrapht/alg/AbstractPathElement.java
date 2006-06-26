@@ -25,7 +25,7 @@
 /* -------------------------
  * AbstractPathElement.java
  * -------------------------
- * (C) Copyright 2006, by France Telecom
+ * (C) Copyright 2006-2006, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi

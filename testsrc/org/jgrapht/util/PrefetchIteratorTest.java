@@ -25,7 +25,7 @@
 /* -----------------
  * PrefetchIteratorTest.java
  * -----------------
- * (C) Copyright 2005, by Assaf Lehr and Contributors.
+ * (C) Copyright 2005-2006, by Assaf Lehr and Contributors.
  *
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
