@@ -121,7 +121,7 @@ public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
     /**
      * @see Graph#addEdge(Object, Object, E)
      */
-    public E addEdge(V sourceVertex, V targetVertex, E e)
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }

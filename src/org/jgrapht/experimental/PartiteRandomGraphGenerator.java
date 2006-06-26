@@ -148,7 +148,7 @@ public class PartiteRandomGraphGenerator<V,E>
 
         for (int i = 0; i < m_numVertices.length; i++) {
             vertices[i] =
-                RandomGraphs.addVertices(
+                RandomGraphHelper.addVertices(
                     target,
                     vertexFactory,
                     m_numVertices[i]);
@@ -158,7 +158,7 @@ public class PartiteRandomGraphGenerator<V,E>
             }
 
             for (int j = 0; j < i; j++) {
-                RandomGraphs.addEdges(
+                RandomGraphHelper.addEdges(
                     target,
                     Arrays.asList(vertices[i]),
                     Arrays.asList(vertices[j]),

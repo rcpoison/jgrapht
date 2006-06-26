@@ -114,6 +114,34 @@ public abstract class Graphs
     }
 
     /**
+     * Adds the specified edge to the graph, including its vertices if
+     * not already included.
+     *
+     * @param targetGraph the graph for which the specified edge to be added.
+     *
+     * @param sourceGraph the graph in which the specified edge is already
+     * present
+     *
+     * @param edge edge to add
+     *
+     * @return <tt>true</tt> if the target graph did not already contain the
+     *         specified edge.
+     */
+    public static <V, E> boolean addEdgeWithVertices(
+        Graph<V, E> targetGraph,
+        Graph<V, E> sourceGraph,
+        E edge)
+    {
+        V sourceVertex = sourceGraph.getEdgeSource(edge);
+        V targetVertex = sourceGraph.getEdgeTarget(edge);
+        
+        targetGraph.addVertex(sourceVertex);
+        targetGraph.addVertex(targetVertex);
+
+        return targetGraph.addEdge(sourceVertex, targetVertex, edge);
+    }
+
+    /**
      * Adds the specified source and target vertices to the graph, if not
      * already included, and creates a new weighted edge and adds it to the
      * specified graph similarly to the {@link Graph#addEdge(Object, Object)}

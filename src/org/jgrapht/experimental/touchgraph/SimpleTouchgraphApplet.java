@@ -45,7 +45,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import org.jgrapht.Edge;
 import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.SimpleGraph;
