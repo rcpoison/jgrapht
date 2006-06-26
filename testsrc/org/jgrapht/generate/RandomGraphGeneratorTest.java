@@ -40,8 +40,8 @@ package org.jgrapht.generate;
 import junit.framework.TestCase;
 
 import org.jgrapht.Graph;
-import org.jgrapht.alg.isomorphism.EdgeTopologyCompare;
-import org.jgrapht.alg.isomorphism.IntegerVertexFactory;
+import org.jgrapht.experimental.isomorphism.EdgeTopologyCompare;
+import org.jgrapht.experimental.isomorphism.IntegerVertexFactory;
 import org.jgrapht.graph.*;
 
 

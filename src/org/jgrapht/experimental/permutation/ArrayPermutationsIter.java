@@ -35,7 +35,7 @@
  * Changes
  * -------
  */
-package org.jgrapht.util.permutation;
+package org.jgrapht.experimental.permutation;
 
 /**
  * An interface to iterate over array permutations. Similiar to Iterator, but

@@ -35,7 +35,7 @@
  * Changes
  * -------
  */
-package org.jgrapht.util.permutation;
+package org.jgrapht.experimental.permutation;
 
 import java.util.*;
 

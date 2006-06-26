@@ -35,13 +35,13 @@
  * Changes
  * -------
  */
-package org.jgrapht.alg.isomorphism;
+package org.jgrapht.experimental.isomorphism;
 
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.equivalence.*;
-import org.jgrapht.util.permutation.*;
+import org.jgrapht.experimental.equivalence.*;
+import org.jgrapht.experimental.permutation.*;
 
 
 /**

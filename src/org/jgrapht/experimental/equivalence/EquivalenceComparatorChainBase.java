@@ -35,7 +35,7 @@
  * Changes
  * -------
  */
-package org.jgrapht.util.equivalence;
+package org.jgrapht.experimental.equivalence;
 
 import java.util.*;
 
@@ -92,7 +92,7 @@ public class EquivalenceComparatorChainBase<E,C>
      *
      *
      *
-     * org.jgrapht.util.equivalence.EquivalenceComparatorChain#addComparatorAfter(org.jgrapht.util.equivalence.EquivalenceComparator)
+     * org.jgrapht.experimental.equivalence.EquivalenceComparatorChain#addComparatorAfter(org.jgrapht.experimental.equivalence.EquivalenceComparator)
      */
     @SuppressWarnings("unchecked")
 	public void appendComparator(EquivalenceComparator comparatorAfter)
@@ -107,7 +107,7 @@ public class EquivalenceComparatorChainBase<E,C>
      * the comparators chain until one of them returns false. If none returns
      * false, this method returns true.
      *
-     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
+     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
      *      java.lang.Object, Object, Object)
      */
     public boolean equivalenceCompare(
@@ -131,7 +131,7 @@ public class EquivalenceComparatorChainBase<E,C>
     /**
      * Rehashes the concatenation of the results of all single hashcodes.
      *
-     * @see org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
+     * @see org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      *      Object)
      */
     public int equivalenceHashcode(E arg1, C context)

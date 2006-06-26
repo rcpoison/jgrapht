@@ -35,14 +35,14 @@
  * Changes
  * -------
  */
-package org.jgrapht.util.equivalence;
+package org.jgrapht.experimental.equivalence;
 
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
-import org.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator;
-import org.jgrapht.alg.isomorphism.comparators.OddEvenGroupComparator;
+import org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator;
+import org.jgrapht.experimental.isomorphism.comparators.OddEvenGroupComparator;
 
 
 /**
@@ -74,17 +74,17 @@ public class EquivalenceGroupCreatorTest extends TestCase
         //expecting two seperate groups , one with odd , one with even nubmers"
         testOneComparator(new UniformEquivalenceComparator(),    1      );
         //" expecting 3 seperate groups , one for each mod3
-        testOneComparator(new org.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator(),
+        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
             3) ;
     }
     
     public void testOddEvenGroup()
     {
         //" expecting two seperate groups , one with odd , one with even nubmers");
-        testOneComparator(new org.jgrapht.alg.isomorphism.comparators.OddEvenGroupComparator(),
+        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.OddEvenGroupComparator(),
             2);
         //  " expecting 3 seperate groups , one for each mod3");  
-        testOneComparator(new org.jgrapht.alg.isomorphism.comparators.Mod3GroupComparator(),
+        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
             3);
           
     }

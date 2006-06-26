@@ -35,17 +35,17 @@
  * Changes
  * -------
  */
-package org.jgrapht.alg.isomorphism;
+package org.jgrapht.experimental.isomorphism;
 
 import java.util.*;
 
 import junit.framework.*;
 
 import org.jgrapht.*;
-import org.jgrapht.alg.isomorphism.comparators.*;
+import org.jgrapht.experimental.isomorphism.comparators.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
-import org.jgrapht.util.equivalence.*;
+import org.jgrapht.experimental.equivalence.*;
 
 
 /**

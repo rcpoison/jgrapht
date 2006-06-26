@@ -35,9 +35,9 @@
  * Changes
  * -------
  */
-package org.jgrapht.alg.isomorphism.comparators;
+package org.jgrapht.experimental.isomorphism.comparators;
 
-import org.jgrapht.util.equivalence.*;
+import org.jgrapht.experimental.equivalence.*;
 
 
 /**
@@ -73,7 +73,7 @@ public class Mod3GroupComparator implements EquivalenceComparator<Integer,Object
      *
      *
      *
-     * org.jgrapht.util.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object)
+     * org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object)
      */
     public int equivalenceHashcode(Integer arg1, Object context)
     {

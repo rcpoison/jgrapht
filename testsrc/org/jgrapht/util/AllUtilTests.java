@@ -37,8 +37,8 @@
  */
 package org.jgrapht.util;
 
-import org.jgrapht.util.equivalence.EquivalenceGroupCreatorTest;
-import org.jgrapht.util.permutation.CompoundPermutationIterTest;
+import org.jgrapht.experimental.equivalence.EquivalenceGroupCreatorTest;
+import org.jgrapht.experimental.permutation.CompoundPermutationIterTest;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;

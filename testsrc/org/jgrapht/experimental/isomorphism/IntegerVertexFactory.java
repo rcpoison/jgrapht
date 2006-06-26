@@ -35,7 +35,7 @@
  * Changes
  * -------
  */
-package org.jgrapht.alg.isomorphism;
+package org.jgrapht.experimental.isomorphism;
 
 import org.jgrapht.*;
 

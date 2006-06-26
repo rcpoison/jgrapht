@@ -35,7 +35,7 @@
  * Changes
  * -------
  */
-package org.jgrapht.util.equivalence;
+package org.jgrapht.experimental.equivalence;
 
 import java.util.*;
 
