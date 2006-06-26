@@ -30,7 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id: EdgeFactories.java 456 2006-04-24 00:32:26Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------
