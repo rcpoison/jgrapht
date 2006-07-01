@@ -452,7 +452,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
                  includes="${build.file.name},${license.file.name}"/>
 
         <!-- make the tar.gz file -->
-        <tar tarfile="${project.tar}">
+        <tar tarfile="${project.tar}" longfile="gnu">
              <tarfileset dir="${distrib.dir}" prefix="${project.prefix}" />
         </tar>
         <gzip zipfile="${project.tar.gz}" src="${project.tar}" />
