@@ -58,9 +58,9 @@ public class BronKerboschCliqueFinder<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private final Graph<V,E> m_graph;
+    private final Graph<V,E> graph;
 
-    private Collection<Set<V>> m_cliques;
+    private Collection<Set<V>> cliques;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -72,7 +72,7 @@ public class BronKerboschCliqueFinder<V, E>
      */
     public BronKerboschCliqueFinder(Graph<V,E> graph)
     {
-        m_graph = graph;
+        this.graph = graph;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -90,13 +90,13 @@ public class BronKerboschCliqueFinder<V, E>
     {
         // TODO jvs 26-July-2005:  assert that graph is simple
 
-        m_cliques = new ArrayList<Set<V>>();
+        cliques = new ArrayList<Set<V>>();
         List<V> potential_clique = new ArrayList<V>();
         List<V> candidates = new ArrayList<V>();
         List<V> already_found = new ArrayList<V>();
-        candidates.addAll(m_graph.vertexSet());
+        candidates.addAll(graph.vertexSet());
         findCliques(potential_clique, candidates, already_found);
-        return m_cliques;
+        return cliques;
     }
 
     /**
@@ -112,12 +112,12 @@ public class BronKerboschCliqueFinder<V, E>
 
         int maximum = 0;
         Collection<Set<V>> biggest_cliques = new ArrayList<Set<V>>();
-        for (Set<V> clique : m_cliques) {
+        for (Set<V> clique : cliques) {
             if (maximum < clique.size()) {
                 maximum = clique.size();
             }
         }
-        for (Set<V> clique : m_cliques) {
+        for (Set<V> clique : cliques) {
             if (maximum == clique.size()) {
                 biggest_cliques.add(clique);
             }
@@ -143,7 +143,7 @@ public class BronKerboschCliqueFinder<V, E>
                 // create new_candidates by removing nodes in candidates not
                 // connected to candidate node
                 for (V new_candidate : candidates) {
-                    if (m_graph.containsEdge(candidate, new_candidate)) {
+                    if (graph.containsEdge(candidate, new_candidate)) {
                         new_candidates.add(new_candidate);
                     } // of if
                 } // of for
@@ -151,7 +151,7 @@ public class BronKerboschCliqueFinder<V, E>
                 // create new_already_found by removing nodes in already_found
                 // not connected to candidate node
                 for (V new_found : already_found) {
-                    if (m_graph.containsEdge(candidate, new_found)) {
+                    if (graph.containsEdge(candidate, new_found)) {
                         new_already_found.add(new_found);
                     } // of if
                 } // of for
@@ -159,7 +159,7 @@ public class BronKerboschCliqueFinder<V, E>
                 // if new_candidates and new_already_found are empty
                 if (new_candidates.isEmpty() && new_already_found.isEmpty()) {
                     // potential_clique is maximal_clique
-                    m_cliques.add(new HashSet<V>(potential_clique));
+                    cliques.add(new HashSet<V>(potential_clique));
                 } // of if
                 else {
                     // recursive call
@@ -184,7 +184,7 @@ public class BronKerboschCliqueFinder<V, E>
         for (V found : already_found) {
             edgecounter = 0;
             for (V candidate : candidates) {
-                if (m_graph.containsEdge(found, candidate)) {
+                if (graph.containsEdge(found, candidate)) {
                     edgecounter++;
                 } // of if
             } // of for

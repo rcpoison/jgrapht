@@ -86,7 +86,7 @@ public class GraphVertexChangeEvent<V> extends GraphChangeEvent
     /**
      * The vertex that this event is related to.
      */
-    protected V m_vertex;
+    protected V vertex;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -100,7 +100,7 @@ public class GraphVertexChangeEvent<V> extends GraphChangeEvent
     public GraphVertexChangeEvent(Object eventSource, int type, V vertex)
     {
         super(eventSource, type);
-        m_vertex = vertex;
+        this.vertex = vertex;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -112,6 +112,6 @@ public class GraphVertexChangeEvent<V> extends GraphChangeEvent
      */
     public V getVertex()
     {
-        return m_vertex;
+        return vertex;
     }
 }

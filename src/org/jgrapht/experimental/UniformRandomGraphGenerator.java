@@ -60,8 +60,8 @@ public class UniformRandomGraphGenerator implements GraphGenerator
 
     //~ Instance fields -------------------------------------------------------
 
-    private final int m_numEdges;
-    private final int m_numVertices;
+    private final int numEdges;
+    private final int numVertices;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -84,8 +84,8 @@ public class UniformRandomGraphGenerator implements GraphGenerator
             throw new IllegalArgumentException("illegal number of edges");
         }
 
-        m_numVertices = numVertices;
-        m_numEdges = numEdges;
+        this.numVertices = numVertices;
+        this.numEdges = numEdges;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -102,11 +102,11 @@ public class UniformRandomGraphGenerator implements GraphGenerator
             RandomGraphHelper.addVertices(
                 target,
                 vertexFactory,
-                m_numVertices);
+                numVertices);
         RandomGraphHelper.addEdges(
             target,
             Arrays.asList(vertices),
             Arrays.asList(vertices),
-            m_numEdges);
+            numEdges);
     }
 }

@@ -67,7 +67,7 @@ public class VisioExporter<V,E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private VertexNameProvider<V> m_vertexNameProvider;
+    private VertexNameProvider<V> vertexNameProvider;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -79,7 +79,7 @@ public class VisioExporter<V,E>
      */
     public VisioExporter(VertexNameProvider<V> vertexNameProvider)
     {
-        m_vertexNameProvider = vertexNameProvider;
+        this.vertexNameProvider = vertexNameProvider;
     }
 
     /**
@@ -116,9 +116,9 @@ public class VisioExporter<V,E>
     private void exportEdge(PrintStream out, E edge, Graph<V,E> g)
     {
         String sourceName =
-            m_vertexNameProvider.getVertexName(g.getEdgeSource(edge));
+            vertexNameProvider.getVertexName(g.getEdgeSource(edge));
         String targetName =
-            m_vertexNameProvider.getVertexName(g.getEdgeTarget(edge));
+            vertexNameProvider.getVertexName(g.getEdgeTarget(edge));
 
         out.print("Link,");
 
@@ -137,7 +137,7 @@ public class VisioExporter<V,E>
 
     private void exportVertex(PrintStream out, V vertex)
     {
-        String name = m_vertexNameProvider.getVertexName(vertex);
+        String name = vertexNameProvider.getVertexName(vertex);
 
         out.print("Shape,");
         out.print(name);

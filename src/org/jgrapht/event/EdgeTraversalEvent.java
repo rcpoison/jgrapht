@@ -61,7 +61,7 @@ public class EdgeTraversalEvent<V, E> extends EventObject
     /**
      * The traversed edge.
      */
-    protected E m_edge;
+    protected E edge;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -74,7 +74,7 @@ public class EdgeTraversalEvent<V, E> extends EventObject
     public EdgeTraversalEvent(Object eventSource, E edge)
     {
         super(eventSource);
-        m_edge = edge;
+        this.edge = edge;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -86,6 +86,6 @@ public class EdgeTraversalEvent<V, E> extends EventObject
      */
     public E getEdge()
     {
-        return m_edge;
+        return edge;
     }
 }

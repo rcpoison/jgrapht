@@ -128,63 +128,63 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     //~ Instance fields -------------------------------------------------------
 
     /**
-     * The following m_(jCells|jtElement)Being(Added|Removed) sets are used to
+     * The following (jCells|jtElement)Being(Added|Removed) sets are used to
      * prevent bouncing of events between the JGraph and JGraphT listeners.
      * They ensure that their respective add/remove operations are done exactly
-     * once. Here is an example of how m_jCellsBeingAdded is used when an edge
+     * once. Here is an example of how jCellsBeingAdded is used when an edge
      * is added to a JGraph graph:
      *
      * <pre>
-        1. First, we add the desired edge to m_jCellsBeingAdded to indicate
+        1. First, we add the desired edge to jCellsBeingAdded to indicate
         that the edge is being inserted internally.
         2.    Then we invoke the JGraph 'insert' operation.
         3.    The JGraph listener will detect the newly inserted edge.
-        4.    It checks if the edge is contained in m_jCellsBeingAdded.
+        4.    It checks if the edge is contained in jCellsBeingAdded.
         5.    If yes,
         it just removes it and does nothing else.
         if no,
         it knows that the edge was inserted externally and performs
         the insertion.
-        6. Lastly, we remove the edge from the m_jCellsBeingAdded.
+        6. Lastly, we remove the edge from the jCellsBeingAdded.
      * </pre>
      *
      * <p>Step 6 is not always required but we do it anyway as a safeguard
      * against the rare case where the edge to be added is already contained in
      * the graph and thus NO event will be fired. If 6 is not done, a junk edge
-     * will remain in the m_jCellsBeingAdded set.</p>
+     * will remain in the jCellsBeingAdded set.</p>
      *
      * <p>The other sets are used in a similar manner to the above. Apparently,
      * All that complication could be eliminated if JGraph and JGraphT had both
      * allowed operations that do not inform listeners...</p>
      */
-    final Set<GraphCell> m_jCellsBeingAdded = new HashSet<GraphCell>();
-    final Set<GraphCell> m_jCellsBeingRemoved = new HashSet<GraphCell>();
-    final Set<Object> m_jtElementsBeingAdded = new HashSet<Object>();
-    final Set<Object> m_jtElementsBeingRemoved = new HashSet<Object>();
-    private final CellFactory<V,E> m_cellFactory;
+    final Set<GraphCell> jCellsBeingAdded = new HashSet<GraphCell>();
+    final Set<GraphCell> jCellsBeingRemoved = new HashSet<GraphCell>();
+    final Set<Object> jtElementsBeingAdded = new HashSet<Object>();
+    final Set<Object> jtElementsBeingRemoved = new HashSet<Object>();
+    private final CellFactory<V,E> cellFactory;
 
     /**
      * Maps JGraph edges to JGraphT edges
      */
-    private final Map<org.jgraph.graph.Edge, E> m_cellToEdge = new HashMap<org.jgraph.graph.Edge, E>();
+    private final Map<org.jgraph.graph.Edge, E> cellToEdge = new HashMap<org.jgraph.graph.Edge, E>();
 
     /**
      * Maps JGraph vertices to JGraphT vertices
      */
-    private final Map<GraphCell, V> m_cellToVertex = new HashMap<GraphCell, V>();
-    private AttributeMap m_defaultEdgeAttributes;
-    private AttributeMap m_defaultVertexAttributes;
+    private final Map<GraphCell, V> cellToVertex = new HashMap<GraphCell, V>();
+    private AttributeMap defaultEdgeAttributes;
+    private AttributeMap defaultVertexAttributes;
 
     /**
      * Maps JGraphT edges to JGraph edges
      */
-    private final Map<E, org.jgraph.graph.Edge> m_edgeToCell = new HashMap<E, org.jgraph.graph.Edge>();
+    private final Map<E, org.jgraph.graph.Edge> edgeToCell = new HashMap<E, org.jgraph.graph.Edge>();
 
     /**
      * Maps JGraphT vertices to JGraph vertices
      */
-    private final Map<V, GraphCell> m_vertexToCell = new HashMap<V, GraphCell>();
-    private final ShieldedGraph m_jtGraph;
+    private final Map<V, GraphCell> vertexToCell = new HashMap<V, GraphCell>();
+    private final ShieldedGraph jtGraph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -255,10 +255,10 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             throw new IllegalArgumentException("null is NOT permitted");
         }
 
-        m_jtGraph = new ShieldedGraph(jGraphTGraph);
+        jtGraph = new ShieldedGraph(jGraphTGraph);
         setDefaultVertexAttributes(defaultVertexAttributes);
         setDefaultEdgeAttributes(defaultEdgeAttributes);
-        m_cellFactory = cellFactory;
+        this.cellFactory = cellFactory;
 
         if (jGraphTGraph instanceof ListenableGraph) {
             ListenableGraph<V, E> g = (ListenableGraph<V, E>) jGraphTGraph;
@@ -338,7 +338,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public CellFactory<V,E> getCellFactory()
     {
-        return m_cellFactory;
+        return cellFactory;
     }
 
     /**
@@ -348,7 +348,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public void setDefaultEdgeAttributes(AttributeMap defaultEdgeAttributes)
     {
-        m_defaultEdgeAttributes = defaultEdgeAttributes;
+        this.defaultEdgeAttributes = defaultEdgeAttributes;
     }
 
     /**
@@ -358,7 +358,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public AttributeMap getDefaultEdgeAttributes()
     {
-        return m_defaultEdgeAttributes;
+        return defaultEdgeAttributes;
     }
 
     /**
@@ -370,7 +370,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     public void setDefaultVertexAttributes(
         AttributeMap defaultVertexAttributes)
     {
-        m_defaultVertexAttributes = defaultVertexAttributes;
+        this.defaultVertexAttributes = defaultVertexAttributes;
     }
 
     /**
@@ -382,7 +382,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public AttributeMap getDefaultVertexAttributes()
     {
-        return m_defaultVertexAttributes;
+        return defaultVertexAttributes;
     }
 
     /**
@@ -396,7 +396,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public DefaultEdge getEdgeCell(E jGraphTEdge)
     {
-        return (DefaultEdge) m_edgeToCell.get(jGraphTEdge);
+        return (DefaultEdge) edgeToCell.get(jGraphTEdge);
     }
 
     /**
@@ -410,7 +410,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     public DefaultGraphCell getVertexCell(Object jGraphTVertex)
     {
-        return (DefaultGraphCell) m_vertexToCell.get(jGraphTVertex);
+        return (DefaultGraphCell) vertexToCell.get(jGraphTVertex);
     }
 
     /**
@@ -447,7 +447,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     void handleJGraphChangedEdge(org.jgraph.graph.Edge jEdge)
     {
         if (isDangling(jEdge)) {
-            if (m_cellToEdge.containsKey(jEdge)) {
+            if (cellToEdge.containsKey(jEdge)) {
                 // a non-dangling edge became dangling -- remove the JGraphT
                 // edge by faking as if the edge is removed from the JGraph.
                 // TODO: Consider keeping the JGraphT edges outside the graph
@@ -458,20 +458,20 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             }
         } else {
             // edge is not dangling
-            if (m_cellToEdge.containsKey(jEdge)) {
+            if (cellToEdge.containsKey(jEdge)) {
                 // edge already has a corresponding JGraphT edge.
                 // check if any change to its endpoints.
                 E jtEdge =
-                    m_cellToEdge.get(jEdge);
+                    cellToEdge.get(jEdge);
 
                 Object jSource = getSourceVertex(this, jEdge);
                 Object jTarget = getTargetVertex(this, jEdge);
 
-                Object jtSource = m_cellToVertex.get(jSource);
-                Object jtTarget = m_cellToVertex.get(jTarget);
+                Object jtSource = cellToVertex.get(jSource);
+                Object jtTarget = cellToVertex.get(jTarget);
 
-                if ((m_jtGraph.getEdgeSource(jtEdge) == jtSource)
-                    && (m_jtGraph.getEdgeTarget(jtEdge) == jtTarget)) {
+                if ((jtGraph.getEdgeSource(jtEdge) == jtSource)
+                    && (jtGraph.getEdgeTarget(jtEdge) == jtTarget)) {
                     // no change in edge's endpoints -- nothing to do.
                 } else {
                     // edge's end-points have changed -- need to refresh the
@@ -509,14 +509,14 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             Object jSource = getSourceVertex(this, jEdge);
             Object jTarget = getTargetVertex(this, jEdge);
 
-            V jtSource = m_cellToVertex.get(jSource);
-            V jtTarget = m_cellToVertex.get(jTarget);
+            V jtSource = cellToVertex.get(jSource);
+            V jtTarget = cellToVertex.get(jTarget);
 
-            E jtEdge = m_jtGraph.addEdge(jtSource, jtTarget);
+            E jtEdge = jtGraph.addEdge(jtSource, jtTarget);
 
             if (jtEdge != null) {
-                m_cellToEdge.put(jEdge, jtEdge);
-                m_edgeToCell.put(jtEdge, jEdge);
+                cellToEdge.put(jEdge, jtEdge);
+                edgeToCell.put(jtEdge, jEdge);
             } else {
                 // Adding failed because user is using a JGraphT graph the
                 // forbids parallel edges.
@@ -560,7 +560,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             jtVertex = (V)jVertex.toString();
         }
 
-        if (m_vertexToCell.containsKey(jtVertex)) {
+        if (vertexToCell.containsKey(jtVertex)) {
             // We have to remove the new vertex, because it would lead to
             // duplicate vertices. We can't use ShieldedGraph.removeVertex for
             // that, because it would remove the wrong (existing) vertex.
@@ -571,17 +571,17 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
                 + "Removing vertex: " + jVertex);
             internalRemoveCell(jVertex);
         } else {
-            m_jtGraph.addVertex(jtVertex);
+            jtGraph.addVertex(jtVertex);
 
-            m_cellToVertex.put(jVertex, jtVertex);
-            m_vertexToCell.put(jtVertex, jVertex);
+            cellToVertex.put(jVertex, jtVertex);
+            vertexToCell.put(jtVertex, jVertex);
         }
     }
 
     /**
      * Removes the edge corresponding to the specified JGraph edge from the
      * JGraphT graph. If the specified edge is not contained in {@link
-     * #m_cellToEdge}, it is silently ignored.
+     * #cellToEdge}, it is silently ignored.
      *
      * <p>This method is to be called only for edges that have already been
      * removed from the JGraph graph.</p>
@@ -590,21 +590,21 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     void handleJGraphRemovedEdge(org.jgraph.graph.Edge jEdge)
     {
-        if (m_cellToEdge.containsKey(jEdge)) {
+        if (cellToEdge.containsKey(jEdge)) {
             E jtEdge =
-                m_cellToEdge.get(jEdge);
+                cellToEdge.get(jEdge);
 
-            m_jtGraph.removeEdge(jtEdge);
+            jtGraph.removeEdge(jtEdge);
 
-            m_cellToEdge.remove(jEdge);
-            m_edgeToCell.remove(jtEdge);
+            cellToEdge.remove(jEdge);
+            edgeToCell.remove(jtEdge);
         }
     }
 
     /**
      * Removes the vertex corresponding to the specified JGraph vertex from the
      * JGraphT graph. If the specified vertex is not contained in {@link
-     * #m_cellToVertex}, it is silently ignored.
+     * #cellToVertex}, it is silently ignored.
      *
      * <p>If any edges are incident with this vertex, we first remove them from
      * the both graphs, because otherwise the JGraph graph would leave them
@@ -620,9 +620,9 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     void handleJGraphRemovedVertex(GraphCell jVertex)
     {
-        if (m_cellToVertex.containsKey(jVertex)) {
-            V jtVertex = m_cellToVertex.get(jVertex);
-            Set<E> jtIncidentEdges = m_jtGraph.edgesOf(jtVertex);
+        if (cellToVertex.containsKey(jVertex)) {
+            V jtVertex = cellToVertex.get(jVertex);
+            Set<E> jtIncidentEdges = jtGraph.edgesOf(jtVertex);
 
             if (!jtIncidentEdges.isEmpty()) {
                 // We can't just call removeAllEdges with this list: that
@@ -630,13 +630,13 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
                 // a shallow copy.
                 // This also triggers removal of the corresponding JGraph
                 // edges.
-                m_jtGraph.removeAllEdges(new ArrayList<E>(jtIncidentEdges));
+                jtGraph.removeAllEdges(new ArrayList<E>(jtIncidentEdges));
             }
 
-            m_jtGraph.removeVertex(jtVertex);
+            jtGraph.removeVertex(jtVertex);
 
-            m_cellToVertex.remove(jVertex);
-            m_vertexToCell.remove(jtVertex);
+            cellToVertex.remove(jVertex);
+            vertexToCell.remove(jtVertex);
         }
     }
 
@@ -648,15 +648,15 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     void handleJGraphTAddedEdge(E jtEdge)
     {
-        DefaultEdge edgeCell = m_cellFactory.createEdgeCell(jtEdge);
-        m_edgeToCell.put(jtEdge, edgeCell);
-        m_cellToEdge.put(edgeCell, jtEdge);
+        DefaultEdge edgeCell = cellFactory.createEdgeCell(jtEdge);
+        edgeToCell.put(jtEdge, edgeCell);
+        cellToEdge.put(edgeCell, jtEdge);
 
         ConnectionSet cs = new ConnectionSet();
         cs.connect(
             edgeCell,
-            getVertexPort(m_jtGraph.getEdgeSource(jtEdge)),
-            getVertexPort(m_jtGraph.getEdgeTarget(jtEdge)));
+            getVertexPort(jtGraph.getEdgeSource(jtEdge)),
+            getVertexPort(jtGraph.getEdgeTarget(jtEdge)));
 
         internalInsertCell(edgeCell, createEdgeAttributeMap(edgeCell), cs);
     }
@@ -669,11 +669,11 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     void handleJGraphTAddedVertex(V jtVertex)
     {
-        DefaultGraphCell vertexCell = m_cellFactory.createVertexCell(jtVertex);
+        DefaultGraphCell vertexCell = cellFactory.createVertexCell(jtVertex);
         vertexCell.add(new DefaultPort());
 
-        m_vertexToCell.put(jtVertex, vertexCell);
-        m_cellToVertex.put(vertexCell, jtVertex);
+        vertexToCell.put(jtVertex, vertexCell);
+        cellToVertex.put(vertexCell, jtVertex);
 
         internalInsertCell(
             vertexCell,
@@ -692,8 +692,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     void handleJGraphTRemoveVertex(Object jtVertex)
     {
         DefaultGraphCell vertexCell =
-            (DefaultGraphCell) m_vertexToCell.remove(jtVertex);
-        m_cellToVertex.remove(vertexCell);
+            (DefaultGraphCell) vertexToCell.remove(jtVertex);
+        cellToVertex.remove(vertexCell);
 
         internalRemoveCell(vertexCell);
 
@@ -713,8 +713,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     void handleJGraphTRemovedEdge(E jtEdge)
     {
-        DefaultEdge edgeCell = (DefaultEdge) m_edgeToCell.remove(jtEdge);
-        m_cellToEdge.remove(edgeCell);
+        DefaultEdge edgeCell = (DefaultEdge) edgeToCell.remove(jtEdge);
+        cellToEdge.remove(edgeCell);
         internalRemoveCell(edgeCell);
     }
 
@@ -733,8 +733,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         Object jTarget = getTargetVertex(this, jEdge);
 
         return
-            !m_cellToVertex.containsKey(jSource)
-            || !m_cellToVertex.containsKey(jTarget);
+            !cellToVertex.containsKey(jSource)
+            || !cellToVertex.containsKey(jTarget);
     }
 
     @SuppressWarnings("unchecked")
@@ -770,9 +770,9 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         AttributeMap attrs,
         ConnectionSet cs)
     {
-        m_jCellsBeingAdded.add(cell);
+        jCellsBeingAdded.add(cell);
         insert(new Object [] { cell }, attrs, cs, null, null);
-        m_jCellsBeingAdded.remove(cell);
+        jCellsBeingAdded.remove(cell);
     }
 
     /**
@@ -782,9 +782,9 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     private void internalRemoveCell(GraphCell cell)
     {
-        m_jCellsBeingRemoved.add(cell);
+        jCellsBeingRemoved.add(cell);
         remove(new Object [] { cell });
-        m_jCellsBeingRemoved.remove(cell);
+        jCellsBeingRemoved.remove(cell);
     }
 
     //~ Inner Interfaces ------------------------------------------------------
@@ -971,7 +971,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             for (Iterator<Object> i = jEdges.iterator(); i.hasNext();) {
                 org.jgraph.graph.Edge jEdge = (org.jgraph.graph.Edge) i.next();
 
-                if (!m_jCellsBeingAdded.remove(jEdge)) {
+                if (!jCellsBeingAdded.remove(jEdge)) {
                     handleJGraphInsertedEdge(jEdge);
                 }
             }
@@ -982,7 +982,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             for (Iterator<Object> i = jVertices.iterator(); i.hasNext();) {
                 GraphCell jVertex = (GraphCell) i.next();
 
-                if (!m_jCellsBeingAdded.remove(jVertex)) {
+                if (!jCellsBeingAdded.remove(jVertex)) {
                     handleJGraphInsertedVertex(jVertex);
                 }
             }
@@ -993,7 +993,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             for (Iterator<Object> i = jEdges.iterator(); i.hasNext();) {
                 org.jgraph.graph.Edge jEdge = (org.jgraph.graph.Edge) i.next();
 
-                if (!m_jCellsBeingRemoved.remove(jEdge)) {
+                if (!jCellsBeingRemoved.remove(jEdge)) {
                     handleJGraphRemovedEdge(jEdge);
                 }
             }
@@ -1004,7 +1004,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             for (Iterator<Object> i = jVertices.iterator(); i.hasNext();) {
                 GraphCell jVertex = (GraphCell) i.next();
 
-                if (!m_jCellsBeingRemoved.remove(jVertex)) {
+                if (!jCellsBeingRemoved.remove(jVertex)) {
                     handleJGraphRemovedVertex(jVertex);
                 }
             }
@@ -1031,7 +1031,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         {
             E jtEdge = e.getEdge();
 
-            if (!m_jtElementsBeingAdded.remove(jtEdge)) {
+            if (!jtElementsBeingAdded.remove(jtEdge)) {
                 handleJGraphTAddedEdge(jtEdge);
             }
         }
@@ -1043,7 +1043,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         {
             E jtEdge = e.getEdge();
 
-            if (!m_jtElementsBeingRemoved.remove(jtEdge)) {
+            if (!jtElementsBeingRemoved.remove(jtEdge)) {
                 handleJGraphTRemovedEdge(jtEdge);
             }
         }
@@ -1055,7 +1055,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         {
             V jtVertex = e.getVertex();
 
-            if (!m_jtElementsBeingAdded.remove(jtVertex)) {
+            if (!jtElementsBeingAdded.remove(jtVertex)) {
                 handleJGraphTAddedVertex(jtVertex);
             }
         }
@@ -1067,7 +1067,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         {
             V jtVertex = e.getVertex();
 
-            if (!m_jtElementsBeingRemoved.remove(jtVertex)) {
+            if (!jtElementsBeingRemoved.remove(jtVertex)) {
                 handleJGraphTRemoveVertex(jtVertex);
             }
         }
@@ -1078,68 +1078,68 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      */
     private class ShieldedGraph
     {
-        private final Graph<V, E> m_graph;
+        private final Graph<V, E> graph;
 
         ShieldedGraph(Graph<V, E> graph)
         {
-            m_graph = graph;
+            this.graph = graph;
         }
 
         EdgeFactory<V, E> getEdgeFactory()
         {
-            return m_graph.getEdgeFactory();
+            return graph.getEdgeFactory();
         }
 
         E addEdge(V jtSource, V jtTarget) 
         {
-            E jtEdge = m_graph.getEdgeFactory().createEdge(jtSource, jtTarget);
-            m_jtElementsBeingAdded.add(jtEdge);
+            E jtEdge = graph.getEdgeFactory().createEdge(jtSource, jtTarget);
+            jtElementsBeingAdded.add(jtEdge);
 
-            boolean added = m_graph.addEdge(jtSource, jtTarget, jtEdge);
-            m_jtElementsBeingAdded.remove(jtEdge);
+            boolean added = graph.addEdge(jtSource, jtTarget, jtEdge);
+            jtElementsBeingAdded.remove(jtEdge);
 
             return added ? jtEdge : null;
         }
 
         V getEdgeSource(E e)
         {
-            return m_graph.getEdgeSource(e);
+            return graph.getEdgeSource(e);
         }
 
         V getEdgeTarget(E e)
         {
-            return m_graph.getEdgeTarget(e);
+            return graph.getEdgeTarget(e);
         }
 
         void addVertex(V jtVertex)
         {
-            m_jtElementsBeingAdded.add(jtVertex);
-            m_graph.addVertex(jtVertex);
-            m_jtElementsBeingAdded.remove(jtVertex);
+            jtElementsBeingAdded.add(jtVertex);
+            graph.addVertex(jtVertex);
+            jtElementsBeingAdded.remove(jtVertex);
         }
 
         Set<E> edgesOf(V vertex)
         {
-            return m_graph.edgesOf(vertex);
+            return graph.edgesOf(vertex);
         }
 
         boolean removeAllEdges(Collection<E> edges)
         {
-            return m_graph.removeAllEdges(edges);
+            return graph.removeAllEdges(edges);
         }
 
         void removeEdge(E jtEdge)
         {
-            m_jtElementsBeingRemoved.add(jtEdge);
-            m_graph.removeEdge(jtEdge);
-            m_jtElementsBeingRemoved.remove(jtEdge);
+            jtElementsBeingRemoved.add(jtEdge);
+            graph.removeEdge(jtEdge);
+            jtElementsBeingRemoved.remove(jtEdge);
         }
 
         void removeVertex(V jtVertex)
         {
-            m_jtElementsBeingRemoved.add(jtVertex);
-            m_graph.removeVertex(jtVertex);
-            m_jtElementsBeingRemoved.remove(jtVertex);
+            jtElementsBeingRemoved.add(jtVertex);
+            graph.removeVertex(jtVertex);
+            jtElementsBeingRemoved.remove(jtVertex);
         }
     }
 }

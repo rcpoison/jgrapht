@@ -62,7 +62,7 @@ public class CycleDetector<V, E>
     /**
      * Graph on which cycle detection is being performed.
      */
-    Graph<V, E> m_graph;
+    Graph<V, E> graph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -74,7 +74,7 @@ public class CycleDetector<V, E>
      */
     public CycleDetector(DirectedGraph<V, E> graph)
     {
-        m_graph = (Graph<V,E>)graph;
+        this.graph = graph;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -169,14 +169,14 @@ public class CycleDetector<V, E>
      */
     private class ProbeIterator extends DepthFirstIterator<V, E>
     {
-        private List<V> m_path;
-        private Set<V> m_cycleSet;
+        private List<V> path;
+        private Set<V> cycleSet;
 
         ProbeIterator(Set<V> cycleSet, V startVertex)
         {
-            super(m_graph, startVertex);
-            m_cycleSet = cycleSet;
-            m_path = new ArrayList<V>();
+            super(graph, startVertex);
+            this.cycleSet = cycleSet;
+            path = new ArrayList<V>();
         }
 
         /**
@@ -186,16 +186,16 @@ public class CycleDetector<V, E>
         {
             super.encounterVertexAgain(vertex, edge);
 
-            int i = m_path.indexOf(vertex);
+            int i = path.indexOf(vertex);
 
             if (i > -1) {
-                if (m_cycleSet == null) {
+                if (cycleSet == null) {
                     // we're doing yes/no cycle detection
                     throw new CycleDetectedException();
                 }
 
-                for (; i < m_path.size(); ++i) {
-                    m_cycleSet.add(m_path.get(i));
+                for (; i < path.size(); ++i) {
+                    cycleSet.add(path.get(i));
                 }
             }
         }
@@ -208,15 +208,15 @@ public class CycleDetector<V, E>
             V v = super.provideNextVertex();
 
             // backtrack
-            for (int i = m_path.size() - 1; i >= 0; --i) {
-                if (m_graph.containsEdge(m_path.get(i), v)) {
+            for (int i = path.size() - 1; i >= 0; --i) {
+                if (graph.containsEdge(path.get(i), v)) {
                     break;
                 }
 
-                m_path.remove(i);
+                path.remove(i);
             }
 
-            m_path.add(v);
+            path.add(v);
 
             return v;
         }

@@ -70,7 +70,7 @@ public class ConnectedComponentTraversalEvent extends EventObject
     /**
      * The type of this event.
      */
-    private int m_type;
+    private int type;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -83,7 +83,7 @@ public class ConnectedComponentTraversalEvent extends EventObject
     public ConnectedComponentTraversalEvent(Object eventSource, int type)
     {
         super(eventSource);
-        m_type = type;
+        this.type = type;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -95,6 +95,6 @@ public class ConnectedComponentTraversalEvent extends EventObject
      */
     public int getType()
     {
-        return m_type;
+        return type;
     }
 }

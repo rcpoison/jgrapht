@@ -55,9 +55,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private String m_v1 = "v1";
-    private String m_v2 = "v2";
-    private String m_v3 = "v3";
+    private String v1 = "v1";
+    private String v2 = "v2";
+    private String v3 = "v3";
 
     //~ Methods ---------------------------------------------------------------
 
@@ -81,13 +81,13 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
         DirectedGraph<String, DefaultEdge> g =
             new DirectedMultigraph<String, DefaultEdge>(
                 DefaultEdge.class);
-        g.addVertex(m_v1);
-        g.addVertex(m_v2);
-        g.addVertex(m_v3);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
 
-        DefaultEdge e1 = g.addEdge(m_v1, m_v2);
-        DefaultEdge e2 = g.addEdge(m_v2, m_v3);
-        DefaultEdge e3 = g.addEdge(m_v3, m_v1);
+        DefaultEdge e1 = g.addEdge(v1, v2);
+        DefaultEdge e2 = g.addEdge(v2, v3);
+        DefaultEdge e3 = g.addEdge(v3, v1);
 
         Iterator<DefaultEdge> iter = g.edgeSet().iterator();
         assertEquals(e1, iter.next());
@@ -95,11 +95,11 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
         assertEquals(e3, iter.next());
 
         // some bonus tests
-        assertTrue(Graphs.testIncidence(g, e1, m_v1));
-        assertTrue(Graphs.testIncidence(g, e1, m_v2));
-        assertFalse(Graphs.testIncidence(g, e1, m_v3));
-        assertEquals(m_v2, Graphs.getOppositeVertex(g, e1, m_v1));
-        assertEquals(m_v1, Graphs.getOppositeVertex(g, e1, m_v2));
+        assertTrue(Graphs.testIncidence(g, e1, v1));
+        assertTrue(Graphs.testIncidence(g, e1, v2));
+        assertFalse(Graphs.testIncidence(g, e1, v3));
+        assertEquals(v2, Graphs.getOppositeVertex(g, e1, v1));
+        assertEquals(v1, Graphs.getOppositeVertex(g, e1, v2));
 
         assertEquals(
             "([v1, v2, v3], [(v1,v2), (v2,v3), (v3,v1)])",
@@ -113,8 +113,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
 
-        assertEquals(3, g.edgesOf(m_v1).size());
-        assertEquals(2, g.edgesOf(m_v2).size());
+        assertEquals(3, g.edgesOf(v1).size());
+        assertEquals(2, g.edgesOf(v2).size());
     }
 
     /**
@@ -124,7 +124,7 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
 
-        Set<DefaultEdge> loops = g.getAllEdges(m_v1, m_v1);
+        Set<DefaultEdge> loops = g.getAllEdges(v1, v1);
         assertEquals(1, loops.size());
     }
 
@@ -135,8 +135,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
 
-        assertEquals(2, g.inDegreeOf(m_v1));
-        assertEquals(1, g.inDegreeOf(m_v2));
+        assertEquals(2, g.inDegreeOf(v1));
+        assertEquals(1, g.inDegreeOf(v2));
     }
 
     /**
@@ -146,8 +146,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
 
-        assertEquals(2, g.outDegreeOf(m_v1));
-        assertEquals(1, g.outDegreeOf(m_v2));
+        assertEquals(2, g.outDegreeOf(v1));
+        assertEquals(1, g.outDegreeOf(v2));
     }
 
     /**
@@ -157,9 +157,9 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
     {
         DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
         Iterator<String> iter = g.vertexSet().iterator();
-        assertEquals(m_v1, iter.next());
-        assertEquals(m_v2, iter.next());
-        assertEquals(m_v3, iter.next());
+        assertEquals(v1, iter.next());
+        assertEquals(v2, iter.next());
+        assertEquals(v3, iter.next());
     }
 
     private DirectedGraph<String, DefaultEdge> createMultiTriangleWithMultiLoop()
@@ -174,14 +174,14 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
 
     private void initMultiTriangleWithMultiLoop(DirectedGraph<String, DefaultEdge> g)
     {
-        g.addVertex(m_v1);
-        g.addVertex(m_v2);
-        g.addVertex(m_v3);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
 
-        g.addEdge(m_v1, m_v1);
-        g.addEdge(m_v1, m_v2);
-        g.addEdge(m_v2, m_v3);
-        g.addEdge(m_v3, m_v1);
+        g.addEdge(v1, v1);
+        g.addEdge(v1, v2);
+        g.addEdge(v2, v3);
+        g.addEdge(v3, v1);
     }
 
     //~ Inner Classes ---------------------------------------------------------

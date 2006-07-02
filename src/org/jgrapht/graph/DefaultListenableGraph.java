@@ -78,12 +78,12 @@ public class DefaultListenableGraph<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private ArrayList<GraphListener<V, E>> m_graphListeners = new ArrayList<GraphListener<V, E>>();
-    private ArrayList<VertexSetListener<V>> m_vertexSetListeners =
+    private ArrayList<GraphListener<V, E>> graphListeners = new ArrayList<GraphListener<V, E>>();
+    private ArrayList<VertexSetListener<V>> vertexSetListeners =
         new ArrayList<VertexSetListener<V>>();
-    private FlyweightEdgeEvent<V,E> m_reuseableEdgeEvent;
-    private FlyweightVertexEvent<V> m_reuseableVertexEvent;
-    private boolean m_reuseEvents;
+    private FlyweightEdgeEvent<V,E> reuseableEdgeEvent;
+    private FlyweightVertexEvent<V> reuseableVertexEvent;
+    private boolean reuseEvents;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -115,9 +115,9 @@ public class DefaultListenableGraph<V, E>
     public DefaultListenableGraph(Graph<V, E> g, boolean reuseEvents)
     {
         super(g);
-        m_reuseEvents = reuseEvents;
-        m_reuseableEdgeEvent = new FlyweightEdgeEvent<V,E>(this, -1, null);
-        m_reuseableVertexEvent = new FlyweightVertexEvent<V>(this, -1, null);
+        this.reuseEvents = reuseEvents;
+        reuseableEdgeEvent = new FlyweightEdgeEvent<V,E>(this, -1, null);
+        reuseableVertexEvent = new FlyweightVertexEvent<V>(this, -1, null);
 
         // the following restriction could be probably relaxed in the future.
         if (g instanceof ListenableGraph) {
@@ -140,7 +140,7 @@ public class DefaultListenableGraph<V, E>
      */
     public void setReuseEvents(boolean reuseEvents)
     {
-        m_reuseEvents = reuseEvents;
+        this.reuseEvents = reuseEvents;
     }
 
     /**
@@ -154,7 +154,7 @@ public class DefaultListenableGraph<V, E>
      */
     public boolean isReuseEvents()
     {
-        return m_reuseEvents;
+        return reuseEvents;
     }
 
     /**
@@ -190,7 +190,7 @@ public class DefaultListenableGraph<V, E>
      */
     public void addGraphListener(GraphListener<V, E> l)
     {
-        addToListenerList(m_graphListeners, l);
+        addToListenerList(graphListeners, l);
     }
 
     /**
@@ -212,7 +212,7 @@ public class DefaultListenableGraph<V, E>
      */
     public void addVertexSetListener(VertexSetListener<V> l)
     {
-        addToListenerList(m_vertexSetListeners, l);
+        addToListenerList(vertexSetListeners, l);
     }
 
     /**
@@ -225,8 +225,8 @@ public class DefaultListenableGraph<V, E>
 
             DefaultListenableGraph<V,E> g =
                 TypeUtil.uncheckedCast(super.clone(), typeDecl);
-            g.m_graphListeners = new ArrayList<GraphListener<V, E>>();
-            g.m_vertexSetListeners = new ArrayList<VertexSetListener<V>>();
+            g.graphListeners = new ArrayList<GraphListener<V, E>>();
+            g.vertexSetListeners = new ArrayList<VertexSetListener<V>>();
 
             return g;
         } catch (CloneNotSupportedException e) {
@@ -269,7 +269,7 @@ public class DefaultListenableGraph<V, E>
      */
     public void removeGraphListener(GraphListener<V, E> l)
     {
-        m_graphListeners.remove(l);
+        graphListeners.remove(l);
     }
 
     /**
@@ -298,7 +298,7 @@ public class DefaultListenableGraph<V, E>
      */
     public void removeVertexSetListener(VertexSetListener<V> l)
     {
-        m_vertexSetListeners.remove(l);
+        vertexSetListeners.remove(l);
     }
 
     /**
@@ -311,8 +311,8 @@ public class DefaultListenableGraph<V, E>
         GraphEdgeChangeEvent<V, E> e =
             createGraphEdgeChangeEvent(GraphEdgeChangeEvent.EDGE_ADDED, edge);
 
-        for (int i = 0; i < m_graphListeners.size(); i++) {
-            GraphListener<V, E> l = m_graphListeners.get(i);
+        for (int i = 0; i < graphListeners.size(); i++) {
+            GraphListener<V, E> l = graphListeners.get(i);
 
             l.edgeAdded(e);
         }
@@ -330,8 +330,8 @@ public class DefaultListenableGraph<V, E>
                 GraphEdgeChangeEvent.EDGE_REMOVED,
                 edge);
 
-        for (int i = 0; i < m_graphListeners.size(); i++) {
-            GraphListener<V,E> l = m_graphListeners.get(i);
+        for (int i = 0; i < graphListeners.size(); i++) {
+            GraphListener<V,E> l = graphListeners.get(i);
 
             l.edgeRemoved(e);
         }
@@ -349,14 +349,14 @@ public class DefaultListenableGraph<V, E>
                 GraphVertexChangeEvent.VERTEX_ADDED,
                 vertex);
 
-        for (int i = 0; i < m_vertexSetListeners.size(); i++) {
-            VertexSetListener<V> l = m_vertexSetListeners.get(i);
+        for (int i = 0; i < vertexSetListeners.size(); i++) {
+            VertexSetListener<V> l = vertexSetListeners.get(i);
 
             l.vertexAdded(e);
         }
 
-        for (int i = 0; i < m_graphListeners.size(); i++) {
-            GraphListener<V, E> l = m_graphListeners.get(i);
+        for (int i = 0; i < graphListeners.size(); i++) {
+            GraphListener<V, E> l = graphListeners.get(i);
 
             l.vertexAdded(e);
         }
@@ -374,14 +374,14 @@ public class DefaultListenableGraph<V, E>
                 GraphVertexChangeEvent.VERTEX_REMOVED,
                 vertex);
 
-        for (int i = 0; i < m_vertexSetListeners.size(); i++) {
-            VertexSetListener<V> l = m_vertexSetListeners.get(i);
+        for (int i = 0; i < vertexSetListeners.size(); i++) {
+            VertexSetListener<V> l = vertexSetListeners.get(i);
 
             l.vertexRemoved(e);
         }
 
-        for (int i = 0; i < m_graphListeners.size(); i++) {
-            GraphListener<V, E> l = m_graphListeners.get(i);
+        for (int i = 0; i < graphListeners.size(); i++) {
+            GraphListener<V, E> l = graphListeners.get(i);
 
             l.vertexRemoved(e);
         }
@@ -399,11 +399,11 @@ public class DefaultListenableGraph<V, E>
         int eventType,
         E edge)
     {
-        if (m_reuseEvents) {
-            m_reuseableEdgeEvent.setType(eventType);
-            m_reuseableEdgeEvent.setEdge(edge);
+        if (reuseEvents) {
+            reuseableEdgeEvent.setType(eventType);
+            reuseableEdgeEvent.setEdge(edge);
 
-            return m_reuseableEdgeEvent;
+            return reuseableEdgeEvent;
         } else {
             return new GraphEdgeChangeEvent<V,E>(this, eventType, edge);
         }
@@ -413,11 +413,11 @@ public class DefaultListenableGraph<V, E>
         int eventType,
         V vertex)
     {
-        if (m_reuseEvents) {
-            m_reuseableVertexEvent.setType(eventType);
-            m_reuseableVertexEvent.setVertex(vertex);
+        if (reuseEvents) {
+            reuseableVertexEvent.setType(eventType);
+            reuseableVertexEvent.setVertex(vertex);
 
-            return m_reuseableVertexEvent;
+            return reuseableVertexEvent;
         } else {
             return new GraphVertexChangeEvent<V>(this, eventType, vertex);
         }
@@ -451,7 +451,7 @@ public class DefaultListenableGraph<V, E>
          */
         protected void setEdge(EE e)
         {
-            m_edge = e;
+            this.edge = e;
         }
 
         /**
@@ -461,7 +461,7 @@ public class DefaultListenableGraph<V, E>
          */
         protected void setType(int type)
         {
-            m_type = type;
+            this.type = type;
         }
     }
 
@@ -492,7 +492,7 @@ public class DefaultListenableGraph<V, E>
          */
         protected void setType(int type)
         {
-            m_type = type;
+            this.type = type;
         }
 
         /**
@@ -502,7 +502,7 @@ public class DefaultListenableGraph<V, E>
          */
         protected void setVertex(VV vertex)
         {
-            m_vertex = vertex;
+            this.vertex = vertex;
         }
     }
 }

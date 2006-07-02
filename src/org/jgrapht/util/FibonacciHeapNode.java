@@ -64,43 +64,43 @@ public class FibonacciHeapNode<T>
     /**
      * Node data.
      */
-    T m_data;
+    T data;
     
     /**
      * first child node
      */
-    FibonacciHeapNode<T> m_child;
+    FibonacciHeapNode<T> child;
 
     /**
      * left sibling node
      */
-    FibonacciHeapNode<T> m_left;
+    FibonacciHeapNode<T> left;
 
     /**
      * parent node
      */
-    FibonacciHeapNode<T> m_parent;
+    FibonacciHeapNode<T> parent;
 
     /**
      * right sibling node
      */
-    FibonacciHeapNode<T> m_right;
+    FibonacciHeapNode<T> right;
 
     /**
      * true if this node has had a child removed since this node was added
      * to its parent
      */
-    boolean m_mark;
+    boolean mark;
 
     /**
      * key value for this node
      */
-    double m_key;
+    double key;
 
     /**
      * number of children of this node (does not count grandchildren)
      */
-    int m_degree;
+    int degree;
 
     /**
      * Default constructor.  Initializes the right and left pointers,
@@ -112,10 +112,10 @@ public class FibonacciHeapNode<T>
      */
     public FibonacciHeapNode(T data, double key)
     {
-        m_right = this;
-        m_left = this;
-        m_data = data;
-        m_key = key;
+        right = this;
+        left = this;
+        this.data = data;
+        this.key = key;
     }
 
     /**
@@ -125,7 +125,7 @@ public class FibonacciHeapNode<T>
      */
     public final double getKey()
     {
-        return m_key;
+        return key;
     }
 
     /**
@@ -133,7 +133,7 @@ public class FibonacciHeapNode<T>
      */
     public final T getData()
     {
-        return m_data;
+        return data;
     }
 
     /**
@@ -144,41 +144,41 @@ public class FibonacciHeapNode<T>
     public String toString()
     {
         if (true) {
-            return Double.toString(m_key);
+            return Double.toString(key);
         } else {
             StringBuffer buf = new StringBuffer();
             buf.append("Node=[parent = ");
 
-            if (m_parent != null) {
-                buf.append(Double.toString(m_parent.m_key));
+            if (parent != null) {
+                buf.append(Double.toString(parent.key));
             } else {
                 buf.append("---");
             }
 
             buf.append(", key = ");
-            buf.append(Double.toString(m_key));
+            buf.append(Double.toString(key));
             buf.append(", degree = ");
-            buf.append(Integer.toString(m_degree));
+            buf.append(Integer.toString(degree));
             buf.append(", right = ");
 
-            if (m_right != null) {
-                buf.append(Double.toString(m_right.m_key));
+            if (right != null) {
+                buf.append(Double.toString(right.key));
             } else {
                 buf.append("---");
             }
 
             buf.append(", left = ");
 
-            if (m_left != null) {
-                buf.append(Double.toString(m_left.m_key));
+            if (left != null) {
+                buf.append(Double.toString(left.key));
             } else {
                 buf.append("---");
             }
 
             buf.append(", child = ");
 
-            if (m_child != null) {
-                buf.append(Double.toString(m_child.m_key));
+            if (child != null) {
+                buf.append(Double.toString(child.key));
             } else {
                 buf.append("---");
             }

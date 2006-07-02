@@ -57,10 +57,10 @@ public class SubgraphTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private String _v1 = new String("v1");
-    private String _v2 = new String("v2");
-    private String _v3 = new String("v3");
-    private String _v4 = new String("v4");
+    private String v1 = new String("v1");
+    private String v2 = new String("v2");
+    private String v3 = new String("v3");
+    private String v4 = new String("v4");
 
     //~ Constructors ----------------------------------------------------------
 
@@ -85,7 +85,7 @@ public class SubgraphTest extends TestCase
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
 
-        g.addEdge(_v3, _v4);
+        g.addEdge(v3, v4);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -103,20 +103,20 @@ public class SubgraphTest extends TestCase
         assertEquals(g.edgeSet(), sub.edgeSet());
 
         Set<String> vset = new HashSet<String>(g.vertexSet());
-        g.removeVertex(_v1);
+        g.removeVertex(v1);
         assertEquals(vset, sub.vertexSet()); // losing track
 
         g = init(false);
         vset = new HashSet<String>();
-        vset.add(_v1);
+        vset.add(v1);
         sub = new Subgraph<String, DefaultEdge>(g, vset, null);
         assertEquals(vset, sub.vertexSet());
-        assertEquals(0, sub.degreeOf(_v1));
+        assertEquals(0, sub.degreeOf(v1));
         assertEquals(Collections.EMPTY_SET, sub.edgeSet());
 
-        vset.add(_v2);
-        vset.add(_v3);
-        sub = new Subgraph<String, DefaultEdge>(g, vset, new HashSet<DefaultEdge>(g.getAllEdges(_v1, _v2)));
+        vset.add(v2);
+        vset.add(v3);
+        sub = new Subgraph<String, DefaultEdge>(g, vset, new HashSet<DefaultEdge>(g.getAllEdges(v1, v2)));
         assertEquals(vset, sub.vertexSet());
         assertEquals(1, sub.edgeSet().size());
     }
@@ -133,8 +133,8 @@ public class SubgraphTest extends TestCase
         assertEquals(g.edgeSet(), sub.edgeSet());
 
         Set<String> vset = new HashSet<String>(g.vertexSet());
-        g.removeVertex(_v1);
-        vset.remove(_v1);
+        g.removeVertex(v1);
+        vset.remove(v1);
         assertEquals(vset, sub.vertexSet()); // not losing track
         assertEquals(g.edgeSet(), sub.edgeSet());
     }
@@ -151,14 +151,14 @@ public class SubgraphTest extends TestCase
                 DefaultEdge.class);
         }
 
-        g.addVertex(_v1);
-        g.addVertex(_v2);
-        g.addVertex(_v3);
-        g.addVertex(_v4);
-        g.addEdge(_v1, _v2);
-        g.addEdge(_v2, _v3);
-        g.addEdge(_v3, _v1);
-        g.addEdge(_v1, _v4);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addEdge(v1, v2);
+        g.addEdge(v2, v3);
+        g.addEdge(v3, v1);
+        g.addEdge(v1, v4);
 
         return g;
     }

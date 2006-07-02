@@ -64,7 +64,7 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
         // find best path with no constraint on number of hops
         assertEquals(
             Arrays.asList(new DefaultEdge [] {
-                m_e13, m_e12, m_e24, m_e45
+                e13, e12, e24, e45
             }),
             path.getPathEdgeList(V5));
         assertEquals(15.0, path.getCost(V5), 0);
@@ -73,7 +73,7 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
         path = new BellmanFordShortestPath(g, V3, 2);
         assertEquals(
             Arrays.asList(new DefaultEdge [] {
-                m_e34, m_e45
+                e34, e45
             }),
             path.getPathEdgeList(V5));
         assertEquals(25.0, path.getCost(V5), 0);
@@ -95,10 +95,10 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
         List path;
         
         path = findPathBetween(g, V1, V4);
-        assertEquals(Arrays.asList(new DefaultEdge [] { m_e13, m_e34 }), path);
+        assertEquals(Arrays.asList(new DefaultEdge [] { e13, e34 }), path);
         
         path = findPathBetween(g, V1, V5);
-        assertEquals(Arrays.asList(new DefaultEdge [] { m_e15 }), path);
+        assertEquals(Arrays.asList(new DefaultEdge [] { e15 }), path);
     }
 }
 

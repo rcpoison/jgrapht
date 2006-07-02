@@ -75,8 +75,8 @@ public class TopologicalOrderIterator<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private LinkedList<V> m_queue;
-    private Map<V, ModifiableInteger> m_inDegreeMap;
+    private LinkedList<V> queue;
+    private Map<V, ModifiableInteger> inDegreeMap;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -101,8 +101,8 @@ public class TopologicalOrderIterator<V, E>
         Map<V, ModifiableInteger> inDegreeMap)
     {
         this(dg, initialize(dg, queue, inDegreeMap));
-        m_queue = queue;
-        m_inDegreeMap = inDegreeMap;
+        this.queue = queue;
+        this.inDegreeMap = inDegreeMap;
     }
 
     // NOTE: This is intentionally private, because starting the sort "in the
@@ -123,7 +123,7 @@ public class TopologicalOrderIterator<V, E>
         // one component.  We will actually exhaust a connected component
         // before the queue is empty, because initialize adds roots from all
         // components to the queue.
-        return m_queue.isEmpty();
+        return queue.isEmpty();
     }
 
     /**
@@ -148,7 +148,7 @@ public class TopologicalOrderIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        return m_queue.removeFirst();
+        return queue.removeFirst();
     }
 
     /**
@@ -158,13 +158,13 @@ public class TopologicalOrderIterator<V, E>
      */
     private void decrementInDegree(V vertex)
     {
-        ModifiableInteger inDegree = m_inDegreeMap.get(vertex);
+        ModifiableInteger inDegree = inDegreeMap.get(vertex);
 
         if (inDegree.value > 0) {
             inDegree.value--;
 
             if (inDegree.value == 0) {
-                m_queue.addLast(vertex);
+                queue.addLast(vertex);
             }
         }
     }
@@ -175,8 +175,8 @@ public class TopologicalOrderIterator<V, E>
      * structure for the in-degrees.
      *
      * @param dg the directed graph to be iterated.
-     * @param queue initializer for m_queue
-     * @param inDegreeMap initializer for m_inDegreeMap
+     * @param queue initializer for queue
+     * @param inDegreeMap initializer for inDegreeMap
      *
      * @return start vertex
      */

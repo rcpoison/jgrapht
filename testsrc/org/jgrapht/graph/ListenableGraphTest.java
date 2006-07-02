@@ -57,10 +57,10 @@ public class ListenableGraphTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    DefaultEdge m_lastAddedEdge;
-    DefaultEdge m_lastRemovedEdge;
-    Object m_lastAddedVertex;
-    Object m_lastRemovedVertex;
+    DefaultEdge lastAddedEdge;
+    DefaultEdge lastRemovedEdge;
+    Object lastAddedVertex;
+    Object lastRemovedVertex;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -92,13 +92,13 @@ public class ListenableGraphTest extends TestCase
 
         // test vertex notification
         g.addVertex(v1);
-        assertEquals(v1, m_lastAddedVertex);
-        assertEquals(null, m_lastRemovedVertex);
+        assertEquals(v1, lastAddedVertex);
+        assertEquals(null, lastRemovedVertex);
 
         init();
         g.removeVertex(v1);
-        assertEquals(v1, m_lastRemovedVertex);
-        assertEquals(null, m_lastAddedVertex);
+        assertEquals(v1, lastRemovedVertex);
+        assertEquals(null, lastAddedVertex);
 
         // test edge notification
         g.addVertex(v1);
@@ -107,13 +107,13 @@ public class ListenableGraphTest extends TestCase
         init();
 
         DefaultEdge e = g.addEdge(v1, v2);
-        assertEquals(e, m_lastAddedEdge);
-        assertEquals(null, m_lastRemovedEdge);
+        assertEquals(e, lastAddedEdge);
+        assertEquals(null, lastRemovedEdge);
 
         init();
         assertTrue(g.removeEdge(e));
-        assertEquals(e, m_lastRemovedEdge);
-        assertEquals(null, m_lastAddedEdge);
+        assertEquals(e, lastRemovedEdge);
+        assertEquals(null, lastAddedEdge);
 
         g.removeVertex(v1);
         g.removeVertex(v2);
@@ -128,10 +128,10 @@ public class ListenableGraphTest extends TestCase
         e = g.addEdge(v1, v2);
         g.removeEdge(e);
 
-        assertEquals(null, m_lastAddedEdge);
-        assertEquals(null, m_lastAddedVertex);
-        assertEquals(null, m_lastRemovedEdge);
-        assertEquals(null, m_lastRemovedVertex);
+        assertEquals(null, lastAddedEdge);
+        assertEquals(null, lastAddedVertex);
+        assertEquals(null, lastRemovedEdge);
+        assertEquals(null, lastRemovedVertex);
     }
 
     /**
@@ -152,13 +152,13 @@ public class ListenableGraphTest extends TestCase
 
         // test vertex notification
         g.addVertex(v1);
-        assertEquals(v1, m_lastAddedVertex);
-        assertEquals(null, m_lastRemovedVertex);
+        assertEquals(v1, lastAddedVertex);
+        assertEquals(null, lastRemovedVertex);
 
         init();
         g.removeVertex(v1);
-        assertEquals(v1, m_lastRemovedVertex);
-        assertEquals(null, m_lastAddedVertex);
+        assertEquals(v1, lastRemovedVertex);
+        assertEquals(null, lastAddedVertex);
 
         // test edge notification
         g.addVertex(v1);
@@ -167,13 +167,13 @@ public class ListenableGraphTest extends TestCase
         init();
 
         DefaultEdge e = g.addEdge(v1, v2);
-        assertEquals(null, m_lastAddedEdge);
-        assertEquals(null, m_lastRemovedEdge);
+        assertEquals(null, lastAddedEdge);
+        assertEquals(null, lastRemovedEdge);
 
         init();
         assertTrue(g.removeEdge(e));
-        assertEquals(null, m_lastRemovedEdge);
-        assertEquals(null, m_lastAddedEdge);
+        assertEquals(null, lastRemovedEdge);
+        assertEquals(null, lastAddedEdge);
 
         g.removeVertex(v1);
         g.removeVertex(v2);
@@ -188,18 +188,18 @@ public class ListenableGraphTest extends TestCase
         e = g.addEdge(v1, v2);
         g.removeEdge(e);
 
-        assertEquals(null, m_lastAddedEdge);
-        assertEquals(null, m_lastAddedVertex);
-        assertEquals(null, m_lastRemovedEdge);
-        assertEquals(null, m_lastRemovedVertex);
+        assertEquals(null, lastAddedEdge);
+        assertEquals(null, lastAddedVertex);
+        assertEquals(null, lastRemovedEdge);
+        assertEquals(null, lastRemovedVertex);
     }
 
     private void init()
     {
-        m_lastAddedEdge = null;
-        m_lastAddedVertex = null;
-        m_lastRemovedEdge = null;
-        m_lastRemovedVertex = null;
+        lastAddedEdge = null;
+        lastAddedVertex = null;
+        lastRemovedEdge = null;
+        lastRemovedVertex = null;
     }
 
     //~ Inner Classes ---------------------------------------------------------
@@ -217,7 +217,7 @@ public class ListenableGraphTest extends TestCase
          */
         public void edgeAdded(GraphEdgeChangeEvent<Object,DefaultEdge> e)
         {
-            m_lastAddedEdge = e.getEdge();
+            lastAddedEdge = e.getEdge();
         }
 
         /**
@@ -225,7 +225,7 @@ public class ListenableGraphTest extends TestCase
          */
         public void edgeRemoved(GraphEdgeChangeEvent<Object,DefaultEdge> e)
         {
-            m_lastRemovedEdge = e.getEdge();
+            lastRemovedEdge = e.getEdge();
         }
 
         /**
@@ -233,7 +233,7 @@ public class ListenableGraphTest extends TestCase
          */
         public void vertexAdded(GraphVertexChangeEvent<Object> e)
         {
-            m_lastAddedVertex = e.getVertex();
+            lastAddedVertex = e.getVertex();
         }
 
         /**
@@ -241,7 +241,7 @@ public class ListenableGraphTest extends TestCase
          */
         public void vertexRemoved(GraphVertexChangeEvent<Object> e)
         {
-            m_lastRemovedVertex = e.getVertex();
+            lastRemovedVertex = e.getVertex();
         }
     }
 }

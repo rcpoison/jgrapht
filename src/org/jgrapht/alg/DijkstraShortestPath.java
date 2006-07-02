@@ -60,8 +60,8 @@ public final class DijkstraShortestPath<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private List<E> m_edgeList;
-    private double m_pathLength;
+    private List<E> edgeList;
+    private double pathLength;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -105,14 +105,14 @@ public final class DijkstraShortestPath<V, E>
 
             if (vertex.equals(endVertex)) {
                 createEdgeList(graph, iter, endVertex);
-                m_pathLength = iter.getShortestPathLength(endVertex);
+                pathLength = iter.getShortestPathLength(endVertex);
 
                 return;
             }
         }
 
-        m_edgeList = null;
-        m_pathLength = Double.POSITIVE_INFINITY;
+        edgeList = null;
+        pathLength = Double.POSITIVE_INFINITY;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -124,7 +124,7 @@ public final class DijkstraShortestPath<V, E>
      */
     public List<E> getPathEdgeList()
     {
-        return m_edgeList;
+        return edgeList;
     }
 
     /**
@@ -134,7 +134,7 @@ public final class DijkstraShortestPath<V, E>
      */
     public double getPathLength()
     {
-        return m_pathLength;
+        return pathLength;
     }
 
     /**
@@ -167,7 +167,7 @@ public final class DijkstraShortestPath<V, E>
         ClosestFirstIterator<V, E> iter,
         V endVertex)
     {
-        m_edgeList = new ArrayList<E>();
+        edgeList = new ArrayList<E>();
 
         while (true) {
             E edge = iter.getSpanningTreeEdge(endVertex);
@@ -176,10 +176,10 @@ public final class DijkstraShortestPath<V, E>
                 break;
             }
 
-            m_edgeList.add(edge);
+            edgeList.add(edge);
             endVertex = Graphs.getOppositeVertex(graph, edge, endVertex);
         }
 
-        Collections.reverse(m_edgeList);
+        Collections.reverse(edgeList);
     }
 }

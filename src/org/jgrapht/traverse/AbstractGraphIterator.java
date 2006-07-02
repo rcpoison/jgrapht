@@ -59,10 +59,10 @@ public abstract class AbstractGraphIterator<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private List<TraversalListener<V, E>> m_traversalListeners =
+    private List<TraversalListener<V, E>> traversalListeners =
         new ArrayList<TraversalListener<V, E>>();
-    private boolean m_crossComponentTraversal = true;
-    private boolean m_reuseEvents = false;
+    private boolean crossComponentTraversal = true;
+    private boolean reuseEvents = false;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -75,7 +75,7 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public void setCrossComponentTraversal(boolean crossComponentTraversal)
     {
-        m_crossComponentTraversal = crossComponentTraversal;
+        this.crossComponentTraversal = crossComponentTraversal;
     }
 
     /**
@@ -87,7 +87,7 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public boolean isCrossComponentTraversal()
     {
-        return m_crossComponentTraversal;
+        return crossComponentTraversal;
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public void setReuseEvents(boolean reuseEvents)
     {
-        m_reuseEvents = reuseEvents;
+        this.reuseEvents = reuseEvents;
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public boolean isReuseEvents()
     {
-        return m_reuseEvents;
+        return reuseEvents;
     }
 
     /**
@@ -113,8 +113,8 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public void addTraversalListener(TraversalListener<V, E> l)
     {
-        if (!m_traversalListeners.contains(l)) {
-            m_traversalListeners.add(l);
+        if (!traversalListeners.contains(l)) {
+            traversalListeners.add(l);
         }
     }
 
@@ -135,7 +135,7 @@ public abstract class AbstractGraphIterator<V, E>
      */
     public void removeTraversalListener(TraversalListener<V, E> l)
     {
-        m_traversalListeners.remove(l);
+        traversalListeners.remove(l);
     }
 
     /**
@@ -147,10 +147,10 @@ public abstract class AbstractGraphIterator<V, E>
     protected void fireConnectedComponentFinished(
         ConnectedComponentTraversalEvent e)
     {
-        int len = m_traversalListeners.size();
+        int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = m_traversalListeners.get(i);
+            TraversalListener l = traversalListeners.get(i);
             l.connectedComponentFinished(e);
         }
     }
@@ -164,10 +164,10 @@ public abstract class AbstractGraphIterator<V, E>
     protected void fireConnectedComponentStarted(
         ConnectedComponentTraversalEvent e)
     {
-        int len = m_traversalListeners.size();
+        int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = m_traversalListeners.get(i);
+            TraversalListener l = traversalListeners.get(i);
             l.connectedComponentStarted(e);
         }
     }
@@ -179,10 +179,10 @@ public abstract class AbstractGraphIterator<V, E>
      */
     protected void fireEdgeTraversed(EdgeTraversalEvent<V, E> e)
     {
-        int len = m_traversalListeners.size();
+        int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener<V, E> l = m_traversalListeners.get(i);
+            TraversalListener<V, E> l = traversalListeners.get(i);
             l.edgeTraversed(e);
         }
     }
@@ -194,10 +194,10 @@ public abstract class AbstractGraphIterator<V, E>
      */
     protected void fireVertexTraversed(VertexTraversalEvent<V> e)
     {
-        int len = m_traversalListeners.size();
+        int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener<V, E> l = m_traversalListeners.get(i);
+            TraversalListener<V, E> l = traversalListeners.get(i);
             l.vertexTraversed(e);
         }
     }

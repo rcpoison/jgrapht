@@ -65,12 +65,12 @@ public abstract class ShortestPathTestCase extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    DefaultEdge m_e12;
-    DefaultEdge m_e13;
-    DefaultEdge m_e15;
-    DefaultEdge m_e24;
-    DefaultEdge m_e34;
-    DefaultEdge m_e45;
+    DefaultEdge e12;
+    DefaultEdge e13;
+    DefaultEdge e15;
+    DefaultEdge e24;
+    DefaultEdge e34;
+    DefaultEdge e45;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -83,21 +83,21 @@ public abstract class ShortestPathTestCase extends TestCase
         Graph g = create();
 
         path = findPathBetween(g, V1, V2);
-        assertEquals(Arrays.asList(new DefaultEdge [] { m_e12 }), path);
+        assertEquals(Arrays.asList(new DefaultEdge [] { e12 }), path);
 
         path = findPathBetween(g, V1, V4);
         assertEquals(Arrays.asList(new DefaultEdge [] {
-                    m_e12, m_e24
+                    e12, e24
                 }), path);
 
         path = findPathBetween(g, V1, V5);
         assertEquals(Arrays.asList(new DefaultEdge [] {
-                    m_e12, m_e24, m_e45
+                    e12, e24, e45
                 }), path);
 
         path = findPathBetween(g, V3, V4);
         assertEquals(Arrays.asList(new DefaultEdge [] {
-                    m_e13, m_e12, m_e24
+                    e13, e12, e24
                 }), path);
     }
 
@@ -128,17 +128,17 @@ public abstract class ShortestPathTestCase extends TestCase
         g.addVertex(V4);
         g.addVertex(V5);
 
-        m_e12 = Graphs.addEdge(g, V1, V2, bias * 2);
+        e12 = Graphs.addEdge(g, V1, V2, bias * 2);
 
-        m_e13 = Graphs.addEdge(g, V1, V3, bias * 3);
+        e13 = Graphs.addEdge(g, V1, V3, bias * 3);
 
-        m_e24 = Graphs.addEdge(g, V2, V4, bias * 5);
+        e24 = Graphs.addEdge(g, V2, V4, bias * 5);
 
-        m_e34 = Graphs.addEdge(g, V3, V4, bias * 20);
+        e34 = Graphs.addEdge(g, V3, V4, bias * 20);
 
-        m_e45 = Graphs.addEdge(g, V4, V5, bias * 5);
+        e45 = Graphs.addEdge(g, V4, V5, bias * 5);
 
-        m_e15 = Graphs.addEdge(g, V1, V5, bias * 100);
+        e15 = Graphs.addEdge(g, V1, V5, bias * 100);
 
         return g;
     }

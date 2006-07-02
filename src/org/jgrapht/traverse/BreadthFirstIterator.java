@@ -67,7 +67,7 @@ public class BreadthFirstIterator<V, E>
      * of GC efficiency. If you need it to be improved either let us know or
      * use the source...
      */
-    private LinkedList<V> m_queue = new LinkedList<V>();
+    private LinkedList<V> queue = new LinkedList<V>();
 
     //~ Constructors ----------------------------------------------------------
 
@@ -104,7 +104,7 @@ public class BreadthFirstIterator<V, E>
      */
     protected boolean isConnectedComponentExhausted()
     {
-        return m_queue.isEmpty();
+        return queue.isEmpty();
     }
 
     /**
@@ -113,7 +113,7 @@ public class BreadthFirstIterator<V, E>
     protected void encounterVertex(V vertex, E edge)
     {
         putSeenData(vertex, null);
-        m_queue.add(vertex);
+        queue.add(vertex);
     }
 
     /**
@@ -128,6 +128,6 @@ public class BreadthFirstIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        return m_queue.removeFirst();
+        return queue.removeFirst();
     }
 }

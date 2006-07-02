@@ -60,7 +60,7 @@ public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
      */
     public void testRadius()
     {
-        m_result = new StringBuffer();
+        result = new StringBuffer();
 
         DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
 
@@ -70,14 +70,14 @@ public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
             new ClosestFirstIterator<String, DefaultEdge>(graph, "1", 301);
 
         while (iterator.hasNext()) {
-            m_result.append(iterator.next());
+            result.append(iterator.next());
 
             if (iterator.hasNext()) {
-                m_result.append(',');
+                result.append(',');
             }
         }
 
-        assertEquals("1,2,3,5,6,7", m_result.toString());
+        assertEquals("1,2,3,5,6,7", result.toString());
     }
 
     // NOTE:  the edge weights make the result deterministic

@@ -61,13 +61,13 @@ public class VertexDegreeComparator<V, E>
     /**
      * The graph that contains the vertices to be compared.
      */
-    private UndirectedGraph<V, E> m_graph;
+    private UndirectedGraph<V, E> graph;
 
     /**
      * The sort order for vertex degree. <code>true</code> for ascending degree
      * order (smaller degrees first), <code>false</code> for descending.
      */
-    private boolean m_ascendingOrder;
+    private boolean ascendingOrder;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -95,8 +95,8 @@ public class VertexDegreeComparator<V, E>
     public VertexDegreeComparator(UndirectedGraph<V, E> g,
         boolean ascendingOrder)
     {
-        m_graph = g;
-        m_ascendingOrder = ascendingOrder;
+        graph = g;
+        this.ascendingOrder = ascendingOrder;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -113,14 +113,14 @@ public class VertexDegreeComparator<V, E>
      */
     public int compare(V v1, V v2)
     {
-        int degree1 = m_graph.degreeOf(v1);
-        int degree2 = m_graph.degreeOf(v2);
+        int degree1 = graph.degreeOf(v1);
+        int degree2 = graph.degreeOf(v2);
 
-        if (((degree1 < degree2) && m_ascendingOrder)
-            || ((degree1 > degree2) && !m_ascendingOrder)) {
+        if (((degree1 < degree2) && ascendingOrder)
+            || ((degree1 > degree2) && !ascendingOrder)) {
             return -1;
-        } else if (((degree1 > degree2) && m_ascendingOrder)
-            || ((degree1 < degree2) && !m_ascendingOrder)) {
+        } else if (((degree1 > degree2) && ascendingOrder)
+            || ((degree1 < degree2) && !ascendingOrder)) {
             return 1;
         } else {
             return 0;

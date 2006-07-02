@@ -74,7 +74,7 @@ public class JGraphAdapterDemo extends JApplet
     //~ Instance fields -------------------------------------------------------
 
     //
-    private JGraphModelAdapter m_jgAdapter;
+    private JGraphModelAdapter jgAdapter;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -108,9 +108,9 @@ public class JGraphAdapterDemo extends JApplet
                 DefaultEdge.class);
 
         // create a visualization using JGraph, via an adapter
-        m_jgAdapter = new JGraphModelAdapter<String,DefaultEdge>(g);
+        jgAdapter = new JGraphModelAdapter<String,DefaultEdge>(g);
 
-        JGraph jgraph = new JGraph(m_jgAdapter);
+        JGraph jgraph = new JGraph(jgAdapter);
 
         adjustDisplaySettings(jgraph);
         getContentPane().add(jgraph);
@@ -163,7 +163,7 @@ public class JGraphAdapterDemo extends JApplet
     @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME below
     private void positionVertexAt(Object vertex, int x, int y)
     {
-        DefaultGraphCell cell = m_jgAdapter.getVertexCell(vertex);
+        DefaultGraphCell cell = jgAdapter.getVertexCell(vertex);
         AttributeMap attr = cell.getAttributes();
         Rectangle2D bounds = GraphConstants.getBounds(attr);
 
@@ -179,7 +179,7 @@ public class JGraphAdapterDemo extends JApplet
         //TODO: Clean up generics once JGraph goes generic
         AttributeMap cellAttr = new AttributeMap();
         cellAttr.put(cell, attr);
-        m_jgAdapter.edit(cellAttr, null, null, null);
+        jgAdapter.edit(cellAttr, null, null, null);
     }
 
     //~ Inner Classes ---------------------------------------------------------

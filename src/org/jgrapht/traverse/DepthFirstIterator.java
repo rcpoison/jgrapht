@@ -65,7 +65,7 @@ public class DepthFirstIterator<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private List<V> m_stack = new ArrayList<V>();
+    private List<V> stack = new ArrayList<V>();
 
     //~ Constructors ----------------------------------------------------------
 
@@ -102,7 +102,7 @@ public class DepthFirstIterator<V, E>
      */
     protected boolean isConnectedComponentExhausted()
     {
-        return m_stack.isEmpty();
+        return stack.isEmpty();
     }
 
     /**
@@ -111,7 +111,7 @@ public class DepthFirstIterator<V, E>
     protected void encounterVertex(V vertex, E edge)
     {
         putSeenData(vertex, null);
-        m_stack.add(vertex);
+        stack.add(vertex);
     }
 
     /**
@@ -126,6 +126,6 @@ public class DepthFirstIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        return m_stack.remove(m_stack.size() - 1);
+        return stack.remove(stack.size() - 1);
     }
 }

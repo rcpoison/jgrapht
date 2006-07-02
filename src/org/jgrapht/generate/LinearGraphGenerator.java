@@ -68,7 +68,7 @@ public class LinearGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 
     //~ Instance fields -------------------------------------------------------
 
-    private int m_size;
+    private int size;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -85,7 +85,7 @@ public class LinearGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        m_size = size;
+        this.size = size;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -100,7 +100,7 @@ public class LinearGraphGenerator<V,E> implements GraphGenerator<V,E,V>
     {
         V lastVertex = null;
 
-        for (int i = 0; i < m_size; ++i) {
+        for (int i = 0; i < size; ++i) {
             V newVertex = vertexFactory.createVertex();
             target.addVertex(newVertex);
 

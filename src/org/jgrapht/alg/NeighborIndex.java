@@ -68,8 +68,8 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    Map<V, Neighbors<V,E>> m_neighborMap = new HashMap<V, Neighbors<V,E>>();
-    private Graph<V, E> m_graph;
+    Map<V, Neighbors<V,E>> neighborMap = new HashMap<V, Neighbors<V,E>>();
+    private Graph<V, E> graph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -81,7 +81,7 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
     public NeighborIndex(Graph<V, E> g)
     {
         // no need to distinguish directedgraphs as we don't do traversals
-        m_graph = g;
+        graph = g;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -123,8 +123,8 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
     public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = m_graph.getEdgeSource(edge);
-        V target = m_graph.getEdgeTarget(edge);
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
         getNeighbors(source).addNeighbor(target);
         getNeighbors(target).addNeighbor(source);
     }
@@ -135,13 +135,13 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
     public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = m_graph.getEdgeSource(edge);
-        V target = m_graph.getEdgeTarget(edge);
-        if (m_neighborMap.containsKey(source)) {
-            m_neighborMap.get(source).removeNeighbor(target);
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
+        if (neighborMap.containsKey(source)) {
+            neighborMap.get(source).removeNeighbor(target);
         }
-        if (m_neighborMap.containsKey(target)) {
-            m_neighborMap.get(target).removeNeighbor(source);
+        if (neighborMap.containsKey(target)) {
+            neighborMap.get(target).removeNeighbor(source);
         }
     }
 
@@ -158,16 +158,16 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {
-        m_neighborMap.remove(e.getVertex());
+        neighborMap.remove(e.getVertex());
     }
 
     private Neighbors<V,E> getNeighbors(V v)
     {
-        Neighbors<V,E> neighbors = m_neighborMap.get(v);
+        Neighbors<V,E> neighbors = neighborMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    Graphs.neighborListOf(m_graph, v));
-            m_neighborMap.put(v, neighbors);
+                    Graphs.neighborListOf(graph, v));
+            neighborMap.put(v, neighbors);
         }
         return neighbors;
     }
@@ -180,11 +180,11 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
      */
     static class Neighbors<V, E>
     {
-        private Map<V,ModifiableInteger> m_neighborCounts = new LinkedHashMap<V,ModifiableInteger>();
+        private Map<V,ModifiableInteger> neighborCounts = new LinkedHashMap<V,ModifiableInteger>();
         // TODO could eventually make neighborSet modifiable, resulting
         //      in edge removals from the graph
-        private Set<V> m_neighborSet = Collections.unmodifiableSet(
-                m_neighborCounts.keySet());
+        private Set<V> neighborSet = Collections.unmodifiableSet(
+                neighborCounts.keySet());
 
         public Neighbors(V v, Collection<V> neighbors)
         {
@@ -196,10 +196,10 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
 
         public void addNeighbor(V v)
         {
-            ModifiableInteger count = m_neighborCounts.get(v);
+            ModifiableInteger count = neighborCounts.get(v);
             if (count == null) {
                 count = new ModifiableInteger(1);
-                m_neighborCounts.put(v, count);
+                neighborCounts.put(v, count);
             }
             else {
                 count.increment();
@@ -208,26 +208,26 @@ public class NeighborIndex<V, E> implements GraphListener<V, E>
 
         public void removeNeighbor(V v)
         {
-            ModifiableInteger count = m_neighborCounts.get(v);
+            ModifiableInteger count = neighborCounts.get(v);
             if (count == null) {
                 throw new IllegalArgumentException("Attempting to remove a neighbor that wasn't present");
             }
 
             count.decrement();
             if (count.getValue() == 0) {
-                m_neighborCounts.remove(v);
+                neighborCounts.remove(v);
             }
         }
 
         public Set<V> getNeighbors()
         {
-            return m_neighborSet;
+            return neighborSet;
         }
 
         public List<V> getNeighborList()
         {
             List<V> neighbors = new ArrayList<V>();
-            for (Map.Entry<V,ModifiableInteger> entry : m_neighborCounts.entrySet()) {
+            for (Map.Entry<V,ModifiableInteger> entry : neighborCounts.entrySet()) {
                 V v = entry.getKey();
                 int count = entry.getValue().intValue();
                 for (int i = 0; i < count; i++) {

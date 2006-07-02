@@ -80,9 +80,9 @@ public class ConnectivityInspector<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    List<Set<V>> m_connectedSets;
-    Map<V, Set<V>> m_vertexToConnectedSet;
-    private Graph<V, E> m_graph;
+    List<Set<V>> connectedSets;
+    Map<V, Set<V>> vertexToConnectedSet;
+    private Graph<V, E> graph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -94,7 +94,7 @@ public class ConnectivityInspector<V, E>
     public ConnectivityInspector(UndirectedGraph<V, E> g)
     {
         init();
-        m_graph = g;
+        this.graph = g;
     }
 
     /**
@@ -105,7 +105,7 @@ public class ConnectivityInspector<V, E>
     public ConnectivityInspector(DirectedGraph<V, E> g)
     {
         init();
-        m_graph = new AsUndirectedGraph<V,E>(g);
+        this.graph = new AsUndirectedGraph<V,E>(g);
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -135,19 +135,19 @@ public class ConnectivityInspector<V, E>
      */
     public Set<V> connectedSetOf(V vertex)
     {
-        Set<V> connectedSet = m_vertexToConnectedSet.get(vertex);
+        Set<V> connectedSet = vertexToConnectedSet.get(vertex);
 
         if (connectedSet == null) {
             connectedSet = new HashSet<V>();
 
             BreadthFirstIterator<V, E> i =
-                new BreadthFirstIterator<V, E>(m_graph, vertex);
+                new BreadthFirstIterator<V, E>(graph, vertex);
 
             while (i.hasNext()) {
                 connectedSet.add(i.next());
             }
 
-            m_vertexToConnectedSet.put(vertex, connectedSet);
+            vertexToConnectedSet.put(vertex, connectedSet);
         }
 
         return connectedSet;
@@ -232,20 +232,20 @@ public class ConnectivityInspector<V, E>
 
     private void init()
     {
-        m_connectedSets = null;
-        m_vertexToConnectedSet = new HashMap<V, Set<V>>();
+        connectedSets = null;
+        vertexToConnectedSet = new HashMap<V, Set<V>>();
     }
 
     private List<Set<V>> lazyFindConnectedSets()
     {
-        if (m_connectedSets == null) {
-            m_connectedSets = new ArrayList<Set<V>>();
+        if (connectedSets == null) {
+            connectedSets = new ArrayList<Set<V>>();
 
-            Set vertexSet = m_graph.vertexSet();
+            Set vertexSet = graph.vertexSet();
 
             if (vertexSet.size() > 0) {
                 BreadthFirstIterator<V,E> i =
-                    new BreadthFirstIterator<V,E>(m_graph, null);
+                    new BreadthFirstIterator<V,E>(graph, null);
                 i.addTraversalListener(new MyTraversalListener());
 
                 while (i.hasNext()) {
@@ -254,7 +254,7 @@ public class ConnectivityInspector<V, E>
             }
         }
 
-        return m_connectedSets;
+        return connectedSets;
     }
 
     //~ Inner Classes ---------------------------------------------------------
@@ -268,7 +268,7 @@ public class ConnectivityInspector<V, E>
      */
     private class MyTraversalListener extends TraversalListenerAdapter<V, E>
     {
-        private Set<V> m_currentConnectedSet;
+        private Set<V> currentConnectedSet;
 
         /**
          * @see TraversalListenerAdapter#connectedComponentFinished(ConnectedComponentTraversalEvent)
@@ -276,7 +276,7 @@ public class ConnectivityInspector<V, E>
         public void connectedComponentFinished(
             ConnectedComponentTraversalEvent e)
         {
-            m_connectedSets.add(m_currentConnectedSet);
+            connectedSets.add(currentConnectedSet);
         }
 
         /**
@@ -285,7 +285,7 @@ public class ConnectivityInspector<V, E>
         public void connectedComponentStarted(
             ConnectedComponentTraversalEvent e)
         {
-            m_currentConnectedSet = new HashSet<V>();
+            currentConnectedSet = new HashSet<V>();
         }
 
         /**
@@ -294,8 +294,8 @@ public class ConnectivityInspector<V, E>
         public void vertexTraversed(VertexTraversalEvent<V> e)
         {
             V v = e.getVertex();
-            m_currentConnectedSet.add(v);
-            m_vertexToConnectedSet.put(v, m_currentConnectedSet);
+            currentConnectedSet.add(v);
+            vertexToConnectedSet.put(v, currentConnectedSet);
         }
     }
 }

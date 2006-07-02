@@ -63,11 +63,11 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 {
     //~ Instance fields -------------------------------------------------------
 
-    Map<V, Neighbors<V,E>> m_predecessorMap =
+    Map<V, Neighbors<V,E>> predecessorMap =
         new HashMap<V, Neighbors<V,E>>();
-    Map<V, Neighbors<V,E>> m_successorMap =
+    Map<V, Neighbors<V,E>> successorMap =
         new HashMap<V, Neighbors<V,E>>();
-    private DirectedGraph<V, E> m_graph;
+    private DirectedGraph<V, E> graph;
 
 
     //~ Constructors ----------------------------------------------------------
@@ -79,7 +79,7 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
      */
     public DirectedNeighborIndex(DirectedGraph<V, E> g)
     {
-        m_graph = g;
+        graph = g;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -152,8 +152,8 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
     public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = m_graph.getEdgeSource(edge);
-        V target = m_graph.getEdgeTarget(edge);
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
         getSuccessors(source).addNeighbor(target);
         getPredecessors(target).addNeighbor(source);
     }
@@ -164,13 +164,13 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
     public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
     {
         E edge = e.getEdge();
-        V source = m_graph.getEdgeSource(edge);
-        V target = m_graph.getEdgeTarget(edge);
-        if (m_successorMap.containsKey(source)) {
-            m_successorMap.get(source).removeNeighbor(target);
+        V source = graph.getEdgeSource(edge);
+        V target = graph.getEdgeTarget(edge);
+        if (successorMap.containsKey(source)) {
+            successorMap.get(source).removeNeighbor(target);
         }
-        if (m_predecessorMap.containsKey(target)) {
-            m_predecessorMap.get(target).removeNeighbor(source);
+        if (predecessorMap.containsKey(target)) {
+            predecessorMap.get(target).removeNeighbor(source);
         }
     }
 
@@ -187,28 +187,28 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e)
     {
-        m_predecessorMap.remove(e.getVertex());
-        m_successorMap.remove(e.getVertex());
+        predecessorMap.remove(e.getVertex());
+        successorMap.remove(e.getVertex());
     }
 
     private Neighbors<V,E> getPredecessors(V v)
     {
-        Neighbors<V,E> neighbors = m_predecessorMap.get(v);
+        Neighbors<V,E> neighbors = predecessorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    Graphs.predecessorListOf(m_graph, v));
-            m_predecessorMap.put(v, neighbors);
+                    Graphs.predecessorListOf(graph, v));
+            predecessorMap.put(v, neighbors);
         }
         return neighbors;
     }
 
     private Neighbors<V,E> getSuccessors(V v)
     {
-        Neighbors<V,E> neighbors = m_successorMap.get(v);
+        Neighbors<V,E> neighbors = successorMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    Graphs.successorListOf(m_graph, v));
-            m_successorMap.put(v, neighbors);
+                    Graphs.successorListOf(graph, v));
+            successorMap.put(v, neighbors);
         }
         return neighbors;
     }

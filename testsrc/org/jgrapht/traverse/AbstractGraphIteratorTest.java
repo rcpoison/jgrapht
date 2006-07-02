@@ -60,7 +60,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    StringBuffer m_result;
+    StringBuffer result;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -69,7 +69,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
      */
     public void testDirectedGraph()
     {
-        m_result = new StringBuffer();
+        result = new StringBuffer();
 
         DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
 
@@ -77,14 +77,14 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         iterator.addTraversalListener(new MyTraversalListener());
 
         while (iterator.hasNext()) {
-            m_result.append(iterator.next());
+            result.append(iterator.next());
 
             if (iterator.hasNext()) {
-                m_result.append(',');
+                result.append(',');
             }
         }
 
-        assertEquals(getExpectedStr2(), m_result.toString());
+        assertEquals(getExpectedStr2(), result.toString());
     }
 
     abstract String getExpectedStr1();
@@ -152,8 +152,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
      */
     private class MyTraversalListener implements TraversalListener<String,DefaultEdge>
     {
-        private int m_componentNumber = 0;
-        private int m_numComponentVertices = 0;
+        private int componentNumber = 0;
+        private int numComponentVertices = 0;
 
         /**
          * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
@@ -161,16 +161,16 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         public void connectedComponentFinished(
             ConnectedComponentTraversalEvent e)
         {
-            switch (m_componentNumber) {
+            switch (componentNumber) {
             case 1:
-                assertEquals(getExpectedStr1(), m_result.toString());
-                assertEquals(9, m_numComponentVertices);
+                assertEquals(getExpectedStr1(), result.toString());
+                assertEquals(9, numComponentVertices);
 
                 break;
 
             case 2:
-                assertEquals(getExpectedStr2(), m_result.toString());
-                assertEquals(1, m_numComponentVertices);
+                assertEquals(getExpectedStr2(), result.toString());
+                assertEquals(1, numComponentVertices);
 
                 break;
 
@@ -180,7 +180,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
                 break;
             }
 
-            m_numComponentVertices = 0;
+            numComponentVertices = 0;
         }
 
         /**
@@ -189,7 +189,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         public void connectedComponentStarted(
             ConnectedComponentTraversalEvent e)
         {
-            m_componentNumber++;
+            componentNumber++;
         }
 
         /**
@@ -205,7 +205,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
          */
         public void vertexTraversed(VertexTraversalEvent<String> e)
         {
-            m_numComponentVertices++;
+            numComponentVertices++;
         }
     }
 }

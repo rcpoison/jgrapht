@@ -67,7 +67,7 @@ public class DijkstraShortestPathTest extends ShortestPathTestCase
         path = new DijkstraShortestPath(g, V3, V4, Double.POSITIVE_INFINITY);
         assertEquals(
             Arrays.asList(new DefaultEdge [] {
-                    m_e13, m_e12, m_e24
+                    e13, e12, e24
                 }),
             path.getPathEdgeList());
         assertEquals(10.0, path.getPathLength(), 0);

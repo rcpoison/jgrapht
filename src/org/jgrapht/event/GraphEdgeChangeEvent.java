@@ -87,7 +87,7 @@ public class GraphEdgeChangeEvent<V, E>
     /**
      * The edge that this event is related to.
      */
-    protected E m_edge;
+    protected E edge;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -101,7 +101,7 @@ public class GraphEdgeChangeEvent<V, E>
     public GraphEdgeChangeEvent(Object eventSource, int type, E e)
     {
         super(eventSource, type);
-        m_edge = e;
+        edge = e;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -113,6 +113,6 @@ public class GraphEdgeChangeEvent<V, E>
      */
     public E getEdge()
     {
-        return m_edge;
+        return edge;
     }
 }

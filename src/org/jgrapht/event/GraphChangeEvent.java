@@ -61,7 +61,7 @@ public class GraphChangeEvent extends EventObject
     /**
      * The type of graph change this event indicates.
      */
-    protected int m_type;
+    protected int type;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -74,7 +74,7 @@ public class GraphChangeEvent extends EventObject
     public GraphChangeEvent(Object eventSource, int type)
     {
         super(eventSource);
-        m_type = type;
+        this.type = type;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -86,6 +86,6 @@ public class GraphChangeEvent extends EventObject
      */
     public int getType()
     {
-        return m_type;
+        return type;
     }
 }

@@ -58,9 +58,9 @@ public class SerializationTest extends EnhancedTestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private String m_v1 = "v1";
-    private String m_v2 = "v2";
-    private String m_v3 = "v3";
+    private String v1 = "v1";
+    private String v2 = "v2";
+    private String v3 = "v3";
 
     //~ Constructors ----------------------------------------------------------
 
@@ -84,22 +84,22 @@ public class SerializationTest extends EnhancedTestCase
         DirectedMultigraph<String,DefaultEdge> graph =
             new DirectedMultigraph<String,DefaultEdge>(
                 DefaultEdge.class);
-        graph.addVertex(m_v1);
-        graph.addVertex(m_v2);
-        graph.addVertex(m_v3);
-        graph.addEdge(m_v1, m_v2);
-        graph.addEdge(m_v2, m_v3);
-        graph.addEdge(m_v2, m_v3);
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex(v3);
+        graph.addEdge(v1, v2);
+        graph.addEdge(v2, v3);
+        graph.addEdge(v2, v3);
 
         graph = (DirectedMultigraph<String,DefaultEdge>) serializeAndDeserialize(graph);
-        assertTrue(graph.containsVertex(m_v1));
-        assertTrue(graph.containsVertex(m_v2));
-        assertTrue(graph.containsVertex(m_v3));
-        assertTrue(graph.containsEdge(m_v1, m_v2));
-        assertTrue(graph.containsEdge(m_v2, m_v3));
-        assertEquals(1, graph.edgesOf(m_v1).size());
-        assertEquals(3, graph.edgesOf(m_v2).size());
-        assertEquals(2, graph.edgesOf(m_v3).size());
+        assertTrue(graph.containsVertex(v1));
+        assertTrue(graph.containsVertex(v2));
+        assertTrue(graph.containsVertex(v3));
+        assertTrue(graph.containsEdge(v1, v2));
+        assertTrue(graph.containsEdge(v2, v3));
+        assertEquals(1, graph.edgesOf(v1).size());
+        assertEquals(3, graph.edgesOf(v2).size());
+        assertEquals(2, graph.edgesOf(v3).size());
     }
 
     private Object serializeAndDeserialize(Object obj)

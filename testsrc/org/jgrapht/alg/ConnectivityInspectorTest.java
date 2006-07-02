@@ -66,11 +66,11 @@ public class ConnectivityInspectorTest extends TestCase
     //~ Instance fields -------------------------------------------------------
 
     //
-    DefaultEdge m_e1;
-    DefaultEdge m_e2;
-    DefaultEdge m_e3;
-    DefaultEdge m_e3_b;
-    DefaultEdge m_u;
+    DefaultEdge e1;
+    DefaultEdge e2;
+    DefaultEdge e3;
+    DefaultEdge e3_b;
+    DefaultEdge u;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -96,22 +96,22 @@ public class ConnectivityInspectorTest extends TestCase
 
         assertEquals(0, g.edgeSet().size());
 
-        m_e1 = g.addEdge(V1, V2);
+        e1 = g.addEdge(V1, V2);
         assertEquals(1, g.edgeSet().size());
 
-        m_e2 = g.addEdge(V2, V3);
+        e2 = g.addEdge(V2, V3);
         assertEquals(2, g.edgeSet().size());
 
-        m_e3 = g.addEdge(V3, V1);
+        e3 = g.addEdge(V3, V1);
         assertEquals(3, g.edgeSet().size());
 
-        m_e3_b = g.addEdge(V3, V1);
+        e3_b = g.addEdge(V3, V1);
         assertEquals(4, g.edgeSet().size());
-        assertNotNull(m_e3_b);
+        assertNotNull(e3_b);
 
-        m_u = g.addEdge(V1, V1);
+        u = g.addEdge(V1, V1);
         assertEquals(5, g.edgeSet().size());
-        m_u = g.addEdge(V1, V1);
+        u = g.addEdge(V1, V1);
         assertEquals(6, g.edgeSet().size());
 
         return g;
@@ -160,7 +160,7 @@ public class ConnectivityInspectorTest extends TestCase
         g.removeVertex(V1);
         assertEquals(1, g.edgeSet().size());
 
-        g.removeEdge(m_e2);
+        g.removeEdge(e2);
         g.addEdge(V2, V2);
         assertEquals(1, g.edgeSet().size());
 

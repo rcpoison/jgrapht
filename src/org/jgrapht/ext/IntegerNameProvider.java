@@ -52,16 +52,16 @@ import org.jgrapht.event.*;
  */
 public class IntegerNameProvider<V> implements VertexNameProvider<V>
 {
-    private int m_nextID = 1;
-    private final Map<V,Integer> m_idMap = new HashMap<V,Integer>();
+    private int nextID = 1;
+    private final Map<V,Integer> idMap = new HashMap<V,Integer>();
 
     /**
      * Clears all cached identifiers, and resets the unique identifier counter.
      */
     public void clear()
     {
-        m_nextID = 1;
-        m_idMap.clear();
+        nextID = 1;
+        idMap.clear();
     }
 
     /**
@@ -74,10 +74,10 @@ public class IntegerNameProvider<V> implements VertexNameProvider<V>
      */
     public String getVertexName(V vertex)
     {
-        Integer id = m_idMap.get(vertex);
+        Integer id = idMap.get(vertex);
         if (id == null) {
-            id = m_nextID++;
-            m_idMap.put(vertex, id);
+            id = nextID++;
+            idMap.put(vertex, id);
         }
 
         return id.toString();

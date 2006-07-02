@@ -59,7 +59,7 @@ public final class RandomGraphHelper
 
     //~ Static fields/initializers --------------------------------------------
 
-    private static final Random _rand = new Random();
+    private static final Random randSingleton = new Random();
 
     //~ Constructors ----------------------------------------------------------
 
@@ -88,9 +88,9 @@ public final class RandomGraphHelper
         for (int i = 0; i < numEdges; ++i) {
             while (
                 target.addEdge(
-                    sourceVertices.get(_rand.nextInt(
+                    sourceVertices.get(randSingleton.nextInt(
                             sourceSize)),
-                    destVertices.get(_rand.nextInt(destSize))) == null) {
+                    destVertices.get(randSingleton.nextInt(destSize))) == null) {
                 ;
             }
         }

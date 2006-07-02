@@ -68,13 +68,13 @@ public class GraphGeneratorTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private VertexFactory<Object> m_vertexFactory =
+    private VertexFactory<Object> vertexFactory =
         new VertexFactory<Object>() {
-            private int m_i;
+            private int i;
 
             public Object createVertex()
             {
-                return new Integer(++m_i);
+                return new Integer(++i);
             }
         };
 
@@ -91,7 +91,7 @@ public class GraphGeneratorTest extends TestCase
         DirectedGraph<Object,DefaultEdge> g =
             new DefaultDirectedGraph<Object,DefaultEdge>(DefaultEdge.class);
         Map<String,Object> resultMap = new HashMap<String,Object>();
-        gen.generateGraph(g, m_vertexFactory, resultMap);
+        gen.generateGraph(g, vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(0, g.edgeSet().size());
         assertTrue(resultMap.isEmpty());
@@ -107,7 +107,7 @@ public class GraphGeneratorTest extends TestCase
         DirectedGraph<Object,DefaultEdge> g =
             new DefaultDirectedGraph<Object,DefaultEdge>(DefaultEdge.class);
         Map<String,Object> resultMap = new HashMap<String,Object>();
-        gen.generateGraph(g, m_vertexFactory, resultMap);
+        gen.generateGraph(g, vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(SIZE - 1, g.edgeSet().size());
 
@@ -147,7 +147,7 @@ public class GraphGeneratorTest extends TestCase
         DirectedGraph<Object,DefaultEdge> g =
             new DefaultDirectedGraph<Object,DefaultEdge>(DefaultEdge.class);
         Map<String,Object> resultMap = new HashMap<String,Object>();
-        gen.generateGraph(g, m_vertexFactory, resultMap);
+        gen.generateGraph(g, vertexFactory, resultMap);
         assertEquals(SIZE, g.vertexSet().size());
         assertEquals(SIZE, g.edgeSet().size());
 

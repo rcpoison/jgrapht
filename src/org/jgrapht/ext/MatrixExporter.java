@@ -59,9 +59,9 @@ public class MatrixExporter<V,E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private String m_delimiter = " ";
-    private String m_prefix = "";
-    private String m_suffix = "";
+    private String delimiter = " ";
+    private String prefix = "";
+    private String suffix = "";
 
     //~ Constructors ----------------------------------------------------------
 
@@ -77,9 +77,9 @@ public class MatrixExporter<V,E>
     private void println(
         PrintWriter out, String fromName, String toName, String value)
     {
-        out.println(m_prefix + fromName + m_suffix + m_delimiter
-                + m_prefix + toName + m_suffix + m_delimiter
-                + m_prefix + value + m_suffix);
+        out.println(prefix + fromName + suffix + delimiter
+                + prefix + toName + suffix + delimiter
+                + prefix + value + suffix);
     }
 
     /**

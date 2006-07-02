@@ -61,7 +61,7 @@ public class VertexTraversalEvent<V> extends EventObject
     /**
      * The traversed vertex.
      */
-    protected V m_vertex;
+    protected V vertex;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -74,7 +74,7 @@ public class VertexTraversalEvent<V> extends EventObject
     public VertexTraversalEvent(Object eventSource, V vertex)
     {
         super(eventSource);
-        m_vertex = vertex;
+        this.vertex = vertex;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -86,6 +86,6 @@ public class VertexTraversalEvent<V> extends EventObject
      */
     public V getVertex()
     {
-        return m_vertex;
+        return vertex;
     }
 }

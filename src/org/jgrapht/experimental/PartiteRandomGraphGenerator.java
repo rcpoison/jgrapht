@@ -62,8 +62,8 @@ public class PartiteRandomGraphGenerator<V,E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private final int [] m_numVertices;
-    private final int m_numEdges;
+    private final int [] numVertices;
+    private final int numEdges;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -92,8 +92,8 @@ public class PartiteRandomGraphGenerator<V,E>
         final int [] numVertices = {
                 numVertices1, numVertices2
             };
-        m_numVertices = numVertices;
-        m_numEdges = numEdges;
+        this.numVertices = numVertices;
+        this.numEdges = numEdges;
     }
 
     /**
@@ -124,8 +124,8 @@ public class PartiteRandomGraphGenerator<V,E>
             }
         }
 
-        m_numVertices = numVertices;
-        m_numEdges = numEdges;
+        this.numVertices = numVertices;
+        this.numEdges = numEdges;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -143,14 +143,14 @@ public class PartiteRandomGraphGenerator<V,E>
             VertexFactory<V> vertexFactory,
             Map<String,Object[]> resultMap)
     {
-        Object [][] vertices = new Object [m_numVertices.length][];
+        Object [][] vertices = new Object [numVertices.length][];
 
-        for (int i = 0; i < m_numVertices.length; i++) {
+        for (int i = 0; i < numVertices.length; i++) {
             vertices[i] =
                 RandomGraphHelper.addVertices(
                     target,
                     vertexFactory,
-                    m_numVertices[i]);
+                    numVertices[i]);
 
             if (resultMap != null) {
                 resultMap.put(Integer.toString(i), vertices[i]);
@@ -161,7 +161,7 @@ public class PartiteRandomGraphGenerator<V,E>
                     target,
                     Arrays.asList(vertices[i]),
                     Arrays.asList(vertices[j]),
-                    m_numEdges);
+                    numEdges);
             }
         }
     }

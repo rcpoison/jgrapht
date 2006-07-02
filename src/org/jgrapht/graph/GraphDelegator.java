@@ -77,7 +77,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     /**
      * The graph to which operations are delegated.
      */
-    private Graph<V, E> m_delegate;
+    private Graph<V, E> delegate;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -96,7 +96,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
             throw new IllegalArgumentException("g must not be null.");
         }
 
-        m_delegate = g;
+        delegate = g;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -106,7 +106,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
-        return m_delegate.getAllEdges(sourceVertex, targetVertex);
+        return delegate.getAllEdges(sourceVertex, targetVertex);
     }
 
     /**
@@ -114,7 +114,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public E getEdge(V sourceVertex, V targetVertex)
     {
-        return m_delegate.getEdge(sourceVertex, targetVertex);
+        return delegate.getEdge(sourceVertex, targetVertex);
     }
 
     /**
@@ -122,7 +122,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public EdgeFactory<V, E> getEdgeFactory()
     {
-        return m_delegate.getEdgeFactory();
+        return delegate.getEdgeFactory();
     }
 
     /**
@@ -130,7 +130,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public E addEdge(V sourceVertex, V targetVertex)
     {
-        return m_delegate.addEdge(sourceVertex, targetVertex);
+        return delegate.addEdge(sourceVertex, targetVertex);
     }
 
     /**
@@ -138,7 +138,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean addEdge(V sourceVertex, V targetVertex, E e)
     {
-        return m_delegate.addEdge(sourceVertex, targetVertex, e);
+        return delegate.addEdge(sourceVertex, targetVertex, e);
     }
 
     /**
@@ -146,7 +146,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean addVertex(V v)
     {
-        return m_delegate.addVertex(v);
+        return delegate.addVertex(v);
     }
 
     /**
@@ -154,7 +154,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean containsEdge(E e)
     {
-        return m_delegate.containsEdge(e);
+        return delegate.containsEdge(e);
     }
 
     /**
@@ -162,7 +162,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean containsVertex(V v)
     {
-        return m_delegate.containsVertex(v);
+        return delegate.containsVertex(v);
     }
 
     /**
@@ -170,7 +170,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int degreeOf(V vertex)
     {
-        return ((UndirectedGraph<V,E>) m_delegate).degreeOf(vertex);
+        return ((UndirectedGraph<V,E>) delegate).degreeOf(vertex);
     }
 
     /**
@@ -178,7 +178,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> edgeSet()
     {
-        return m_delegate.edgeSet();
+        return delegate.edgeSet();
     }
 
     /**
@@ -186,7 +186,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> edgesOf(V vertex)
     {
-        return m_delegate.edgesOf(vertex);
+        return delegate.edgesOf(vertex);
     }
 
     /**
@@ -194,7 +194,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int inDegreeOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) m_delegate).inDegreeOf(vertex);
+        return ((DirectedGraph<V,? extends E>) delegate).inDegreeOf(vertex);
     }
 
     /**
@@ -202,7 +202,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> incomingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,E>) m_delegate).incomingEdgesOf(vertex);
+        return ((DirectedGraph<V,E>) delegate).incomingEdgesOf(vertex);
     }
 
     /**
@@ -210,7 +210,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int outDegreeOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) m_delegate).outDegreeOf(vertex);
+        return ((DirectedGraph<V,? extends E>) delegate).outDegreeOf(vertex);
     }
 
     /**
@@ -218,7 +218,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> outgoingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,E>) m_delegate).outgoingEdgesOf(vertex);
+        return ((DirectedGraph<V,E>) delegate).outgoingEdgesOf(vertex);
     }
 
     /**
@@ -226,7 +226,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean removeEdge(E e)
     {
-        return m_delegate.removeEdge(e);
+        return delegate.removeEdge(e);
     }
 
     /**
@@ -234,7 +234,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public E removeEdge(V sourceVertex, V targetVertex)
     {
-        return m_delegate.removeEdge(sourceVertex, targetVertex);
+        return delegate.removeEdge(sourceVertex, targetVertex);
     }
 
     /**
@@ -242,7 +242,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public boolean removeVertex(V v)
     {
-        return m_delegate.removeVertex(v);
+        return delegate.removeVertex(v);
     }
 
     /**
@@ -250,7 +250,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public String toString()
     {
-        return m_delegate.toString();
+        return delegate.toString();
     }
 
     /**
@@ -258,7 +258,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<V> vertexSet()
     {
-        return m_delegate.vertexSet();
+        return delegate.vertexSet();
     }
     
     /**
@@ -266,7 +266,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public V getEdgeSource(E e)
     {
-        return m_delegate.getEdgeSource(e);
+        return delegate.getEdgeSource(e);
     }
 
     /**
@@ -274,7 +274,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public V getEdgeTarget(E e)
     {
-        return m_delegate.getEdgeTarget(e);
+        return delegate.getEdgeTarget(e);
     }
     
     /**
@@ -282,7 +282,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public double getEdgeWeight(E e)
     {
-        return m_delegate.getEdgeWeight(e);
+        return delegate.getEdgeWeight(e);
     }
 
     /**
@@ -290,6 +290,6 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public void setEdgeWeight(E e, double weight)
     {
-        ((WeightedGraph<V, E>) m_delegate).setEdgeWeight(e, weight);
+        ((WeightedGraph<V, E>) delegate).setEdgeWeight(e, weight);
     }
 }

@@ -56,7 +56,7 @@ public class EmptyGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 
     //~ Instance fields -------------------------------------------------------
 
-    private int m_size;
+    private int size;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -73,7 +73,7 @@ public class EmptyGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        m_size = size;
+        this.size = size;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -86,7 +86,7 @@ public class EmptyGraphGenerator<V,E> implements GraphGenerator<V,E,V>
         VertexFactory<V> vertexFactory,
         Map<String,V> resultMap)
     {
-        for (int i = 0; i < m_size; ++i) {
+        for (int i = 0; i < size; ++i) {
             target.addVertex(vertexFactory.createVertex());
         }
     }

@@ -66,8 +66,8 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 
     //~ Instance fields -------------------------------------------------------
 
-    private boolean m_inwardSpokes;
-    private int m_size;
+    private boolean inwardSpokes;
+    private int size;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -98,8 +98,8 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        m_size = size;
-        m_inwardSpokes = inwardSpokes;
+        this.size = size;
+        this.inwardSpokes = inwardSpokes;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -112,7 +112,7 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
         final VertexFactory<V> vertexFactory,
         Map<String,V> resultMap)
     {
-        if (m_size < 1) {
+        if (size < 1) {
             return;
         }
 
@@ -131,7 +131,7 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
                 }
             };
 
-        RingGraphGenerator<V,E> ringGenerator = new RingGraphGenerator<V,E>(m_size - 1);
+        RingGraphGenerator<V,E> ringGenerator = new RingGraphGenerator<V,E>(size - 1);
         ringGenerator.generateGraph(target, rimVertexFactory, resultMap);
 
         V hubVertex = vertexFactory.createVertex();
@@ -142,7 +142,7 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
         }
 
         for( V rimVertex : rim ) {
-            if (m_inwardSpokes) {
+            if (inwardSpokes) {
                 target.addEdge(rimVertex, hubVertex);
             } else {
                 target.addEdge(hubVertex, rimVertex);

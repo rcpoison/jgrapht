@@ -71,13 +71,13 @@ public class ClosestFirstIterator<V, E>
     /**
      * Priority queue of fringe vertices.
      */
-    private FibonacciHeap<QueueEntry<V,E>> m_heap =
+    private FibonacciHeap<QueueEntry<V,E>> heap =
         new FibonacciHeap<QueueEntry<V,E>>();
 
     /**
      * Maximum distance to search.
      */
-    private double m_radius = Double.POSITIVE_INFINITY;
+    private double radius = Double.POSITIVE_INFINITY;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -123,7 +123,7 @@ public class ClosestFirstIterator<V, E>
     public ClosestFirstIterator(Graph<V, E> g, V startVertex, double radius)
     {
         super(g, startVertex);
-        m_radius = radius;
+        this.radius = radius;
         checkRadiusTraversal(isCrossComponentTraversal());
     }
 
@@ -177,7 +177,7 @@ public class ClosestFirstIterator<V, E>
             return null;
         }
 
-        return node.getData().m_spanningTreeEdge;
+        return node.getData().spanningTreeEdge;
     }
 
     /**
@@ -185,11 +185,11 @@ public class ClosestFirstIterator<V, E>
      */
     protected boolean isConnectedComponentExhausted()
     {
-        if (m_heap.size() == 0) {
+        if (heap.size() == 0) {
             return true;
         } else {
-            if (m_heap.min().getKey() > m_radius) {
-                m_heap.clear();
+            if (heap.min().getKey() > radius) {
+                heap.clear();
 
                 return true;
             } else {
@@ -205,7 +205,7 @@ public class ClosestFirstIterator<V, E>
     {
         FibonacciHeapNode<QueueEntry<V,E>> node = createSeenData(vertex, edge);
         putSeenData(vertex, node);
-        m_heap.insert(node, node.getKey());
+        heap.insert(node, node.getKey());
     }
 
     /**
@@ -219,7 +219,7 @@ public class ClosestFirstIterator<V, E>
     {
         FibonacciHeapNode<QueueEntry<V,E>> node = getSeenData(vertex);
 
-        if (node.getData().m_frozen) {
+        if (node.getData().frozen) {
             // no improvement for this vertex possible
             return;
         }
@@ -227,8 +227,8 @@ public class ClosestFirstIterator<V, E>
         double candidatePathLength = calculatePathLength(vertex, edge);
 
         if (candidatePathLength < node.getKey()) {
-            node.getData().m_spanningTreeEdge = edge;
-            m_heap.decreaseKey(node, candidatePathLength);
+            node.getData().spanningTreeEdge = edge;
+            heap.decreaseKey(node, candidatePathLength);
         }
     }
 
@@ -237,10 +237,10 @@ public class ClosestFirstIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        FibonacciHeapNode<QueueEntry<V, E>> node = m_heap.removeMin();
-        node.getData().m_frozen = true;
+        FibonacciHeapNode<QueueEntry<V, E>> node = heap.removeMin();
+        node.getData().frozen = true;
 
-        return node.getData().m_vertex;
+        return node.getData().vertex;
     }
 
     private void assertNonNegativeEdge(E edge)
@@ -274,7 +274,7 @@ public class ClosestFirstIterator<V, E>
 
     private void checkRadiusTraversal(boolean crossComponentTraversal)
     {
-        if (crossComponentTraversal && (m_radius != Double.POSITIVE_INFINITY)) {
+        if (crossComponentTraversal && (radius != Double.POSITIVE_INFINITY)) {
             throw new IllegalArgumentException(
                 "radius may not be specified for cross-component traversal");
         }
@@ -299,8 +299,8 @@ public class ClosestFirstIterator<V, E>
         }
 
         QueueEntry<V,E> entry = new QueueEntry<V,E>();
-        entry.m_vertex = vertex;
-        entry.m_spanningTreeEdge = edge;
+        entry.vertex = vertex;
+        entry.spanningTreeEdge = edge;
 
         return new FibonacciHeapNode<QueueEntry<V,E>>(
             entry, shortestPathLength);
@@ -316,17 +316,17 @@ public class ClosestFirstIterator<V, E>
         /**
          * Best spanning tree edge to vertex seen so far.
          */
-        E m_spanningTreeEdge;
+        E spanningTreeEdge;
 
         /**
          * The vertex reached.
          */
-        V m_vertex;
+        V vertex;
 
         /**
-         * True once m_spanningTreeEdge is guaranteed to be the true minimum.
+         * True once spanningTreeEdge is guaranteed to be the true minimum.
          */
-        boolean m_frozen;
+        boolean frozen;
 
         QueueEntry()
         {

@@ -58,7 +58,7 @@ public class RingGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 
     //~ Instance fields -------------------------------------------------------
 
-    private int m_size;
+    private int size;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -75,7 +75,7 @@ public class RingGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        m_size = size;
+        this.size = size;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -88,12 +88,12 @@ public class RingGraphGenerator<V,E> implements GraphGenerator<V,E,V>
         VertexFactory<V> vertexFactory,
         Map<String,V> resultMap)
     {
-        if (m_size < 1) {
+        if (size < 1) {
             return;
         }
 
         LinearGraphGenerator<V,E> linearGenerator =
-            new LinearGraphGenerator<V,E>(m_size);
+            new LinearGraphGenerator<V,E>(size);
         Map<String,V> privateMap = new HashMap<String,V>();
         linearGenerator.generateGraph(target, vertexFactory, privateMap);
 
