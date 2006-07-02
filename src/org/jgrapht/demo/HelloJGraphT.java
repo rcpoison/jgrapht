@@ -39,8 +39,7 @@
  */
 package org.jgrapht.demo;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
@@ -70,13 +69,13 @@ public final class HelloJGraphT
      */
     public static void main(String [] args)
     {
-        UndirectedGraph stringGraph = createStringGraph();
+        UndirectedGraph<String,DefaultEdge> stringGraph = createStringGraph();
 
         // note undirected edges are printed as: {<v1>,<v2>}
         System.out.println(stringGraph.toString());
 
         // create a graph based on URL objects
-        DirectedGraph hrefGraph = createHrefGraph();
+        DirectedGraph<URL,DefaultEdge> hrefGraph = createHrefGraph();
 
         // note directed edges are printed as: (<v1>,<v2>)
         System.out.println(hrefGraph.toString());
@@ -88,7 +87,7 @@ public final class HelloJGraphT
      *
      * @return a graph based on URL objects.
      */
-    private static DirectedGraph createHrefGraph()
+    private static DirectedGraph<URL,DefaultEdge> createHrefGraph()
     {
         DirectedGraph<URL,DefaultEdge> g =
             new DefaultDirectedGraph<URL,DefaultEdge>(DefaultEdge.class);
@@ -118,7 +117,7 @@ public final class HelloJGraphT
      *
      * @return a graph based on String objects.
      */
-    private static UndirectedGraph createStringGraph()
+    private static UndirectedGraph<String,DefaultEdge> createStringGraph()
     {
         UndirectedGraph<String,DefaultEdge> g =
             new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
