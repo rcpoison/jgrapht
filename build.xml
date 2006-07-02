@@ -72,490 +72,541 @@
 
 <project name="jgrapht" default="all" basedir=".">
 
-    <!-- import local property overrides; these take precedence over
-         later definitions in this file -->
-    <property file="etc/build.properties"/>
+  <!-- import local property overrides; these take precedence over
+  later definitions in this file -->
+  <property file="etc/build.properties"/>
 
-    <property name="latest.version.name"  value="0.7.0" />
-    
-    <!-- SVN tags and their respective version names -->
-    <property name="ver_0_7_1.name"       value="0.7.1" />
-    <property name="ver_0_7_0.name"       value="0.7.0" />
-    <property name="ver_0_6_0.name"       value="0.6.0" />
-    <property name="ver_0_5_3.name"       value="0.5.3" />
-    <property name="ver_0_5_2.name"       value="0.5.2" />
+  <property name="latest.version.name"  
+    value="0.7.0" />
+  
+  <!-- SVN tags and their respective version names -->
+  <property name="ver_0_7_1.name"       
+    value="0.7.1" />
+  <property name="ver_0_7_0.name"       
+    value="0.7.0" />
+  <property name="ver_0_6_0.name"       
+    value="0.6.0" />
+  <property name="ver_0_5_3.name"       
+    value="0.5.3" />
+  <property name="ver_0_5_2.name"       
+    value="0.5.2" />
 
-    <!-- Initialization. -->
-    <target name="init.local" unless="svntag">
-        <property name="checkout.dir"     value="checkout" />
-        <property name="project.version"  value="${latest.version.name}-local" />
-    </target>
-    
-    <target name="init.svn" if="svntag">
-        <property name="checkout.dir"     value="${svntag}" />
-        <!-- A dereferencing hack to set project.version=${${svntag}.name} -->
-        <!-- To be simplified if future Ant versions will support it directly -->
-        <echo file="project.version.tmp">project.version=$${${svntag}.name}</echo>
-        <property file="project.version.tmp" />
-        <delete file="project.version.tmp" />
-        <!-- project.version now has the dereferenced value of ${${svntag}.name} -->
-    </target>
+  <!-- Initialization. -->
+  <target name="init.local" unless="svntag">
+    <property name="checkout.dir"     value="checkout" />
+    <property name="project.version"  value="${latest.version.name}-local" />
+  </target>
+  
+  <target name="init.svn" if="svntag">
+    <property name="checkout.dir"     
+      value="${svntag}" />
+    <!-- A dereferencing hack to set project.version=${${svntag}.name} -->
+    <!-- To be simplified if future Ant versions will support it directly -->
+    <echo file="project.version.tmp">project.version=$${${svntag}.name}</echo>
+    <property file="project.version.tmp" />
+    <delete file="project.version.tmp" />
+    <!-- project.version now has the dereferenced value of ${${svntag}.name} -->
+  </target>
 
-    <target name="init" depends="init.local,init.svn">
-        <echo level="info">JAVA_HOME=${java.home}</echo>
-        <property name="project.name"     value="jgrapht" />
-        <property name="project.prefix"   value="${project.name}-${project.version}" />
+  <target name="init" depends="init.local,init.svn">
+    <echo level="info">JAVA_HOME=${java.home}</echo>
+    <property name="project.name"     
+      value="jgrapht" />
+    <property name="project.prefix"   
+      value="${project.name}-${project.version}" />
 
-        <!-- Directories -->
-        <property name="build.dir"        value="${basedir}/build" />
-        <property name="testbuild.dir"    value="${basedir}/testbuild" />
-        <property name="distrib.dir"      value="${basedir}/distribution"/>
-        <property name="src.dir"          value="${basedir}/src"/>
-        <property name="testsrc.dir"      value="${basedir}/testsrc"/>
-        <property name="lib.dir"          value="${basedir}/lib"/>
-        <property name="etc.dir"          value="${basedir}/etc"/>
-        <property name="javadoc.dir"      value="${basedir}/javadoc"/>
+    <!-- Directories -->
+    <property name="build.dir"        
+      value="${basedir}/build" />
+    <property name="testbuild.dir"    
+      value="${basedir}/testbuild" />
+    <property name="distrib.dir"      
+      value="${basedir}/distribution"/>
+    <property name="src.dir"          
+      value="${basedir}/src"/>
+    <property name="testsrc.dir"      
+      value="${basedir}/testsrc"/>
+    <property name="lib.dir"          
+      value="${basedir}/lib"/>
+    <property name="etc.dir"          
+      value="${basedir}/etc"/>
+    <property name="javadoc.dir"      
+      value="${basedir}/javadoc"/>
 
-        <!-- File names -->
-        <property name="project.jar.name"    value="${project.name}-jdk1.5.jar" />
-        <property name="retro.jar.name"      value="${project.name}-jdk1.4.jar" />
-        <property name="project.tar.name"    value="${project.prefix}.tar" />
-        <property name="project.tar.gz.name" value="${project.prefix}.tar.gz" />
-        <property name="project.zip.name"    value="${project.prefix}.zip" />
-        <property name="build.file.name"     value="build.xml" />
-        <property name="license.file.name"   value="license-LGPL.txt" />
-        <property name="junit.jar.name"      value="junit.jar" />
-        <property name="jgraph.jar.name"     value="jgraph.jar" />
-        <property name="touchgraph.jar.name" value="TGGraphLayout.jar" />
+    <!-- File names -->
+    <property name="project.jar.name"    
+      value="${project.name}-jdk1.5.jar" />
+    <property name="retro.jar.name"      
+      value="${project.name}-jdk1.4.jar" />
+    <property name="project.tar.name"    
+      value="${project.prefix}.tar" />
+    <property name="project.tar.gz.name" 
+      value="${project.prefix}.tar.gz" />
+    <property name="project.zip.name"    
+      value="${project.prefix}.zip" />
+    <property name="build.file.name"     
+      value="build.xml" />
+    <property name="license.file.name"   
+      value="license-LGPL.txt" />
+    <property name="junit.jar.name"      
+      value="junit.jar" />
+    <property name="jgraph.jar.name"     
+      value="jgraph.jar" />
+    <property name="touchgraph.jar.name" 
+      value="TGGraphLayout.jar" />
 
-        <!-- Files -->
-        <property name="project.jar"      value="${basedir}/${project.jar.name}" />
-        <property name="retro.jar"        value="${basedir}/${retro.jar.name}" />
-        <property name="project.tar"      value="${basedir}/${project.tar.name}" />
-        <property name="project.tar.gz"   value="${basedir}/${project.tar.gz.name}" />
-        <property name="project.zip"      value="${basedir}/${project.zip.name}" />
-        <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
-        <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
-        <property name="touchgraph.jar"   value="${lib.dir}/${touchgraph.jar.name}"/>
-        <property name="build.file"       value="${basedir}/${build.file.name}"/>
-        <property name="jalopy.settings"  value="${etc.dir}/triemax-jalopy-settings.xml"/>
+    <!-- Files -->
+    <property name="project.jar"      
+      value="${basedir}/${project.jar.name}" />
+    <property name="retro.jar"        
+      value="${basedir}/${retro.jar.name}" />
+    <property name="project.tar"      
+      value="${basedir}/${project.tar.name}" />
+    <property name="project.tar.gz"   
+      value="${basedir}/${project.tar.gz.name}" />
+    <property name="project.zip"      
+      value="${basedir}/${project.zip.name}" />
+    <property name="junit.jar"        
+      value="${lib.dir}/${junit.jar.name}"/>
+    <property name="jgraph.jar"       
+      value="${lib.dir}/${jgraph.jar.name}"/>
+    <property name="touchgraph.jar"   
+      value="${lib.dir}/${touchgraph.jar.name}"/>
+    <property name="build.file"       
+      value="${basedir}/${build.file.name}"/>
+    <property name="jalopy.settings"  
+      value="${etc.dir}/triemax-jalopy-settings.xml"/>
 
-        <!-- Classpath for building functional sources. -->
-        <path id="build.classpath">
-            <pathelement location="${junit.jar}"/>
-            <pathelement location="${jgraph.jar}"/>
-            <pathelement location="${touchgraph.jar}"/>
-        </path>
-        <property name="build.classpath" refid="build.classpath"/>
+    <!-- Classpath for building functional sources. -->
+    <path id="build.classpath">
+      <pathelement location="${junit.jar}"/>
+      <pathelement location="${jgraph.jar}"/>
+      <pathelement location="${touchgraph.jar}"/>
+    </path>
+    <property name="build.classpath" refid="build.classpath"/>
 
-        <!-- Classpath for building tests. -->
-        <path id="testbuild.classpath">
-            <pathelement path="${build.classpath}"/>
-            <pathelement location="${build.dir}"/>
-        </path>
-        <property name="testbuild.classpath" refid="testbuild.classpath"/>
+    <!-- Classpath for building tests. -->
+    <path id="testbuild.classpath">
+      <pathelement path="${build.classpath}"/>
+      <pathelement location="${build.dir}"/>
+    </path>
+    <property name="testbuild.classpath" refid="testbuild.classpath"/>
 
-        <!-- Classpath for running svn task. -->
-        <path id="svn.classpath">
-            <pathelement location="${lib.dir}/svnant.jar"/>
-            <pathelement location="${lib.dir}/svnClientAdapter.jar"/>
-        </path>
-        <property name="svn.classpath" refid="svn.classpath"/>
+    <!-- Classpath for running svn task. -->
+    <path id="svn.classpath">
+      <pathelement location="${lib.dir}/svnant.jar"/>
+      <pathelement location="${lib.dir}/svnClientAdapter.jar"/>
+    </path>
+    <property name="svn.classpath" refid="svn.classpath"/>
 
-        <!-- Classpath for running tests. -->
-        <path id="test.classpath">
-            <pathelement path="${testbuild.classpath}"/>
-            <pathelement location="${testbuild.dir}"/>
-        </path>
-        <property name="test.classpath" refid="test.classpath"/>
+    <!-- Classpath for running tests. -->
+    <path id="test.classpath">
+      <pathelement path="${testbuild.classpath}"/>
+      <pathelement location="${testbuild.dir}"/>
+    </path>
+    <property name="test.classpath" refid="test.classpath"/>
 
-        <!-- Classpath for running tests with retro runtime support. -->
-        <path id="test.retro.classpath">
-            <pathelement path="${test.classpath}"/>
-            <pathelement location="${retroweaver.dir}/release/retroweaver-rt-${retroweaver.ver}.jar"/>
-        </path>
-        <property name="test.retro.classpath" refid="test.retro.classpath"/>
-    </target>
-
-
-    <!-- Compile the classes -->
-    <target name="compile" depends="init"
-                           description="Compiles the JGraphT source code.">
-
-        <!-- create a build directory -->
-        <mkdir dir="${build.dir}" />
-
-        <!-- compile the source -->
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
-            <classpath refid="build.classpath" />
-            <include name="org/jgrapht/util/TypeUtil.java"/>
-        </javac>
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
-            <compilerarg line="-Xlint:all" />
-            <classpath refid="build.classpath" />
-            <include name="**/*.java"/>
-            <exclude name="org/jgrapht/experimental/**/*.java"/>
-            <exclude name="org/jgrapht/util/TypeUtil.java"/>
-            <exclude name="org/jgrapht/ext/JGraphModelAdapter.java"/>
-            <exclude name="org/jgrapht/demo/JGraphAdapterDemo.java"/>
-        </javac>
-        <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
-            <classpath refid="build.classpath" />
-            <include name="**/*.java"/>
-        </javac>
-    </target>
-
-    <!-- Run the experimental touchgraph demo -->
-    <target name="touchgraph.demo" depends="compile"
-                           description="Runs the experimental Touchgraph demo.">
-        <java classname="org.jgrapht.experimental.touchgraph.SimpleTouchgraphApplet">
-            <classpath refid="test.classpath" />
-        </java>
-    </target>
-
-
-    <!-- Generate the runtime jar -->
-    <target name="jar" depends="compile">
-        <jar jarfile="${project.jar}" basedir="${build.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="org.jgrapht.demo.JGraphAdapterDemo"/>
-                <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
-                <attribute name="Specification-Title" value="${project.name}"/>
-                <attribute name="Specification-Version" value="${project.version}"/>
-                <attribute name="Implementation-Version" value="${project.version}-jdk1.5"/>
-            </manifest> 
-        </jar>
-    </target>
-
-    <!-- Generate the retrowoven runtime jar -->
-    <target name="jar.retro" depends="compile">
-        <jar jarfile="${retro.jar}" basedir="${build.dir}">
-            <manifest>
-                <attribute name="Main-Class" value="org.jgrapht.demo.JGraphAdapterDemo"/>
-                <attribute name="Class-Path" value="lib/${jgraph.jar.name}"/>
-                <attribute name="Specification-Title" value="${project.name}"/>
-                <attribute name="Specification-Version" value="${project.version}"/>
-                <attribute name="Implementation-Version" value="${project.version}-jdk1.4"/>
-            </manifest> 
-        </jar>
-    </target>
+    <!-- Classpath for running tests with retro runtime support. -->
+    <path id="test.retro.classpath">
+      <pathelement path="${test.classpath}"/>
+      <pathelement 
+        location="${retroweaver.dir}/release/retroweaver-rt-${retroweaver.ver}.jar"/>
+    </path>
+    <property name="test.retro.classpath" refid="test.retro.classpath"/>
+  </target>
 
 
-    <!-- Build all JUnit tests -->
-    <target name="test.compile" depends="compile"
-                                description="Builds all JUnit tests.">
-        <!-- create a test build directory -->
-        <mkdir dir="${testbuild.dir}" />
+  <!-- Compile the classes -->
+  <target name="compile" depends="init"
+    description="Compiles the JGraphT source code.">
 
-        <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.5"
-               debug="on">
-            <classpath refid="testbuild.classpath" />
-            <include name="org/jgrapht/**"/>
-        </javac>
-    </target>
+    <!-- create a build directory -->
+    <mkdir dir="${build.dir}" />
 
-    <!-- Macro for running all JUnit tests -->
-    <macrodef name="runTests">
-      <attribute name="jvm" default="java"/>
-      <attribute name="classpath.refid" default="test.classpath"/>
-      <sequential>
-        <echo level="info">
-If you get a junit task failure, you need to add the junit.jar to
-the classpath, possibly by copying it into the ANT_HOME/lib folder.
-See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
-        </echo>
-        <junit printsummary="no" fork="yes" jvm="@{jvm}"
-                           haltonerror="true" haltonfailure="true">
-            <classpath refid="@{classpath.refid}"/>
-            <formatter type="brief" usefile="no" />
-            <batchtest>
-                <fileset dir="${testsrc.dir}">
-                    <include name="**/*Test.java"/>
-                    <exclude name="**/Abstract*Test.java"/>
-                    <exclude name="**/DefaultEdgeTest.java"/>
-                </fileset>
-            </batchtest>
-        </junit>
-      </sequential>
-    </macrodef>
+    <!-- compile the source -->
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+      <classpath refid="build.classpath" />
+      <include name="org/jgrapht/util/TypeUtil.java"/>
+    </javac>
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+      <compilerarg line="-Xlint:all" />
+      <classpath refid="build.classpath" />
+      <include name="**/*.java"/>
+      <exclude name="org/jgrapht/experimental/**/*.java"/>
+      <exclude name="org/jgrapht/util/TypeUtil.java"/>
+      <exclude name="org/jgrapht/ext/JGraphModelAdapter.java"/>
+      <exclude name="org/jgrapht/demo/JGraphAdapterDemo.java"/>
+    </javac>
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+      <classpath refid="build.classpath" />
+      <include name="**/*.java"/>
+    </javac>
+  </target>
 
-    <!-- Run all JUnit tests -->
-    <target name="test" depends="test.compile"
-                        description="Builds and runs all JUnit tests.">
-      <runTests/>
-    </target>
-
-    <!-- Run jalopy on source code                                         -->
-    <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
-    <target name="jalopy" depends="test.compile"
-            description="Runs jalopy on all source code.">
-        <taskdef name="jalopy" 
-                 classname="com.triemax.JalopyTask">
-            <classpath>
-                <fileset dir="${basedir}/lib/jalopy">
-                    <include name="*.jar"/>
-                </fileset>
-            </classpath>
-        </taskdef>
-        <jalopy backup="true" convention="${jalopy.settings}"
-                classpathref="test.classpath" history="CRC32">
-            <fileset dir="${basedir}">
-                <include name="src/**/*.java"/>
-                <include name="testsrc/**/*.java"/>
-            </fileset>
-        </jalopy>
-    </target>
-
-    <!-- Build and test the retrowoven JRE 1.4 backport                    -->
-    <target name="backport" if="retroweaver.dir"
-      description="Builds and tests the JRE 1.4 backport.">
-      <antcall target="retroweave"/>
-      <antcall target="jar.retro"/>
-      <antcall target="test.retro"/>
-    </target>
-
-    <!-- Test the retrowoven JRE 1.4 backport                              -->
-    <target name="test.retro" if="jre1.4.dir"
-      description="Tests the JRE 1.4 backport.">
-      <runTests jvm="${jre1.4.dir}/bin/java" 
-        classpath.refid="test.retro.classpath" />
-    </target>
-
-    <!-- Run retroweaver on compiled classes                               -->
-    <!-- NOTE:  requires manual installation of dist in retroweaver.dir   -->
-    <target name="retroweave" depends="init" 
-      description="Retroweaves for backward compatibility with JRE 1.4.">
-      <fail unless="retroweaver.dir"/>
-      <taskdef name="retroweaver"
-        classname="com.rc.retroweaver.ant.RetroWeaverTask">
-        <classpath>
-          <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
-            <pathelement location="${retroweaver.dir}/release/retroweaver-all-${retroweaver.ver}.jar"/>
-        </classpath>
-      </taskdef>
-      <retroweaver srcdir="${build.dir}"/>
-      <retroweaver srcdir="${testbuild.dir}"/>
-    </target>
-
-    <!-- Generate the JGraphT JavaDoc HTML pages -->
-    <target name="javadoc" depends="init" description="Creates the Javadocs.">
-        <delete dir="${javadoc.dir}" />
-        <mkdir dir="${javadoc.dir}" />
-        <javadoc destdir="${javadoc.dir}" source="1.5" failonerror="true"
-                 access="protected" 
-                 windowtitle="JGraphT : a free Java graph library"
-                 overview="${src.dir}/overview.html">
-            <classpath refid="build.classpath" />
-            
-            <packageset dir="${src.dir}" defaultexcludes="yes">
-                <include name="**"/>
-                <exclude name="org/jgrapht/experimental/**"/>
-            </packageset>
-        </javadoc>
-    </target>
+  <!-- Run the experimental touchgraph demo -->
+  <target name="touchgraph.demo" depends="compile"
+    description="Runs the experimental Touchgraph demo.">
+    <java 
+      classname="org.jgrapht.experimental.touchgraph.SimpleTouchgraphApplet">
+      <classpath refid="test.classpath" />
+    </java>
+  </target>
 
 
-    <!-- Prepares a distribution directory of JGraphT -->
-    <target name="prepare.distribution" depends="jar,javadoc">
-    
-        <antcall target="backport" />
+  <!-- Generate the runtime jar -->
+  <target name="jar" depends="compile">
+    <jar jarfile="${project.jar}" basedir="${build.dir}">
+      <manifest>
+        <attribute name="Main-Class" 
+          value="org.jgrapht.demo.JGraphAdapterDemo"/>
+        <attribute name="Class-Path" 
+          value="lib/${jgraph.jar.name}"/>
+        <attribute name="Specification-Title" 
+          value="${project.name}"/>
+        <attribute name="Specification-Version" 
+          value="${project.version}"/>
+        <attribute name="Implementation-Version" 
+          value="${project.version}-jdk1.5"/>
+      </manifest> 
+    </jar>
+  </target>
 
-        <!-- make a temporary distribution directory -->
-        <mkdir dir="${distrib.dir}" />
-
-        <!-- add README -->
-        <copy file="${basedir}/README.html" tofile="${distrib.dir}/README.html" />
-
-        <!-- add license -->
-        <copy file="${basedir}/${license.file.name}" tofile="${distrib.dir}/${license.file.name}" />
-
-        <!-- add runtime jar file -->
-        <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
-        <copy file="${retro.jar}" tofile="${distrib.dir}/${retro.jar.name}" 
-          failonerror="false" />
-    
-        <!-- add source files -->
-        <copy todir="${distrib.dir}/src">
-            <fileset dir="${src.dir}">
-                <include name="overview.html"/>
-                <include name="**/*.java"/>
-                <include name="**/package.html"/>
-            </fileset>
-        </copy>
-
-        <!-- add source files of unit tests -->
-        <copy todir="${distrib.dir}/testsrc">
-            <fileset dir="${testsrc.dir}">
-                <include name="**"/>
-            </fileset>
-        </copy>
-
-        <!-- add lib files -->
-        <copy todir="${distrib.dir}/lib">
-            <fileset dir="${lib.dir}">
-                <include name="*.jar"/>
-                <include name="lib-readme.txt"/>
-            </fileset>
-        </copy>
-
-        <!-- add ant build file (this file) -->
-        <copy file="${build.file}" tofile="${distrib.dir}/${build.file.name}" />
-
-        <!-- add etc files -->
-        <copy todir="${distrib.dir}/etc">
-            <fileset dir="${etc.dir}">
-                <include name="jalopy-settings.xml"/>
-                <include name="build.properties.template"/>
-            </fileset>
-        </copy>
-
-        <!-- add etc/build.properties -->
-        <copy file="${etc.dir}/build.properties.template" 
-          tofile="${distrib.dir}/etc/build.properties">
-        </copy>
-
-        <!-- add Javadoc files -->
-        <copy todir="${distrib.dir}/javadoc">
-            <fileset dir="${javadoc.dir}"/>
-        </copy>
-    </target>
-    
-
-    <!-- Packages a .zip distribution for JGraphT -->
-    <target name="zip" depends="prepare.distribution">
-
-        <!-- convert end-of-line characters in text files to PC style -->
-        <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/testsrc" eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/etc"     eol="crlf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}"         eol="crlf" eof="remove" 
-                 includes="${build.file.name},${license.file.name}"/>
-
-        <!-- make the zip file -->
-        <zip zipfile="${project.zip}">
-             <zipfileset dir="${distrib.dir}" prefix="${project.prefix}" />
-        </zip>
-    </target>
+  <!-- Generate the retrowoven runtime jar -->
+  <target name="jar.retro" depends="compile">
+    <jar jarfile="${retro.jar}" basedir="${build.dir}">
+      <manifest>
+        <attribute name="Main-Class" 
+          value="org.jgrapht.demo.JGraphAdapterDemo"/>
+        <attribute name="Class-Path" 
+          value="lib/${jgraph.jar.name}"/>
+        <attribute name="Specification-Title" 
+          value="${project.name}"/>
+        <attribute name="Specification-Version" 
+          value="${project.version}"/>
+        <attribute name="Implementation-Version" 
+          value="${project.version}-jdk1.4"/>
+      </manifest> 
+    </jar>
+  </target>
 
 
-    <!-- Packages a .tar.gz distribution for JGraphT -->
-    <target name="targz" depends="prepare.distribution">
+  <!-- Build all JUnit tests -->
+  <target name="test.compile" depends="compile"
+    description="Builds all JUnit tests.">
+    <!-- create a test build directory -->
+    <mkdir dir="${testbuild.dir}" />
 
-        <!-- convert end-of-line characters in text files to Unix style -->
-        <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}/etc"     eol="lf" eof="remove" />
-        <fixcrlf srcdir="${distrib.dir}"         eol="lf" eof="remove" 
-                 includes="${build.file.name},${license.file.name}"/>
+    <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.5"
+      debug="on">
+      <classpath refid="testbuild.classpath" />
+      <include name="org/jgrapht/**"/>
+    </javac>
+  </target>
 
-        <!-- make the tar.gz file -->
-        <tar tarfile="${project.tar}" longfile="gnu">
-             <tarfileset dir="${distrib.dir}" prefix="${project.prefix}" />
-        </tar>
-        <gzip zipfile="${project.tar.gz}" src="${project.tar}" />
-        <delete file="${project.tar}" />
-    </target>
-    
+  <!-- Macro for running all JUnit tests -->
+  <macrodef name="runTests">
+    <attribute name="jvm" default="java"/>
+    <attribute name="classpath.refid" default="test.classpath"/>
+    <sequential>
+      <echo level="info">
+        If you get a junit task lookup failure, you need to add the junit.jar to
+        the classpath, possibly by copying it into the ANT_HOME/lib folder.
+        See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
+      </echo>
+      <junit printsummary="no" fork="yes" jvm="@{jvm}"
+        haltonerror="true" haltonfailure="true">
+        <classpath refid="@{classpath.refid}"/>
+        <formatter type="brief" usefile="no" />
+        <batchtest>
+          <fileset dir="${testsrc.dir}">
+            <include name="**/*Test.java"/>
+            <exclude name="**/Abstract*Test.java"/>
+            <exclude name="**/DefaultEdgeTest.java"/>
+          </fileset>
+        </batchtest>
+      </junit>
+    </sequential>
+  </macrodef>
 
-    <!-- Clean outputs from previous build -->    
-    <target name="clean" depends="init"
-            description="Cleans all outputs from previous builds">
-        <delete dir="${distrib.dir}" />
-        <delete dir="${build.dir}" />
-        <delete dir="${testbuild.dir}" />
-        <delete dir="${javadoc.dir}" />
-        <delete file="${project.jar}" />
-        <delete file="${retro.jar}" />
-        <delete file="${project.zip}" />
-        <delete file="${project.tar.gz}" />
-    </target>
+  <!-- Run all JUnit tests -->
+  <target name="test" depends="test.compile"
+    description="Builds and runs all JUnit tests.">
+    <runTests/>
+  </target>
 
-
-    <!-- ALL -->
-    <target name="all" depends="clean,compile,test,zip,targz"
-            description="Cleans, compiles, tests and creates distribution files (.zip and .tar.gz).">
-            
-        <!-- Clean unnecessary outputs from this build -->    
-        <delete dir="${distrib.dir}" />
-        <delete dir="${javadoc.dir}" />
-        <delete file="${project.jar}" />
-        <delete file="${retro.jar}" />
-    </target>
-
-
-    <!-- generate Emacs tags -->
-    <fileset dir="${basedir}" id="fileset.taggable">
+  <!-- Run jalopy on source code                                         -->
+  <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
+  <target name="jalopy" depends="test.compile"
+    description="Runs jalopy on all source code.">
+    <taskdef name="jalopy" 
+      classname="com.triemax.JalopyTask">
+      <classpath>
+        <fileset dir="${basedir}/lib/jalopy">
+          <include name="*.jar"/>
+        </fileset>
+      </classpath>
+    </taskdef>
+    <jalopy backup="true" convention="${jalopy.settings}"
+      classpathref="test.classpath" history="CRC32">
+      <fileset dir="${basedir}">
         <include name="src/**/*.java"/>
         <include name="testsrc/**/*.java"/>
-    </fileset>
-    <target name="etags" 
-            depends="init" 
-            description="Generates TAGS file for Emacs">
-        <property name="file.taggable.tmp" 
-            location="${basedir}/taggedfiles"/>
-        <antcall target="etags.find_taggable_files"/>
-        <exec dir="${basedir}" executable="ctags">
-            <arg line="-e"/>
-            <arg line="-L taggedfiles"/>
-        </exec>
-        <delete file="${file.taggable.tmp}" quiet="true"/>
-    </target>
+      </fileset>
+    </jalopy>
+  </target>
 
-    <!-- Internal helper for etags target -->
-    <target name="etags.find_taggable_files">
-        <concat destfile="${file.taggable.tmp}">replaceme</concat>
-        <pathconvert property="files.taggable" 
-          pathsep="${line.separator}"
-          dirsep="/" refid="fileset.taggable" >
-          <map from="${basedir}" to="." />
-        </pathconvert>
-        <replace file="${file.taggable.tmp}" 
-          token="replaceme" value="${files.taggable}" />
-        <fixcrlf srcDir="${basedir}" includes="taggedfiles"
-          eol="lf" eof="remove" />
-    </target>
+  <!-- Build and test the retrowoven JRE 1.4 backport                    -->
+  <target name="backport" if="retroweaver.dir"
+    description="Builds and tests the JRE 1.4 backport.">
+    <antcall target="retroweave"/>
+    <antcall target="jar.retro"/>
+    <antcall target="test.retro"/>
+  </target>
 
+  <!-- Test the retrowoven JRE 1.4 backport                              -->
+  <target name="test.retro" if="jre1.4.dir"
+    description="Tests the JRE 1.4 backport.">
+    <runTests jvm="${jre1.4.dir}/bin/java" 
+      classpath.refid="test.retro.classpath" />
+  </target>
 
-    <!-- Creates a release according to a user-defined SVN tag -->
-    <target name="release" depends="init,checkout,svntag.missing" if="svntag"
-            description="Checks out and builds a release according to a SVN tag">
-            
-        <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
+  <!-- Run retroweaver on compiled classes                               -->
+  <!-- NOTE:  requires manual installation of dist in retroweaver.dir   -->
+  <target name="retroweave" depends="init" 
+    description="Retroweaves for backward compatibility with JRE 1.4.">
+    <fail unless="retroweaver.dir"/>
+    <taskdef name="retroweaver"
+      classname="com.rc.retroweaver.ant.RetroWeaverTask">
+      <classpath>
+        <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
+        <pathelement 
+          location="${retroweaver.dir}/release/retroweaver-all-${retroweaver.ver}.jar"/>
+      </classpath>
+    </taskdef>
+    <retroweaver srcdir="${build.dir}"/>
+    <retroweaver srcdir="${testbuild.dir}"/>
+  </target>
 
-        <fail unless="retroweaver.dir"/>
-        <fail unless="jre1.4.dir"/>
-        <ant dir="${checkout.dir}" antfile="${build.file.name}" 
-             target="all" inheritall="false" inheritrefs="false">
-            <property name="svntag" value="${svntag}"/>
-        </ant>
-    </target>
-
-
-    <!-- Checks out a snapshot according to a user-defined SVN tag -->
-    <target name="checkout" depends="init,svntag.missing" if="svntag"
-            description="Checks out a snapshot from SVN according to a tag">
-        <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
-        <echo level="info">Checking out files of SVN tag: ${svntag}</echo>
-        
-        <property name="project.svnroot" 
-                  value="https://svn.sourceforge.net/svnroot/jgrapht" />
-        <delete dir="${checkout.dir}" />
-        <mkdir  dir="${checkout.dir}" />
-
-        <echo file="${svnpass}" append="false">${project.svnroot} A
-        </echo>
-
-        <svn username="guest" password="" javahl="false">
-          <checkout url="${project.svnroot}/tags/${svntag}" destPath="${checkout.dir}"/>
-        </svn>
-       
-        <delete file="${svnpass}" />      
-    </target>
+  <!-- Generate the JGraphT JavaDoc HTML pages -->
+  <target name="javadoc" depends="init" description="Creates the Javadocs.">
+    <delete dir="${javadoc.dir}" />
+    <mkdir dir="${javadoc.dir}" />
+    <javadoc destdir="${javadoc.dir}" source="1.5" failonerror="true"
+      access="protected" 
+      windowtitle="JGraphT : a free Java graph library"
+      overview="${src.dir}/overview.html">
+      <classpath refid="build.classpath" />
+      <packageset dir="${src.dir}" defaultexcludes="yes">
+        <include name="**"/>
+        <exclude name="org/jgrapht/experimental/**"/>
+      </packageset>
+    </javadoc>
+  </target>
 
 
-    <!-- Outputs an error message if SVN tag is unspecified -->
-    <target name="svntag.missing" unless="svntag">
-        <echo level="error">Variable $${svntag} must be specified for selected target.</echo>
-    </target>
+  <!-- Prepares a distribution directory of JGraphT -->
+  <target name="prepare.distribution" depends="jar,javadoc">
+    
+    <antcall target="backport" />
+
+    <!-- make a temporary distribution directory -->
+    <mkdir dir="${distrib.dir}" />
+
+    <!-- add README -->
+    <copy file="${basedir}/README.html" tofile="${distrib.dir}/README.html" />
+
+    <!-- add license -->
+    <copy file="${basedir}/${license.file.name}" 
+      tofile="${distrib.dir}/${license.file.name}" />
+
+    <!-- add runtime jar file -->
+    <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
+    <copy file="${retro.jar}" tofile="${distrib.dir}/${retro.jar.name}" 
+      failonerror="false" />
+    
+    <!-- add source files -->
+    <copy todir="${distrib.dir}/src">
+      <fileset dir="${src.dir}">
+        <include name="overview.html"/>
+        <include name="**/*.java"/>
+        <include name="**/package.html"/>
+      </fileset>
+    </copy>
+
+    <!-- add source files of unit tests -->
+    <copy todir="${distrib.dir}/testsrc">
+      <fileset dir="${testsrc.dir}">
+        <include name="**"/>
+      </fileset>
+    </copy>
+
+    <!-- add lib files -->
+    <copy todir="${distrib.dir}/lib">
+      <fileset dir="${lib.dir}">
+        <include name="*.jar"/>
+        <include name="lib-readme.txt"/>
+      </fileset>
+    </copy>
+
+    <!-- add ant build file (this file) -->
+    <copy file="${build.file}" tofile="${distrib.dir}/${build.file.name}" />
+
+    <!-- add etc files -->
+    <copy todir="${distrib.dir}/etc">
+      <fileset dir="${etc.dir}">
+        <include name="jalopy-settings.xml"/>
+        <include name="build.properties.template"/>
+      </fileset>
+    </copy>
+
+    <!-- add etc/build.properties -->
+    <copy file="${etc.dir}/build.properties.template" 
+      tofile="${distrib.dir}/etc/build.properties">
+    </copy>
+
+    <!-- add Javadoc files -->
+    <copy todir="${distrib.dir}/javadoc">
+      <fileset dir="${javadoc.dir}"/>
+    </copy>
+  </target>
+  
+
+  <!-- Packages a .zip distribution for JGraphT -->
+  <target name="zip" depends="prepare.distribution">
+
+    <!-- convert end-of-line characters in text files to PC style -->
+    <fixcrlf srcdir="${distrib.dir}/src"     eol="crlf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}/testsrc" eol="crlf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}/etc"     eol="crlf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}"         eol="crlf" eof="remove" 
+      includes="${build.file.name},${license.file.name}"/>
+
+    <!-- make the zip file -->
+    <zip zipfile="${project.zip}">
+      <zipfileset dir="${distrib.dir}" prefix="${project.prefix}" />
+    </zip>
+  </target>
+
+
+  <!-- Packages a .tar.gz distribution for JGraphT -->
+  <target name="targz" depends="prepare.distribution">
+
+    <!-- convert end-of-line characters in text files to Unix style -->
+    <fixcrlf srcdir="${distrib.dir}/src"     eol="lf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}/testsrc" eol="lf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}/etc"     eol="lf" eof="remove" />
+    <fixcrlf srcdir="${distrib.dir}"         eol="lf" eof="remove" 
+      includes="${build.file.name},${license.file.name}"/>
+
+    <!-- make the tar.gz file -->
+    <tar tarfile="${project.tar}" longfile="gnu">
+      <tarfileset dir="${distrib.dir}" prefix="${project.prefix}" />
+    </tar>
+    <gzip zipfile="${project.tar.gz}" src="${project.tar}" />
+    <delete file="${project.tar}" />
+  </target>
+  
+
+  <!-- Clean outputs from previous build -->    
+  <target name="clean" depends="init"
+    description="Cleans all outputs from previous builds">
+    <delete dir="${distrib.dir}" />
+    <delete dir="${build.dir}" />
+    <delete dir="${testbuild.dir}" />
+    <delete dir="${javadoc.dir}" />
+    <delete file="${project.jar}" />
+    <delete file="${retro.jar}" />
+    <delete file="${project.zip}" />
+    <delete file="${project.tar.gz}" />
+  </target>
+
+
+  <!-- ALL -->
+  <target name="all" depends="clean,compile,test,zip,targz"
+    description="Cleans, compiles, tests and creates distribution files (.zip and .tar.gz).">
+    
+    <!-- Clean unnecessary outputs from this build -->    
+    <delete dir="${distrib.dir}" />
+    <delete dir="${javadoc.dir}" />
+    <delete file="${project.jar}" />
+    <delete file="${retro.jar}" />
+  </target>
+
+
+  <!-- generate Emacs tags -->
+  <fileset dir="${basedir}" id="fileset.taggable">
+    <include name="src/**/*.java"/>
+    <include name="testsrc/**/*.java"/>
+  </fileset>
+  <target name="etags" 
+    depends="init" 
+    description="Generates TAGS file for Emacs">
+    <property name="file.taggable.tmp" 
+      location="${basedir}/taggedfiles"/>
+    <antcall target="etags.find_taggable_files"/>
+    <exec dir="${basedir}" executable="ctags">
+      <arg line="-e"/>
+      <arg line="-L taggedfiles"/>
+    </exec>
+    <delete file="${file.taggable.tmp}" quiet="true"/>
+  </target>
+
+  <!-- Internal helper for etags target -->
+  <target name="etags.find_taggable_files">
+    <concat destfile="${file.taggable.tmp}">replaceme</concat>
+    <pathconvert property="files.taggable" 
+      pathsep="${line.separator}"
+      dirsep="/" refid="fileset.taggable" >
+      <map from="${basedir}" to="." />
+    </pathconvert>
+    <replace file="${file.taggable.tmp}" 
+      token="replaceme" value="${files.taggable}" />
+    <fixcrlf srcDir="${basedir}" includes="taggedfiles"
+      eol="lf" eof="remove" />
+  </target>
+
+
+  <!-- Creates a release according to a user-defined SVN tag -->
+  <target name="release" depends="init,checkout,svntag.missing" if="svntag"
+    description="Checks out and builds a release according to a SVN tag">
+    
+    <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
+
+    <fail unless="retroweaver.dir"/>
+    <fail unless="jre1.4.dir"/>
+    <ant dir="${checkout.dir}" antfile="${build.file.name}" 
+      target="all" inheritall="false" inheritrefs="false">
+      <property name="svntag" value="${svntag}"/>
+    </ant>
+  </target>
+
+
+  <!-- Checks out a snapshot according to a user-defined SVN tag -->
+  <target name="checkout" depends="init,svntag.missing" if="svntag"
+    description="Checks out a snapshot from SVN according to a tag">
+    <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
+    <echo level="info">Checking out files of SVN tag: ${svntag}</echo>
+    
+    <property name="project.svnroot" 
+      value="https://svn.sourceforge.net/svnroot/jgrapht" />
+    <delete dir="${checkout.dir}" />
+    <mkdir  dir="${checkout.dir}" />
+
+    <echo file="${svnpass}" append="false">${project.svnroot} A
+    </echo>
+
+    <svn username="guest" password="" javahl="false">
+      <checkout url="${project.svnroot}/tags/${svntag}" 
+        destPath="${checkout.dir}"/>
+    </svn>
+    
+    <delete file="${svnpass}" />      
+  </target>
+
+
+  <!-- Outputs an error message if SVN tag is unspecified -->
+  <target name="svntag.missing" unless="svntag">
+    <echo level="error">Variable $${svntag} must be specified for selected target.</echo>
+  </target>
 
 </project>
