@@ -159,6 +159,13 @@
             <pathelement location="${testbuild.dir}"/>
         </path>
         <property name="test.classpath" refid="test.classpath"/>
+
+        <!-- Classpath for running tests with retro runtime support. -->
+        <path id="test.retro.classpath">
+            <pathelement path="${test.classpath}"/>
+            <pathelement location="${retroweaver.dir}/release/retroweaver-rt-${retroweaver.ver}.jar"/>
+        </path>
+        <property name="test.retro.classpath" refid="test.retro.classpath"/>
     </target>
 
 
@@ -241,6 +248,7 @@
     <!-- Macro for running all JUnit tests -->
     <macrodef name="runTests">
       <attribute name="jvm" default="java"/>
+      <attribute name="classpath.refid" default="test.classpath"/>
       <sequential>
         <echo level="info">
 If you get a junit task failure, you need to add the junit.jar to
@@ -249,7 +257,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         </echo>
         <junit printsummary="no" fork="yes" jvm="@{jvm}"
                            haltonerror="true" haltonfailure="true">
-            <classpath refid="test.classpath"/>
+            <classpath refid="@{classpath.refid}"/>
             <formatter type="brief" usefile="no" />
             <batchtest>
                 <fileset dir="${testsrc.dir}">
@@ -300,11 +308,12 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <!-- Test the retrowoven JRE 1.4 backport                              -->
     <target name="test.retro" if="jre1.4.dir"
       description="Tests the JRE 1.4 backport.">
-      <runTests jvm="${jre1.4.dir}/bin/java"/>
+      <runTests jvm="${jre1.4.dir}/bin/java" 
+        classpath.refid="test.retro.classpath" />
     </target>
 
     <!-- Run retroweaver on compiled classes                               -->
-    <!-- NOTE:  requires manual installation of .jars in lib/retroweaver   -->
+    <!-- NOTE:  requires manual installation of dist in retroweaver.dir   -->
     <target name="retroweave" depends="init" 
       description="Retroweaves for backward compatibility with JRE 1.4.">
       <fail unless="retroweaver.dir"/>
@@ -312,7 +321,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         classname="com.rc.retroweaver.ant.RetroWeaverTask">
         <classpath>
           <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
-            <pathelement location="${retroweaver.dir}/release/retroweaver.jar"/>
+            <pathelement location="${retroweaver.dir}/release/retroweaver-all-${retroweaver.ver}.jar"/>
         </classpath>
       </taskdef>
       <retroweaver srcdir="${build.dir}"/>

@@ -56,7 +56,7 @@ import org.jgrapht.util.*;
  *
  * <p>A vertex's neighbors are cached the first time they are asked for (i.e.
  * the index is built on demand). The index will only be updated automatically
- * if it is added to the associated grpah as a listener. If it is added as a
+ * if it is added to the associated graph as a listener. If it is added as a
  * listener to a graph other than the one it indexes, results are
  * undefined.</p>
  *

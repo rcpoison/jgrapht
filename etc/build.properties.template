@@ -33,6 +33,7 @@
 # Changes
 # ~~~~~~~
 # 31-July-2005 : Initial revision (JVS);
+# 01-July-2006 : Update for version 0.7 (JVS);
 # ~~~~~~~
 #
 # etc/build.properties is used to customize the JGraphT build.
@@ -41,7 +42,7 @@
 # The ant buildfile will override its own defaults with any
 # uncommented values it sees here.
 
-# NOTE: If you are building JGraphT directly from CVS rather than from
+# NOTE: If you are building JGraphT directly from Subversion rather than from
 # a distribution, create etc/build.properties by making a copy of
 # etc/build.properties.template.  (The template file should only be
 # changed by developers who are enhancing the build process
@@ -55,6 +56,11 @@
 # to enable a retrowoven JRE 1.4 backport as part of the build.
 # ~~~~~~~
 # retroweaver.dir=/path/to/distribution/of/retroweaver
+
+# Version of Retroweaver distribution.  You must uncomment retroweaver.dir
+# and set it if you uncomment retroweaver.dir.
+# ~~~~~~~
+# retroweaver.ver=x.y.z
 
 # Location of JRE 1.4 installation.  Uncomment jre1.4.dir to enable
 # a test of the backport as part of the build.  The test will execute
