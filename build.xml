@@ -158,6 +158,7 @@
         <!-- Classpath for running svn task. -->
         <path id="svn.classpath">
             <pathelement location="${lib.dir}/svnant.jar"/>
+            <pathelement location="${lib.dir}/svnClientAdapter.jar"/>
         </path>
         <property name="svn.classpath" refid="svn.classpath"/>
 
@@ -544,7 +545,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <echo file="${svnpass}" append="false">${project.svnroot} A
         </echo>
 
-        <svn username="guest" password="">
+        <svn username="guest" password="" javahl="false">
           <checkout url="${project.svnroot}/tags/${svntag}" destPath="${checkout.dir}"/>
         </svn>
        
