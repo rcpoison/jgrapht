@@ -4,7 +4,7 @@
  * ==========================================
  *
  * Project Info:  http://jgrapht.sourceforge.net/
- * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
  * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
@@ -386,7 +386,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <!-- add etc files -->
         <copy todir="${distrib.dir}/etc">
             <fileset dir="${etc.dir}">
-                <include name="etc-readme.txt"/>
                 <include name="jalopy-settings.xml"/>
                 <include name="build.properties.template"/>
             </fileset>

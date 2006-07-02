@@ -150,15 +150,15 @@
 current state.  If there were important bug/feature changes, it is worth
 mentioning them in the README.html release notes.
 
-<li>Bring dependent libraries (JGraph, Checkstyle) up to date and update
+<li>Bring dependent libraries (e.g. JGraph) up to date and update
 lib/lib-readme.txt accordingly.
 
 <li>Run ant to build the javadoc and make sure it is generated without
 errors/warnings. Fix where necessary.
 
-<li>Run Checkstyle globally to make a "code quality review" according to its
-reporting. Fix where necessary.  [Could be useful to also add PMD and
-FindBugs as additional code scanners.]
+<li>We used to run Checkstyle globally to make a "code quality review";
+we may bring this back, and/or add PMD/FindBugs, and Emma for
+code coverage.
 
 <li>Run all the JUnit tests. Fix where necessary.
 
