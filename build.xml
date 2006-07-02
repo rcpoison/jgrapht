@@ -341,7 +341,7 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     <target name="javadoc" depends="init" description="Creates the Javadocs.">
         <delete dir="${javadoc.dir}" />
         <mkdir dir="${javadoc.dir}" />
-        <javadoc destdir="${javadoc.dir}" source="1.5"
+        <javadoc destdir="${javadoc.dir}" source="1.5" failonerror="true"
                  access="protected" 
                  windowtitle="JGraphT : a free Java graph library"
                  overview="${src.dir}/overview.html">
