@@ -46,6 +46,7 @@
  * 31-Jul-2005 : Added support for retroweaver (JVS);
  * 23-Apr-2006 : Renamed package to org.jgrapht (JVS);
  * 25-Jun-2006 : Fold experimental into main build (JVS);
+ * 01-Jul-2006 : Remove checkstyle (JVS);
  *
  */
 -->
@@ -124,7 +125,6 @@
         <property name="junit.jar.name"      value="junit.jar" />
         <property name="jgraph.jar.name"     value="jgraph.jar" />
         <property name="touchgraph.jar.name" value="TGGraphLayout.jar" />
-        <property name="checkstyle.jar.name" value="checkstyle-all-3.3.jar" />
 
         <!-- Files -->
         <property name="project.jar"      value="${basedir}/${project.jar.name}" />
@@ -135,9 +135,7 @@
         <property name="junit.jar"        value="${lib.dir}/${junit.jar.name}"/>
         <property name="jgraph.jar"       value="${lib.dir}/${jgraph.jar.name}"/>
         <property name="touchgraph.jar"   value="${lib.dir}/${touchgraph.jar.name}"/>
-        <property name="checkstyle.jar"   value="${lib.dir}/${checkstyle.jar.name}"/>
         <property name="build.file"       value="${basedir}/${build.file.name}"/>
-        <property name="checkstyle.settings" value="${etc.dir}/checkstyle-settings.xml"/>
         <property name="jalopy.settings"  value="${etc.dir}/triemax-jalopy-settings.xml"/>
 
         <!-- Classpath for building functional sources. -->
@@ -270,22 +268,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
       <runTests/>
     </target>
 
-    <!-- Run checkstyle on source code -->
-    <!-- TODO:  once code is all clean, use as a dependency for "all" task -->
-    <target name="checkstyle" depends="init"
-                           description="Runs checkstyle on all source code.">
-        <taskdef resource="checkstyletask.properties" 
-                 classpath="${checkstyle.jar}"/>
-        <checkstyle config="${checkstyle.settings}">
-            <fileset dir="${src.dir}">
-                <include name="**/*.java"/>
-            </fileset>
-            <fileset dir="${testsrc.dir}">
-                <include name="**/*.java"/>
-            </fileset>
-        </checkstyle>
-    </target>
-
     <!-- Run jalopy on source code                                         -->
     <!-- NOTE:  requires manual installation of .jars in lib/jalopy        -->
     <target name="jalopy" depends="test.compile"
@@ -395,7 +377,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
             <fileset dir="${lib.dir}">
                 <include name="*.jar"/>
                 <include name="lib-readme.txt"/>
-                <exclude name="${checkstyle.jar.name}"/>
             </fileset>
         </copy>
 
@@ -405,7 +386,6 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <!-- add etc files -->
         <copy todir="${distrib.dir}/etc">
             <fileset dir="${etc.dir}">
-                <include name="checkstyle-settings.xml"/>
                 <include name="etc-readme.txt"/>
                 <include name="jalopy-settings.xml"/>
                 <include name="build.properties.template"/>
