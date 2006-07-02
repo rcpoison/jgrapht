@@ -1,0 +1,211 @@
+/* ==========================================
+ * JGraphT : a free Java graph-theory library
+ * ==========================================
+ *
+ * Project Info:  http://jgrapht.sourceforge.net/
+ * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
+ *
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
+ *
+ * This library is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation; either version 2.1 of the License, or
+ * (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation,
+ * Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+ */
+/* ------------------------------
+ * AbstractGraphIteratorTest.java
+ * ------------------------------
+ * (C) Copyright 2003-2006, by Liviu Rau and Contributors.
+ *
+ * Original Author:  Liviu Rau
+ * Contributor(s):   Barak Naveh
+ *
+ * $Id$
+ *
+ * Changes
+ * -------
+ * 30-Jul-2003 : Initial revision (LR);
+ * 06-Aug-2003 : Test traversal listener & extract a shared superclass (BN);
+ *
+ */
+package org.jgrapht.traverse;
+
+import org.jgrapht.*;
+import org.jgrapht.event.ConnectedComponentTraversalEvent;
+import org.jgrapht.event.EdgeTraversalEvent;
+import org.jgrapht.event.TraversalListener;
+import org.jgrapht.event.VertexTraversalEvent;
+import org.jgrapht.graph.*;
+
+
+/**
+ * A basis for testing {@link org.jgrapht.traverse.BreadthFirstIterator}
+ * and {@link org.jgrapht.traverse.DepthFirstIterator} classes.
+ *
+ * @author Liviu Rau
+ * @since Jul 30, 2003
+ */
+public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
+{
+
+    //~ Instance fields -------------------------------------------------------
+
+    StringBuffer result;
+
+    //~ Methods ---------------------------------------------------------------
+
+    /**
+     * .
+     */
+    public void testDirectedGraph()
+    {
+        result = new StringBuffer();
+
+        DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
+
+        AbstractGraphIterator<String,DefaultEdge> iterator = createIterator(graph, "1");
+        iterator.addTraversalListener(new MyTraversalListener());
+
+        while (iterator.hasNext()) {
+            result.append(iterator.next());
+
+            if (iterator.hasNext()) {
+                result.append(',');
+            }
+        }
+
+        assertEquals(getExpectedStr2(), result.toString());
+    }
+
+    abstract String getExpectedStr1();
+
+    abstract String getExpectedStr2();
+
+    DirectedGraph<String, DefaultEdge> createDirectedGraph()
+    {
+        DirectedGraph<String, DefaultEdge> graph =
+            new DefaultDirectedWeightedGraph<String, DefaultEdge>(
+                DefaultWeightedEdge.class);
+
+        //
+        String v1 = "1";
+        String v2 = "2";
+        String v3 = "3";
+        String v4 = "4";
+        String v5 = "5";
+        String v6 = "6";
+        String v7 = "7";
+        String v8 = "8";
+        String v9 = "9";
+
+        graph.addVertex(v1);
+        graph.addVertex(v2);
+        graph.addVertex("3");
+        graph.addVertex("4");
+        graph.addVertex("5");
+        graph.addVertex("6");
+        graph.addVertex("7");
+        graph.addVertex("8");
+        graph.addVertex("9");
+
+        graph.addVertex("orphan");
+
+        // NOTE:  set weights on some of the edges to test traversals like
+        // ClosestFirstIterator where it matters.  For other traversals, it
+        // will be ignored.  Rely on the default edge weight being 1.
+        graph.addEdge(v1, v2);
+        Graphs.addEdge(graph, v1, v3, 100);
+        Graphs.addEdge(graph, v2, v4, 1000);
+        graph.addEdge(v3, v5);
+        Graphs.addEdge(graph, v3, v6, 100);
+        graph.addEdge(v5, v6);
+        Graphs.addEdge(graph, v5, v7, 200);
+        graph.addEdge(v6, v1);
+        Graphs.addEdge(graph, v7, v8, 100);
+        graph.addEdge(v7, v9);
+        graph.addEdge(v8, v2);
+        graph.addEdge(v9, v4);
+
+        return graph;
+    }
+
+    abstract AbstractGraphIterator<String, DefaultEdge> createIterator(
+        DirectedGraph<String, DefaultEdge> g,
+        String startVertex);
+
+    //~ Inner Classes ---------------------------------------------------------
+
+    /**
+     * Internal traversal listener.
+     *
+     * @author Barak Naveh
+     */
+    private class MyTraversalListener implements TraversalListener<String,DefaultEdge>
+    {
+        private int componentNumber = 0;
+        private int numComponentVertices = 0;
+
+        /**
+         * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
+         */
+        public void connectedComponentFinished(
+            ConnectedComponentTraversalEvent e)
+        {
+            switch (componentNumber) {
+            case 1:
+                assertEquals(getExpectedStr1(), result.toString());
+                assertEquals(9, numComponentVertices);
+
+                break;
+
+            case 2:
+                assertEquals(getExpectedStr2(), result.toString());
+                assertEquals(1, numComponentVertices);
+
+                break;
+
+            default:
+                assertFalse();
+
+                break;
+            }
+
+            numComponentVertices = 0;
+        }
+
+        /**
+         * @see TraversalListener#connectedComponentStarted(ConnectedComponentTraversalEvent)
+         */
+        public void connectedComponentStarted(
+            ConnectedComponentTraversalEvent e)
+        {
+            componentNumber++;
+        }
+
+        /**
+         * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
+         */
+        public void edgeTraversed(EdgeTraversalEvent<String,DefaultEdge> e)
+        {
+            // to be tested...
+        }
+
+        /**
+         * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
+         */
+        public void vertexTraversed(VertexTraversalEvent<String> e)
+        {
+            numComponentVertices++;
+        }
+    }
+}
