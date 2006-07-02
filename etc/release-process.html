@@ -9,7 +9,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Lead:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,7 @@
 /* ~~~~~~~~~~~~~
  * release-process.html
  * ~~~~~~~~~~~~~
- * (C) Copyright 2005, by Barak Naveh and Contributors.
+ * (C) Copyright 2005-2006, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
@@ -136,7 +136,7 @@
 
 <ol>
 
-<li>Update the new version number and CVS tag in the build.xml file.
+<li>Update the new version number and SVN tag in the build.xml file.
   
 <li>Review the README.html and update: 
 <ul>
@@ -164,19 +164,18 @@ code coverage.
 
 <li>Run jalopy to reformat the code.  
 
-<li>Commit all work to CVS.
+<li>Commit all work to SVN.
 
-<li>Add a CVS tag using the convention: ver_x_y_z (e.g., the tag ver_0_5_1
-denotes Version 0.5.1).
+<li>Add a SVN tag using the convention: ver_x_y_z (e.g., the tag ver_0_5_1
+denotes Version 0.5.1).  The command for this is something like
+svn copy https://svn.sourceforge.net/svnroot/jgrapht/trunk \
+         https://svn.sourceforge.net/svnroot/jgrapht/tags/ver_0_7_0 \
+         -m "Tag for the 0.7.0 release of JGraphT"
 
 <li>
-At this stage, the release is complete in CVS and only a distribution
-is needed to be built.  The distribution is built from CVS to ensure
-that whatever released is reproducible later.  CAUTION: the build
-command below checks out from the SF pserver, which is used for
-observers only and takes about 24 hours to update after committing to
-the developer CVS.  Wait for SF to be updated before proceeding (the
-new tag will appear in browse CVS).
+At this stage, the release is complete in SVN and only a distribution
+is needed to be built.  The distribution is built from SVN to ensure
+that whatever released is reproducible later.
 
 <li>To build the release, you need to have extra software installed to
 create and test the JRE 1.4 backport.  In particular, you need JRE 1.4
@@ -184,14 +183,14 @@ and <a href="http://retroweaver.sf.net">Retroweaver</a>.  To tell the
 build where these are installed, follow the instructions in
 etc/build.properties.template.
 
-<li>The ant build.xml has a hack that allows specifying a CVS tag.
+<li>The ant build.xml has a hack that allows specifying a SVN tag.
 You just need to invoke:
 
 <pre><code>
-      ant -Dcvstag=ver_0_5_1 release
+      ant -Dsvntag=ver_0_5_1 release
 </code></pre>
 
-It will checkout from CVS the tagged version 0.5.1, and build a
+It will checkout from SVN the tagged version 0.5.1, and build a
 distribution for it.  This will fail unless you have set up your build
 to include the retroweaver-based backport.
 
@@ -202,7 +201,7 @@ to include the retroweaver-based backport.
 <li>Update the website with links to the new downloads, version numbers,
 etc.  This involves uploading web/index.html (at least).
 
-<li>Announce the new version in the mailing lists and forum, and using
+<li>Announce the new version in the mailing lists, wiki, and forum, and using
 the File Release System notification feature.
 
 </ol>

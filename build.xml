@@ -46,7 +46,7 @@
  * 31-Jul-2005 : Added support for retroweaver (JVS);
  * 23-Apr-2006 : Renamed package to org.jgrapht (JVS);
  * 25-Jun-2006 : Fold experimental into main build (JVS);
- * 01-Jul-2006 : Remove checkstyle (JVS);
+ * 01-Jul-2006 : Remove checkstyle, switch from CVS to SVN (JVS);
  *
  */
 -->
@@ -76,30 +76,32 @@
          later definitions in this file -->
     <property file="etc/build.properties"/>
 
-    <property name="latest.version.name"  value="0.7.0alpha" />
+    <property name="latest.version.name"  value="0.7.0" />
     
-    <!-- CVS tags and their respective version names -->
+    <!-- SVN tags and their respective version names -->
+    <property name="ver_0_7_1.name"       value="0.7.1" />
+    <property name="ver_0_7_0.name"       value="0.7.0" />
     <property name="ver_0_6_0.name"       value="0.6.0" />
     <property name="ver_0_5_3.name"       value="0.5.3" />
     <property name="ver_0_5_2.name"       value="0.5.2" />
 
     <!-- Initialization. -->
-    <target name="init.local" unless="cvstag">
+    <target name="init.local" unless="svntag">
         <property name="checkout.dir"     value="checkout" />
         <property name="project.version"  value="${latest.version.name}-local" />
     </target>
     
-    <target name="init.cvs" if="cvstag">
-        <property name="checkout.dir"     value="${cvstag}" />
-        <!-- A dereferencing hack to set project.version=${${cvstag}.name} -->
+    <target name="init.svn" if="svntag">
+        <property name="checkout.dir"     value="${svntag}" />
+        <!-- A dereferencing hack to set project.version=${${svntag}.name} -->
         <!-- To be simplified if future Ant versions will support it directly -->
-        <echo file="project.version.tmp">project.version=$${${cvstag}.name}</echo>
+        <echo file="project.version.tmp">project.version=$${${svntag}.name}</echo>
         <property file="project.version.tmp" />
         <delete file="project.version.tmp" />
-        <!-- project.version now has the dereferenced value of ${${cvstag}.name} -->
+        <!-- project.version now has the dereferenced value of ${${svntag}.name} -->
     </target>
 
-    <target name="init" depends="init.local,init.cvs">
+    <target name="init" depends="init.local,init.svn">
         <echo level="info">JAVA_HOME=${java.home}</echo>
         <property name="project.name"     value="jgrapht" />
         <property name="project.prefix"   value="${project.name}-${project.version}" />
@@ -152,6 +154,12 @@
             <pathelement location="${build.dir}"/>
         </path>
         <property name="testbuild.classpath" refid="testbuild.classpath"/>
+
+        <!-- Classpath for running svn task. -->
+        <path id="svn.classpath">
+            <pathelement location="${lib.dir}/svnant.jar"/>
+        </path>
+        <property name="svn.classpath" refid="svn.classpath"/>
 
         <!-- Classpath for running tests. -->
         <path id="test.classpath">
@@ -507,9 +515,9 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
     </target>
 
 
-    <!-- Creates a release according to a user-defined CVS tag -->
-    <target name="release" depends="init,checkout,cvstag.missing" if="cvstag"
-            description="Checks out and builds a release according to a CVS tag">
+    <!-- Creates a release according to a user-defined SVN tag -->
+    <target name="release" depends="init,checkout,svntag.missing" if="svntag"
+            description="Checks out and builds a release according to a SVN tag">
             
         <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
@@ -517,36 +525,36 @@ See http://ant.apache.org/manual/OptionalTasks/junit.html for more.
         <fail unless="jre1.4.dir"/>
         <ant dir="${checkout.dir}" antfile="${build.file.name}" 
              target="all" inheritall="false" inheritrefs="false">
-            <property name="cvstag" value="${cvstag}"/>
+            <property name="svntag" value="${svntag}"/>
         </ant>
     </target>
 
 
-    <!-- Checks out a snapshot according to a user-defined CVS tag -->
-    <target name="checkout" depends="init,cvstag.missing" if="cvstag"
-            description="Checks out a snapshot from CVS according to a tag">
-        <echo level="info">Checking out files of CVS tag: ${cvstag}</echo>
+    <!-- Checks out a snapshot according to a user-defined SVN tag -->
+    <target name="checkout" depends="init,svntag.missing" if="svntag"
+            description="Checks out a snapshot from SVN according to a tag">
+        <taskdef resource="svntask.properties" classpathref="svn.classpath"/>
+        <echo level="info">Checking out files of SVN tag: ${svntag}</echo>
         
-        <property name="project.cvsroot" 
-                  value=":pserver:anonymous@cvs.sourceforge.net:/cvsroot/jgrapht" />
-        <property name="cvspass" value=".cvspass" />
-
+        <property name="project.svnroot" 
+                  value="https://svn.sourceforge.net/svnroot/jgrapht" />
         <delete dir="${checkout.dir}" />
         <mkdir  dir="${checkout.dir}" />
 
-        <echo file="${cvspass}" append="false">${project.cvsroot} A
+        <echo file="${svnpass}" append="false">${project.svnroot} A
         </echo>
 
-        <cvs command="checkout" cvsroot="${project.cvsroot}" package="."
-             tag="${cvstag}" dest="${checkout.dir}" passfile="${cvspass}" />
+        <svn username="guest" password="">
+          <checkout url="${project.svnroot}/tags/${svntag}" destPath="${checkout.dir}"/>
+        </svn>
        
-        <delete file="${cvspass}" />      
+        <delete file="${svnpass}" />      
     </target>
 
 
-    <!-- Outputs an error message if CVS tag is unspecified -->
-    <target name="cvstag.missing" unless="cvstag">
-        <echo level="error">Variable $${cvstag} must be specified for selected target.</echo>
+    <!-- Outputs an error message if SVN tag is unspecified -->
+    <target name="svntag.missing" unless="svntag">
+        <echo level="error">Variable $${svntag} must be specified for selected target.</echo>
     </target>
 
 </project>
