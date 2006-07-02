@@ -38,7 +38,6 @@
 package org.jgrapht.experimental.isomorphism.comparators;
 
 import org.jgrapht.*;
-import org.jgrapht.graph.*;
 import org.jgrapht.experimental.equivalence.*;
 
 
@@ -71,7 +70,8 @@ public class DirectedEdgeWeightOddEvenComparator
      * org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceCompare(java.lang.Object,
      * java.lang.Object, java.lang.Object, java.lang.Object)
      */
-    public boolean equivalenceCompare(
+    @SuppressWarnings("unchecked")
+	public boolean equivalenceCompare(
         Object arg1,
         Object arg2,
         Object context1,
@@ -93,7 +93,8 @@ public class DirectedEdgeWeightOddEvenComparator
      * org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      * java.lang.Object)
      */
-    public int equivalenceHashcode(Object arg1, Object context)
+    @SuppressWarnings("unchecked")
+	public int equivalenceHashcode(Object arg1, Object context)
     {
         int int1 = (int) graph.getEdgeWeight(arg1);
         return int1 % 2;

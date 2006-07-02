@@ -52,9 +52,9 @@ public class PrefetchIteratorTest extends TestCase
                 
             public IterateFrom1To99()
                 {
-                    nextSupplier = new PrefetchIterator(new PrefetchIterator.NextElementFunctor(){
+                    nextSupplier = new PrefetchIterator<Integer>(new PrefetchIterator.NextElementFunctor<Integer>(){
                         
-                        public Object nextElement() throws NoSuchElementException {
+                        public Integer nextElement() throws NoSuchElementException {
                             counter++;
                             if (counter>=100)
                                 throw new NoSuchElementException();

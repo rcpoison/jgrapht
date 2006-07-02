@@ -70,7 +70,7 @@ public class VertexCoversTest extends TestCase
     public void testFind2ApproximationCover()
     {
         for (int i = 0; i < TEST_REPEATS; i++) {
-            Graph g = createRandomGraph();
+            Graph<Integer,DefaultEdge> g = createRandomGraph();
             assertTrue(
                 isCover(VertexCovers.find2ApproximationCover(g), g));
         }
@@ -82,8 +82,8 @@ public class VertexCoversTest extends TestCase
     public void testFindGreedyCover()
     {
         for (int i = 0; i < TEST_REPEATS; i++) {
-            Graph g = createRandomGraph();
-            Set c =
+            Graph<Integer,DefaultEdge> g = createRandomGraph();
+            Set<Integer> c =
                 VertexCovers.findGreedyCover(
                     Graphs.undirectedGraph(g));
             assertTrue(isCover(c, g));
@@ -101,11 +101,12 @@ public class VertexCoversTest extends TestCase
      *
      * @return
      */
-    private boolean isCover(Set vertexSet, Graph g)
+    private boolean isCover(
+        Set<Integer> vertexSet, Graph<Integer,DefaultEdge> g)
     {
-        Set uncoveredEdges = new HashSet(g.edgeSet());
+        Set<DefaultEdge> uncoveredEdges = new HashSet<DefaultEdge>(g.edgeSet());
 
-        for (Iterator i = vertexSet.iterator(); i.hasNext();) {
+        for (Iterator<Integer> i = vertexSet.iterator(); i.hasNext();) {
             uncoveredEdges.removeAll(g.edgesOf(i.next()));
         }
 
@@ -117,17 +118,18 @@ public class VertexCoversTest extends TestCase
      *
      * @return
      */
-    private Graph createRandomGraph()
+    private Graph<Integer,DefaultEdge> createRandomGraph()
     {
         // TODO: move random graph generator to be under GraphGenerator
         // framework.
-        Pseudograph g = new Pseudograph(DefaultEdge.class);
+        Pseudograph<Integer,DefaultEdge> g =
+            new Pseudograph<Integer,DefaultEdge>(DefaultEdge.class);
 
         for (int i = 0; i < TEST_GRAPH_SIZE; i++) {
             g.addVertex(new Integer(i));
         }
 
-        Vector vertices = new Vector(g.vertexSet());
+        List<Integer> vertices = new ArrayList<Integer>(g.vertexSet());
 
         // join every vertex with a random number of other vertices
         for (int source = 0; source < TEST_GRAPH_SIZE; source++) {

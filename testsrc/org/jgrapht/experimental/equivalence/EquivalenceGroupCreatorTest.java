@@ -116,7 +116,8 @@ public class EquivalenceGroupCreatorTest extends TestCase
             
     }
 
-    public void testComparatorChainSameComparatorTwice()
+    @SuppressWarnings("unchecked")
+	public void testComparatorChainSameComparatorTwice()
     {
         EquivalenceComparatorChain comparatorChain =
             new EquivalenceComparatorChainBase(new OddEvenGroupComparator());
@@ -130,7 +131,8 @@ public class EquivalenceGroupCreatorTest extends TestCase
             
     }
 
-    private void testOneComparator(
+    @SuppressWarnings("unchecked")
+	private void testOneComparator(
         EquivalenceComparator comparator,
         int expectedNumOfGroups)
    

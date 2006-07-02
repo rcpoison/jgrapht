@@ -57,10 +57,10 @@ public class SubgraphTest extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    private String v1 = new String("v1");
-    private String v2 = new String("v2");
-    private String v3 = new String("v3");
-    private String v4 = new String("v4");
+    private String v1 = "v1";
+    private String v2 = "v2";
+    private String v3 = "v3";
+    private String v4 = "v4";
 
     //~ Constructors ----------------------------------------------------------
 

@@ -65,12 +65,12 @@ public abstract class ShortestPathTestCase extends TestCase
 
     //~ Instance fields -------------------------------------------------------
 
-    DefaultEdge e12;
-    DefaultEdge e13;
-    DefaultEdge e15;
-    DefaultEdge e24;
-    DefaultEdge e34;
-    DefaultEdge e45;
+    DefaultWeightedEdge e12;
+    DefaultWeightedEdge e13;
+    DefaultWeightedEdge e15;
+    DefaultWeightedEdge e24;
+    DefaultWeightedEdge e34;
+    DefaultWeightedEdge e45;
 
     //~ Methods ---------------------------------------------------------------
 
@@ -80,7 +80,7 @@ public abstract class ShortestPathTestCase extends TestCase
     public void testPathBetween()
     {
         List path;
-        Graph g = create();
+        Graph<String,DefaultWeightedEdge> g = create();
 
         path = findPathBetween(g, V1, V2);
         assertEquals(Arrays.asList(new DefaultEdge [] { e12 }), path);
@@ -101,25 +101,28 @@ public abstract class ShortestPathTestCase extends TestCase
                 }), path);
     }
 
-    protected abstract List findPathBetween(Graph g, String src, String dest);
+    protected abstract List findPathBetween(
+        Graph<String,DefaultWeightedEdge> g, String src, String dest);
 
-    protected Graph create()
+    protected Graph<String,DefaultWeightedEdge> create()
     {
         return createWithBias(false);
     }
     
-    protected Graph createWithBias(boolean negate)
+    protected Graph<String,DefaultWeightedEdge> createWithBias(boolean negate)
     {
-        Graph<String,DefaultEdge> g;
+        Graph<String,DefaultWeightedEdge> g;
         double bias = 1;
         if (negate) {
             // negative-weight edges are being tested, so only a directed graph
             // makes sense
-            g = new SimpleDirectedWeightedGraph(DefaultWeightedEdge.class);
+            g = new SimpleDirectedWeightedGraph<String,DefaultWeightedEdge>(
+                DefaultWeightedEdge.class);
             bias = -1;
         } else {
             // by default, use an undirected graph
-            g = new SimpleWeightedGraph(DefaultWeightedEdge.class);
+            g = new SimpleWeightedGraph<String,DefaultWeightedEdge>(
+                DefaultWeightedEdge.class);
         }
 
         g.addVertex(V1);

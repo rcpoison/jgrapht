@@ -37,6 +37,8 @@
  */
 package org.jgrapht.experimental.permutation;
 
+import org.jgrapht.util.*;
+
 import junit.framework.*;
 
 
@@ -77,7 +79,9 @@ public class CompoundPermutationIterTest extends TestCase
         while (this.complexPerm.hasNext()) {
             int [] resultArray = this.complexPerm.getNext();
 
-            // System.out.println(ArraysUtility.toString(resultArray));
+            if (false) {
+                System.out.println(ArrayUtil.toString(resultArray));
+            }
             counter++;
         }
 
@@ -98,7 +102,9 @@ public class CompoundPermutationIterTest extends TestCase
         while (this.complexPerm.hasNext()) {
             int [] resultArray = this.complexPerm.getNext();
 
-            // System.out.println(ArraysUtility.toString(resultArray));
+            if (false) {
+                System.out.println(ArrayUtil.toString(resultArray));
+            }
             counter++;
         }
 

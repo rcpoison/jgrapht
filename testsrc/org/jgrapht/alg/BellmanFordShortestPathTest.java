@@ -56,10 +56,10 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
      */
     public void testConstructor()
     {
-        BellmanFordShortestPath path;
-        Graph g = create();
+        BellmanFordShortestPath<String,DefaultWeightedEdge> path;
+        Graph<String,DefaultWeightedEdge> g = create();
 
-        path = new BellmanFordShortestPath(g, V3);
+        path = new BellmanFordShortestPath<String,DefaultWeightedEdge>(g, V3);
 
         // find best path with no constraint on number of hops
         assertEquals(
@@ -70,7 +70,8 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
         assertEquals(15.0, path.getCost(V5), 0);
 
         // find best path within 2 hops (less than optimal)
-        path = new BellmanFordShortestPath(g, V3, 2);
+        path = new BellmanFordShortestPath<String,DefaultWeightedEdge>(
+            g, V3, 2);
         assertEquals(
             Arrays.asList(new DefaultEdge [] {
                 e34, e45
@@ -79,18 +80,20 @@ public class BellmanFordShortestPathTest extends ShortestPathTestCase
         assertEquals(25.0, path.getCost(V5), 0);
 
         // find best path within 1 hop (doesn't exist!)
-        path = new BellmanFordShortestPath(g, V3, 1);
+        path = new BellmanFordShortestPath<String,DefaultWeightedEdge>(
+            g, V3, 1);
         assertNull(path.getPathEdgeList(V5));
     }
 
-    protected List findPathBetween(Graph g, String src, String dest)
+    protected List findPathBetween(
+        Graph<String,DefaultWeightedEdge> g, String src, String dest)
     {
         return BellmanFordShortestPath.findPathBetween(g, src, dest);
     }
 
     public void testWithNegativeEdges()
     {
-        Graph g = createWithBias(true);
+        Graph<String,DefaultWeightedEdge> g = createWithBias(true);
 
         List path;
         

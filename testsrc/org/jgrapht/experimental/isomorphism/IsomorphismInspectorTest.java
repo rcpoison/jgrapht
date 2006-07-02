@@ -90,7 +90,8 @@ public class IsomorphismInspectorTest extends TestCase
         assertIsomorphic(graphs, shouldTheyBeIsomorphic, null, null);
     }
 
-    private void assertIsomorphic(
+    @SuppressWarnings("unchecked")
+	private void assertIsomorphic(
         Graph<Integer,DefaultEdge> [] graphs,
         boolean shouldTheyBeIsomorphic,
         EquivalenceComparator vertexChecker,
@@ -109,17 +110,17 @@ public class IsomorphismInspectorTest extends TestCase
                 g2,
                 vertexChecker,
                 edgeChecker);
-        IsomorphismRelation isioResult;
         int counter = 0;
         while (iso.hasNext()) {
-            isioResult = (IsomorphismRelation) iso.next();
+            IsomorphismRelation isioResult = (IsomorphismRelation) iso.next();
 
-            // if (counter==0)
-            // {
-            // System.out.println("Graphs are isomorphic. Iterating over all
-            // options:");
-            // }
-            // System.out.println(counter+" : "+isioResult);
+            if (false) {
+                if (counter==0)
+                {
+                    System.out.println("Graphs are isomorphic. Iterating over all options:");
+                }
+                System.out.println(counter+" : "+isioResult);
+            }
             counter++;
         }
 
@@ -140,7 +141,8 @@ public class IsomorphismInspectorTest extends TestCase
         }
     }
 
-    private void checkRelation(
+    @SuppressWarnings("unchecked")
+	private void checkRelation(
         Graph<Integer,DefaultEdge> [] graphs,
         EquivalenceComparator vertexChecker,
         EquivalenceComparator edgeChecker)
@@ -155,7 +157,6 @@ public class IsomorphismInspectorTest extends TestCase
                 vertexChecker,
                 edgeChecker);
         IsomorphismRelation<Integer,DefaultEdge> isoResult;
-        int counter = 0;
         if (iso.hasNext()) {
             isoResult = (IsomorphismRelation) iso.next();
 
@@ -165,7 +166,9 @@ public class IsomorphismInspectorTest extends TestCase
             {
                 Integer v1 = iter.next();
                 Integer v2 = isoResult.getVertexCorrespondence(v1, true);
-                // System.out.println("Vertex relation "+v1+" to " +v2);
+                if (false) {
+                    System.out.println("Vertex relation "+v1+" to " +v2);
+                }
             }
             Set<DefaultEdge> edgeSet = g1.edgeSet();
             for (Iterator<DefaultEdge> iter = edgeSet.iterator();
@@ -173,7 +176,9 @@ public class IsomorphismInspectorTest extends TestCase
             {
                 DefaultEdge e1 = iter.next();
                 DefaultEdge e2 = isoResult.getEdgeCorrespondence(e1, true);
-                // System.out.println("Vertex relation "+e1+" to " +e2);
+                if (false) {
+                    System.out.println("Vertex relation "+e1+" to " +e2);
+                }
             }
 
             // if (counter==0)
@@ -186,7 +191,8 @@ public class IsomorphismInspectorTest extends TestCase
         }
     }
 
-    public void testWheelGraphAddRemoveParts()
+    @SuppressWarnings("unchecked")
+	public void testWheelGraphAddRemoveParts()
     {
         final int NUM_OF_VERTEXES_IN_WHEEL = 6;
         final int FIRST_INTEGER_FOR_G2 = 13;
@@ -229,7 +235,8 @@ public class IsomorphismInspectorTest extends TestCase
             }, false);
     }
 
-    public void testLinear4vertexIsomorphicGraph()
+    @SuppressWarnings("unchecked")
+	public void testLinear4vertexIsomorphicGraph()
     {
         Graph<Integer,DefaultEdge>
             g1 = new DefaultDirectedGraph<Integer,DefaultEdge>(
@@ -258,7 +265,8 @@ public class IsomorphismInspectorTest extends TestCase
      * 3-->4-->5-->6 The eq-group-check is if the number is even or odd. So, g1
      * and g3 are isomorphic. g2 is not isomorphic to either of them.
      */
-    public void testLinear4vertexNonIsomorphicCauseOfVertexEqGroup()
+    @SuppressWarnings("unchecked")
+	public void testLinear4vertexNonIsomorphicCauseOfVertexEqGroup()
     {
         LinearGraphGenerator<Integer,DefaultEdge>
             gen4 = new LinearGraphGenerator<Integer,DefaultEdge>(4);
@@ -317,7 +325,8 @@ public class IsomorphismInspectorTest extends TestCase
      * @author Assaf
      * @since Aug 12, 2005
      */
-    public void testEdgeComparator()
+    @SuppressWarnings("unchecked")
+	public void testEdgeComparator()
     {
         int LINEAR_GRAPH_VERTEX_NUM = 4;
         Graph [] graphsArray = new DirectedGraph [3];
@@ -395,7 +404,8 @@ public class IsomorphismInspectorTest extends TestCase
             edgeEqChecker);
     }
 
-    private void assertIsomorphicStopAfterFirstMatch(
+    @SuppressWarnings("unchecked")
+	private void assertIsomorphicStopAfterFirstMatch(
         Graph [] graphs,
         boolean assertActive,
         boolean shouldTheyBeIsomorphic,
@@ -417,8 +427,6 @@ public class IsomorphismInspectorTest extends TestCase
                 g2,
                 vertexChecker,
                 edgeChecker);
-        IsomorphismRelation isioResult;
-        int counter = 0;
         boolean isoResult = iso.isIsomorphic();
         if (isoResult) {
             System.out.println("Graphs are isomorphic. ");
@@ -448,7 +456,8 @@ public class IsomorphismInspectorTest extends TestCase
      * make it work. It shows output and not assertions, so it cannot be used
      * by automatic tests.
      */
-    public void performanceTestOnRandomGraphs()
+    @SuppressWarnings("unchecked")
+	public void performanceTestOnRandomGraphs()
         throws Exception
     {
         final int [] numOfVertexesArray =

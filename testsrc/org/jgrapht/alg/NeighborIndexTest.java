@@ -54,20 +54,22 @@ public class NeighborIndexTest extends TestCase
 
     //~ Static fields/initializers --------------------------------------------
 
-    private static final String V1 = new String("v1");
-    private static final String V2 = new String("v2");
-    private static final String V3 = new String("v3");
+    private static final String V1 = "v1";
+    private static final String V2 = "v2";
+    private static final String V3 = "v3";
     
     public void testNeighborSet()
     {
-        ListenableUndirectedGraph g = new ListenableUndirectedGraph(
-            DefaultEdge.class);
+        ListenableUndirectedGraph<String,DefaultEdge> g =
+            new ListenableUndirectedGraph<String,DefaultEdge>(
+                DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 
         g.addEdge(V1, V2);
 
-        NeighborIndex index = new NeighborIndex(g);
+        NeighborIndex<String,DefaultEdge> index =
+            new NeighborIndex<String,DefaultEdge>(g);
         g.addGraphListener(index);
 
         Set neighbors = index.neighborsOf(V1);
@@ -93,14 +95,16 @@ public class NeighborIndexTest extends TestCase
 
     public void testDirectedNeighborSet()
     {
-        ListenableDirectedGraph g = new ListenableDirectedGraph(
-            DefaultEdge.class);
+        ListenableDirectedGraph<String,DefaultEdge> g =
+            new ListenableDirectedGraph<String,DefaultEdge>(
+                DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 
         g.addEdge(V1, V2);
 
-        DirectedNeighborIndex index = new DirectedNeighborIndex(g);
+        DirectedNeighborIndex<String,DefaultEdge> index =
+            new DirectedNeighborIndex<String,DefaultEdge>(g);
         g.addGraphListener(index);
 
         Set p = index.predecessorsOf(V1);

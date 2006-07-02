@@ -61,10 +61,11 @@ public class DijkstraShortestPathTest extends ShortestPathTestCase
      */
     public void testConstructor()
     {
-        DijkstraShortestPath path;
-        Graph g = create();
+        DijkstraShortestPath<String,DefaultWeightedEdge> path;
+        Graph<String,DefaultWeightedEdge> g = create();
 
-        path = new DijkstraShortestPath(g, V3, V4, Double.POSITIVE_INFINITY);
+        path = new DijkstraShortestPath<String,DefaultWeightedEdge>(
+            g, V3, V4, Double.POSITIVE_INFINITY);
         assertEquals(
             Arrays.asList(new DefaultEdge [] {
                     e13, e12, e24
@@ -72,12 +73,14 @@ public class DijkstraShortestPathTest extends ShortestPathTestCase
             path.getPathEdgeList());
         assertEquals(10.0, path.getPathLength(), 0);
 
-        path = new DijkstraShortestPath(g, V3, V4, 7);
+        path = new DijkstraShortestPath<String,DefaultWeightedEdge>(
+            g, V3, V4, 7);
         assertNull(path.getPathEdgeList());
         assertEquals(Double.POSITIVE_INFINITY, path.getPathLength(), 0);
     }
 
-    protected List findPathBetween(Graph g, String src, String dest)
+    protected List findPathBetween(
+        Graph<String,DefaultWeightedEdge> g, String src, String dest)
     {
         return DijkstraShortestPath.findPathBetween(g, src, dest);
     }

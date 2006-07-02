@@ -62,7 +62,7 @@ import com.touchgraph.graphlayout.interaction.ZoomScroll;
  *   
  * @author canderson
  */
-public class TouchgraphPanel extends GLPanel
+public class TouchgraphPanel<V,E> extends GLPanel
 {
     private Color defaultBackColor = new Color(0x01,0x11,0x44);
     private Color defaultBorderBackColor = new Color(0x02,0x35,0x81);
@@ -76,7 +76,7 @@ public class TouchgraphPanel extends GLPanel
     /**
      * the JGraphT graph we are displaying
      */
-    Graph graph;
+    Graph<V,E> graph;
 
     /**
      * are self-references allowed? They will not show up in TouchGraph unless
@@ -87,7 +87,7 @@ public class TouchgraphPanel extends GLPanel
     // =================
 
     /**constructor*/
-    public TouchgraphPanel(Graph graph, boolean selfReferencesAllowed)
+    public TouchgraphPanel(Graph<V,E> graph, boolean selfReferencesAllowed)
     {
         this.graph = graph;
         this.selfReferencesAllowed = selfReferencesAllowed;
@@ -141,7 +141,7 @@ public class TouchgraphPanel extends GLPanel
                 /*
                  * Add users graph
                  */
-                TouchgraphConverter converter = new TouchgraphConverter();
+                TouchgraphConverter<V,E> converter = new TouchgraphConverter<V,E>();
                 Node n = (Node) converter.convertToTouchGraph(this.graph,
                         tgPanel, this.selfReferencesAllowed);
                 getHVScroll().slowScrollToCenter(n);

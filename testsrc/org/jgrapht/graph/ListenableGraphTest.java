@@ -87,8 +87,8 @@ public class ListenableGraphTest extends TestCase
         GraphListener<Object, DefaultEdge> listener = new MyGraphListner();
         g.addGraphListener(listener);
 
-        String v1 = new String("v1");
-        String v2 = new String("v2");
+        String v1 = "v1";
+        String v2 = "v2";
 
         // test vertex notification
         g.addVertex(v1);
@@ -147,8 +147,8 @@ public class ListenableGraphTest extends TestCase
         VertexSetListener<Object> listener = new MyGraphListner();
         g.addVertexSetListener(listener);
 
-        String v1 = new String("v1");
-        String v2 = new String("v2");
+        String v1 = "v1";
+        String v2 = "v2";
 
         // test vertex notification
         g.addVertex(v1);

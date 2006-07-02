@@ -46,12 +46,14 @@ import com.touchgraph.graphlayout.Node;
 import com.touchgraph.graphlayout.TGException;
 import com.touchgraph.graphlayout.TGPanel;
 
+import java.util.*;
+
 /**
  * A Converter class that converts a JGraphT graph to that used in the TouchGraph library.
  *   
  * @author canderson
  */
-public class TouchgraphConverter
+public class TouchgraphConverter<V,E>
 {
     /**
      * Convert a JGraphT graph to the representation used in the TouchGraph library.
@@ -75,23 +77,23 @@ public class TouchgraphConverter
      * @return first node of the TouchGraph graph
      */
     @SuppressWarnings("unchecked")
-	public Node convertToTouchGraph(Graph graph, TGPanel tgPanel,boolean selfReferencesAllowed) throws TGException
+	public Node convertToTouchGraph(Graph<V,E> graph, TGPanel tgPanel,boolean selfReferencesAllowed) throws TGException
     {
-        Object[] jgtNodes = graph.vertexSet().toArray();
-        Node[] tgNodes = new Node[jgtNodes.length];
+        List<V> jgtNodes = new ArrayList<V>(graph.vertexSet());
+        Node[] tgNodes = new Node[jgtNodes.size()];
 
         // add all the nodes...
-        for (int i = 0; i < jgtNodes.length; i++) {
+        for (int i = 0; i < jgtNodes.size(); i++) {
             Node n;
-            if (jgtNodes[i] instanceof Node) {
+            if (jgtNodes.get(i) instanceof Node) {
                 
                 //if our JGraphT object was a touchGraph node, add it unaltered
-                n = (Node) jgtNodes[i];
+                n = (Node) jgtNodes.get(i);
                 
             } else {
                 
                 //create a TG Node with a "label" and "id" equals to the objects toString() value
-                n = new Node(jgtNodes[i].toString());
+                n = new Node(jgtNodes.get(i).toString());
             }
             //store this for edge-related creation below
             tgNodes[i] = n;
@@ -108,7 +110,7 @@ public class TouchgraphConverter
                 //subclass TG's Node class to show them
                 if (i != j || selfReferencesAllowed) {
                     
-                    if (graph.getEdge(jgtNodes[i], jgtNodes[j]) != null) {
+                    if (graph.getEdge(jgtNodes.get(i), jgtNodes.get(j)) != null) {
                         
                         //add TG directed edge from i to j
                         tgPanel.addEdge(new Edge(tgNodes[i], tgNodes[j]));

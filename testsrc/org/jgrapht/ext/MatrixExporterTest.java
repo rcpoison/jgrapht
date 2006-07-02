@@ -39,8 +39,6 @@
 package org.jgrapht.ext;
 
 import java.io.*;
-import java.util.*;
-
 import junit.framework.*;
 
 import org.jgrapht.*;
@@ -57,11 +55,9 @@ public class MatrixExporterTest extends TestCase
 
     //~ Static fields/initializers --------------------------------------------
 
-    private static final String V1 = new String("v1");
-    private static final String V2 = new String("v2");
-    private static final String V3 = new String("v3");
-    private static final String V4 = new String("v4");
-
+    private static final String V1 = "v1";
+    private static final String V2 = "v2";
+    private static final String V3 = "v3";
     private static final String LAPLACIAN =
         "1 1 2\n" +
         "1 2 -1\n" +
@@ -91,13 +87,15 @@ public class MatrixExporterTest extends TestCase
         "1 2 1\n" +
         "3 1 2\n";
 
-    private static final MatrixExporter exporter = new MatrixExporter();
+    private static final MatrixExporter<String,DefaultEdge> exporter =
+        new MatrixExporter<String,DefaultEdge>();
 
     //~ Methods ---------------------------------------------------------------
 
     public void testLaplacian()
     {
-        UndirectedGraph g = new SimpleGraph(DefaultEdge.class);
+        UndirectedGraph<String,DefaultEdge> g =
+            new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
         g.addEdge(V1, V2);
@@ -115,7 +113,8 @@ public class MatrixExporterTest extends TestCase
 
     public void testAdjacencyUndirected()
     {
-        UndirectedGraph g = new Pseudograph(DefaultEdge.class);
+        UndirectedGraph<String,DefaultEdge> g =
+            new Pseudograph<String,DefaultEdge>(DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
         g.addEdge(V1, V2);
@@ -131,7 +130,8 @@ public class MatrixExporterTest extends TestCase
 
     public void testAdjacencyDirected()
     {
-        DirectedGraph g = new DirectedMultigraph(DefaultEdge.class);
+        DirectedGraph<String,DefaultEdge> g =
+            new DirectedMultigraph<String,DefaultEdge>(DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
         g.addEdge(V1, V2);
