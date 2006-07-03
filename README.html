@@ -44,6 +44,7 @@
  * 06-Nov-2003 : Version 0.5.1 notes (BN);
  * 10-Feb-2004 : Version 0.5.2 notes (BN);
  * 16-Jul-2005 : Version 0.6.0 notes (JVS);
+ * 03-Jul-2006 : Version 0.7.0 notes (JVS);
  *
  */
 -->
@@ -147,7 +148,7 @@
   "mailto:barak_naveh@users.sourceforge.net">barak_naveh@users.sourceforge.net</a>)
   and Contributors.</p>
 
-  <p>(C) Copyright 2003-2005, by Barak Naveh and Contributors. All rights
+  <p>(C) Copyright 2003-2006, by Barak Naveh and Contributors. All rights
   reserved.</p>
 
   <p>Please address all contributions, suggestions, and inquiries to the
@@ -174,13 +175,13 @@
   <table border="1" cellspacing="0" cellpadding="5" style=
   "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
     <tr>
-      <td valign="top"><b><code>jgrapht-0.7.0.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-jdk1.5.jar</code></b></td>
 
       <td>the compiled JGraphT library for JRE 1.5</td>
     </tr>
 
     <tr>
-      <td valign="top"><b><code>jgrapht-0.7.0-jre1.4.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-jdk1.4.jar</code></b></td>
 
       <td>the backported JGraphT library for JRE 1.4</td>
     </tr>
@@ -261,9 +262,9 @@
       <td valign="top">Your application builds on JDK 1.5 and runs on
       JRE 1.5</td>
 
-      <td><code>jgrapht-0.7.0.jar</code></td>
+      <td><code>jgrapht-jdk1.5.jar</code></td>
 
-      <td><code>jgrapht-0.7.0.jar</code></td>
+      <td><code>jgrapht-jdk1.5.jar</code></td>
     </tr>
     <tr>
       <td valign="top">Your application builds on JDK 1.4 and runs on
@@ -271,16 +272,16 @@
  backported jar is type-erased so your application must use runtime
  casts as with 1.4 collection classes)</td>
 
-      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+      <td><code>jgrapht-jdk1.4.jar</code></td>
 
-      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+      <td><code>jgrapht-jdk1.4.jar</code></td>
     </tr>
     <tr>
       <td valign="top">Your application builds on JDK 1.5 but runs on JRE 1.4 via Retroweaver</td>
 
-      <td><code>jgrapht-0.7.0</code></td>
+      <td><code>jgrapht-jdk1.5.jar</code></td>
 
-      <td><code>jgrapht-0.7.0-jre1.4.jar</code></td>
+      <td><code>jgrapht-jdk1.4.jar</code></td>
     </tr>
   </table>
 
@@ -288,7 +289,8 @@
 
   <p>To help upgrading, JGraphT maintains a one-version-backwards
   compatibility. While this compatibility is not a hard promise, it is generally
-  respected. You can upgrade via:</p>
+  respected. (This policy was not followed for the jump from 0.6.0 to 0.7.0
+  due to the pervasive changes required for generics.) You can upgrade via:</p>
 
   <ul>
     <li>
@@ -312,7 +314,7 @@
 
   <p>A local copy of the Javadoc HTML files is included in this distribution.
   The latest version of these files is also available on-line at <a href=
-  "http://jgrapht.sourceforge.net/javadoc">http://jgrapht.sourceforge.net/javadoc</a>.</p>
+  "http://www.jgrapht.org/javadoc">http://www.jgrapht.org/javadoc</a>.</p>
 
   <h2>Dependencies</h2>
 
@@ -355,7 +357,7 @@
   <h2>Online Resources</h2>
 
   <p>The JGraphT website is at: <a href=
-  "http://jgrapht.sourceforge.net/">http://jgrapht.sourceforge.net</a>. You can
+  "http://www.jgrapht.org">http://www.jgrapht.org</a>. You can
   use this site to:</p>
 
   <ul>
@@ -376,22 +378,18 @@
   from it: others may fix bugs in your source files or may continue to enhance
   them.</p>
 
-  <p>If you particularly like the elegance of a certain part, don't be shy to
-  drop a compliment to its author - it's heartening (and it's free)! On the
-  other hand, if you think you can do better, let's see your source...</p>
-
   <h2><a name="history"></a>History</h2>
 
   <p>Changes to JGraphT in each version:</p>
 
   <ul>
-    <li><b>version 0.7.0alpha</b> (under development) : Upgraded to
+    <li><b>version 0.7.0</b> (July-2006) : Upgraded to
     JDK 1.5 (conversion provided by Christian Hammer with additional
-    work by Hartmut Benz).  Added (Directed)NeighborIndex and
+    work by Hartmut Benz and John Sichi).  Added (Directed)NeighborIndex and
     MatrixExport, contributed by Charles Fry.  Added BellmanFord,
     contributed by Guillaume Boulmier of France Telecom.
     Removed never-used LabeledElement.  Renamed package from
-    org._3pq.jgrapht to org.jgrapht.  Made breaking change to
+    org._3pq.jgrapht to org.jgrapht.  Made various breaking change to
     interfaces; edge collections are now Sets, not Lists.
     Added Touchgraph converter, contributed by Carl Anderson</li>
 
@@ -500,7 +498,7 @@
 
   <p>Regards,<br>
   <a href="mailto:barak_naveh@users.sourceforge.net">Barak Naveh</a><br>
-  JGraphT Project Founder</p>
+  JGraphT Project Creator</p>
 
   <p> </p>
   <hr noshade size="2" style=
