@@ -50,10 +50,10 @@ import org.jgrapht.graph.*;
 
 /**
  * Algorithms to find a vertex cover for a graph. A vertex cover is a set of
- * vertices that touches all the edges in the graph. The graph's vertex set is
- * a trivial cover. However, a <i>minimal</i> vertex set (or at least an
- * approximation for it) is usually desired. Finding a true minimal vertex
- * cover is an NP-Complete problem. For more on the vertex cover problem, see <a
+ * vertices that touches all the edges in the graph. The graph's vertex set is a
+ * trivial cover. However, a <i>minimal</i> vertex set (or at least an
+ * approximation for it) is usually desired. Finding a true minimal vertex cover
+ * is an NP-Complete problem. For more on the vertex cover problem, see <a
  * href="http://mathworld.wolfram.com/VertexCover.html">
  * http://mathworld.wolfram.com/VertexCover.html</a>
  *
@@ -110,14 +110,13 @@ public abstract class VertexCovers
 
     /**
      * Finds a greedy approximation for a minimal vertex cover of a specified
-     * graph. At each iteration, the algorithm picks the vertex with the
-     * highest degree and adds it to the cover, until all edges are covered.
+     * graph. At each iteration, the algorithm picks the vertex with the highest
+     * degree and adds it to the cover, until all edges are covered.
      *
      * <p>The algorithm works on undirected graphs, but can also work on
      * directed graphs when their edge-directions are ignored. To ignore edge
-     * directions you can use {@link
-     * org.jgrapht.Graphs#undirectedGraph(Graph)} or {@link
-     * org.jgrapht.graph.AsUndirectedGraph}.</p>
+     * directions you can use {@link org.jgrapht.Graphs#undirectedGraph(Graph)}
+     * or {@link org.jgrapht.graph.AsUndirectedGraph}.</p>
      *
      * @param g the graph for which vertex cover approximation is to be found.
      *
@@ -133,7 +132,8 @@ public abstract class VertexCovers
         UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
 
         // compare vertices in descending order of degree
-        VertexDegreeComparator<V, E> comp = new VertexDegreeComparator<V, E>(sg);
+        VertexDegreeComparator<V, E> comp =
+            new VertexDegreeComparator<V, E>(sg);
 
         // while G' != {}
         while (sg.edgeSet().size() > 0) {

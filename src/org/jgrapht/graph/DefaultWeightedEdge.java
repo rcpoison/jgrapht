@@ -41,17 +41,25 @@ package org.jgrapht.graph;
 
 import org.jgrapht.*;
 
+
 /**
- * A default implementation for edges in a {@link WeightedGraph}.
- * All access to the weight of an edge must go through the graph
- * interface, which is why this class doesn't expose any public methods.
+ * A default implementation for edges in a {@link WeightedGraph}. All access to
+ * the weight of an edge must go through the graph interface, which is why this
+ * class doesn't expose any public methods.
  *
  * @author John V. Sichi
  */
-public class DefaultWeightedEdge extends DefaultEdge
+public class DefaultWeightedEdge
+    extends DefaultEdge
 {
-	private static final long serialVersionUID = 229708706467350994L;
-	double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
+
+    //~ Static fields/initializers --------------------------------------------
+
+    private static final long serialVersionUID = 229708706467350994L;
+
+    //~ Instance fields -------------------------------------------------------
+
+    double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
 }
 
 // End DefaultWeightedEdge.java

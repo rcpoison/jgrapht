@@ -41,13 +41,13 @@ import java.util.*;
 
 
 /**
- * Utility class to help implement an iterator/enumerator in which the
- * hasNext() method needs to calculate the next elements ahead of time.
+ * Utility class to help implement an iterator/enumerator in which the hasNext()
+ * method needs to calculate the next elements ahead of time.
  *
  * <p>Many classes which implement an iterator face a common problem: if there
- * is no easy way to calculate hasNext() other than to call getNext(), then
- * they save the result for fetching in the next call to getNext(). This
- * utility helps in doing just that.
+ * is no easy way to calculate hasNext() other than to call getNext(), then they
+ * save the result for fetching in the next call to getNext(). This utility
+ * helps in doing just that.
  *
  * <p><b>Usage:</b> The new iterator class will hold this class as a member
  * variable and forward the hasNext() and next() to it. When creating an
@@ -86,7 +86,8 @@ import java.util.*;
  *
  * @author Assaf_Lehr
  */
-public class PrefetchIterator<E> implements Iterator<E>, Enumeration<E>
+public class PrefetchIterator<E>
+    implements Iterator<E>, Enumeration<E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -165,10 +166,10 @@ public class PrefetchIterator<E> implements Iterator<E>, Enumeration<E>
     } // method
 
     /**
-     * Tests whether the enumeration started as an empty one. It does not
-     * matter if it hasMoreElements() now, only at initialization time.
-     * Efficiency: if nextElements(), hasMoreElements() were never used, it
-     * activates the hasMoreElements() once. Else it is immediately(O(1))
+     * Tests whether the enumeration started as an empty one. It does not matter
+     * if it hasMoreElements() now, only at initialization time. Efficiency: if
+     * nextElements(), hasMoreElements() were never used, it activates the
+     * hasMoreElements() once. Else it is immediately(O(1))
      */
     public boolean isEnumerationStartedEmpty()
     {

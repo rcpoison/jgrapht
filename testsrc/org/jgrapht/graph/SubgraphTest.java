@@ -52,7 +52,8 @@ import org.jgrapht.*;
  * @author Michael Behrisch
  * @since Sep 21, 2004
  */
-public class SubgraphTest extends TestCase
+public class SubgraphTest
+    extends TestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -80,7 +81,8 @@ public class SubgraphTest extends TestCase
     public void testInducedSubgraphListener()
     {
         Graph<String, DefaultEdge> g = init(true);
-        Subgraph<String, DefaultEdge> sub = new Subgraph<String, DefaultEdge>(g, null);
+        Subgraph<String, DefaultEdge> sub =
+            new Subgraph<String, DefaultEdge>(g, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -97,7 +99,8 @@ public class SubgraphTest extends TestCase
     public void testSubgraph()
     {
         Graph<String, DefaultEdge> g = init(false);
-        Subgraph<String, DefaultEdge> sub = new Subgraph<String, DefaultEdge>(g, null, null);
+        Subgraph<String, DefaultEdge> sub =
+            new Subgraph<String, DefaultEdge>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -116,7 +119,11 @@ public class SubgraphTest extends TestCase
 
         vset.add(v2);
         vset.add(v3);
-        sub = new Subgraph<String, DefaultEdge>(g, vset, new HashSet<DefaultEdge>(g.getAllEdges(v1, v2)));
+        sub =
+            new Subgraph<String, DefaultEdge>(
+                g,
+                vset,
+                new HashSet<DefaultEdge>(g.getAllEdges(v1, v2)));
         assertEquals(vset, sub.vertexSet());
         assertEquals(1, sub.edgeSet().size());
     }
@@ -127,7 +134,8 @@ public class SubgraphTest extends TestCase
     public void testSubgraphListener()
     {
         Graph<String, DefaultEdge> g = init(true);
-        Subgraph<String, DefaultEdge> sub = new Subgraph<String, DefaultEdge>(g, null, null);
+        Subgraph<String, DefaultEdge> sub =
+            new Subgraph<String, DefaultEdge>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -141,14 +149,15 @@ public class SubgraphTest extends TestCase
 
     private Graph<String, DefaultEdge> init(boolean listenable)
     {
-        Graph<String,DefaultEdge> g;
+        Graph<String, DefaultEdge> g;
 
         if (listenable) {
-            g = new ListenableUndirectedGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+            g =
+                new ListenableUndirectedGraph<String, DefaultEdge>(
+                    DefaultEdge.class);
         } else {
             g = new SimpleGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+                    DefaultEdge.class);
         }
 
         g.addVertex(v1);

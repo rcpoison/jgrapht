@@ -46,7 +46,8 @@ package org.jgrapht.experimental.equivalence;
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<E,C>
+public class UniformEquivalenceComparator<E, C>
+    implements EquivalenceComparator<E, C>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -55,13 +56,13 @@ public class UniformEquivalenceComparator<E,C> implements EquivalenceComparator<
      * Always returns true.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     * Object)
+     *      Object)
      */
     public boolean equivalenceCompare(
-            E arg1,
-            E arg2,
-            C context1,
-            C context2)
+        E arg1,
+        E arg2,
+        C context1,
+        C context2)
     {
         return true;
     }

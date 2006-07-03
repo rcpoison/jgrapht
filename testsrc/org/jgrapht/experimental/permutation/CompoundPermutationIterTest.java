@@ -37,16 +37,17 @@
  */
 package org.jgrapht.experimental.permutation;
 
-import org.jgrapht.util.*;
-
 import junit.framework.*;
+
+import org.jgrapht.util.*;
 
 
 /**
  * @author Assaf
  * @since May 30, 2005
  */
-public class CompoundPermutationIterTest extends TestCase
+public class CompoundPermutationIterTest
+    extends TestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -58,9 +59,8 @@ public class CompoundPermutationIterTest extends TestCase
     /**
      * Asserts that the number of permutations is the same as getMax. It also
      * verifies that the number is the same when using different internal order
-     * of the permutation components. Note: The prints and timer can be
-     * unmarked to see performance results and the permutations array
-     * themselves.
+     * of the permutation components. Note: The prints and timer can be unmarked
+     * to see performance results and the permutations array themselves.
      */
     public void testGetNext()
     {
@@ -70,7 +70,14 @@ public class CompoundPermutationIterTest extends TestCase
 
         this.complexPerm =
             new CompoundPermutationIter(new int [] {
-                    1, 1, 1, 2, 2, 3, 4, 5
+                    1,
+                    1,
+                    1,
+                    2,
+                    2,
+                    3,
+                    4,
+                    5
                 });
         int maxPermNum = this.complexPerm.getMax();
 
@@ -93,7 +100,14 @@ public class CompoundPermutationIterTest extends TestCase
         // timer.start();
         this.complexPerm =
             new CompoundPermutationIter(new int [] {
-                    5, 4, 3, 2, 2, 1, 1, 1
+                    5,
+                    4,
+                    3,
+                    2,
+                    2,
+                    1,
+                    1,
+                    1
                 });
 
         // System.out.println("testing complex perm {5,4,3,2,2,1,1,1} ");

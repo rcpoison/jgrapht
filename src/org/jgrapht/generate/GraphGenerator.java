@@ -50,7 +50,7 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public interface GraphGenerator<V,E,T>
+public interface GraphGenerator<V, E, T>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -59,23 +59,23 @@ public interface GraphGenerator<V,E,T>
      * Generate a graph structure. The topology of the generated graph is
      * dependent on the implementation.  For graphs in which not all vertices
      * share the same automorphism equivalence class, the generator may produce
-     * a labeling indicating the roles played by generated elements. This is
-     * the purpose of the resultMap parameter.  For example, a generator for a
-     * wheel graph would designate a hub vertex.  Role names used as keys in
-     * resultMap should be declared as public static final Strings by
-     * implementation classes.
+     * a labeling indicating the roles played by generated elements. This is the
+     * purpose of the resultMap parameter.  For example, a generator for a wheel
+     * graph would designate a hub vertex.  Role names used as keys in resultMap
+     * should be declared as public static final Strings by implementation
+     * classes.
      *
      * @param target receives the generated edges and vertices; if this is
-     *               non-empty on entry, the result will be a disconnected
-     *               graph since generated elements will not be connected to
-     *               existing elements
+     *               non-empty on entry, the result will be a disconnected graph
+     *               since generated elements will not be connected to existing
+     *               elements
      * @param vertexFactory called to produce new vertices
      * @param resultMap if non-null, receives implementation-specific mappings
      *                  from String roles to graph elements (or collections of
      *                  graph elements)
      */
     public void generateGraph(
-        Graph<V,E> target,
+        Graph<V, E> target,
         VertexFactory<V> vertexFactory,
-        Map<String,T> resultMap);
+        Map<String, T> resultMap);
 }

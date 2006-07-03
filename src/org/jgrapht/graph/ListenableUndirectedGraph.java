@@ -50,7 +50,8 @@ import org.jgrapht.*;
  * @see DefaultListenableGraph
  */
 public class ListenableUndirectedGraph<V, E>
-    extends DefaultListenableGraph<V, E> implements UndirectedGraph<V, E>
+    extends DefaultListenableGraph<V, E>
+    implements UndirectedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -66,7 +67,7 @@ public class ListenableUndirectedGraph<V, E>
      */
     public ListenableUndirectedGraph(Class<? extends E> edgeClass)
     {
-        this(new SimpleGraph<V,E>(edgeClass));
+        this(new SimpleGraph<V, E>(edgeClass));
     }
 
     /**

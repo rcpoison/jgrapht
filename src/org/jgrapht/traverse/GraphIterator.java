@@ -52,7 +52,8 @@ import org.jgrapht.event.*;
  * @author Barak Naveh
  * @since Jul 31, 2003
  */
-public interface GraphIterator<V, E> extends Iterator<V>
+public interface GraphIterator<V, E>
+    extends Iterator<V>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -68,14 +69,13 @@ public interface GraphIterator<V, E> extends Iterator<V>
 
     /**
      * Sets a value the <code>reuseEvents</code> flag. If the <code>
-     * reuseEvents</code> flag is set to <code>true</code> this class will
-     * reuse previously fired events and will not create a new object for each
-     * event. This option increases performance but should be used with care,
+     * reuseEvents</code> flag is set to <code>true</code> this class will reuse
+     * previously fired events and will not create a new object for each event.
+     * This option increases performance but should be used with care,
      * especially in multithreaded environment.
      *
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each
-     *                    event.
+     *                    instead of creating a new event object for each event.
      */
     public void setReuseEvents(boolean reuseEvents);
 

@@ -52,7 +52,8 @@ import org.jgrapht.graph.*;
  *
  * @author John V. Sichi
  */
-public class CycleDetectorTest extends TestCase
+public class CycleDetectorTest
+    extends TestCase
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -71,7 +72,7 @@ public class CycleDetectorTest extends TestCase
      *
      * @param g
      */
-    public void createGraph(Graph<String,DefaultEdge> g)
+    public void createGraph(Graph<String, DefaultEdge> g)
     {
         g.addVertex(V1);
         g.addVertex(V2);
@@ -94,8 +95,8 @@ public class CycleDetectorTest extends TestCase
      */
     public void testDirectedWithCycle()
     {
-        DirectedGraph<String,DefaultEdge> g =
-            new DefaultDirectedGraph<String,DefaultEdge>(
+        DirectedGraph<String, DefaultEdge> g =
+            new DefaultDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
         createGraph(g);
 
@@ -118,24 +119,27 @@ public class CycleDetectorTest extends TestCase
     @SuppressWarnings("unchecked")
     public void testDirectedWithoutCycle()
     {
-        DirectedGraph<String,DefaultEdge> g =
-            new DefaultDirectedGraph<String,DefaultEdge>(
+        DirectedGraph<String, DefaultEdge> g =
+            new DefaultDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
         createGraph(g);
         g.removeVertex(V2);
 
-        Set<String> cyclicSet = Collections.EMPTY_SET;  // hb: I would like EMPTY_SET to be typed as well...
+        Set<String> cyclicSet = Collections.EMPTY_SET; // hb: I would like
+                                                       // EMPTY_SET to be typed
+                                                       // as well...
         Set<String> acyclicSet = g.vertexSet();
 
         runTest(g, cyclicSet, acyclicSet);
     }
 
-    private void runTest( DirectedGraph<String,DefaultEdge> g,
-                          Set<String> cyclicSet,
-                          Set<String> acyclicSet )
+    private void runTest(
+        DirectedGraph<String, DefaultEdge> g,
+        Set<String> cyclicSet,
+        Set<String> acyclicSet)
     {
-        CycleDetector<String,DefaultEdge> detector =
-            new CycleDetector<String,DefaultEdge>(g);
+        CycleDetector<String, DefaultEdge> detector =
+            new CycleDetector<String, DefaultEdge>(g);
 
         Set emptySet = Collections.EMPTY_SET;
 
@@ -143,12 +147,12 @@ public class CycleDetectorTest extends TestCase
 
         assertEquals(cyclicSet, detector.findCycles());
 
-        for ( String v : cyclicSet ) {
+        for (String v : cyclicSet) {
             assertEquals(true, detector.detectCyclesContainingVertex(v));
             assertEquals(cyclicSet, detector.findCyclesContainingVertex(v));
         }
 
-        for ( String v : acyclicSet ) {
+        for (String v : acyclicSet) {
             assertEquals(false, detector.detectCyclesContainingVertex(v));
             assertEquals(emptySet, detector.findCyclesContainingVertex(v));
         }

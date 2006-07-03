@@ -92,7 +92,8 @@ public final class DijkstraShortestPath<V, E>
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
      *               unbounded search
      */
-    public DijkstraShortestPath(Graph<V, E> graph,
+    public DijkstraShortestPath(
+        Graph<V, E> graph,
         V startVertex,
         V endVertex,
         double radius)

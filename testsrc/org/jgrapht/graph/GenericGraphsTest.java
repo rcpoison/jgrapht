@@ -41,20 +41,22 @@ package org.jgrapht.graph;
 
 import org.jgrapht.*;
 
+
 /**
  * A unit test for graph generic vertex/edge parameters.
  *
  * @author Hartmut Benz
  */
-public class GenericGraphsTest extends EnhancedTestCase
+public class GenericGraphsTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    Graph<Object,? extends DefaultEdge> objectGraph;
-    Graph<FooVertex,FooEdge> fooFooGraph;
-    Graph<BarVertex,BarEdge> barBarGraph;
-    Graph<FooVertex,BarEdge> fooBarGraph;
+    Graph<Object, ? extends DefaultEdge> objectGraph;
+    Graph<FooVertex, FooEdge> fooFooGraph;
+    Graph<BarVertex, BarEdge> barBarGraph;
+    Graph<FooVertex, BarEdge> fooBarGraph;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -66,9 +68,12 @@ public class GenericGraphsTest extends EnhancedTestCase
         super(name);
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     // ~ Methods ---------------------------------------------------------------
 
-    public void testLegalInsertStringGraph() {
+    public void testLegalInsertStringGraph()
+    {
         String v1 = "Vertex1";
         Object v2 = "Vertex2";
         objectGraph.addVertex(v1);
@@ -76,7 +81,8 @@ public class GenericGraphsTest extends EnhancedTestCase
         objectGraph.addEdge(v1, v2);
     }
 
-    public void testLegalInsertFooGraph() {
+    public void testLegalInsertFooGraph()
+    {
         FooVertex v1 = new FooVertex();
         FooVertex v2 = new FooVertex();
         BarVertex vb1 = new BarVertex();
@@ -88,12 +94,13 @@ public class GenericGraphsTest extends EnhancedTestCase
         fooFooGraph.addEdge(v1, v2);
         fooFooGraph.addEdge(vb1, vb2);
         fooFooGraph.addEdge(v1, vb2);
-        fooFooGraph.addEdge(v1, v2, new BarEdge() );
-        fooFooGraph.addEdge(v1, vb2, new BarEdge() );
-        fooFooGraph.addEdge(vb1, vb2, new BarEdge() );
+        fooFooGraph.addEdge(v1, v2, new BarEdge());
+        fooFooGraph.addEdge(v1, vb2, new BarEdge());
+        fooFooGraph.addEdge(vb1, vb2, new BarEdge());
     }
 
-    public void testLegalInsertBarGraph() {
+    public void testLegalInsertBarGraph()
+    {
         BarVertex v1 = new BarVertex();
         BarVertex v2 = new BarVertex();
         barBarGraph.addVertex(v1);
@@ -101,7 +108,8 @@ public class GenericGraphsTest extends EnhancedTestCase
         barBarGraph.addEdge(v1, v2);
     }
 
-    public void testLegalInsertFooBarGraph() {
+    public void testLegalInsertFooBarGraph()
+    {
         FooVertex v1 = new FooVertex();
         FooVertex v2 = new FooVertex();
         BarVertex vb1 = new BarVertex();
@@ -115,68 +123,82 @@ public class GenericGraphsTest extends EnhancedTestCase
         fooFooGraph.addEdge(v1, vb2);
     }
 
-    public void testAlissaHacker() {
-        
-        DirectedGraph<String,CustomEdge> g = 
-            new DefaultDirectedGraph<String,CustomEdge>(CustomEdge.class);
+    public void testAlissaHacker()
+    {
+        DirectedGraph<String, CustomEdge> g =
+            new DefaultDirectedGraph<String, CustomEdge>(CustomEdge.class);
         g.addVertex("a");
         g.addVertex("b");
         g.addEdge("a", "b");
         CustomEdge custom = g.getEdge("a", "b");
         String s = custom.toString();
-        assertEquals("Alissa P. Hacker",s);
+        assertEquals("Alissa P. Hacker", s);
     }
 
-    public static class CustomEdge extends DefaultEdge {
-        private static final long serialVersionUID = 1L;
-        
-        public String toString()
-        {
-            return "Alissa P. Hacker";
-        }
-    }
-    
     /**
      * .
      */
     protected void setUp()
     {
-        objectGraph = new DefaultDirectedGraph<Object,DefaultEdge>(
-            DefaultEdge.class);
-        fooFooGraph = new SimpleGraph<FooVertex,FooEdge>(FooEdge.class);
-        barBarGraph = new SimpleGraph<BarVertex,BarEdge>(BarEdge.class);
-   }
-    
-    
-    public static class FooEdge extends DefaultEdge
+        objectGraph =
+            new DefaultDirectedGraph<Object, DefaultEdge>(
+                DefaultEdge.class);
+        fooFooGraph = new SimpleGraph<FooVertex, FooEdge>(FooEdge.class);
+        barBarGraph = new SimpleGraph<BarVertex, BarEdge>(BarEdge.class);
+    }
+
+    //~ Inner Classes ---------------------------------------------------------
+
+    public static class CustomEdge
+        extends DefaultEdge
+    {
+        private static final long serialVersionUID = 1L;
+
+        public String toString()
+        {
+            return "Alissa P. Hacker";
+        }
+    }
+
+    public static class FooEdge
+        extends DefaultEdge
     {
         private static final long serialVersionUID = 1L;
     }
-    
-    private class FooVertex {
+
+    private class FooVertex
+    {
         String str;
-        public FooVertex(){
+
+        public FooVertex()
+        {
             super();
-            str="empty foo";
+            str = "empty foo";
         }
-        
-        public FooVertex( String s ) {
+
+        public FooVertex(String s)
+        {
             str = s;
         }
-    } 
-    
-    public static class BarEdge extends FooEdge {
+    }
+
+    public static class BarEdge
+        extends FooEdge
+    {
         private static final long serialVersionUID = 1L;
     }
-    
-    private class BarVertex extends FooVertex {
-        public BarVertex() {
+
+    private class BarVertex
+        extends FooVertex
+    {
+        public BarVertex()
+        {
             super("empty bar");
         }
 
-        public BarVertex(String s) {
+        public BarVertex(String s)
+        {
             super(s);
         }
-        
     }
 }

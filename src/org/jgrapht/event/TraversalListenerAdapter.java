@@ -41,10 +41,9 @@
  */
 package org.jgrapht.event;
 
-
 /**
- * An empty do-nothing implementation of the {@link TraversalListener}
- * interface used for subclasses.
+ * An empty do-nothing implementation of the {@link TraversalListener} interface
+ * used for subclasses.
  *
  * @author Barak Naveh
  * @since Aug 6, 2003

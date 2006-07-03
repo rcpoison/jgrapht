@@ -49,7 +49,8 @@ import java.util.*;
  * @author Barak Naveh
  * @since Aug 10, 2003
  */
-public class GraphChangeEvent extends EventObject
+public class GraphChangeEvent
+    extends EventObject
 {
 
     //~ Static fields/initializers --------------------------------------------

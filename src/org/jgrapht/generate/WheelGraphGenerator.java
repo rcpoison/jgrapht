@@ -54,7 +54,8 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
+public class WheelGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -108,9 +109,9 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph<V,E> target,
+        Graph<V, E> target,
         final VertexFactory<V> vertexFactory,
-        Map<String,V> resultMap)
+        Map<String, V> resultMap)
     {
         if (size < 1) {
             return;
@@ -131,7 +132,8 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
                 }
             };
 
-        RingGraphGenerator<V,E> ringGenerator = new RingGraphGenerator<V,E>(size - 1);
+        RingGraphGenerator<V, E> ringGenerator =
+            new RingGraphGenerator<V, E>(size - 1);
         ringGenerator.generateGraph(target, rimVertexFactory, resultMap);
 
         V hubVertex = vertexFactory.createVertex();
@@ -141,7 +143,7 @@ public class WheelGraphGenerator<V,E> implements GraphGenerator<V,E,V>
             resultMap.put(HUB_VERTEX, hubVertex);
         }
 
-        for( V rimVertex : rim ) {
+        for (V rimVertex : rim) {
             if (inwardSpokes) {
                 target.addEdge(rimVertex, hubVertex);
             } else {

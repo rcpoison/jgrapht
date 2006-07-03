@@ -41,21 +41,19 @@
 package org.jgrapht.traverse;
 
 import org.jgrapht.*;
-import org.jgrapht.event.ConnectedComponentTraversalEvent;
-import org.jgrapht.event.EdgeTraversalEvent;
-import org.jgrapht.event.TraversalListener;
-import org.jgrapht.event.VertexTraversalEvent;
+import org.jgrapht.event.*;
 import org.jgrapht.graph.*;
 
 
 /**
- * A basis for testing {@link org.jgrapht.traverse.BreadthFirstIterator}
- * and {@link org.jgrapht.traverse.DepthFirstIterator} classes.
+ * A basis for testing {@link org.jgrapht.traverse.BreadthFirstIterator} and
+ * {@link org.jgrapht.traverse.DepthFirstIterator} classes.
  *
  * @author Liviu Rau
  * @since Jul 30, 2003
  */
-public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
+public abstract class AbstractGraphIteratorTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -73,7 +71,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
 
         DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
 
-        AbstractGraphIterator<String,DefaultEdge> iterator = createIterator(graph, "1");
+        AbstractGraphIterator<String, DefaultEdge> iterator =
+            createIterator(graph, "1");
         iterator.addTraversalListener(new MyTraversalListener());
 
         while (iterator.hasNext()) {
@@ -150,7 +149,8 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
      *
      * @author Barak Naveh
      */
-    private class MyTraversalListener implements TraversalListener<String,DefaultEdge>
+    private class MyTraversalListener
+        implements TraversalListener<String, DefaultEdge>
     {
         private int componentNumber = 0;
         private int numComponentVertices = 0;
@@ -195,7 +195,7 @@ public abstract class AbstractGraphIteratorTest extends EnhancedTestCase
         /**
          * @see TraversalListener#edgeTraversed(EdgeTraversalEvent)
          */
-        public void edgeTraversed(EdgeTraversalEvent<String,DefaultEdge> e)
+        public void edgeTraversed(EdgeTraversalEvent<String, DefaultEdge> e)
         {
             // to be tested...
         }

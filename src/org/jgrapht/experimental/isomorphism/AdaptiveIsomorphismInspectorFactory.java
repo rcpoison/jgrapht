@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: AdaptiveIsomorphismInspectorFactory.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -38,8 +39,8 @@
 package org.jgrapht.experimental.isomorphism;
 
 import org.jgrapht.*;
-import org.jgrapht.graph.*;
 import org.jgrapht.experimental.equivalence.*;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -81,11 +82,11 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker may be null
      * @param edgeChecker may be null
      */
-    public static <V,E> GraphIsomorphismInspector createIsomorphismInspector(
-        Graph<V,E> graph1,
-        Graph<V,E> graph2,
-        EquivalenceComparator<? super V,? super Graph<V,E>> vertexChecker,
-        EquivalenceComparator<? super E,? super Graph<V,E>> edgeChecker)
+    public static <V, E> GraphIsomorphismInspector createIsomorphismInspector(
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
         int graphType = checkGraphsType(graph1, graph2);
         return
@@ -106,9 +107,9 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param graph1
      * @param graph2
      */
-    public static <V,E> GraphIsomorphismInspector createIsomorphismInspector(
-        Graph<V,E> graph1,
-        Graph<V,E> graph2)
+    public static <V, E> GraphIsomorphismInspector createIsomorphismInspector(
+        Graph<V, E> graph1,
+        Graph<V, E> graph2)
     {
         return createIsomorphismInspector(graph1, graph2, null, null);
     }
@@ -123,12 +124,13 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker - can be null
      * @param edgeChecker - can be null
      */
-    public static <V,E> GraphIsomorphismInspector createIsomorphismInspectorByType(
+    public static <V, E> GraphIsomorphismInspector
+    createIsomorphismInspectorByType(
         int type,
-        Graph<V,E> graph1,
-        Graph<V,E> graph2,
-        EquivalenceComparator<? super V,? super Graph<V,E>> vertexChecker,
-        EquivalenceComparator<? super E,? super Graph<V,E>> edgeChecker)
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
         return
             createAppropriateConcreteInspector(
@@ -150,10 +152,11 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param graph1
      * @param graph2
      */
-    public static <V,E> GraphIsomorphismInspector createIsomorphismInspectorByType(
+    public static <V, E> GraphIsomorphismInspector
+    createIsomorphismInspectorByType(
         int type,
-        Graph<V,E> graph1,
-        Graph<V,E> graph2)
+        Graph<V, E> graph1,
+        Graph<V, E> graph2)
     {
         return
             createAppropriateConcreteInspector(
@@ -175,13 +178,13 @@ public class AdaptiveIsomorphismInspectorFactory
      * @param vertexChecker
      * @param edgeChecker
      */
-    protected static <V,E> GraphIsomorphismInspector
+    protected static <V, E> GraphIsomorphismInspector
     createAppropriateConcreteInspector(
         int graphType,
-        Graph<V,E> graph1,
-        Graph<V,E> graph2,
-        EquivalenceComparator<? super V,? super Graph<V,E>> vertexChecker,
-        EquivalenceComparator<? super E,? super Graph<V,E>> edgeChecker)
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
         assertUnsupportedGraphTypes(graph1);
         assertUnsupportedGraphTypes(graph2);
@@ -201,7 +204,8 @@ public class AdaptiveIsomorphismInspectorFactory
 
         default:
 
-            throw new IllegalArgumentException("The type was not one of the supported types.");
+            throw new IllegalArgumentException(
+                "The type was not one of the supported types.");
         }
         return currentInspector;
     }
@@ -216,10 +220,11 @@ public class AdaptiveIsomorphismInspectorFactory
      *
      * @throws IllegalArgumentException
      */
-    protected static void assertUnsupportedGraphTypes( Graph g )
+    protected static void assertUnsupportedGraphTypes(Graph g)
         throws IllegalArgumentException
     {
-        if ((g instanceof Multigraph)
+        if (
+            (g instanceof Multigraph)
             || (g instanceof DirectedMultigraph)
             || (g instanceof Pseudograph)) {
             throw new IllegalArgumentException(
@@ -238,20 +243,22 @@ public class AdaptiveIsomorphismInspectorFactory
      *         <li>vertex degree size comparator
      */
     @SuppressWarnings("unchecked")
-	protected static <V,E> GraphIsomorphismInspector
-        createTopologicalExhaustiveInspector(
-                Graph<V,E> graph1,
-                Graph<V,E> graph2,
-                EquivalenceComparator<? super V,? super Graph<V,E>> vertexChecker,
-                EquivalenceComparator<? super E,? super Graph<V,E>> edgeChecker)
+    protected static <V, E> GraphIsomorphismInspector
+    createTopologicalExhaustiveInspector(
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
-        VertexDegreeEquivalenceComparator<V,E> degreeComparator =
-            new VertexDegreeEquivalenceComparator<V,E>();
-        EquivalenceComparatorChain<V,Graph<V, E>> vertexChainedChecker =
-            new EquivalenceComparatorChainBase<V,Graph<V,E>>(degreeComparator);
+        VertexDegreeEquivalenceComparator<V, E> degreeComparator =
+            new VertexDegreeEquivalenceComparator<V, E>();
+        EquivalenceComparatorChain<V, Graph<V, E>> vertexChainedChecker =
+            new EquivalenceComparatorChainBase<V, Graph<V, E>>(
+                degreeComparator);
         vertexChainedChecker.appendComparator(vertexChecker);
 
         GraphIsomorphismInspector inspector =
+
             // FIXME hb060208 I don't understand how to generify this, yet
             new EquivalenceIsomorphismInspector(
                 graph1,

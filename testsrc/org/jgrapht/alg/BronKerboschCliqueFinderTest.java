@@ -52,7 +52,8 @@ import org.jgrapht.graph.*;
  *
  * @author John V. Sichi
  */
-public class BronKerboschCliqueFinderTest extends TestCase
+public class BronKerboschCliqueFinderTest
+    extends TestCase
 {
 
     //~ Static fields/initializers --------------------------------------------

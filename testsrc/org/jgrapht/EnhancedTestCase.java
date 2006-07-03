@@ -48,7 +48,8 @@ import junit.framework.*;
  * @author Barak Naveh
  * @since Jul 25, 2003
  */
-public class EnhancedTestCase extends TestCase
+public class EnhancedTestCase
+    extends TestCase
 {
 
     //~ Constructors ----------------------------------------------------------

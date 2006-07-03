@@ -53,8 +53,8 @@ import org.jgrapht.traverse.*;
  * elements.
  *
  * <p>NOTE: To run this demo you may need to increase the JVM max mem size. In
- * Sun's JVM it is done using the "-Xmx" switch. Specify "-Xmx300M" to set it
- * to 300MB.</p>
+ * Sun's JVM it is done using the "-Xmx" switch. Specify "-Xmx300M" to set it to
+ * 300MB.</p>
  *
  * <p>WARNING: Don't run this demo as-is on machines with less than 512MB
  * memory. Your machine will start paging severely. You need to first modify it
@@ -80,8 +80,8 @@ public final class PerformanceDemo
 
         reportPerformanceFor("starting at", time);
 
-        Graph<Object,DefaultEdge> g =
-            new Pseudograph<Object,DefaultEdge>(DefaultEdge.class);
+        Graph<Object, DefaultEdge> g =
+            new Pseudograph<Object, DefaultEdge>(DefaultEdge.class);
         Object prev;
         Object curr;
 
@@ -111,7 +111,9 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new BreadthFirstIterator<Object,DefaultEdge>(g); i.hasNext();) {
+        for (
+            Iterator i = new BreadthFirstIterator<Object, DefaultEdge>(g);
+            i.hasNext();) {
             i.next();
         }
 
@@ -119,7 +121,9 @@ public final class PerformanceDemo
 
         time = System.currentTimeMillis();
 
-        for (Iterator i = new DepthFirstIterator<Object,DefaultEdge>(g); i.hasNext();) {
+        for (
+            Iterator i = new DepthFirstIterator<Object, DefaultEdge>(g);
+            i.hasNext();) {
             i.next();
         }
 
@@ -142,7 +146,8 @@ public final class PerformanceDemo
     private static void reportPerformanceFor(String msg, long refTime)
     {
         double time = (System.currentTimeMillis() - refTime) / 1000.0;
-        double mem = usedMemory() / (1024.0 * 1024.0);
+        double mem = usedMemory()
+            / (1024.0 * 1024.0);
         mem = Math.round(mem * 100) / 100.0;
         System.out.println(msg + " (" + time + " sec, " + mem + "MB)");
     }

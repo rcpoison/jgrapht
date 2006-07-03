@@ -50,7 +50,8 @@ import org.jgrapht.*;
  * pseudographs, see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class Pseudograph<V, E> extends AbstractBaseGraph<V, E>
+public class Pseudograph<V, E>
+    extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
 

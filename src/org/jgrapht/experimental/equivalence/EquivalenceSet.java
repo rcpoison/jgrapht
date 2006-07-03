@@ -51,12 +51,13 @@ import java.util.*;
  * the same group.
  *
  * @param <E> the type of the elements in the set
- * @param <C> the type of the context the element is compared against, e.g. a Graph
- * 
+ * @param <C> the type of the context the element is compared against, e.g. a
+ *        Graph
+ *
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class EquivalenceSet<E,C>
+public class EquivalenceSet<E, C>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -64,7 +65,7 @@ public class EquivalenceSet<E,C>
     /**
      * The comparator used to define the group
      */
-    protected EquivalenceComparator<? super E,? super C> eqComparator;
+    protected EquivalenceComparator<? super E, ? super C> eqComparator;
     protected C comparatorContext;
 
     /**
@@ -75,21 +76,21 @@ public class EquivalenceSet<E,C>
     //~ Constructors ----------------------------------------------------------
 
     /**
-     * Private constructor. An empty group cannot be created as a group does
-     * not have meaning without an element, because the equal and hashcode
-     * methods cannot work.
+     * Private constructor. An empty group cannot be created as a group does not
+     * have meaning without an element, because the equal and hashcode methods
+     * cannot work.
      */
     private EquivalenceSet()
     {
     }
 
     /**
-     * Constructs a new EquivalenceSet, filled with the aElement parameter and
-     * a reference to the comparator which is used.
+     * Constructs a new EquivalenceSet, filled with the aElement parameter and a
+     * reference to the comparator which is used.
      */
     public EquivalenceSet(
         E aElement,
-        EquivalenceComparator<? super E,? super C> aEqComparator,
+        EquivalenceComparator<? super E, ? super C> aEqComparator,
         C aComparatorContext)
     {
         this.eqComparator = aEqComparator;
@@ -103,8 +104,8 @@ public class EquivalenceSet<E,C>
 
     /**
      * Returns an arbitrary object from the group. There is no guarantee as to
-     * which will be returned, and whether the same will be returned on the
-     * next call.
+     * which will be returned, and whether the same will be returned on the next
+     * call.
      */
     public E getRepresentative()
     {
@@ -144,25 +145,29 @@ public class EquivalenceSet<E,C>
     /**
      * Uses the equivalenceCompare() of the comparator to compare a
      * representation of this group, taken using this.getRepresentative(),  and
-     * a representation of the other object, which may be the object itself,
-     * or, if it is an equivalence group too, other.getRepresentative()
+     * a representation of the other object, which may be the object itself, or,
+     * if it is an equivalence group too, other.getRepresentative()
      */
-    // FIXME REVIEW hb 26-Jan-2006: I think throwing the exception is kind of odd,
+    // FIXME REVIEW hb 26-Jan-2006: I think throwing the exception is kind of
+    // odd,
     // - it feels like violating the contract of Object.equals()
-    // From what I understand, comparing any object to any other object should be
+    // From what I understand, comparing any object to any other object should
+    // be
     // possible at all times and simply return false if they are not equal.
     // Uncomparable objects beeing unequal.
-    // Suggestion: remove the exception, at best, test on this specific class and
+    // Suggestion: remove the exception, at best, test on this specific class
+    // and
     // write a warning or some such.
-    
+
     @SuppressWarnings("unchecked")
     public boolean equals(Object other)
     {
         E otherRepresentative = null;
         C otherContext = null;
         if (other instanceof EquivalenceSet) {
-            otherRepresentative = ((EquivalenceSet<E,C>) other).getRepresentative();
-            otherContext = ((EquivalenceSet<E,C>) other).getContext();
+            otherRepresentative =
+                ((EquivalenceSet<E, C>) other).getRepresentative();
+            otherContext = ((EquivalenceSet<E, C>) other).getContext();
         } else {
             throw new ClassCastException(
                 "can check equal() only of EqualityGroup");

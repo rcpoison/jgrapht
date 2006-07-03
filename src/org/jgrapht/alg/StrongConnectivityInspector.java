@@ -45,16 +45,14 @@ import org.jgrapht.graph.*;
 
 
 /**
- * <p>Complements the {@link org.jgrapht.alg.ConnectivityInspector} class
- * with the capability to compute the strongly connected components of a
- * directed graph. The algorithm is implemented after "Corman et al:
- * Introduction to agorithms", Chapter 25.2. It has a running time of O(V + E).
- * </p>
+ * <p>Complements the {@link org.jgrapht.alg.ConnectivityInspector} class with
+ * the capability to compute the strongly connected components of a directed
+ * graph. The algorithm is implemented after "Corman et al: Introduction to
+ * agorithms", Chapter 25.2. It has a running time of O(V + E).</p>
  *
- * <p>Unlike {@link org.jgrapht.alg.ConnectivityInspector}, this class
- * does not implement incremental inspection. The full algorithm is executed at
- * the first call of {@link
- * StrongConnectivityInspector#stronglyConnectedSets()} or {@link
+ * <p>Unlike {@link org.jgrapht.alg.ConnectivityInspector}, this class does not
+ * implement incremental inspection. The full algorithm is executed at the first
+ * call of {@link StrongConnectivityInspector#stronglyConnectedSets()} or {@link
  * StrongConnectivityInspector#isStronglyConnected()}.</p>
  *
  * @author Christian Soltenborn
@@ -76,7 +74,7 @@ public class StrongConnectivityInspector<V, E>
     private List<Set<V>> stronglyConnectedSets;
 
     // the result of the computation, cached for future calls
-    private List<DirectedSubgraph<V,E>> stronglyConnectedSubgraphs;
+    private List<DirectedSubgraph<V, E>> stronglyConnectedSubgraphs;
 
     // maps vertices to their VertexData object
     private Map<V, VertexData<V>> vertexToVertexData;
@@ -127,9 +125,9 @@ public class StrongConnectivityInspector<V, E>
     }
 
     /**
-     * Computes a {@link List} of {@link Set}s, where each set contains
-     * vertices which together form a strongly connected component within the
-     * given graph.
+     * Computes a {@link List} of {@link Set}s, where each set contains vertices
+     * which together form a strongly connected component within the given
+     * graph.
      *
      * @return <code>List</code> of <code>Set</code> s containing the strongly
      *         connected components
@@ -201,16 +199,18 @@ public class StrongConnectivityInspector<V, E>
      * @return a list of subgraphs representing the strongly connected
      *         components
      */
-    public List<DirectedSubgraph<V,E>> stronglyConnectedSubgraphs()
+    public List<DirectedSubgraph<V, E>> stronglyConnectedSubgraphs()
     {
         if (stronglyConnectedSubgraphs == null) {
             List<Set<V>> sets = stronglyConnectedSets();
-            stronglyConnectedSubgraphs = new Vector<DirectedSubgraph<V, E>>(sets.size());
+            stronglyConnectedSubgraphs =
+                new Vector<DirectedSubgraph<V, E>>(sets.size());
 
             Iterator<Set<V>> iter = sets.iterator();
 
             while (iter.hasNext()) {
-                stronglyConnectedSubgraphs.add(new DirectedSubgraph<V, E>(
+                stronglyConnectedSubgraphs.add(
+                    new DirectedSubgraph<V, E>(
                         graph,
                         iter.next(),
                         null));
@@ -246,7 +246,8 @@ public class StrongConnectivityInspector<V, E>
      * round). set != null: all vertices found will be saved in the set (2nd
      * round)
      */
-    private void dfsVisit(DirectedGraph<V, E> graph,
+    private void dfsVisit(
+        DirectedGraph<V, E> graph,
         VertexData<V> vertexData,
         Set<V> vertices)
     {

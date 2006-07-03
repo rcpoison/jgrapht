@@ -51,7 +51,8 @@ import org.jgrapht.graph.*;
  * @author John V. Sichi
  * @since Apr 25, 2005
  */
-public class TopologicalOrderIteratorTest extends EnhancedTestCase
+public class TopologicalOrderIteratorTest
+    extends EnhancedTestCase
 {
 
     //~ Methods ---------------------------------------------------------------

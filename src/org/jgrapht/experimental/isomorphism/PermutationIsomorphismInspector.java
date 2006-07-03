@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: PermutationIsomorphismInspector.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -48,14 +49,14 @@ import org.jgrapht.experimental.permutation.*;
  * Checks every possible permutation.
  *
  * <p>It does not uses the graph topology to enhance the performance. It is
- * recommended to use only if there cannot be a useful division into
- * equivalence sets.
+ * recommended to use only if there cannot be a useful division into equivalence
+ * sets.
  *
  * @author Assaf
  * @since Jul 29, 2005
  */
-class PermutationIsomorphismInspector<V,E>
-    extends AbstractExhaustiveIsomorphismInspector<V,E>
+class PermutationIsomorphismInspector<V, E>
+    extends AbstractExhaustiveIsomorphismInspector<V, E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -64,18 +65,20 @@ class PermutationIsomorphismInspector<V,E>
      * @param graph1
      * @param graph2
      * @param vertexChecker eq. group checker for vertexes. If null,
-     *                      UniformEquivalenceComparator will be used as
-     *                      default (always return true)
+     *                      UniformEquivalenceComparator will be used as default
+     *                      (always return true)
      * @param edgeChecker eq. group checker for edges. If null,
      *                    UniformEquivalenceComparator will be used as default
      *                    (always return true)
      */
     public PermutationIsomorphismInspector(
-        Graph<V,E> graph1,
-        Graph<V,E> graph2,
-        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super E>
-        EquivalenceComparator<? super V,? super Graph<? super V,? super E>> vertexChecker,
-        EquivalenceComparator<? super E,? super Graph<? super V,? super E>> edgeChecker)
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        
+        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super
+    // E>
+    EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<? super V, ? super E>> edgeChecker)
     {
         super(graph1, graph2, vertexChecker, edgeChecker);
     }
@@ -83,9 +86,12 @@ class PermutationIsomorphismInspector<V,E>
     /**
      * Constructor which uses the default comparators.
      *
-     * @see AbstractExhaustiveIsomorphismInspector#AbstractExhaustiveIsomorphismInspector(Graph, Graph)
+     * @see AbstractExhaustiveIsomorphismInspector#AbstractExhaustiveIsomorphismInspector(Graph,
+     *      Graph)
      */
-    public PermutationIsomorphismInspector(Graph<V,E> graph1, Graph<V,E> graph2)
+    public PermutationIsomorphismInspector(
+        Graph<V, E> graph1,
+        Graph<V, E> graph2)
     {
         super(graph1, graph2);
     }
@@ -93,11 +99,11 @@ class PermutationIsomorphismInspector<V,E>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Creates the permutation iterator, not dependant on equality group, or
-     * the other vertexset.
+     * Creates the permutation iterator, not dependant on equality group, or the
+     * other vertexset.
      *
-     * @param vertexSet1    FIXME Document me
-     * @param vertexSet2    FIXME Document me
+     * @param vertexSet1 FIXME Document me
+     * @param vertexSet2 FIXME Document me
      *
      * @return the permutation iterator
      */
@@ -109,10 +115,10 @@ class PermutationIsomorphismInspector<V,E>
     }
 
     /**
-     * FIXME Document me
-     * FIXME Document me
-     * @param vertexSet1    FIXME Document me
-     * @param vertexSet2    FIXME Document me
+     * FIXME Document me FIXME Document me
+     *
+     * @param vertexSet1 FIXME Document me
+     * @param vertexSet2 FIXME Document me
      *
      * @return FIXME Document me
      */
@@ -129,7 +135,8 @@ class PermutationIsomorphismInspector<V,E>
         for (Iterator<V> iter1 = vertexSet1.iterator(); iter1.hasNext();) {
             V vertex1 = iter1.next();
             V vertex2 = iter2.next();
-            if (!this.vertexComparator.equivalenceCompare(
+            if (
+                !this.vertexComparator.equivalenceCompare(
                     vertex1,
                     vertex2,
                     this.graph1,

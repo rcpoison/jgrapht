@@ -50,7 +50,8 @@ import org.jgrapht.*;
  *
  * @see Subgraph
  */
-public class UndirectedSubgraph<V, E> extends Subgraph<V, E>
+public class UndirectedSubgraph<V, E>
+    extends Subgraph<V, E>
     implements UndirectedGraph<V, E>
 {
 
@@ -63,15 +64,15 @@ public class UndirectedSubgraph<V, E> extends Subgraph<V, E>
     /**
      * Creates a new undirected subgraph.
      *
-     * @param base the base (backing) graph on which the subgraph will be
-     *             based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public UndirectedSubgraph(UndirectedGraph<V, E> base,
+    public UndirectedSubgraph(
+        UndirectedGraph<V, E> base,
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {

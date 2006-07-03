@@ -40,29 +40,32 @@
  */
 package org.jgrapht.alg;
 
-import java.util.List;
+import java.util.*;
 
-import org.jgrapht.Graph;
+import org.jgrapht.*;
+
 
 /**
  * <a href="http://www.nist.gov/dads/HTML/dijkstraalgo.html">Bellman-Ford
- * algorithm </a>: weights could be negative, paths could be constrained by a
+ * algorithm</a>: weights could be negative, paths could be constrained by a
  * maximum number of edges.
- *  
  */
-public class BellmanFordShortestPath<V,E> {
+public class BellmanFordShortestPath<V, E>
+{
+
+    //~ Instance fields -------------------------------------------------------
 
     /**
      * Graph on which shortest paths are searched.
      */
-    protected Graph<V,E> graph;
+    protected Graph<V, E> graph;
 
     /**
      * Start vertex.
      */
     protected V startVertex;
 
-    private BellmanFordIterator<V,E> iter;
+    private BellmanFordIterator<V, E> iter;
 
     /**
      * Maximum number of edges of the calculated paths.
@@ -71,29 +74,33 @@ public class BellmanFordShortestPath<V,E> {
 
     private int passNumber;
 
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates an object to calculate shortest paths between the start vertex
      * and others vertices using the Bellman-Ford algorithm.
-     * 
+     *
      * @param graph
      * @param startVertex
      */
-    public BellmanFordShortestPath(Graph<V,E> graph, V startVertex) {
+    public BellmanFordShortestPath(Graph<V, E> graph, V startVertex)
+    {
         this(graph, startVertex, graph.vertexSet().size() - 1);
     }
 
     /**
      * Creates an object to calculate shortest paths between the start vertex
      * and others vertices using the Bellman-Ford algorithm.
-     * 
-     * 
+     *
      * @param graph
      * @param startVertex
-     * @param nMaxHops
-     *            maximum number of edges of the calculated paths.
+     * @param nMaxHops maximum number of edges of the calculated paths.
      */
     public BellmanFordShortestPath(
-        Graph<V,E> graph, V startVertex, int nMaxHops) {
+        Graph<V, E> graph,
+        V startVertex,
+        int nMaxHops)
+    {
         this.startVertex = startVertex;
         this.nMaxHops = nMaxHops;
         this.graph = graph;
@@ -101,14 +108,16 @@ public class BellmanFordShortestPath<V,E> {
         this.passNumber = 1;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
-     * 
-     * @param endVertex
-     *            end vertex.
+     * @param endVertex end vertex.
+     *
      * @return the cost of the shortest path between the start vertex and the
      *         end vertex.
      */
-    public double getCost(V endVertex) {
+    public double getCost(V endVertex)
+    {
         lazyCalculate();
 
         assertGetPath(endVertex);
@@ -117,14 +126,13 @@ public class BellmanFordShortestPath<V,E> {
     }
 
     /**
-     * 
-     * @param endVertex
-     *            end vertex.
-     * @return list of <code>Edge</code>, or null
-     *             if no path exists between the start vertex and the end
-     *             vertex.
+     * @param endVertex end vertex.
+     *
+     * @return list of <code>Edge</code>, or null if no path exists between the
+     *         start vertex and the end vertex.
      */
-    public List<E> getPathEdgeList(V endVertex) {
+    public List<E> getPathEdgeList(V endVertex)
+    {
         assertGetPath(endVertex);
 
         lazyCalculate();
@@ -136,43 +144,47 @@ public class BellmanFordShortestPath<V,E> {
         return createPath(endVertex);
     }
 
-    private void assertGetPath(V endVertex) {
-
+    private void assertGetPath(V endVertex)
+    {
         if (endVertex.equals(this.startVertex)) {
             throw new IllegalArgumentException(
-                    "The end vertex is the same as the start vertex!");
+                "The end vertex is the same as the start vertex!");
         }
 
         if (!this.graph.containsVertex(endVertex)) {
             throw new IllegalArgumentException(
-                    "Graph must contain the end vertex!");
+                "Graph must contain the end vertex!");
         }
-
     }
 
     /**
      * Complexity = O(length of path)
-     * 
-     * @param endVertex
-     *            end vertex.
+     *
+     * @param endVertex end vertex.
+     *
      * @return list of <code>Edge</code>.
      */
-    private List<E> createPath(V endVertex) {
-        AbstractPathElement<V,E> pathElement =
+    private List<E> createPath(V endVertex)
+    {
+        AbstractPathElement<V, E> pathElement =
             this.iter.getPathElement(endVertex);
 
         return pathElement.createEdgeListPath();
     }
 
-    private void lazyCalculate() {
+    private void lazyCalculate()
+    {
         if (this.iter == null) {
             this.iter =
-                new BellmanFordIterator<V,E>(this.graph, this.startVertex);
+                new BellmanFordIterator<V, E>(this.graph, this.startVertex);
         }
 
         // at the i-th pass the shortest paths with less (or equal) than i edges
         // are calculated.
-        for (; this.passNumber <= this.nMaxHops && this.iter.hasNext(); this.passNumber++) {
+        for (
+            ;
+            (this.passNumber <= this.nMaxHops) && this.iter.hasNext();
+            this.passNumber++) {
             this.iter.next();
         }
     }
@@ -193,8 +205,8 @@ public class BellmanFordShortestPath<V,E> {
         V startVertex,
         V endVertex)
     {
-        BellmanFordShortestPath<V,E> alg =
-            new BellmanFordShortestPath<V,E>(
+        BellmanFordShortestPath<V, E> alg =
+            new BellmanFordShortestPath<V, E>(
                 graph,
                 startVertex);
 

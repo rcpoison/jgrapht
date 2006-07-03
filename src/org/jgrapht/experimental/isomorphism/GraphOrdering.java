@@ -49,20 +49,20 @@ import org.jgrapht.util.*;
  * LabelsEdge[] for edges. The current algorithms do not support graph with
  * multiple edges (Multigraph / Pseudograph). For the maintaner: The reason for
  * it is the use of edges sets of LabelsEdge in which the equals checks for
- * source and target vertexes. Thus there cannot be two LabelsEdge with the
- * same source and target in the same Set.
+ * source and target vertexes. Thus there cannot be two LabelsEdge with the same
+ * source and target in the same Set.
  *
  * @author Assaf
  * @since May 20, 2005
  */
-public class GraphOrdering<V,E>
+public class GraphOrdering<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
 
     /**
-     * Holds a mapping between key=V(vertex) and value=Integer(vertex
-     * order). It can be used for identifying the order of regular vertex/edge.
+     * Holds a mapping between key=V(vertex) and value=Integer(vertex order). It
+     * can be used for identifying the order of regular vertex/edge.
      */
     private Map<V, Integer> mapVertexToOrder;
 
@@ -80,7 +80,7 @@ public class GraphOrdering<V,E>
      *
      * @param regularGraph
      */
-    public GraphOrdering(Graph<V,E> regularGraph)
+    public GraphOrdering(Graph<V, E> regularGraph)
     {
         this(regularGraph, regularGraph.vertexSet(), regularGraph.edgeSet());
     }
@@ -95,14 +95,16 @@ public class GraphOrdering<V,E>
      * @param edgeSet
      */
     public GraphOrdering(
-        Graph<V,E> regularGraph, Set<V> vertexSet, Set<E> edgeSet)
+        Graph<V, E> regularGraph,
+        Set<V> vertexSet,
+        Set<E> edgeSet)
     {
         init(regularGraph, vertexSet, edgeSet);
     }
 
     //~ Methods ---------------------------------------------------------------
 
-    private void init(Graph<V,E> g, Set<V> vertexSet, Set<E> edgeSet)
+    private void init(Graph<V, E> g, Set<V> vertexSet, Set<E> edgeSet)
     {
         // create a map between vertex value to its order(1st,2nd,etc)
         // "CAT"=1 "DOG"=2 "RHINO"=3
@@ -127,8 +129,7 @@ public class GraphOrdering<V,E>
             Integer sourceOrder = mapVertexToOrder.get(sourceVertex);
             int sourceLabel = sourceOrder.intValue();
             int targetLabel =
-                (mapVertexToOrder.get(g.getEdgeTarget(edge)))
-                .intValue();
+                (mapVertexToOrder.get(g.getEdgeTarget(edge))).intValue();
 
             LabelsEdge lablesEdge = new LabelsEdge(sourceLabel, targetLabel);
             this.labelsEdgesSet.add(lablesEdge);
@@ -198,15 +199,16 @@ public class GraphOrdering<V,E>
         }
 
         /**
-         * Checks both source and target.  Does not check class type to be
-         * fast, so it may throw ClassCastException. Careful!
+         * Checks both source and target.  Does not check class type to be fast,
+         * so it may throw ClassCastException. Careful!
          *
          * @see java.lang.Object#equals(java.lang.Object)
          */
         public boolean equals(Object obj)
         {
             LabelsEdge otherEdge = (LabelsEdge) obj;
-            if ((this.source == otherEdge.source)
+            if (
+                (this.source == otherEdge.source)
                 && (this.target == otherEdge.target)) {
                 return true;
             } else {

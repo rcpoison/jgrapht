@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: ConnectedComponentTraversalEvent.java 487 2006-07-02 00:53:17Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -48,7 +49,8 @@ import java.util.*;
  * @author Barak Naveh
  * @since Aug 11, 2003
  */
-public class ConnectedComponentTraversalEvent extends EventObject
+public class ConnectedComponentTraversalEvent
+    extends EventObject
 {
 
     //~ Static fields/initializers --------------------------------------------

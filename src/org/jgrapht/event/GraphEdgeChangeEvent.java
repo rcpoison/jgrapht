@@ -40,7 +40,6 @@
  */
 package org.jgrapht.event;
 
-
 /**
  * An event which indicates that a graph edge has changed, or is about to
  * change. The event can be used either as an indication <i>after</i> the edge
@@ -60,8 +59,8 @@ public class GraphEdgeChangeEvent<V, E>
     private static final long serialVersionUID = 3618134563335844662L;
 
     /**
-     * Before edge added event. This event is fired before an edge is added to
-     * a graph.
+     * Before edge added event. This event is fired before an edge is added to a
+     * graph.
      */
     public static final int BEFORE_EDGE_ADDED = 21;
 

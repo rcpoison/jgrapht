@@ -38,9 +38,9 @@
 package org.jgrapht.experimental.permutation;
 
 /**
- * Factory to create Permutations of several types and use them as
- * Enumerations. Note that callers may use them directly if they need to use
- * special concrete methods.
+ * Factory to create Permutations of several types and use them as Enumerations.
+ * Note that callers may use them directly if they need to use special concrete
+ * methods.
  *
  * <p>These types are:
  *
@@ -57,14 +57,14 @@ package org.jgrapht.experimental.permutation;
  *
  * <p>
  * <li>There are separate permutations groups, which are connected to one
- * sequence. Permutations are allowed only inside the group. Possible
- * sequences: product of factorial of each group. see example.
+ * sequence. Permutations are allowed only inside the group. Possible sequences:
+ * product of factorial of each group. see example.
  *
  * <p><i>example:</i> assume source=the groups are sizes are : 1,2,2,5 elements
  * will be created: (1),(2,3),(4,5).
  *
- * <p>result=[1,(2,3),(4,5)] [1,(2,3),(5,4)] [1,(3,2),(5,4)] [1,(3,2),(4,5)].
- * In this example the number of possiblities is 1! x 2! x 2! = 4
+ * <p>result=[1,(2,3),(4,5)] [1,(2,3),(5,4)] [1,(3,2),(5,4)] [1,(3,2),(4,5)]. In
+ * this example the number of possiblities is 1! x 2! x 2! = 4
  *
  * @author Assaf Lehr
  * @since Jun 3, 2005

@@ -48,8 +48,10 @@ package org.jgrapht.ext;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.geom.Rectangle2D;
-import java.io.Serializable;
+import java.awt.geom.*;
+
+import java.io.*;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -59,40 +61,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.BorderFactory;
+import javax.swing.*;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.Graph;
-import org.jgrapht.ListenableGraph;
-import org.jgrapht.event.GraphEdgeChangeEvent;
-import org.jgrapht.event.GraphListener;
-import org.jgrapht.event.GraphVertexChangeEvent;
-import org.jgraph.event.GraphModelEvent;
-import org.jgraph.event.GraphModelListener;
-import org.jgraph.event.GraphModelEvent.GraphModelChange;
-import org.jgraph.graph.AttributeMap;
-import org.jgraph.graph.ConnectionSet;
-import org.jgraph.graph.DefaultEdge;
-import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.graph.DefaultGraphModel;
-import org.jgraph.graph.DefaultPort;
-import org.jgraph.graph.GraphCell;
-import org.jgraph.graph.GraphConstants;
-import org.jgraph.graph.Port;
+import org.jgraph.event.*;
+import org.jgraph.event.GraphModelEvent.*;
+import org.jgraph.graph.*;
+
+import org.jgrapht.*;
+import org.jgrapht.event.*;
 
 
 /**
  * An adapter that reflects a JGraphT graph as a JGraph graph. This adapter is
- * useful when using JGraph in order to visualize JGraphT graphs. For more
- * about JGraph see <a href="http://jgraph.sourceforge.net">
+ * useful when using JGraph in order to visualize JGraphT graphs. For more about
+ * JGraph see <a href="http://jgraph.sourceforge.net">
  * http://jgraph.sourceforge.net</a>
  *
  * <p>Modifications made to the underlying JGraphT graph are reflected to this
  * JGraph model if and only if the underlying JGraphT graph is a {@link
- * org.jgrapht.ListenableGraph}. If the underlying JGraphT graph is <i>
- * not</i> ListenableGraph, then this JGraph model represent a snapshot if the
- * graph at the time of its creation.</p>
+ * org.jgrapht.ListenableGraph}. If the underlying JGraphT graph is <i>not</i>
+ * ListenableGraph, then this JGraph model represent a snapshot if the graph at
+ * the time of its creation.</p>
  *
  * <p>Changes made to this JGraph model are also reflected back to the
  * underlying JGraphT graph. To avoid confusion, variables are prefixed
@@ -118,7 +107,8 @@ import org.jgraph.graph.Port;
  * todo and fixme marks in the code indicate where the possible improvements
  * could be made to realize that.
  */
-public class JGraphModelAdapter<V,E> extends DefaultGraphModel
+public class JGraphModelAdapter<V, E>
+    extends DefaultGraphModel
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -129,10 +119,10 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
 
     /**
      * The following (jCells|jtElement)Being(Added|Removed) sets are used to
-     * prevent bouncing of events between the JGraph and JGraphT listeners.
-     * They ensure that their respective add/remove operations are done exactly
-     * once. Here is an example of how jCellsBeingAdded is used when an edge
-     * is added to a JGraph graph:
+     * prevent bouncing of events between the JGraph and JGraphT listeners. They
+     * ensure that their respective add/remove operations are done exactly once.
+     * Here is an example of how jCellsBeingAdded is used when an edge is added
+     * to a JGraph graph:
      *
      * <pre>
         1. First, we add the desired edge to jCellsBeingAdded to indicate
@@ -161,12 +151,13 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     final Set<GraphCell> jCellsBeingRemoved = new HashSet<GraphCell>();
     final Set<Object> jtElementsBeingAdded = new HashSet<Object>();
     final Set<Object> jtElementsBeingRemoved = new HashSet<Object>();
-    private final CellFactory<V,E> cellFactory;
+    private final CellFactory<V, E> cellFactory;
 
     /**
      * Maps JGraph edges to JGraphT edges
      */
-    private final Map<org.jgraph.graph.Edge, E> cellToEdge = new HashMap<org.jgraph.graph.Edge, E>();
+    private final Map<org.jgraph.graph.Edge, E> cellToEdge =
+        new HashMap<org.jgraph.graph.Edge, E>();
 
     /**
      * Maps JGraph vertices to JGraphT vertices
@@ -178,7 +169,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     /**
      * Maps JGraphT edges to JGraph edges
      */
-    private final Map<E, org.jgraph.graph.Edge> edgeToCell = new HashMap<E, org.jgraph.graph.Edge>();
+    private final Map<E, org.jgraph.graph.Edge> edgeToCell =
+        new HashMap<E, org.jgraph.graph.Edge>();
 
     /**
      * Maps JGraphT vertices to JGraph vertices
@@ -194,7 +186,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      * @param jGraphTGraph the JGraphT graph for which JGraph model adapter to
      *                     be created. <code>null</code> is NOT permitted.
      */
-    public JGraphModelAdapter(Graph<V,E> jGraphTGraph)
+    public JGraphModelAdapter(Graph<V, E> jGraphTGraph)
     {
         this(
             jGraphTGraph,
@@ -210,12 +202,11 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      * @param defaultVertexAttributes a default map of JGraph attributes to
      *                                format vertices. <code>null</code> is NOT
      *                                permitted.
-     * @param defaultEdgeAttributes a default map of JGraph attributes to
-     *                              format edges. <code>null</code> is NOT
-     *                              permitted.
+     * @param defaultEdgeAttributes a default map of JGraph attributes to format
+     *                              edges. <code>null</code> is NOT permitted.
      */
     public JGraphModelAdapter(
-        Graph<V,E> jGraphTGraph,
+        Graph<V, E> jGraphTGraph,
         AttributeMap defaultVertexAttributes,
         AttributeMap defaultEdgeAttributes)
     {
@@ -223,7 +214,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             jGraphTGraph,
             defaultVertexAttributes,
             defaultEdgeAttributes,
-            new DefaultCellFactory<V,E>());
+            new DefaultCellFactory<V, E>());
     }
 
     /**
@@ -234,9 +225,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      * @param defaultVertexAttributes a default map of JGraph attributes to
      *                                format vertices. <code>null</code> is NOT
      *                                permitted.
-     * @param defaultEdgeAttributes a default map of JGraph attributes to
-     *                              format edges. <code>null</code> is NOT
-     *                              permitted.
+     * @param defaultEdgeAttributes a default map of JGraph attributes to format
+     *                              edges. <code>null</code> is NOT permitted.
      * @param cellFactory a {@link CellFactory} to be used to create the JGraph
      *                    cells. <code>null</code> is NOT permitted.
      *
@@ -246,12 +236,15 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         Graph<V, E> jGraphTGraph,
         AttributeMap defaultVertexAttributes,
         AttributeMap defaultEdgeAttributes,
-        CellFactory<V,E> cellFactory)
+        CellFactory<V, E> cellFactory)
     {
         super();
 
-        if ((jGraphTGraph == null) || (defaultVertexAttributes == null)
-            || (defaultEdgeAttributes == null) || (cellFactory == null)) {
+        if (
+            (jGraphTGraph == null)
+            || (defaultVertexAttributes == null)
+            || (defaultEdgeAttributes == null)
+            || (cellFactory == null)) {
             throw new IllegalArgumentException("null is NOT permitted");
         }
 
@@ -265,7 +258,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             g.addGraphListener(new JGraphTListener());
         }
 
-        for (Iterator<V> i = jGraphTGraph.vertexSet().iterator(); i.hasNext();) {
+        for (Iterator<V> i = jGraphTGraph.vertexSet().iterator();
+            i.hasNext();) {
             handleJGraphTAddedVertex(i.next());
         }
 
@@ -308,11 +302,10 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * Creates and returns a map of attributes to be used as defaults for
-     * vertex attributes.
+     * Creates and returns a map of attributes to be used as defaults for vertex
+     * attributes.
      *
-     * @return a map of attributes to be used as defaults for vertex
-     *         attributes.
+     * @return a map of attributes to be used as defaults for vertex attributes.
      */
     public static AttributeMap createDefaultVertexAttributes()
     {
@@ -336,7 +329,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      *
      * @return the cell factory used to create the JGraph cells.
      */
-    public CellFactory<V,E> getCellFactory()
+    public CellFactory<V, E> getCellFactory()
     {
         return cellFactory;
     }
@@ -362,8 +355,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * Sets the default vertex attributes used for creating new JGraph
-     * vertices.
+     * Sets the default vertex attributes used for creating new JGraph vertices.
      *
      * @param defaultVertexAttributes the default vertex attributes to set.
      */
@@ -461,8 +453,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             if (cellToEdge.containsKey(jEdge)) {
                 // edge already has a corresponding JGraphT edge.
                 // check if any change to its endpoints.
-                E jtEdge =
-                    cellToEdge.get(jEdge);
+                E jtEdge = cellToEdge.get(jEdge);
 
                 Object jSource = getSourceVertex(this, jEdge);
                 Object jTarget = getTargetVertex(this, jEdge);
@@ -470,7 +461,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
                 Object jtSource = cellToVertex.get(jSource);
                 Object jtTarget = cellToVertex.get(jTarget);
 
-                if ((jtGraph.getEdgeSource(jtEdge) == jtSource)
+                if (
+                    (jtGraph.getEdgeSource(jtEdge) == jtSource)
                     && (jtGraph.getEdgeTarget(jtEdge) == jtTarget)) {
                     // no change in edge's endpoints -- nothing to do.
                 } else {
@@ -537,10 +529,10 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     /**
      * Adds to the underlying JGraphT graph a vertex corresponding to the
      * specified JGraph vertex. In JGraph, two vertices with the same user
-     * object are in principle allowed; in JGraphT, this would lead to
-     * duplicate vertices, which is not allowed. So if such vertex already
-     * exists, the specified vertex is REMOVED from the JGraph graph and a a
-     * warning is printed.
+     * object are in principle allowed; in JGraphT, this would lead to duplicate
+     * vertices, which is not allowed. So if such vertex already exists, the
+     * specified vertex is REMOVED from the JGraph graph and a a warning is
+     * printed.
      *
      * <p>This method is to be called only for vertices that have already been
      * added to the JGraph graph.</p>
@@ -554,10 +546,10 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
 
         if (jVertex instanceof DefaultGraphCell) {
             // FIXME hb 28-nov-05: waiting for jgraph to go generic
-            jtVertex = (V)((DefaultGraphCell) jVertex).getUserObject();
+            jtVertex = (V) ((DefaultGraphCell) jVertex).getUserObject();
         } else {
             // FIXME: Why toString? Explain if for a good reason otherwise fix.
-            jtVertex = (V)jVertex.toString();
+            jtVertex = (V) jVertex.toString();
         }
 
         if (vertexToCell.containsKey(jtVertex)) {
@@ -591,8 +583,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     void handleJGraphRemovedEdge(org.jgraph.graph.Edge jEdge)
     {
         if (cellToEdge.containsKey(jEdge)) {
-            E jtEdge =
-                cellToEdge.get(jEdge);
+            E jtEdge = cellToEdge.get(jEdge);
 
             jtGraph.removeEdge(jtEdge);
 
@@ -662,8 +653,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * Adds the specified JGraphT vertex to be reflected by this graph model.
-     * To be called only for edges that already exist in the JGraphT graph.
+     * Adds the specified JGraphT vertex to be reflected by this graph model. To
+     * be called only for edges that already exist in the JGraphT graph.
      *
      * @param jtVertex a JGraphT vertex to be reflected by this graph model.
      */
@@ -683,8 +674,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
 
     /**
      * Removes the specified JGraphT vertex from being reflected by this graph
-     * model. To be called only for vertices that have already been removed
-     * from the JGraphT graph.
+     * model. To be called only for vertices that have already been removed from
+     * the JGraphT graph.
      *
      * @param jtVertex a JGraphT vertex to be removed from being reflected by
      *                 this graph model.
@@ -719,8 +710,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * Tests if the specified JGraph edge is 'dangling', that is having at
-     * least one endpoint which is not connected to a vertex.
+     * Tests if the specified JGraph edge is 'dangling', that is having at least
+     * one endpoint which is not connected to a vertex.
      *
      * @param jEdge the JGraph edge to be tested for being dangling.
      *
@@ -741,6 +732,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     private AttributeMap createEdgeAttributeMap(DefaultEdge edgeCell)
     {
         AttributeMap attrs = new AttributeMap();
+
         // FIXME hb 28-nov-05: waiting for graph to go generic
         attrs.put(edgeCell, getDefaultEdgeAttributes().clone());
 
@@ -751,6 +743,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     private AttributeMap createVertexAttributeMap(GraphCell vertexCell)
     {
         AttributeMap attrs = new AttributeMap();
+
         // FIXME hb 28-nov-05: waiting for graph to go generic
         attrs.put(vertexCell, getDefaultVertexAttributes().clone());
 
@@ -824,8 +817,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      * @author Barak Naveh
      * @since Dec 12, 2003
      */
-    public static class DefaultCellFactory<VV, EE> implements CellFactory<VV,EE>,
-        Serializable
+    public static class DefaultCellFactory<VV, EE>
+        implements CellFactory<VV, EE>, Serializable
     {
         private static final long serialVersionUID = 3690194343461861173L;
 
@@ -852,10 +845,11 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
      * back to the JGraphT graph, if it didn't originate there.</p>
      *
      * <p>If this change contains changes that would make this an illegal
-     * JGraphT graph, like adding an edge that is incident with only one
-     * vertex, the illegal parts of the change are undone.</p>
+     * JGraphT graph, like adding an edge that is incident with only one vertex,
+     * the illegal parts of the change are undone.</p>
      */
-    private class JGraphListener implements GraphModelListener, Serializable
+    private class JGraphListener
+        implements GraphModelListener, Serializable
     {
         private static final long serialVersionUID = 3544673988098865209L;
 
@@ -943,7 +937,8 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
                     // vertex.
                     // Note: do not change the order of following conditions;
                     // the code uses the short-circuit evaluation of ||.
-                    if (graphCell.isLeaf()
+                    if (
+                        graphCell.isLeaf()
                         || (graphCell.getFirstChild() instanceof Port)) {
                         jVertices.add(cell);
                     }
@@ -1012,22 +1007,23 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
     }
 
     /**
-     * A listener on the underlying JGraphT graph. This listener is used to
-     * keep the JGraph model in sync. Whenever one of the event handlers is
-     * called, it first checks whether the change is due to a previous change
-     * in the JGraph model. If it is, then no action is taken.
+     * A listener on the underlying JGraphT graph. This listener is used to keep
+     * the JGraph model in sync. Whenever one of the event handlers is called,
+     * it first checks whether the change is due to a previous change in the
+     * JGraph model. If it is, then no action is taken.
      *
      * @author Barak Naveh
      * @since Aug 2, 2003
      */
-    private class JGraphTListener implements GraphListener<V,E>, Serializable
+    private class JGraphTListener
+        implements GraphListener<V, E>, Serializable
     {
         private static final long serialVersionUID = 3616724963609360440L;
 
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded(GraphEdgeChangeEvent<V,E> e)
+        public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
         {
             E jtEdge = e.getEdge();
 
@@ -1039,7 +1035,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
         /**
          * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved(GraphEdgeChangeEvent<V,E> e)
+        public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
         {
             E jtEdge = e.getEdge();
 
@@ -1090,7 +1086,7 @@ public class JGraphModelAdapter<V,E> extends DefaultGraphModel
             return graph.getEdgeFactory();
         }
 
-        E addEdge(V jtSource, V jtTarget) 
+        E addEdge(V jtSource, V jtTarget)
         {
             E jtEdge = graph.getEdgeFactory().createEdge(jtSource, jtTarget);
             jtElementsBeingAdded.add(jtEdge);

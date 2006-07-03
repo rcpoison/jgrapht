@@ -39,7 +39,8 @@
  */
 package org.jgrapht.experimental.touchgraph;
 
-import java.applet.Applet;
+import java.applet.*;
+
 import java.awt.*;
 
 import javax.swing.*;
@@ -47,25 +48,32 @@ import javax.swing.*;
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
+
 /**
- * SimpleTouchgraphApplet 
+ * SimpleTouchgraphApplet
  *
  * @author canderson
  */
-public class SimpleTouchgraphApplet extends Applet
+public class SimpleTouchgraphApplet
+    extends Applet
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
     /**
-     * 
      */
     private static final long serialVersionUID = 6213379835360007840L;
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
-     * create a graph: code taken from non-visible org._3pq.jgrapht.demo.createStringGraph()
-     * */
-    public static Graph<String,DefaultEdge> createSamplegraph()
+     * create a graph: code taken from non-visible
+     * org._3pq.jgrapht.demo.createStringGraph()
+     */
+    public static Graph<String, DefaultEdge> createSamplegraph()
     {
-        UndirectedGraph<String,DefaultEdge> g =
-            new SimpleGraph<String,DefaultEdge>(DefaultEdge.class);
+        UndirectedGraph<String, DefaultEdge> g =
+            new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
 
         String v1 = "v1";
         String v2 = "v2";
@@ -86,32 +94,32 @@ public class SimpleTouchgraphApplet extends Applet
 
         return g;
     }
-    
+
     /**
      * initialize the applet
      */
     public void init()
     {
-        Graph<String,DefaultEdge> g = createSamplegraph();
-        boolean selfReferencesAllowed = false;
-        
-        setLayout(new BorderLayout());
-        setSize(800,600);
-        add(new TouchgraphPanel<String,DefaultEdge>(g,selfReferencesAllowed), BorderLayout.CENTER);
-    }
-    
-    public static void main(String [] args)
-    {
-        Graph<String,DefaultEdge> g = createSamplegraph();
+        Graph<String, DefaultEdge> g = createSamplegraph();
         boolean selfReferencesAllowed = false;
 
-        JFrame frame = new
-            JFrame();
+        setLayout(new BorderLayout());
+        setSize(800, 600);
+        add(
+            new TouchgraphPanel<String, DefaultEdge>(g, selfReferencesAllowed),
+            BorderLayout.CENTER);
+    }
+
+    public static void main(String [] args)
+    {
+        Graph<String, DefaultEdge> g = createSamplegraph();
+        boolean selfReferencesAllowed = false;
+
+        JFrame frame = new JFrame();
         frame.getContentPane().add(
-            new TouchgraphPanel<String,DefaultEdge>(g,selfReferencesAllowed));
-        frame.setPreferredSize(new Dimension(800,800));
-        frame.setTitle("JGraphT to Touchgraph Converter Demo"
-            );
+            new TouchgraphPanel<String, DefaultEdge>(g, selfReferencesAllowed));
+        frame.setPreferredSize(new Dimension(800, 800));
+        frame.setTitle("JGraphT to Touchgraph Converter Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

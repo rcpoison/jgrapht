@@ -42,31 +42,37 @@ package org.jgrapht.alg;
 
 import org.jgrapht.*;
 
+
 /**
- * Helper class for {@link BellmanFordShortestPath}; not intended
- * for general use.
+ * Helper class for {@link BellmanFordShortestPath}; not intended for general
+ * use.
  */
-final class BellmanFordPathElement<V,E>
-    extends AbstractPathElement<V,E>
+final class BellmanFordPathElement<V, E>
+    extends AbstractPathElement<V, E>
 {
-    private double cost = 0;
+
+    //~ Static fields/initializers --------------------------------------------
 
     private static final double epsilon = 0.000000001;
 
+    //~ Instance fields -------------------------------------------------------
+
+    private double cost = 0;
+
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates a path element by concatenation of an edge to a path element.
-     * 
+     *
      * @param pathElement
-     * @param edge
-     *            edge reaching the end vertex of the path element created.
-     * @param cost
-     *            total cost of the created path element.
-     *  
+     * @param edge edge reaching the end vertex of the path element created.
+     * @param cost total cost of the created path element.
      */
     protected BellmanFordPathElement(
-        Graph<V,E> graph,
-        BellmanFordPathElement<V,E> pathElement,
-        E edge, double cost)
+        Graph<V, E> graph,
+        BellmanFordPathElement<V, E> pathElement,
+        E edge,
+        double cost)
     {
         super(graph, pathElement, edge);
 
@@ -78,8 +84,7 @@ final class BellmanFordPathElement<V,E>
      *
      * @param original source to copy from
      */
-    BellmanFordPathElement(
-        BellmanFordPathElement<V,E> original)
+    BellmanFordPathElement(BellmanFordPathElement<V, E> original)
     {
         super(original);
         this.cost = original.cost;
@@ -87,42 +92,47 @@ final class BellmanFordPathElement<V,E>
 
     /**
      * Creates an empty path element.
-     * 
-     * @param vertex
-     *            end vertex of the path element.
+     *
+     * @param vertex end vertex of the path element.
      */
-    protected BellmanFordPathElement(V vertex) {
+    protected BellmanFordPathElement(V vertex)
+    {
         super(vertex);
 
         this.cost = 0;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Returns the total cost of the path element.
-     * 
+     *
      * @return .
      */
-    public double getCost() {
+    public double getCost()
+    {
         return this.cost;
     }
 
     /**
-     * Returns <code>true</code> if the path has been improved,
-     * <code>false</code> otherwise. We use an "epsilon" precision to check
-     * whether the cost has been improved (because of many roundings, a formula
-     * equal to 0 could unfortunately be evaluated to 10^-14).
-     * 
+     * Returns <code>true</code> if the path has been improved, <code>
+     * false</code> otherwise. We use an "epsilon" precision to check whether
+     * the cost has been improved (because of many roundings, a formula equal to
+     * 0 could unfortunately be evaluated to 10^-14).
+     *
      * @param candidatePrevPathElement
      * @param candidateEdge
      * @param candidateCost
-     * 
+     *
      * @return .
      */
     protected boolean improve(
-        BellmanFordPathElement<V,E> candidatePrevPathElement,
-        E candidateEdge, double candidateCost) {
+        BellmanFordPathElement<V, E> candidatePrevPathElement,
+        E candidateEdge,
+        double candidateCost)
+    {
         // to avoid improvement only due to rounding errors.
-        if (candidateCost < getCost() - epsilon) {
+        if (candidateCost < (getCost() - epsilon)) {
             this.prevPathElement = candidatePrevPathElement;
             this.prevEdge = candidateEdge;
             this.cost = candidateCost;

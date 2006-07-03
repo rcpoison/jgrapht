@@ -47,7 +47,8 @@ import org.jgrapht.experimental.equivalence.*;
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class OddEvenGroupComparator implements EquivalenceComparator<Integer,Object>
+public class OddEvenGroupComparator
+    implements EquivalenceComparator<Integer, Object>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -67,6 +68,7 @@ public class OddEvenGroupComparator implements EquivalenceComparator<Integer,Obj
 
     /* Odd and even must have unique values.
      * @see
+     *
      *
      *
      *

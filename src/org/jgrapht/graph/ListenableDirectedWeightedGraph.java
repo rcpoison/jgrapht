@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: ListenableDirectedWeightedGraph.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -45,13 +46,13 @@ import org.jgrapht.*;
 
 
 /**
- * A directed weighted graph which is also {@link
- * org.jgrapht.ListenableGraph}.
+ * A directed weighted graph which is also {@link org.jgrapht.ListenableGraph}.
  *
  * @see DefaultListenableGraph
  */
 public class ListenableDirectedWeightedGraph<V, E>
-    extends ListenableDirectedGraph<V, E> implements WeightedGraph<V, E>
+    extends ListenableDirectedGraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -67,7 +68,7 @@ public class ListenableDirectedWeightedGraph<V, E>
      */
     public ListenableDirectedWeightedGraph(Class<? extends E> edgeClass)
     {
-        this(new DefaultDirectedWeightedGraph<V,E>(edgeClass));
+        this(new DefaultDirectedWeightedGraph<V, E>(edgeClass));
     }
 
     /**

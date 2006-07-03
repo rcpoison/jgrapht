@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: DirectedEdgeWeightOddEvenComparator.java 489 2006-07-02 02:05:47Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -52,17 +53,22 @@ public class DirectedEdgeWeightOddEvenComparator
     implements EquivalenceComparator
 {
 
+    //~ Instance fields -------------------------------------------------------
+
     private final Graph graph;
-    
-    //~ Methods ---------------------------------------------------------------
+
+    //~ Constructors ----------------------------------------------------------
 
     public DirectedEdgeWeightOddEvenComparator(Graph graph)
     {
         this.graph = graph;
     }
-    
+
+    //~ Methods ---------------------------------------------------------------
+
     /* (non-Javadoc)
      * @see
+     *
      *
      *
      *
@@ -71,7 +77,7 @@ public class DirectedEdgeWeightOddEvenComparator
      * java.lang.Object, java.lang.Object, java.lang.Object)
      */
     @SuppressWarnings("unchecked")
-	public boolean equivalenceCompare(
+    public boolean equivalenceCompare(
         Object arg1,
         Object arg2,
         Object context1,
@@ -90,11 +96,12 @@ public class DirectedEdgeWeightOddEvenComparator
      *
      *
      *
+     *
      * org.jgrapht.experimental.equivalence.EquivalenceComparator#equivalenceHashcode(java.lang.Object,
      * java.lang.Object)
      */
     @SuppressWarnings("unchecked")
-	public int equivalenceHashcode(Object arg1, Object context)
+    public int equivalenceHashcode(Object arg1, Object context)
     {
         int int1 = (int) graph.getEdgeWeight(arg1);
         return int1 % 2;

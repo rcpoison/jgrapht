@@ -50,8 +50,8 @@ import org.jgrapht.*;
 /**
  * A breadth-first iterator for a directed and an undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
- * Currently there are no means to ensure that, nor to fail-fast. The results
- * of such modifications are undefined.
+ * Currently there are no means to ensure that, nor to fail-fast. The results of
+ * such modifications are undefined.
  *
  * @author Barak Naveh
  * @since Jul 19, 2003
@@ -63,9 +63,9 @@ public class BreadthFirstIterator<V, E>
     //~ Instance fields -------------------------------------------------------
 
     /**
-     * <b>Note to users:</b> this queue implementation is a bit lame in terms
-     * of GC efficiency. If you need it to be improved either let us know or
-     * use the source...
+     * <b>Note to users:</b> this queue implementation is a bit lame in terms of
+     * GC efficiency. If you need it to be improved either let us know or use
+     * the source...
      */
     private LinkedList<V> queue = new LinkedList<V>();
 
@@ -86,8 +86,7 @@ public class BreadthFirstIterator<V, E>
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
      * vertex is <code>null</code>, iteration will start at an arbitrary vertex
-     * and will not be limited, that is, will be able to traverse all the
-     * graph.
+     * and will not be limited, that is, will be able to traverse all the graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.

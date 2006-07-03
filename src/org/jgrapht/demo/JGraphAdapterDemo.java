@@ -45,12 +45,12 @@ import java.awt.geom.*;
 
 import javax.swing.*;
 
+import org.jgraph.*;
+import org.jgraph.graph.*;
+
 import org.jgrapht.*;
 import org.jgrapht.ext.*;
 import org.jgrapht.graph.*;
-
-import org.jgraph.*;
-import org.jgraph.graph.*;
 
 // resolve ambiguity
 import org.jgrapht.graph.DefaultEdge;
@@ -62,7 +62,8 @@ import org.jgrapht.graph.DefaultEdge;
  * @author Barak Naveh
  * @since Aug 3, 2003
  */
-public class JGraphAdapterDemo extends JApplet
+public class JGraphAdapterDemo
+    extends JApplet
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -103,12 +104,12 @@ public class JGraphAdapterDemo extends JApplet
     public void init()
     {
         // create a JGraphT graph
-        ListenableGraph<String,DefaultEdge> g =
-            new ListenableDirectedMultigraph<String,DefaultEdge>(
+        ListenableGraph<String, DefaultEdge> g =
+            new ListenableDirectedMultigraph<String, DefaultEdge>(
                 DefaultEdge.class);
 
         // create a visualization using JGraph, via an adapter
-        jgAdapter = new JGraphModelAdapter<String,DefaultEdge>(g);
+        jgAdapter = new JGraphModelAdapter<String, DefaultEdge>(g);
 
         JGraph jgraph = new JGraph(jgAdapter);
 
@@ -160,7 +161,7 @@ public class JGraphAdapterDemo extends JApplet
         jg.setBackground(c);
     }
 
-    @SuppressWarnings("unchecked")    // FIXME hb 28-nov-05: See FIXME below
+    @SuppressWarnings("unchecked") // FIXME hb 28-nov-05: See FIXME below
     private void positionVertexAt(Object vertex, int x, int y)
     {
         DefaultGraphCell cell = jgAdapter.getVertexCell(vertex);
@@ -176,7 +177,7 @@ public class JGraphAdapterDemo extends JApplet
 
         GraphConstants.setBounds(attr, newBounds);
 
-        //TODO: Clean up generics once JGraph goes generic
+        // TODO: Clean up generics once JGraph goes generic
         AttributeMap cellAttr = new AttributeMap();
         cellAttr.put(cell, attr);
         jgAdapter.edit(cellAttr, null, null, null);
@@ -187,14 +188,15 @@ public class JGraphAdapterDemo extends JApplet
     /**
      * a listenable directed multigraph that allows loops and parallel edges.
      */
-    private static class ListenableDirectedMultigraph<V,E>
-        extends DefaultListenableGraph<V,E> implements DirectedGraph<V,E>
+    private static class ListenableDirectedMultigraph<V, E>
+        extends DefaultListenableGraph<V, E>
+        implements DirectedGraph<V, E>
     {
         private static final long serialVersionUID = 1L;
 
         ListenableDirectedMultigraph(Class<E> edgeClass)
         {
-            super(new DirectedMultigraph<V,E>(edgeClass));
+            super(new DirectedMultigraph<V, E>(edgeClass));
         }
     }
 }

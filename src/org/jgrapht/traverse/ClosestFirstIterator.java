@@ -49,21 +49,19 @@ import org.jgrapht.util.*;
 /**
  * A closest-first iterator for a directed or undirected graph. For this
  * iterator to work correctly the graph must not be modified during iteration.
- * Currently there are no means to ensure that, nor to fail-fast. The results
- * of such modifications are undefined.
+ * Currently there are no means to ensure that, nor to fail-fast. The results of
+ * such modifications are undefined.
  *
- * <p>The metric for <i>closest</i> here is the path length from a start
- * vertex. Graph.getEdgeWeight(Edge) is summed to calculate path
- * length. Negative edge weights will result in an IllegalArgumentException.
- * Optionally, path length may be bounded by a finite radius.</p>
+ * <p>The metric for <i>closest</i> here is the path length from a start vertex.
+ * Graph.getEdgeWeight(Edge) is summed to calculate path length. Negative edge
+ * weights will result in an IllegalArgumentException. Optionally, path length
+ * may be bounded by a finite radius.</p>
  *
  * @author John V. Sichi
  * @since Sep 2, 2003
  */
 public class ClosestFirstIterator<V, E>
-    extends CrossComponentIterator<
-        V, E,
-        FibonacciHeapNode<ClosestFirstIterator.QueueEntry<V,E>>>
+    extends CrossComponentIterator<V, E, FibonacciHeapNode<ClosestFirstIterator.QueueEntry<V, E>>>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -71,8 +69,8 @@ public class ClosestFirstIterator<V, E>
     /**
      * Priority queue of fringe vertices.
      */
-    private FibonacciHeap<QueueEntry<V,E>> heap =
-        new FibonacciHeap<QueueEntry<V,E>>();
+    private FibonacciHeap<QueueEntry<V, E>> heap =
+        new FibonacciHeap<QueueEntry<V, E>>();
 
     /**
      * Maximum distance to search.
@@ -96,8 +94,7 @@ public class ClosestFirstIterator<V, E>
      * will start at the specified start vertex and will be limited to the
      * connected component that includes that vertex. If the specified start
      * vertex is <code>null</code>, iteration will start at an arbitrary vertex
-     * and will not be limited, that is, will be able to traverse all the
-     * graph.
+     * and will not be limited, that is, will be able to traverse all the graph.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
@@ -148,7 +145,7 @@ public class ClosestFirstIterator<V, E>
      */
     public double getShortestPathLength(V vertex)
     {
-        FibonacciHeapNode<QueueEntry<V,E>> node = getSeenData(vertex);
+        FibonacciHeapNode<QueueEntry<V, E>> node = getSeenData(vertex);
 
         if (node == null) {
             return Double.POSITIVE_INFINITY;
@@ -159,15 +156,15 @@ public class ClosestFirstIterator<V, E>
 
     /**
      * Get the spanning tree edge reaching a vertex which has been seen already
-     * in this traversal.  This edge is the last link in the shortest known
-     * path between the start vertex and the requested vertex.  If the vertex
-     * has already been visited, then it is truly the minimum spanning tree
-     * edge; otherwise, it is the best candidate seen so far.
+     * in this traversal.  This edge is the last link in the shortest known path
+     * between the start vertex and the requested vertex.  If the vertex has
+     * already been visited, then it is truly the minimum spanning tree edge;
+     * otherwise, it is the best candidate seen so far.
      *
      * @param vertex the spanned vertex.
      *
-     * @return the spanning tree edge, or null if the vertex either has not
-     *         been seen yet or is the start vertex.
+     * @return the spanning tree edge, or null if the vertex either has not been
+     *         seen yet or is the start vertex.
      */
     public E getSpanningTreeEdge(V vertex)
     {
@@ -203,7 +200,7 @@ public class ClosestFirstIterator<V, E>
      */
     protected void encounterVertex(V vertex, E edge)
     {
-        FibonacciHeapNode<QueueEntry<V,E>> node = createSeenData(vertex, edge);
+        FibonacciHeapNode<QueueEntry<V, E>> node = createSeenData(vertex, edge);
         putSeenData(vertex, node);
         heap.insert(node, node.getKey());
     }
@@ -217,7 +214,7 @@ public class ClosestFirstIterator<V, E>
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
-        FibonacciHeapNode<QueueEntry<V,E>> node = getSeenData(vertex);
+        FibonacciHeapNode<QueueEntry<V, E>> node = getSeenData(vertex);
 
         if (node.getData().frozen) {
             // no improvement for this vertex possible
@@ -265,7 +262,7 @@ public class ClosestFirstIterator<V, E>
         assertNonNegativeEdge(edge);
 
         V otherVertex = Graphs.getOppositeVertex(getGraph(), edge, vertex);
-        FibonacciHeapNode<QueueEntry<V,E>> otherEntry =
+        FibonacciHeapNode<QueueEntry<V, E>> otherEntry =
             getSeenData(otherVertex);
 
         return otherEntry.getKey()
@@ -288,7 +285,9 @@ public class ClosestFirstIterator<V, E>
      *
      * @return the new heap node.
      */
-    private FibonacciHeapNode<QueueEntry<V,E>> createSeenData(V vertex, E edge)
+    private FibonacciHeapNode<QueueEntry<V, E>> createSeenData(
+        V vertex,
+        E edge)
     {
         double shortestPathLength;
 
@@ -298,12 +297,14 @@ public class ClosestFirstIterator<V, E>
             shortestPathLength = calculatePathLength(vertex, edge);
         }
 
-        QueueEntry<V,E> entry = new QueueEntry<V,E>();
+        QueueEntry<V, E> entry = new QueueEntry<V, E>();
         entry.vertex = vertex;
         entry.spanningTreeEdge = edge;
 
-        return new FibonacciHeapNode<QueueEntry<V,E>>(
-            entry, shortestPathLength);
+        return
+            new FibonacciHeapNode<QueueEntry<V, E>>(
+                entry,
+                shortestPathLength);
     }
 
     //~ Inner Classes ---------------------------------------------------------
@@ -311,7 +312,7 @@ public class ClosestFirstIterator<V, E>
     /**
      * Private data to associate with each entry in the priority queue.
      */
-    static class QueueEntry<V,E>
+    static class QueueEntry<V, E>
     {
         /**
          * Best spanning tree edge to vertex seen so far.

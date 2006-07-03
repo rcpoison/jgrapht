@@ -52,8 +52,8 @@ import java.util.*;
  * @author Assaf
  * @since May 20, 2005
  */
-public class IntegerPermutationIter implements Iterator,
-    ArrayPermutationsIter
+public class IntegerPermutationIter
+    implements Iterator, ArrayPermutationsIter
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -90,9 +90,9 @@ public class IntegerPermutationIter implements Iterator,
     }
 
     /**
-     * Uses a predefined array (sorted), for example:
-     * [3,1,1,2,1]-->[1,1,1,2,3]; note that there are much less than 5!
-     * premutations here, because of the repetitive 1s.
+     * Uses a predefined array (sorted), for example: [3,1,1,2,1]-->[1,1,1,2,3];
+     * note that there are much less than 5! premutations here, because of the
+     * repetitive 1s.
      *
      * @param array creates a copy of it (so sort / later changes will not
      *              matter)
@@ -182,7 +182,8 @@ public class IntegerPermutationIter implements Iterator,
      */
     public boolean hasNext()
     {
-        if ((this.permutationCounter == 0)
+        if (
+            (this.permutationCounter == 0)
             || (this.wasNextValueCalculatedAlready)) {
             return true;
         } else if (this.endWasReached) {

@@ -78,6 +78,7 @@ import java.util.*;
  */
 public class FibonacciHeap<T>
 {
+
     //~ Instance fields -------------------------------------------------------
 
     /**
@@ -315,7 +316,8 @@ public class FibonacciHeap<T>
      * @return new heap containing h1 and h2
      */
     public static <T> FibonacciHeap<T> union(
-        FibonacciHeap<T> h1, FibonacciHeap<T> h2)
+        FibonacciHeap<T> h1,
+        FibonacciHeap<T> h2)
     {
         FibonacciHeap<T> h = new FibonacciHeap<T>();
 
@@ -425,8 +427,8 @@ public class FibonacciHeap<T>
     // cascadingCut
 
     /**
-     * Consolidates the trees in the heap by joining trees of equal degree
-     * until there are no more trees of equal degree in the root list.
+     * Consolidates the trees in the heap by joining trees of equal degree until
+     * there are no more trees of equal degree in the root list.
      *
      * <p>Running time: O(log n) amortized</p>
      */
@@ -437,8 +439,9 @@ public class FibonacciHeap<T>
             new ArrayList<FibonacciHeapNode<T>>(arraySize);
 
         // Initialize degree array
-        for (int i=0; i<arraySize; i++)
+        for (int i = 0; i < arraySize; i++) {
             array.add(null);
+        }
 
         // Find the number of root nodes.
         int numRoots = 0;
@@ -476,13 +479,13 @@ public class FibonacciHeap<T>
                 link(y, x);
 
                 // We've handled this degree, go to next one.
-                array.set(d,null);
+                array.set(d, null);
                 d++;
             }
 
             // Save this node for later when we might encounter another
             // of the same degree.
-            array.set(d,x);
+            array.set(d, x);
 
             // Move forward through list.
             x = next;

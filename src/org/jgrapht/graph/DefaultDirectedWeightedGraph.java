@@ -45,9 +45,9 @@ import org.jgrapht.*;
 
 
 /**
- * A directed weighted graph. A directed weighted graph is a non-simple
- * directed graph in which multiple edges between any two vertices are <i>
- * not</i> permitted, but loops are. The graph has weights on its edges.
+ * A directed weighted graph. A directed weighted graph is a non-simple directed
+ * graph in which multiple edges between any two vertices are <i>not</i>
+ * permitted, but loops are. The graph has weights on its edges.
  *
  * <p>prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
  * interface.</p>
@@ -55,7 +55,8 @@ import org.jgrapht.*;
  * @see DefaultDirectedGraph
  */
 public class DefaultDirectedWeightedGraph<V, E>
-    extends DefaultDirectedGraph<V, E> implements WeightedGraph<V, E>
+    extends DefaultDirectedGraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------

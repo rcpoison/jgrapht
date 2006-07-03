@@ -52,7 +52,8 @@ import org.jgrapht.*;
  * @see Subgraph
  */
 public class DirectedWeightedSubgraph<V, E>
-    extends DirectedSubgraph<V, E> implements WeightedGraph<V, E>
+    extends DirectedSubgraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -64,18 +65,18 @@ public class DirectedWeightedSubgraph<V, E>
     /**
      * Creates a new weighted directed subgraph.
      *
-     * @param base the base (backing) graph on which the subgraph will be
-     *             based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public DirectedWeightedSubgraph(WeightedGraph<V, E> base,
+    public DirectedWeightedSubgraph(
+        WeightedGraph<V, E> base,
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {
-        super((DirectedGraph<V,E>) base, vertexSubset, edgeSubset);
+        super((DirectedGraph<V, E>) base, vertexSubset, edgeSubset);
     }
 }

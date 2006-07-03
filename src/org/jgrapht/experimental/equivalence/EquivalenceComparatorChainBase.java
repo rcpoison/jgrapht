@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: EquivalenceComparatorChainBase.java 485 2006-06-26 09:12:14Z perfecthash
+ * $
  *
  * Changes
  * -------
@@ -61,12 +62,14 @@ import java.util.*;
  * </blockquote>
  *
  * @param <E> the type of the elements in the set
- * @param <C> the type of the context the element is compared against, e.g. a Graph
+ * @param <C> the type of the context the element is compared against, e.g. a
+ *        Graph
+ *
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class EquivalenceComparatorChainBase<E,C>
-    implements EquivalenceComparatorChain<E,C>
+public class EquivalenceComparatorChainBase<E, C>
+    implements EquivalenceComparatorChain<E, C>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -78,9 +81,10 @@ public class EquivalenceComparatorChainBase<E,C>
     /**
      */
     public EquivalenceComparatorChainBase(
-        EquivalenceComparator<E,C> firstComaparator)
+        EquivalenceComparator<E, C> firstComaparator)
     {
-        this.chain = new LinkedList<EquivalenceComparator<? super E, ? super C>>();
+        this.chain =
+            new LinkedList<EquivalenceComparator<? super E, ? super C>>();
         this.chain.add(firstComaparator);
     }
 
@@ -92,10 +96,11 @@ public class EquivalenceComparatorChainBase<E,C>
      *
      *
      *
+     *
      * org.jgrapht.experimental.equivalence.EquivalenceComparatorChain#addComparatorAfter(org.jgrapht.experimental.equivalence.EquivalenceComparator)
      */
     @SuppressWarnings("unchecked")
-	public void appendComparator(EquivalenceComparator comparatorAfter)
+    public void appendComparator(EquivalenceComparator comparatorAfter)
     {
         if (comparatorAfter != null) {
             this.chain.add(comparatorAfter);
@@ -108,7 +113,7 @@ public class EquivalenceComparatorChainBase<E,C>
      * false, this method returns true.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     * Object)
+     *      Object)
      */
     public boolean equivalenceCompare(
         E arg1,
@@ -116,8 +121,11 @@ public class EquivalenceComparatorChainBase<E,C>
         C context1,
         C context2)
     {
-        for (EquivalenceComparator<? super E, ? super C> currentComparator : this.chain) {
-            if (!currentComparator.equivalenceCompare(
+        for (
+            EquivalenceComparator<? super E, ? super C> currentComparator
+            : this.chain) {
+            if (
+                !currentComparator.equivalenceCompare(
                     arg1,
                     arg2,
                     context1,
@@ -136,8 +144,10 @@ public class EquivalenceComparatorChainBase<E,C>
     public int equivalenceHashcode(E arg1, C context)
     {
         StringBuffer hashStringBuffer = new StringBuffer();
-        for (ListIterator<EquivalenceComparator<? super E, ? super C>> iter = this.chain.listIterator();
-             iter.hasNext();) {
+        for (
+            ListIterator<EquivalenceComparator<? super E, ? super C>> iter =
+                this.chain.listIterator();
+            iter.hasNext();) {
             EquivalenceComparator<? super E, ? super C> currentComparator =
                 iter.next();
             int currentHashCode =

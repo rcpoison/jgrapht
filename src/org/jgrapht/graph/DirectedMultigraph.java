@@ -49,7 +49,8 @@ import org.jgrapht.*;
  * in which loops and multiple edges between any two vertices are permitted.
  */
 public class DirectedMultigraph<V, E>
-    extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
+    extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------

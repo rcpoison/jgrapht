@@ -41,7 +41,6 @@
  */
 package org.jgrapht.event;
 
-
 /**
  * A listener on graph iterator or on a graph traverser.
  *
@@ -80,9 +79,9 @@ public interface TraversalListener<V, E>
     public void edgeTraversed(EdgeTraversalEvent<V, E> e);
 
     /**
-     * Called to inform the listener that the specified vertex have been
-     * visited during the graph traversal. Depending on the traversal
-     * algorithm, vertex might be visited more than once.
+     * Called to inform the listener that the specified vertex have been visited
+     * during the graph traversal. Depending on the traversal algorithm, vertex
+     * might be visited more than once.
      *
      * @param e the vertex traversal event.
      */

@@ -52,7 +52,8 @@ import org.jgrapht.graph.*;
  * @author Michael Behrisch
  * @since Sep 14, 2004
  */
-public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
+public class GraphSquare<V, E>
+    extends AbstractBaseGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -68,15 +69,16 @@ public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
      * @param g the graph of which a square is to be created.
      * @param createLoops
      */
-    public GraphSquare(final Graph<V,E> g, final boolean createLoops)
+    public GraphSquare(final Graph<V, E> g, final boolean createLoops)
     {
         super(g.getEdgeFactory(), false, createLoops);
         Graphs.addAllVertices(this, g.vertexSet());
         addSquareEdges(g, createLoops);
 
         if (g instanceof ListenableGraph) {
-            ((ListenableGraph<V,E>) g).addGraphListener(new GraphListener<V,E>() {
-                    public void edgeAdded(GraphEdgeChangeEvent<V,E> e)
+            ((ListenableGraph<V, E>) g).addGraphListener(
+                new GraphListener<V, E>() {
+                    public void edgeAdded(GraphEdgeChangeEvent<V, E> e)
                     {
                         E edge = e.getEdge();
                         addEdgesStartingAt(
@@ -91,7 +93,7 @@ public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
                             createLoops);
                     }
 
-                    public void edgeRemoved(GraphEdgeChangeEvent<V,E> e)
+                    public void edgeRemoved(GraphEdgeChangeEvent<V, E> e)
                     { // this is not a very performant implementation
                         GraphSquare.super.removeAllEdges(edgeSet());
                         addSquareEdges(g, createLoops);
@@ -183,7 +185,7 @@ public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
     }
 
     private void addEdgesStartingAt(
-        final Graph<V,E> g,
+        final Graph<V, E> g,
         final V v,
         final V u,
         boolean createLoops)
@@ -203,9 +205,9 @@ public class GraphSquare<V, E> extends AbstractBaseGraph<V, E>
         }
     }
 
-    private void addSquareEdges(Graph<V,E> g, boolean createLoops)
+    private void addSquareEdges(Graph<V, E> g, boolean createLoops)
     {
-        for (V v: g.vertexSet()) {
+        for (V v : g.vertexSet()) {
             List<V> adjVertices = Graphs.neighborListOf(g, v);
 
             for (int i = 0; i < adjVertices.size(); i++) {

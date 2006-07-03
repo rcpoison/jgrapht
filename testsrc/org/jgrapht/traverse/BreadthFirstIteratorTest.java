@@ -48,13 +48,14 @@ import org.jgrapht.graph.*;
  * Tests for the {@link BreadthFirstIterator} class.
  *
  * <p>NOTE: This test uses hard-coded expected ordering isn't really guaranteed
- * by the specification of the algorithm. This could cause false failures if
- * the traversal implementation changes.</p>
+ * by the specification of the algorithm. This could cause false failures if the
+ * traversal implementation changes.</p>
  *
  * @author Liviu Rau
  * @since Jul 30, 2003
  */
-public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest
+public class BreadthFirstIteratorTest
+    extends AbstractGraphIteratorTest
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -69,7 +70,9 @@ public class BreadthFirstIteratorTest extends AbstractGraphIteratorTest
         return "1,2,3,4,5,6,7,8,9,orphan";
     }
 
-    AbstractGraphIterator<String, DefaultEdge> createIterator(DirectedGraph<String, DefaultEdge> g, String vertex)
+    AbstractGraphIterator<String, DefaultEdge> createIterator(
+        DirectedGraph<String, DefaultEdge> g,
+        String vertex)
     {
         AbstractGraphIterator<String, DefaultEdge> i =
             new BreadthFirstIterator<String, DefaultEdge>(g, vertex);

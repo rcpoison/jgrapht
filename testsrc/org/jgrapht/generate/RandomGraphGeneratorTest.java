@@ -37,11 +37,10 @@
  */
 package org.jgrapht.generate;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.Graph;
-import org.jgrapht.experimental.isomorphism.EdgeTopologyCompare;
-import org.jgrapht.experimental.isomorphism.IntegerVertexFactory;
+import org.jgrapht.*;
+import org.jgrapht.experimental.isomorphism.*;
 import org.jgrapht.graph.*;
 
 
@@ -49,7 +48,8 @@ import org.jgrapht.graph.*;
  * @author Assaf
  * @since Aug 6, 2005
  */
-public class RandomGraphGeneratorTest extends TestCase
+public class RandomGraphGeneratorTest
+    extends TestCase
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -66,20 +66,21 @@ public class RandomGraphGeneratorTest extends TestCase
 
     /**
      * Creates 3 graphs with the same numOfVertex and numOfEdges. The first two
-     * are generated using the same RandomGraphGenerator; the third is
-     * generated using a new instance.
-     *
-     * The graphs are <code>directedGragh1, directedGragh2, directedGragh3</code>
+     * are generated using the same RandomGraphGenerator; the third is generated
+     * using a new instance. The graphs are <code>directedGragh1,
+     * directedGragh2, directedGragh3</code>
      */
     private static Graph [] testGenerateDirectedGraph()
     {
         final int numOfVertex = 11;
         final int numOfEdges = 110; // simple undirected max = N(v)x(N(v)-1)
-        RandomGraphGenerator<Integer,DefaultEdge>
-            randomGen = new RandomGraphGenerator<Integer,DefaultEdge>(numOfVertex, numOfEdges);
+        RandomGraphGenerator<Integer, DefaultEdge> randomGen =
+            new RandomGraphGenerator<Integer, DefaultEdge>(
+                numOfVertex,
+                numOfEdges);
 
-        Graph<Integer,DefaultEdge>
-            directedGragh1 = new SimpleDirectedGraph<Integer,DefaultEdge>(
+        Graph<Integer, DefaultEdge> directedGragh1 =
+            new SimpleDirectedGraph<Integer, DefaultEdge>(
                 DefaultEdge.class);
 
         randomGen.generateGraph(
@@ -87,10 +88,9 @@ public class RandomGraphGeneratorTest extends TestCase
             new IntegerVertexFactory(),
             null);
 
-        
         // use the same randomGen
-        Graph<Integer,DefaultEdge>
-            directedGragh2 = new SimpleDirectedGraph<Integer,DefaultEdge>(
+        Graph<Integer, DefaultEdge> directedGragh2 =
+            new SimpleDirectedGraph<Integer, DefaultEdge>(
                 DefaultEdge.class);
 
         randomGen.generateGraph(
@@ -98,22 +98,25 @@ public class RandomGraphGeneratorTest extends TestCase
             new IntegerVertexFactory(),
             null);
 
-        
         // use new randomGen here
-        RandomGraphGenerator<Integer,DefaultEdge>
-            newRandomGen = new RandomGraphGenerator<Integer,DefaultEdge>(numOfVertex, numOfEdges);
-        
-        Graph<Integer,DefaultEdge>
-            directedGragh3 = new SimpleDirectedGraph<Integer,DefaultEdge>(
+        RandomGraphGenerator<Integer, DefaultEdge> newRandomGen =
+            new RandomGraphGenerator<Integer, DefaultEdge>(
+                numOfVertex,
+                numOfEdges);
+
+        Graph<Integer, DefaultEdge> directedGragh3 =
+            new SimpleDirectedGraph<Integer, DefaultEdge>(
                 DefaultEdge.class);
-        
+
         newRandomGen.generateGraph(
             directedGragh3,
             new IntegerVertexFactory(),
             null);
 
         return new Graph [] {
-                directedGragh1, directedGragh2, directedGragh3
+                directedGragh1,
+                directedGragh2,
+                directedGragh3
             };
     }
 }

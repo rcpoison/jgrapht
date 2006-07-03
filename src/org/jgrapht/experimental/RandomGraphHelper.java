@@ -47,9 +47,9 @@ import org.jgrapht.*;
 
 /**
  * UniformRandomGraphGenerator generates a <a
- * href="http://mathworld.wolfram.com/RandomGraph.html">uniform random
- * graph</a> of any size. A uniform random graph contains edges chosen
- * independently uniformly at random from the set of all possible edges.
+ * href="http://mathworld.wolfram.com/RandomGraph.html">uniform random graph</a>
+ * of any size. A uniform random graph contains edges chosen independently
+ * uniformly at random from the set of all possible edges.
  *
  * @author Michael Behrisch
  * @since Sep 13, 2004
@@ -76,7 +76,7 @@ public final class RandomGraphHelper
      * @see GraphGenerator#generateGraph
      */
     @SuppressWarnings("unchecked")
-	public static void addEdges(
+    public static void addEdges(
         Graph target,
         List sourceVertices,
         List destVertices,
@@ -90,7 +90,8 @@ public final class RandomGraphHelper
                 target.addEdge(
                     sourceVertices.get(randSingleton.nextInt(
                             sourceSize)),
-                    destVertices.get(randSingleton.nextInt(destSize))) == null) {
+                    destVertices.get(randSingleton.nextInt(destSize)))
+                == null) {
                 ;
             }
         }
@@ -106,7 +107,7 @@ public final class RandomGraphHelper
      * @return
      */
     @SuppressWarnings("unchecked")
-	public static Object [] addVertices(
+    public static Object [] addVertices(
         Graph target,
         VertexFactory vertexFactory,
         int numVertices)

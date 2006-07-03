@@ -65,8 +65,7 @@ public class StopWatch
         } else {
             String timeDesc;
             timeDesc =
-                (deltaTime <= 10)
-                ? "<10ms [less than minumun measurement time]"
+                (deltaTime <= 10) ? "<10ms [less than minumun measurement time]"
                 : String.valueOf(deltaTime);
             System.out.println("# Performence:  in MiliSeconds:" + timeDesc);
         }

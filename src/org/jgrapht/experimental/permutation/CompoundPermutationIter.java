@@ -97,8 +97,8 @@ import org.jgrapht.util.*;
  * @author Assaf
  * @since May 30, 2005
  */
-public class CompoundPermutationIter implements ArrayPermutationsIter,
-    Iterator
+public class CompoundPermutationIter
+    implements ArrayPermutationsIter, Iterator
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -121,8 +121,7 @@ public class CompoundPermutationIter implements ArrayPermutationsIter,
     //~ Constructors ----------------------------------------------------------
 
     /**
-     * For the class example, use [1,2,2]. order matters! (performance-wise
-     * too)
+     * For the class example, use [1,2,2]. order matters! (performance-wise too)
      *
      * @param equalityGroupsSizesArray
      */
@@ -146,7 +145,9 @@ public class CompoundPermutationIter implements ArrayPermutationsIter,
 
         int counter = 0;
         this.max = 1; // each time , multiply by factorail(eqGroupSize)
-        for (int eqGroup = 0; eqGroup < equalityGroupsSizesArray.length;
+        for (
+            int eqGroup = 0;
+            eqGroup < equalityGroupsSizesArray.length;
             eqGroup++) {
             // create an array of eq.group size filled with values
             // of counter, counter+1, ... counter+size-1
@@ -229,7 +230,9 @@ public class CompoundPermutationIter implements ArrayPermutationsIter,
     {
         int [] resultArray = new int [this.totalPermArraySize];
         int counter = 0;
-        for (int groupIndex = 0; groupIndex < this.permArray.length;
+        for (
+            int groupIndex = 0;
+            groupIndex < this.permArray.length;
             groupIndex++) {
             int [] currPermArray = this.permArray[groupIndex].getCurrent();
             System.arraycopy(

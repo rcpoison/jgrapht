@@ -63,21 +63,21 @@ import org.jgrapht.util.*;
  * with respect to some base graph. More formally, a subgraph G(V,E) that is
  * based on a base graph Gb(Vb,Eb) satisfies the following <b><i>subgraph
  * property</i></b>: V is a subset of Vb and E is a subset of Eb. Other than
- * this property, a subgraph is a graph with any respect and fully complies
- * with the <code>Graph</code> interface.
+ * this property, a subgraph is a graph with any respect and fully complies with
+ * the <code>Graph</code> interface.
  *
- * <p>If the base graph is a {@link org.jgrapht.ListenableGraph}, the
- * subgraph listens on the base graph and guarantees the subgraph property. If
- * an edge or a vertex is removed from the base graph, it is automatically
- * removed from the subgraph. Subgraph listeners are informed on such removal
- * only if it results in a cascaded removal from the subgraph. If the subgraph
- * has been created as an induced subgraph it also keeps track of edges being
- * added to its vertices. If  vertices are added to the base graph, the
- * subgraph remains unaffected.</p>
+ * <p>If the base graph is a {@link org.jgrapht.ListenableGraph}, the subgraph
+ * listens on the base graph and guarantees the subgraph property. If an edge or
+ * a vertex is removed from the base graph, it is automatically removed from the
+ * subgraph. Subgraph listeners are informed on such removal only if it results
+ * in a cascaded removal from the subgraph. If the subgraph has been created as
+ * an induced subgraph it also keeps track of edges being added to its vertices.
+ * If  vertices are added to the base graph, the subgraph remains
+ * unaffected.</p>
  *
  * <p>If the base graph is <i>not</i> a ListenableGraph, then the subgraph
- * property cannot be guaranteed. If edges or vertices are removed from the
- * base graph, they are <i>not</i> removed from the subgraph.</p>
+ * property cannot be guaranteed. If edges or vertices are removed from the base
+ * graph, they are <i>not</i> removed from the subgraph.</p>
  *
  * <p>Modifications to Subgraph are allowed as long as the subgraph property is
  * maintained. Addition of vertices or edges are allowed as long as they also
@@ -94,10 +94,9 @@ import org.jgrapht.util.*;
  * longer enforced. If you want to achieve a "live-window"functionality, your
  * safest tactics would be to NOT override the <code>equals()</code> methods of
  * your vertices and edges. If you use a class that has already overridden the
- * <code>equals()</code> method, such as <code>String</code>, than you can use
- * a wrapper around it, or else use it directly but exercise a great care to
- * avoid having different-but-equal instances in the subgraph and the base
- * graph.</p>
+ * <code>equals()</code> method, such as <code>String</code>, than you can use a
+ * wrapper around it, or else use it directly but exercise a great care to avoid
+ * having different-but-equal instances in the subgraph and the base graph.</p>
  *
  * <p>This graph implementation guarantees deterministic vertex and edge set
  * ordering (via {@link LinkedHashSet}).</p>
@@ -106,17 +105,20 @@ import org.jgrapht.util.*;
  * @see Graph
  * @see Set
  * @since Jul 18, 2003
- * 
- * <p>
- * TODO hb 27-Nov-05: Subgraph features the code for a directed graph without specifying the interface.
- * This makes types/typecasting problematic. The class does not even test
- * whether a directed graph is stored in base when executing direction-related methods.
- * My guess is that all direction-related methods should move to DirectedSubgraph.
+ *
+ *        <p>TODO hb 27-Nov-05: Subgraph features the code for a directed graph
+ *        without specifying the interface. This makes types/typecasting
+ *        problematic. The class does not even test whether a directed graph is
+ *        stored in base when executing direction-related methods. My guess is
+ *        that all direction-related methods should move to DirectedSubgraph.
  */
-public class Subgraph<V, E> extends AbstractGraph<V, E>
+public class Subgraph<V, E>
+    extends AbstractGraph<V, E>
     implements Serializable
 {
+
     //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3208313055169665387L;
     private static final String NO_SUCH_EDGE_IN_BASE =
         "no such edge in base graph";
@@ -128,7 +130,8 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     //
     Set<E> edgeSet = new LinkedHashSet<E>(); // friendly to improve performance
     Set<V> vertexSet = new LinkedHashSet<V>(); // friendly to improve
-                                              // performance
+
+    // performance
 
     //
     private transient Set<E> unmodifiableEdgeSet = null;
@@ -141,8 +144,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     /**
      * Creates a new Subgraph.
      *
-     * @param base the base (backing) graph on which the subgraph will be
-     *             based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
@@ -156,7 +158,8 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
         this.base = base;
 
         if (base instanceof ListenableGraph) {
-            ((ListenableGraph<V, E>) base).addGraphListener(new BaseGraphListener());
+            ((ListenableGraph<V, E>) base).addGraphListener(
+                new BaseGraphListener());
         }
 
         addVerticesUsingFilter(base.vertexSet(), vertexSubset);
@@ -169,8 +172,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
      * vertices. If base it not listenable, this is identical to the call
      * Subgraph(base, vertexSubset, null) .
      *
-     * @param base the base (backing) graph on which the subgraph will be
-     *             based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      */
@@ -199,7 +201,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
                 E e = iter.next();
 
                 if (edgeSet.contains(e)) { // add if subgraph also contains
-                                             // it
+                                           // it
                     edges.add(e);
                 }
             }
@@ -273,8 +275,8 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
         assertVertexExist(sourceVertex);
         assertVertexExist(targetVertex);
 
-        assert(base.getEdgeSource(e) == sourceVertex);
-        assert(base.getEdgeTarget(e) == targetVertex);
+        assert (base.getEdgeSource(e) == sourceVertex);
+        assert (base.getEdgeTarget(e) == targetVertex);
 
         if (containsEdge(e)) {
             return false;
@@ -337,14 +339,15 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
-    public int degreeOf(V vertex) {
+    public int degreeOf(V vertex)
+    {
         assertVertexExist(vertex);
 
         // TODO hb 27-Nov-05: Check/understand this sophistication
         // could the intend be to throw a ClassCastException
         // for non-directed graphs?
         // sophisticated way to check runtime class of base ;-)
-        ((UndirectedGraph<V,E>) base).degreeOf(vertex);
+        ((UndirectedGraph<V, E>) base).degreeOf(vertex);
 
         int degree = 0;
 
@@ -401,7 +404,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V,E>)base).incomingEdgesOf(vertex)) {
+        for (E e : ((DirectedGraph<V, E>) base).incomingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -418,8 +421,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
         assertVertexExist(vertex);
 
         Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<E> baseEdges =
-            ((DirectedGraph<V, E>) base).incomingEdgesOf(vertex);
+        Set<E> baseEdges = ((DirectedGraph<V, E>) base).incomingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -439,7 +441,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V,E>)base).outgoingEdgesOf(vertex)) {
+        for (E e : ((DirectedGraph<V, E>) base).outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -567,7 +569,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
         }
     }
 
-    protected Graph<V,E> getBase()
+    protected Graph<V, E> getBase()
     {
         return base;
     }
@@ -587,7 +589,7 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
     {
         ((WeightedGraph<V, E>) base).setEdgeWeight(e, weight);
     }
-    
+
     //~ Inner Classes ---------------------------------------------------------
 
     /**
@@ -596,8 +598,8 @@ public class Subgraph<V, E> extends AbstractGraph<V, E>
      * @author Barak Naveh
      * @since Jul 20, 2003
      */
-    private class BaseGraphListener implements GraphListener<V, E>,
-        Serializable
+    private class BaseGraphListener
+        implements GraphListener<V, E>, Serializable
     {
         private static final long serialVersionUID = 4343535244243546391L;
 

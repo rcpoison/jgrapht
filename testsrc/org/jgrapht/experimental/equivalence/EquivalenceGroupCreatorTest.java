@@ -37,19 +37,19 @@
  */
 package org.jgrapht.experimental.equivalence;
 
-import java.util.ArrayList;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator;
-import org.jgrapht.experimental.isomorphism.comparators.OddEvenGroupComparator;
+import org.jgrapht.experimental.isomorphism.comparators.*;
 
 
 /**
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class EquivalenceGroupCreatorTest extends TestCase
+public class EquivalenceGroupCreatorTest
+    extends TestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -68,25 +68,29 @@ public class EquivalenceGroupCreatorTest extends TestCase
         super.setUp();
     }
 
-    
     public void testUniformGroup()
     {
-        //expecting two seperate groups , one with odd , one with even nubmers"
-        testOneComparator(new UniformEquivalenceComparator(),    1      );
-        //" expecting 3 seperate groups , one for each mod3
-        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
-            3) ;
+        // expecting two seperate groups , one with odd , one with even nubmers"
+        testOneComparator(new UniformEquivalenceComparator(), 1);
+
+        // " expecting 3 seperate groups , one for each mod3
+        testOneComparator(
+            new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
+            3);
     }
-    
+
     public void testOddEvenGroup()
     {
-        //" expecting two seperate groups , one with odd , one with even nubmers");
-        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.OddEvenGroupComparator(),
+        // " expecting two seperate groups , one with odd , one with even
+        // nubmers");
+        testOneComparator(
+            new org.jgrapht.experimental.isomorphism.comparators.OddEvenGroupComparator(),
             2);
-        //  " expecting 3 seperate groups , one for each mod3");  
-        testOneComparator(new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
+
+        // " expecting 3 seperate groups , one for each mod3");
+        testOneComparator(
+            new org.jgrapht.experimental.isomorphism.comparators.Mod3GroupComparator(),
             3);
-          
     }
 
     /**
@@ -98,8 +102,9 @@ public class EquivalenceGroupCreatorTest extends TestCase
      */
     public void testComparatorChain()
     {
-        EquivalenceComparatorChain<Integer,Object> comparatorChain =
-            new EquivalenceComparatorChainBase<Integer,Object>(new OddEvenGroupComparator());
+        EquivalenceComparatorChain<Integer, Object> comparatorChain =
+            new EquivalenceComparatorChainBase<Integer, Object>(
+                new OddEvenGroupComparator());
         comparatorChain.appendComparator(new Mod3GroupComparator());
 
         // for (int i=0 ; i<INTEGER_ARRAY_SIZE ; i++)
@@ -113,11 +118,10 @@ public class EquivalenceGroupCreatorTest extends TestCase
         testOneComparator(
             comparatorChain,
             6);
-            
     }
 
     @SuppressWarnings("unchecked")
-	public void testComparatorChainSameComparatorTwice()
+    public void testComparatorChainSameComparatorTwice()
     {
         EquivalenceComparatorChain comparatorChain =
             new EquivalenceComparatorChainBase(new OddEvenGroupComparator());
@@ -125,21 +129,20 @@ public class EquivalenceGroupCreatorTest extends TestCase
         comparatorChain.appendComparator(new OddEvenGroupComparator());
 
         // still expecting 2 groups "
-         testOneComparator(
+        testOneComparator(
             comparatorChain,
             2);
-            
     }
 
     @SuppressWarnings("unchecked")
-	private void testOneComparator(
+    private void testOneComparator(
         EquivalenceComparator comparator,
         int expectedNumOfGroups)
-   
     {
-        ArrayList<Integer> integerArray = new ArrayList<Integer>(INTEGER_ARRAY_SIZE);
+        ArrayList<Integer> integerArray =
+            new ArrayList<Integer>(INTEGER_ARRAY_SIZE);
         for (int i = 0; i < INTEGER_ARRAY_SIZE; i++) {
-            integerArray.add( i );
+            integerArray.add(i);
         }
 
         EquivalenceSet [] eqGroupArray =
@@ -148,10 +151,11 @@ public class EquivalenceGroupCreatorTest extends TestCase
                 comparator,
                 null);
         assertEquals(expectedNumOfGroups, eqGroupArray.length);
-        //assert the group order size is sorted.
+
+        // assert the group order size is sorted.
         for (int i = 1; i < eqGroupArray.length; i++) {
             EquivalenceSet set = eqGroupArray[i];
-            assertTrue(set.size() >= eqGroupArray[i-1].size());
+            assertTrue(set.size() >= eqGroupArray[i - 1].size());
         }
         // System.out.println("\nTesting the EquivalenceSet[] returned from
         // Integer["

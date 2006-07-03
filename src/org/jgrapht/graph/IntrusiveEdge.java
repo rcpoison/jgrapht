@@ -41,22 +41,29 @@ package org.jgrapht.graph;
 
 import java.io.*;
 
+
 /**
- * IntrusiveEdge encapsulates the internals for the default edge
- * implementation.  It is not intended to be referenced directly
- * (which is why it's not public); use DefaultEdge for that.
+ * IntrusiveEdge encapsulates the internals for the default edge implementation.
+ * It is not intended to be referenced directly (which is why it's not public);
+ * use DefaultEdge for that.
  *
  * @author John V. Sichi
  */
-class IntrusiveEdge implements Cloneable, Serializable
+class IntrusiveEdge
+    implements Cloneable, Serializable
 {
+
     //~ Static fields/initializers --------------------------------------------
 
     private static final long serialVersionUID = 3258408452177932855L;
-    
+
+    //~ Instance fields -------------------------------------------------------
+
     Object source;
 
     Object target;
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * @see Object#clone()

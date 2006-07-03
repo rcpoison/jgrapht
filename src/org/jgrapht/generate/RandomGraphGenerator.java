@@ -45,9 +45,9 @@ import org.jgrapht.graph.*;
 
 /**
  * This Generator creates a random-topology graph of a specified number of
- * vertexes and edges. An instance of this generator will always return the
- * same graph-topology in calls to generateGraph(). The vertexes can be
- * different (depends on the VertexFactory implementation)
+ * vertexes and edges. An instance of this generator will always return the same
+ * graph-topology in calls to generateGraph(). The vertexes can be different
+ * (depends on the VertexFactory implementation)
  *
  * <p>However, two instances which use the same constructor parameters will
  * produce two different random graphs (note: as with any random generator,
@@ -57,8 +57,13 @@ import org.jgrapht.graph.*;
  * @author Assaf Lehr
  * @since Aug 6, 2005
  */
-public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
+public class RandomGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
+    private static long seedUniquifier = 8682522807148012L;
 
     //~ Instance fields -------------------------------------------------------
 
@@ -66,8 +71,6 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
     protected int numOfEdges;
     protected Random randomizer;
     private long randomizerSeed;
-    
-    private static long seedUniquifier = 8682522807148012L;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -121,15 +124,16 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * @see GraphGenerator#generateGraph(Graph, VertexFactory, Map)
      */
     public void generateGraph(
-        Graph<V,E> target,
+        Graph<V, E> target,
         VertexFactory<V> vertexFactory,
-        Map<String,V> resultMap)
+        Map<String, V> resultMap)
     {
         resetRandomSeed();
 
         // key = generation order (1st,2nd,3rd,...) value=vertex Object
         // will be used later
-        Map<Integer,V> orderToVertexMap = new HashMap<Integer,V>(this.numOfVertexes);
+        Map<Integer, V> orderToVertexMap =
+            new HashMap<Integer, V>(this.numOfVertexes);
 
         for (int i = 0; i < this.numOfVertexes; i++) {
             V currVertex = vertexFactory.createVertex();
@@ -139,7 +143,7 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
 
         // use specific type of edge factory, depending of the graph type
         // and edge density
-        EdgeTopologyFactory<V,E> edgesFactory =
+        EdgeTopologyFactory<V, E> edgesFactory =
             edgeTopologyFactoryChooser(target, numOfEdges);
         if (!edgesFactory.isNumberOfEdgesValid(target, numOfEdges)) {
             throw new IllegalArgumentException(
@@ -166,11 +170,11 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      *
      * @return
      */
-    private EdgeTopologyFactory<V,E> edgeTopologyFactoryChooser(
-        Graph<V,E> target,
+    private EdgeTopologyFactory<V, E> edgeTopologyFactoryChooser(
+        Graph<V, E> target,
         int numOfEdges)
     {
-        return new DefaultEdgeTopologyFactory<V,E>();
+        return new DefaultEdgeTopologyFactory<V, E>();
     }
 
     //~ Inner Interfaces ------------------------------------------------------
@@ -181,7 +185,7 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * @author Assaf
      * @since Aug 6, 2005
      */
-    public interface EdgeTopologyFactory<VV,EE>
+    public interface EdgeTopologyFactory<VV, EE>
     {
         /**
          * Two different calls to the createEdges() with the same parameters
@@ -196,14 +200,14 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
          * @param randomizer
          */
         public void createEdges(
-            Graph<VV,EE> targetGraph,
-            Map<Integer,VV> orderToVertexMap,
+            Graph<VV, EE> targetGraph,
+            Map<Integer, VV> orderToVertexMap,
             int numberOfEdges,
             Random randomizer);
 
         /**
-         * Checks if the graph can contain the givven numberOfEdges according
-         * to the graph type restrictions. For example: <i>#V means number of
+         * Checks if the graph can contain the givven numberOfEdges according to
+         * the graph type restrictions. For example: <i>#V means number of
          * vertexes in graph
          * <li>a Simple Graph, can have max of #V*(#V-1)/2 edges. etc
          *
@@ -211,7 +215,7 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
          * @param numberOfEdges
          */
         public boolean isNumberOfEdgesValid(
-            Graph<VV,EE> targetGraph,
+            Graph<VV, EE> targetGraph,
             int numberOfEdges);
     }
 
@@ -222,23 +226,24 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * chooses an edge and tries to add it. If the add fails from any reason
      * (like: self edge / multiple edges  in unpermitted graph type) it will
      * just choose another and try again. Performance:
-     * <li>when the number of possible edges becomes slim , this class will
-     * have a very poor performance , cause it will not use gready methods to
-     * choose them. for example : In simple graph , if #V = N (#x = number Of
-     * x) and we want full mesh #edges= N*(N-1)/2 , the first added edges will
-     * do so quickly (O(1) , the last will take O(N^2). So , do not use it in
-     * this kind of graphs.
+     * <li>when the number of possible edges becomes slim , this class will have
+     * a very poor performance , cause it will not use gready methods to choose
+     * them. for example : In simple graph , if #V = N (#x = number Of x) and we
+     * want full mesh #edges= N*(N-1)/2 , the first added edges will do so
+     * quickly (O(1) , the last will take O(N^2). So , do not use it in this
+     * kind of graphs.
      * <li>If the numberOfEdges is bigger than what the graph can add, there
      * will be an infinite loop here. It is not tested.
      *
      * @author Assaf
      * @since Aug 6, 2005
      */
-    public class DefaultEdgeTopologyFactory<VV,EE> implements EdgeTopologyFactory<VV,EE>
+    public class DefaultEdgeTopologyFactory<VV, EE>
+        implements EdgeTopologyFactory<VV, EE>
     {
         public void createEdges(
-            Graph<VV,EE> targetGraph,
-            Map<Integer,VV> orderToVertexMap,
+            Graph<VV, EE> targetGraph,
+            Map<Integer, VV> orderToVertexMap,
             int numberOfEdges,
             Random randomizer)
         {
@@ -254,8 +259,7 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
                     orderToVertexMap.get(
                         Integer.valueOf(randomizer.nextInt(numOfVertexes)));
                 try {
-                    EE resultEdge =
-                        targetGraph.addEdge(startVertex, endVertex);
+                    EE resultEdge = targetGraph.addEdge(startVertex, endVertex);
                     if (resultEdge != null) {
                         edgesCounter++;
                     }
@@ -324,12 +328,11 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
          * </tr>
          * </table>
          *
-         * @see
-         * RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(Graph,
-         * int)
+         * @see RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(Graph,
+         *      int)
          */
         public boolean isNumberOfEdgesValid(
-            Graph<VV,EE> targetGraph,
+            Graph<VV, EE> targetGraph,
             int numberOfEdges)
         {
             boolean result;
@@ -351,10 +354,9 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
         }
 
         /**
-         * Return max edges for that graph. If it is infinite return -1
-         * instead.
+         * Return max edges for that graph. If it is infinite return -1 instead.
          */
-        public int getMaxEdgesForVertexNum(Graph<VV,EE> targetGraph)
+        public int getMaxEdgesForVertexNum(Graph<VV, EE> targetGraph)
         {
             int maxAllowedEdges = 0;
             if (targetGraph instanceof SimpleGraph) {
@@ -363,7 +365,8 @@ public class RandomGraphGenerator<V,E> implements GraphGenerator<V,E,V>
                 maxAllowedEdges = numOfVertexes * (numOfVertexes - 1);
             } else if (targetGraph instanceof DefaultDirectedGraph) {
                 maxAllowedEdges = numOfVertexes * numOfVertexes;
-            } else if ((targetGraph instanceof Multigraph)
+            } else if (
+                (targetGraph instanceof Multigraph)
                 || (targetGraph instanceof Pseudograph)
                 || (targetGraph instanceof DirectedMultigraph)) {
                 maxAllowedEdges = -1; // infinite

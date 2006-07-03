@@ -49,7 +49,8 @@ import org.jgrapht.*;
  *
  * @author John V. Sichi
  */
-public class AsUndirectedGraphTest extends EnhancedTestCase
+public class AsUndirectedGraphTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -171,8 +172,9 @@ public class AsUndirectedGraphTest extends EnhancedTestCase
      */
     protected void setUp()
     {
-        directed = new DefaultDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+        directed =
+            new DefaultDirectedGraph<String, DefaultEdge>(
+                DefaultEdge.class);
         undirected = new AsUndirectedGraph<String, DefaultEdge>(directed);
 
         directed.addVertex(v1);

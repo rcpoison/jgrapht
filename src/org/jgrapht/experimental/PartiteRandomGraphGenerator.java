@@ -56,8 +56,8 @@ import org.jgrapht.generate.*;
  * @author Michael Behrisch
  * @since Sep 13, 2004
  */
-public class PartiteRandomGraphGenerator<V,E>
-    implements GraphGenerator<V,E,Object[]>
+public class PartiteRandomGraphGenerator<V, E>
+    implements GraphGenerator<V, E, Object []>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -90,7 +90,8 @@ public class PartiteRandomGraphGenerator<V,E>
         }
 
         final int [] numVertices = {
-                numVertices1, numVertices2
+                numVertices1,
+                numVertices2
             };
         this.numVertices = numVertices;
         this.numEdges = numEdges;
@@ -132,16 +133,17 @@ public class PartiteRandomGraphGenerator<V,E>
 
     /**
      * TODO hb 30-nov-05: document me
-     * 
+     *
      * @param target
      * @param vertexFactory
      * @param resultMap some array of vertices
+     *
      * @see GraphGenerator#generateGraph
      */
     public void generateGraph(
-            Graph<V,E> target,
-            VertexFactory<V> vertexFactory,
-            Map<String,Object[]> resultMap)
+        Graph<V, E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String, Object []> resultMap)
     {
         Object [][] vertices = new Object [numVertices.length][];
 

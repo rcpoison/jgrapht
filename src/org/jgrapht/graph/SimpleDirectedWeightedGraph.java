@@ -49,7 +49,8 @@ import org.jgrapht.*;
  * simple directed graph for which edges are assigned weights.
  */
 public class SimpleDirectedWeightedGraph<V, E>
-    extends SimpleDirectedGraph<V, E> implements WeightedGraph<V, E>
+    extends SimpleDirectedGraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------

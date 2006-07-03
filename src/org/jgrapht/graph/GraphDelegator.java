@@ -50,21 +50,22 @@ import org.jgrapht.*;
 
 
 /**
- * A graph backed by the the graph specified at the constructor, which
- * delegates all its methods to the backing graph. Operations on this graph
- * "pass through" to the to the backing graph. Any modification made to this
- * graph or the backing graph is reflected by the other.
+ * A graph backed by the the graph specified at the constructor, which delegates
+ * all its methods to the backing graph. Operations on this graph "pass through"
+ * to the to the backing graph. Any modification made to this graph or the
+ * backing graph is reflected by the other.
  *
- * <p>This graph does <i>not</i> pass the hashCode and equals operations
- * through to the backing graph, but relies on <tt>Object</tt>'s <tt>
- * equals</tt> and <tt>hashCode</tt> methods.</p>
+ * <p>This graph does <i>not</i> pass the hashCode and equals operations through
+ * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
+ * <tt>hashCode</tt> methods.</p>
  *
  * <p>This class is mostly used as a base for extending subclasses.</p>
  *
  * @author Barak Naveh
  * @since Jul 20, 2003
  */
-public class GraphDelegator<V, E> extends AbstractGraph<V, E>
+public class GraphDelegator<V, E>
+    extends AbstractGraph<V, E>
     implements Graph<V, E>, Serializable
 {
 
@@ -170,7 +171,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int degreeOf(V vertex)
     {
-        return ((UndirectedGraph<V,E>) delegate).degreeOf(vertex);
+        return ((UndirectedGraph<V, E>) delegate).degreeOf(vertex);
     }
 
     /**
@@ -194,7 +195,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int inDegreeOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) delegate).inDegreeOf(vertex);
+        return ((DirectedGraph<V, ? extends E>) delegate).inDegreeOf(vertex);
     }
 
     /**
@@ -202,7 +203,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> incomingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,E>) delegate).incomingEdgesOf(vertex);
+        return ((DirectedGraph<V, E>) delegate).incomingEdgesOf(vertex);
     }
 
     /**
@@ -210,7 +211,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public int outDegreeOf(V vertex)
     {
-        return ((DirectedGraph<V,? extends E>) delegate).outDegreeOf(vertex);
+        return ((DirectedGraph<V, ? extends E>) delegate).outDegreeOf(vertex);
     }
 
     /**
@@ -218,7 +219,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
      */
     public Set<E> outgoingEdgesOf(V vertex)
     {
-        return ((DirectedGraph<V,E>) delegate).outgoingEdgesOf(vertex);
+        return ((DirectedGraph<V, E>) delegate).outgoingEdgesOf(vertex);
     }
 
     /**
@@ -260,7 +261,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     {
         return delegate.vertexSet();
     }
-    
+
     /**
      * @see Graph#getEdgeSource(Object)
      */
@@ -276,7 +277,7 @@ public class GraphDelegator<V, E> extends AbstractGraph<V, E>
     {
         return delegate.getEdgeTarget(e);
     }
-    
+
     /**
      * @see Graph#getEdgeWeight(Object)
      */

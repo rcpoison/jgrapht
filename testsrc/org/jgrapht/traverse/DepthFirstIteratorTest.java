@@ -48,13 +48,14 @@ import org.jgrapht.graph.*;
  * Tests for the {@link DepthFirstIteratorTest} class.
  *
  * <p>NOTE: This test uses hard-coded expected ordering isn't really guaranteed
- * by the specification of the algorithm. This could cause false failures if
- * the traversal implementation changes.</p>
+ * by the specification of the algorithm. This could cause false failures if the
+ * traversal implementation changes.</p>
  *
  * @author Liviu Rau
  * @since Jul 30, 2003
  */
-public class DepthFirstIteratorTest extends AbstractGraphIteratorTest
+public class DepthFirstIteratorTest
+    extends AbstractGraphIteratorTest
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -69,7 +70,9 @@ public class DepthFirstIteratorTest extends AbstractGraphIteratorTest
         return "1,3,6,5,7,9,4,8,2,orphan";
     }
 
-    AbstractGraphIterator<String, DefaultEdge> createIterator(DirectedGraph<String, DefaultEdge> g, String vertex)
+    AbstractGraphIterator<String, DefaultEdge> createIterator(
+        DirectedGraph<String, DefaultEdge> g,
+        String vertex)
     {
         AbstractGraphIterator<String, DefaultEdge> i =
             new DepthFirstIterator<String, DefaultEdge>(g, vertex);

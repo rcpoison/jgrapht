@@ -57,7 +57,8 @@ import org.jgrapht.*;
  * @see DirectedGraph
  * @see UndirectedGraph
  */
-public abstract class AbstractGraph<V, E> implements Graph<V, E>
+public abstract class AbstractGraph<V, E>
+    implements Graph<V, E>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -127,10 +128,11 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E>
      */
     public String toString()
     {
-        return toStringFromSets(
-            vertexSet(),
-            edgeSet(),
-            (this instanceof DirectedGraph));
+        return
+            toStringFromSets(
+                vertexSet(),
+                edgeSet(),
+                (this instanceof DirectedGraph));
     }
 
     /**
@@ -186,7 +188,7 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E>
      * @param vertexSet the vertex set V to be printed
      * @param edgeSet the edge set E to be printed
      * @param directed true to use parens for each edge (representing directed);
-     * false to use curly braces (representing undirected)
+     *                 false to use curly braces (representing undirected)
      *
      * @return a string representation of (V,E)
      */
@@ -199,9 +201,9 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E>
 
         StringBuffer sb = new StringBuffer();
         for (E e : edgeSet) {
-            if ((e.getClass() != DefaultEdge.class)
-                && (e.getClass() != DefaultWeightedEdge.class))
-            {
+            if (
+                (e.getClass() != DefaultEdge.class)
+                && (e.getClass() != DefaultWeightedEdge.class)) {
                 sb.append(e.toString());
                 sb.append("=");
             }
@@ -218,11 +220,12 @@ public abstract class AbstractGraph<V, E> implements Graph<V, E>
             } else {
                 sb.append("}");
             }
+
             // REVIEW jvs 29-May-2006:  dump weight somewhere?
             renderedEdges.add(sb.toString());
             sb.setLength(0);
         }
-        
+
         return "(" + vertexSet + ", " + renderedEdges + ")";
     }
 }
