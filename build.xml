@@ -573,10 +573,14 @@
     <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
     <fail unless="retroweaver.dir"/>
+    <fail unless="retroweaver.version"/>
     <fail unless="jre1.4.dir"/>
     <ant dir="${checkout.dir}" antfile="${build.file.name}" 
       target="all" inheritall="false" inheritrefs="false">
       <property name="svntag" value="${svntag}"/>
+      <property name="retroweaver.dir" value="${retroweaver.dir}"/>
+      <property name="retroweaver.ver" value="${retroweaver.ver}"/>
+      <property name="jre1.4.dir" value="${jre1.4.dir}"/>
     </ant>
   </target>
 
