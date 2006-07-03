@@ -181,7 +181,7 @@
         <insert>
           <dowhile>true</dowhile>
           <for>true</for>
-          <ifelse>false</ifelse>
+          <ifelse>true</ifelse>
           <switch>false</switch>
           <while>true</while>
         </insert>
@@ -328,7 +328,7 @@
               <throws>false</throws>
             </after>
             <inline>true</inline>
-            <lineLength>79</lineLength>
+            <lineLength>80</lineLength>
           </wrap>
         </javadoc>
         <reflow>
@@ -509,7 +509,7 @@
           <brackets>false</brackets>
           <bracketsTypes>true</bracketsTypes>
           <caseColon>false</caseColon>
-          <ellipsis>false</ellipsis>
+          <ellipsis>true</ellipsis>
           <operator>
             <not>false</not>
           </operator>
@@ -562,7 +562,7 @@
         <always>
           <after>
             <annotationMember>false</annotationMember>
-            <arrayElement>0</arrayElement>
+            <arrayElement>1</arrayElement>
             <braceRight>false</braceRight>
             <conditional>false</conditional>
             <extendsTypes>false</extendsTypes>
@@ -581,9 +581,9 @@
           <before>
             <braceLeft>false</braceLeft>
             <declaration>false</declaration>
-            <extends>false</extends>
+            <extends>true</extends>
             <fieldName>false</fieldName>
-            <implements>false</implements>
+            <implements>true</implements>
             <methodName>false</methodName>
             <throws>true</throws>
           </before>
@@ -603,7 +603,7 @@
           <keepLinebreak>true</keepLinebreak>
           <keepLinebreakArray>true</keepLinebreakArray>
           <keepLinebreakConcat>true</keepLinebreakConcat>
-          <lineLength>79</lineLength>
+          <lineLength>80</lineLength>
         </general>
         <never>
           <chainedIndexOperator>false</chainedIndexOperator>
@@ -615,9 +615,9 @@
           <after>
             <argument>true</argument>
             <assignment>true</assignment>
-            <leftParenthesis>false</leftParenthesis>
+            <leftParenthesis>true</leftParenthesis>
             <param>true</param>
-            <parameter>false</parameter>
+            <parameter>true</parameter>
             <return>true</return>
             <types>
               <extends>false</extends>
@@ -646,7 +646,7 @@
     <convention>
       <description>Java Coding Convention For JGraphT</description>
       <local></local>
-      <location>file:///home/jvs/open/farrago/src/jalopy.xml</location>
+      <location>file:///home/jvs/open/jgrapht/etc/triemax-jalopy-settings.xml</location>
       <name>JGraphT</name>
       <synchronize>false</synchronize>
     </convention>
@@ -660,10 +660,10 @@
     </locale>
     <misc>
       <forceFormatting>false</forceFormatting>
-      <forceLineSeparator>false</forceLineSeparator>
+      <forceLineSeparator>true</forceLineSeparator>
       <formatOnLoad>false</formatOnLoad>
       <formatOnSave>false</formatOnSave>
-      <lineSeparator>AUTO</lineSeparator>
+      <lineSeparator>DEFAULT</lineSeparator>
       <testFormatting>false</testFormatting>
       <threadCount>1</threadCount>
     </misc>
