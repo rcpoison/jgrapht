@@ -591,16 +591,10 @@
       value="https://svn.sourceforge.net/svnroot/jgrapht" />
     <delete dir="${checkout.dir}" />
     <mkdir  dir="${checkout.dir}" />
-
-    <echo file="${svnpass}" append="false">${project.svnroot} A
-    </echo>
-
     <svn username="guest" password="" javahl="false">
       <checkout url="${project.svnroot}/tags/${svntag}" 
         destPath="${checkout.dir}"/>
     </svn>
-    
-    <delete file="${svnpass}" />      
   </target>
 
 
