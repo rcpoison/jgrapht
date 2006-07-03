@@ -43,15 +43,15 @@ import java.util.*;
 /**
  * <b>Isomorphism Overview</b>
  *
- * <p>Isomorphism is the problem of testing whether two graphs are
- * topologically the same. Suppose we are given a collection of graphs and must
- * perform some operation on each of them. If we can identify which of the
- * graphs are duplicates, they can be discarded so as to avoid redundant work.
+ * <p>Isomorphism is the problem of testing whether two graphs are topologically
+ * the same. Suppose we are given a collection of graphs and must perform some
+ * operation on each of them. If we can identify which of the graphs are
+ * duplicates, they can be discarded so as to avoid redundant work.
  *
  * <p>In Formal Math: <i>Input description:</i> Two graphs, G and H. <i>Problem
  * description:</i> Find a (or all) mappings f of the vertices of G to the
- * vertices of H such that G and H are identical; i.e. (x,y) is an edge of G
- * iff (f(x),f(y)) is an edge of H. <a
+ * vertices of H such that G and H are identical; i.e. (x,y) is an edge of G iff
+ * (f(x),f(y)) is an edge of H. <a
  * href="http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK4/NODE180.HTM">
  * http://www2.toki.or.id/book/AlgDesignManual/BOOK/BOOK4/NODE180.HTM</a>.
  *
@@ -81,13 +81,14 @@ import java.util.*;
 // REVIEW jvs 5-Sept-2005:  Since we're using JDK1.5 now, we should be
 // able to declare this as Iterator<GraphMapping>, correct?  Otherwise
 // the caller doesn't even know what they're getting back.
-public interface GraphIsomorphismInspector<E> extends Iterator<E>
+public interface GraphIsomorphismInspector<E>
+    extends Iterator<E>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * @return <code>true</code> iff the two graphs are isomorphic 
+     * @return <code>true</code> iff the two graphs are isomorphic
      */
     public boolean isIsomorphic();
 }

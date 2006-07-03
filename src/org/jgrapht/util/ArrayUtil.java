@@ -38,8 +38,8 @@
 package org.jgrapht.util;
 
 /**
- * Utility class to iterate over arrays and use toString() on their elements.
- * In jdk1.5 , a few very useful methods were added to the system.Arrays class.
+ * Utility class to iterate over arrays and use toString() on their elements. In
+ * jdk1.5 , a few very useful methods were added to the system.Arrays class.
  * JGraphT should work on jdk1.4, so we re-implement them here, as utility
  * methods.
  *

@@ -37,23 +37,27 @@
  */
 package org.jgrapht.util;
 
-import org.jgrapht.experimental.equivalence.EquivalenceGroupCreatorTest;
-import org.jgrapht.experimental.permutation.CompoundPermutationIterTest;
+import junit.framework.*;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.jgrapht.experimental.equivalence.*;
+import org.jgrapht.experimental.permutation.*;
 
-public class AllUtilTests {
 
-    public static Test suite() {
+public class AllUtilTests
+{
+
+    //~ Methods ---------------------------------------------------------------
+
+    public static Test suite()
+    {
         TestSuite suite = new TestSuite("Test for org.jgrapht.util");
-        //$JUnit-BEGIN$
+
+        // $JUnit-BEGIN$
         suite.addTestSuite(PrefetchIteratorTest.class);
         suite.addTestSuite(CompoundPermutationIterTest.class);
         suite.addTestSuite(EquivalenceGroupCreatorTest.class);
 
-        //$JUnit-END$
+        // $JUnit-END$
         return suite;
     }
-
 }

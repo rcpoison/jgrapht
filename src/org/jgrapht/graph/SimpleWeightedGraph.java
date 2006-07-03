@@ -45,10 +45,11 @@ import org.jgrapht.*;
 
 
 /**
- * A simple weighted graph. A simple weighted graph is a simple graph  for
- * which edges are assigned weights.
+ * A simple weighted graph. A simple weighted graph is a simple graph  for which
+ * edges are assigned weights.
  */
-public class SimpleWeightedGraph<V, E> extends SimpleGraph<V, E>
+public class SimpleWeightedGraph<V, E>
+    extends SimpleGraph<V, E>
     implements WeightedGraph<V, E>
 {
 

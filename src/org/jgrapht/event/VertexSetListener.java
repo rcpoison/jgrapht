@@ -45,16 +45,17 @@ import java.util.*;
 
 
 /**
- * A listener that is notified when the graph's vertex set changes. It should
- * be used when <i>only</i> notifications on vertex-set changes are of
- * interest. If all graph  notifications are of interest better use <code>
+ * A listener that is notified when the graph's vertex set changes. It should be
+ * used when <i>only</i> notifications on vertex-set changes are of interest. If
+ * all graph  notifications are of interest better use <code>
  * GraphListener</code>.
  *
  * @author Barak Naveh
  * @see GraphListener
  * @since Jul 18, 2003
  */
-public interface VertexSetListener<V> extends EventListener
+public interface VertexSetListener<V>
+    extends EventListener
 {
 
     //~ Methods ---------------------------------------------------------------

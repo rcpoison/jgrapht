@@ -54,7 +54,8 @@ import org.jgrapht.graph.*;
  * @author Linda Buisman
  * @since Nov 6, 2003
  */
-public class VertexCoversTest extends TestCase
+public class VertexCoversTest
+    extends TestCase
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -70,7 +71,7 @@ public class VertexCoversTest extends TestCase
     public void testFind2ApproximationCover()
     {
         for (int i = 0; i < TEST_REPEATS; i++) {
-            Graph<Integer,DefaultEdge> g = createRandomGraph();
+            Graph<Integer, DefaultEdge> g = createRandomGraph();
             assertTrue(
                 isCover(VertexCovers.find2ApproximationCover(g), g));
         }
@@ -82,7 +83,7 @@ public class VertexCoversTest extends TestCase
     public void testFindGreedyCover()
     {
         for (int i = 0; i < TEST_REPEATS; i++) {
-            Graph<Integer,DefaultEdge> g = createRandomGraph();
+            Graph<Integer, DefaultEdge> g = createRandomGraph();
             Set<Integer> c =
                 VertexCovers.findGreedyCover(
                     Graphs.undirectedGraph(g));
@@ -92,8 +93,8 @@ public class VertexCoversTest extends TestCase
 
     /**
      * Checks if the specified vertex set covers every edge of the graph. Uses
-     * the definition of Vertex Cover - removes every edge that is incident on
-     * a vertex in vertexSet. If no edges are left, vertexSet is a vertex cover
+     * the definition of Vertex Cover - removes every edge that is incident on a
+     * vertex in vertexSet. If no edges are left, vertexSet is a vertex cover
      * for the specified graph.
      *
      * @param vertexSet the vertices to be tested for covering the graph.
@@ -102,7 +103,8 @@ public class VertexCoversTest extends TestCase
      * @return
      */
     private boolean isCover(
-        Set<Integer> vertexSet, Graph<Integer,DefaultEdge> g)
+        Set<Integer> vertexSet,
+        Graph<Integer, DefaultEdge> g)
     {
         Set<DefaultEdge> uncoveredEdges = new HashSet<DefaultEdge>(g.edgeSet());
 
@@ -118,12 +120,12 @@ public class VertexCoversTest extends TestCase
      *
      * @return
      */
-    private Graph<Integer,DefaultEdge> createRandomGraph()
+    private Graph<Integer, DefaultEdge> createRandomGraph()
     {
         // TODO: move random graph generator to be under GraphGenerator
         // framework.
-        Pseudograph<Integer,DefaultEdge> g =
-            new Pseudograph<Integer,DefaultEdge>(DefaultEdge.class);
+        Pseudograph<Integer, DefaultEdge> g =
+            new Pseudograph<Integer, DefaultEdge>(DefaultEdge.class);
 
         for (int i = 0; i < TEST_GRAPH_SIZE; i++) {
             g.addVertex(new Integer(i));

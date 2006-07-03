@@ -52,7 +52,8 @@ import org.jgrapht.event.*;
  * @see VertexSetListener
  * @since Jul 20, 2003
  */
-public interface ListenableGraph<V, E> extends Graph<V, E>
+public interface ListenableGraph<V, E>
+    extends Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

@@ -39,9 +39,9 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.experimental.isomorphism.IsomorphismInspectorTest;
-
 import junit.framework.*;
+
+import org.jgrapht.experimental.isomorphism.*;
 
 
 /**
@@ -77,6 +77,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(CycleDetectorTest.class));
         suite.addTest(new TestSuite(BronKerboschCliqueFinderTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
+
         // $JUnit-END$
         return suite;
     }

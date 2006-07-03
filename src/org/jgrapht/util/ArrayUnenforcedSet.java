@@ -40,23 +40,28 @@ package org.jgrapht.util;
 
 import java.util.*;
 
+
 /**
- * Helper for efficiently representing small sets whose elements are known to
- * be unique by construction, implying we don't need to enforce the uniqueness
+ * Helper for efficiently representing small sets whose elements are known to be
+ * unique by construction, implying we don't need to enforce the uniqueness
  * property in the data structure itself.  Use with caution.
  *
- *<p>
- *
- * Note that for equals/hashCode, the class implements the Set behavior
- * (unordered), not the list behavior (ordered); the fact that it
- * subclasses ArrayList should be considered an implementation detail.
+ * <p>Note that for equals/hashCode, the class implements the Set behavior
+ * (unordered), not the list behavior (ordered); the fact that it subclasses
+ * ArrayList should be considered an implementation detail.
  *
  * @author John V. Sichi
  */
 public class ArrayUnenforcedSet<E>
-    extends ArrayList<E> implements Set<E>
+    extends ArrayList<E>
+    implements Set<E>
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = -7413250161201811238L;
+
+    //~ Constructors ----------------------------------------------------------
 
     public ArrayUnenforcedSet()
     {
@@ -73,26 +78,31 @@ public class ArrayUnenforcedSet<E>
         super(n);
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     public boolean equals(Object o)
     {
         return new SetForEquality().equals(o);
     }
-    
+
     public int hashCode()
     {
         return new SetForEquality().hashCode();
     }
 
+    //~ Inner Classes ---------------------------------------------------------
+
     /**
      * Multiple inheritance helper.
      */
-    private class SetForEquality extends AbstractSet<E>
+    private class SetForEquality
+        extends AbstractSet<E>
     {
         public Iterator<E> iterator()
         {
             return ArrayUnenforcedSet.this.iterator();
         }
-        
+
         public int size()
         {
             return ArrayUnenforcedSet.this.size();

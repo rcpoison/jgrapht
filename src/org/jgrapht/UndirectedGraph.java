@@ -51,7 +51,8 @@ package org.jgrapht;
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface UndirectedGraph<V, E> extends Graph<V, E>
+public interface UndirectedGraph<V, E>
+    extends Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------

@@ -41,8 +41,8 @@ package org.jgrapht.experimental.equivalence;
  * This interface distinguishes between Equivalence sets.
  *
  * <p>It is similar, in concept, to the Object.hashcode() and Object.equals()
- * methods, but instead of checking whether two objects are equal, it is used
- * to check whether they are part of the same Equivalence group, where the
+ * methods, but instead of checking whether two objects are equal, it is used to
+ * check whether they are part of the same Equivalence group, where the
  * definition of an "equivalence" is defined by the implementation of this
  * interface.
  *
@@ -67,15 +67,17 @@ package org.jgrapht.experimental.equivalence;
  * isomorphism inspection may return different result according to this choice.
  * If the other graph is: (male,"Don")--->(male,"Sunny")---->(male,"Jo") In no
  * eq.set they are Isomorphic, but for the two other cases they are not. Other
- * examples: Nodes with the same degree, Edges with the same weight, Graphs
- * with the same number of nodes and edges.
+ * examples: Nodes with the same degree, Edges with the same weight, Graphs with
+ * the same number of nodes and edges.
  *
  * @param <E> the type of the elements in the set
- * @param <C> the type of the context the element is compared against, e.g. a Graph
+ * @param <C> the type of the context the element is compared against, e.g. a
+ *        Graph
+ *
  * @author Assaf
  * @since Jul 15, 2005
  */
-public interface EquivalenceComparator<E,C>
+public interface EquivalenceComparator<E, C>
 {
 
     //~ Methods ---------------------------------------------------------------

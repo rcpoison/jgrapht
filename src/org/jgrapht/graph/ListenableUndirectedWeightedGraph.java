@@ -30,7 +30,8 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Christian Hammer
  *
- * $Id$
+ * $Id: ListenableUndirectedWeightedGraph.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -51,7 +52,8 @@ import org.jgrapht.*;
  * @see DefaultListenableGraph
  */
 public class ListenableUndirectedWeightedGraph<V, E>
-    extends ListenableUndirectedGraph<V, E> implements WeightedGraph<V, E>
+    extends ListenableUndirectedGraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -67,7 +69,7 @@ public class ListenableUndirectedWeightedGraph<V, E>
      */
     public ListenableUndirectedWeightedGraph(Class<? extends E> edgeClass)
     {
-        this(new SimpleWeightedGraph<V,E>(edgeClass));
+        this(new SimpleWeightedGraph<V, E>(edgeClass));
     }
 
     /**
@@ -77,6 +79,6 @@ public class ListenableUndirectedWeightedGraph<V, E>
      */
     public ListenableUndirectedWeightedGraph(WeightedGraph<V, E> base)
     {
-        super((UndirectedGraph<V,E>) base);
+        super((UndirectedGraph<V, E>) base);
     }
 }

@@ -43,9 +43,10 @@
  */
 package org.jgrapht.graph;
 
+import java.io.*;
+
 import org.jgrapht.*;
 
-import java.io.*;
 
 /**
  * An EdgeFactory for producing edges by using a class as a factory.
@@ -56,15 +57,24 @@ import java.io.*;
 public class ClassBasedEdgeFactory<V, E>
     implements EdgeFactory<V, E>, Serializable
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
     private static final long serialVersionUID = 3618135658586388792L;
 
+    //~ Instance fields -------------------------------------------------------
+
     private final Class<? extends E> edgeClass;
+
+    //~ Constructors ----------------------------------------------------------
 
     public ClassBasedEdgeFactory(Class<? extends E> edgeClass)
     {
         this.edgeClass = edgeClass;
     }
-        
+
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * @see EdgeFactory#createEdge(Object, Object)
      */

@@ -58,7 +58,7 @@ public class BronKerboschCliqueFinder<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private final Graph<V,E> graph;
+    private final Graph<V, E> graph;
 
     private Collection<Set<V>> cliques;
 
@@ -70,7 +70,7 @@ public class BronKerboschCliqueFinder<V, E>
      * @param graph the graph in which cliques are to be found; graph must be
      *              simple
      */
-    public BronKerboschCliqueFinder(Graph<V,E> graph)
+    public BronKerboschCliqueFinder(Graph<V, E> graph)
     {
         this.graph = graph;
     }
@@ -80,8 +80,7 @@ public class BronKerboschCliqueFinder<V, E>
     /**
      * Finds all maximal cliques of the graph.  A clique is maximal if it is
      * impossible to enlarge it by adding another vertex from the graph.  Note
-     * that a maximal clique is not necessarily the biggest clique in the
-     * graph.
+     * that a maximal clique is not necessarily the biggest clique in the graph.
      *
      * @return Collection of cliques (each of which is represented as a Set of
      *         vertices)
@@ -125,7 +124,8 @@ public class BronKerboschCliqueFinder<V, E>
         return biggest_cliques;
     }
 
-    private void findCliques(List<V> potential_clique,
+    private void findCliques(
+        List<V> potential_clique,
         List<V> candidates,
         List<V> already_found)
     {

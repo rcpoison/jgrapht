@@ -47,7 +47,7 @@ import org.jgrapht.alg.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
-import org.jgrapht.util.AllUtilTests;
+import org.jgrapht.util.*;
 
 
 /**
@@ -81,13 +81,14 @@ public final class AllTests
         suite.addTestSuit((TestSuite) AllGraphTests.suite());
         suite.addTestSuit((TestSuite) AllTraverseTests.suite());
         suite.addTestSuit((TestSuite) AllUtilTests.suite());
-        
+
         return suite;
     }
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private static class ExpandableTestSuite extends TestSuite
+    private static class ExpandableTestSuite
+        extends TestSuite
     {
         /**
          * @see TestSuite#TestSuite()

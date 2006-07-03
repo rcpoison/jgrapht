@@ -56,15 +56,16 @@ import org.jgrapht.*;
  * and attempts to modify this graph result in an <code>
  * UnsupportedOperationException</code>.
  *
- * <p>This graph does <i>not</i> pass the hashCode and equals operations
- * through to the backing graph, but relies on <tt>Object</tt>'s <tt>
- * equals</tt> and <tt>hashCode</tt> methods.  This graph will be serializable
- * if the backing graph is serializable.</p>
+ * <p>This graph does <i>not</i> pass the hashCode and equals operations through
+ * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
+ * <tt>hashCode</tt> methods.  This graph will be serializable if the backing
+ * graph is serializable.</p>
  *
  * @author Barak Naveh
  * @since Jul 24, 2003
  */
-public class UnmodifiableGraph<V, E> extends GraphDelegator<V, E>
+public class UnmodifiableGraph<V, E>
+    extends GraphDelegator<V, E>
     implements Serializable
 {
 

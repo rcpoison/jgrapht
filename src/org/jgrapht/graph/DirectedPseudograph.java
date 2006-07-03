@@ -44,21 +44,24 @@ import org.jgrapht.*;
 
 
 /**
- * A directed pseudograph. A directed pseudograph is a non-simple directed
- * graph in which both graph loops and multiple edges are permitted. If you're
- * unsure about pseudographs, see: <a
+ * A directed pseudograph. A directed pseudograph is a non-simple directed graph
+ * in which both graph loops and multiple edges are permitted. If you're unsure
+ * about pseudographs, see: <a
  * href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
 public class DirectedPseudograph<V, E>
-    extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
+    extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E>
 {
+
+    //~ Static fields/initializers --------------------------------------------
+
+    private static final long serialVersionUID = -8300409752893486415L;
 
     //~ Constructors ----------------------------------------------------------
 
-	private static final long serialVersionUID = -8300409752893486415L;
-
-	/**
+    /**
      * @see AbstractBaseGraph
      */
     public DirectedPseudograph(Class<? extends E> edgeClass)

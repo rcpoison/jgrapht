@@ -48,8 +48,8 @@ import org.jgrapht.traverse.*;
 
 /**
  * Performs cycle detection on a graph. The <i>inspected graph</i> is specified
- * at construction time and cannot be modified. Currently, the detector
- * supports only directed graphs.
+ * at construction time and cannot be modified. Currently, the detector supports
+ * only directed graphs.
  *
  * @author John V. Sichi
  * @since Sept 16, 2004
@@ -158,7 +158,8 @@ public class CycleDetector<V, E>
      * Exception thrown internally when a cycle is detected during a yes/no
      * cycle test.  Must be caught by top-level detection method.
      */
-    private static class CycleDetectedException extends RuntimeException
+    private static class CycleDetectedException
+        extends RuntimeException
     {
         private static final long serialVersionUID = 3834305137802950712L;
     }
@@ -167,7 +168,8 @@ public class CycleDetector<V, E>
      * Version of DFS which maintains a backtracking path used to probe for
      * cycles.
      */
-    private class ProbeIterator extends DepthFirstIterator<V, E>
+    private class ProbeIterator
+        extends DepthFirstIterator<V, E>
     {
         private List<V> path;
         private Set<V> cycleSet;

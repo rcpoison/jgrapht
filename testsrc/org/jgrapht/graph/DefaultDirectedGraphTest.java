@@ -50,7 +50,8 @@ import org.jgrapht.*;
  * @author Barak Naveh
  * @since Aug 9, 2003
  */
-public class DefaultDirectedGraphTest extends EnhancedTestCase
+public class DefaultDirectedGraphTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -111,7 +112,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testEdgesOf()
     {
-        DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DefaultEdge> g =
+            createMultiTriangleWithMultiLoop();
 
         assertEquals(3, g.edgesOf(v1).size());
         assertEquals(2, g.edgesOf(v2).size());
@@ -122,7 +124,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testGetAllEdges()
     {
-        DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DefaultEdge> g =
+            createMultiTriangleWithMultiLoop();
 
         Set<DefaultEdge> loops = g.getAllEdges(v1, v1);
         assertEquals(1, loops.size());
@@ -133,7 +136,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testInDegreeOf()
     {
-        DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DefaultEdge> g =
+            createMultiTriangleWithMultiLoop();
 
         assertEquals(2, g.inDegreeOf(v1));
         assertEquals(1, g.inDegreeOf(v2));
@@ -144,7 +148,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testOutDegreeOf()
     {
-        DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DefaultEdge> g =
+            createMultiTriangleWithMultiLoop();
 
         assertEquals(2, g.outDegreeOf(v1));
         assertEquals(1, g.outDegreeOf(v2));
@@ -155,14 +160,16 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
      */
     public void testVertexOrderDeterminism()
     {
-        DirectedGraph<String, DefaultEdge> g = createMultiTriangleWithMultiLoop();
+        DirectedGraph<String, DefaultEdge> g =
+            createMultiTriangleWithMultiLoop();
         Iterator<String> iter = g.vertexSet().iterator();
         assertEquals(v1, iter.next());
         assertEquals(v2, iter.next());
         assertEquals(v3, iter.next());
     }
 
-    private DirectedGraph<String, DefaultEdge> createMultiTriangleWithMultiLoop()
+    private DirectedGraph<String, DefaultEdge>
+    createMultiTriangleWithMultiLoop()
     {
         DirectedGraph<String, DefaultEdge> g =
             new DirectedMultigraph<String, DefaultEdge>(
@@ -172,7 +179,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
         return g;
     }
 
-    private void initMultiTriangleWithMultiLoop(DirectedGraph<String, DefaultEdge> g)
+    private void initMultiTriangleWithMultiLoop(
+        DirectedGraph<String, DefaultEdge> g)
     {
         g.addVertex(v1);
         g.addVertex(v2);
@@ -186,7 +194,8 @@ public class DefaultDirectedGraphTest extends EnhancedTestCase
 
     //~ Inner Classes ---------------------------------------------------------
 
-    private static class LinkedHashSetFactory<V,E> implements EdgeSetFactory<V,E>
+    private static class LinkedHashSetFactory<V, E>
+        implements EdgeSetFactory<V, E>
     {
         /**
          * .

@@ -39,21 +39,18 @@
  */
 package org.jgrapht.graph;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
-import org.jgrapht.EnhancedTestCase;
+import org.jgrapht.*;
 
 
 /**
- * SerializationTest tests serialization and deserialization of JGraphT
- * objects.
+ * SerializationTest tests serialization and deserialization of JGraphT objects.
  *
  * @author John V. Sichi
  */
-public class SerializationTest extends EnhancedTestCase
+public class SerializationTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -81,8 +78,8 @@ public class SerializationTest extends EnhancedTestCase
     public void testDirectedMultigraph()
         throws Exception
     {
-        DirectedMultigraph<String,DefaultEdge> graph =
-            new DirectedMultigraph<String,DefaultEdge>(
+        DirectedMultigraph<String, DefaultEdge> graph =
+            new DirectedMultigraph<String, DefaultEdge>(
                 DefaultEdge.class);
         graph.addVertex(v1);
         graph.addVertex(v2);
@@ -91,7 +88,9 @@ public class SerializationTest extends EnhancedTestCase
         graph.addEdge(v2, v3);
         graph.addEdge(v2, v3);
 
-        graph = (DirectedMultigraph<String,DefaultEdge>) serializeAndDeserialize(graph);
+        graph =
+            (DirectedMultigraph<String, DefaultEdge>) serializeAndDeserialize(
+                graph);
         assertTrue(graph.containsVertex(v1));
         assertTrue(graph.containsVertex(v2));
         assertTrue(graph.containsVertex(v3));
@@ -111,8 +110,7 @@ public class SerializationTest extends EnhancedTestCase
         out.writeObject(obj);
         out.flush();
 
-        ByteArrayInputStream bin =
-            new ByteArrayInputStream(bout.toByteArray());
+        ByteArrayInputStream bin = new ByteArrayInputStream(bout.toByteArray());
         ObjectInputStream in = new ObjectInputStream(bin);
 
         obj = in.readObject();

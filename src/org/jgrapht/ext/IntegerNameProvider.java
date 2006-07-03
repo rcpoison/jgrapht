@@ -39,21 +39,28 @@
 package org.jgrapht.ext;
 
 import java.util.*;
+
 import org.jgrapht.event.*;
 
+
 /**
- * Assigns a unique integer to represent each vertex. Each instance
- * of IntegerNameProvider maintains an internal map between every
- * vertex it has ever seen and the unique integer representing that
- * vertex. As a result it is probably desirable to have a separate
- * instance for each distinct graph.
+ * Assigns a unique integer to represent each vertex. Each instance of
+ * IntegerNameProvider maintains an internal map between every vertex it has
+ * ever seen and the unique integer representing that vertex. As a result it is
+ * probably desirable to have a separate instance for each distinct graph.
  *
  * @author Charles Fry
  */
-public class IntegerNameProvider<V> implements VertexNameProvider<V>
+public class IntegerNameProvider<V>
+    implements VertexNameProvider<V>
 {
+
+    //~ Instance fields -------------------------------------------------------
+
     private int nextID = 1;
-    private final Map<V,Integer> idMap = new HashMap<V,Integer>();
+    private final Map<V, Integer> idMap = new HashMap<V, Integer>();
+
+    //~ Methods ---------------------------------------------------------------
 
     /**
      * Clears all cached identifiers, and resets the unique identifier counter.
@@ -65,11 +72,13 @@ public class IntegerNameProvider<V> implements VertexNameProvider<V>
     }
 
     /**
-     * Returns the String representation of the unique integer representing
-     * a vertex.
+     * Returns the String representation of the unique integer representing a
+     * vertex.
      *
      * @param vertex the vertex to be named
+     *
      * @return the name of
+     *
      * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
     public String getVertexName(V vertex)
@@ -82,5 +91,4 @@ public class IntegerNameProvider<V> implements VertexNameProvider<V>
 
         return id.toString();
     }
-
 }

@@ -53,10 +53,10 @@ import org.jgrapht.event.*;
 /**
  * Provides a cross-connected-component traversal functionality for iterator
  * subclasses.
- * 
+ *
  * @param <V> vertex type
  * @param <E> edge type
- * @param <D> type of data associated to seen vertices 
+ * @param <D> type of data associated to seen vertices
  *
  * @author Barak Naveh
  * @since Jan 31, 2004
@@ -90,8 +90,8 @@ public abstract class CrossComponentIterator<V, E, D>
     private Iterator<V> vertexIterator = null;
 
     /**
-     * Stores the vertices that have been seen during iteration and
-     * (optionally) some additional traversal info regarding each vertex.
+     * Stores the vertices that have been seen during iteration and (optionally)
+     * some additional traversal info regarding each vertex.
      */
     private Map<V, D> seen = new HashMap<V, D>();
     private V startVertex;
@@ -114,8 +114,8 @@ public abstract class CrossComponentIterator<V, E, D>
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      *
-     * @throws IllegalArgumentException if <code>g==null</code>
-     *              or does not contain <code>startVertex</code> 
+     * @throws IllegalArgumentException if <code>g==null</code> or does not
+     *                                  contain <code>startVertex</code>
      */
     public CrossComponentIterator(Graph<V, E> g, V startVertex)
     {
@@ -157,7 +157,7 @@ public abstract class CrossComponentIterator<V, E, D>
     {
         return graph;
     }
-    
+
     /**
      * @see java.util.Iterator#hasNext()
      */
@@ -225,8 +225,7 @@ public abstract class CrossComponentIterator<V, E, D>
      * currently iterated connected component; <tt>false</tt> otherwise.
      *
      * @return <tt>true</tt> if there are no more uniterated vertices in the
-     *         currently iterated connected component; <tt>false</tt>
-     *         otherwise.
+     *         currently iterated connected component; <tt>false</tt> otherwise.
      */
     protected abstract boolean isConnectedComponentExhausted();
 
@@ -234,8 +233,8 @@ public abstract class CrossComponentIterator<V, E, D>
      * Update data structures the first time we see a vertex.
      *
      * @param vertex the vertex encountered
-     * @param edge the edge via which the vertex was encountered, or null if
-     *             the vertex is a starting point
+     * @param edge the edge via which the vertex was encountered, or null if the
+     *             vertex is a starting point
      */
     protected abstract void encounterVertex(V vertex, E edge);
 
@@ -299,17 +298,18 @@ public abstract class CrossComponentIterator<V, E, D>
         return seen.put(vertex, data);
     }
 
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     /**
      * @param <V>
      * @param <E>
      * @param g
+     *
      * @return TODO Document me
      */
     static <V, E> Specifics<V, E> createGraphSpecifics(Graph<V, E> g)
     {
         if (g instanceof DirectedGraph) {
-            return new DirectedSpecifics<V,E>((DirectedGraph<V, E>) g);
+            return new DirectedSpecifics<V, E>((DirectedGraph<V, E>) g);
         } else {
             return new UndirectedSpecifics<V, E>(g);
         }
@@ -319,9 +319,9 @@ public abstract class CrossComponentIterator<V, E, D>
     {
         for (E edge : specifics.edgesOf(vertex)) {
             fireEdgeTraversed(createEdgeTraversalEvent(edge));
-            
+
             V oppositeV = Graphs.getOppositeVertex(graph, edge, vertex);
-            
+
             if (isSeenVertex(oppositeV)) {
                 encounterVertexAgain(oppositeV, edge);
             } else {
@@ -394,14 +394,14 @@ public abstract class CrossComponentIterator<V, E, D>
     {
         /**
          * Returns the edges outgoing from the specified vertex in case of
-         * directed graph, and the edge touching the specified vertex in case
-         * of undirected graph.
+         * directed graph, and the edge touching the specified vertex in case of
+         * undirected graph.
          *
          * @param vertex the vertex whose outgoing edges are to be returned.
          *
          * @return the edges outgoing from the specified vertex in case of
-         *         directed graph, and the edge touching the specified vertex
-         *         in case of undirected graph.
+         *         directed graph, and the edge touching the specified vertex in
+         *         case of undirected graph.
          */
         public abstract Set<? extends EE> edgesOf(VV vertex);
     }
@@ -442,7 +442,8 @@ public abstract class CrossComponentIterator<V, E, D>
      * @author Barak Naveh
      * @since Aug 11, 2003
      */
-    static class FlyweightVertexEvent<VV> extends VertexTraversalEvent<VV>
+    static class FlyweightVertexEvent<VV>
+        extends VertexTraversalEvent<VV>
     {
         private static final long serialVersionUID = 3834024753848399924L;
 
@@ -466,8 +467,7 @@ public abstract class CrossComponentIterator<V, E, D>
     }
 
     /**
-     * An implementation of {@link Specifics} for a directed
-     * graph.
+     * An implementation of {@link Specifics} for a directed graph.
      */
     private static class DirectedSpecifics<VV, EE>
         extends Specifics<VV, EE>
@@ -494,8 +494,8 @@ public abstract class CrossComponentIterator<V, E, D>
     }
 
     /**
-     * An implementation of {@link Specifics} in which edge
-     * direction (if any) is ignored.
+     * An implementation of {@link Specifics} in which edge direction (if any)
+     * is ignored.
      */
     private static class UndirectedSpecifics<VV, EE>
         extends Specifics<VV, EE>

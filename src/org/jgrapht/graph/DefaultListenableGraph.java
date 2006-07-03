@@ -48,20 +48,20 @@ package org.jgrapht.graph;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 import org.jgrapht.event.*;
+import org.jgrapht.util.*;
 
 
 /**
  * A graph backed by the the graph specified at the constructor, which can be
  * listened by <code>GraphListener</code> s and by <code>
- * VertexSetListener</code> s. Operations on this graph "pass through" to the
- * to the backing graph. Any modification made to this graph or the backing
- * graph is reflected by the other.
+ * VertexSetListener</code> s. Operations on this graph "pass through" to the to
+ * the backing graph. Any modification made to this graph or the backing graph
+ * is reflected by the other.
  *
- * <p>This graph does <i>not</i> pass the hashCode and equals operations
- * through to the backing graph, but relies on <tt>Object</tt>'s <tt>
- * equals</tt> and <tt>hashCode</tt> methods.</p>
+ * <p>This graph does <i>not</i> pass the hashCode and equals operations through
+ * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
+ * <tt>hashCode</tt> methods.</p>
  *
  * @author Barak Naveh
  * @see GraphListener
@@ -69,7 +69,8 @@ import org.jgrapht.event.*;
  * @since Jul 20, 2003
  */
 public class DefaultListenableGraph<V, E>
-    extends GraphDelegator<V, E> implements ListenableGraph<V, E>, Cloneable
+    extends GraphDelegator<V, E>
+    implements ListenableGraph<V, E>, Cloneable
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -78,10 +79,11 @@ public class DefaultListenableGraph<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private ArrayList<GraphListener<V, E>> graphListeners = new ArrayList<GraphListener<V, E>>();
+    private ArrayList<GraphListener<V, E>> graphListeners =
+        new ArrayList<GraphListener<V, E>>();
     private ArrayList<VertexSetListener<V>> vertexSetListeners =
         new ArrayList<VertexSetListener<V>>();
-    private FlyweightEdgeEvent<V,E> reuseableEdgeEvent;
+    private FlyweightEdgeEvent<V, E> reuseableEdgeEvent;
     private FlyweightVertexEvent<V> reuseableVertexEvent;
     private boolean reuseEvents;
 
@@ -106,8 +108,7 @@ public class DefaultListenableGraph<V, E>
      *
      * @param g the backing graph.
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each
-     *                    event.
+     *                    instead of creating a new event object for each event.
      *
      * @throws IllegalArgumentException if the backing graph is already a
      *                                  listenable graph.
@@ -116,7 +117,7 @@ public class DefaultListenableGraph<V, E>
     {
         super(g);
         this.reuseEvents = reuseEvents;
-        reuseableEdgeEvent = new FlyweightEdgeEvent<V,E>(this, -1, null);
+        reuseableEdgeEvent = new FlyweightEdgeEvent<V, E>(this, -1, null);
         reuseableVertexEvent = new FlyweightVertexEvent<V>(this, -1, null);
 
         // the following restriction could be probably relaxed in the future.
@@ -130,13 +131,12 @@ public class DefaultListenableGraph<V, E>
 
     /**
      * If the <code>reuseEvents</code> flag is set to <code>true</code> this
-     * class will reuse previously fired events and will not create a new
-     * object for each event. This option increases performance but should be
-     * used with care, especially in multithreaded environment.
+     * class will reuse previously fired events and will not create a new object
+     * for each event. This option increases performance but should be used with
+     * care, especially in multithreaded environment.
      *
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each
-     *                    event.
+     *                    instead of creating a new event object for each event.
      */
     public void setReuseEvents(boolean reuseEvents)
     {
@@ -221,9 +221,9 @@ public class DefaultListenableGraph<V, E>
     public Object clone()
     {
         try {
-            TypeUtil<DefaultListenableGraph<V,E>> typeDecl = null;
+            TypeUtil<DefaultListenableGraph<V, E>> typeDecl = null;
 
-            DefaultListenableGraph<V,E> g =
+            DefaultListenableGraph<V, E> g =
                 TypeUtil.uncheckedCast(super.clone(), typeDecl);
             g.graphListeners = new ArrayList<GraphListener<V, E>>();
             g.vertexSetListeners = new ArrayList<VertexSetListener<V>>();
@@ -331,7 +331,7 @@ public class DefaultListenableGraph<V, E>
                 edge);
 
         for (int i = 0; i < graphListeners.size(); i++) {
-            GraphListener<V,E> l = graphListeners.get(i);
+            GraphListener<V, E> l = graphListeners.get(i);
 
             l.edgeRemoved(e);
         }
@@ -387,7 +387,8 @@ public class DefaultListenableGraph<V, E>
         }
     }
 
-    private static <L extends EventListener> void addToListenerList(List<L> list,
+    private static <L extends EventListener> void addToListenerList(
+        List<L> list,
         L l)
     {
         if (!list.contains(l)) {
@@ -405,7 +406,7 @@ public class DefaultListenableGraph<V, E>
 
             return reuseableEdgeEvent;
         } else {
-            return new GraphEdgeChangeEvent<V,E>(this, eventType, edge);
+            return new GraphEdgeChangeEvent<V, E>(this, eventType, edge);
         }
     }
 

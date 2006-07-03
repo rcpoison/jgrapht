@@ -50,7 +50,8 @@ import org.jgrapht.*;
  * vertices are permitted, and edges have weights.
  */
 public class DirectedWeightedMultigraph<V, E>
-    extends DirectedMultigraph<V, E> implements WeightedGraph<V, E>
+    extends DirectedMultigraph<V, E>
+    implements WeightedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -66,7 +67,7 @@ public class DirectedWeightedMultigraph<V, E>
      */
     public DirectedWeightedMultigraph(Class<? extends E> edgeClass)
     {
-        this(new ClassBasedEdgeFactory<V,E>(edgeClass));
+        this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 
     /**

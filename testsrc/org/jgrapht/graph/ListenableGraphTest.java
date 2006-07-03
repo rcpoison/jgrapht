@@ -52,7 +52,8 @@ import org.jgrapht.event.*;
  * @author Barak Naveh
  * @since Aug 3, 2003
  */
-public class ListenableGraphTest extends TestCase
+public class ListenableGraphTest
+    extends TestCase
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -81,7 +82,7 @@ public class ListenableGraphTest extends TestCase
     {
         init();
 
-        ListenableGraph<Object,DefaultEdge> g =
+        ListenableGraph<Object, DefaultEdge> g =
             new ListenableUndirectedGraph<Object, DefaultEdge>(
                 DefaultEdge.class);
         GraphListener<Object, DefaultEdge> listener = new MyGraphListner();
@@ -210,12 +211,13 @@ public class ListenableGraphTest extends TestCase
      * @author Barak Naveh
      * @since Aug 3, 2003
      */
-    private class MyGraphListner implements GraphListener<Object,DefaultEdge>
+    private class MyGraphListner
+        implements GraphListener<Object, DefaultEdge>
     {
         /**
          * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
          */
-        public void edgeAdded(GraphEdgeChangeEvent<Object,DefaultEdge> e)
+        public void edgeAdded(GraphEdgeChangeEvent<Object, DefaultEdge> e)
         {
             lastAddedEdge = e.getEdge();
         }
@@ -223,7 +225,7 @@ public class ListenableGraphTest extends TestCase
         /**
          * @see GraphListener#edgeRemoved(GraphEdgeChangeEvent)
          */
-        public void edgeRemoved(GraphEdgeChangeEvent<Object,DefaultEdge> e)
+        public void edgeRemoved(GraphEdgeChangeEvent<Object, DefaultEdge> e)
         {
             lastRemovedEdge = e.getEdge();
         }

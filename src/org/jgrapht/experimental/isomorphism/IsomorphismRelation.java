@@ -50,9 +50,8 @@ import org.jgrapht.graph.*;
  * <p>Usage:
  *
  * <ol>
- * <li>use <code>getVertexCorrespondence()</code> or
- * <code>getEdgeCorrespondence()</code> to get the mapped object in the
- * other graph.
+ * <li>use <code>getVertexCorrespondence()</code> or <code>
+ * getEdgeCorrespondence()</code> to get the mapped object in the other graph.
  * </ol>
  *
  * <p>
@@ -63,7 +62,8 @@ import org.jgrapht.graph.*;
  * @author Assaf
  * @since May 27, 2005
  */
-public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
+public class IsomorphismRelation<V, E>
+    implements GraphMapping<V, E>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -71,10 +71,10 @@ public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
     private List<V> vertexList1;
     private List<V> vertexList2;
 
-    private GraphMapping<V,E> graphMapping = null;
+    private GraphMapping<V, E> graphMapping = null;
 
-    private Graph<V,E> graph1;
-    private Graph<V,E> graph2;
+    private Graph<V, E> graph1;
+    private Graph<V, E> graph2;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -83,8 +83,8 @@ public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
     public IsomorphismRelation(
         List<V> aGraph1vertexArray,
         List<V> aGraph2vertexArray,
-        Graph<V,E> g1,
-        Graph<V,E> g2)
+        Graph<V, E> g1,
+        Graph<V, E> g2)
     {
         this.vertexList1 = aGraph1vertexArray;
         this.vertexList2 = aGraph2vertexArray;
@@ -131,8 +131,8 @@ public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
     private void initGraphMapping()
     {
         int mapSize = vertexList1.size();
-        Map<V,V> g1ToG2 = new HashMap<V,V>(mapSize);
-        Map<V,V> g2ToG1 = new HashMap<V,V>(mapSize);
+        Map<V, V> g1ToG2 = new HashMap<V, V>(mapSize);
+        Map<V, V> g2ToG1 = new HashMap<V, V>(mapSize);
 
         for (int i = 0; i < mapSize; i++) {
             V source = this.vertexList1.get(i);
@@ -141,7 +141,10 @@ public class IsomorphismRelation<V,E> implements GraphMapping<V,E>
             g2ToG1.put(target, source);
         }
         this.graphMapping =
-            new DefaultGraphMapping<V,E>(
-                g1ToG2, g2ToG1, this.graph1, this.graph2);
+            new DefaultGraphMapping<V, E>(
+                g1ToG2,
+                g2ToG1,
+                this.graph1,
+                this.graph2);
     }
 }

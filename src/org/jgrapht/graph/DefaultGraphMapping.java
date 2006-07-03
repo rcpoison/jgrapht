@@ -51,14 +51,17 @@ import org.jgrapht.*;
  * @author Assaf
  * @since Jul 30, 2005
  */
-public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
+public class DefaultGraphMapping<V, E>
+    implements GraphMapping<V, E>
 {
 
-    private Map<V,V> graphMappingForward;
-    private Map<V,V> graphMappingReverse;
+    //~ Instance fields -------------------------------------------------------
 
-    private Graph<V,E> graph1;
-    private Graph<V,E> graph2;
+    private Map<V, V> graphMappingForward;
+    private Map<V, V> graphMappingReverse;
+
+    private Graph<V, E> graph1;
+    private Graph<V, E> graph2;
 
     //~ Constructors ----------------------------------------------------------
 
@@ -73,7 +76,10 @@ public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
      * @param g2
      */
     public DefaultGraphMapping(
-        Map<V,V> g1ToG2, Map<V,V> g2ToG1, Graph<V,E> g1, Graph<V,E> g2)
+        Map<V, V> g1ToG2,
+        Map<V, V> g2ToG1,
+        Graph<V, E> g1,
+        Graph<V, E> g2)
     {
         this.graph1 = g1;
         this.graph2 = g2;
@@ -85,7 +91,7 @@ public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
 
     public E getEdgeCorrespondence(E currEdge, boolean forward)
     {
-        Graph<V,E> sourceGraph, targetGraph;
+        Graph<V, E> sourceGraph, targetGraph;
 
         if (forward) {
             sourceGraph = this.graph1;
@@ -97,15 +103,16 @@ public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
 
         V mappedSourceVertex =
             getVertexCorrespondence(
-                sourceGraph.getEdgeSource(currEdge), forward);
+                sourceGraph.getEdgeSource(currEdge),
+                forward);
         V mappedTargetVertex =
             getVertexCorrespondence(
-                sourceGraph.getEdgeTarget(currEdge), forward);
+                sourceGraph.getEdgeTarget(currEdge),
+                forward);
         if ((mappedSourceVertex == null) || (mappedTargetVertex == null)) {
             return null;
         } else {
-            return
-                targetGraph.getEdge(
+            return targetGraph.getEdge(
                     mappedSourceVertex,
                     mappedTargetVertex);
         }
@@ -115,7 +122,7 @@ public class DefaultGraphMapping<V,E> implements GraphMapping<V,E>
         V keyVertex,
         boolean forward)
     {
-        Map<V,V> graphMapping;
+        Map<V, V> graphMapping;
         if (forward) {
             graphMapping = graphMappingForward;
         } else {

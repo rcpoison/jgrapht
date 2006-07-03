@@ -51,7 +51,8 @@ import org.jgrapht.*;
  * href="http://mathworld.wolfram.com/SimpleGraph.html">
  * http://mathworld.wolfram.com/SimpleGraph.html</a>.
  */
-public class SimpleGraph<V, E> extends AbstractBaseGraph<V, E>
+public class SimpleGraph<V, E>
+    extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
 

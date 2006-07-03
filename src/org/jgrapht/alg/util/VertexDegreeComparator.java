@@ -92,7 +92,8 @@ public class VertexDegreeComparator<V, E>
      *                       (lowest first), false - compares in descending
      *                       order of degrees (highest first).
      */
-    public VertexDegreeComparator(UndirectedGraph<V, E> g,
+    public VertexDegreeComparator(
+        UndirectedGraph<V, E> g,
         boolean ascendingOrder)
     {
         graph = g;
@@ -116,10 +117,12 @@ public class VertexDegreeComparator<V, E>
         int degree1 = graph.degreeOf(v1);
         int degree2 = graph.degreeOf(v2);
 
-        if (((degree1 < degree2) && ascendingOrder)
+        if (
+            ((degree1 < degree2) && ascendingOrder)
             || ((degree1 > degree2) && !ascendingOrder)) {
             return -1;
-        } else if (((degree1 > degree2) && ascendingOrder)
+        } else if (
+            ((degree1 > degree2) && ascendingOrder)
             || ((degree1 < degree2) && !ascendingOrder)) {
             return 1;
         } else {

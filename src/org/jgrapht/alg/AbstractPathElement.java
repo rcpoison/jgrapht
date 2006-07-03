@@ -40,26 +40,26 @@
  */
 package org.jgrapht.alg;
 
+import java.util.*;
+
 import org.jgrapht.*;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * A new path is created from a path concatenated to an edge. It's like a linked
- * list. <br>
- * 
- * The empty path is composed only of one vertex. <br>
- * In this case the path has no previous path element. <br>.
+ * list.<br>
+ * The empty path is composed only of one vertex.<br>
+ * In this case the path has no previous path element.<br>
+ * .
  *
- *<p>
- *
- * NOTE jvs 14-Jan-2006: This is currently an internal data structure for use
+ * <p>NOTE jvs 14-Jan-2006: This is currently an internal data structure for use
  * in algorithms.  If we want to promote it to public, we should first clean it
  * up and move it to the parent package, making a Path a first-class concept.
  */
-abstract class AbstractPathElement<V, E> {
+abstract class AbstractPathElement<V, E>
+{
+
+    //~ Instance fields -------------------------------------------------------
 
     /**
      * Number of hops of the path.
@@ -74,26 +74,31 @@ abstract class AbstractPathElement<V, E> {
     /**
      * Previous path element.
      */
-    protected AbstractPathElement<V,E> prevPathElement;
+    protected AbstractPathElement<V, E> prevPathElement;
 
     /**
      * Target vertex.
      */
     private V vertex;
 
+    //~ Constructors ----------------------------------------------------------
+
     /**
      * Creates a path element by concatenation of an edge to a path element.
-     * 
+     *
      * @param pathElement
-     * @param edge
-     *            edge reaching the end vertex of the path element created.
+     * @param edge edge reaching the end vertex of the path element created.
      */
     protected AbstractPathElement(
-        Graph<V,E> graph,
-        AbstractPathElement<V,E> pathElement, E edge)
+        Graph<V, E> graph,
+        AbstractPathElement<V, E> pathElement,
+        E edge)
     {
-        this.vertex = Graphs.getOppositeVertex(
-            graph, edge, pathElement.getVertex());
+        this.vertex =
+            Graphs.getOppositeVertex(
+                graph,
+                edge,
+                pathElement.getVertex());
         this.prevEdge = edge;
         this.prevPathElement = pathElement;
 
@@ -105,22 +110,21 @@ abstract class AbstractPathElement<V, E> {
      *
      * @param original source to copy from
      */
-    protected AbstractPathElement(
-        AbstractPathElement<V,E> original)
+    protected AbstractPathElement(AbstractPathElement<V, E> original)
     {
         this.nHops = original.nHops;
         this.prevEdge = original.prevEdge;
         this.prevPathElement = original.prevPathElement;
         this.vertex = original.vertex;
     }
-    
+
     /**
      * Creates an empty path element.
-     * 
-     * @param vertex
-     *            end vertex of the path element.
+     *
+     * @param vertex end vertex of the path element.
      */
-    protected AbstractPathElement(V vertex) {
+    protected AbstractPathElement(V vertex)
+    {
         this.vertex = vertex;
         this.prevEdge = null;
         this.prevPathElement = null;
@@ -128,17 +132,20 @@ abstract class AbstractPathElement<V, E> {
         this.nHops = 0;
     }
 
+    //~ Methods ---------------------------------------------------------------
+
     /**
      * Returns the path as a list of edges.
-     * 
+     *
      * @return list of <code>Edge</code>.
      */
-    public List<E> createEdgeListPath() {
+    public List<E> createEdgeListPath()
+    {
         List<E> path = new ArrayList<E>();
-        AbstractPathElement<V,E> pathElement = this;
+        AbstractPathElement<V, E> pathElement = this;
+
         // while start vertex is not reached.
         while (pathElement.getPrevEdge() != null) {
-
             path.add(pathElement.getPrevEdge());
 
             pathElement = pathElement.getPrevPathElement();
@@ -151,39 +158,41 @@ abstract class AbstractPathElement<V, E> {
 
     /**
      * Returns the number of hops (or number of edges) of the path.
-     * 
+     *
      * @return .
      */
-    public int getHopCount() {
+    public int getHopCount()
+    {
         return this.nHops;
     }
 
     /**
      * Returns the edge reaching the target vertex of the path.
-     * 
+     *
      * @return <code>null</code> if the path is empty.
      */
-    public E getPrevEdge() {
+    public E getPrevEdge()
+    {
         return this.prevEdge;
     }
 
     /**
      * Returns the previous path element.
-     * 
+     *
      * @return <code>null</code> is the path is empty.
      */
-    public AbstractPathElement<V,E> getPrevPathElement() {
+    public AbstractPathElement<V, E> getPrevPathElement()
+    {
         return this.prevPathElement;
     }
 
     /**
      * Returns the target vertex of the path.
-     * 
+     *
      * @return .
      */
-    public V getVertex() {
+    public V getVertex()
+    {
         return this.vertex;
     }
-
 }
-

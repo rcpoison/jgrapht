@@ -50,7 +50,8 @@ import org.jgrapht.*;
  * @author Assaf
  * @since May 25, 2005
  */
-public class IntegerVertexFactory implements VertexFactory<Integer>
+public class IntegerVertexFactory
+    implements VertexFactory<Integer>
 {
 
     //~ Instance fields -------------------------------------------------------

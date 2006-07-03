@@ -67,15 +67,16 @@ import org.jgrapht.util.*;
  * distinction between directed and undirected edges, this detail should be
  * irrelevant to algorithms.</p>
  *
- * <p>This graph does <i>not</i> pass the hashCode and equals operations
- * through to the backing graph, but relies on <tt>Object</tt>'s <tt>
- * equals</tt> and <tt>hashCode</tt> methods.  This graph will be serializable
- * if the backing graph is serializable.</p>
+ * <p>This graph does <i>not</i> pass the hashCode and equals operations through
+ * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
+ * <tt>hashCode</tt> methods.  This graph will be serializable if the backing
+ * graph is serializable.</p>
  *
  * @author John V. Sichi
  * @since Aug 14, 2003
  */
-public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
+public class AsUndirectedGraph<V, E>
+    extends GraphDelegator<V, E>
     implements Serializable, UndirectedGraph<V, E>
 {
 
@@ -95,7 +96,7 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
      * @param g the backing directed graph over which an undirected view is to
      *          be created.
      */
-    public AsUndirectedGraph(DirectedGraph<V,E> g)
+    public AsUndirectedGraph(DirectedGraph<V, E> g)
     {
         super(g);
     }
@@ -108,15 +109,16 @@ public class AsUndirectedGraph<V, E> extends GraphDelegator<V, E>
     public Set<E> getAllEdges(V sourceVertex, V targetVertex)
     {
         Set<E> forwardList = super.getAllEdges(sourceVertex, targetVertex);
-        
+
         if (sourceVertex.equals(targetVertex)) {
             // avoid duplicating loops
             return forwardList;
         }
-        
+
         Set<E> reverseList = super.getAllEdges(targetVertex, sourceVertex);
-        Set<E> list = new ArrayUnenforcedSet<E>(
-            forwardList.size() + reverseList.size());
+        Set<E> list =
+            new ArrayUnenforcedSet<E>(
+                forwardList.size() + reverseList.size());
         list.addAll(forwardList);
         list.addAll(reverseList);
 

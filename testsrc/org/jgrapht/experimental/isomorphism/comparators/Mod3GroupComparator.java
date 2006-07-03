@@ -49,7 +49,8 @@ import org.jgrapht.experimental.equivalence.*;
  * @author Assaf
  * @since Jul 22, 2005
  */
-public class Mod3GroupComparator implements EquivalenceComparator<Integer,Object>
+public class Mod3GroupComparator
+    implements EquivalenceComparator<Integer, Object>
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -69,6 +70,7 @@ public class Mod3GroupComparator implements EquivalenceComparator<Integer,Object
 
     /* Each group must have unique values.
      * @see
+     *
      *
      *
      *

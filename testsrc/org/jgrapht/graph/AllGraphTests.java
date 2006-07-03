@@ -39,8 +39,7 @@
  */
 package org.jgrapht.graph;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import junit.framework.*;
 
 
 /**

@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: VertexDegreeEquivalenceComparator.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -54,8 +55,8 @@ import org.jgrapht.experimental.equivalence.*;
  * @author Assaf
  * @since Jul 21, 2005
  */
-public class VertexDegreeEquivalenceComparator<V,E>
-    implements EquivalenceComparator<V,Graph<V,E>>
+public class VertexDegreeEquivalenceComparator<V, E>
+    implements EquivalenceComparator<V, Graph<V, E>>
 {
 
     //~ Constructors ----------------------------------------------------------
@@ -75,13 +76,13 @@ public class VertexDegreeEquivalenceComparator<V,E>
      * graph, or both on the same graph type.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     * Object)
+     *      Object)
      */
     public boolean equivalenceCompare(
         V vertex1,
         V vertex2,
-        Graph<V,E> context1,
-        Graph<V,E> context2)
+        Graph<V, E> context1,
+        Graph<V, E> context2)
     {
         // note that VertexDegreeComparator cannot be used. It supports only
         // directed graphs.
@@ -96,7 +97,7 @@ public class VertexDegreeEquivalenceComparator<V,E>
      *
      * @see EquivalenceComparator#equivalenceHashcode(Object, Object)
      */
-    public int equivalenceHashcode(V vertex, Graph<V,E> context)
+    public int equivalenceHashcode(V vertex, Graph<V, E> context)
     {
         InOutDegrees inOut = getInOutDegrees(context, vertex);
 
@@ -117,17 +118,19 @@ public class VertexDegreeEquivalenceComparator<V,E>
      * @param vertex
      */
     protected InOutDegrees getInOutDegrees(
-        Graph<V,E> aContextGraph,
+        Graph<V, E> aContextGraph,
         V vertex)
     {
         int inVertexDegree = 0;
         int outVertexDegree = 0;
         if (aContextGraph instanceof UndirectedGraph) {
-            UndirectedGraph<V,E> undirectedGraph = (UndirectedGraph<V,E>) aContextGraph;
+            UndirectedGraph<V, E> undirectedGraph =
+                (UndirectedGraph<V, E>) aContextGraph;
             inVertexDegree = undirectedGraph.degreeOf(vertex);
             outVertexDegree = inVertexDegree; // it is UNdirected
         } else if (aContextGraph instanceof DirectedGraph) {
-            DirectedGraph<V,E> directedGraph = (DirectedGraph<V,E>) aContextGraph;
+            DirectedGraph<V, E> directedGraph =
+                (DirectedGraph<V, E>) aContextGraph;
             inVertexDegree = directedGraph.inDegreeOf(vertex);
             outVertexDegree = directedGraph.outDegreeOf(vertex);
         } else {
@@ -160,8 +163,8 @@ public class VertexDegreeEquivalenceComparator<V,E>
         }
 
         /**
-         * Checks both inDegree and outDegree. Does not check class type to
-         * save time. If should be used with caution.
+         * Checks both inDegree and outDegree. Does not check class type to save
+         * time. If should be used with caution.
          *
          * @see java.lang.Object#equals(java.lang.Object)
          */

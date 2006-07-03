@@ -40,7 +40,7 @@
  */
 package org.jgrapht.traverse;
 
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
 
@@ -50,7 +50,8 @@ import org.jgrapht.graph.*;
  * @author John V. Sichi
  * @since Sep 3, 2003
  */
-public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
+public class ClosestFirstIteratorTest
+    extends AbstractGraphIteratorTest
 {
 
     //~ Methods ---------------------------------------------------------------
@@ -91,9 +92,12 @@ public class ClosestFirstIteratorTest extends AbstractGraphIteratorTest
         return getExpectedStr1() + ",orphan";
     }
 
-    AbstractGraphIterator<String, DefaultEdge> createIterator(DirectedGraph<String, DefaultEdge> g, String vertex)
+    AbstractGraphIterator<String, DefaultEdge> createIterator(
+        DirectedGraph<String, DefaultEdge> g,
+        String vertex)
     {
-        AbstractGraphIterator<String, DefaultEdge> i = new ClosestFirstIterator<String, DefaultEdge>(g, vertex);
+        AbstractGraphIterator<String, DefaultEdge> i =
+            new ClosestFirstIterator<String, DefaultEdge>(g, vertex);
         i.setCrossComponentTraversal(true);
 
         return i;

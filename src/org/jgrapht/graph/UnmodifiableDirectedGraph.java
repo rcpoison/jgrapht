@@ -49,7 +49,8 @@ import org.jgrapht.*;
  * @see UnmodifiableGraph
  */
 public class UnmodifiableDirectedGraph<V, E>
-    extends UnmodifiableGraph<V, E> implements DirectedGraph<V, E>
+    extends UnmodifiableGraph<V, E>
+    implements DirectedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------

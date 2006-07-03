@@ -48,14 +48,15 @@ import org.jgrapht.generate.*;
 
 /**
  * UniformRandomGraphGenerator generates a <a
- * href="http://mathworld.wolfram.com/RandomGraph.html">uniform random
- * graph</a> of any size. A uniform random graph contains edges chosen
- * independently uniformly at random from the set of all possible edges.
+ * href="http://mathworld.wolfram.com/RandomGraph.html">uniform random graph</a>
+ * of any size. A uniform random graph contains edges chosen independently
+ * uniformly at random from the set of all possible edges.
  *
  * @author Michael Behrisch
  * @since Sep 13, 2004
  */
-public class UniformRandomGraphGenerator implements GraphGenerator
+public class UniformRandomGraphGenerator
+    implements GraphGenerator
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -79,7 +80,8 @@ public class UniformRandomGraphGenerator implements GraphGenerator
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        if ((numEdges < 0)
+        if (
+            (numEdges < 0)
             || (numEdges > (numVertices * (numVertices - 1) / 2))) {
             throw new IllegalArgumentException("illegal number of edges");
         }

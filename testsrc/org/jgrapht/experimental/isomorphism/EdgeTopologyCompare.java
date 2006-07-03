@@ -57,7 +57,7 @@ public class EdgeTopologyCompare
      * @param g2
      */
     @SuppressWarnings("unchecked")
-	public static boolean compare(Graph g1, Graph g2)
+    public static boolean compare(Graph g1, Graph g2)
     {
         boolean result = false;
         GraphOrdering lg1 = new GraphOrdering(g1);

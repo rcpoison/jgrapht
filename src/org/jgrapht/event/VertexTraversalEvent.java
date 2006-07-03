@@ -49,7 +49,8 @@ import java.util.*;
  * @author Barak Naveh
  * @since Aug 11, 2003
  */
-public class VertexTraversalEvent<V> extends EventObject
+public class VertexTraversalEvent<V>
+    extends EventObject
 {
 
     //~ Static fields/initializers --------------------------------------------

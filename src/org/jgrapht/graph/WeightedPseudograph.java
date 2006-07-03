@@ -51,7 +51,8 @@ import org.jgrapht.*;
  * see: <a href="http://mathworld.wolfram.com/Pseudograph.html">
  * http://mathworld.wolfram.com/Pseudograph.html</a>.
  */
-public class WeightedPseudograph<V, E> extends Pseudograph<V, E>
+public class WeightedPseudograph<V, E>
+    extends Pseudograph<V, E>
     implements WeightedGraph<V, E>
 {
 

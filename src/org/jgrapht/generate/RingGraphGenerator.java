@@ -53,7 +53,8 @@ import org.jgrapht.*;
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
-public class RingGraphGenerator<V,E> implements GraphGenerator<V,E,V>
+public class RingGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
 {
 
     //~ Instance fields -------------------------------------------------------
@@ -84,17 +85,17 @@ public class RingGraphGenerator<V,E> implements GraphGenerator<V,E,V>
      * {@inheritDoc}
      */
     public void generateGraph(
-        Graph<V,E> target,
+        Graph<V, E> target,
         VertexFactory<V> vertexFactory,
-        Map<String,V> resultMap)
+        Map<String, V> resultMap)
     {
         if (size < 1) {
             return;
         }
 
-        LinearGraphGenerator<V,E> linearGenerator =
-            new LinearGraphGenerator<V,E>(size);
-        Map<String,V> privateMap = new HashMap<String,V>();
+        LinearGraphGenerator<V, E> linearGenerator =
+            new LinearGraphGenerator<V, E>(size);
+        Map<String, V> privateMap = new HashMap<String, V>();
         linearGenerator.generateGraph(target, vertexFactory, privateMap);
 
         V startVertex = privateMap.get(LinearGraphGenerator.START_VERTEX);

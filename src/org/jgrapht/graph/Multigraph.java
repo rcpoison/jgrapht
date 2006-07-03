@@ -45,13 +45,14 @@ import org.jgrapht.*;
 
 
 /**
- * A multigraph. A multigraph is a non-simple undirected graph in which no
- * loops are permitted, but multiple edges between any two vertices are. If
- * you're unsure about multigraphs, see: <a
+ * A multigraph. A multigraph is a non-simple undirected graph in which no loops
+ * are permitted, but multiple edges between any two vertices are. If you're
+ * unsure about multigraphs, see: <a
  * href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class Multigraph<V, E> extends AbstractBaseGraph<V, E>
+public class Multigraph<V, E>
+    extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
 

@@ -44,8 +44,8 @@ import org.jgrapht.util.*;
 
 /**
  * Given a container with elements (Collection,Enumeration,array) defines a
- * permutation iterator which returns, on each iteration, a differnt
- * permutation of the source container. You may choose a different container
+ * permutation iterator which returns, on each iteration, a differnt permutation
+ * of the source container. You may choose a different container
  * type(Collection/Array/etc) for each next call. It will continue as if they
  * were the same iterator.
  *
@@ -69,11 +69,11 @@ public class CollectionPermutationIter<E>
 
     /**
      * Note: the Set interface does not guarantee iteration order. This method
-     * iterates on the set to get the initial order and after that the data
-     * will be saved internally in another (ordered) container. So, remeber
-     * that the Initial order can be different from the objectSet.toString()
-     * method. If you want it to be the same, use a LinkedHashSet , or use the
-     * array constructor.
+     * iterates on the set to get the initial order and after that the data will
+     * be saved internally in another (ordered) container. So, remeber that the
+     * Initial order can be different from the objectSet.toString() method. If
+     * you want it to be the same, use a LinkedHashSet , or use the array
+     * constructor.
      *
      * @param objectsSet
      */
@@ -98,7 +98,7 @@ public class CollectionPermutationIter<E>
             objectsArray,
             new IntegerPermutationIter(objectsArray.size()));
     }
-    
+
     public CollectionPermutationIter(
         List<E> objectsArray,
         ArrayPermutationsIter permuter)

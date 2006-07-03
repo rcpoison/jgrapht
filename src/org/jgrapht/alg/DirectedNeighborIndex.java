@@ -41,34 +41,33 @@ package org.jgrapht.alg;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.alg.NeighborIndex.Neighbors;
+import org.jgrapht.alg.NeighborIndex.*;
 import org.jgrapht.event.*;
 
+
 /**
- * Maintains a cache of each vertex's neighbors. While
- * lists of neighbors can be obtained from {@link Graphs}, they are
- * re-calculated at each invocation by walking a vertex's incident edges, which
- * becomes inordinately expensive when performed often.
+ * Maintains a cache of each vertex's neighbors. While lists of neighbors can be
+ * obtained from {@link Graphs}, they are re-calculated at each invocation by
+ * walking a vertex's incident edges, which becomes inordinately expensive when
+ * performed often.
  *
  * <p>A vertex's neighbors are cached the first time they are asked for (i.e.
  * the index is built on demand). The index will only be updated automatically
  * if it is added to the associated graph as a listener. If it is added as a
- * listener to a graph other than the one it indexes, results are
- * undefined.</p>
+ * listener to a graph other than the one it indexes, results are undefined.</p>
  *
  * @author Charles Fry
  * @since Dec 13, 2005
  */
-public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
+public class DirectedNeighborIndex<V, E>
+    implements GraphListener<V, E>
 {
+
     //~ Instance fields -------------------------------------------------------
 
-    Map<V, Neighbors<V,E>> predecessorMap =
-        new HashMap<V, Neighbors<V,E>>();
-    Map<V, Neighbors<V,E>> successorMap =
-        new HashMap<V, Neighbors<V,E>>();
+    Map<V, Neighbors<V, E>> predecessorMap = new HashMap<V, Neighbors<V, E>>();
+    Map<V, Neighbors<V, E>> successorMap = new HashMap<V, Neighbors<V, E>>();
     private DirectedGraph<V, E> graph;
-
 
     //~ Constructors ----------------------------------------------------------
 
@@ -86,11 +85,12 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 
     /**
      * Returns the set of vertices which are the predecessors of a specified
-     * vertex. The returned set is backed
-     * by the index, and will be updated when the graph changes as long as
-     * the index has been added as a listener to the graph.
+     * vertex. The returned set is backed by the index, and will be updated when
+     * the graph changes as long as the index has been added as a listener to
+     * the graph.
      *
      * @param v the vertex whose predecessors are desired
+     *
      * @return all unique predecessors of the specified vertex
      */
     public Set<V> predecessorsOf(V v)
@@ -100,14 +100,14 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 
     /**
      * Returns the set of vertices which are the predecessors of a specified
-     * vertex. If the graph is a multigraph, vertices may appear more than
-     * once in the returned list. Because a list of
-     * predecessors can not be efficiently maintained, it is reconstructed
-     * on every invocation by duplicating entries in the neighbor set.
-     * It is thus more efficient to use {@link #predecessorsOf(Object)}
-     * unless duplicate neighbors are required.
+     * vertex. If the graph is a multigraph, vertices may appear more than once
+     * in the returned list. Because a list of predecessors can not be
+     * efficiently maintained, it is reconstructed on every invocation by
+     * duplicating entries in the neighbor set. It is thus more efficient to use
+     * {@link #predecessorsOf(Object)} unless duplicate neighbors are required.
      *
      * @param v the vertex whose predecessors are desired
+     *
      * @return all predecessors of the specified vertex
      */
     public List<V> predecessorListOf(V v)
@@ -117,11 +117,12 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 
     /**
      * Returns the set of vertices which are the successors of a specified
-     * vertex. The returned set is backed
-     * by the index, and will be updated when the graph changes as long as
-     * the index has been added as a listener to the graph.
+     * vertex. The returned set is backed by the index, and will be updated when
+     * the graph changes as long as the index has been added as a listener to
+     * the graph.
      *
      * @param v the vertex whose successors are desired
+     *
      * @return all unique successors of the specified vertex
      */
     public Set<V> successorsOf(V v)
@@ -131,14 +132,14 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
 
     /**
      * Returns the set of vertices which are the successors of a specified
-     * vertex. If the graph is a multigraph, vertices may appear more than
-     * once in the returned list. Because a list of
-     * successors can not be efficiently maintained, it is reconstructed
-     * on every invocation by duplicating entries in the neighbor set.
-     * It is thus more effecient to use {@link #successorsOf(Object)}
-     * unless dupliate neighbors are required.
+     * vertex. If the graph is a multigraph, vertices may appear more than once
+     * in the returned list. Because a list of successors can not be efficiently
+     * maintained, it is reconstructed on every invocation by duplicating
+     * entries in the neighbor set. It is thus more effecient to use {@link
+     * #successorsOf(Object)} unless dupliate neighbors are required.
      *
      * @param v the vertex whose successors are desired
+     *
      * @return all successors of the specified vertex
      */
     public List<V> successorListOf(V v)
@@ -191,26 +192,27 @@ public class DirectedNeighborIndex<V, E> implements GraphListener<V, E>
         successorMap.remove(e.getVertex());
     }
 
-    private Neighbors<V,E> getPredecessors(V v)
+    private Neighbors<V, E> getPredecessors(V v)
     {
-        Neighbors<V,E> neighbors = predecessorMap.get(v);
+        Neighbors<V, E> neighbors = predecessorMap.get(v);
         if (neighbors == null) {
-            neighbors = new Neighbors<V, E>(v,
+            neighbors =
+                new Neighbors<V, E>(v,
                     Graphs.predecessorListOf(graph, v));
             predecessorMap.put(v, neighbors);
         }
         return neighbors;
     }
 
-    private Neighbors<V,E> getSuccessors(V v)
+    private Neighbors<V, E> getSuccessors(V v)
     {
-        Neighbors<V,E> neighbors = successorMap.get(v);
+        Neighbors<V, E> neighbors = successorMap.get(v);
         if (neighbors == null) {
-            neighbors = new Neighbors<V, E>(v,
+            neighbors =
+                new Neighbors<V, E>(v,
                     Graphs.successorListOf(graph, v));
             successorMap.put(v, neighbors);
         }
         return neighbors;
     }
-
 }

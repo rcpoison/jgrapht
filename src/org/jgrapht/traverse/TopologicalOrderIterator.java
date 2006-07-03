@@ -49,9 +49,9 @@ import org.jgrapht.util.*;
 
 /**
  * Implements topological order traversal for a directed graph. A topological
- * sort is a permutation <tt>p</tt> of the vertices of a graph such that an
- * edge <tt>(i,j)</tt> implies that <tt>i</tt> appears before <tt>j</tt> in
- * <tt>p</tt> (Skiena 1990, p. 208). See also <a
+ * sort is a permutation <tt>p</tt> of the vertices of a graph such that an edge
+ * <tt>(i,j)</tt> implies that <tt>i</tt> appears before <tt>j</tt> in <tt>
+ * p</tt> (Skiena 1990, p. 208). See also <a
  * href="http://mathworld.wolfram.com/TopologicalSort.html">
  * http://mathworld.wolfram.com/TopologicalSort.html</a>.
  *
@@ -63,8 +63,8 @@ import org.jgrapht.util.*;
  * http://www.brpreiss.com/books/opus5/</a></p>
  *
  * <p>For this iterator to work correctly the graph must not be modified during
- * iteration. Currently there are no means to ensure that, nor to fail-fast.
- * The results of such modifications are undefined.</p>
+ * iteration. Currently there are no means to ensure that, nor to fail-fast. The
+ * results of such modifications are undefined.</p>
  *
  * @author Marden Neubert
  * @since Dec 18, 2004
@@ -96,7 +96,8 @@ public class TopologicalOrderIterator<V, E>
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
-    private TopologicalOrderIterator(DirectedGraph<V, E> dg,
+    private TopologicalOrderIterator(
+        DirectedGraph<V, E> dg,
         LinkedList<V> queue,
         Map<V, ModifiableInteger> inDegreeMap)
     {
@@ -170,9 +171,9 @@ public class TopologicalOrderIterator<V, E>
     }
 
     /**
-     * Initializes the internal traversal object structure. Sets up the
-     * internal queue with the directed graph vertices and creates the control
-     * structure for the in-degrees.
+     * Initializes the internal traversal object structure. Sets up the internal
+     * queue with the directed graph vertices and creates the control structure
+     * for the in-degrees.
      *
      * @param dg the directed graph to be iterated.
      * @param queue initializer for queue
@@ -180,7 +181,8 @@ public class TopologicalOrderIterator<V, E>
      *
      * @return start vertex
      */
-    private static <V, E> V initialize(DirectedGraph<V, E> dg,
+    private static <V, E> V initialize(
+        DirectedGraph<V, E> dg,
         LinkedList<V> queue,
         Map<V, ModifiableInteger> inDegreeMap)
     {

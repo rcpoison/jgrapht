@@ -30,7 +30,8 @@
  * Original Author:  Assaf Lehr
  * Contributor(s):   -
  *
- * $Id$
+ * $Id: AbstractExhaustiveIsomorphismInspector.java 485 2006-06-26 09:12:14Z
+ * perfecthash $
  *
  * Changes
  * -------
@@ -40,26 +41,26 @@ package org.jgrapht.experimental.isomorphism;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 import org.jgrapht.experimental.equivalence.*;
 import org.jgrapht.experimental.permutation.*;
+import org.jgrapht.util.*;
 
 
 /**
- * Abstract base for isomorphism inspectors which exhaustively test the
- * possible mappings between graphs.  The current algorithms do not support
- * graphs with multiple edges (Multigraph / Pseudograph).  For the maintainer:
- * The reason is the use of GraphOrdering which currently does not support all
- * graph types.
+ * Abstract base for isomorphism inspectors which exhaustively test the possible
+ * mappings between graphs.  The current algorithms do not support graphs with
+ * multiple edges (Multigraph / Pseudograph).  For the maintainer: The reason is
+ * the use of GraphOrdering which currently does not support all graph types.
  *
  * @author Assaf Lehr
  * @since May 20, 2005 ver5.3
  */
-abstract class AbstractExhaustiveIsomorphismInspector<V,E>
+abstract class AbstractExhaustiveIsomorphismInspector<V, E>
     implements GraphIsomorphismInspector<IsomorphismRelation>
 {
 
     //~ Static fields/initializers --------------------------------------------
+
     public static EquivalenceComparator<Object, Object> edgeDefaultIsomorphismComparator =
         new UniformEquivalenceComparator<Object, Object>();
     public static EquivalenceComparator<Object, Object> vertexDefaultIsomorphismComparator =
@@ -67,11 +68,11 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
 
     //~ Instance fields -------------------------------------------------------
 
-    protected EquivalenceComparator<? super E,? super Graph<V,? super E>> edgeComparator;
-    protected EquivalenceComparator<? super V,? super Graph<? super V,E>> vertexComparator;
+    protected EquivalenceComparator<? super E, ? super Graph<V, ? super E>> edgeComparator;
+    protected EquivalenceComparator<? super V, ? super Graph<? super V, E>> vertexComparator;
 
-    protected Graph<V,E> graph1;
-    protected Graph<V,E> graph2;
+    protected Graph<V, E> graph1;
+    protected Graph<V, E> graph2;
 
     private PrefetchIterator<IsomorphismRelation> nextSupplier;
 
@@ -81,7 +82,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
     private LinkedHashSet<E> graph2EdgeSet;
     private CollectionPermutationIter<V> vertexPermuteIter;
     private Set<V> currVertexPermutation; // filled every iteration, used in the
-                                       // result relation.
+
+    // result relation.
 
     //~ Constructors ----------------------------------------------------------
 
@@ -89,18 +91,20 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * @param graph1
      * @param graph2
      * @param vertexChecker eq. group checker for vertexes. If null,
-     *                      UniformEquivalenceComparator will be used as
-     *                      default (always return true)
+     *                      UniformEquivalenceComparator will be used as default
+     *                      (always return true)
      * @param edgeChecker eq. group checker for edges. If null,
      *                    UniformEquivalenceComparator will be used as default
      *                    (always return true)
      */
     public AbstractExhaustiveIsomorphismInspector(
-        Graph<V,E> graph1,
-        Graph<V,E> graph2,
-        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super E>
-        EquivalenceComparator<? super V,? super Graph<? super V,? super E>> vertexChecker,
-        EquivalenceComparator<? super E,? super Graph<? super V,? super E>> edgeChecker)
+        Graph<V, E> graph1,
+        Graph<V, E> graph2,
+        
+        // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super
+    // E>
+    EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
+        EquivalenceComparator<? super E, ? super Graph<? super V, ? super E>> edgeChecker)
     {
         this.graph1 = graph1;
         this.graph2 = graph2;
@@ -127,9 +131,12 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      *
      * @param graph1
      * @param graph2
+     *
      * @see #AbstractExhaustiveIsomorphismInspector(Graph,Graph,EquivalenceComparator,EquivalenceComparator)
      */
-    public AbstractExhaustiveIsomorphismInspector(Graph<V,E> graph1, Graph<V,E> graph2)
+    public AbstractExhaustiveIsomorphismInspector(
+        Graph<V, E> graph1,
+        Graph<V, E> graph2)
     {
         this(
             graph1,
@@ -143,9 +150,9 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
     /**
      * Inits needed data-structures , among them:
      * <li>LabelsGraph which is a created in the image of graph1
-     * <li>vertexPermuteIter which is created after the vertexes were divided
-     * to equivalence groups. This saves order-of-magnitude in performance,
-     * because the number of possible permutations dramatically decreases.
+     * <li>vertexPermuteIter which is created after the vertexes were divided to
+     * equivalence groups. This saves order-of-magnitude in performance, because
+     * the number of possible permutations dramatically decreases.
      *
      * <p>for example: if the eq.group are even/odd - only two groups. A graph
      * with consist of 10 nodes of which 5 are even , 5 are odd , will need to
@@ -158,9 +165,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
     {
         this.nextSupplier =
             new PrefetchIterator<IsomorphismRelation>(
-                    // XXX hb 280106: I don't understand this warning, yet :-)
-                    new NextFunctor()
-                    );
+                // XXX hb 280106: I don't understand this warning, yet :-)
+            new NextFunctor());
 
         this.graph1VertexSet = new LinkedHashSet<V>(this.graph1.vertexSet());
 
@@ -171,17 +177,17 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
                 this.graph2.vertexSet());
 
         this.lableGraph1 =
-            new GraphOrdering<V,E>(
+            new GraphOrdering<V, E>(
                 this.graph1,
-                this.graph1VertexSet, this.graph1.edgeSet());
+                this.graph1VertexSet,
+                this.graph1.edgeSet());
 
         this.graph2EdgeSet = new LinkedHashSet<E>(this.graph2.edgeSet());
     }
 
     /**
-     * Creates the permutation iterator for vertexSet2 . The subclasses may
-     * make either cause it to depend on equality groups or use vertexSet1 for
-     * it.
+     * Creates the permutation iterator for vertexSet2 . The subclasses may make
+     * either cause it to depend on equality groups or use vertexSet1 for it.
      *
      * @param vertexSet1 [i] may be reordered
      * @param vertexSet2 [i] may not.
@@ -193,8 +199,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
         Set<V> vertexSet2);
 
     /**
-     * <p>1. Creates a LabelsGraph of graph1 which will serve as a source to
-     * all the comparisons which will follow.
+     * <p>1. Creates a LabelsGraph of graph1 which will serve as a source to all
+     * the comparisons which will follow.
      *
      * <p>2. extract the edge array of graph2; it will be permanent too.
      *
@@ -211,47 +217,48 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * "D" "E" "A" with D->E->A will be isomorphic , but "A","B,"C"with
      * A->B,A->C will not.
      *
-     * <p>First let's extract the important info for isomorphism from the
-     * graph. We don't care what the vertexes are, we care that there are 3 of
-     * them with edges from first to second and from second to third. So the
-     * source LabelsGraph will be: vertexes:[1,2,3] edges:[[1->2],[2->3]] Now
-     * we will do several permutations of D,E,A. A few examples: D->E , E->A
+     * <p>First let's extract the important info for isomorphism from the graph.
+     * We don't care what the vertexes are, we care that there are 3 of them
+     * with edges from first to second and from second to third. So the source
+     * LabelsGraph will be: vertexes:[1,2,3] edges:[[1->2],[2->3]] Now we will
+     * do several permutations of D,E,A. A few examples: D->E , E->A
      * [1,2,3]=[A,D,E] so edges are:    2->3 , 3->1 . does it match the source?
      * NO. [1,2,3]=[D,A,E] so edges are:    1->3 , 3->2 . no match either.
      * [1,2,3]=[D,E,A] so edges are:    1->2 , 2->3 . MATCH FOUND ! Trivial
      * algorithm: We will iterate on all permutations
-     * [abc][acb][bac][bca][cab][cba]. (n! of them,3!=6) For each, first
-     * compare vertexes using the VertexComparator(always true). Then see that
-     * the edges are in the exact order 1st->2nd , 2nd->3rd. If we found a
-     * match stop and return true, otherwise return false; we will compare
-     * vetices and edges by their order (1st,2nd,3rd,etc) only. Two graphs are
-     * the same, by this order,  if: 1. for each i, sourceVertexArray[i] is
-     * equivalent to targetVertexArray[i] 2. for each vertex, the edges which
-     * start in it (it is the source) goes to the same ordered vertex. For
-     * multiple ones, count them too.
+     * [abc][acb][bac][bca][cab][cba]. (n! of them,3!=6) For each, first compare
+     * vertexes using the VertexComparator(always true). Then see that the edges
+     * are in the exact order 1st->2nd , 2nd->3rd. If we found a match stop and
+     * return true, otherwise return false; we will compare vetices and edges by
+     * their order (1st,2nd,3rd,etc) only. Two graphs are the same, by this
+     * order,  if: 1. for each i, sourceVertexArray[i] is equivalent to
+     * targetVertexArray[i] 2. for each vertex, the edges which start in it (it
+     * is the source) goes to the same ordered vertex. For multiple ones, count
+     * them too.
      *
      * @return IsomorphismRelation for a permutation found, or null if no
      *         permutation was isomorphic
      */
-    private IsomorphismRelation<V,E> findNextIsomorphicGraph()
+    private IsomorphismRelation<V, E> findNextIsomorphicGraph()
     {
         boolean result = false;
-        IsomorphismRelation<V,E> resultRelation = null;
+        IsomorphismRelation<V, E> resultRelation = null;
         if (this.vertexPermuteIter != null) {
             // System.out.println("Souce  LabelsGraph="+this.lableGraph1);
             while (this.vertexPermuteIter.hasNext()) {
                 currVertexPermutation = this.vertexPermuteIter.getNextSet();
 
                 // compare vertexes
-                if (!areVertexSetsOfTheSameEqualityGroup(
+                if (
+                    !areVertexSetsOfTheSameEqualityGroup(
                         this.graph1VertexSet,
                         currVertexPermutation)) {
                     continue; // this one is not iso, so try the next one
                 }
 
                 // compare edges
-                GraphOrdering<V,E> currPermuteGraph =
-                    new GraphOrdering<V,E>(
+                GraphOrdering<V, E> currPermuteGraph =
+                    new GraphOrdering<V, E>(
                         this.graph2,
                         currVertexPermutation,
                         this.graph2EdgeSet);
@@ -260,7 +267,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
                 if (this.lableGraph1.equalsByEdgeOrder(currPermuteGraph)) {
                     // create result object.
                     resultRelation =
-                        new IsomorphismRelation<V,E>(
+                        new IsomorphismRelation<V, E>(
                             new ArrayList<V>(graph1VertexSet),
                             new ArrayList<V>(currVertexPermutation),
                             graph1,
@@ -294,8 +301,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * true methods only if they make sure that the permutationIterator will
      * always be already equivalent.
      *
-     * @param vertexSet1    FIXME Document me
-     * @param vertexSet2    FIXME Document me
+     * @param vertexSet1 FIXME Document me
+     * @param vertexSet2 FIXME Document me
      */
     protected abstract boolean areVertexSetsOfTheSameEqualityGroup(
         Set<V> vertexSet1,
@@ -308,8 +315,8 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * @param edgeComparator if null, always return true.
      */
     protected boolean areAllEdgesEquivalent(
-        IsomorphismRelation<V,E> resultRelation,
-        EquivalenceComparator<? super E,? super Graph<V,E>> edgeComparator)
+        IsomorphismRelation<V, E> resultRelation,
+        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeComparator)
     {
         boolean checkResult = true;
 
@@ -321,12 +328,13 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
         try {
             Set<E> edgeSet = this.graph1.edgeSet();
 
-            for ( E currEdge : edgeSet ) {
+            for (E currEdge : edgeSet) {
                 E correspondingEdge =
                     resultRelation.getEdgeCorrespondence(currEdge, true);
 
                 // if one edge test fail , fail the whole method
-                if (!edgeComparator.equivalenceCompare(
+                if (
+                    !edgeComparator.equivalenceCompare(
                         currEdge,
                         correspondingEdge,
                         this.graph1,
@@ -355,7 +363,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V,E>
      * activated on this class and returned there after in O(1). If called on a
      * new ("virgin") class, it activates 1 iso-check.
      *
-     * @return <code>true</code> iff the two graphs are isomorphic 
+     * @return <code>true</code> iff the two graphs are isomorphic
      */
     public boolean isIsomorphic()
     {

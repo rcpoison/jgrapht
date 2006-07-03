@@ -45,14 +45,14 @@ import org.jgrapht.*;
 
 
 /**
- * A weighted multigraph. A weighted multigraph is a non-simple undirected
- * graph in which no loops are permitted, but multiple edges between any two
- * vertices are. The edges of a weighted multigraph have weights. If you're
- * unsure about multigraphs, see: <a
- * href="http://mathworld.wolfram.com/Multigraph.html">
+ * A weighted multigraph. A weighted multigraph is a non-simple undirected graph
+ * in which no loops are permitted, but multiple edges between any two vertices
+ * are. The edges of a weighted multigraph have weights. If you're unsure about
+ * multigraphs, see: <a href="http://mathworld.wolfram.com/Multigraph.html">
  * http://mathworld.wolfram.com/Multigraph.html</a>.
  */
-public class WeightedMultigraph<V, E> extends Multigraph<V, E>
+public class WeightedMultigraph<V, E>
+    extends Multigraph<V, E>
     implements WeightedGraph<V, E>
 {
 

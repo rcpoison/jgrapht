@@ -45,12 +45,12 @@ import org.jgrapht.*;
 
 
 /**
- * A simple directed graph. A simple directed graph is a directed graph in
- * which neither multiple edges between any two vertices nor loops are
- * permitted.
+ * A simple directed graph. A simple directed graph is a directed graph in which
+ * neither multiple edges between any two vertices nor loops are permitted.
  */
 public class SimpleDirectedGraph<V, E>
-    extends AbstractBaseGraph<V, E> implements DirectedGraph<V, E>
+    extends AbstractBaseGraph<V, E>
+    implements DirectedGraph<V, E>
 {
 
     //~ Static fields/initializers --------------------------------------------

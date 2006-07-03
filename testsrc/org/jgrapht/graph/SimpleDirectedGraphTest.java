@@ -41,9 +41,7 @@ package org.jgrapht.graph;
 
 import java.util.*;
 
-import org.jgrapht.DirectedGraph;
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.EnhancedTestCase;
+import org.jgrapht.*;
 
 
 /**
@@ -52,18 +50,19 @@ import org.jgrapht.EnhancedTestCase;
  * @author Barak Naveh
  * @since Jul 25, 2003
  */
-public class SimpleDirectedGraphTest extends EnhancedTestCase
+public class SimpleDirectedGraphTest
+    extends EnhancedTestCase
 {
 
     //~ Instance fields -------------------------------------------------------
 
-    DirectedGraph<String,DefaultEdge> gEmpty;
-    private DirectedGraph<String,DefaultEdge> g1;
-    private DirectedGraph<String,DefaultEdge> g2;
-    private DirectedGraph<String,DefaultEdge> g3;
-    private DirectedGraph<String,DefaultEdge> g4;
+    DirectedGraph<String, DefaultEdge> gEmpty;
+    private DirectedGraph<String, DefaultEdge> g1;
+    private DirectedGraph<String, DefaultEdge> g2;
+    private DirectedGraph<String, DefaultEdge> g3;
+    private DirectedGraph<String, DefaultEdge> g4;
     private DefaultEdge eLoop;
-    private EdgeFactory<String,DefaultEdge> eFactory;
+    private EdgeFactory<String, DefaultEdge> eFactory;
     private String v1 = "v1";
     private String v2 = "v2";
     private String v3 = "v3";
@@ -387,16 +386,17 @@ public class SimpleDirectedGraphTest extends EnhancedTestCase
 
     private void init()
     {
-        gEmpty = new SimpleDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+        gEmpty =
+            new SimpleDirectedGraph<String, DefaultEdge>(
+                DefaultEdge.class);
         g1 = new SimpleDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+                DefaultEdge.class);
         g2 = new SimpleDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+                DefaultEdge.class);
         g3 = new SimpleDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+                DefaultEdge.class);
         g4 = new SimpleDirectedGraph<String, DefaultEdge>(
-            DefaultEdge.class);
+                DefaultEdge.class);
 
         eFactory = g1.getEdgeFactory();
         eLoop = eFactory.createEdge(v1, v1);

@@ -40,6 +40,7 @@ package org.jgrapht.ext;
 
 import org.jgrapht.event.*;
 
+
 /**
  * Generates vertex names by invoking {@link #toString()} on them. This assumes
  * that the vertex's {@link #toString()} method returns a unique String
@@ -47,9 +48,9 @@ import org.jgrapht.event.*;
  *
  * @author Charles Fry
  */
-public class StringNameProvider<V> implements VertexNameProvider<V>
+public class StringNameProvider<V>
+    implements VertexNameProvider<V>
 {
-    //~ Static fields/initializers --------------------------------------------
 
     //~ Constructors ----------------------------------------------------------
 
@@ -60,16 +61,17 @@ public class StringNameProvider<V> implements VertexNameProvider<V>
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Returns the String representation of the unique integer representing
-     * a vertex.
+     * Returns the String representation of the unique integer representing a
+     * vertex.
      *
      * @param vertex the vertex to be named
+     *
      * @return the name of
+     *
      * @see GraphListener#edgeAdded(GraphEdgeChangeEvent)
      */
     public String getVertexName(V vertex)
     {
         return vertex.toString();
     }
-
 }

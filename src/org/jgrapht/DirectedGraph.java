@@ -55,15 +55,16 @@ import java.util.*;
  * @author Barak Naveh
  * @since Jul 14, 2003
  */
-public interface DirectedGraph<V, E> extends Graph<V, E>
+public interface DirectedGraph<V, E>
+    extends Graph<V, E>
 {
 
     //~ Methods ---------------------------------------------------------------
 
     /**
-     * Returns the "in degree" of the specified vertex. An in degree of a
-     * vertex in a directed graph is the number of inward directed edges from
-     * that vertex. See <a href="http://mathworld.wolfram.com/Indegree.html">
+     * Returns the "in degree" of the specified vertex. An in degree of a vertex
+     * in a directed graph is the number of inward directed edges from that
+     * vertex. See <a href="http://mathworld.wolfram.com/Indegree.html">
      * http://mathworld.wolfram.com/Indegree.html</a>.
      *
      * @param vertex vertex whose degree is to be calculated.
@@ -103,5 +104,4 @@ public interface DirectedGraph<V, E> extends Graph<V, E>
      * @return a set of all edges outgoing from the specified vertex.
      */
     public Set<E> outgoingEdgesOf(V vertex);
-
 }

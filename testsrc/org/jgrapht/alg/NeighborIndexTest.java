@@ -44,12 +44,14 @@ import junit.framework.*;
 
 import org.jgrapht.graph.*;
 
+
 /**
  * .
  *
  * @author Charles Fry
  */
-public class NeighborIndexTest extends TestCase
+public class NeighborIndexTest
+    extends TestCase
 {
 
     //~ Static fields/initializers --------------------------------------------
@@ -57,19 +59,21 @@ public class NeighborIndexTest extends TestCase
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
-    
+
+    //~ Methods ---------------------------------------------------------------
+
     public void testNeighborSet()
     {
-        ListenableUndirectedGraph<String,DefaultEdge> g =
-            new ListenableUndirectedGraph<String,DefaultEdge>(
+        ListenableUndirectedGraph<String, DefaultEdge> g =
+            new ListenableUndirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 
         g.addEdge(V1, V2);
 
-        NeighborIndex<String,DefaultEdge> index =
-            new NeighborIndex<String,DefaultEdge>(g);
+        NeighborIndex<String, DefaultEdge> index =
+            new NeighborIndex<String, DefaultEdge>(g);
         g.addGraphListener(index);
 
         Set neighbors = index.neighborsOf(V1);
@@ -95,16 +99,16 @@ public class NeighborIndexTest extends TestCase
 
     public void testDirectedNeighborSet()
     {
-        ListenableDirectedGraph<String,DefaultEdge> g =
-            new ListenableDirectedGraph<String,DefaultEdge>(
+        ListenableDirectedGraph<String, DefaultEdge> g =
+            new ListenableDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
         g.addVertex(V1);
         g.addVertex(V2);
 
         g.addEdge(V1, V2);
 
-        DirectedNeighborIndex<String,DefaultEdge> index =
-            new DirectedNeighborIndex<String,DefaultEdge>(g);
+        DirectedNeighborIndex<String, DefaultEdge> index =
+            new DirectedNeighborIndex<String, DefaultEdge>(g);
         g.addGraphListener(index);
 
         Set p = index.predecessorsOf(V1);
@@ -121,7 +125,6 @@ public class NeighborIndexTest extends TestCase
         assertEquals(1, s.size());
         assertEquals(true, p.contains(V3));
 
-
         g.removeEdge(V3, V1);
 
         assertEquals(0, p.size());
@@ -130,5 +133,4 @@ public class NeighborIndexTest extends TestCase
 
         assertEquals(0, s.size());
     }
-
 }

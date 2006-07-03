@@ -51,7 +51,8 @@ import org.jgrapht.*;
  *
  * @see Subgraph
  */
-public class DirectedSubgraph<V, E> extends Subgraph<V, E>
+public class DirectedSubgraph<V, E>
+    extends Subgraph<V, E>
     implements DirectedGraph<V, E>
 {
 
@@ -64,15 +65,15 @@ public class DirectedSubgraph<V, E> extends Subgraph<V, E>
     /**
      * Creates a new directed subgraph.
      *
-     * @param base the base (backing) graph on which the subgraph will be
-     *             based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public DirectedSubgraph(DirectedGraph<V, E> base,
+    public DirectedSubgraph(
+        DirectedGraph<V, E> base,
         Set<V> vertexSubset,
         Set<E> edgeSubset)
     {
