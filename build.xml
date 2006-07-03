@@ -77,11 +77,9 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.7.0" />
+    value="0.7.1alpha" />
   
   <!-- SVN tags and their respective version names -->
-  <property name="ver_0_7_1.name"       
-    value="0.7.1" />
   <property name="ver_0_7_0.name"       
     value="0.7.0" />
   <property name="ver_0_6_0.name"       
@@ -567,13 +565,13 @@
 
 
   <!-- Creates a release according to a user-defined SVN tag -->
-  <target name="release" depends="init,checkout,svntag.missing" if="svntag"
+  <target name="release" depends="init,svntag.missing" if="svntag"
     description="Checks out and builds a release according to a SVN tag">
     
     <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
     <fail unless="retroweaver.dir"/>
-    <fail unless="retroweaver.version"/>
+    <fail unless="retroweaver.ver"/>
     <fail unless="jre1.4.dir"/>
     <ant dir="${checkout.dir}" antfile="${build.file.name}" 
       target="all" inheritall="false" inheritrefs="false">
