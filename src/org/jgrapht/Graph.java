@@ -272,6 +272,10 @@ public interface Graph<V, E>
      *               returned.
      *
      * @return a set of all edges touching the specified vertex.
+     *
+     * @throws IllegalArgumentException if vertex is not
+     *                                  found in the graph.
+     * @throws NullPointerException if vertex is <code>null</code>.
      */
     public Set<E> edgesOf(V vertex);
 
