@@ -28,7 +28,7 @@
  * (C) Copyright 2003-2006, by John V. Sichi and Contributors.
  *
  * Original Author:  John V. Sichi
- * Contributor(s):   -
+ * Contributor(s):   Khanh Vu
  *
  * $Id$
  *
@@ -64,6 +64,7 @@ public class CycleDetectorTest
     private static final String V4 = "v4";
     private static final String V5 = "v5";
     private static final String V6 = "v6";
+    private static final String V7 = "v7";
 
     //~ Methods ---------------------------------------------------------------
 
@@ -80,6 +81,7 @@ public class CycleDetectorTest
         g.addVertex(V4);
         g.addVertex(V5);
         g.addVertex(V6);
+        g.addVertex(V7);
 
         g.addEdge(V1, V2);
         g.addEdge(V2, V3);
@@ -88,6 +90,10 @@ public class CycleDetectorTest
         g.addEdge(V4, V5);
         g.addEdge(V5, V6);
         g.addEdge(V1, V6);
+
+        // test an edge which leads into a cycle, but where the source
+        // is not itself part of a cycle
+        g.addEdge(V7, V1);
     }
 
     /**
@@ -109,10 +115,41 @@ public class CycleDetectorTest
         Set<String> acyclicSet = new HashSet<String>();
         acyclicSet.add(V5);
         acyclicSet.add(V6);
+        acyclicSet.add(V7);
 
         runTest(g, cyclicSet, acyclicSet);
     }
 
+    /**
+     * .
+     */
+    public void testDirectedWithDoubledCycle()
+    {
+        DirectedGraph<String, DefaultEdge> g =
+            new DefaultDirectedGraph<String, DefaultEdge>(
+                DefaultEdge.class);
+        
+        // build the graph:  vertex order is chosen specifically
+        // to exercise old bug-cases in CycleDetector
+        g.addVertex(V2);
+        g.addVertex(V1);
+        g.addVertex(V3);
+
+        g.addEdge(V1, V2);
+        g.addEdge(V2, V3);
+        g.addEdge(V3, V1);
+        g.addEdge(V2, V1);
+
+        Set<String> cyclicSet = new HashSet<String>();
+        cyclicSet.add(V1);
+        cyclicSet.add(V2);
+        cyclicSet.add(V3);
+
+        Set<String> acyclicSet = new HashSet<String>();
+
+        runTest(g, cyclicSet, acyclicSet);
+    }
+    
     /**
      * .
      */
