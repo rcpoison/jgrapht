@@ -73,7 +73,8 @@ public abstract class AbstractGraphIteratorTest
 
         AbstractGraphIterator<String, DefaultEdge> iterator =
             createIterator(graph, "1");
-        iterator.addTraversalListener(new MyTraversalListener());
+        MyTraversalListener listener = new MyTraversalListener();
+        iterator.addTraversalListener(listener);
 
         while (iterator.hasNext()) {
             result.append(iterator.next());
@@ -84,11 +85,18 @@ public abstract class AbstractGraphIteratorTest
         }
 
         assertEquals(getExpectedStr2(), result.toString());
+
+        assertEquals(getExpectedFinishString(), listener.getFinishString());
     }
 
     abstract String getExpectedStr1();
 
     abstract String getExpectedStr2();
+
+    String getExpectedFinishString()
+    {
+        return "";
+    }
 
     DirectedGraph<String, DefaultEdge> createDirectedGraph()
     {
@@ -155,6 +163,8 @@ public abstract class AbstractGraphIteratorTest
         private int componentNumber = 0;
         private int numComponentVertices = 0;
 
+        private String finishString = "";
+
         /**
          * @see TraversalListener#connectedComponentFinished(ConnectedComponentTraversalEvent)
          */
@@ -206,6 +216,19 @@ public abstract class AbstractGraphIteratorTest
         public void vertexTraversed(VertexTraversalEvent<String> e)
         {
             numComponentVertices++;
+        }
+
+        /**
+         * @see TraversalListener#vertexTraversed(VertexTraversalEvent)
+         */
+        public void vertexFinished(VertexTraversalEvent<String> e)
+        {
+            finishString += e.getVertex() + ":";
+        }
+
+        public String getFinishString()
+        {
+            return finishString;
         }
     }
 }

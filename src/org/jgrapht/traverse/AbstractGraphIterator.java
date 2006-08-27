@@ -201,4 +201,19 @@ public abstract class AbstractGraphIterator<V, E>
             l.vertexTraversed(e);
         }
     }
+
+    /**
+     * Informs all listeners that a the specified vertex was finished.
+     *
+     * @param e the vertex traversal event.
+     */
+    protected void fireVertexFinished(VertexTraversalEvent<V> e)
+    {
+        int len = traversalListeners.size();
+
+        for (int i = 0; i < len; i++) {
+            TraversalListener<V, E> l = traversalListeners.get(i);
+            l.vertexFinished(e);
+        }
+    }
 }

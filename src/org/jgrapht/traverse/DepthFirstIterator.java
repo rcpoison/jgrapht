@@ -60,11 +60,18 @@ import org.jgrapht.*;
  * @since Jul 29, 2003
  */
 public class DepthFirstIterator<V, E>
-    extends CrossComponentIterator<V, E, Object>
+    extends CrossComponentIterator<V, E, CrossComponentIterator.VisitColor>
 {
 
     //~ Instance fields -------------------------------------------------------
 
+    /**
+     * LIFO stack of vertices which have been encountered but not yet visited
+     * (WHITE).  This stack also contains <em>sentinel</em> entries
+     * representing vertices which have been visited but are still GRAY.  A
+     * sentinel entry is a sequence (v, null), whereas a non-sentinel entry is
+     * just (v).
+     */
     private List<V> stack = new ArrayList<V>();
 
     //~ Constructors ----------------------------------------------------------
@@ -101,7 +108,24 @@ public class DepthFirstIterator<V, E>
      */
     protected boolean isConnectedComponentExhausted()
     {
-        return stack.isEmpty();
+        for (;;) {
+            if (stack.isEmpty()) {
+                return true;
+            }
+            if (peekStack() != null) {
+                // Found a non-sentinel.
+                return false;
+            }
+            
+            // Found a sentinel:  pop it, record the finish time,
+            // and then loop to check the rest of the stack.
+            
+            // Pop null we peeked at above.
+            popStack();
+
+            // This will pop corresponding vertex to be recorded as finished.
+            recordFinish();
+        }
     }
 
     /**
@@ -109,7 +133,7 @@ public class DepthFirstIterator<V, E>
      */
     protected void encounterVertex(V vertex, E edge)
     {
-        putSeenData(vertex, null);
+        putSeenData(vertex, VisitColor.WHITE);
         stack.add(vertex);
     }
 
@@ -118,6 +142,19 @@ public class DepthFirstIterator<V, E>
      */
     protected void encounterVertexAgain(V vertex, E edge)
     {
+        VisitColor color = getSeenData(vertex);
+        if (color != VisitColor.WHITE) {
+            // We've already visited this vertex; no need to mess with the
+            // stack (either it's BLACK and not there at all, or it's GRAY
+            // and therefore just a sentinel).
+            return;
+        }
+        int i = stack.indexOf(vertex);
+        // Since we've encountered it before, and it's still WHITE, it
+        // *must* be on the stack.
+        assert(i > -1);
+        stack.remove(i);
+        stack.add(vertex);
     }
 
     /**
@@ -125,6 +162,40 @@ public class DepthFirstIterator<V, E>
      */
     protected V provideNextVertex()
     {
+        V v;
+        for (;;) {
+            v = popStack();
+            if (v == null) {
+                // This is a finish-time sentinel we previously pushed.
+                recordFinish();
+                // Now carry on with another pop until we find a non-sentinel
+            } else {
+                // Got a real vertex to start working on
+                break;
+            }
+        }
+        // Push a sentinel for v onto the stack so that we'll know
+        // when we're done with it.
+        stack.add(v);
+        stack.add(null);
+        putSeenData(v, VisitColor.GRAY);
+        return v;
+    }
+
+    private V popStack()
+    {
         return stack.remove(stack.size() - 1);
+    }
+
+    private V peekStack()
+    {
+        return stack.get(stack.size() - 1);
+    }
+
+    private void recordFinish()
+    {
+        V v = popStack();
+        putSeenData(v, VisitColor.BLACK);
+        finishVertex(v);
     }
 }

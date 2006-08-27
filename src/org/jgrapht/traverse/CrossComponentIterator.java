@@ -298,6 +298,17 @@ public abstract class CrossComponentIterator<V, E, D>
         return seen.put(vertex, data);
     }
 
+    /**
+     * Called when a vertex has been finished (meaning is dependent
+     * on traversal represented by subclass).
+     *
+     * @param vertex vertex which has been finished
+     */
+    protected void finishVertex(V vertex)
+    {
+        fireVertexFinished(createVertexTraversalEvent(vertex));
+    }
+
     // -------------------------------------------------------------------------
     /**
      * @param <V>
@@ -519,5 +530,28 @@ public abstract class CrossComponentIterator<V, E, D>
         {
             return graph.edgesOf(vertex);
         }
+    }
+
+    /**
+     * Standard vertex visit state enumeration.
+     */
+    protected static enum VisitColor
+    {
+        /**
+         * Vertex has not been returned via iterator yet.
+         */
+        WHITE,
+
+        /**
+         * Vertex has been returned via iterator, but we're
+         * not done with all of its out-edges yet.
+         */
+        GRAY,
+
+        /**
+         * Vertex has been returned via iterator, and we're
+         * done with all of its out-edges.
+         */
+        BLACK
     }
 }

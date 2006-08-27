@@ -82,4 +82,11 @@ public class TraversalListenerAdapter<V, E>
     public void vertexTraversed(VertexTraversalEvent<V> e)
     {
     }
+
+    /**
+     * @see TraversalListener#vertexFinished(VertexTraversalEvent)
+     */
+    public void vertexFinished(VertexTraversalEvent<V> e)
+    {
+    }
 }

@@ -86,4 +86,14 @@ public interface TraversalListener<V, E>
      * @param e the vertex traversal event.
      */
     public void vertexTraversed(VertexTraversalEvent<V> e);
+
+    /**
+     * Called to inform the listener that the specified vertex have been
+     * finished during the graph traversal. Exact meaning of
+     * "finish" is algorithm-dependent; e.g. for DFS, it means that
+     * all vertices reachable via the vertex have been visited as well.
+     *
+     * @param e the vertex traversal event.
+     */
+    public void vertexFinished(VertexTraversalEvent<V> e);
 }
