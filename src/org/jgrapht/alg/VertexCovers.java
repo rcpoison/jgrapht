@@ -87,7 +87,8 @@ public abstract class VertexCovers
         Set<V> cover = new HashSet<V>();
 
         // G'=(V',E') <-- G(V,E)
-        Subgraph<V, E> sg = new Subgraph<V, E>(g, null, null);
+        Subgraph<V, E, Graph<V,E>> sg = new Subgraph<V, E, Graph<V,E>>(
+            g, null, null);
 
         // while E' is non-empty
         while (sg.edgeSet().size() > 0) {

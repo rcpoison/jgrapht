@@ -44,7 +44,7 @@ package org.jgrapht.graph;
 import java.util.*;
 
 import org.jgrapht.*;
-
+import org.jgrapht.util.*;
 
 /**
  * A directed graph that is a subgraph on other graph.
@@ -52,7 +52,7 @@ import org.jgrapht.*;
  * @see Subgraph
  */
 public class DirectedSubgraph<V, E>
-    extends Subgraph<V, E>
+    extends Subgraph<V, E, DirectedGraph<V, E>>
     implements DirectedGraph<V, E>
 {
 
@@ -78,5 +78,80 @@ public class DirectedSubgraph<V, E>
         Set<E> edgeSubset)
     {
         super(base, vertexSubset, edgeSubset);
+    }
+    
+    /**
+     * @see DirectedGraph#inDegreeOf(Object)
+     */
+    public int inDegreeOf(V vertex)
+    {
+        assertVertexExist(vertex);
+
+        int degree = 0;
+
+        for (E e : ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex)) {
+            if (containsEdge(e)) {
+                degree++;
+            }
+        }
+
+        return degree;
+    }
+
+    /**
+     * @see DirectedGraph#incomingEdgesOf(Object)
+     */
+    public Set<E> incomingEdgesOf(V vertex)
+    {
+        assertVertexExist(vertex);
+
+        Set<E> edges = new ArrayUnenforcedSet<E>();
+        Set<E> baseEdges = ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex);
+
+        for (E e : baseEdges) {
+            if (containsEdge(e)) {
+                edges.add(e);
+            }
+        }
+
+        return edges;
+    }
+
+    /**
+     * @see DirectedGraph#outDegreeOf(Object)
+     */
+    public int outDegreeOf(V vertex)
+    {
+        assertVertexExist(vertex);
+
+        int degree = 0;
+
+        for (E e : ((DirectedGraph<V, E>) getBase()).outgoingEdgesOf(vertex)) {
+            if (containsEdge(e)) {
+                degree++;
+            }
+        }
+
+        return degree;
+    }
+
+    /**
+     * @see DirectedGraph#outgoingEdgesOf(Object)
+     */
+    public Set<E> outgoingEdgesOf(V vertex)
+    {
+        assertVertexExist(vertex);
+
+        Set<E> edges = new ArrayUnenforcedSet<E>();
+        Set<? extends E> baseEdges =
+            ((DirectedGraph<V, E>) getBase()).outgoingEdgesOf(vertex);
+
+        for (E e : baseEdges) {
+            if (containsEdge(e)) {
+                edges.add(e);
+            }
+        }
+
+        return edges;
     }
 }

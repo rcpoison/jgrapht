@@ -80,9 +80,9 @@ public class SubgraphTest
      */
     public void testInducedSubgraphListener()
     {
-        Graph<String, DefaultEdge> g = init(true);
-        Subgraph<String, DefaultEdge> sub =
-            new Subgraph<String, DefaultEdge>(g, null);
+        UndirectedGraph<String, DefaultEdge> g = init(true);
+        UndirectedSubgraph<String, DefaultEdge> sub =
+            new UndirectedSubgraph<String, DefaultEdge>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -98,9 +98,9 @@ public class SubgraphTest
      */
     public void testSubgraph()
     {
-        Graph<String, DefaultEdge> g = init(false);
-        Subgraph<String, DefaultEdge> sub =
-            new Subgraph<String, DefaultEdge>(g, null, null);
+        UndirectedGraph<String, DefaultEdge> g = init(false);
+        UndirectedSubgraph<String, DefaultEdge> sub =
+            new UndirectedSubgraph<String, DefaultEdge>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -112,7 +112,7 @@ public class SubgraphTest
         g = init(false);
         vset = new HashSet<String>();
         vset.add(v1);
-        sub = new Subgraph<String, DefaultEdge>(g, vset, null);
+        sub = new UndirectedSubgraph<String, DefaultEdge>(g, vset, null);
         assertEquals(vset, sub.vertexSet());
         assertEquals(0, sub.degreeOf(v1));
         assertEquals(Collections.EMPTY_SET, sub.edgeSet());
@@ -120,7 +120,7 @@ public class SubgraphTest
         vset.add(v2);
         vset.add(v3);
         sub =
-            new Subgraph<String, DefaultEdge>(
+            new UndirectedSubgraph<String, DefaultEdge>(
                 g,
                 vset,
                 new HashSet<DefaultEdge>(g.getAllEdges(v1, v2)));
@@ -133,9 +133,9 @@ public class SubgraphTest
      */
     public void testSubgraphListener()
     {
-        Graph<String, DefaultEdge> g = init(true);
-        Subgraph<String, DefaultEdge> sub =
-            new Subgraph<String, DefaultEdge>(g, null, null);
+        UndirectedGraph<String, DefaultEdge> g = init(true);
+        UndirectedSubgraph<String, DefaultEdge> sub =
+            new UndirectedSubgraph<String, DefaultEdge>(g, null, null);
 
         assertEquals(g.vertexSet(), sub.vertexSet());
         assertEquals(g.edgeSet(), sub.edgeSet());
@@ -147,9 +147,9 @@ public class SubgraphTest
         assertEquals(g.edgeSet(), sub.edgeSet());
     }
 
-    private Graph<String, DefaultEdge> init(boolean listenable)
+    private UndirectedGraph<String, DefaultEdge> init(boolean listenable)
     {
-        Graph<String, DefaultEdge> g;
+        UndirectedGraph<String, DefaultEdge> g;
 
         if (listenable) {
             g =

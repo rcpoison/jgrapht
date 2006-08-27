@@ -388,17 +388,21 @@
 
   <ul>
     <li><b>version 0.7.1</b> (under development) : Fixed some bugs in
-    CycleDetector, and added more testcases for it.</li>
+    CycleDetector reported by Khanh Vu, and added more testcases for
+    it.  Fixed bugs in DepthFirstIterator reported by Welson Sun, and
+    added WHITE/GRAY/BLACK states and vertexFinished listener event.
+    Exposed Subgraph.getBase(), and paremeterized Subgraph on graph
+    type.</li>
 
-    <li><b>version 0.7.0</b> (July-2006) : Upgraded to
-    JDK 1.5 (generics support added by Christian Hammer with help
-    from Hartmut Benz and John Sichi).  Added (Directed)NeighborIndex and
+    <li><b>version 0.7.0</b> (July-2006) : Upgraded to JDK 1.5
+    (generics support added by Christian Hammer with help from Hartmut
+    Benz and John Sichi).  Added (Directed)NeighborIndex and
     MatrixExporter, contributed by Charles Fry.  Added BellmanFord,
-    contributed by Guillaume Boulmier of France Telecom.
-    Removed never-used LabeledElement.  Renamed package from
-    org._3pq.jgrapht to org.jgrapht.  Made various breaking change to
-    interfaces; edge collections are now Sets, not Lists.
-    Added Touchgraph converter, contributed by Carl Anderson</li>
+    contributed by Guillaume Boulmier of France Telecom.  Removed
+    never-used LabeledElement.  Renamed package from org._3pq.jgrapht
+    to org.jgrapht.  Made various breaking change to interfaces; edge
+    collections are now Sets, not Lists.  Added Touchgraph converter,
+    contributed by Carl Anderson</li>
 
     <li><b>version 0.6.0</b> (July-2005) : Upgraded to JDK 1.4, taking
     advantage of its new linked hash set/map containers to make

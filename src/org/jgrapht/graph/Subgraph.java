@@ -105,14 +105,8 @@ import org.jgrapht.util.*;
  * @see Graph
  * @see Set
  * @since Jul 18, 2003
- *
- *        <p>TODO hb 27-Nov-05: Subgraph features the code for a directed graph
- *        without specifying the interface. This makes types/typecasting
- *        problematic. The class does not even test whether a directed graph is
- *        stored in base when executing direction-related methods. My guess is
- *        that all direction-related methods should move to DirectedSubgraph.
  */
-public class Subgraph<V, E>
+public class Subgraph<V, E, G extends Graph<V, E>>
     extends AbstractGraph<V, E>
     implements Serializable
 {
@@ -136,7 +130,7 @@ public class Subgraph<V, E>
     //
     private transient Set<E> unmodifiableEdgeSet = null;
     private transient Set<V> unmodifiableVertexSet = null;
-    private Graph<V, E> base;
+    private G base;
     private boolean isInduced = false;
 
     //~ Constructors ----------------------------------------------------------
@@ -151,11 +145,15 @@ public class Subgraph<V, E>
      *                   null</code> then all the edges whose vertices found in
      *                   the graph are included.
      */
-    public Subgraph(Graph<V, E> base, Set<V> vertexSubset, Set<E> edgeSubset)
+    public Subgraph(G base, Set<V> vertexSubset, Set<E> edgeSubset)
     {
         super();
 
         this.base = base;
+
+        if (edgeSubset == null) {
+            isInduced = true;
+        }
 
         if (base instanceof ListenableGraph) {
             ((ListenableGraph<V, E>) base).addGraphListener(
@@ -176,11 +174,9 @@ public class Subgraph<V, E>
      * @param vertexSubset vertices to include in the subgraph. If <code>
      *                     null</code> then all vertices are included.
      */
-    public Subgraph(Graph<V, E> base, Set<V> vertexSubset)
+    public Subgraph(G base, Set<V> vertexSubset)
     {
         this(base, vertexSubset, null);
-
-        isInduced = true;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -337,34 +333,6 @@ public class Subgraph<V, E>
     }
 
     /**
-     * @see UndirectedGraph#degreeOf(Object)
-     */
-    public int degreeOf(V vertex)
-    {
-        assertVertexExist(vertex);
-
-        // TODO hb 27-Nov-05: Check/understand this sophistication
-        // could the intend be to throw a ClassCastException
-        // for non-directed graphs?
-        // sophisticated way to check runtime class of base ;-)
-        ((UndirectedGraph<V, E>) base).degreeOf(vertex);
-
-        int degree = 0;
-
-        for (E e : base.edgesOf(vertex)) {
-            if (containsEdge(e)) {
-                degree++;
-
-                if (getEdgeSource(e).equals(getEdgeTarget(e))) {
-                    degree++;
-                }
-            }
-        }
-
-        return degree;
-    }
-
-    /**
      * @see Graph#edgeSet()
      */
     public Set<E> edgeSet()
@@ -385,81 +353,6 @@ public class Subgraph<V, E>
 
         Set<E> edges = new ArrayUnenforcedSet<E>();
         Set<E> baseEdges = base.edgesOf(vertex);
-
-        for (E e : baseEdges) {
-            if (containsEdge(e)) {
-                edges.add(e);
-            }
-        }
-
-        return edges;
-    }
-
-    /**
-     * @see DirectedGraph#inDegreeOf(Object)
-     */
-    public int inDegreeOf(V vertex)
-    {
-        assertVertexExist(vertex);
-
-        int degree = 0;
-
-        for (E e : ((DirectedGraph<V, E>) base).incomingEdgesOf(vertex)) {
-            if (containsEdge(e)) {
-                degree++;
-            }
-        }
-
-        return degree;
-    }
-
-    /**
-     * @see DirectedGraph#incomingEdgesOf(Object)
-     */
-    public Set<E> incomingEdgesOf(V vertex)
-    {
-        assertVertexExist(vertex);
-
-        Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<E> baseEdges = ((DirectedGraph<V, E>) base).incomingEdgesOf(vertex);
-
-        for (E e : baseEdges) {
-            if (containsEdge(e)) {
-                edges.add(e);
-            }
-        }
-
-        return edges;
-    }
-
-    /**
-     * @see DirectedGraph#outDegreeOf(Object)
-     */
-    public int outDegreeOf(V vertex)
-    {
-        assertVertexExist(vertex);
-
-        int degree = 0;
-
-        for (E e : ((DirectedGraph<V, E>) base).outgoingEdgesOf(vertex)) {
-            if (containsEdge(e)) {
-                degree++;
-            }
-        }
-
-        return degree;
-    }
-
-    /**
-     * @see DirectedGraph#outgoingEdgesOf(Object)
-     */
-    public Set<E> outgoingEdgesOf(V vertex)
-    {
-        assertVertexExist(vertex);
-
-        Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<? extends E> baseEdges =
-            ((DirectedGraph<V, E>) base).outgoingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -569,7 +462,7 @@ public class Subgraph<V, E>
         }
     }
 
-    protected Graph<V, E> getBase()
+    public G getBase()
     {
         return base;
     }
