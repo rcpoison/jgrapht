@@ -110,6 +110,19 @@ public class TopologicalOrderIteratorTest
             assertEquals(v[i], iter.next());
             ++i;
         }
+
+        // Test with a reversed view
+        DirectedGraph<String, DefaultEdge> reversed =
+            new EdgeReversedGraph<String, DefaultEdge>(graph);
+        
+        iter =
+            new TopologicalOrderIterator<String, DefaultEdge>(reversed);
+        i = v.length - 1;
+
+        while (iter.hasNext()) {
+            assertEquals(v[i], iter.next());
+            --i;
+        }
     }
 }
 

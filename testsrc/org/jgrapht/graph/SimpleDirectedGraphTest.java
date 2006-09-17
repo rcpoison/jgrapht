@@ -384,6 +384,70 @@ public class SimpleDirectedGraphTest
         init(); // TODO Implement vertexSet().
     }
 
+    public void testReversedView()
+    {
+        init();
+
+        DirectedGraph <String, DefaultEdge> g =
+            new SimpleDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        DirectedGraph<String, DefaultEdge> r =
+            new EdgeReversedGraph<String, DefaultEdge>(g);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        DefaultEdge e = g.addEdge(v1, v2);
+
+        verifyReversal(g, r, e);
+
+        // We have implicitly verified that r is backed by g for additive
+        // operations (since we constructed it before adding anything to g).
+        // Now verify for deletion.
+
+        g.removeEdge(e);
+
+        assertTrue(r.edgeSet().isEmpty());
+        assertEquals(0, r.inDegreeOf(v1));
+        assertEquals(0, r.outDegreeOf(v1));
+        assertEquals(0, r.inDegreeOf(v2));
+        assertEquals(0, r.outDegreeOf(v2));
+        assertTrue(r.incomingEdgesOf(v1).isEmpty());
+        assertTrue(r.outgoingEdgesOf(v1).isEmpty());
+        assertTrue(r.incomingEdgesOf(v2).isEmpty());
+        assertTrue(r.outgoingEdgesOf(v2).isEmpty());
+    }
+
+    private void verifyReversal(
+        DirectedGraph<String, DefaultEdge> g,
+        DirectedGraph<String, DefaultEdge> r,
+        DefaultEdge e)
+    {
+        assertTrue(r.containsVertex(v1));
+        assertTrue(r.containsVertex(v2));
+        
+        assertEquals(g.vertexSet(), r.vertexSet());
+        assertEquals(g.edgeSet(), r.edgeSet());
+        
+        assertTrue(r.containsEdge(v2, v1));
+        assertSame(e, r.getEdge(v2, v1));
+        assertFalse(r.containsEdge(v1, v2));
+        assertNull(r.getEdge(v1, v2));
+        
+        assertEquals(1, r.inDegreeOf(v1));
+        assertEquals(0, r.inDegreeOf(v2));
+        assertEquals(0, r.outDegreeOf(v1));
+        assertEquals(1, r.outDegreeOf(v2));
+        
+        assertEquals(g.edgeSet(), r.incomingEdgesOf(v1));
+        assertTrue(r.outgoingEdgesOf(v1).isEmpty());
+        assertTrue(r.incomingEdgesOf(v2).isEmpty());
+        assertEquals(g.edgeSet(), r.outgoingEdgesOf(v2));
+
+        assertSame(v2, r.getEdgeSource(e));
+        assertSame(v1, r.getEdgeTarget(e));
+
+        assertEquals("([v1, v2], [(v2,v1)])", r.toString());
+    }
+
     private void init()
     {
         gEmpty =

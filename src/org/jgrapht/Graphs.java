@@ -196,13 +196,17 @@ public abstract class Graphs
 
     /**
      * Adds all the vertices and all the edges of the specified source digraph
-     * to the specified destination digraph, reversing all of the edges.
+     * to the specified destination digraph, reversing all of the edges.  If
+     * you want to do this as a linked view of the source graph (rather than by
+     * copying to a destination graph), use {@link EdgeReversedGraph} instead.
      *
      * <p>The behavior of this operation is undefined if any of the specified
      * graphs is modified while operation is in progress.</p>
      *
      * @param destination the graph to which vertices and edges are added.
      * @param source the graph used as source for vertices and edges to add.
+     *
+     * @see EdgeReversedGraph
      */
     public static <V, E> void addGraphReversed(
         DirectedGraph<V, E> destination,
