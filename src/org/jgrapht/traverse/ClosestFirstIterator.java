@@ -77,6 +77,8 @@ public class ClosestFirstIterator<V, E>
      */
     private double radius = Double.POSITIVE_INFINITY;
 
+    private boolean initialized = false;
+
     //~ Constructors ----------------------------------------------------------
 
     /**
@@ -122,6 +124,7 @@ public class ClosestFirstIterator<V, E>
         super(g, startVertex);
         this.radius = radius;
         checkRadiusTraversal(isCrossComponentTraversal());
+        initialized = true;
     }
 
     //~ Methods ---------------------------------------------------------------
@@ -129,7 +132,9 @@ public class ClosestFirstIterator<V, E>
     // override AbstractGraphIterator
     public void setCrossComponentTraversal(boolean crossComponentTraversal)
     {
-        checkRadiusTraversal(crossComponentTraversal);
+        if (initialized) {
+            checkRadiusTraversal(crossComponentTraversal);
+        }
         super.setCrossComponentTraversal(crossComponentTraversal);
     }
 

@@ -80,6 +80,29 @@ public class ClosestFirstIteratorTest
 
         assertEquals("1,2,3,5,6,7", result.toString());
     }
+    
+    /**
+     * .
+     */
+    public void testNoStart()
+    {
+        result = new StringBuffer();
+
+        DirectedGraph<String, DefaultEdge> graph = createDirectedGraph();
+
+        AbstractGraphIterator<String, ?> iterator =
+            new ClosestFirstIterator<String, DefaultEdge>(graph);
+
+        while (iterator.hasNext()) {
+            result.append(iterator.next());
+
+            if (iterator.hasNext()) {
+                result.append(',');
+            }
+        }
+
+        assertEquals("1,2,3,5,6,7,9,4,8,orphan", result.toString());
+    }
 
     // NOTE:  the edge weights make the result deterministic
     String getExpectedStr1()
