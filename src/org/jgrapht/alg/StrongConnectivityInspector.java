@@ -47,8 +47,8 @@ import org.jgrapht.graph.*;
 /**
  * <p>Complements the {@link org.jgrapht.alg.ConnectivityInspector} class with
  * the capability to compute the strongly connected components of a directed
- * graph. The algorithm is implemented after "Corman et al: Introduction to
- * agorithms", Chapter 25.2. It has a running time of O(V + E).</p>
+ * graph. The algorithm is implemented after "Cormen et al: Introduction to
+ * agorithms", Chapter 22.5. It has a running time of O(V + E).</p>
  *
  * <p>Unlike {@link org.jgrapht.alg.ConnectivityInspector}, this class does not
  * implement incremental inspection. The full algorithm is executed at the first
