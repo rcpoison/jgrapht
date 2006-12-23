@@ -60,33 +60,39 @@ public class MatrixExporterTest
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
+    
+    private static final String NL = System.getProperty("line.separator");
+
+    // TODO jvs 23-Dec-2006:  externalized diff-based testing framework
+    
     private static final String LAPLACIAN =
-        "1 1 2\n"
-        + "1 2 -1\n"
-        + "1 3 -1\n"
-        + "2 2 1\n"
-        + "2 1 -1\n"
-        + "3 3 1\n"
-        + "3 1 -1\n";
+        "1 1 2" + NL +
+        "1 2 -1" + NL +
+        "1 3 -1" + NL +
+        "2 2 1" + NL +
+        "2 1 -1" + NL +
+        "3 3 1" + NL +
+        "3 1 -1" + NL;
 
     private static final String NORMALIZED_LAPLACIAN =
-        "1 1 1\n"
-        + "1 2 -0.7071067811865475\n"
-        + "1 3 -0.7071067811865475\n"
-        + "2 2 1\n"
-        + "2 1 -0.7071067811865475\n"
-        + "3 3 1\n"
-        + "3 1 -0.7071067811865475\n";
+        "1 1 1" + NL +
+        "1 2 -0.7071067811865475" + NL +
+        "1 3 -0.7071067811865475" + NL +
+        "2 2 1" + NL +
+        "2 1 -0.7071067811865475" + NL +
+        "3 3 1" + NL +
+        "3 1 -0.7071067811865475" + NL;
 
     private static final String UNDIRECTED_ADJACENCY =
-        "1 2 1\n"
-        + "1 3 1\n"
-        + "1 1 2\n"
-        + "2 1 1\n"
-        + "3 1 1\n";
+        "1 2 1" + NL +
+        "1 3 1" + NL +
+        "1 1 2" + NL +
+        "2 1 1" + NL +
+        "3 1 1" + NL;
 
-    private static final String DIRECTED_ADJACENCY = "1 2 1\n"
-        + "3 1 2\n";
+    private static final String DIRECTED_ADJACENCY =
+        "1 2 1" + NL +
+        "3 1 2" + NL;
 
     private static final MatrixExporter<String, DefaultEdge> exporter =
         new MatrixExporter<String, DefaultEdge>();
