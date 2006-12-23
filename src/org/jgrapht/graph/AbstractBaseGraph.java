@@ -862,7 +862,7 @@ public abstract class AbstractBaseGraph<V, E>
                 }
             }
 
-            return inAndOut;
+            return Collections.unmodifiableSet(inAndOut);
         }
 
         /**
