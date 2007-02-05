@@ -45,6 +45,7 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.*;
+import org.jgrapht.generate.RingGraphGenerator;
 import org.jgrapht.graph.*;
 
 
@@ -339,4 +340,29 @@ public class ConnectivityInspectorTest
 
         assertEquals(expectedSets, actualSets);
     }
+
+    public void testStronglyConnected4() {
+		DefaultDirectedGraph<Integer, String> graph = new DefaultDirectedGraph<Integer, String>(
+				new EdgeFactory<Integer, String>() {
+					public String createEdge(Integer from, Integer to) {
+						return (from + "->" + to).intern();
+					}
+				});
+
+		new RingGraphGenerator<Integer, String>(3).generateGraph(graph,
+				new VertexFactory<Integer>() {
+					private int i = 0;
+
+					public Integer createVertex() {
+						return i++;
+					}
+				}, null);
+
+		StrongConnectivityInspector<Integer, String> sc = new StrongConnectivityInspector<Integer, String>(
+				graph);
+		Set<Set<Integer>> expected = new HashSet<Set<Integer>>();
+		expected.add(graph.vertexSet());
+		assertEquals(expected, new HashSet<Set<Integer>>(sc.stronglyConnectedSets()));
+	}
+
 }

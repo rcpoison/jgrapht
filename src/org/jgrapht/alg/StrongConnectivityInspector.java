@@ -273,7 +273,7 @@ public class StrongConnectivityInspector<V, E>
                 while (iter.hasNext()) {
                     E edge = iter.next();
                     VertexData<V> targetData =
-                        vertexToVertexData.get(this.graph.getEdgeTarget(edge));
+                        vertexToVertexData.get(graph.getEdgeTarget(edge));
 
                     if (!targetData.discovered) {
                         // the "recursion"
