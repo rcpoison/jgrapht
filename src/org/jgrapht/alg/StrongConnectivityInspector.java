@@ -247,7 +247,7 @@ public class StrongConnectivityInspector<V, E>
      * round)
      */
     private void dfsVisit(
-        DirectedGraph<V, E> graph,
+        DirectedGraph<V, E> visitedGraph,
         VertexData<V> vertexData,
         Set<V> vertices)
     {
@@ -268,12 +268,12 @@ public class StrongConnectivityInspector<V, E>
 
                 // follow all edges
                 Iterator<? extends E> iter =
-                    graph.outgoingEdgesOf(data.vertex).iterator();
+                    visitedGraph.outgoingEdgesOf(data.vertex).iterator();
 
                 while (iter.hasNext()) {
                     E edge = iter.next();
                     VertexData<V> targetData =
-                        vertexToVertexData.get(graph.getEdgeTarget(edge));
+                        vertexToVertexData.get(visitedGraph.getEdgeTarget(edge));
 
                     if (!targetData.discovered) {
                         // the "recursion"
