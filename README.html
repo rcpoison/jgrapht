@@ -333,6 +333,14 @@
     with JGraphT have been created using JUnit 3.8.1.<br>
     &nbsp;</li>
 
+    <li>XMLUnit extends JUnit with XML capabilities. You need XMLUnit
+    only if you want to run the unit tests. The
+    <code>xmlunit-1.0.jar</code> runtime file is included in this
+    distribution. XMLUnit is licensed under the terms of the BSD
+    License. You can find out more about XMLUnit and/or download the
+    latest version from <a href=
+    "http://xmlunit.sourceforge.net">http://xmlunit.sourceforge.net</a>.</li>
+
     <li>JGraph is a graph visualization and editing component. You
     need JGraph only if you want to create graph visualizations using
     the JGraphT-to-JGraph adapter. The <code>jgraph.jar</code> runtime
@@ -393,7 +401,8 @@
     added WHITE/GRAY/BLACK states and vertexFinished listener event.
     Exposed Subgraph.getBase(), and parameterized Subgraph on graph
     type (per suggestion from Aaron Harnly).  Added EdgeReversedView.  
-    Added GmlExporter (contributed by Dimitrios Michail)</li>
+    Added GmlExporter (contributed by Dimitrios Michail), plus
+    DOTExporter and GraphMLExporter (both contributed by Trevor Harmon).</li>
 
     <li><b>version 0.7.0</b> (July-2006) : Upgraded to JDK 1.5
     (generics support added by Christian Hammer with help from Hartmut
@@ -410,7 +419,7 @@
     edge/vertex set order-deterministic. Added support for custom edge
     lists.  Fixed various serialization and Subgraph issues. Added to
     <code>JGraphModelAdapter</code> support for JGraph's "dangling"
-    edges, its constructors have slightly changed and now forbid
+    edges; its constructors have slightly changed and now forbid
     <code>null</code> values. Improved interface to
     <code>DijskstraShortestPath</code>, and added radius support to
     <code>ClosestFirstIterator</code>.  Added new
@@ -504,6 +513,12 @@
     <li>Aaron Harnly</li>
 
     <li>Dimitrios Michail</li>
+
+    <li>Welson Sun</li>
+
+    <li>Trevor Harmon</li>
+
+    <li>David Black-Schaffer</li>
 
   </ul>
 

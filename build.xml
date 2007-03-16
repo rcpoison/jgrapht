@@ -148,6 +148,8 @@
       value="license-LGPL.txt" />
     <property name="junit.jar.name"      
       value="junit.jar" />
+    <property name="xmlunit.jar.name"      
+      value="xmlunit1.0.jar" />
     <property name="jgraph.jar.name"     
       value="jgraph.jar" />
     <property name="touchgraph.jar.name" 
@@ -166,6 +168,8 @@
       value="${basedir}/${project.zip.name}" />
     <property name="junit.jar"        
       value="${lib.dir}/${junit.jar.name}"/>
+    <property name="xmlunit.jar"        
+      value="${lib.dir}/${xmlunit.jar.name}"/>
     <property name="jgraph.jar"       
       value="${lib.dir}/${jgraph.jar.name}"/>
     <property name="touchgraph.jar"   
@@ -177,7 +181,6 @@
 
     <!-- Classpath for building functional sources. -->
     <path id="build.classpath">
-      <pathelement location="${junit.jar}"/>
       <pathelement location="${jgraph.jar}"/>
       <pathelement location="${touchgraph.jar}"/>
     </path>
@@ -185,6 +188,8 @@
 
     <!-- Classpath for building tests. -->
     <path id="testbuild.classpath">
+      <pathelement location="${junit.jar}"/>
+      <pathelement location="${xmlunit.jar}"/>
       <pathelement path="${build.classpath}"/>
       <pathelement location="${build.dir}"/>
     </path>
@@ -209,6 +214,8 @@
       <pathelement path="${test.classpath}"/>
       <pathelement 
         location="${retroweaver.dir}/release/retroweaver-rt-${retroweaver.ver}.jar"/>
+      <pathelement 
+        location="${retroweaver.dir}/lib/backport-util-concurrent.jar"/>
     </path>
     <property name="test.retro.classpath" refid="test.retro.classpath"/>
   </target>
@@ -374,7 +381,7 @@
     description="Retroweaves for backward compatibility with JRE 1.4.">
     <fail unless="retroweaver.dir"/>
     <taskdef name="retroweaver"
-      classname="com.rc.retroweaver.ant.RetroWeaverTask">
+      classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
       <classpath>
         <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
         <pathelement 

@@ -75,14 +75,15 @@ public class TopologicalOrderIterator<V, E>
 
     //~ Instance fields -------------------------------------------------------
 
-    private LinkedList<V> queue;
+    private Queue<V> queue;
     private Map<V, ModifiableInteger> inDegreeMap;
 
     //~ Constructors ----------------------------------------------------------
 
     /**
      * Creates a new topological order iterator over the directed graph
-     * specified. Traversal will start at one of the graphs <i>sources</i>. See
+     * specified, with arbitrary tie-breaking in case of partial
+     * order. Traversal will start at one of the graph's <i>sources</i>. See
      * the definition of source at <a
      * href="http://mathworld.wolfram.com/Source.html">
      * http://mathworld.wolfram.com/Source.html</a>.
@@ -91,14 +92,33 @@ public class TopologicalOrderIterator<V, E>
      */
     public TopologicalOrderIterator(DirectedGraph<V, E> dg)
     {
-        this(dg, new LinkedList<V>(), new HashMap<V, ModifiableInteger>());
+        this(dg, new LinkedListQueue<V>());
+    }
+
+    /**
+     * Creates a new topological order iterator over the directed graph
+     * specified, with a user-supplied queue implementation to allow customize
+     * control over tie-breaking in case of partial order. Traversal will start
+     * at one of the graphs <i>sources</i>. See the definition of source at <a
+     * href="http://mathworld.wolfram.com/Source.html">
+     * http://mathworld.wolfram.com/Source.html</a>.
+     *
+     * @param dg the directed graph to be iterated.
+     *
+     * @param queue queue to use for tie-break in case of partial order
+     * (e.g. a PriorityQueue can be used to break ties according to
+     * vertex priority)
+     */
+    public TopologicalOrderIterator(DirectedGraph<V, E> dg, Queue<V> queue)
+    {
+        this(dg, queue, new HashMap<V, ModifiableInteger>());
     }
 
     // NOTE: This is a hack to deal with the fact that CrossComponentIterator
     // needs to know the start vertex in its constructor
     private TopologicalOrderIterator(
         DirectedGraph<V, E> dg,
-        LinkedList<V> queue,
+        Queue<V> queue,
         Map<V, ModifiableInteger> inDegreeMap)
     {
         this(dg, initialize(dg, queue, inDegreeMap));
@@ -149,7 +169,7 @@ public class TopologicalOrderIterator<V, E>
      */
     protected V provideNextVertex()
     {
-        return queue.removeFirst();
+        return queue.remove();
     }
 
     /**
@@ -165,7 +185,7 @@ public class TopologicalOrderIterator<V, E>
             inDegree.value--;
 
             if (inDegree.value == 0) {
-                queue.addLast(vertex);
+                queue.offer(vertex);
             }
         }
     }
@@ -183,7 +203,7 @@ public class TopologicalOrderIterator<V, E>
      */
     private static <V, E> V initialize(
         DirectedGraph<V, E> dg,
-        LinkedList<V> queue,
+        Queue<V> queue,
         Map<V, ModifiableInteger> inDegreeMap)
     {
         for (Iterator<V> i = dg.vertexSet().iterator(); i.hasNext();) {
@@ -193,14 +213,55 @@ public class TopologicalOrderIterator<V, E>
             inDegreeMap.put(vertex, new ModifiableInteger(inDegree));
 
             if (inDegree == 0) {
-                queue.add(vertex);
+                queue.offer(vertex);
             }
         }
 
         if (queue.isEmpty()) {
             return null;
         } else {
-            return queue.getFirst();
+            return queue.peek();
+        }
+    }
+
+    // NOTE jvs 22-Dec-2006:  For JDK1.4-compatibility, we can't assume
+    // that LinkedList implements Queue, since that wasn't introduced
+    // until JDK1.5, so use an adapter here.  Move this to
+    // top-level in org.jgrapht.util if anyone else needs it.
+    private static class LinkedListQueue<T>
+        extends LinkedList<T> implements Queue<T>
+    {
+        private static final long serialVersionUID = 4217659843476891334L;
+        
+        public T element()
+        {
+            return getFirst();
+        }
+
+        public boolean offer(T o)
+        {
+            return add(o);
+        }
+
+        public T peek()
+        {
+            if (isEmpty()) {
+                return null;
+            }
+            return getFirst();
+        }
+
+        public T poll()
+        {
+            if (isEmpty()) {
+                return null;
+            }
+            return removeFirst();
+        }
+
+        public T remove()
+        {
+            return removeFirst();
         }
     }
 }
