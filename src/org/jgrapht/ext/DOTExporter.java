@@ -75,7 +75,7 @@ public class DOTExporter<V, E>
     
     /** Exports a graph into a plain text file in DOT format. 
      *
-     *  @param output the writer to which the graph to be exported
+     *  @param writer the writer to which the graph to be exported
      *  @param g the graph to be exported
      */
     public void export(Writer writer, Graph<V,E> g)
