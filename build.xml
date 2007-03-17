@@ -351,11 +351,12 @@
         </fileset>
       </classpath>
     </taskdef>
-    <jalopy backup="true" convention="${jalopy.settings}"
+    <jalopy force="true" backup="true" convention="${jalopy.settings}"
       classpathref="test.classpath" history="CRC32">
       <fileset dir="${basedir}">
         <include name="src/**/*.java"/>
         <include name="testsrc/**/*.java"/>
+        <exclude name="testsrc/**/IsomorphismInspectorTest.java"/>
       </fileset>
     </jalopy>
   </target>
