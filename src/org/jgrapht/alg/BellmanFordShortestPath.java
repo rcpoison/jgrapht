@@ -46,7 +46,7 @@ import org.jgrapht.*;
 
 
 /**
- * <a href="http://www.nist.gov/dads/HTML/dijkstraalgo.html">Bellman-Ford
+ * <a href="http://www.nist.gov/dads/HTML/bellmanford.html">Bellman-Ford
  * algorithm</a>: weights could be negative, paths could be constrained by a
  * maximum number of edges.
  */
