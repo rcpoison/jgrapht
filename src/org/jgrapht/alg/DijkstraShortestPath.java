@@ -98,6 +98,11 @@ public final class DijkstraShortestPath<V, E>
         V endVertex,
         double radius)
     {
+        if (!graph.containsVertex(endVertex)) {
+            throw new IllegalArgumentException(
+                "graph must contain the end vertex");
+        }
+        
         ClosestFirstIterator<V, E> iter =
             new ClosestFirstIterator<V, E>(graph, startVertex, radius);
 
