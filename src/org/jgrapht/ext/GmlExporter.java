@@ -40,10 +40,7 @@ package org.jgrapht.ext;
 
 import java.io.*;
 
-import java.util.*;
-
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 
 
 /** Exports a graph into a GML file (Graph Modelling Language).

@@ -32,8 +32,6 @@
  */
 package org.jgrapht.ext;
 
-import org.jgrapht.event.*;
-
 
 /**
  * Generates edge names by invoking {@link #toString()} on them. This assumes

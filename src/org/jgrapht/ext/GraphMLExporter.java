@@ -33,16 +33,13 @@
 package org.jgrapht.ext;
 
 import java.io.*;
-import java.util.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.*;
-import javax.xml.parsers.*;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.sax.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 
 /** Exports a graph into a GraphML file.
  *

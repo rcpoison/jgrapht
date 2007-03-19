@@ -34,8 +34,6 @@ package org.jgrapht.ext;
 
 import java.util.*;
 
-import org.jgrapht.event.*;
-
 
 /**
  * Assigns a unique integer to represent each edge. Each instance of

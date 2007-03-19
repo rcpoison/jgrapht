@@ -51,6 +51,7 @@ implements ApproximationAlgorithm<Integer, V>
         return maxColor;
     }
 
+    @SuppressWarnings("unchecked")
     int[] smallestDegreeLastOrder() {
         final int[] order = new int[_neighbors.length];
         final int[] degree = new int[_neighbors.length];

@@ -179,8 +179,13 @@
     <property name="jalopy.settings"  
       value="${etc.dir}/triemax-jalopy-settings.xml"/>
 
+  <!-- NOTE jvs 18-Mar-2007:  junit.jar and xmlunit.jar should really be on
+       testbuild.classpath only, but this way makes Eclipse setup easier -->
+
     <!-- Classpath for building functional sources. -->
     <path id="build.classpath">
+      <pathelement location="${junit.jar}"/>
+      <pathelement location="${xmlunit.jar}"/>
       <pathelement location="${jgraph.jar}"/>
       <pathelement location="${touchgraph.jar}"/>
     </path>
@@ -188,8 +193,6 @@
 
     <!-- Classpath for building tests. -->
     <path id="testbuild.classpath">
-      <pathelement location="${junit.jar}"/>
-      <pathelement location="${xmlunit.jar}"/>
       <pathelement path="${build.classpath}"/>
       <pathelement location="${build.dir}"/>
     </path>
@@ -220,6 +223,10 @@
     <property name="test.retro.classpath" refid="test.retro.classpath"/>
   </target>
 
+
+  <!-- NOTE jvs 18-Mar-2007:  If you change the javac's below, update
+       the Eclipse setup instructions in 
+       http://jgrapht.wikispaces.com/ContributorGuidelines -->
 
   <!-- Compile the classes -->
   <target name="compile" depends="init"
