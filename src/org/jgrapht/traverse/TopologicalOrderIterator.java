@@ -96,9 +96,9 @@ public class TopologicalOrderIterator<V, E>
 
     /**
      * Creates a new topological order iterator over the directed graph
-     * specified, with a user-supplied queue implementation to allow customize
+     * specified, with a user-supplied queue implementation to allow customized
      * control over tie-breaking in case of partial order. Traversal will start
-     * at one of the graphs <i>sources</i>. See the definition of source at <a
+     * at one of the graph's <i>sources</i>. See the definition of source at <a
      * href="http://mathworld.wolfram.com/Source.html">
      * http://mathworld.wolfram.com/Source.html</a>.
      *
