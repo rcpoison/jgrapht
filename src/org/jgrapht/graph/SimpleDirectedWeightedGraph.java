@@ -52,12 +52,11 @@ public class SimpleDirectedWeightedGraph<V, E>
     extends SimpleDirectedGraph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3904960841681220919L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new simple directed weighted graph with the specified edge
@@ -80,3 +79,5 @@ public class SimpleDirectedWeightedGraph<V, E>
         this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }
+
+// End SimpleDirectedWeightedGraph.java

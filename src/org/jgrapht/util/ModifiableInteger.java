@@ -66,19 +66,18 @@ public class ModifiableInteger
     extends Number
     implements Comparable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3618698612851422261L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The int value represented by this <code>ModifiableInteger</code>.
      */
     public int value;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * <b>!!! DON'T USE - Use the {@link #ModifiableInteger(int)} constructor
@@ -99,14 +98,14 @@ public class ModifiableInteger
      * represents the specified <code>int</code> value.
      *
      * @param value the value to be represented by the <code>
-     *              ModifiableInteger</code> object.
+     * ModifiableInteger</code> object.
      */
     public ModifiableInteger(int value)
     {
         this.value = value;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Sets a new value for this modifiable integer.
@@ -152,13 +151,12 @@ public class ModifiableInteger
      * @param anotherInteger the <code>ModifiableInteger</code> to be compared.
      *
      * @return the value <code>0</code> if this <code>ModifiableInteger</code>
-     *         is equal to the argument <code>ModifiableInteger</code>; a value
-     *         less than <code>0</code> if this <code>ModifiableInteger</code>
-     *         is numerically less than the argument <code>
-     *         ModifiableInteger</code>; and a value greater than <code>0</code>
-     *         if this <code>ModifiableInteger</code> is numerically greater
-     *         than the argument <code>ModifiableInteger</code> (signed
-     *         comparison).
+     * is equal to the argument <code>ModifiableInteger</code>; a value less
+     * than <code>0</code> if this <code>ModifiableInteger</code> is numerically
+     * less than the argument <code>ModifiableInteger</code>; and a value
+     * greater than <code>0</code> if this <code>ModifiableInteger</code> is
+     * numerically greater than the argument <code>ModifiableInteger</code>
+     * (signed comparison).
      */
     public int compareTo(ModifiableInteger anotherInteger)
     {
@@ -171,20 +169,19 @@ public class ModifiableInteger
     /**
      * Compares this <code>ModifiableInteger</code> object to another object. If
      * the object is an <code>ModifiableInteger</code>, this function behaves
-     * like <code>compareTo(Integer)</code>.  Otherwise, it throws a <code>
+     * like <code>compareTo(Integer)</code>. Otherwise, it throws a <code>
      * ClassCastException</code> (as <code>ModifiableInteger</code> objects are
      * only comparable to other <code>ModifiableInteger</code> objects).
      *
      * @param o the <code>Object</code> to be compared.
      *
      * @return the value <code>0</code> if the argument is a <code>
-     *         ModifiableInteger</code> numerically equal to this <code>
-     *         ModifiableInteger</code>; a value less than <code>0</code> if the
-     *         argument is a <code>ModifiableInteger</code> numerically greater
-     *         than this <code>ModifiableInteger</code>; and a value greater
-     *         than <code>0</code> if the argument is a <code>
-     *         ModifiableInteger</code> numerically less than this <code>
-     *         ModifiableInteger</code>.
+     * ModifiableInteger</code> numerically equal to this <code>
+     * ModifiableInteger</code>; a value less than <code>0</code> if the
+     * argument is a <code>ModifiableInteger</code> numerically greater than
+     * this <code>ModifiableInteger</code>; and a value greater than <code>
+     * 0</code> if the argument is a <code>ModifiableInteger</code> numerically
+     * less than this <code>ModifiableInteger</code>.
      *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
@@ -202,7 +199,7 @@ public class ModifiableInteger
     }
 
     /**
-     * Compares this object to the specified object.  The result is <code>
+     * Compares this object to the specified object. The result is <code>
      * true</code> if and only if the argument is not <code>null</code> and is
      * an <code>ModifiableInteger</code> object that contains the same <code>
      * int</code> value as this object.
@@ -210,7 +207,7 @@ public class ModifiableInteger
      * @param o the object to compare with.
      *
      * @return <code>true</code> if the objects are the same; <code>false</code>
-     *         otherwise.
+     * otherwise.
      */
     public boolean equals(Object o)
     {
@@ -233,8 +230,8 @@ public class ModifiableInteger
      * Returns a hash code for this <code>ModifiableInteger</code>.
      *
      * @return a hash code value for this object, equal to the primitive <code>
-     *         int</code> value represented by this <code>
-     *         ModifiableInteger</code> object.
+     * int</code> value represented by this <code>ModifiableInteger</code>
+     * object.
      */
     public int hashCode()
     {
@@ -262,7 +259,7 @@ public class ModifiableInteger
      * ModifiableInteger</code>'s value.
      *
      * @return an <code>Integer</code> representation of the value of this
-     *         object.
+     * object.
      */
     public Integer toInteger()
     {
@@ -277,10 +274,12 @@ public class ModifiableInteger
      * java.lang.Integer#toString(int)} method.
      *
      * @return a string representation of the value of this object in
-     *         base&nbsp;10.
+     * base&nbsp;10.
      */
     public String toString()
     {
         return String.valueOf(this.value);
     }
 }
+
+// End ModifiableInteger.java

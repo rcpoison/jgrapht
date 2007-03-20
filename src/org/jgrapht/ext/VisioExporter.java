@@ -64,18 +64,17 @@ import org.jgrapht.*;
  */
 public class VisioExporter<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private VertexNameProvider<V> vertexNameProvider;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new VisioExporter object with the specified naming policy.
      *
      * @param vertexNameProvider the vertex name provider to be used for naming
-     *                           the Visio shapes.
+     * the Visio shapes.
      */
     public VisioExporter(VertexNameProvider<V> vertexNameProvider)
     {
@@ -90,7 +89,7 @@ public class VisioExporter<V, E>
         this(new StringNameProvider<V>());
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Exports the specified graph into a Visio csv file format.
@@ -146,3 +145,5 @@ public class VisioExporter<V, E>
         out.print("\n");
     }
 }
+
+// End $file.name$

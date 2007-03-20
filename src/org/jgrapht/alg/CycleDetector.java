@@ -56,19 +56,18 @@ import org.jgrapht.traverse.*;
  */
 public class CycleDetector<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Graph on which cycle detection is being performed.
      */
     DirectedGraph<V, E> graph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
-     * Creates a cycle detector for the specified graph.  Currently only
-     * directed graphs are supported.
+     * Creates a cycle detector for the specified graph. Currently only directed
+     * graphs are supported.
      *
      * @param graph the DirectedGraph in which to detect cycles
      */
@@ -77,7 +76,7 @@ public class CycleDetector<V, E>
         this.graph = graph;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Performs yes/no cycle detection on the entire graph.
@@ -117,7 +116,7 @@ public class CycleDetector<V, E>
      * Finds the vertex set for the subgraph of all cycles.
      *
      * @return set of all vertices which participate in at least one cycle in
-     *         this graph
+     * this graph
      */
     public Set<V> findCycles()
     {
@@ -152,13 +151,11 @@ public class CycleDetector<V, E>
      * Finds the vertex set for the subgraph of all cycles which contain a
      * particular vertex.
      *
-     *<p>
-     *
-     * REVIEW jvs 25-Aug-2006: This implementation is not guaranteed to cover
-     * all cases.  If you want to be absolutely certain that you report
-     * vertices from all cycles containing v, it's safer (but less efficient)
-     * to use StrongConnectivityInspector instead and return the strongly
-     * connected component containing v.
+     * <p>REVIEW jvs 25-Aug-2006: This implementation is not guaranteed to cover
+     * all cases. If you want to be absolutely certain that you report vertices
+     * from all cycles containing v, it's safer (but less efficient) to use
+     * StrongConnectivityInspector instead and return the strongly connected
+     * component containing v.
      *
      * @param v the vertex to test
      *
@@ -181,11 +178,11 @@ public class CycleDetector<V, E>
         }
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Exception thrown internally when a cycle is detected during a yes/no
-     * cycle test.  Must be caught by top-level detection method.
+     * cycle test. Must be caught by top-level detection method.
      */
     private static class CycleDetectedException
         extends RuntimeException
@@ -270,3 +267,5 @@ public class CycleDetector<V, E>
         }
     }
 }
+
+// End CycleDetector.java

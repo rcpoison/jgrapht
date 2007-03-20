@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jgrapht.experimental.alg;
 
@@ -7,25 +7,29 @@ import java.util.*;
 
 import org.jgrapht.*;
 
+
 /**
  * @author micha
- *
  */
-public abstract class IntArrayGraphAlgorithm<V,E>
+public abstract class IntArrayGraphAlgorithm<V, E>
 {
+    //~ Instance fields --------------------------------------------------------
+
     protected final List<V> _vertices;
-    protected final int[][] _neighbors;
-    protected final Map<V,Integer> _vertexToPos;
+    protected final int [][] _neighbors;
+    protected final Map<V, Integer> _vertexToPos;
+
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @param g
      */
-    public IntArrayGraphAlgorithm(final Graph<V,E> g)
+    public IntArrayGraphAlgorithm(final Graph<V, E> g)
     {
         final int numVertices = g.vertexSet().size();
         _vertices = new ArrayList<V>(numVertices);
         _neighbors = new int[numVertices][];
-        _vertexToPos = new HashMap<V,Integer>(numVertices);
+        _vertexToPos = new HashMap<V, Integer>(numVertices);
         int index = 0;
         for (V vertex : g.vertexSet()) {
             _vertices.add(vertex);
@@ -36,10 +40,11 @@ public abstract class IntArrayGraphAlgorithm<V,E>
             int nbIndex = 0;
             final V vertex = _vertices.get(i);
             for (E e : g.edgesOf(vertex)) {
-                _neighbors[i][nbIndex++] = _vertexToPos.get(Graphs.getOppositeVertex(g, e, vertex));
+                _neighbors[i][nbIndex++] =
+                    _vertexToPos.get(Graphs.getOppositeVertex(g, e, vertex));
             }
         }
     }
-    
-
 }
+
+// End IntArrayGraphAlgorithm.java

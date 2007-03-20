@@ -56,22 +56,21 @@ import org.jgrapht.event.*;
 public abstract class AbstractGraphIterator<V, E>
     implements GraphIterator<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private List<TraversalListener<V, E>> traversalListeners =
         new ArrayList<TraversalListener<V, E>>();
     private boolean crossComponentTraversal = true;
     private boolean reuseEvents = false;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Sets the cross component traversal flag - indicates whether to traverse
      * the graph across connected components.
      *
      * @param crossComponentTraversal if <code>true</code> traverses across
-     *                                connected components.
+     * connected components.
      */
     public void setCrossComponentTraversal(boolean crossComponentTraversal)
     {
@@ -83,7 +82,7 @@ public abstract class AbstractGraphIterator<V, E>
      * components.
      *
      * @return <code>true</code> if traverses across connected components,
-     *         otherwise <code>false</code>.
+     * otherwise <code>false</code>.
      */
     public boolean isCrossComponentTraversal()
     {
@@ -217,3 +216,5 @@ public abstract class AbstractGraphIterator<V, E>
         }
     }
 }
+
+// End AbstractGraphIterator.java

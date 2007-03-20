@@ -51,14 +51,13 @@ import org.jgrapht.experimental.isomorphism.*;
  */
 public final class AllAlgTests
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private AllAlgTests()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a test suite for all tests in this package.
@@ -82,3 +81,5 @@ public final class AllAlgTests
         return suite;
     }
 }
+
+// End AllAlgTests.java

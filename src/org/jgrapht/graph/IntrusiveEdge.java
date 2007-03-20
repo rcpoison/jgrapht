@@ -50,20 +50,20 @@ import java.io.*;
  * @author John V. Sichi
  */
 class IntrusiveEdge
-    implements Cloneable, Serializable
+    implements Cloneable,
+        Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3258408452177932855L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     Object source;
 
     Object target;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Object#clone()

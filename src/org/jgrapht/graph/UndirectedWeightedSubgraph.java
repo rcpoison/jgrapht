@@ -54,22 +54,21 @@ public class UndirectedWeightedSubgraph<V, E>
     extends UndirectedSubgraph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3689346615735236409L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new undirected weighted subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
-     *                     null</code> then all vertices are included.
+     * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     *                   null</code> then all the edges whose vertices found in
-     *                   the graph are included.
+     * null</code> then all the edges whose vertices found in the graph are
+     * included.
      */
     public UndirectedWeightedSubgraph(
         WeightedGraph<V, E> base,
@@ -79,3 +78,5 @@ public class UndirectedWeightedSubgraph<V, E>
         super((UndirectedGraph<V, E>) base, vertexSubset, edgeSubset);
     }
 }
+
+// End UndirectedWeightedSubgraph.java

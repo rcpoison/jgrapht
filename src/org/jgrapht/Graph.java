@@ -48,7 +48,7 @@ import java.util.*;
 
 
 /**
- * The root interface in the graph hierarchy.  A mathematical graph-theory graph
+ * The root interface in the graph hierarchy. A mathematical graph-theory graph
  * object <tt>G(V,E)</tt> contains a set <tt>V</tt> of vertices and a set <tt>
  * E</tt> of edges. Each edge e=(v1,v2) in E connects vertex v1 to vertex v2.
  * for more information about graphs and their related definitions see <a
@@ -63,8 +63,8 @@ import java.util.*;
  * concrete graph implementations.</p>
  *
  * <p>This library works best when vertices represent arbitrary objects and
- * edges represent the relationships between them.  Vertex and edge instances
- * may be shared by more than one graph.</p>
+ * edges represent the relationships between them. Vertex and edge instances may
+ * be shared by more than one graph.</p>
  *
  * Through generics, a graph can be typed to specific classes for vertices
  * <code>V</code> and edges <code>E&lt;T&gt;</code>. Such a graph can contain
@@ -76,8 +76,7 @@ import java.util.*;
  */
 public interface Graph<V, E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns a set of all edges connecting source vertex to target vertex if
@@ -145,12 +144,12 @@ public interface Graph<V, E>
      * @param targetVertex target vertex of the edge.
      *
      * @return The newly created edge if added to the graph, otherwise <code>
-     *         null</code>.
+     * null</code>.
      *
      * @throws IllegalArgumentException if source or target vertices are not
-     *                                  found in the graph.
+     * found in the graph.
      * @throws NullPointerException if any of the specified vertices is <code>
-     *                              null</code>.
+     * null</code>.
      *
      * @see #getEdgeFactory()
      */
@@ -165,7 +164,7 @@ public interface Graph<V, E>
      * Some graphs do not allow edge-multiplicity. In such cases, if the graph
      * already contains an edge from the specified source to the specified
      * target, than this method does not change the graph and returns <code>
-     * false</code>.  If the edge was added to the graph, returns <code>
+     * false</code>. If the edge was added to the graph, returns <code>
      * true</code>.
      *
      * <p>The source and target vertices must already be contained in this
@@ -177,15 +176,15 @@ public interface Graph<V, E>
      * @param e edge to be added to this graph.
      *
      * @return <tt>true</tt> if this graph did not already contain the specified
-     *         edge.
+     * edge.
      *
      * @throws IllegalArgumentException if source or target vertices are not
-     *                                  found in the graph.
+     * found in the graph.
      * @throws ClassCastException if the specified edge is not assignment
-     *                            compatible with the class of edges produced by
-     *                            the edge factory of this graph.
+     * compatible with the class of edges produced by the edge factory of this
+     * graph.
      * @throws NullPointerException if any of the specified vertices is <code>
-     *                              null</code>.
+     * null</code>.
      *
      * @see #addEdge(Object, Object)
      * @see #getEdgeFactory()
@@ -204,10 +203,10 @@ public interface Graph<V, E>
      * @param v vertex to be added to this graph.
      *
      * @return <tt>true</tt> if this graph did not already contain the specified
-     *         vertex.
+     * vertex.
      *
      * @throws NullPointerException if the specified vertex is <code>
-     *                              null</code>.
+     * null</code>.
      */
     public boolean addVertex(V v);
 
@@ -226,7 +225,7 @@ public interface Graph<V, E>
     public boolean containsEdge(V sourceVertex, V targetVertex);
 
     /**
-     * Returns <tt>true</tt> if this graph contains the specified edge.  More
+     * Returns <tt>true</tt> if this graph contains the specified edge. More
      * formally, returns <tt>true</tt> if and only if this graph contains an
      * edge <code>e2</code> such that <code>e.equals(e2)</code>. If the
      * specified edge is <code>null</code> returns <code>false</code>.
@@ -238,7 +237,7 @@ public interface Graph<V, E>
     public boolean containsEdge(E e);
 
     /**
-     * Returns <tt>true</tt> if this graph contains the specified vertex.  More
+     * Returns <tt>true</tt> if this graph contains the specified vertex. More
      * formally, returns <tt>true</tt> if and only if this graph contains a
      * vertex <code>u</code> such that <code>u.equals(v)</code>. If the
      * specified vertex is <code>null</code> returns <code>false</code>.
@@ -257,7 +256,7 @@ public interface Graph<V, E>
      *
      * <p>The graph implementation may maintain a particular set ordering (e.g.
      * via {@link java.util.LinkedHashSet}) for deterministic iteration, but
-     * this is not required.  It is the responsibility of callers who rely on
+     * this is not required. It is the responsibility of callers who rely on
      * this behavior to only use graph implementations which support it.</p>
      *
      * @return a set of the edges contained in this graph.
@@ -269,19 +268,18 @@ public interface Graph<V, E>
      * touching the specified vertex returns an empty set.
      *
      * @param vertex the vertex for which a set of touching edges is to be
-     *               returned.
+     * returned.
      *
      * @return a set of all edges touching the specified vertex.
      *
-     * @throws IllegalArgumentException if vertex is not
-     *                                  found in the graph.
+     * @throws IllegalArgumentException if vertex is not found in the graph.
      * @throws NullPointerException if vertex is <code>null</code>.
      */
     public Set<E> edgesOf(V vertex);
 
     /**
      * Removes all the edges in this graph that are also contained in the
-     * specified edge collection.  After this call returns, this graph will
+     * specified edge collection. After this call returns, this graph will
      * contain no edges in common with the specified edges. This method will
      * invoke the {@link #removeEdge(Object)} method.
      *
@@ -290,7 +288,7 @@ public interface Graph<V, E>
      * @return <tt>true</tt> if this graph changed as a result of the call
      *
      * @throws NullPointerException if the specified edge collection is <tt>
-     *                              null</tt>.
+     * null</tt>.
      *
      * @see #removeEdge(Object)
      * @see #containsEdge(Object)
@@ -309,13 +307,13 @@ public interface Graph<V, E>
      * @param targetVertex target vertex of the edge.
      *
      * @return the removed edges, or <code>null</code> if no either vertex not
-     *         part of graph
+     * part of graph
      */
     public Set<E> removeAllEdges(V sourceVertex, V targetVertex);
 
     /**
      * Removes all the vertices in this graph that are also contained in the
-     * specified vertex collection.  After this call returns, this graph will
+     * specified vertex collection. After this call returns, this graph will
      * contain no vertices in common with the specified vertices. This method
      * will invoke the {@link #removeVertex(Object)} method.
      *
@@ -324,7 +322,7 @@ public interface Graph<V, E>
      * @return <tt>true</tt> if this graph changed as a result of the call
      *
      * @throws NullPointerException if the specified vertex collection is <tt>
-     *                              null</tt>.
+     * null</tt>.
      *
      * @see #removeVertex(Object)
      * @see #containsVertex(Object)
@@ -356,13 +354,13 @@ public interface Graph<V, E>
      * @param e edge to be removed from this graph, if present.
      *
      * @return <code>true</code> if and only if the graph contained the
-     *         specified edge.
+     * specified edge.
      */
     public boolean removeEdge(E e);
 
     /**
      * Removes the specified vertex from this graph including all its touching
-     * edges if present.  More formally, if the graph contains a vertex <code>
+     * edges if present. More formally, if the graph contains a vertex <code>
      * u</code> such that <code>u.equals(v)</code>, the call removes all edges
      * that touch <code>u</code> and then removes <code>u</code> itself. If no
      * such <code>u</code> is found, the call leaves the graph unchanged.
@@ -375,7 +373,7 @@ public interface Graph<V, E>
      * @param v vertex to be removed from this graph, if present.
      *
      * @return <code>true</code> if the graph contained the specified vertex;
-     *         <code>false</code> otherwise.
+     * <code>false</code> otherwise.
      */
     public boolean removeVertex(V v);
 
@@ -387,7 +385,7 @@ public interface Graph<V, E>
      *
      * <p>The graph implementation may maintain a particular set ordering (e.g.
      * via {@link java.util.LinkedHashSet}) for deterministic iteration, but
-     * this is not required.  It is the responsibility of callers who rely on
+     * this is not required. It is the responsibility of callers who rely on
      * this behavior to only use graph implementations which support it.</p>
      *
      * @return a set view of the vertices contained in this graph.
@@ -395,8 +393,8 @@ public interface Graph<V, E>
     public Set<V> vertexSet();
 
     /**
-     * Returns the source vertex of an edge.  For an undirected graph, source
-     * and target are distinguishable designations (but without any mathematical
+     * Returns the source vertex of an edge. For an undirected graph, source and
+     * target are distinguishable designations (but without any mathematical
      * meaning).
      *
      * @param e edge of interest
@@ -406,8 +404,8 @@ public interface Graph<V, E>
     public V getEdgeSource(E e);
 
     /**
-     * Returns the target vertex of an edge.  For an undirected graph, source
-     * and target are distinguishable designations (but without any mathematical
+     * Returns the target vertex of an edge. For an undirected graph, source and
+     * target are distinguishable designations (but without any mathematical
      * meaning).
      *
      * @param e edge of interest
@@ -417,8 +415,8 @@ public interface Graph<V, E>
     public V getEdgeTarget(E e);
 
     /**
-     * Returns the weight assigned to a given edge.  Unweighted graphs return
-     * 1.0 (as defined by {@link WeightedGraph#DEFAULT_EDGE_WEIGHT}), allowing
+     * Returns the weight assigned to a given edge. Unweighted graphs return 1.0
+     * (as defined by {@link WeightedGraph#DEFAULT_EDGE_WEIGHT}), allowing
      * weighted-graph algorithms to apply to them where meaningful.
      *
      * @param e edge of interest
@@ -429,3 +427,5 @@ public interface Graph<V, E>
      */
     public double getEdgeWeight(E e);
 }
+
+// End Graph.java

@@ -70,14 +70,14 @@ import org.jgrapht.util.*;
  */
 public class DefaultListenableGraph<V, E>
     extends GraphDelegator<V, E>
-    implements ListenableGraph<V, E>, Cloneable
+    implements ListenableGraph<V, E>,
+        Cloneable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3977575900898471984L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private ArrayList<GraphListener<V, E>> graphListeners =
         new ArrayList<GraphListener<V, E>>();
@@ -87,7 +87,7 @@ public class DefaultListenableGraph<V, E>
     private FlyweightVertexEvent<V> reuseableVertexEvent;
     private boolean reuseEvents;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new listenable graph.
@@ -108,10 +108,10 @@ public class DefaultListenableGraph<V, E>
      *
      * @param g the backing graph.
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each event.
+     * instead of creating a new event object for each event.
      *
      * @throws IllegalArgumentException if the backing graph is already a
-     *                                  listenable graph.
+     * listenable graph.
      */
     public DefaultListenableGraph(Graph<V, E> g, boolean reuseEvents)
     {
@@ -127,7 +127,7 @@ public class DefaultListenableGraph<V, E>
         }
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * If the <code>reuseEvents</code> flag is set to <code>true</code> this
@@ -136,7 +136,7 @@ public class DefaultListenableGraph<V, E>
      * care, especially in multithreaded environment.
      *
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each event.
+     * instead of creating a new event object for each event.
      */
     public void setReuseEvents(boolean reuseEvents)
     {
@@ -424,7 +424,7 @@ public class DefaultListenableGraph<V, E>
         }
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * A reuseable edge event.
@@ -479,7 +479,7 @@ public class DefaultListenableGraph<V, E>
 
         /**
          * @see GraphVertexChangeEvent#GraphVertexChangeEvent(Object, int,
-         *      Object)
+         * Object)
          */
         public FlyweightVertexEvent(Object eventSource, int type, VV vertex)
         {
@@ -507,3 +507,5 @@ public class DefaultListenableGraph<V, E>
         }
     }
 }
+
+// End DefaultListenableGraph.java

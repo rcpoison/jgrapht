@@ -57,20 +57,19 @@ import org.jgrapht.*;
 public class WheelGraphGenerator<V, E>
     implements GraphGenerator<V, E, V>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      * Role for the hub vertex.
      */
     public static final String HUB_VERTEX = "Hub Vertex";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private boolean inwardSpokes;
     private int size;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new WheelGraphGenerator object. This constructor is more
@@ -89,7 +88,7 @@ public class WheelGraphGenerator<V, E>
      *
      * @param size number of vertices to be generated.
      * @param inwardSpokes if <code>true</code> and graph is directed, spokes
-     *                     are oriented from rim to hub; else from hub to rim.
+     * are oriented from rim to hub; else from hub to rim.
      *
      * @throws IllegalArgumentException
      */
@@ -103,7 +102,7 @@ public class WheelGraphGenerator<V, E>
         this.inwardSpokes = inwardSpokes;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -152,3 +151,5 @@ public class WheelGraphGenerator<V, E>
         }
     }
 }
+
+// End WheelGraphGenerator.java

@@ -43,12 +43,11 @@ package org.jgrapht.util;
  */
 public class StopWatch
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     long beforeTime;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public void start()
     {
@@ -71,3 +70,5 @@ public class StopWatch
         }
     }
 }
+
+// End StopWatch.java

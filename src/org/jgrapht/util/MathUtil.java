@@ -46,8 +46,7 @@ package org.jgrapht.util;
  */
 public class MathUtil
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public static long factorial(int N)
     {
@@ -58,3 +57,5 @@ public class MathUtil
         return multi;
     }
 }
+
+// End MathUtil.java

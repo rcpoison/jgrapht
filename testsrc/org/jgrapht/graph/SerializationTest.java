@@ -52,14 +52,13 @@ import org.jgrapht.*;
 public class SerializationTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private String v1 = "v1";
     private String v2 = "v2";
     private String v3 = "v3";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -69,7 +68,7 @@ public class SerializationTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Tests serialization of DirectedMultigraph.

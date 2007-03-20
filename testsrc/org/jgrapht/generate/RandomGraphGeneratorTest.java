@@ -51,8 +51,7 @@ import org.jgrapht.graph.*;
 public class RandomGraphGeneratorTest
     extends TestCase
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public void testGenerateGraph2()
     {
@@ -113,10 +112,12 @@ public class RandomGraphGeneratorTest
             new IntegerVertexFactory(),
             null);
 
-        return new Graph [] {
+        return new Graph[] {
                 directedGragh1,
                 directedGragh2,
                 directedGragh3
             };
     }
 }
+
+// End RandomGraphGeneratorTest.java

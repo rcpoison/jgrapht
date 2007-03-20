@@ -58,8 +58,7 @@ import java.util.*;
 public interface DirectedGraph<V, E>
     extends Graph<V, E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the "in degree" of the specified vertex. An in degree of a vertex
@@ -77,7 +76,7 @@ public interface DirectedGraph<V, E>
      * Returns a set of all edges incoming into the specified vertex.
      *
      * @param vertex the vertex for which the list of incoming edges to be
-     *               returned.
+     * returned.
      *
      * @return a set of all edges incoming into the specified vertex.
      */
@@ -99,9 +98,11 @@ public interface DirectedGraph<V, E>
      * Returns a set of all edges outgoing from the specified vertex.
      *
      * @param vertex the vertex for which the list of outgoing edges to be
-     *               returned.
+     * returned.
      *
      * @return a set of all edges outgoing from the specified vertex.
      */
     public Set<E> outgoingEdgesOf(V vertex);
 }
+
+// End DirectedGraph.java

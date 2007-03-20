@@ -62,19 +62,17 @@ import org.jgrapht.*;
 public class DepthFirstIterator<V, E>
     extends CrossComponentIterator<V, E, CrossComponentIterator.VisitColor>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * LIFO stack of vertices which have been encountered but not yet visited
-     * (WHITE).  This stack also contains <em>sentinel</em> entries
-     * representing vertices which have been visited but are still GRAY.  A
-     * sentinel entry is a sequence (v, null), whereas a non-sentinel entry is
-     * just (v).
+     * (WHITE). This stack also contains <em>sentinel</em> entries representing
+     * vertices which have been visited but are still GRAY. A sentinel entry is
+     * a sequence (v, null), whereas a non-sentinel entry is just (v).
      */
     private List<V> stack = new ArrayList<V>();
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new depth-first iterator for the specified graph.
@@ -101,7 +99,7 @@ public class DepthFirstIterator<V, E>
         super(g, startVertex);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see CrossComponentIterator#isConnectedComponentExhausted()
@@ -116,10 +114,10 @@ public class DepthFirstIterator<V, E>
                 // Found a non-sentinel.
                 return false;
             }
-            
+
             // Found a sentinel:  pop it, record the finish time,
             // and then loop to check the rest of the stack.
-            
+
             // Pop null we peeked at above.
             popStack();
 
@@ -150,9 +148,10 @@ public class DepthFirstIterator<V, E>
             return;
         }
         int i = stack.indexOf(vertex);
+
         // Since we've encountered it before, and it's still WHITE, it
         // *must* be on the stack.
-        assert(i > -1);
+        assert (i > -1);
         stack.remove(i);
         stack.add(vertex);
     }
@@ -174,6 +173,7 @@ public class DepthFirstIterator<V, E>
                 break;
             }
         }
+
         // Push a sentinel for v onto the stack so that we'll know
         // when we're done with it.
         stack.add(v);
@@ -199,3 +199,5 @@ public class DepthFirstIterator<V, E>
         finishVertex(v);
     }
 }
+
+// End DepthFirstIterator.java

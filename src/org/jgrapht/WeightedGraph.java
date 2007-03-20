@@ -50,15 +50,14 @@ package org.jgrapht;
 public interface WeightedGraph<V, E>
     extends Graph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      * The default weight for an edge.
      */
     public static double DEFAULT_EDGE_WEIGHT = 1.0;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Assigns a weight to an edge.
@@ -68,3 +67,5 @@ public interface WeightedGraph<V, E>
      */
     public void setEdgeWeight(E e, double weight);
 }
+
+// End WeightedGraph.java

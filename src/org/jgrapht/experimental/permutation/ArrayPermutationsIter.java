@@ -46,10 +46,11 @@ package org.jgrapht.experimental.permutation;
  */
 public interface ArrayPermutationsIter
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public int [] nextPermutation();
 
     public boolean hasNextPermutaions();
 }
+
+// End ArrayPermutationsIter.java

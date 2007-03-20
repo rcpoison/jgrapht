@@ -53,14 +53,13 @@ import org.jgrapht.*;
 public class DefaultDirectedGraphTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private String v1 = "v1";
     private String v2 = "v2";
     private String v3 = "v3";
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -192,7 +191,7 @@ public class DefaultDirectedGraphTest
         g.addEdge(v3, v1);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     private static class LinkedHashSetFactory<V, E>
         implements EdgeSetFactory<V, E>
@@ -210,3 +209,5 @@ public class DefaultDirectedGraphTest
         }
     }
 }
+
+// End $file.name$

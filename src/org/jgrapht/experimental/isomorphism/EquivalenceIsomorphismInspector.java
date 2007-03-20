@@ -49,7 +49,7 @@ import org.jgrapht.experimental.permutation.*;
  * The current implementation uses the vertexComparator to greatly increase the
  * test speed by dividing the vertexes into equivalent groups and permuting
  * inside them only. The EdgeComparator is used to test edges, but not to make a
- * finer division, thus it adds overhead.  Use it only when needed.
+ * finer division, thus it adds overhead. Use it only when needed.
  *
  * @author Assaf
  * @since Jul 29, 2005
@@ -57,26 +57,23 @@ import org.jgrapht.experimental.permutation.*;
 class EquivalenceIsomorphismInspector<V, E>
     extends AbstractExhaustiveIsomorphismInspector<V, E>
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @param graph1
      * @param graph2
      * @param vertexChecker eq. group checker for vertexes. If null,
-     *                      UniformEquivalenceComparator will be used as default
-     *                      (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      * @param edgeChecker eq. group checker for edges. If null,
-     *                    UniformEquivalenceComparator will be used as default
-     *                    (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      */
     public EquivalenceIsomorphismInspector(
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        
+
         // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super
-    // E>
-    EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
+        // E>
+        EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
         EquivalenceComparator<? super E, ? super Graph<? super V, ? super E>> edgeChecker)
     {
         super(graph1, graph2, vertexChecker, edgeChecker);
@@ -94,7 +91,7 @@ class EquivalenceIsomorphismInspector<V, E>
         super(graph1, graph2);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates the permutation iterator according to equivalance class.
@@ -111,9 +108,9 @@ class EquivalenceIsomorphismInspector<V, E>
      * <p>
      * <p>That's it. If the eq.group comaparator is strong enough to provide
      * small groups, this algortihm will produce a small possible permutations
-     * numbers. example: G1: [A,B,F,X,Y]  [A->B,B->X,X->Y]
+     * numbers. example: G1: [A,B,F,X,Y] [A->B,B->X,X->Y]
      *
-     * <p>G2: [D,Z,C,U,F]  [D->C,Z->C,U->Z]
+     * <p>G2: [D,Z,C,U,F] [D->C,Z->C,U->Z]
      *
      * <p>vertexEq: three groups , one all letters A-E , second all letters S-Z
      * , third the letter 'f'. 1. [(f)size=1, (X,Y)size=2 , (A,B)size=2] 2.
@@ -121,15 +118,15 @@ class EquivalenceIsomorphismInspector<V, E>
      * the second array to have the equiviavlant order :##[(f)size=1 ,
      * (Z,U)size=2 , (C,D)size=2]## 4.for example G2 will not do all 5!=120
      * permutations , but 2!x2!x1!=4 permutations only which are: (of the 3rd
-     * array) [ F, Z , U , C , D ] [ F, Z , U , D , C ] [ F, U , Z, C , D ] [
-     * F, U , Z , D , C ]
+     * array) [ F, Z , U , C , D ] [ F, Z , U , D , C ] [ F, U , Z, C , D ] [ F,
+     * U , Z , D , C ]
      *
      * @return null, if the eq.group do not match (there cannot be any
-     *         permutation for eq.groups) or the sets do not match in size;
-     *         otherwise, the permutationiterator otherwise
+     * permutation for eq.groups) or the sets do not match in size; otherwise,
+     * the permutationiterator otherwise
      *
      * @see AbstractExhaustiveIsomorphismInspector#createPermutationIterator(Set,
-     *      Set)
+     * Set)
      */
     @SuppressWarnings("unchecked")
     protected CollectionPermutationIter<V> createPermutationIterator(
@@ -171,7 +168,7 @@ class EquivalenceIsomorphismInspector<V, E>
         // the permutations will be relevant.
         // note that it does not start in any way related to eqGroup sizes.
 
-        V [] reorderingVertexSet1Temp = (V []) new Object [vertexSet1.size()];
+        V [] reorderingVertexSet1Temp = (V []) new Object[vertexSet1.size()];
         fillElementsflatArray(eqGroupArray1, reorderingVertexSet1Temp);
         vertexSet1.clear();
         vertexSet1.addAll(Arrays.asList(reorderingVertexSet1Temp));
@@ -183,17 +180,18 @@ class EquivalenceIsomorphismInspector<V, E>
         // 1. create array of the vertexes , by flattening the eq.group array
         // contents
 
-        V [] flatVertexArray = (V []) new Object [vertexSet2.size()];
+        V [] flatVertexArray = (V []) new Object[vertexSet2.size()];
         fillElementsflatArray(eqGroupArray2, flatVertexArray);
 
         // 2. make the permuter according to the groups size
-        int [] groupSizesArray = new int [eqGroupArray1.length];
+        int [] groupSizesArray = new int[eqGroupArray1.length];
 
         // iterate over the EqualityGroup array
         for (
             int eqGroupCounter = 0;
             eqGroupCounter < eqGroupArray2.length;
-            eqGroupCounter++) {
+            eqGroupCounter++)
+        {
             // now for (.2.) size count
             groupSizesArray[eqGroupCounter] =
                 eqGroupArray2[eqGroupCounter].size();
@@ -216,7 +214,7 @@ class EquivalenceIsomorphismInspector<V, E>
      * <li>try to match only group of the same size and then hashcode
      * <li>it is enough to choose one from each group to see if a match exist.
      *
-     * <p>Algorithm: hold counters in the two arrays. [a,b,c,d,e]  assume groups
+     * <p>Algorithm: hold counters in the two arrays. [a,b,c,d,e] assume groups
      * are:a,(b,c,d),e [a,c,d,b,e] c1=0 , c2=0 check if eqvivalent . if not ,
      * advance , as long as both size and hashcode are the same. if found a
      * match , swap the group positions in array2. if not , throws
@@ -227,7 +225,7 @@ class EquivalenceIsomorphismInspector<V, E>
      * @param targetArray
      *
      * @return true if the array was reordered successfully. false if not(It
-     *         will happen if there is no complete match between the groups)
+     * will happen if there is no complete match between the groups)
      */
     private boolean reorderTargetArrayToMatchSourceOrder(
         EquivalenceSet [] sourceArray,
@@ -237,7 +235,8 @@ class EquivalenceIsomorphismInspector<V, E>
         for (
             int sourceIndex = 0;
             sourceIndex < sourceArray.length;
-            sourceIndex++) {
+            sourceIndex++)
+        {
             int currTargetIndex = sourceIndex;
 
             // if they are already equivalent do nothing.
@@ -252,7 +251,8 @@ class EquivalenceIsomorphismInspector<V, E>
                 while (
                     (targetEqGroup.size() == sourceSize)
                     && (targetEqGroup.hashCode() == sourceHashCode)
-                    && (currTargetIndex < targetArray.length)) {
+                    && (currTargetIndex < targetArray.length))
+                {
                     currTargetIndex++;
                     targetEqGroup = targetArray[currTargetIndex];
                     if (targetEqGroup.equals(sourceEqGroup)) {
@@ -290,7 +290,8 @@ class EquivalenceIsomorphismInspector<V, E>
         for (
             int eqGroupCounter = 0;
             eqGroupCounter < eqGroupArray.length;
-            eqGroupCounter++) {
+            eqGroupCounter++)
+        {
             Object [] currGroupArray = eqGroupArray[eqGroupCounter].toArray();
 
             // copy this small array to the free place in the big
@@ -301,7 +302,7 @@ class EquivalenceIsomorphismInspector<V, E>
                 flatVertexArray, // dest
                 flatVertexArrayNextFree, // destPos
                 currGroupArray.length // length
-            );
+                );
             flatVertexArrayNextFree += currGroupArray.length;
         }
     }
@@ -311,7 +312,7 @@ class EquivalenceIsomorphismInspector<V, E>
      * it will return true without any further checks.
      *
      * @see AbstractExhaustiveIsomorphismInspector#areVertexSetsOfTheSameEqualityGroup(
-     *      Set, Set)
+     * Set, Set)
      */
     protected boolean areVertexSetsOfTheSameEqualityGroup(
         Set vertexSet1,
@@ -320,3 +321,5 @@ class EquivalenceIsomorphismInspector<V, E>
         return true;
     }
 }
+
+// End EquivalenceIsomorphismInspector.java

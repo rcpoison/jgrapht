@@ -55,8 +55,7 @@ import org.jgrapht.graph.*;
 public class IsomorphismInspectorTest
     extends TestCase
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructor for IsomorphismInspectorTest.
@@ -68,7 +67,7 @@ public class IsomorphismInspectorTest
         super(arg0);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /*
      * @see TestCase#setUp()
@@ -81,8 +80,8 @@ public class IsomorphismInspectorTest
 
     /**
      * Calls the same method with different (default) parameters
-     * EqualityGroupChecker vertexChecker   = null EqualityGroupChecker
-     * edgeChecker     =   null
+     * EqualityGroupChecker vertexChecker = null EqualityGroupChecker
+     * edgeChecker = null
      */
     private void assertIsomorphic(
         Graph<Integer, DefaultEdge> [] graphs,
@@ -162,8 +161,10 @@ public class IsomorphismInspectorTest
             isoResult = (IsomorphismRelation) iso.next();
 
             Set<Integer> vertexSet = g1.vertexSet();
-            for (Iterator<Integer> iter = vertexSet.iterator();
-                iter.hasNext();) {
+            for (
+                Iterator<Integer> iter = vertexSet.iterator();
+                iter.hasNext();)
+            {
                 Integer v1 = iter.next();
                 Integer v2 = isoResult.getVertexCorrespondence(v1, true);
                 if (false) {
@@ -173,7 +174,8 @@ public class IsomorphismInspectorTest
             Set<DefaultEdge> edgeSet = g1.edgeSet();
             for (
                 Iterator<DefaultEdge> iter = edgeSet.iterator();
-                iter.hasNext();) {
+                iter.hasNext();)
+            {
                 DefaultEdge e1 = iter.next();
                 DefaultEdge e2 = isoResult.getEdgeCorrespondence(e1, true);
                 if (false) {
@@ -213,32 +215,40 @@ public class IsomorphismInspectorTest
             g2,
             new IntegerVertexFactory(FIRST_INTEGER_FOR_G2),
             null);
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, true);
+            },
+            true);
 
         // In a wheel , the last vertex is the wheel center!
         g1.removeVertex(new Integer(NUM_OF_VERTEXES_IN_WHEEL)); // delete one vertex from g1
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, false);
+            },
+            false);
 
         // for example: 10+4
         g2.removeVertex(
             new Integer(FIRST_INTEGER_FOR_G2
                 + NUM_OF_VERTEXES_IN_WHEEL));
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, true);
+            },
+            true);
 
         g1.removeEdge(new Integer(1), new Integer(2));
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, false);
+            },
+            false);
     }
 
     @SuppressWarnings("unchecked")
@@ -255,21 +265,26 @@ public class IsomorphismInspectorTest
                 DefaultEdge.class);
         LinearGraphGenerator gen2 = new LinearGraphGenerator(4);
         gen2.generateGraph(g2, new IntegerVertexFactory(5), null); // start vertex from number 6
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, true);
+            },
+            true);
 
-        checkRelation(new Graph [] {
+        checkRelation(
+            new Graph[] {
                 g1,
                 g2
-            }, null, null);
+            },
+            null,
+            null);
     }
 
     /**
      * Create two graphs which are topologically the same (same number of
      * vertexes and same edges connection), but the contents of the vertexes
-     * belong to different eq. set. g1:  1-->2-->3-->4 g2:  2-->3-->4-->5 g3:
+     * belong to different eq. set. g1: 1-->2-->3-->4 g2: 2-->3-->4-->5 g3:
      * 3-->4-->5-->6 The eq-group-check is if the number is even or odd. So, g1
      * and g3 are isomorphic. g2 is not isomorphic to either of them.
      */
@@ -295,39 +310,51 @@ public class IsomorphismInspectorTest
         gen4.generateGraph(g3, new IntegerVertexFactory(2), null); // start vertex from number 3
 
         // first assert all are isomorphic (if vertexChecker is not used)
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
-            }, true);
-        assertIsomorphic(new Graph [] {
+            },
+            true);
+        assertIsomorphic(
+            new Graph[] {
                 g2,
                 g3
-            }, true);
-        assertIsomorphic(new Graph [] {
+            },
+            true);
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g3
-            }, true);
+            },
+            true);
 
         // create a functor according to odd even
         EquivalenceComparator vertexEqChecker = new OddEvenGroupComparator();
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g2
             },
             false,
             vertexEqChecker,
             null);
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g2,
                 g3
             },
             false,
             vertexEqChecker,
             null);
-        assertIsomorphic(new Graph [] {
+        assertIsomorphic(
+            new Graph[] {
                 g1,
                 g3
-            }, true, vertexEqChecker, null);
+            },
+            true,
+            vertexEqChecker,
+            null);
     }
 
     /**
@@ -342,16 +369,16 @@ public class IsomorphismInspectorTest
     public void testEdgeComparator()
     {
         int LINEAR_GRAPH_VERTEX_NUM = 4;
-        Graph [] graphsArray = new DirectedGraph [3];
+        Graph [] graphsArray = new DirectedGraph[3];
         Character [] charArray =
-            new Character [] {
+            new Character[] {
                 new Character('A'),
                 new Character('B'),
                 new Character('C'),
                 new Character('D')
             };
         int [][] weigthsArray =
-            new int [][] {
+            new int[][] {
                 {
                     12,
                     10,
@@ -372,7 +399,8 @@ public class IsomorphismInspectorTest
         for (int i = 0; i < graphsArray.length; i++) {
             Graph<Character, DefaultEdge> currGraph =
                 graphsArray[i] =
-                    new DefaultDirectedWeightedGraph<Character, DefaultWeightedEdge>(
+                    new DefaultDirectedWeightedGraph<Character,
+                        DefaultWeightedEdge>(
                         DefaultWeightedEdge.class);
             for (int j = 0; j < LINEAR_GRAPH_VERTEX_NUM; j++) {
                 currGraph.addVertex(charArray[j]);
@@ -389,46 +417,31 @@ public class IsomorphismInspectorTest
         }
 
         // first assert all are isomorphic (if vertexChecker is not used)
-        assertIsomorphic(new Graph [] {
-                graphsArray[0],
-                graphsArray[1]
-            },
+        assertIsomorphic(
+            new Graph[] { graphsArray[0], graphsArray[1] },
             true);
-        assertIsomorphic(new Graph [] {
-                graphsArray[0],
-                graphsArray[2]
-            },
+        assertIsomorphic(
+            new Graph[] { graphsArray[0], graphsArray[2] },
             true);
-        assertIsomorphic(new Graph [] {
-                graphsArray[1],
-                graphsArray[2]
-            },
+        assertIsomorphic(
+            new Graph[] { graphsArray[1], graphsArray[2] },
             true);
 
         // create a functor according to odd even
         EquivalenceComparator edgeEqChecker =
             new DirectedEdgeWeightOddEvenComparator(graphsArray[0]);
         assertIsomorphic(
-            new Graph [] {
-                graphsArray[0],
-                graphsArray[1]
-            },
+            new Graph[] { graphsArray[0], graphsArray[1] },
             true,
             null,
             edgeEqChecker);
         assertIsomorphic(
-            new Graph [] {
-                graphsArray[0],
-                graphsArray[2]
-            },
+            new Graph[] { graphsArray[0], graphsArray[2] },
             false,
             null,
             edgeEqChecker);
         assertIsomorphic(
-            new Graph [] {
-                graphsArray[1],
-                graphsArray[2]
-            },
+            new Graph[] { graphsArray[1], graphsArray[2] },
             false,
             null,
             edgeEqChecker);
@@ -491,7 +504,7 @@ public class IsomorphismInspectorTest
         throws Exception
     {
         final int [] numOfVertexesArray =
-            new int [] {
+            new int[] {
                 6,
                 6,
                 6,
@@ -508,7 +521,7 @@ public class IsomorphismInspectorTest
                 99
             };
         final int [] numOfEdgesArray =
-            new int [] {
+            new int[] {
                 0,
                 4,
                 12,
@@ -530,10 +543,10 @@ public class IsomorphismInspectorTest
         // the other for the3rd graph
         final int NUM_OF_GENERATORS = 2;
         RandomGraphGenerator [] genArray =
-            new RandomGraphGenerator [NUM_OF_GENERATORS];
+            new RandomGraphGenerator[NUM_OF_GENERATORS];
 
         String [] graphConctereClassesFullName =
-            new String [] { // "org.jgrapht.graph.SimpleGraph" ,
+            new String[] { // "org.jgrapht.graph.SimpleGraph" ,
                 "org.jgrapht.graph.SimpleDirectedGraph",
                 "org.jgrapht.graph.DefaultDirectedGraph",
                 // "org.jgrapht.graph.Multigraph",
@@ -546,9 +559,9 @@ public class IsomorphismInspectorTest
         // graphsArray rows are different graph types. Columns are few
         // instances of that type
         Graph [][] graphsArray =
-            new Graph [graphConctereClassesFullName.length][SIZE_OF_GENERATED_GRAPH_ARRAY];
+            new Graph[graphConctereClassesFullName.length][SIZE_OF_GENERATED_GRAPH_ARRAY];
 
-        Graph [] currIsoTestArray = new Graph [2];
+        Graph [] currIsoTestArray = new Graph[2];
         for (int testNum = 0; testNum < numOfVertexesArray.length; testNum++) {
             // recreate the graphs (empty)
             try {
@@ -574,7 +587,8 @@ public class IsomorphismInspectorTest
             for (
                 int graphType = 0;
                 graphType < graphConctereClassesFullName.length;
-                graphType++) {
+                graphType++)
+            {
                 System.out.println(
                     "### numOfVertexes= " + numOfVertexesArray[testNum]);
                 System.out.println(
@@ -625,3 +639,5 @@ public class IsomorphismInspectorTest
         }
     }
 }
+
+// End IsomorphismInspectorTest.java

@@ -54,8 +54,7 @@ import org.jgrapht.*;
  */
 public class TouchgraphConverter<V, E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Convert a JGraphT graph to the representation used in the TouchGraph
@@ -74,10 +73,9 @@ public class TouchgraphConverter<V, E>
      * @param graph: the JGraphT graph
      * @param tgPanel: the TouchGraph TGPanel
      * @param selfReferencesAllowed: do you want to include self-referenctial
-     *                               edges, ie an edge from a node to itself?
-     *                               Self-referential loops do not show up in
-     *                               the TG visualization but you may want to
-     *                               subclass TG's Node class to show them
+     * edges, ie an edge from a node to itself? Self-referential loops do not
+     * show up in the TG visualization but you may want to subclass TG's Node
+     * class to show them
      *
      * @return first node of the TouchGraph graph
      *
@@ -91,7 +89,7 @@ public class TouchgraphConverter<V, E>
         throws TGException
     {
         List<V> jgtNodes = new ArrayList<V>(graph.vertexSet());
-        Node [] tgNodes = new Node [jgtNodes.size()];
+        Node [] tgNodes = new Node[jgtNodes.size()];
 
         // add all the nodes...
         for (int i = 0; i < jgtNodes.size(); i++) {
@@ -119,9 +117,9 @@ public class TouchgraphConverter<V, E>
                 // visualization but you may want to
                 // subclass TG's Node class to show them
                 if ((i != j) || selfReferencesAllowed) {
-                    if (
-                        graph.getEdge(jgtNodes.get(i), jgtNodes.get(j))
-                        != null) {
+                    if (graph.getEdge(jgtNodes.get(i), jgtNodes.get(j))
+                        != null)
+                    {
                         // add TG directed edge from i to j
                         tgPanel.addEdge(new Edge(tgNodes[i], tgNodes[j]));
                     }

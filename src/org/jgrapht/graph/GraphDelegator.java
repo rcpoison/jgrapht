@@ -66,21 +66,21 @@ import org.jgrapht.*;
  */
 public class GraphDelegator<V, E>
     extends AbstractGraph<V, E>
-    implements Graph<V, E>, Serializable
+    implements Graph<V, E>,
+        Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3257005445226181425L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The graph to which operations are delegated.
      */
     private Graph<V, E> delegate;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructor for GraphDelegator.
@@ -100,7 +100,7 @@ public class GraphDelegator<V, E>
         delegate = g;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#getAllEdges(Object, Object)
@@ -294,3 +294,5 @@ public class GraphDelegator<V, E>
         ((WeightedGraph<V, E>) delegate).setEdgeWeight(e, weight);
     }
 }
+
+// End GraphDelegator.java

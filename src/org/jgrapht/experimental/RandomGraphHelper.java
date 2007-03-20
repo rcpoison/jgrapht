@@ -56,12 +56,11 @@ import org.jgrapht.*;
  */
 public final class RandomGraphHelper
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final Random randSingleton = new Random();
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * .
@@ -70,7 +69,7 @@ public final class RandomGraphHelper
     {
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see GraphGenerator#generateGraph
@@ -91,7 +90,8 @@ public final class RandomGraphHelper
                     sourceVertices.get(randSingleton.nextInt(
                             sourceSize)),
                     destVertices.get(randSingleton.nextInt(destSize)))
-                == null) {
+                == null)
+            {
                 ;
             }
         }
@@ -112,7 +112,7 @@ public final class RandomGraphHelper
         VertexFactory vertexFactory,
         int numVertices)
     {
-        Object [] vertices = new Object [numVertices];
+        Object [] vertices = new Object[numVertices];
 
         for (int i = 0; i < numVertices; ++i) {
             vertices[i] = vertexFactory.createVertex();
@@ -122,3 +122,5 @@ public final class RandomGraphHelper
         return vertices;
     }
 }
+
+// End RandomGraphHelper.java

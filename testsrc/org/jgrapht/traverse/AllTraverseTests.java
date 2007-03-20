@@ -49,14 +49,13 @@ import junit.framework.*;
  */
 public final class AllTraverseTests
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private AllTraverseTests()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a test suite for all tests in this package.
@@ -78,3 +77,5 @@ public final class AllTraverseTests
         return suite;
     }
 }
+
+// End AllTraverseTests.java

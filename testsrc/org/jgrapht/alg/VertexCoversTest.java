@@ -57,13 +57,12 @@ import org.jgrapht.graph.*;
 public class VertexCoversTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final int TEST_GRAPH_SIZE = 200;
     private static final int TEST_REPEATS = 20;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -148,3 +147,5 @@ public class VertexCoversTest
         return g;
     }
 }
+
+// End VertexCoversTest.java

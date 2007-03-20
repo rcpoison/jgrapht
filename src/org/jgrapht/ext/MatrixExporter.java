@@ -55,14 +55,13 @@ import org.jgrapht.util.*;
  */
 public class MatrixExporter<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private String delimiter = " ";
     private String prefix = "";
     private String suffix = "";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new MatrixExporter object.
@@ -71,7 +70,7 @@ public class MatrixExporter<V, E>
     {
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     private void println(
         PrintWriter out,
@@ -261,3 +260,5 @@ public class MatrixExporter<V, E>
         out.flush();
     }
 }
+
+// End MatrixExporter.java

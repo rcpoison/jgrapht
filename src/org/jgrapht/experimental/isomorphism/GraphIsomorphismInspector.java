@@ -58,13 +58,13 @@ import java.util.*;
  * <p><i>Efficiency:</i> The general algorithm is not polynomial, however
  * polynomial algorithms are known for special cases, like acyclic graphs,
  * planar graphs etc. There are several heuristic algorithms which gives quite
- * good results (polynomial) in  general graphs, for most but not all cases.
+ * good results (polynomial) in general graphs, for most but not all cases.
  *
  * <p><b>Usage:</b>
  *
  * <ol>
- * <li>Choose comparators for the vertexes and edges.  You may use the default
- * comparator by sending null parameters for them to the constructor.  Example:
+ * <li>Choose comparators for the vertexes and edges. You may use the default
+ * comparator by sending null parameters for them to the constructor. Example:
  * Assume Your graphs are of human relations. Each vertex is either a man or a
  * woman and also has the person name. You may decide that isomorphism is
  * checked according to gender, but not according to the specific name. So you
@@ -84,11 +84,12 @@ import java.util.*;
 public interface GraphIsomorphismInspector<E>
     extends Iterator<E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @return <code>true</code> iff the two graphs are isomorphic
      */
     public boolean isIsomorphic();
 }
+
+// End GraphIsomorphismInspector.java

@@ -54,8 +54,7 @@ import org.jgrapht.*;
 public class DefaultGraphMapping<V, E>
     implements GraphMapping<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private Map<V, V> graphMappingForward;
     private Map<V, V> graphMappingReverse;
@@ -63,11 +62,11 @@ public class DefaultGraphMapping<V, E>
     private Graph<V, E> graph1;
     private Graph<V, E> graph2;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
-     * The maps themselves are used.  There is no defensive-copy. Assumption:
-     * The key and value in the mappings are of valid graph objects. It is not
+     * The maps themselves are used. There is no defensive-copy. Assumption: The
+     * key and value in the mappings are of valid graph objects. It is not
      * checked.
      *
      * @param g1ToG2
@@ -87,7 +86,7 @@ public class DefaultGraphMapping<V, E>
         this.graphMappingReverse = g2ToG1;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public E getEdgeCorrespondence(E currEdge, boolean forward)
     {
@@ -113,8 +112,8 @@ public class DefaultGraphMapping<V, E>
             return null;
         } else {
             return targetGraph.getEdge(
-                    mappedSourceVertex,
-                    mappedTargetVertex);
+                mappedSourceVertex,
+                mappedTargetVertex);
         }
     }
 
@@ -132,3 +131,5 @@ public class DefaultGraphMapping<V, E>
         return graphMapping.get(keyVertex);
     }
 }
+
+// End DefaultGraphMapping.java

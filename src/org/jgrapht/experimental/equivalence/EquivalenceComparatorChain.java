@@ -42,11 +42,11 @@ package org.jgrapht.experimental.equivalence;
  * result can be supplied. It implements the EquivalenceComparator, so chains
  * can include other chains. The first check will use the current comparator and
  * not the next one. So, make sure to use the one which has better performance
- * first.  (This class follows the "Composite" design-pattern).
+ * first. (This class follows the "Composite" design-pattern).
  *
  * @param <E> the type of the elements in the set
  * @param <C> the type of the context the element is compared against, e.g. a
- *        Graph
+ * Graph
  *
  * @author Assaf
  * @since Jul 22, 2005
@@ -54,13 +54,12 @@ package org.jgrapht.experimental.equivalence;
 public interface EquivalenceComparatorChain<E, C>
     extends EquivalenceComparator<E, C>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Adds a comparator which will also test equivalence. For
      * equivalenceCompare(), the return value is a logical AND of the two
-     * comparators.  The first check will use the first comparator before the
+     * comparators. The first check will use the first comparator before the
      * next one. Make sure to put the one which has better performance first.
      * For equivalenceHashcode(), the resulting hashes will be rehashed
      * together. This method may be used multiple times to create a long "chain"
@@ -68,3 +67,5 @@ public interface EquivalenceComparatorChain<E, C>
      */
     public void appendComparator(EquivalenceComparator comparatorAfter);
 }
+
+// End EquivalenceComparatorChain.java

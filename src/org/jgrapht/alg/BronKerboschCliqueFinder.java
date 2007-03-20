@@ -55,35 +55,34 @@ import org.jgrapht.*;
  */
 public class BronKerboschCliqueFinder<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private final Graph<V, E> graph;
 
     private Collection<Set<V>> cliques;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new clique finder.
      *
      * @param graph the graph in which cliques are to be found; graph must be
-     *              simple
+     * simple
      */
     public BronKerboschCliqueFinder(Graph<V, E> graph)
     {
         this.graph = graph;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
-     * Finds all maximal cliques of the graph.  A clique is maximal if it is
-     * impossible to enlarge it by adding another vertex from the graph.  Note
+     * Finds all maximal cliques of the graph. A clique is maximal if it is
+     * impossible to enlarge it by adding another vertex from the graph. Note
      * that a maximal clique is not necessarily the biggest clique in the graph.
      *
      * @return Collection of cliques (each of which is represented as a Set of
-     *         vertices)
+     * vertices)
      */
     public Collection<Set<V>> getAllMaximalCliques()
     {
@@ -102,7 +101,7 @@ public class BronKerboschCliqueFinder<V, E>
      * Finds the biggest maximal cliques of the graph.
      *
      * @return Collection of cliques (each of which is represented as a Set of
-     *         vertices)
+     * vertices)
      */
     public Collection<Set<V>> getBiggestMaximalCliques()
     {
@@ -195,3 +194,5 @@ public class BronKerboschCliqueFinder<V, E>
         return end;
     }
 }
+
+// End BronKerboschCliqueFinder.java

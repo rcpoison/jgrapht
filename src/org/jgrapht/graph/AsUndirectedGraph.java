@@ -52,7 +52,7 @@ import org.jgrapht.util.*;
 
 /**
  * An undirected view of the backing directed graph specified in the
- * constructor.  This graph allows modules to apply algorithms designed for
+ * constructor. This graph allows modules to apply algorithms designed for
  * undirected graphs to a directed graph by simply ignoring edge direction. If
  * the backing directed graph is an <a
  * href="http://mathworld.wolfram.com/OrientedGraph.html">oriented graph</a>,
@@ -63,13 +63,13 @@ import org.jgrapht.util.*;
  * immediately reflected in the backing graph).
  *
  * <p>Note that edges returned by this graph's accessors are really just the
- * edges of the underlying directed graph.  Since there is no interface
+ * edges of the underlying directed graph. Since there is no interface
  * distinction between directed and undirected edges, this detail should be
  * irrelevant to algorithms.</p>
  *
  * <p>This graph does <i>not</i> pass the hashCode and equals operations through
  * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
- * <tt>hashCode</tt> methods.  This graph will be serializable if the backing
+ * <tt>hashCode</tt> methods. This graph will be serializable if the backing
  * graph is serializable.</p>
  *
  * @author John V. Sichi
@@ -77,10 +77,10 @@ import org.jgrapht.util.*;
  */
 public class AsUndirectedGraph<V, E>
     extends GraphDelegator<V, E>
-    implements Serializable, UndirectedGraph<V, E>
+    implements Serializable,
+        UndirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3257845485078065462L; // @todo renew
     private static final String NO_EDGE_ADD =
@@ -88,20 +88,20 @@ public class AsUndirectedGraph<V, E>
     private static final String UNDIRECTED =
         "this graph only supports undirected operations";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructor for AsUndirectedGraph.
      *
      * @param g the backing directed graph over which an undirected view is to
-     *          be created.
+     * be created.
      */
     public AsUndirectedGraph(DirectedGraph<V, E> g)
     {
         super(g);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#getAllEdges(Object, Object)
@@ -205,3 +205,5 @@ public class AsUndirectedGraph<V, E>
         return super.toStringFromSets(vertexSet(), edgeSet(), false);
     }
 }
+
+// End AsUndirectedGraph.java

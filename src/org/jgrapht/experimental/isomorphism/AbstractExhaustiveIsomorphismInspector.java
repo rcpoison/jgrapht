@@ -48,8 +48,8 @@ import org.jgrapht.util.*;
 
 /**
  * Abstract base for isomorphism inspectors which exhaustively test the possible
- * mappings between graphs.  The current algorithms do not support graphs with
- * multiple edges (Multigraph / Pseudograph).  For the maintainer: The reason is
+ * mappings between graphs. The current algorithms do not support graphs with
+ * multiple edges (Multigraph / Pseudograph). For the maintainer: The reason is
  * the use of GraphOrdering which currently does not support all graph types.
  *
  * @author Assaf Lehr
@@ -58,18 +58,21 @@ import org.jgrapht.util.*;
 abstract class AbstractExhaustiveIsomorphismInspector<V, E>
     implements GraphIsomorphismInspector<IsomorphismRelation>
 {
+    //~ Static fields/initializers ---------------------------------------------
 
-    //~ Static fields/initializers --------------------------------------------
+    public static EquivalenceComparator<Object, Object>
+        edgeDefaultIsomorphismComparator =
+            new UniformEquivalenceComparator<Object, Object>();
+    public static EquivalenceComparator<Object, Object>
+        vertexDefaultIsomorphismComparator =
+            new UniformEquivalenceComparator<Object, Object>();
 
-    public static EquivalenceComparator<Object, Object> edgeDefaultIsomorphismComparator =
-        new UniformEquivalenceComparator<Object, Object>();
-    public static EquivalenceComparator<Object, Object> vertexDefaultIsomorphismComparator =
-        new UniformEquivalenceComparator<Object, Object>();
+    //~ Instance fields --------------------------------------------------------
 
-    //~ Instance fields -------------------------------------------------------
-
-    protected EquivalenceComparator<? super E, ? super Graph<V, ? super E>> edgeComparator;
-    protected EquivalenceComparator<? super V, ? super Graph<? super V, E>> vertexComparator;
+    protected EquivalenceComparator<? super E, ? super Graph<V, ? super E>>
+        edgeComparator;
+    protected EquivalenceComparator<? super V, ? super Graph<? super V, E>>
+        vertexComparator;
 
     protected Graph<V, E> graph1;
     protected Graph<V, E> graph2;
@@ -83,27 +86,25 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
     private CollectionPermutationIter<V> vertexPermuteIter;
     private Set<V> currVertexPermutation; // filled every iteration, used in the
 
-    // result relation.
+    //~ Constructors -----------------------------------------------------------
 
-    //~ Constructors ----------------------------------------------------------
+    // result relation.
 
     /**
      * @param graph1
      * @param graph2
      * @param vertexChecker eq. group checker for vertexes. If null,
-     *                      UniformEquivalenceComparator will be used as default
-     *                      (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      * @param edgeChecker eq. group checker for edges. If null,
-     *                    UniformEquivalenceComparator will be used as default
-     *                    (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      */
     public AbstractExhaustiveIsomorphismInspector(
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        
+
         // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super
-    // E>
-    EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
+        // E>
+        EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
         EquivalenceComparator<? super E, ? super Graph<? super V, ? super E>> edgeChecker)
     {
         this.graph1 = graph1;
@@ -145,7 +146,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
             vertexDefaultIsomorphismComparator);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Inits needed data-structures , among them:
@@ -166,7 +167,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
         this.nextSupplier =
             new PrefetchIterator<IsomorphismRelation>(
                 // XXX hb 280106: I don't understand this warning, yet :-)
-            new NextFunctor());
+                new NextFunctor());
 
         this.graph1VertexSet = new LinkedHashSet<V>(this.graph1.vertexSet());
 
@@ -211,7 +212,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
      * <p>3.2. edges (in labelsgraph)
      *
      * <p>Implementation Notes and considerations: Let's consider a trivial
-     * example: graph of strings "A","B","C" with two edges A->B,B->C.  Let's
+     * example: graph of strings "A","B","C" with two edges A->B,B->C. Let's
      * assume for this example that the vertex comparator always returns true,
      * meaning String value does not matter, only the graph structure does. So
      * "D" "E" "A" with D->E->A will be isomorphic , but "A","B,"C"with
@@ -222,22 +223,22 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
      * with edges from first to second and from second to third. So the source
      * LabelsGraph will be: vertexes:[1,2,3] edges:[[1->2],[2->3]] Now we will
      * do several permutations of D,E,A. A few examples: D->E , E->A
-     * [1,2,3]=[A,D,E] so edges are:    2->3 , 3->1 . does it match the source?
-     * NO. [1,2,3]=[D,A,E] so edges are:    1->3 , 3->2 . no match either.
-     * [1,2,3]=[D,E,A] so edges are:    1->2 , 2->3 . MATCH FOUND ! Trivial
+     * [1,2,3]=[A,D,E] so edges are: 2->3 , 3->1 . does it match the source? NO.
+     * [1,2,3]=[D,A,E] so edges are: 1->3 , 3->2 . no match either.
+     * [1,2,3]=[D,E,A] so edges are: 1->2 , 2->3 . MATCH FOUND ! Trivial
      * algorithm: We will iterate on all permutations
      * [abc][acb][bac][bca][cab][cba]. (n! of them,3!=6) For each, first compare
      * vertexes using the VertexComparator(always true). Then see that the edges
      * are in the exact order 1st->2nd , 2nd->3rd. If we found a match stop and
      * return true, otherwise return false; we will compare vetices and edges by
      * their order (1st,2nd,3rd,etc) only. Two graphs are the same, by this
-     * order,  if: 1. for each i, sourceVertexArray[i] is equivalent to
+     * order, if: 1. for each i, sourceVertexArray[i] is equivalent to
      * targetVertexArray[i] 2. for each vertex, the edges which start in it (it
      * is the source) goes to the same ordered vertex. For multiple ones, count
      * them too.
      *
      * @return IsomorphismRelation for a permutation found, or null if no
-     *         permutation was isomorphic
+     * permutation was isomorphic
      */
     private IsomorphismRelation<V, E> findNextIsomorphicGraph()
     {
@@ -249,10 +250,10 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
                 currVertexPermutation = this.vertexPermuteIter.getNextSet();
 
                 // compare vertexes
-                if (
-                    !areVertexSetsOfTheSameEqualityGroup(
+                if (!areVertexSetsOfTheSameEqualityGroup(
                         this.graph1VertexSet,
-                        currVertexPermutation)) {
+                        currVertexPermutation))
+                {
                     continue; // this one is not iso, so try the next one
                 }
 
@@ -279,6 +280,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
                             resultRelation,
                             this.edgeComparator);
                     if (edgeEq) // only if equivalent
+
                     {
                         result = true;
                         break;
@@ -333,12 +335,12 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
                     resultRelation.getEdgeCorrespondence(currEdge, true);
 
                 // if one edge test fail , fail the whole method
-                if (
-                    !edgeComparator.equivalenceCompare(
+                if (!edgeComparator.equivalenceCompare(
                         currEdge,
                         correspondingEdge,
                         this.graph1,
-                        this.graph2)) {
+                        this.graph2))
+                {
                     checkResult = false;
                     break;
                 }
@@ -398,7 +400,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
             + " There is no meaning to removing an isomorphism result.");
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     private class NextFunctor
         implements PrefetchIterator.NextElementFunctor<IsomorphismRelation>
@@ -416,3 +418,5 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
         }
     }
 }
+
+// End AbstractExhaustiveIsomorphismInspector.java

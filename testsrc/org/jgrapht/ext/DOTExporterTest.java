@@ -48,8 +48,7 @@ import org.jgrapht.graph.*;
 public class DOTExporterTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
@@ -58,20 +57,20 @@ public class DOTExporterTest
     private static final String NL = System.getProperty("line.separator");
 
     // TODO jvs 23-Dec-2006:  externalized diff-based testing framework
-    
+
     private static final String UNDIRECTED =
-        "graph G {" + NL +
-        "  1;" + NL +
-        "  2;" + NL +
-        "  3;" + NL +
-        "  1 -- 2;" + NL +
-        "  3 -- 1;" + NL +
-        "}" + NL;
+        "graph G {" + NL
+        + "  1;" + NL
+        + "  2;" + NL
+        + "  3;" + NL
+        + "  1 -- 2;" + NL
+        + "  3 -- 1;" + NL
+        + "}" + NL;
 
     private static final DOTExporter<String, DefaultEdge> exporter =
         new DOTExporter<String, DefaultEdge>();
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public void testUndirected()
     {
@@ -88,3 +87,5 @@ public class DOTExporterTest
         assertEquals(UNDIRECTED, w.toString());
     }
 }
+
+// End DOTExporterTest.java

@@ -44,7 +44,7 @@ import java.util.*;
 /**
  * Helper for efficiently representing small sets whose elements are known to be
  * unique by construction, implying we don't need to enforce the uniqueness
- * property in the data structure itself.  Use with caution.
+ * property in the data structure itself. Use with caution.
  *
  * <p>Note that for equals/hashCode, the class implements the Set behavior
  * (unordered), not the list behavior (ordered); the fact that it subclasses
@@ -56,12 +56,11 @@ public class ArrayUnenforcedSet<E>
     extends ArrayList<E>
     implements Set<E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = -7413250161201811238L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public ArrayUnenforcedSet()
     {
@@ -78,7 +77,7 @@ public class ArrayUnenforcedSet<E>
         super(n);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public boolean equals(Object o)
     {
@@ -90,7 +89,7 @@ public class ArrayUnenforcedSet<E>
         return new SetForEquality().hashCode();
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Multiple inheritance helper.

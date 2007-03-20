@@ -55,15 +55,14 @@ import org.jgrapht.*;
 public class SubgraphTest
     extends TestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private String v1 = "v1";
     private String v2 = "v2";
     private String v3 = "v3";
     private String v4 = "v4";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -73,7 +72,7 @@ public class SubgraphTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -152,12 +151,11 @@ public class SubgraphTest
         UndirectedGraph<String, DefaultEdge> g;
 
         if (listenable) {
-            g =
-                new ListenableUndirectedGraph<String, DefaultEdge>(
-                    DefaultEdge.class);
+            g = new ListenableUndirectedGraph<String, DefaultEdge>(
+                DefaultEdge.class);
         } else {
             g = new SimpleGraph<String, DefaultEdge>(
-                    DefaultEdge.class);
+                DefaultEdge.class);
         }
 
         g.addVertex(v1);
@@ -172,3 +170,5 @@ public class SubgraphTest
         return g;
     }
 }
+
+// End $file.name$

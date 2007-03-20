@@ -55,25 +55,25 @@ import org.jgrapht.*;
  * @since Jul 14, 2003
  */
 public class ClassBasedEdgeFactory<V, E>
-    implements EdgeFactory<V, E>, Serializable
+    implements EdgeFactory<V, E>,
+        Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3618135658586388792L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private final Class<? extends E> edgeClass;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public ClassBasedEdgeFactory(Class<? extends E> edgeClass)
     {
         this.edgeClass = edgeClass;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see EdgeFactory#createEdge(Object, Object)
@@ -87,3 +87,5 @@ public class ClassBasedEdgeFactory<V, E>
         }
     }
 }
+
+// End ClassBasedEdgeFactory.java

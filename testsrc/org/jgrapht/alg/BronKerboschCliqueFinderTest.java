@@ -55,8 +55,7 @@ import org.jgrapht.graph.*;
 public class BronKerboschCliqueFinderTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
@@ -67,7 +66,7 @@ public class BronKerboschCliqueFinderTest
     private static final String V7 = "v7";
     private static final String V8 = "v8";
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .

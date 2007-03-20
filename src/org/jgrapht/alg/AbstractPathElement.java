@@ -53,13 +53,12 @@ import org.jgrapht.*;
  * .
  *
  * <p>NOTE jvs 14-Jan-2006: This is currently an internal data structure for use
- * in algorithms.  If we want to promote it to public, we should first clean it
+ * in algorithms. If we want to promote it to public, we should first clean it
  * up and move it to the parent package, making a Path a first-class concept.
  */
 abstract class AbstractPathElement<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Number of hops of the path.
@@ -81,7 +80,7 @@ abstract class AbstractPathElement<V, E>
      */
     private V vertex;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a path element by concatenation of an edge to a path element.
@@ -132,7 +131,7 @@ abstract class AbstractPathElement<V, E>
         this.nHops = 0;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the path as a list of edges.
@@ -196,3 +195,5 @@ abstract class AbstractPathElement<V, E>
         return this.vertex;
     }
 }
+
+// End AbstractPathElement.java

@@ -50,15 +50,14 @@ import org.jgrapht.*;
 public class GenericGraphsTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     Graph<Object, ? extends DefaultEdge> objectGraph;
     Graph<FooVertex, FooEdge> fooFooGraph;
     Graph<BarVertex, BarEdge> barBarGraph;
     Graph<FooVertex, BarEdge> fooBarGraph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -68,7 +67,7 @@ public class GenericGraphsTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     // ~ Methods ---------------------------------------------------------------
 
@@ -147,7 +146,7 @@ public class GenericGraphsTest
         barBarGraph = new SimpleGraph<BarVertex, BarEdge>(BarEdge.class);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     public static class CustomEdge
         extends DefaultEdge
@@ -202,3 +201,5 @@ public class GenericGraphsTest
         }
     }
 }
+
+// End GenericGraphsTest.java

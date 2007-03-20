@@ -52,12 +52,11 @@ public class DirectedMultigraph<V, E>
     extends AbstractBaseGraph<V, E>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3258408413590599219L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new directed multigraph.
@@ -79,3 +78,5 @@ public class DirectedMultigraph<V, E>
         super(ef, true, true);
     }
 }
+
+// End DirectedMultigraph.java

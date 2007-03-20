@@ -110,12 +110,11 @@ import org.jgrapht.event.*;
 public class JGraphModelAdapter<V, E>
     extends DefaultGraphModel
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3256722883706302515L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The following (jCells|jtElement)Being(Added|Removed) sets are used to
@@ -178,13 +177,13 @@ public class JGraphModelAdapter<V, E>
     private final Map<V, GraphCell> vertexToCell = new HashMap<V, GraphCell>();
     private final ShieldedGraph jtGraph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
      * @param jGraphTGraph the JGraphT graph for which JGraph model adapter to
-     *                     be created. <code>null</code> is NOT permitted.
+     * be created. <code>null</code> is NOT permitted.
      */
     public JGraphModelAdapter(Graph<V, E> jGraphTGraph)
     {
@@ -198,12 +197,11 @@ public class JGraphModelAdapter<V, E>
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
      * @param jGraphTGraph the JGraphT graph for which JGraph model adapter to
-     *                     be created. <code>null</code> is NOT permitted.
+     * be created. <code>null</code> is NOT permitted.
      * @param defaultVertexAttributes a default map of JGraph attributes to
-     *                                format vertices. <code>null</code> is NOT
-     *                                permitted.
+     * format vertices. <code>null</code> is NOT permitted.
      * @param defaultEdgeAttributes a default map of JGraph attributes to format
-     *                              edges. <code>null</code> is NOT permitted.
+     * edges. <code>null</code> is NOT permitted.
      */
     public JGraphModelAdapter(
         Graph<V, E> jGraphTGraph,
@@ -221,14 +219,13 @@ public class JGraphModelAdapter<V, E>
      * Constructs a new JGraph model adapter for the specified JGraphT graph.
      *
      * @param jGraphTGraph the JGraphT graph for which JGraph model adapter to
-     *                     be created. <code>null</code> is NOT permitted.
+     * be created. <code>null</code> is NOT permitted.
      * @param defaultVertexAttributes a default map of JGraph attributes to
-     *                                format vertices. <code>null</code> is NOT
-     *                                permitted.
+     * format vertices. <code>null</code> is NOT permitted.
      * @param defaultEdgeAttributes a default map of JGraph attributes to format
-     *                              edges. <code>null</code> is NOT permitted.
+     * edges. <code>null</code> is NOT permitted.
      * @param cellFactory a {@link CellFactory} to be used to create the JGraph
-     *                    cells. <code>null</code> is NOT permitted.
+     * cells. <code>null</code> is NOT permitted.
      *
      * @throws IllegalArgumentException
      */
@@ -240,11 +237,11 @@ public class JGraphModelAdapter<V, E>
     {
         super();
 
-        if (
-            (jGraphTGraph == null)
+        if ((jGraphTGraph == null)
             || (defaultVertexAttributes == null)
             || (defaultEdgeAttributes == null)
-            || (cellFactory == null)) {
+            || (cellFactory == null))
+        {
             throw new IllegalArgumentException("null is NOT permitted");
         }
 
@@ -258,8 +255,10 @@ public class JGraphModelAdapter<V, E>
             g.addGraphListener(new JGraphTListener());
         }
 
-        for (Iterator<V> i = jGraphTGraph.vertexSet().iterator();
-            i.hasNext();) {
+        for (
+            Iterator<V> i = jGraphTGraph.vertexSet().iterator();
+            i.hasNext();)
+        {
             handleJGraphTAddedVertex(i.next());
         }
 
@@ -270,14 +269,14 @@ public class JGraphModelAdapter<V, E>
         this.addGraphModelListener(new JGraphListener());
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates and returns a map of attributes to be used as defaults for edge
      * attributes, depending on the specified graph.
      *
      * @param jGraphTGraph the graph for which default edge attributes to be
-     *                     created.
+     * created.
      *
      * @return a map of attributes to be used as default for edge attributes.
      */
@@ -370,7 +369,7 @@ public class JGraphModelAdapter<V, E>
      * vertices.
      *
      * @return the default vertex attributes used for creating new JGraph
-     *         vertices.
+     * vertices.
      */
     public AttributeMap getDefaultVertexAttributes()
     {
@@ -384,7 +383,7 @@ public class JGraphModelAdapter<V, E>
      * @param jGraphTEdge a JGraphT edge of the JGraphT graph.
      *
      * @return the JGraph edge cell that corresponds to the specified JGraphT
-     *         edge, or <code>null</code> if no corresponding cell found.
+     * edge, or <code>null</code> if no corresponding cell found.
      */
     public DefaultEdge getEdgeCell(E jGraphTEdge)
     {
@@ -398,7 +397,7 @@ public class JGraphModelAdapter<V, E>
      * @param jGraphTVertex a JGraphT vertex of the JGraphT graph.
      *
      * @return the JGraph vertex cell that corresponds to the specified JGraphT
-     *         vertex, or <code>null</code> if no corresponding cell found.
+     * vertex, or <code>null</code> if no corresponding cell found.
      */
     public DefaultGraphCell getVertexCell(Object jGraphTVertex)
     {
@@ -412,7 +411,7 @@ public class JGraphModelAdapter<V, E>
      * @param jGraphTVertex a JGraphT vertex of the JGraphT graph.
      *
      * @return the JGraph port cell that corresponds to the specified JGraphT
-     *         vertex, or <code>null</code> if no corresponding cell found.
+     * vertex, or <code>null</code> if no corresponding cell found.
      */
     public DefaultPort getVertexPort(Object jGraphTVertex)
     {
@@ -461,9 +460,9 @@ public class JGraphModelAdapter<V, E>
                 Object jtSource = cellToVertex.get(jSource);
                 Object jtTarget = cellToVertex.get(jTarget);
 
-                if (
-                    (jtGraph.getEdgeSource(jtEdge) == jtSource)
-                    && (jtGraph.getEdgeTarget(jtEdge) == jtTarget)) {
+                if ((jtGraph.getEdgeSource(jtEdge) == jtSource)
+                    && (jtGraph.getEdgeTarget(jtEdge) == jtTarget))
+                {
                     // no change in edge's endpoints -- nothing to do.
                 } else {
                     // edge's end-points have changed -- need to refresh the
@@ -494,8 +493,8 @@ public class JGraphModelAdapter<V, E>
     void handleJGraphInsertedEdge(org.jgraph.graph.Edge jEdge)
     {
         if (isDangling(jEdge)) {
-            // JGraphT forbid dangling edges so we cannot add the edge yet.
-            // If later the edge becomes connected, we will add it.
+            // JGraphT forbid dangling edges so we cannot add the edge yet. If
+            // later the edge becomes connected, we will add it.
         } else {
             // FIXME hb 28-nov-05: waiting for jgraph to go generic
             Object jSource = getSourceVertex(this, jEdge);
@@ -678,7 +677,7 @@ public class JGraphModelAdapter<V, E>
      * the JGraphT graph.
      *
      * @param jtVertex a JGraphT vertex to be removed from being reflected by
-     *                 this graph model.
+     * this graph model.
      */
     void handleJGraphTRemoveVertex(Object jtVertex)
     {
@@ -690,7 +689,7 @@ public class JGraphModelAdapter<V, E>
 
         // FIXME: Why remove childAt(0)? Explain if correct, otherwise fix.
         if (vertexCell.getChildCount() > 0) {
-            remove(new Object [] { vertexCell.getChildAt(0) });
+            remove(new Object[] { vertexCell.getChildAt(0) });
         }
     }
 
@@ -700,7 +699,7 @@ public class JGraphModelAdapter<V, E>
      * the JGraphT graph.
      *
      * @param jtEdge a JGraphT edge to be removed from being reflected by this
-     *               graph model.
+     * graph model.
      */
     void handleJGraphTRemovedEdge(E jtEdge)
     {
@@ -716,15 +715,14 @@ public class JGraphModelAdapter<V, E>
      * @param jEdge the JGraph edge to be tested for being dangling.
      *
      * @return <code>true</code> if the specified edge is dangling, otherwise
-     *         <code>false</code>.
+     * <code>false</code>.
      */
     private boolean isDangling(org.jgraph.graph.Edge jEdge)
     {
         Object jSource = getSourceVertex(this, jEdge);
         Object jTarget = getTargetVertex(this, jEdge);
 
-        return
-            !cellToVertex.containsKey(jSource)
+        return !cellToVertex.containsKey(jSource)
             || !cellToVertex.containsKey(jTarget);
     }
 
@@ -764,7 +762,7 @@ public class JGraphModelAdapter<V, E>
         ConnectionSet cs)
     {
         jCellsBeingAdded.add(cell);
-        insert(new Object [] { cell }, attrs, cs, null, null);
+        insert(new Object[] { cell }, attrs, cs, null, null);
         jCellsBeingAdded.remove(cell);
     }
 
@@ -776,11 +774,11 @@ public class JGraphModelAdapter<V, E>
     private void internalRemoveCell(GraphCell cell)
     {
         jCellsBeingRemoved.add(cell);
-        remove(new Object [] { cell });
+        remove(new Object[] { cell });
         jCellsBeingRemoved.remove(cell);
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
+    //~ Inner Interfaces -------------------------------------------------------
 
     /**
      * Creates the JGraph cells that reflect the respective JGraphT elements.
@@ -809,7 +807,7 @@ public class JGraphModelAdapter<V, E>
         public DefaultGraphCell createVertexCell(VV jGraphTVertex);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * A simple default cell factory.
@@ -818,7 +816,8 @@ public class JGraphModelAdapter<V, E>
      * @since Dec 12, 2003
      */
     public static class DefaultCellFactory<VV, EE>
-        implements CellFactory<VV, EE>, Serializable
+        implements CellFactory<VV, EE>,
+            Serializable
     {
         private static final long serialVersionUID = 3690194343461861173L;
 
@@ -849,7 +848,8 @@ public class JGraphModelAdapter<V, E>
      * the illegal parts of the change are undone.</p>
      */
     private class JGraphListener
-        implements GraphModelListener, Serializable
+        implements GraphModelListener,
+            Serializable
     {
         private static final long serialVersionUID = 3544673988098865209L;
 
@@ -937,9 +937,9 @@ public class JGraphModelAdapter<V, E>
                     // vertex.
                     // Note: do not change the order of following conditions;
                     // the code uses the short-circuit evaluation of ||.
-                    if (
-                        graphCell.isLeaf()
-                        || (graphCell.getFirstChild() instanceof Port)) {
+                    if (graphCell.isLeaf()
+                        || (graphCell.getFirstChild() instanceof Port))
+                    {
                         jVertices.add(cell);
                     }
                 } else if (cell instanceof GraphCell) {
@@ -1016,7 +1016,8 @@ public class JGraphModelAdapter<V, E>
      * @since Aug 2, 2003
      */
     private class JGraphTListener
-        implements GraphListener<V, E>, Serializable
+        implements GraphListener<V, E>,
+            Serializable
     {
         private static final long serialVersionUID = 3616724963609360440L;
 
@@ -1139,3 +1140,5 @@ public class JGraphModelAdapter<V, E>
         }
     }
 }
+
+// End $file.name$

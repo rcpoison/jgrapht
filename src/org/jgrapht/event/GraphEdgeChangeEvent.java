@@ -53,8 +53,7 @@ package org.jgrapht.event;
 public class GraphEdgeChangeEvent<V, E>
     extends GraphChangeEvent
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3618134563335844662L;
 
@@ -81,14 +80,14 @@ public class GraphEdgeChangeEvent<V, E>
      */
     public static final int EDGE_REMOVED = 24;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The edge that this event is related to.
      */
     protected E edge;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructor for GraphEdgeChangeEvent.
@@ -103,7 +102,7 @@ public class GraphEdgeChangeEvent<V, E>
         edge = e;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the edge that this event is related to.
@@ -115,3 +114,5 @@ public class GraphEdgeChangeEvent<V, E>
         return edge;
     }
 }
+
+// End GraphEdgeChangeEvent.java

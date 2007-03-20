@@ -32,7 +32,6 @@
  */
 package org.jgrapht.ext;
 
-
 /**
  * Generates edge names by invoking {@link #toString()} on them. This assumes
  * that the edge's {@link #toString()} method returns a unique String
@@ -43,14 +42,13 @@ package org.jgrapht.ext;
 public class StringEdgeNameProvider<E>
     implements EdgeNameProvider<E>
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public StringEdgeNameProvider()
     {
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the String representation an edge.
@@ -62,3 +60,5 @@ public class StringEdgeNameProvider<E>
         return edge.toString();
     }
 }
+
+// End StringEdgeNameProvider.java

@@ -43,7 +43,7 @@ package org.jgrapht.event;
 /**
  * An event which indicates that a graph vertex has changed, or is about to
  * change. The event can be used either as an indication <i>after</i> the vertex
- * has  been added or removed, or <i>before</i> it is added. The type of the
+ * has been added or removed, or <i>before</i> it is added. The type of the
  * event can be tested using the {@link
  * org.jgrapht.event.GraphChangeEvent#getType()} method.
  *
@@ -53,8 +53,7 @@ package org.jgrapht.event;
 public class GraphVertexChangeEvent<V>
     extends GraphChangeEvent
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3690189962679104053L;
 
@@ -82,14 +81,14 @@ public class GraphVertexChangeEvent<V>
      */
     public static final int VERTEX_REMOVED = 14;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The vertex that this event is related to.
      */
     protected V vertex;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new GraphVertexChangeEvent object.
@@ -104,7 +103,7 @@ public class GraphVertexChangeEvent<V>
         this.vertex = vertex;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the vertex that this event is related to.
@@ -116,3 +115,5 @@ public class GraphVertexChangeEvent<V>
         return vertex;
     }
 }
+
+// End GraphVertexChangeEvent.java

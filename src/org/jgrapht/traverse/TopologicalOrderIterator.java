@@ -72,19 +72,18 @@ import org.jgrapht.util.*;
 public class TopologicalOrderIterator<V, E>
     extends CrossComponentIterator<V, E, Object>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private Queue<V> queue;
     private Map<V, ModifiableInteger> inDegreeMap;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new topological order iterator over the directed graph
-     * specified, with arbitrary tie-breaking in case of partial
-     * order. Traversal will start at one of the graph's <i>sources</i>. See
-     * the definition of source at <a
+     * specified, with arbitrary tie-breaking in case of partial order.
+     * Traversal will start at one of the graph's <i>sources</i>. See the
+     * definition of source at <a
      * href="http://mathworld.wolfram.com/Source.html">
      * http://mathworld.wolfram.com/Source.html</a>.
      *
@@ -104,10 +103,8 @@ public class TopologicalOrderIterator<V, E>
      * http://mathworld.wolfram.com/Source.html</a>.
      *
      * @param dg the directed graph to be iterated.
-     *
-     * @param queue queue to use for tie-break in case of partial order
-     * (e.g. a PriorityQueue can be used to break ties according to
-     * vertex priority)
+     * @param queue queue to use for tie-break in case of partial order (e.g. a
+     * PriorityQueue can be used to break ties according to vertex priority)
      */
     public TopologicalOrderIterator(DirectedGraph<V, E> dg, Queue<V> queue)
     {
@@ -133,7 +130,7 @@ public class TopologicalOrderIterator<V, E>
         super(dg, start);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see CrossComponentIterator#isConnectedComponentExhausted()
@@ -224,15 +221,18 @@ public class TopologicalOrderIterator<V, E>
         }
     }
 
+    //~ Inner Classes ----------------------------------------------------------
+
     // NOTE jvs 22-Dec-2006:  For JDK1.4-compatibility, we can't assume
     // that LinkedList implements Queue, since that wasn't introduced
     // until JDK1.5, so use an adapter here.  Move this to
     // top-level in org.jgrapht.util if anyone else needs it.
     private static class LinkedListQueue<T>
-        extends LinkedList<T> implements Queue<T>
+        extends LinkedList<T>
+        implements Queue<T>
     {
         private static final long serialVersionUID = 4217659843476891334L;
-        
+
         public T element()
         {
             return getFirst();
@@ -265,3 +265,5 @@ public class TopologicalOrderIterator<V, E>
         }
     }
 }
+
+// End $file.name$

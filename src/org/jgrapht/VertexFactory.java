@@ -50,8 +50,7 @@ package org.jgrapht;
  */
 public interface VertexFactory<V>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a new vertex.
@@ -60,3 +59,5 @@ public interface VertexFactory<V>
      */
     public V createVertex();
 }
+
+// End VertexFactory.java

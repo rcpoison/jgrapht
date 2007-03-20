@@ -40,22 +40,25 @@
 package org.jgrapht.experimental;
 
 import java.io.*;
+
 import java.util.*;
 
 import org.jgrapht.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 
+
 /**
  * Generates a linear graph of any size. For a directed graph, the edges are
  * oriented from START_VERTEX to END_VERTEX.
- * 
+ *
  * @author John V. Sichi
  * @since Sep 16, 2003
  */
 public class GraphReader<V, E>
     implements GraphGenerator<V, E, V>
 {
+    //~ Instance fields --------------------------------------------------------
 
     // ~ Static fields/initializers --------------------------------------------
 
@@ -65,11 +68,13 @@ public class GraphReader<V, E>
 
     // ~ Constructors ----------------------------------------------------------
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * Construct a new LinearGraphGenerator.
-     * 
+     *
      * @param size number of vertices to be generated
-     * 
+     *
      * @throws IllegalArgumentException if the specified size is negative.
      */
     public GraphReader(String file)
@@ -77,6 +82,8 @@ public class GraphReader<V, E>
     {
         _in = new BufferedReader(new FileReader(file));
     }
+
+    //~ Methods ----------------------------------------------------------------
 
     // ~ Methods ---------------------------------------------------------------
 
@@ -95,7 +102,9 @@ public class GraphReader<V, E>
         try {
             if (_in.ready()) {
                 List<String> cols = split(_in.readLine());
-                while (cols.isEmpty() || cols.get(0).equals("c")
+                while (
+                    cols.isEmpty()
+                    || cols.get(0).equals("c")
                     || cols.get(0).startsWith("%"))
                 {
                     cols = split(_in.readLine());
@@ -125,8 +134,9 @@ public class GraphReader<V, E>
         Map<String, V> resultMap)
     {
         final int size = readNodeCount();
-        if (resultMap == null)
+        if (resultMap == null) {
             resultMap = new HashMap<String, V>();
+        }
 
         for (int i = 0; i < size; i++) {
             V newVertex = vertexFactory.createVertex();
@@ -144,6 +154,22 @@ public class GraphReader<V, E>
         }
     }
 
+    public static void main(String [] args)
+        throws Exception
+    {
+        GraphReader<Integer, DefaultEdge> reader =
+            new GraphReader<Integer, DefaultEdge>(
+                args[0]);
+        Graph<Integer, DefaultEdge> g =
+            new SimpleGraph<Integer, DefaultEdge>(
+                DefaultEdge.class);
+        VertexFactory<Integer> vf = new IntVertexFactory();
+        reader.generateGraph(g, vf, null);
+        System.out.println(g);
+    }
+
+    //~ Inner Classes ----------------------------------------------------------
+
     private static final class IntVertexFactory
         implements VertexFactory<Integer>
     {
@@ -153,18 +179,7 @@ public class GraphReader<V, E>
         {
             return last++;
         }
-
-    }
-
-    public static void main(String[] args)
-        throws Exception
-    {
-        GraphReader<Integer, DefaultEdge> reader = new GraphReader<Integer, DefaultEdge>(
-            args[0]);
-        Graph<Integer, DefaultEdge> g = new SimpleGraph<Integer, DefaultEdge>(
-            DefaultEdge.class);
-        VertexFactory<Integer> vf = new IntVertexFactory();
-        reader.generateGraph(g, vf, null);
-        System.out.println(g);
     }
 }
+
+// End $file.name$

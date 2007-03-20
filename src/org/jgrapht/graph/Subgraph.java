@@ -72,8 +72,7 @@ import org.jgrapht.util.*;
  * subgraph. Subgraph listeners are informed on such removal only if it results
  * in a cascaded removal from the subgraph. If the subgraph has been created as
  * an induced subgraph it also keeps track of edges being added to its vertices.
- * If  vertices are added to the base graph, the subgraph remains
- * unaffected.</p>
+ * If vertices are added to the base graph, the subgraph remains unaffected.</p>
  *
  * <p>If the base graph is <i>not</i> a ListenableGraph, then the subgraph
  * property cannot be guaranteed. If edges or vertices are removed from the base
@@ -110,8 +109,7 @@ public class Subgraph<V, E, G extends Graph<V, E>>
     extends AbstractGraph<V, E>
     implements Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3208313055169665387L;
     private static final String NO_SUCH_EDGE_IN_BASE =
@@ -119,7 +117,7 @@ public class Subgraph<V, E, G extends Graph<V, E>>
     private static final String NO_SUCH_VERTEX_IN_BASE =
         "no such vertex in base graph";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     //
     Set<E> edgeSet = new LinkedHashSet<E>(); // friendly to improve performance
@@ -133,17 +131,17 @@ public class Subgraph<V, E, G extends Graph<V, E>>
     private G base;
     private boolean isInduced = false;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new Subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
-     *                     null</code> then all vertices are included.
+     * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     *                   null</code> then all the edges whose vertices found in
-     *                   the graph are included.
+     * null</code> then all the edges whose vertices found in the graph are
+     * included.
      */
     public Subgraph(G base, Set<V> vertexSubset, Set<E> edgeSubset)
     {
@@ -172,14 +170,14 @@ public class Subgraph<V, E, G extends Graph<V, E>>
      *
      * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
-     *                     null</code> then all vertices are included.
+     * null</code> then all vertices are included.
      */
     public Subgraph(G base, Set<V> vertexSubset)
     {
         this(base, vertexSubset, null);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#getAllEdges(Object, Object)
@@ -289,7 +287,7 @@ public class Subgraph<V, E, G extends Graph<V, E>>
      * @param v the vertex to be added.
      *
      * @return <code>true</code> if the vertex was added, otherwise <code>
-     *         false</code>.
+     * false</code>.
      *
      * @throws NullPointerException
      * @throws IllegalArgumentException
@@ -483,7 +481,7 @@ public class Subgraph<V, E, G extends Graph<V, E>>
         ((WeightedGraph<V, E>) base).setEdgeWeight(e, weight);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * An internal listener on the base graph.
@@ -492,7 +490,8 @@ public class Subgraph<V, E, G extends Graph<V, E>>
      * @since Jul 20, 2003
      */
     private class BaseGraphListener
-        implements GraphListener<V, E>, Serializable
+        implements GraphListener<V, E>,
+            Serializable
     {
         private static final long serialVersionUID = 4343535244243546391L;
 
@@ -539,3 +538,5 @@ public class Subgraph<V, E, G extends Graph<V, E>>
         }
     }
 }
+
+// End Subgraph.java

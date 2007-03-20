@@ -54,8 +54,7 @@ import org.jgrapht.graph.*;
 public class DijkstraShortestPathTest
     extends ShortestPathTestCase
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -72,7 +71,8 @@ public class DijkstraShortestPathTest
                 V4,
                 Double.POSITIVE_INFINITY);
         assertEquals(
-            Arrays.asList(new DefaultEdge [] {
+            Arrays.asList(
+                new DefaultEdge[] {
                     e13,
                     e12,
                     e24
@@ -98,3 +98,5 @@ public class DijkstraShortestPathTest
         return DijkstraShortestPath.findPathBetween(g, src, dest);
     }
 }
+
+// End DijkstraShortestPathTest.java

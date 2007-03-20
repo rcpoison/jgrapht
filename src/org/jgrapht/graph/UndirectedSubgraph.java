@@ -54,22 +54,21 @@ public class UndirectedSubgraph<V, E>
     extends Subgraph<V, E, UndirectedGraph<V, E>>
     implements UndirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3256728359772631350L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new undirected subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
-     *                     null</code> then all vertices are included.
+     * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     *                   null</code> then all the edges whose vertices found in
-     *                   the graph are included.
+     * null</code> then all the edges whose vertices found in the graph are
+     * included.
      */
     public UndirectedSubgraph(
         UndirectedGraph<V, E> base,
@@ -78,7 +77,9 @@ public class UndirectedSubgraph<V, E>
     {
         super(base, vertexSubset, edgeSubset);
     }
-    
+
+    //~ Methods ----------------------------------------------------------------
+
     /**
      * @see UndirectedGraph#degreeOf(Object)
      */
@@ -103,3 +104,5 @@ public class UndirectedSubgraph<V, E>
         return degree;
     }
 }
+
+// End UndirectedSubgraph.java

@@ -57,8 +57,7 @@ import org.jgrapht.graph.*;
  */
 public abstract class Graphs
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a new edge and adds it to the specified graph similarly to the
@@ -70,7 +69,7 @@ public abstract class Graphs
      * @param weight weight of the edge.
      *
      * @return The newly created edge if added to the graph, otherwise <code>
-     *         null</code>.
+     * null</code>.
      *
      * @see Graph#addEdge(Object, Object)
      */
@@ -102,7 +101,7 @@ public abstract class Graphs
      * @param targetVertex target vertex of the edge.
      *
      * @return The newly created edge if added to the graph, otherwise <code>
-     *         null</code>.
+     * null</code>.
      */
     public static <V, E> E addEdgeWithVertices(
         Graph<V, E> g,
@@ -121,11 +120,11 @@ public abstract class Graphs
      *
      * @param targetGraph the graph for which the specified edge to be added.
      * @param sourceGraph the graph in which the specified edge is already
-     *                    present
+     * present
      * @param edge edge to add
      *
      * @return <tt>true</tt> if the target graph did not already contain the
-     *         specified edge.
+     * specified edge.
      */
     public static <V, E> boolean addEdgeWithVertices(
         Graph<V, E> targetGraph,
@@ -153,7 +152,7 @@ public abstract class Graphs
      * @param weight weight of the edge.
      *
      * @return The newly created edge if added to the graph, otherwise <code>
-     *         null</code>.
+     * null</code>.
      */
     public static <V, E> E addEdgeWithVertices(
         Graph<V, E> g,
@@ -182,7 +181,7 @@ public abstract class Graphs
      * @param source the graph used as source for vertices and edges to add.
      *
      * @return <code>true</code> if and only if the destination graph has been
-     *         changed as a result of this operation.
+     * changed as a result of this operation.
      */
     public static <V, E> boolean addGraph(
         Graph<V, E> destination,
@@ -196,8 +195,8 @@ public abstract class Graphs
 
     /**
      * Adds all the vertices and all the edges of the specified source digraph
-     * to the specified destination digraph, reversing all of the edges.  If
-     * you want to do this as a linked view of the source graph (rather than by
+     * to the specified destination digraph, reversing all of the edges. If you
+     * want to do this as a linked view of the source graph (rather than by
      * copying to a destination graph), use {@link EdgeReversedGraph} instead.
      *
      * <p>The behavior of this operation is undefined if any of the specified
@@ -264,8 +263,8 @@ public abstract class Graphs
      * @return <tt>true</tt> if graph changed as a result of the call
      *
      * @throws NullPointerException if the specified vertices contains one or
-     *                              more null vertices, or if the specified
-     *                              vertex collection is <tt>null</tt>.
+     * more null vertices, or if the specified vertex collection is <tt>
+     * null</tt>.
      *
      * @see Graph#addVertex(Object)
      */
@@ -291,7 +290,7 @@ public abstract class Graphs
      * @param vertex the vertex to get the neighbors of.
      *
      * @return a list of the vertices that are the neighbors of the specified
-     *         vertex.
+     * vertex.
      */
     public static <V, E> List<V> neighborListOf(Graph<V, E> g,
         V vertex)
@@ -314,7 +313,7 @@ public abstract class Graphs
      * @param vertex the vertex to get the predecessors of.
      *
      * @return a list of the vertices that are the predecessors of the specified
-     *         vertex.
+     * vertex.
      */
     public static <V, E> List<V> predecessorListOf(
         DirectedGraph<V, E> g,
@@ -339,7 +338,7 @@ public abstract class Graphs
      * @param vertex the vertex to get the successors of.
      *
      * @return a list of the vertices that are the successors of the specified
-     *         vertex.
+     * vertex.
      */
     public static <V, E> List<V> successorListOf(
         DirectedGraph<V, E> g,
@@ -363,10 +362,10 @@ public abstract class Graphs
      * @param g the graph for which an undirected view to be returned.
      *
      * @return an undirected view of the specified graph, if it is directed, or
-     *         or the specified graph itself if it is undirected.
+     * or the specified graph itself if it is undirected.
      *
      * @throws IllegalArgumentException if the graph is neither DirectedGraph
-     *                                  nor UndirectedGraph.
+     * nor UndirectedGraph.
      *
      * @see AsUndirectedGraph
      */
@@ -419,3 +418,5 @@ public abstract class Graphs
         }
     }
 }
+
+// End $file.name$

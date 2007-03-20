@@ -54,13 +54,16 @@ import org.jgrapht.*;
 public class DefaultEdge
     extends IntrusiveEdge
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3258408452177932855L;
+
+    //~ Methods ----------------------------------------------------------------
 
     public String toString()
     {
         return "(" + source + " : " + target + ")";
     }
 }
+
+// End DefaultEdge.java

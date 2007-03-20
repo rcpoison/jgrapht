@@ -52,12 +52,11 @@ import org.jgrapht.*;
 public class DefaultWeightedEdge
     extends DefaultEdge
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 229708706467350994L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
 }

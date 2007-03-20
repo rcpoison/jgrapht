@@ -61,10 +61,10 @@ import org.jgrapht.util.*;
  * @since Sep 2, 2003
  */
 public class ClosestFirstIterator<V, E>
-    extends CrossComponentIterator<V, E, FibonacciHeapNode<ClosestFirstIterator.QueueEntry<V, E>>>
+    extends CrossComponentIterator<V,
+        E, FibonacciHeapNode<ClosestFirstIterator.QueueEntry<V, E>>>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Priority queue of fringe vertices.
@@ -79,7 +79,7 @@ public class ClosestFirstIterator<V, E>
 
     private boolean initialized = false;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new closest-first iterator for the specified graph.
@@ -111,13 +111,13 @@ public class ClosestFirstIterator<V, E>
      * graph. Iteration will start at the specified start vertex and will be
      * limited to the subset of the connected component which includes that
      * vertex and is reachable via paths of length less than or equal to the
-     * specified radius.  The specified start vertex may not be <code>
+     * specified radius. The specified start vertex may not be <code>
      * null</code>.
      *
      * @param g the graph to be iterated.
      * @param startVertex the vertex iteration to be started.
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
-     *               unbounded search.
+     * unbounded search.
      */
     public ClosestFirstIterator(Graph<V, E> g, V startVertex, double radius)
     {
@@ -127,7 +127,7 @@ public class ClosestFirstIterator<V, E>
         initialized = true;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     // override AbstractGraphIterator
     public void setCrossComponentTraversal(boolean crossComponentTraversal)
@@ -139,14 +139,14 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * Get the length of the shortest path known to the given vertex.  If the
+     * Get the length of the shortest path known to the given vertex. If the
      * vertex has already been visited, then it is truly the shortest path
      * length; otherwise, it is the best known upper bound.
      *
      * @param vertex vertex being sought from start vertex
      *
      * @return length of shortest path known, or Double.POSITIVE_INFINITY if no
-     *         path found yet
+     * path found yet
      */
     public double getShortestPathLength(V vertex)
     {
@@ -161,15 +161,15 @@ public class ClosestFirstIterator<V, E>
 
     /**
      * Get the spanning tree edge reaching a vertex which has been seen already
-     * in this traversal.  This edge is the last link in the shortest known path
-     * between the start vertex and the requested vertex.  If the vertex has
+     * in this traversal. This edge is the last link in the shortest known path
+     * between the start vertex and the requested vertex. If the vertex has
      * already been visited, then it is truly the minimum spanning tree edge;
      * otherwise, it is the best candidate seen so far.
      *
      * @param vertex the spanned vertex.
      *
      * @return the spanning tree edge, or null if the vertex either has not been
-     *         seen yet or is the start vertex.
+     * seen yet or is the start vertex.
      */
     public E getSpanningTreeEdge(V vertex)
     {
@@ -211,7 +211,7 @@ public class ClosestFirstIterator<V, E>
     }
 
     /**
-     * Override superclass.  When we see a vertex again, we need to see if the
+     * Override superclass. When we see a vertex again, we need to see if the
      * new edge provides a shorter path than the old edge.
      *
      * @param vertex the vertex re-encountered
@@ -306,13 +306,12 @@ public class ClosestFirstIterator<V, E>
         entry.vertex = vertex;
         entry.spanningTreeEdge = edge;
 
-        return
-            new FibonacciHeapNode<QueueEntry<V, E>>(
-                entry,
-                shortestPathLength);
+        return new FibonacciHeapNode<QueueEntry<V, E>>(
+            entry,
+            shortestPathLength);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Private data to associate with each entry in the priority queue.
@@ -339,3 +338,5 @@ public class ClosestFirstIterator<V, E>
         }
     }
 }
+
+// End $file.name$

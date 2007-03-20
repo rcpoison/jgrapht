@@ -53,12 +53,11 @@ public class ListenableUndirectedGraph<V, E>
     extends DefaultListenableGraph<V, E>
     implements UndirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3256999969193145905L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new listenable undirected simple graph.
@@ -80,3 +79,5 @@ public class ListenableUndirectedGraph<V, E>
         super(base);
     }
 }
+
+// End ListenableUndirectedGraph.java

@@ -54,7 +54,7 @@ import org.jgrapht.traverse.*;
  * Allows obtaining various connectivity aspects of a graph. The <i>inspected
  * graph</i> is specified at construction time and cannot be modified.
  * Currently, the inspector supports connected components for an undirected
- * graph and weakly connected components for a directed graph.  To find strongly
+ * graph and weakly connected components for a directed graph. To find strongly
  * connected components, use {@link StrongConnectivityInspector} instead.
  *
  * <p>The inspector methods work in a lazy fashion: no computation is performed
@@ -76,14 +76,13 @@ import org.jgrapht.traverse.*;
 public class ConnectivityInspector<V, E>
     implements GraphListener<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     List<Set<V>> connectedSets;
     Map<V, Set<V>> vertexToConnectedSet;
     private Graph<V, E> graph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a connectivity inspector for the specified undirected graph.
@@ -107,7 +106,7 @@ public class ConnectivityInspector<V, E>
         this.graph = new AsUndirectedGraph<V, E>(g);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Test if the inspected graph is connected. An empty graph is <i>not</i>
@@ -130,7 +129,7 @@ public class ConnectivityInspector<V, E>
      * @param vertex the vertex for which the connected set to be returned.
      *
      * @return a set of all vertices that are in the maximally connected
-     *         component together with the specified vertex.
+     * component together with the specified vertex.
      */
     public Set<V> connectedSetOf(V vertex)
     {
@@ -155,13 +154,13 @@ public class ConnectivityInspector<V, E>
     /**
      * Returns a list of <code>Set</code> s, where each set contains all
      * vertices that are in the same maximally connected component. All graph
-     * vertices occur in exactly one set.  For more on maximally connected
+     * vertices occur in exactly one set. For more on maximally connected
      * component, see <a
      * href="http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html">
      * http://www.nist.gov/dads/HTML/maximallyConnectedComponent.html</a>.
      *
      * @return Returns a list of <code>Set</code> s, where each set contains all
-     *         vertices that are in the same maximally connected component.
+     * vertices that are in the same maximally connected component.
      */
     public List<Set<V>> connectedSets()
     {
@@ -198,7 +197,7 @@ public class ConnectivityInspector<V, E>
      * @param targetVertex another end of the path.
      *
      * @return <code>true</code> if and only if there is a path from the source
-     *         vertex to the target vertex.
+     * vertex to the target vertex.
      */
     public boolean pathExists(V sourceVertex, V targetVertex)
     {
@@ -256,7 +255,7 @@ public class ConnectivityInspector<V, E>
         return connectedSets;
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * A traversal listener that groups all vertices according to to their
@@ -299,3 +298,5 @@ public class ConnectivityInspector<V, E>
         }
     }
 }
+
+// End ConnectivityInspector.java

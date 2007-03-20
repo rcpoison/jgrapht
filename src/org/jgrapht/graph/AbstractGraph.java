@@ -60,8 +60,7 @@ import org.jgrapht.*;
 public abstract class AbstractGraph<V, E>
     implements Graph<V, E>
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new empty graph object.
@@ -70,7 +69,7 @@ public abstract class AbstractGraph<V, E>
     {
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#containsEdge(Object, Object)
@@ -128,11 +127,10 @@ public abstract class AbstractGraph<V, E>
      */
     public String toString()
     {
-        return
-            toStringFromSets(
-                vertexSet(),
-                edgeSet(),
-                (this instanceof DirectedGraph));
+        return toStringFromSets(
+            vertexSet(),
+            edgeSet(),
+            (this instanceof DirectedGraph));
     }
 
     /**
@@ -145,7 +143,7 @@ public abstract class AbstractGraph<V, E>
      *
      * @throws NullPointerException if specified vertex is <code>null</code>.
      * @throws IllegalArgumentException if specified vertex does not exist in
-     *                                  this graph.
+     * this graph.
      */
     protected boolean assertVertexExist(V v)
     {
@@ -160,8 +158,8 @@ public abstract class AbstractGraph<V, E>
 
     /**
      * Removes all the edges in this graph that are also contained in the
-     * specified edge array.  After this call returns, this graph will contain
-     * no edges in common with the specified edges. This method will invoke the
+     * specified edge array. After this call returns, this graph will contain no
+     * edges in common with the specified edges. This method will invoke the
      * {@link Graph#removeEdge(Object)} method.
      *
      * @param edges edges to be removed from this graph.
@@ -183,12 +181,12 @@ public abstract class AbstractGraph<V, E>
     }
 
     /**
-     * Helper for subclass implementations of toString(  ).
+     * Helper for subclass implementations of toString( ).
      *
      * @param vertexSet the vertex set V to be printed
      * @param edgeSet the edge set E to be printed
      * @param directed true to use parens for each edge (representing directed);
-     *                 false to use curly braces (representing undirected)
+     * false to use curly braces (representing undirected)
      *
      * @return a string representation of (V,E)
      */
@@ -201,9 +199,9 @@ public abstract class AbstractGraph<V, E>
 
         StringBuffer sb = new StringBuffer();
         for (E e : edgeSet) {
-            if (
-                (e.getClass() != DefaultEdge.class)
-                && (e.getClass() != DefaultWeightedEdge.class)) {
+            if ((e.getClass() != DefaultEdge.class)
+                && (e.getClass() != DefaultWeightedEdge.class))
+            {
                 sb.append(e.toString());
                 sb.append("=");
             }
@@ -229,3 +227,5 @@ public abstract class AbstractGraph<V, E>
         return "(" + vertexSet + ", " + renderedEdges + ")";
     }
 }
+
+// End AbstractGraph.java

@@ -45,7 +45,7 @@ import org.jgrapht.*;
 
 
 /**
- * Generates a linear graph of any size.  For a directed graph, the edges are
+ * Generates a linear graph of any size. For a directed graph, the edges are
  * oriented from START_VERTEX to END_VERTEX.
  *
  * @author John V. Sichi
@@ -54,8 +54,7 @@ import org.jgrapht.*;
 public class LinearGraphGenerator<V, E>
     implements GraphGenerator<V, E, V>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      * Role for the first vertex generated.
@@ -67,11 +66,11 @@ public class LinearGraphGenerator<V, E>
      */
     public static final String END_VERTEX = "End Vertex";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private int size;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new LinearGraphGenerator.
@@ -89,7 +88,7 @@ public class LinearGraphGenerator<V, E>
         this.size = size;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -121,3 +120,5 @@ public class LinearGraphGenerator<V, E>
         }
     }
 }
+
+// End LinearGraphGenerator.java

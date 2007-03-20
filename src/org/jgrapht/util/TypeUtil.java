@@ -46,16 +46,14 @@ package org.jgrapht.util;
  */
 public class TypeUtil<T>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Casts an object to a type.
      *
      * @param o object to be cast
      * @param typeDecl conveys the target type information; the actual value is
-     *                 unused and can be null since this is all just stupid
-     *                 compiler tricks
+     * unused and can be null since this is all just stupid compiler tricks
      *
      * @return the result of the cast
      */

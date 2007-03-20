@@ -57,12 +57,11 @@ import org.jgrapht.graph.*;
 public class GraphGeneratorTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final int SIZE = 10;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private VertexFactory<Object> vertexFactory =
         new VertexFactory<Object>() {
@@ -74,8 +73,7 @@ public class GraphGeneratorTest
             }
         };
 
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -170,3 +168,5 @@ public class GraphGeneratorTest
 
     // TODO:  testWheelGraphGenerator
 }
+
+// End $file.name$

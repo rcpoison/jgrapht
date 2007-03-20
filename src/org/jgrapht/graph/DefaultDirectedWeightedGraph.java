@@ -58,12 +58,11 @@ public class DefaultDirectedWeightedGraph<V, E>
     extends DefaultDirectedGraph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3761405317841171513L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new directed weighted graph.
@@ -85,3 +84,5 @@ public class DefaultDirectedWeightedGraph<V, E>
         super(ef);
     }
 }
+
+// End DefaultDirectedWeightedGraph.java

@@ -52,8 +52,7 @@ import org.jgrapht.*;
 class BellmanFordIterator<V, E>
     implements Iterator<List<V>>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      * Error message.
@@ -62,7 +61,7 @@ class BellmanFordIterator<V, E>
         "Negative"
         + "edge-weights are not allowed in an unidrected graph!";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Graph on which shortest paths are searched.
@@ -90,7 +89,7 @@ class BellmanFordIterator<V, E>
      */
     private Map<V, BellmanFordPathElement<V, E>> vertexData;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @param graph
@@ -104,7 +103,7 @@ class BellmanFordIterator<V, E>
         this.startVertex = startVertex;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the path element of the shortest path with less than <code>
@@ -121,7 +120,7 @@ class BellmanFordIterator<V, E>
 
     /**
      * @return <code>true</code> if at least one path has been improved during
-     *         the previous pass, <code>false</code> otherwise.
+     * the previous pass, <code>false</code> otherwise.
      */
     public boolean hasNext()
     {
@@ -150,7 +149,8 @@ class BellmanFordIterator<V, E>
                 V vertex = this.prevImprovedVertices.get(i);
                 for (
                     Iterator<? extends E> iter = edgesOfIterator(vertex);
-                    iter.hasNext();) {
+                    iter.hasNext();)
+                {
                     E edge = iter.next();
                     V oppositeVertex =
                         Graphs.getOppositeVertex(
@@ -192,7 +192,7 @@ class BellmanFordIterator<V, E>
      * @param edge
      *
      * @throws IllegalArgumentException if the graph is undirected and the
-     *         edge-weight is negative.
+     * edge-weight is negative.
      */
     protected void assertValidEdge(E edge)
     {
@@ -244,8 +244,7 @@ class BellmanFordIterator<V, E>
     protected Iterator<E> edgesOfIterator(V vertex)
     {
         if (this.graph instanceof DirectedGraph) {
-            return
-                ((DirectedGraph<V, E>) this.graph).outgoingEdgesOf(vertex)
+            return ((DirectedGraph<V, E>) this.graph).outgoingEdgesOf(vertex)
                 .iterator();
         } else {
             return this.graph.edgesOf(vertex).iterator();
@@ -258,7 +257,7 @@ class BellmanFordIterator<V, E>
      * @param vertex a vertex which has already been seen.
      *
      * @return data associated with the seen vertex or <code>null</code> if no
-     *         data was associated with the vertex.
+     * data was associated with the vertex.
      */
     protected BellmanFordPathElement<V, E> getPrevSeenData(V vertex)
     {
@@ -271,7 +270,7 @@ class BellmanFordIterator<V, E>
      * @param vertex a vertex which has already been seen.
      *
      * @return data associated with the seen vertex or <code>null</code> if no
-     *         data was associated with the vertex.
+     * data was associated with the vertex.
      */
     protected BellmanFordPathElement<V, E> getSeenData(V vertex)
     {
@@ -316,7 +315,7 @@ class BellmanFordIterator<V, E>
      * @param data data to be associated with the seen vertex.
      *
      * @return previous value associated with specified vertex or <code>
-     *         null</code> if no data was associated with the vertex.
+     * null</code> if no data was associated with the vertex.
      */
     protected BellmanFordPathElement<V, E> putSeenData(
         V vertex,
@@ -407,7 +406,7 @@ class BellmanFordIterator<V, E>
      * @param edge the edge via which the vertex was encountered.
      *
      * @return <code>true</code> if the cost has been improved, <code>
-     *         false</code> otherwise.
+     * false</code> otherwise.
      */
     private boolean relaxVertexAgain(V vertex, E edge)
     {
@@ -436,3 +435,5 @@ class BellmanFordIterator<V, E>
         this.prevImprovedVertices = improvedVertices;
     }
 }
+
+// End $file.name$

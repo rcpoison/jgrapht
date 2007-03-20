@@ -58,26 +58,23 @@ import org.jgrapht.experimental.permutation.*;
 class PermutationIsomorphismInspector<V, E>
     extends AbstractExhaustiveIsomorphismInspector<V, E>
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @param graph1
      * @param graph2
      * @param vertexChecker eq. group checker for vertexes. If null,
-     *                      UniformEquivalenceComparator will be used as default
-     *                      (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      * @param edgeChecker eq. group checker for edges. If null,
-     *                    UniformEquivalenceComparator will be used as default
-     *                    (always return true)
+     * UniformEquivalenceComparator will be used as default (always return true)
      */
     public PermutationIsomorphismInspector(
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        
+
         // XXX hb 060128: FOllowing parameter may need Graph<? super V,? super
-    // E>
-    EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
+        // E>
+        EquivalenceComparator<? super V, ? super Graph<? super V, ? super E>> vertexChecker,
         EquivalenceComparator<? super E, ? super Graph<? super V, ? super E>> edgeChecker)
     {
         super(graph1, graph2, vertexChecker, edgeChecker);
@@ -87,7 +84,7 @@ class PermutationIsomorphismInspector<V, E>
      * Constructor which uses the default comparators.
      *
      * @see AbstractExhaustiveIsomorphismInspector#AbstractExhaustiveIsomorphismInspector(Graph,
-     *      Graph)
+     * Graph)
      */
     public PermutationIsomorphismInspector(
         Graph<V, E> graph1,
@@ -96,7 +93,7 @@ class PermutationIsomorphismInspector<V, E>
         super(graph1, graph2);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates the permutation iterator, not dependant on equality group, or the
@@ -135,15 +132,17 @@ class PermutationIsomorphismInspector<V, E>
         for (Iterator<V> iter1 = vertexSet1.iterator(); iter1.hasNext();) {
             V vertex1 = iter1.next();
             V vertex2 = iter2.next();
-            if (
-                !this.vertexComparator.equivalenceCompare(
+            if (!this.vertexComparator.equivalenceCompare(
                     vertex1,
                     vertex2,
                     this.graph1,
-                    this.graph2)) {
+                    this.graph2))
+            {
                 return false;
             }
         }
         return true;
     }
 }
+
+// End PermutationIsomorphismInspector.java

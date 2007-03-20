@@ -51,8 +51,7 @@ import org.jgrapht.*;
 public class CloneTest
     extends EnhancedTestCase
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -62,7 +61,7 @@ public class CloneTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Test graph cloning.
@@ -92,3 +91,5 @@ public class CloneTest
         assertTrue(g2.edgeSet().isEmpty());
     }
 }
+
+// End $file.name$

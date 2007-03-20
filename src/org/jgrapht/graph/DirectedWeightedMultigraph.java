@@ -53,12 +53,11 @@ public class DirectedWeightedMultigraph<V, E>
     extends DirectedMultigraph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 4049071636005206066L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new directed weighted multigraph.
@@ -81,3 +80,5 @@ public class DirectedWeightedMultigraph<V, E>
         super(ef);
     }
 }
+
+// End DirectedWeightedMultigraph.java

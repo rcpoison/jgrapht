@@ -52,8 +52,7 @@ import org.jgrapht.*;
  */
 public class BellmanFordShortestPath<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Graph on which shortest paths are searched.
@@ -74,7 +73,7 @@ public class BellmanFordShortestPath<V, E>
 
     private int passNumber;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates an object to calculate shortest paths between the start vertex
@@ -108,13 +107,13 @@ public class BellmanFordShortestPath<V, E>
         this.passNumber = 1;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @param endVertex end vertex.
      *
      * @return the cost of the shortest path between the start vertex and the
-     *         end vertex.
+     * end vertex.
      */
     public double getCost(V endVertex)
     {
@@ -129,7 +128,7 @@ public class BellmanFordShortestPath<V, E>
      * @param endVertex end vertex.
      *
      * @return list of <code>Edge</code>, or null if no path exists between the
-     *         start vertex and the end vertex.
+     * start vertex and the end vertex.
      */
     public List<E> getPathEdgeList(V endVertex)
     {
@@ -184,14 +183,15 @@ public class BellmanFordShortestPath<V, E>
         for (
             ;
             (this.passNumber <= this.nMaxHops) && this.iter.hasNext();
-            this.passNumber++) {
+            this.passNumber++)
+        {
             this.iter.next();
         }
     }
 
     /**
      * Convenience method to find the shortest path via a single static method
-     * call.  If you need a more advanced search (e.g. limited by hops, or
+     * call. If you need a more advanced search (e.g. limited by hops, or
      * computation of the path length), use the constructor instead.
      *
      * @param graph the graph to be searched
@@ -213,3 +213,5 @@ public class BellmanFordShortestPath<V, E>
         return alg.getPathEdgeList(endVertex);
     }
 }
+
+// End $file.name$

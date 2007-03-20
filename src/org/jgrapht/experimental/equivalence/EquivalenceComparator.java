@@ -72,15 +72,14 @@ package org.jgrapht.experimental.equivalence;
  *
  * @param <E> the type of the elements in the set
  * @param <C> the type of the context the element is compared against, e.g. a
- *        Graph
+ * Graph
  *
  * @author Assaf
  * @since Jul 15, 2005
  */
 public interface EquivalenceComparator<E, C>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public boolean equivalenceCompare(
         E arg1,
@@ -90,3 +89,5 @@ public interface EquivalenceComparator<E, C>
 
     public int equivalenceHashcode(E arg1, C context);
 }
+
+// End EquivalenceComparator.java

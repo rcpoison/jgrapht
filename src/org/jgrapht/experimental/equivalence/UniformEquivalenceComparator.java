@@ -39,9 +39,9 @@ package org.jgrapht.experimental.equivalence;
 
 /**
  * This Equivalence comparator acts as if all elements are in one big global
- * equivalence class.  Useful when a comparator is needed, but there is no
- * important difference between the elements.  equivalenceCompare() always
- * return true; equivalenceHashcode() always returns 0.
+ * equivalence class. Useful when a comparator is needed, but there is no
+ * important difference between the elements. equivalenceCompare() always return
+ * true; equivalenceHashcode() always returns 0.
  *
  * @author Assaf
  * @since Jul 21, 2005
@@ -49,14 +49,13 @@ package org.jgrapht.experimental.equivalence;
 public class UniformEquivalenceComparator<E, C>
     implements EquivalenceComparator<E, C>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Always returns true.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     *      Object)
+     * Object)
      */
     public boolean equivalenceCompare(
         E arg1,
@@ -77,3 +76,5 @@ public class UniformEquivalenceComparator<E, C>
         return 0;
     }
 }
+
+// End UniformEquivalenceComparator.java

@@ -46,8 +46,8 @@ import org.jgrapht.*;
 
 /**
  * A simple graph. A simple graph is an undirected graph for which at most one
- * edge connects any two vertices, and loops are not permitted.  If you're
- * unsure about simple graphs, see: <a
+ * edge connects any two vertices, and loops are not permitted. If you're unsure
+ * about simple graphs, see: <a
  * href="http://mathworld.wolfram.com/SimpleGraph.html">
  * http://mathworld.wolfram.com/SimpleGraph.html</a>.
  */
@@ -55,12 +55,11 @@ public class SimpleGraph<V, E>
     extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3545796589454112304L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new simple graph with the specified edge factory.
@@ -82,3 +81,5 @@ public class SimpleGraph<V, E>
         this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }
+
+// End SimpleGraph.java

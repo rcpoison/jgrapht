@@ -57,8 +57,7 @@ import org.jgrapht.util.*;
  */
 public class GraphOrdering<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Holds a mapping between key=V(vertex) and value=Integer(vertex order). It
@@ -71,7 +70,7 @@ public class GraphOrdering<V, E>
      */
     private Set<LabelsEdge> labelsEdgesSet;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new labels graph according to the regular graph. After its
@@ -102,7 +101,7 @@ public class GraphOrdering<V, E>
         init(regularGraph, vertexSet, edgeSet);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     private void init(Graph<V, E> g, Set<V> vertexSet, Set<E> edgeSet)
     {
@@ -161,7 +160,7 @@ public class GraphOrdering<V, E>
     /**
      * This is the format example:
      *
-     * <pre> 
+     * <pre>
        mapVertexToOrder=        labelsOrder=
      * </pre>
      */
@@ -171,7 +170,7 @@ public class GraphOrdering<V, E>
         sb.append("mapVertexToOrder=");
 
         // vertex will be printed in their order
-        Object [] vertexArray = new Object [this.mapVertexToOrder.size()];
+        Object [] vertexArray = new Object[this.mapVertexToOrder.size()];
         Set<V> keySet = this.mapVertexToOrder.keySet();
         for (V currVertex : keySet) {
             Integer index = this.mapVertexToOrder.get(currVertex);
@@ -182,7 +181,7 @@ public class GraphOrdering<V, E>
         return sb.toString();
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     private class LabelsEdge
     {
@@ -199,7 +198,7 @@ public class GraphOrdering<V, E>
         }
 
         /**
-         * Checks both source and target.  Does not check class type to be fast,
+         * Checks both source and target. Does not check class type to be fast,
          * so it may throw ClassCastException. Careful!
          *
          * @see java.lang.Object#equals(java.lang.Object)
@@ -207,9 +206,9 @@ public class GraphOrdering<V, E>
         public boolean equals(Object obj)
         {
             LabelsEdge otherEdge = (LabelsEdge) obj;
-            if (
-                (this.source == otherEdge.source)
-                && (this.target == otherEdge.target)) {
+            if ((this.source == otherEdge.source)
+                && (this.target == otherEdge.target))
+            {
                 return true;
             } else {
                 return false;
@@ -230,3 +229,5 @@ public class GraphOrdering<V, E>
         }
     }
 }
+
+// End GraphOrdering.java

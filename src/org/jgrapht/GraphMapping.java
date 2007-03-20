@@ -47,15 +47,14 @@ package org.jgrapht;
  */
 public interface GraphMapping<V, E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Gets the mapped value where the key is <code>vertex</code>
      *
      * @param vertex vertex in one of the graphs
      * @param forward if true, uses mapping from graph1 to graph2; if false, use
-     *                mapping from graph2 to graph1
+     * mapping from graph2 to graph1
      *
      * @return corresponding vertex in other graph, or null if none
      */
@@ -66,9 +65,11 @@ public interface GraphMapping<V, E>
      *
      * @param edge edge in one of the graphs
      * @param forward if true, uses mapping from graph1 to graph2; if false, use
-     *                mapping from graph2 to graph1
+     * mapping from graph2 to graph1
      *
      * @return corresponding edge in other graph, or null if none
      */
     public E getEdgeCorrespondence(E edge, boolean forward);
 }
+
+// End GraphMapping.java

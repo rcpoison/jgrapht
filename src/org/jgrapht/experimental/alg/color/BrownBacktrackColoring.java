@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package org.jgrapht.experimental.alg.color;
 
@@ -8,55 +8,70 @@ import java.util.*;
 import org.jgrapht.*;
 import org.jgrapht.experimental.alg.*;
 
+
 /**
  * @author micha
- *
  */
-public class BrownBacktrackColoring<V,E> extends IntArrayGraphAlgorithm<V, E>
+public class BrownBacktrackColoring<V, E>
+    extends IntArrayGraphAlgorithm<V, E>
     implements ExactAlgorithm<Integer, V>
 {
-    private int[] _color;
-    private int[] _colorCount;
-    private BitSet[] _allowedColors;
+    //~ Instance fields --------------------------------------------------------
+
+    private int [] _color;
+    private int [] _colorCount;
+    private BitSet [] _allowedColors;
     private int _chi;
+
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @param g
      */
-    public BrownBacktrackColoring(final Graph<V,E> g)
+    public BrownBacktrackColoring(final Graph<V, E> g)
     {
         super(g);
     }
-    
-    void recursiveColor(int pos) {
-        _colorCount[pos] = _colorCount[pos-1];
-        _allowedColors[pos].set(0, _colorCount[pos]+1);
+
+    //~ Methods ----------------------------------------------------------------
+
+    void recursiveColor(int pos)
+    {
+        _colorCount[pos] = _colorCount[pos - 1];
+        _allowedColors[pos].set(0, _colorCount[pos] + 1);
         for (int i = 0; i < _neighbors[pos].length; i++) {
             final int nb = _neighbors[pos][i];
-            if (_color[nb] > 0) _allowedColors[pos].clear(_color[nb]);
+            if (_color[nb] > 0) {
+                _allowedColors[pos].clear(_color[nb]);
+            }
         }
-        for (int i = 1; i <= _colorCount[pos] && _colorCount[pos] < _chi; i++) {
+        for (
+            int i = 1;
+            (i <= _colorCount[pos])
+            && (_colorCount[pos] < _chi);
+            i++)
+        {
             if (_allowedColors[pos].get(i)) {
                 _color[pos] = i;
-                if (pos < _neighbors.length - 1) {
-                    recursiveColor(pos+1);
+                if (pos < (_neighbors.length - 1)) {
+                    recursiveColor(pos + 1);
                 } else {
                     _chi = _colorCount[pos];
                 }
             }
         }
-        if (_colorCount[pos]+1 < _chi) {
+        if ((_colorCount[pos] + 1) < _chi) {
             _colorCount[pos]++;
             _color[pos] = _colorCount[pos];
-            if (pos < _neighbors.length - 1) {
-                recursiveColor(pos+1);
+            if (pos < (_neighbors.length - 1)) {
+                recursiveColor(pos + 1);
             } else {
                 _chi = _colorCount[pos];
             }
         }
         _color[pos] = 0;
     }
-    
+
     /* (non-Javadoc)
      * @see org.jgrapht.experimental.alg.ExactAlgorithm#getResult()
      */
@@ -77,5 +92,6 @@ public class BrownBacktrackColoring<V,E> extends IntArrayGraphAlgorithm<V, E>
         }
         return _chi;
     }
-
 }
+
+// End BrownBacktrackColoring.java

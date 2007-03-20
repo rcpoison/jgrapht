@@ -52,8 +52,7 @@ import org.jgrapht.experimental.equivalence.*;
 public class Mod3GroupComparator
     implements EquivalenceComparator<Integer, Object>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public boolean equivalenceCompare(
         Integer arg1,
@@ -83,3 +82,5 @@ public class Mod3GroupComparator
         return int1 % 3;
     }
 }
+
+// End Mod3GroupComparator.java

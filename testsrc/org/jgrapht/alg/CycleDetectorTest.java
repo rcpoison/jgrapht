@@ -55,8 +55,7 @@ import org.jgrapht.graph.*;
 public class CycleDetectorTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
@@ -66,7 +65,7 @@ public class CycleDetectorTest
     private static final String V6 = "v6";
     private static final String V7 = "v7";
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -128,7 +127,7 @@ public class CycleDetectorTest
         DirectedGraph<String, DefaultEdge> g =
             new DefaultDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
-        
+
         // build the graph:  vertex order is chosen specifically
         // to exercise old bug-cases in CycleDetector
         g.addVertex(V2);
@@ -149,7 +148,7 @@ public class CycleDetectorTest
 
         runTest(g, cyclicSet, acyclicSet);
     }
-    
+
     /**
      * .
      */
@@ -195,3 +194,5 @@ public class CycleDetectorTest
         }
     }
 }
+
+// End CycleDetectorTest.java

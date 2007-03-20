@@ -56,12 +56,11 @@ import org.jgrapht.*;
 public class RingGraphGenerator<V, E>
     implements GraphGenerator<V, E, V>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private int size;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new RingGraphGenerator.
@@ -79,7 +78,7 @@ public class RingGraphGenerator<V, E>
         this.size = size;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -103,3 +102,5 @@ public class RingGraphGenerator<V, E>
         target.addEdge(endVertex, startVertex);
     }
 }
+
+// End RingGraphGenerator.java

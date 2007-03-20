@@ -51,13 +51,12 @@ import org.jgrapht.experimental.isomorphism.comparators.*;
 public class EquivalenceGroupCreatorTest
     extends TestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     // create the groups array as 0 to X (it)
     final int INTEGER_ARRAY_SIZE = 25;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /*
      * @see TestCase#setUp()
@@ -96,8 +95,8 @@ public class EquivalenceGroupCreatorTest
     /**
      * Using a chain of evenOdd(mod2) and mod3 comparator , should yield the 6
      * groups , which are infact mod6 , examples:
-     * <li>mod2 = 0 , mod3 = 0  --> mod6=0 , like : 6 , 12
-     * <li>mod2 = 1 , mod3 = 0  --> mod6=1 , like : 7 , 13
+     * <li>mod2 = 0 , mod3 = 0 --> mod6=0 , like : 6 , 12
+     * <li>mod2 = 1 , mod3 = 0 --> mod6=1 , like : 7 , 13
      * <li>
      */
     public void testComparatorChain()
@@ -167,3 +166,5 @@ public class EquivalenceGroupCreatorTest
         // }
     }
 }
+
+// End EquivalenceGroupCreatorTest.java

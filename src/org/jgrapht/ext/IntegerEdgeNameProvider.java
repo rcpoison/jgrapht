@@ -46,13 +46,12 @@ import java.util.*;
 public class IntegerEdgeNameProvider<E>
     implements EdgeNameProvider<E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private int nextID = 1;
     private final Map<E, Integer> idMap = new HashMap<E, Integer>();
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Clears all cached identifiers, and resets the unique identifier counter.
@@ -67,7 +66,6 @@ public class IntegerEdgeNameProvider<E>
      * Returns the String representation of an edge.
      *
      * @param edge the edge to be named
-     *
      */
     public String getEdgeName(E edge)
     {
@@ -80,3 +78,5 @@ public class IntegerEdgeNameProvider<E>
         return id.toString();
     }
 }
+
+// End IntegerEdgeNameProvider.java

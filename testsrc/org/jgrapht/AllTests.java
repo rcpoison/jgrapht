@@ -57,14 +57,13 @@ import org.jgrapht.util.*;
  */
 public final class AllTests
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private AllTests()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a test suite that includes all JGraphT tests.
@@ -85,7 +84,7 @@ public final class AllTests
         return suite;
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     private static class ExpandableTestSuite
         extends TestSuite
@@ -120,3 +119,5 @@ public final class AllTests
         }
     }
 }
+
+// End AllTests.java

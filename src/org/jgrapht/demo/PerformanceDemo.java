@@ -66,8 +66,7 @@ import org.jgrapht.traverse.*;
  */
 public final class PerformanceDemo
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * The starting point for the demo.
@@ -113,7 +112,8 @@ public final class PerformanceDemo
 
         for (
             Iterator i = new BreadthFirstIterator<Object, DefaultEdge>(g);
-            i.hasNext();) {
+            i.hasNext();)
+        {
             i.next();
         }
 
@@ -123,7 +123,8 @@ public final class PerformanceDemo
 
         for (
             Iterator i = new DepthFirstIterator<Object, DefaultEdge>(g);
-            i.hasNext();) {
+            i.hasNext();)
+        {
             i.next();
         }
 
@@ -159,3 +160,5 @@ public final class PerformanceDemo
         return rt.totalMemory() - rt.freeMemory();
     }
 }
+
+// End PerformanceDemo.java

@@ -57,13 +57,12 @@ import org.jgrapht.traverse.*;
  */
 public final class DijkstraShortestPath<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private List<E> edgeList;
     private double pathLength;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates and executes a new DijkstraShortestPath algorithm instance. An
@@ -90,7 +89,7 @@ public final class DijkstraShortestPath<V, E>
      * @param startVertex the vertex at which the path should start
      * @param endVertex the vertex at which the path should end
      * @param radius limit on path length, or Double.POSITIVE_INFINITY for
-     *               unbounded search
+     * unbounded search
      */
     public DijkstraShortestPath(
         Graph<V, E> graph,
@@ -102,7 +101,7 @@ public final class DijkstraShortestPath<V, E>
             throw new IllegalArgumentException(
                 "graph must contain the end vertex");
         }
-        
+
         ClosestFirstIterator<V, E> iter =
             new ClosestFirstIterator<V, E>(graph, startVertex, radius);
 
@@ -121,7 +120,7 @@ public final class DijkstraShortestPath<V, E>
         pathLength = Double.POSITIVE_INFINITY;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Return the edges making up the path found.
@@ -145,7 +144,7 @@ public final class DijkstraShortestPath<V, E>
 
     /**
      * Convenience method to find the shortest path via a single static method
-     * call.  If you need a more advanced search (e.g. limited by radius, or
+     * call. If you need a more advanced search (e.g. limited by radius, or
      * computation of the path length), use the constructor instead.
      *
      * @param graph the graph to be searched
@@ -189,3 +188,5 @@ public final class DijkstraShortestPath<V, E>
         Collections.reverse(edgeList);
     }
 }
+
+// End DijkstraShortestPath.java

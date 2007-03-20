@@ -58,7 +58,7 @@ import org.jgrapht.*;
  *
  * <p>This graph does <i>not</i> pass the hashCode and equals operations through
  * to the backing graph, but relies on <tt>Object</tt>'s <tt>equals</tt> and
- * <tt>hashCode</tt> methods.  This graph will be serializable if the backing
+ * <tt>hashCode</tt> methods. This graph will be serializable if the backing
  * graph is serializable.</p>
  *
  * @author Barak Naveh
@@ -68,26 +68,25 @@ public class UnmodifiableGraph<V, E>
     extends GraphDelegator<V, E>
     implements Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3544957670722713913L;
     private static final String UNMODIFIABLE = "this graph is unmodifiable";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new unmodifiable graph based on the specified backing graph.
      *
      * @param g the backing graph on which an unmodifiable graph is to be
-     *          created.
+     * created.
      */
     public UnmodifiableGraph(Graph<V, E> g)
     {
         super(g);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#addEdge(Object, Object)
@@ -161,3 +160,5 @@ public class UnmodifiableGraph<V, E>
         throw new UnsupportedOperationException(UNMODIFIABLE);
     }
 }
+
+// End UnmodifiableGraph.java

@@ -71,15 +71,14 @@ import java.util.*;
  * set.</p>
  *
  * <p>This class was originally developed by Nathan Fiedler for the GraphMaker
- * project.  It was imported to JGraphT with permission, courtesy of Nathan
+ * project. It was imported to JGraphT with permission, courtesy of Nathan
  * Fiedler.</p>
  *
  * @author Nathan Fiedler
  */
 public class FibonacciHeap<T>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Points to the minimum node in the heap.
@@ -91,7 +90,7 @@ public class FibonacciHeap<T>
      */
     private int nNodes;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructs a FibonacciHeap object that contains no elements.
@@ -100,7 +99,7 @@ public class FibonacciHeap<T>
     {
     } // FibonacciHeap
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Tests if the Fibonacci heap is empty or not. Returns true if the heap is
@@ -138,7 +137,7 @@ public class FibonacciHeap<T>
      * @param k new key value for node x
      *
      * @exception IllegalArgumentException Thrown if k is larger than x.key
-     *                                     value.
+     * value.
      */
     public void decreaseKey(FibonacciHeapNode<T> x, double k)
     {

@@ -46,6 +46,7 @@ import java.util.*;
 import org.jgrapht.*;
 import org.jgrapht.util.*;
 
+
 /**
  * A directed graph that is a subgraph on other graph.
  *
@@ -55,22 +56,21 @@ public class DirectedSubgraph<V, E>
     extends Subgraph<V, E, DirectedGraph<V, E>>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3616445700507054133L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new directed subgraph.
      *
      * @param base the base (backing) graph on which the subgraph will be based.
      * @param vertexSubset vertices to include in the subgraph. If <code>
-     *                     null</code> then all vertices are included.
+     * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     *                   null</code> then all the edges whose vertices found in
-     *                   the graph are included.
+     * null</code> then all the edges whose vertices found in the graph are
+     * included.
      */
     public DirectedSubgraph(
         DirectedGraph<V, E> base,
@@ -79,7 +79,9 @@ public class DirectedSubgraph<V, E>
     {
         super(base, vertexSubset, edgeSubset);
     }
-    
+
+    //~ Methods ----------------------------------------------------------------
+
     /**
      * @see DirectedGraph#inDegreeOf(Object)
      */
@@ -106,7 +108,8 @@ public class DirectedSubgraph<V, E>
         assertVertexExist(vertex);
 
         Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<E> baseEdges = ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex);
+        Set<E> baseEdges =
+            ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex);
 
         for (E e : baseEdges) {
             if (containsEdge(e)) {
@@ -155,3 +158,5 @@ public class DirectedSubgraph<V, E>
         return edges;
     }
 }
+
+// End DirectedSubgraph.java

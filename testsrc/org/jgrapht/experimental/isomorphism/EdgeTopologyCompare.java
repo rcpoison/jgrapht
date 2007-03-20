@@ -46,8 +46,7 @@ import org.jgrapht.*;
  */
 public class EdgeTopologyCompare
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Compare topology of the two graphs. It does not compare the contents of
@@ -67,3 +66,5 @@ public class EdgeTopologyCompare
         return result;
     }
 }
+
+// End EdgeTopologyCompare.java

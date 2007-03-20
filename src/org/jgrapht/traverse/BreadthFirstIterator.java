@@ -59,8 +59,7 @@ import org.jgrapht.*;
 public class BreadthFirstIterator<V, E>
     extends CrossComponentIterator<V, E, Object>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * <b>Note to users:</b> this queue implementation is a bit lame in terms of
@@ -69,7 +68,7 @@ public class BreadthFirstIterator<V, E>
      */
     private LinkedList<V> queue = new LinkedList<V>();
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new breadth-first iterator for the specified graph.
@@ -96,7 +95,7 @@ public class BreadthFirstIterator<V, E>
         super(g, startVertex);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see CrossComponentIterator#isConnectedComponentExhausted()
@@ -130,3 +129,5 @@ public class BreadthFirstIterator<V, E>
         return queue.removeFirst();
     }
 }
+
+// End BreadthFirstIterator.java

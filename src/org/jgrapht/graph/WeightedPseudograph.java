@@ -55,12 +55,11 @@ public class WeightedPseudograph<V, E>
     extends Pseudograph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3257290244524356152L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new weighted pseudograph with the specified edge factory.
@@ -82,3 +81,5 @@ public class WeightedPseudograph<V, E>
         this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }
+
+// End WeightedPseudograph.java

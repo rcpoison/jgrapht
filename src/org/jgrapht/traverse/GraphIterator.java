@@ -55,15 +55,14 @@ import org.jgrapht.event.*;
 public interface GraphIterator<V, E>
     extends Iterator<V>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Test whether this iterator is set to traverse the grpah across connected
      * components.
      *
      * @return <code>true</code> if traverses across connected components,
-     *         otherwise <code>false</code>.
+     * otherwise <code>false</code>.
      */
     public boolean isCrossComponentTraversal();
 
@@ -75,7 +74,7 @@ public interface GraphIterator<V, E>
      * especially in multithreaded environment.
      *
      * @param reuseEvents whether to reuse previously fired event objects
-     *                    instead of creating a new event object for each event.
+     * instead of creating a new event object for each event.
      */
     public void setReuseEvents(boolean reuseEvents);
 
@@ -111,3 +110,5 @@ public interface GraphIterator<V, E>
      */
     public void removeTraversalListener(TraversalListener<V, E> l);
 }
+
+// End GraphIterator.java

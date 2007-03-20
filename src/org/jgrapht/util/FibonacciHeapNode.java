@@ -60,8 +60,7 @@ package org.jgrapht.util;
  */
 public class FibonacciHeapNode<T>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * Node data.
@@ -104,11 +103,11 @@ public class FibonacciHeapNode<T>
      */
     int degree;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
-     * Default constructor.  Initializes the right and left pointers, making
-     * this a circular doubly-linked list.
+     * Default constructor. Initializes the right and left pointers, making this
+     * a circular doubly-linked list.
      *
      * @param data data for this node
      * @param key initial key for node
@@ -121,7 +120,7 @@ public class FibonacciHeapNode<T>
         this.key = key;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Obtain the key for this node.

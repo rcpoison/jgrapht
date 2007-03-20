@@ -52,8 +52,7 @@ import org.jgrapht.*;
 public class AsUndirectedGraphTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private DirectedGraph<String, DefaultEdge> directed;
     private DefaultEdge loop;
@@ -63,7 +62,7 @@ public class AsUndirectedGraphTest
     private String v4 = "v4";
     private UndirectedGraph<String, DefaultEdge> undirected;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -73,7 +72,7 @@ public class AsUndirectedGraphTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -187,3 +186,5 @@ public class AsUndirectedGraphTest
         loop = directed.addEdge(v4, v4);
     }
 }
+
+// End $file.name$

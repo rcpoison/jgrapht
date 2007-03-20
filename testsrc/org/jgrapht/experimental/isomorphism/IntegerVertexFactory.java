@@ -44,7 +44,7 @@ import org.jgrapht.*;
  * Implements createVertex() by producing a sequence of Integers; their values
  * start with the successor to the constructor value.
  *
- * <p>for example : IntegerVertexFactory(10);  the first createVertex() will
+ * <p>for example : IntegerVertexFactory(10); the first createVertex() will
  * return Integer=11
  *
  * @author Assaf
@@ -53,12 +53,11 @@ import org.jgrapht.*;
 public class IntegerVertexFactory
     implements VertexFactory<Integer>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private int counter;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Equivalent to IntegerVertexFactory(0);
@@ -76,7 +75,7 @@ public class IntegerVertexFactory
         this.counter = oneBeforeFirstValue;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public Integer createVertex()
     {
@@ -84,3 +83,5 @@ public class IntegerVertexFactory
         return new Integer(this.counter);
     }
 }
+
+// End IntegerVertexFactory.java

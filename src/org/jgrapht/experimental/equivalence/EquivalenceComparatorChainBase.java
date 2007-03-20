@@ -63,7 +63,7 @@ import java.util.*;
  *
  * @param <E> the type of the elements in the set
  * @param <C> the type of the context the element is compared against, e.g. a
- *        Graph
+ * Graph
  *
  * @author Assaf
  * @since Jul 22, 2005
@@ -71,12 +71,11 @@ import java.util.*;
 public class EquivalenceComparatorChainBase<E, C>
     implements EquivalenceComparatorChain<E, C>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private List<EquivalenceComparator<? super E, ? super C>> chain;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      */
@@ -88,7 +87,7 @@ public class EquivalenceComparatorChainBase<E, C>
         this.chain.add(firstComaparator);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /* (non-Javadoc)
      * @see
@@ -113,7 +112,7 @@ public class EquivalenceComparatorChainBase<E, C>
      * false, this method returns true.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     *      Object)
+     * Object)
      */
     public boolean equivalenceCompare(
         E arg1,
@@ -123,13 +122,14 @@ public class EquivalenceComparatorChainBase<E, C>
     {
         for (
             EquivalenceComparator<? super E, ? super C> currentComparator
-            : this.chain) {
-            if (
-                !currentComparator.equivalenceCompare(
+            : this.chain)
+        {
+            if (!currentComparator.equivalenceCompare(
                     arg1,
                     arg2,
                     context1,
-                    context2)) {
+                    context2))
+            {
                 return false;
             }
         }
@@ -147,7 +147,8 @@ public class EquivalenceComparatorChainBase<E, C>
         for (
             ListIterator<EquivalenceComparator<? super E, ? super C>> iter =
                 this.chain.listIterator();
-            iter.hasNext();) {
+            iter.hasNext();)
+        {
             EquivalenceComparator<? super E, ? super C> currentComparator =
                 iter.next();
             int currentHashCode =
@@ -162,3 +163,5 @@ public class EquivalenceComparatorChainBase<E, C>
         return hashStringBuffer.toString().hashCode();
     }
 }
+
+// End EquivalenceComparatorChainBase.java

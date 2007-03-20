@@ -52,19 +52,18 @@ import org.jgrapht.experimental.equivalence.*;
 public class DirectedEdgeWeightOddEvenComparator
     implements EquivalenceComparator
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private final Graph graph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public DirectedEdgeWeightOddEvenComparator(Graph graph)
     {
         this.graph = graph;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /* (non-Javadoc)
      * @see
@@ -107,3 +106,5 @@ public class DirectedEdgeWeightOddEvenComparator
         return int1 % 2;
     }
 }
+
+// End DirectedEdgeWeightOddEvenComparator.java

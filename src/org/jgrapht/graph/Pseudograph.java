@@ -54,12 +54,11 @@ public class Pseudograph<V, E>
     extends AbstractBaseGraph<V, E>
     implements UndirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3833183614484755253L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new pseudograph.
@@ -81,3 +80,5 @@ public class Pseudograph<V, E>
         super(ef, true, true);
     }
 }
+
+// End Pseudograph.java

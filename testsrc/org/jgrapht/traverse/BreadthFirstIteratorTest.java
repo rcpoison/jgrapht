@@ -57,8 +57,7 @@ import org.jgrapht.graph.*;
 public class BreadthFirstIteratorTest
     extends AbstractGraphIteratorTest
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     String getExpectedStr1()
     {
@@ -81,3 +80,5 @@ public class BreadthFirstIteratorTest
         return i;
     }
 }
+
+// End BreadthFirstIteratorTest.java

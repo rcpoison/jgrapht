@@ -36,10 +36,11 @@ import java.io.*;
 
 import junit.framework.*;
 
+import org.custommonkey.xmlunit.*;
+
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
-import org.custommonkey.xmlunit.*;
 
 /**
  * .
@@ -49,8 +50,7 @@ import org.custommonkey.xmlunit.*;
 public class GraphMLExporterTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
@@ -59,25 +59,27 @@ public class GraphMLExporterTest
     private static final String NL = System.getProperty("line.separator");
 
     // TODO jvs 23-Dec-2006:  externalized diff-based testing framework
-    
+
     private static final String UNDIRECTED =
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NL +
-        "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">" + NL +
-        "<graph edgedefault=\"undirected\">" + NL +
-        "<node id=\"1\"/>" + NL +
-        "<node id=\"2\"/>" + NL +
-        "<node id=\"3\"/>" + NL +
-        "<edge id=\"1\" source=\"1\" target=\"2\"/>" + NL +
-        "<edge id=\"2\" source=\"3\" target=\"1\"/>" + NL +
-        "</graph>" + NL +
-        "</graphml>" + NL;
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + NL
+        + "<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xsi:schemaLocation=\"http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
+        + NL
+        + "<graph edgedefault=\"undirected\">" + NL
+        + "<node id=\"1\"/>" + NL
+        + "<node id=\"2\"/>" + NL
+        + "<node id=\"3\"/>" + NL
+        + "<edge id=\"1\" source=\"1\" target=\"2\"/>" + NL
+        + "<edge id=\"2\" source=\"3\" target=\"1\"/>" + NL
+        + "</graph>" + NL
+        + "</graphml>" + NL;
 
     private static final GraphMLExporter<String, DefaultEdge> exporter =
         new GraphMLExporter<String, DefaultEdge>();
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
-    public void testUndirected() throws Exception
+    public void testUndirected()
+        throws Exception
     {
         UndirectedGraph<String, DefaultEdge> g =
             new SimpleGraph<String, DefaultEdge>(DefaultEdge.class);
@@ -96,7 +98,9 @@ public class GraphMLExporterTest
             // of the test.
             return;
         }
-        
+
         XMLAssert.assertXMLEqual(UNDIRECTED, w.toString());
     }
 }
+
+// End $file.name$

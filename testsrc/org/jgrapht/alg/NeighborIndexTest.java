@@ -53,14 +53,13 @@ import org.jgrapht.graph.*;
 public class NeighborIndexTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public void testNeighborSet()
     {
@@ -134,3 +133,5 @@ public class NeighborIndexTest
         assertEquals(0, s.size());
     }
 }
+
+// End NeighborIndexTest.java

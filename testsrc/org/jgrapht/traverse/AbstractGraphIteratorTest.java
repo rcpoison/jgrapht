@@ -55,12 +55,11 @@ import org.jgrapht.graph.*;
 public abstract class AbstractGraphIteratorTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     StringBuffer result;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -150,7 +149,7 @@ public abstract class AbstractGraphIteratorTest
         DirectedGraph<String, DefaultEdge> g,
         String startVertex);
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Internal traversal listener.
@@ -232,3 +231,5 @@ public abstract class AbstractGraphIteratorTest
         }
     }
 }
+
+// End AbstractGraphIteratorTest.java

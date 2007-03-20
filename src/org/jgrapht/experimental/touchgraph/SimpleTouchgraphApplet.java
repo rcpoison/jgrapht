@@ -57,14 +57,13 @@ import org.jgrapht.graph.*;
 public class SimpleTouchgraphApplet
     extends Applet
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      */
     private static final long serialVersionUID = 6213379835360007840L;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * create a graph: code taken from non-visible

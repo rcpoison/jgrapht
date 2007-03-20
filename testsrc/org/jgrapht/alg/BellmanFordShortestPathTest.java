@@ -53,8 +53,7 @@ import org.jgrapht.graph.*;
 public class BellmanFordShortestPathTest
     extends ShortestPathTestCase
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -68,7 +67,8 @@ public class BellmanFordShortestPathTest
 
         // find best path with no constraint on number of hops
         assertEquals(
-            Arrays.asList(new DefaultEdge [] {
+            Arrays.asList(
+                new DefaultEdge[] {
                     e13,
                     e12,
                     e24,
@@ -84,7 +84,8 @@ public class BellmanFordShortestPathTest
                 V3,
                 2);
         assertEquals(
-            Arrays.asList(new DefaultEdge [] {
+            Arrays.asList(
+                new DefaultEdge[] {
                     e34,
                     e45
                 }),
@@ -115,13 +116,14 @@ public class BellmanFordShortestPathTest
         List path;
 
         path = findPathBetween(g, V1, V4);
-        assertEquals(Arrays.asList(new DefaultEdge [] {
+        assertEquals(Arrays.asList(
+                new DefaultEdge[] {
                     e13,
                     e34
                 }), path);
 
         path = findPathBetween(g, V1, V5);
-        assertEquals(Arrays.asList(new DefaultEdge [] { e15 }), path);
+        assertEquals(Arrays.asList(new DefaultEdge[] { e15 }), path);
     }
 }
 

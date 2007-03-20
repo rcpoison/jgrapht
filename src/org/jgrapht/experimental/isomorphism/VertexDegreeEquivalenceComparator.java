@@ -58,8 +58,7 @@ import org.jgrapht.experimental.equivalence.*;
 public class VertexDegreeEquivalenceComparator<V, E>
     implements EquivalenceComparator<V, Graph<V, E>>
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      */
@@ -67,7 +66,7 @@ public class VertexDegreeEquivalenceComparator<V, E>
     {
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Compares the in degrees and the out degrees of the two vertexes.
@@ -76,7 +75,7 @@ public class VertexDegreeEquivalenceComparator<V, E>
      * graph, or both on the same graph type.
      *
      * @see EquivalenceComparator#equivalenceCompare(Object, Object, Object,
-     *      Object)
+     * Object)
      */
     public boolean equivalenceCompare(
         V vertex1,
@@ -117,8 +116,7 @@ public class VertexDegreeEquivalenceComparator<V, E>
      * @param aContextGraph
      * @param vertex
      */
-    protected InOutDegrees getInOutDegrees(
-        Graph<V, E> aContextGraph,
+    protected InOutDegrees getInOutDegrees(Graph<V, E> aContextGraph,
         V vertex)
     {
         int inVertexDegree = 0;
@@ -141,7 +139,7 @@ public class VertexDegreeEquivalenceComparator<V, E>
         return new InOutDegrees(inVertexDegree, outVertexDegree);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Simple structure used to hold the two ints: vertex in degree and vertex
@@ -171,9 +169,10 @@ public class VertexDegreeEquivalenceComparator<V, E>
         public boolean equals(Object obj)
         {
             InOutDegrees other = (InOutDegrees) obj;
-            return
-                ((this.inDegree == other.inDegree)
-                    && (this.outDegree == other.outDegree));
+            return ((this.inDegree == other.inDegree)
+                && (this.outDegree == other.outDegree));
         }
     }
 }
+
+// End VertexDegreeEquivalenceComparator.java

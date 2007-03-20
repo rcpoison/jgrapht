@@ -45,8 +45,7 @@ import org.jgrapht.experimental.permutation.*;
 
 public class AllUtilTests
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public static Test suite()
     {
@@ -61,3 +60,5 @@ public class AllUtilTests
         return suite;
     }
 }
+
+// End AllUtilTests.java

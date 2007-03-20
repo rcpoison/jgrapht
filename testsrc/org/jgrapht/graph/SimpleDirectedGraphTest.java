@@ -53,8 +53,7 @@ import org.jgrapht.*;
 public class SimpleDirectedGraphTest
     extends EnhancedTestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     DirectedGraph<String, DefaultEdge> gEmpty;
     private DirectedGraph<String, DefaultEdge> g1;
@@ -68,7 +67,7 @@ public class SimpleDirectedGraphTest
     private String v3 = "v3";
     private String v4 = "v4";
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -78,7 +77,7 @@ public class SimpleDirectedGraphTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Class to test for boolean addEdge(V, V, E)
@@ -388,7 +387,7 @@ public class SimpleDirectedGraphTest
     {
         init();
 
-        DirectedGraph <String, DefaultEdge> g =
+        DirectedGraph<String, DefaultEdge> g =
             new SimpleDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
         DirectedGraph<String, DefaultEdge> r =
             new EdgeReversedGraph<String, DefaultEdge>(g);
@@ -423,20 +422,20 @@ public class SimpleDirectedGraphTest
     {
         assertTrue(r.containsVertex(v1));
         assertTrue(r.containsVertex(v2));
-        
+
         assertEquals(g.vertexSet(), r.vertexSet());
         assertEquals(g.edgeSet(), r.edgeSet());
-        
+
         assertTrue(r.containsEdge(v2, v1));
         assertSame(e, r.getEdge(v2, v1));
         assertFalse(r.containsEdge(v1, v2));
         assertNull(r.getEdge(v1, v2));
-        
+
         assertEquals(1, r.inDegreeOf(v1));
         assertEquals(0, r.inDegreeOf(v2));
         assertEquals(0, r.outDegreeOf(v1));
         assertEquals(1, r.outDegreeOf(v2));
-        
+
         assertEquals(g.edgeSet(), r.incomingEdgesOf(v1));
         assertTrue(r.outgoingEdgesOf(v1).isEmpty());
         assertTrue(r.incomingEdgesOf(v2).isEmpty());
@@ -454,13 +453,13 @@ public class SimpleDirectedGraphTest
             new SimpleDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
         g1 = new SimpleDirectedGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+            DefaultEdge.class);
         g2 = new SimpleDirectedGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+            DefaultEdge.class);
         g3 = new SimpleDirectedGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+            DefaultEdge.class);
         g4 = new SimpleDirectedGraph<String, DefaultEdge>(
-                DefaultEdge.class);
+            DefaultEdge.class);
 
         eFactory = g1.getEdgeFactory();
         eLoop = eFactory.createEdge(v1, v1);
@@ -492,3 +491,5 @@ public class SimpleDirectedGraphTest
         g4.addEdge(v4, v1);
     }
 }
+
+// End $file.name$

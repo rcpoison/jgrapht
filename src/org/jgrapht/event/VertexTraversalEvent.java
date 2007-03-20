@@ -52,19 +52,18 @@ import java.util.*;
 public class VertexTraversalEvent<V>
     extends EventObject
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3688790267213918768L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The traversed vertex.
      */
     protected V vertex;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new VertexTraversalEvent.
@@ -78,7 +77,7 @@ public class VertexTraversalEvent<V>
         this.vertex = vertex;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the traversed vertex.
@@ -90,3 +89,5 @@ public class VertexTraversalEvent<V>
         return vertex;
     }
 }
+
+// End VertexTraversalEvent.java

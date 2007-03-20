@@ -52,15 +52,14 @@ import java.util.*;
  *
  * @param <E> the type of the elements in the set
  * @param <C> the type of the context the element is compared against, e.g. a
- *        Graph
+ * Graph
  *
  * @author Assaf
  * @since Jul 21, 2005
  */
 public class EquivalenceSet<E, C>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The comparator used to define the group
@@ -73,7 +72,7 @@ public class EquivalenceSet<E, C>
      */
     protected Set<E> elementsSet;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Private constructor. An empty group cannot be created as a group does not
@@ -100,7 +99,7 @@ public class EquivalenceSet<E, C>
         this.elementsSet.add(aElement);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns an arbitrary object from the group. There is no guarantee as to
@@ -144,8 +143,8 @@ public class EquivalenceSet<E, C>
 
     /**
      * Uses the equivalenceCompare() of the comparator to compare a
-     * representation of this group, taken using this.getRepresentative(),  and
-     * a representation of the other object, which may be the object itself, or,
+     * representation of this group, taken using this.getRepresentative(), and a
+     * representation of the other object, which may be the object itself, or,
      * if it is an equivalence group too, other.getRepresentative()
      */
     // FIXME REVIEW hb 26-Jan-2006: I think throwing the exception is kind of
@@ -212,3 +211,5 @@ public class EquivalenceSet<E, C>
         return this.elementsSet.toArray();
     }
 }
+
+// End EquivalenceSet.java

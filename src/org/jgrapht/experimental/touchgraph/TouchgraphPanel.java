@@ -58,14 +58,13 @@ import org.jgrapht.*;
 public class TouchgraphPanel<V, E>
     extends GLPanel
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
      */
     private static final long serialVersionUID = -7441058429719746032L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private Color defaultBackColor = new Color(0x01, 0x11, 0x44);
     private Color defaultBorderBackColor = new Color(0x02, 0x35, 0x81);
@@ -85,7 +84,7 @@ public class TouchgraphPanel<V, E>
 
     // =================
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**constructor*/
     public TouchgraphPanel(Graph<V, E> graph, boolean selfReferencesAllowed)
@@ -104,7 +103,7 @@ public class TouchgraphPanel<V, E>
         initialize(); // now we can insert our own graph into this method
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * get everything setup: this is the code that was in the super's

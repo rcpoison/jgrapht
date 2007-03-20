@@ -53,8 +53,7 @@ import org.jgrapht.graph.*;
 public class ClosestFirstIteratorTest
     extends AbstractGraphIteratorTest
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -80,7 +79,7 @@ public class ClosestFirstIteratorTest
 
         assertEquals("1,2,3,5,6,7", result.toString());
     }
-    
+
     /**
      * .
      */
@@ -126,3 +125,5 @@ public class ClosestFirstIteratorTest
         return i;
     }
 }
+
+// End ClosestFirstIteratorTest.java

@@ -53,14 +53,13 @@ import org.jgrapht.graph.*;
  */
 public final class HelloJGraphT
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private HelloJGraphT()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * The starting point for the demo.
@@ -142,3 +141,5 @@ public final class HelloJGraphT
         return g;
     }
 }
+
+// End HelloJGraphT.java

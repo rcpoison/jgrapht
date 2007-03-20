@@ -54,8 +54,7 @@ import org.jgrapht.graph.*;
 public class GmlExporterTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
@@ -64,7 +63,7 @@ public class GmlExporterTest
     private static final String NL = System.getProperty("line.separator");
 
     // TODO jvs 23-Dec-2006:  externalized diff-based testing framework
-    
+
     private static final String UNDIRECTED =
         "Creator \"JGraphT GML Exporter\"" + NL
         + "Version 1" + NL
@@ -99,7 +98,7 @@ public class GmlExporterTest
     private static final GmlExporter<String, DefaultEdge> exporter =
         new GmlExporter<String, DefaultEdge>();
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public void testUndirected()
     {
@@ -116,3 +115,5 @@ public class GmlExporterTest
         assertEquals(UNDIRECTED, w.toString());
     }
 }
+
+// End GmlExporterTest.java

@@ -66,13 +66,12 @@ import org.jgrapht.util.*;
 public class NeighborIndex<V, E>
     implements GraphListener<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     Map<V, Neighbors<V, E>> neighborMap = new HashMap<V, Neighbors<V, E>>();
     private Graph<V, E> graph;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a neighbor index for the specified undirected graph.
@@ -85,7 +84,7 @@ public class NeighborIndex<V, E>
         graph = g;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the set of vertices which are adjacent to a specified vertex. The
@@ -167,16 +166,16 @@ public class NeighborIndex<V, E>
         Neighbors<V, E> neighbors = neighborMap.get(v);
         if (neighbors == null) {
             neighbors = new Neighbors<V, E>(v,
-                    Graphs.neighborListOf(graph, v));
+                Graphs.neighborListOf(graph, v));
             neighborMap.put(v, neighbors);
         }
         return neighbors;
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
-     * Stores cached neighbors  for a single vertex. Includes support for live
+     * Stores cached neighbors for a single vertex. Includes support for live
      * neighbor sets and duplicate neighbors.
      */
     static class Neighbors<V, E>
@@ -233,7 +232,8 @@ public class NeighborIndex<V, E>
             List<V> neighbors = new ArrayList<V>();
             for (
                 Map.Entry<V, ModifiableInteger> entry
-                : neighborCounts.entrySet()) {
+                : neighborCounts.entrySet())
+            {
                 V v = entry.getKey();
                 int count = entry.getValue().intValue();
                 for (int i = 0; i < count; i++) {
@@ -244,3 +244,5 @@ public class NeighborIndex<V, E>
         }
     }
 }
+
+// End NeighborIndex.java

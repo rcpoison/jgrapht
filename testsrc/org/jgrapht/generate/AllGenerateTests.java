@@ -49,14 +49,13 @@ import junit.framework.*;
  */
 public final class AllGenerateTests
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private AllGenerateTests()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a test suite for all tests in this package.
@@ -75,3 +74,5 @@ public final class AllGenerateTests
         return suite;
     }
 }
+
+// End AllGenerateTests.java

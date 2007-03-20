@@ -53,12 +53,11 @@ public class ListenableDirectedGraph<V, E>
     extends DefaultListenableGraph<V, E>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3257571698126368824L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new listenable directed graph.
@@ -80,3 +79,5 @@ public class ListenableDirectedGraph<V, E>
         super(base);
     }
 }
+
+// End ListenableDirectedGraph.java

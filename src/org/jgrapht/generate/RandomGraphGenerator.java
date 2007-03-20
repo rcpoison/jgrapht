@@ -60,19 +60,18 @@ import org.jgrapht.graph.*;
 public class RandomGraphGenerator<V, E>
     implements GraphGenerator<V, E, V>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static long seedUniquifier = 8682522807148012L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     protected int numOfVertexes;
     protected int numOfEdges;
     protected Random randomizer;
     private long randomizerSeed;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public RandomGraphGenerator(int aNumOfVertexes, int aNumOfEdges)
     {
@@ -86,7 +85,7 @@ public class RandomGraphGenerator<V, E>
         this.randomizer = new Random(this.randomizerSeed);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Should be called only once on creation. Chooses a seed which can be used
@@ -114,12 +113,10 @@ public class RandomGraphGenerator<V, E>
      * (non-Javadoc)
      *
      * @throws IllegalArgumentException if the aNumOfEdges passed in the
-     *                                  constructor, cannot be created on a
-     *                                  graph of the concrete type with
-     *                                  aNumOfVertexes.
-     *                                  
-     *                                  org.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
-     *                                  int)
+     * constructor, cannot be created on a graph of the concrete type with
+     * aNumOfVertexes.
+     * org.jgrapht.generate.RandomGraphGenerator.DefaultEdgeTopologyFactory#isNumberOfEdgesValid(org.jgrapht.Graph,
+     * int)
      *
      * @see GraphGenerator#generateGraph(Graph, VertexFactory, Map)
      */
@@ -177,7 +174,7 @@ public class RandomGraphGenerator<V, E>
         return new DefaultEdgeTopologyFactory<V, E>();
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
+    //~ Inner Interfaces -------------------------------------------------------
 
     /**
      * This class is used to generate the edge topology for a graph.
@@ -194,8 +191,7 @@ public class RandomGraphGenerator<V, E>
          *
          * @param targetGraph - guranteed to start with zero edges.
          * @param orderToVertexMap - key=Integer of vertex order . between zero
-         *                         to numOfVertexes (exclusive). value = vertex
-         *                         from the graph. unique.
+         * to numOfVertexes (exclusive). value = vertex from the graph. unique.
          * @param numberOfEdges - to create in the graph
          * @param randomizer
          */
@@ -219,13 +215,13 @@ public class RandomGraphGenerator<V, E>
             int numberOfEdges);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Default implementation of the EdgeTopologyFactory interface. randomly
      * chooses an edge and tries to add it. If the add fails from any reason
-     * (like: self edge / multiple edges  in unpermitted graph type) it will
-     * just choose another and try again. Performance:
+     * (like: self edge / multiple edges in unpermitted graph type) it will just
+     * choose another and try again. Performance:
      * <li>when the number of possible edges becomes slim , this class will have
      * a very poor performance , cause it will not use gready methods to choose
      * them. for example : In simple graph , if #V = N (#x = number Of x) and we
@@ -329,7 +325,7 @@ public class RandomGraphGenerator<V, E>
          * </table>
          *
          * @see RandomGraphGenerator.EdgeTopologyFactory#isNumberOfEdgesValid(Graph,
-         *      int)
+         * int)
          */
         public boolean isNumberOfEdgesValid(
             Graph<VV, EE> targetGraph,
@@ -368,7 +364,8 @@ public class RandomGraphGenerator<V, E>
             } else if (
                 (targetGraph instanceof Multigraph)
                 || (targetGraph instanceof Pseudograph)
-                || (targetGraph instanceof DirectedMultigraph)) {
+                || (targetGraph instanceof DirectedMultigraph))
+            {
                 maxAllowedEdges = -1; // infinite
             } else {
                 throw new ClassCastException(
@@ -378,3 +375,5 @@ public class RandomGraphGenerator<V, E>
         }
     }
 }
+
+// End RandomGraphGenerator.java

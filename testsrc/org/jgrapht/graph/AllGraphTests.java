@@ -50,14 +50,13 @@ import junit.framework.*;
  */
 public final class AllGraphTests
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     private AllGraphTests()
     {
     } // ensure non-instantiability.
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a test suite for all tests in this package.
@@ -81,3 +80,5 @@ public final class AllGraphTests
         return suite;
     }
 }
+
+// End AllGraphTests.java

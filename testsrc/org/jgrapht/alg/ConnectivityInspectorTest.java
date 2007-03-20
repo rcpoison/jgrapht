@@ -45,7 +45,7 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.*;
-import org.jgrapht.generate.RingGraphGenerator;
+import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 
 
@@ -57,15 +57,14 @@ import org.jgrapht.graph.*;
 public class ConnectivityInspectorTest
     extends TestCase
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String V1 = "v1";
     private static final String V2 = "v2";
     private static final String V3 = "v3";
     private static final String V4 = "v4";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     //
     DefaultEdge e1;
@@ -74,7 +73,7 @@ public class ConnectivityInspectorTest
     DefaultEdge e3_b;
     DefaultEdge u;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -341,28 +340,38 @@ public class ConnectivityInspectorTest
         assertEquals(expectedSets, actualSets);
     }
 
-    public void testStronglyConnected4() {
-		DefaultDirectedGraph<Integer, String> graph = new DefaultDirectedGraph<Integer, String>(
-				new EdgeFactory<Integer, String>() {
-					public String createEdge(Integer from, Integer to) {
-						return (from + "->" + to).intern();
-					}
-				});
+    public void testStronglyConnected4()
+    {
+        DefaultDirectedGraph<Integer, String> graph =
+            new DefaultDirectedGraph<Integer, String>(
+                new EdgeFactory<Integer, String>() {
+                    public String createEdge(Integer from, Integer to)
+                    {
+                        return (from + "->" + to).intern();
+                    }
+                });
 
-		new RingGraphGenerator<Integer, String>(3).generateGraph(graph,
-				new VertexFactory<Integer>() {
-					private int i = 0;
+        new RingGraphGenerator<Integer, String>(3).generateGraph(
+            graph,
+            new VertexFactory<Integer>() {
+                private int i = 0;
 
-					public Integer createVertex() {
-						return i++;
-					}
-				}, null);
+                public Integer createVertex()
+                {
+                    return i++;
+                }
+            },
+            null);
 
-		StrongConnectivityInspector<Integer, String> sc = new StrongConnectivityInspector<Integer, String>(
-				graph);
-		Set<Set<Integer>> expected = new HashSet<Set<Integer>>();
-		expected.add(graph.vertexSet());
-		assertEquals(expected, new HashSet<Set<Integer>>(sc.stronglyConnectedSets()));
-	}
-
+        StrongConnectivityInspector<Integer, String> sc =
+            new StrongConnectivityInspector<Integer, String>(
+                graph);
+        Set<Set<Integer>> expected = new HashSet<Set<Integer>>();
+        expected.add(graph.vertexSet());
+        assertEquals(
+            expected,
+            new HashSet<Set<Integer>>(sc.stronglyConnectedSets()));
+    }
 }
+
+// End $file.name$

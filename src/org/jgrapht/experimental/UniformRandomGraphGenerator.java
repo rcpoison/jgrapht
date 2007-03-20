@@ -58,13 +58,12 @@ import org.jgrapht.generate.*;
 public class UniformRandomGraphGenerator
     implements GraphGenerator
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private final int numEdges;
     private final int numVertices;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new UniformRandomGraphGenerator.
@@ -80,9 +79,9 @@ public class UniformRandomGraphGenerator
             throw new IllegalArgumentException("must be non-negative");
         }
 
-        if (
-            (numEdges < 0)
-            || (numEdges > (numVertices * (numVertices - 1) / 2))) {
+        if ((numEdges < 0)
+            || (numEdges > (numVertices * (numVertices - 1) / 2)))
+        {
             throw new IllegalArgumentException("illegal number of edges");
         }
 
@@ -90,7 +89,7 @@ public class UniformRandomGraphGenerator
         this.numEdges = numEdges;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see GraphGenerator#generateGraph
@@ -112,3 +111,5 @@ public class UniformRandomGraphGenerator
             numEdges);
     }
 }
+
+// End UniformRandomGraphGenerator.java

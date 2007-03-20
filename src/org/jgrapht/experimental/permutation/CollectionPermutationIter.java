@@ -54,8 +54,7 @@ import org.jgrapht.util.*;
  */
 public class CollectionPermutationIter<E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private ArrayPermutationsIter permOrder;
     private List<E> sourceArray;
@@ -65,7 +64,7 @@ public class CollectionPermutationIter<E>
      */
     private int [] currPermutationArray;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Note: the Set interface does not guarantee iteration order. This method
@@ -107,7 +106,7 @@ public class CollectionPermutationIter<E>
         this.sourceArray = objectsArray;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public boolean hasNext()
     {
@@ -184,3 +183,5 @@ public class CollectionPermutationIter<E>
         return sb.toString();
     }
 }
+
+// End CollectionPermutationIter.java

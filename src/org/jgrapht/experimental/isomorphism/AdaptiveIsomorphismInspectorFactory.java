@@ -52,7 +52,7 @@ import org.jgrapht.graph.*;
  * this class the graph-checking time.
  *
  * <p>Note that the concrete implementations are package-private and should not
- * be created directly.  If you are the maintainer of the package, you can add
+ * be created directly. If you are the maintainer of the package, you can add
  * new implementation classes, and add them to the "check-list". The current
  * algorithms do not support graphs with multiple edges (Multigraph /
  * Pseudograph)
@@ -63,15 +63,14 @@ import org.jgrapht.graph.*;
  */
 public class AdaptiveIsomorphismInspectorFactory
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     public static final int GRAPH_TYPE_ARBITRARY = 0;
     public static final int GRAPH_TYPE_PLANAR = 1;
     public static final int GRAPH_TYPE_TREE = 2;
     public static final int GRAPH_TYPE_MULTIGRAPH = 3;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates a new inspector, letting this class determine what is the most
@@ -89,13 +88,12 @@ public class AdaptiveIsomorphismInspectorFactory
         EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
         int graphType = checkGraphsType(graph1, graph2);
-        return
-            createAppropriateConcreteInspector(
-                graphType,
-                graph1,
-                graph2,
-                vertexChecker,
-                edgeChecker);
+        return createAppropriateConcreteInspector(
+            graphType,
+            graph1,
+            graph2,
+            vertexChecker,
+            edgeChecker);
     }
 
     /**
@@ -132,13 +130,12 @@ public class AdaptiveIsomorphismInspectorFactory
         EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
         EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
     {
-        return
-            createAppropriateConcreteInspector(
-                type,
-                graph1,
-                graph2,
-                vertexChecker,
-                edgeChecker);
+        return createAppropriateConcreteInspector(
+            type,
+            graph1,
+            graph2,
+            vertexChecker,
+            edgeChecker);
     }
 
     /**
@@ -158,13 +155,12 @@ public class AdaptiveIsomorphismInspectorFactory
         Graph<V, E> graph1,
         Graph<V, E> graph2)
     {
-        return
-            createAppropriateConcreteInspector(
-                type,
-                graph1,
-                graph2,
-                null,
-                null);
+        return createAppropriateConcreteInspector(
+            type,
+            graph1,
+            graph2,
+            null,
+            null);
     }
 
     /**
@@ -223,10 +219,10 @@ public class AdaptiveIsomorphismInspectorFactory
     protected static void assertUnsupportedGraphTypes(Graph g)
         throws IllegalArgumentException
     {
-        if (
-            (g instanceof Multigraph)
+        if ((g instanceof Multigraph)
             || (g instanceof DirectedMultigraph)
-            || (g instanceof Pseudograph)) {
+            || (g instanceof Pseudograph))
+        {
             throw new IllegalArgumentException(
                 "graph type not supported for the graph" + g);
         }
@@ -239,8 +235,8 @@ public class AdaptiveIsomorphismInspectorFactory
 
     /**
      * @return ExhaustiveInspector, where the equivalence comparator is chained
-     *         with a topological comparator. This implementation uses:
-     *         <li>vertex degree size comparator
+     * with a topological comparator. This implementation uses:
+     * <li>vertex degree size comparator
      */
     @SuppressWarnings("unchecked")
     protected static <V, E> GraphIsomorphismInspector
@@ -268,3 +264,5 @@ public class AdaptiveIsomorphismInspectorFactory
         return inspector;
     }
 }
+
+// End AdaptiveIsomorphismInspectorFactory.java

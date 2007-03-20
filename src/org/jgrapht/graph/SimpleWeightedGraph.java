@@ -45,19 +45,18 @@ import org.jgrapht.*;
 
 
 /**
- * A simple weighted graph. A simple weighted graph is a simple graph  for which
+ * A simple weighted graph. A simple weighted graph is a simple graph for which
  * edges are assigned weights.
  */
 public class SimpleWeightedGraph<V, E>
     extends SimpleGraph<V, E>
     implements WeightedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3906088949100655922L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new simple weighted graph with the specified edge factory.
@@ -79,3 +78,5 @@ public class SimpleWeightedGraph<V, E>
         this(new ClassBasedEdgeFactory<V, E>(edgeClass));
     }
 }
+
+// End SimpleWeightedGraph.java

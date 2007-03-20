@@ -54,12 +54,11 @@ public class DirectedPseudograph<V, E>
     extends AbstractBaseGraph<V, E>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = -8300409752893486415L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see AbstractBaseGraph
@@ -77,3 +76,5 @@ public class DirectedPseudograph<V, E>
         super(ef, true, true);
     }
 }
+
+// End DirectedPseudograph.java

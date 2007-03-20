@@ -61,8 +61,7 @@ import org.jgrapht.graph.*;
  */
 public class StrongConnectivityInspector<V, E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     // the graph to compute the strongly connected sets for
     private final DirectedGraph<V, E> graph;
@@ -79,7 +78,7 @@ public class StrongConnectivityInspector<V, E>
     // maps vertices to their VertexData object
     private Map<V, VertexData<V>> vertexToVertexData;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * The constructor of the StrongConnectivityInspector class.
@@ -101,7 +100,7 @@ public class StrongConnectivityInspector<V, E>
         stronglyConnectedSubgraphs = null;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the graph inspected by the StrongConnectivityInspector.
@@ -130,7 +129,7 @@ public class StrongConnectivityInspector<V, E>
      * graph.
      *
      * @return <code>List</code> of <code>Set</code> s containing the strongly
-     *         connected components
+     * connected components
      */
     public List<Set<V>> stronglyConnectedSets()
     {
@@ -197,7 +196,7 @@ public class StrongConnectivityInspector<V, E>
      * subgraphs, use that method.</p>
      *
      * @return a list of subgraphs representing the strongly connected
-     *         components
+     * components
      */
     public List<DirectedSubgraph<V, E>> stronglyConnectedSubgraphs()
     {
@@ -273,7 +272,8 @@ public class StrongConnectivityInspector<V, E>
                 while (iter.hasNext()) {
                     E edge = iter.next();
                     VertexData<V> targetData =
-                        vertexToVertexData.get(visitedGraph.getEdgeTarget(edge));
+                        vertexToVertexData.get(
+                            visitedGraph.getEdgeTarget(edge));
 
                     if (!targetData.discovered) {
                         // the "recursion"
@@ -302,7 +302,7 @@ public class StrongConnectivityInspector<V, E>
         }
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /*
      * Lightweight class storing some data for every vertex.
@@ -329,3 +329,5 @@ public class StrongConnectivityInspector<V, E>
         }
     }
 }
+
+// End $file.name$

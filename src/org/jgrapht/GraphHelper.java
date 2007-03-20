@@ -55,3 +55,5 @@ package org.jgrapht;
     extends Graphs
 {
 }
+
+// End GraphHelper.java

@@ -47,8 +47,7 @@ package org.jgrapht.util;
  */
 public class ArrayUtil
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Prints the contents of an array (not the array ref itself).
@@ -98,10 +97,12 @@ public class ArrayUtil
         return stringBuffer.toString();
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
+    //~ Inner Interfaces -------------------------------------------------------
 
     public interface ToStringFunctor
     {
         public String toString(Object arrayElement);
     }
 }
+
+// End ArrayUtil.java

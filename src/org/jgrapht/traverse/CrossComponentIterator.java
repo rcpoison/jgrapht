@@ -64,14 +64,38 @@ import org.jgrapht.event.*;
 public abstract class CrossComponentIterator<V, E, D>
     extends AbstractGraphIterator<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final int CCS_BEFORE_COMPONENT = 1;
     private static final int CCS_WITHIN_COMPONENT = 2;
     private static final int CCS_AFTER_COMPONENT = 3;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Enums ------------------------------------------------------------------
+
+    /**
+     * Standard vertex visit state enumeration.
+     */
+    protected static enum VisitColor
+    {
+        /**
+         * Vertex has not been returned via iterator yet.
+         */
+        WHITE,
+
+        /**
+         * Vertex has been returned via iterator, but we're
+         * not done with all of its out-edges yet.
+         */
+        GRAY,
+
+        /**
+         * Vertex has been returned via iterator, and we're
+         * done with all of its out-edges.
+         */
+        BLACK
+    }
+
+    //~ Instance fields --------------------------------------------------------
 
     //
     private final ConnectedComponentTraversalEvent ccFinishedEvent =
@@ -104,7 +128,7 @@ public abstract class CrossComponentIterator<V, E, D>
      */
     private int state = CCS_BEFORE_COMPONENT;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new iterator for the specified graph. Iteration will start at
@@ -115,7 +139,7 @@ public abstract class CrossComponentIterator<V, E, D>
      * @param startVertex the vertex iteration to be started.
      *
      * @throws IllegalArgumentException if <code>g==null</code> or does not
-     *                                  contain <code>startVertex</code>
+     * contain <code>startVertex</code>
      */
     public CrossComponentIterator(Graph<V, E> g, V startVertex)
     {
@@ -148,7 +172,7 @@ public abstract class CrossComponentIterator<V, E, D>
         }
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @return the graph being traversed
@@ -225,7 +249,7 @@ public abstract class CrossComponentIterator<V, E, D>
      * currently iterated connected component; <tt>false</tt> otherwise.
      *
      * @return <tt>true</tt> if there are no more uniterated vertices in the
-     *         currently iterated connected component; <tt>false</tt> otherwise.
+     * currently iterated connected component; <tt>false</tt> otherwise.
      */
     protected abstract boolean isConnectedComponentExhausted();
 
@@ -234,7 +258,7 @@ public abstract class CrossComponentIterator<V, E, D>
      *
      * @param vertex the vertex encountered
      * @param edge the edge via which the vertex was encountered, or null if the
-     *             vertex is a starting point
+     * vertex is a starting point
      */
     protected abstract void encounterVertex(V vertex, E edge);
 
@@ -252,9 +276,9 @@ public abstract class CrossComponentIterator<V, E, D>
      * @param vertex a vertex which has already been seen.
      *
      * @return data associated with the seen vertex or <code>null</code> if no
-     *         data was associated with the vertex. A <code>null</code> return
-     *         can also indicate that the vertex was explicitly associated with
-     *         <code>null</code>.
+     * data was associated with the vertex. A <code>null</code> return can also
+     * indicate that the vertex was explicitly associated with <code>
+     * null</code>.
      */
     protected D getSeenData(V vertex)
     {
@@ -274,8 +298,8 @@ public abstract class CrossComponentIterator<V, E, D>
     }
 
     /**
-     * Called whenever we re-encounter a vertex.  The default implementation
-     * does nothing.
+     * Called whenever we re-encounter a vertex. The default implementation does
+     * nothing.
      *
      * @param vertex the vertex re-encountered
      * @param edge the edge via which the vertex was re-encountered
@@ -289,9 +313,9 @@ public abstract class CrossComponentIterator<V, E, D>
      * @param data data to be associated with the seen vertex.
      *
      * @return previous value associated with specified vertex or <code>
-     *         null</code> if no data was associated with the vertex. A <code>
-     *         null</code> return can also indicate that the vertex was
-     *         explicitly associated with <code>null</code>.
+     * null</code> if no data was associated with the vertex. A <code>
+     * null</code> return can also indicate that the vertex was explicitly
+     * associated with <code>null</code>.
      */
     protected D putSeenData(V vertex, D data)
     {
@@ -299,8 +323,8 @@ public abstract class CrossComponentIterator<V, E, D>
     }
 
     /**
-     * Called when a vertex has been finished (meaning is dependent
-     * on traversal represented by subclass).
+     * Called when a vertex has been finished (meaning is dependent on traversal
+     * represented by subclass).
      *
      * @param vertex vertex which has been finished
      */
@@ -369,7 +393,7 @@ public abstract class CrossComponentIterator<V, E, D>
         startVertex = null;
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
+    //~ Inner Interfaces -------------------------------------------------------
 
     static interface SimpleContainer<T>
     {
@@ -395,7 +419,7 @@ public abstract class CrossComponentIterator<V, E, D>
         public T remove();
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * Provides unified interface for operations that are different in directed
@@ -411,8 +435,8 @@ public abstract class CrossComponentIterator<V, E, D>
          * @param vertex the vertex whose outgoing edges are to be returned.
          *
          * @return the edges outgoing from the specified vertex in case of
-         *         directed graph, and the edge touching the specified vertex in
-         *         case of undirected graph.
+         * directed graph, and the edge touching the specified vertex in case of
+         * undirected graph.
          */
         public abstract Set<? extends EE> edgesOf(VV vertex);
     }
@@ -531,27 +555,6 @@ public abstract class CrossComponentIterator<V, E, D>
             return graph.edgesOf(vertex);
         }
     }
-
-    /**
-     * Standard vertex visit state enumeration.
-     */
-    protected static enum VisitColor
-    {
-        /**
-         * Vertex has not been returned via iterator yet.
-         */
-        WHITE,
-
-        /**
-         * Vertex has been returned via iterator, but we're
-         * not done with all of its out-edges yet.
-         */
-        GRAY,
-
-        /**
-         * Vertex has been returned via iterator, and we're
-         * done with all of its out-edges.
-         */
-        BLACK
-    }
 }
+
+// End CrossComponentIterator.java

@@ -55,15 +55,14 @@ import org.jgrapht.event.*;
 public class ListenableGraphTest
     extends TestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     DefaultEdge lastAddedEdge;
     DefaultEdge lastRemovedEdge;
     Object lastAddedVertex;
     Object lastRemovedVertex;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
@@ -73,7 +72,7 @@ public class ListenableGraphTest
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Tests GraphListener listener.
@@ -203,7 +202,7 @@ public class ListenableGraphTest
         lastRemovedVertex = null;
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * A listener on the tested graph.
@@ -247,3 +246,5 @@ public class ListenableGraphTest
         }
     }
 }
+
+// End ListenableGraphTest.java

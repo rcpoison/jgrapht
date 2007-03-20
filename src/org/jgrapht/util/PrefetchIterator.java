@@ -55,15 +55,15 @@ import java.util.*;
  * job of calculating the next element.
  *
  * <pre><code>
-    //This class supllies enumeration of integer till 100. 
+    //This class supllies enumeration of integer till 100.
     public class iteratorExample implements Enumeration{
     private int counter=0;
     private PrefetchIterator nextSupplier;
-        
+
         iteratorExample()
         {
             nextSupplier = new PrefetchIterator(new PrefetchIterator.NextElementFunctor(){
-                
+
                 public Object nextElement() throws NoSuchElementException {
                     counter++;
                     if (counter>=100)
@@ -71,7 +71,7 @@ import java.util.*;
                     else
                         return new Integer(counter);
                 }
-            
+
             });
         }
         //forwarding to nextSupplier and return its returned value
@@ -82,15 +82,16 @@ import java.util.*;
         public Object nextElement() {
             return this.nextSupplier.nextElement();
         }
-  }</pre></code>
+  }</pre>
+ * </code>
  *
  * @author Assaf_Lehr
  */
 public class PrefetchIterator<E>
-    implements Iterator<E>, Enumeration<E>
+    implements Iterator<E>,
+        Enumeration<E>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private NextElementFunctor<E> innerEnum;
     private E getNextLastResult;
@@ -99,14 +100,14 @@ public class PrefetchIterator<E>
     private boolean flagIsEnumerationStartedEmpty = true;
     private int innerFunctorUsageCounter = 0;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     public PrefetchIterator(NextElementFunctor<E> aEnum)
     {
         innerEnum = aEnum;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Serves as one contact place to the functor; all must use it and not
@@ -206,7 +207,7 @@ public class PrefetchIterator<E>
         throw new UnsupportedOperationException();
     }
 
-    //~ Inner Interfaces ------------------------------------------------------
+    //~ Inner Interfaces -------------------------------------------------------
 
     public interface NextElementFunctor<EE>
     {
@@ -218,3 +219,5 @@ public class PrefetchIterator<E>
             throws NoSuchElementException;
     }
 }
+
+// End PrefetchIterator.java

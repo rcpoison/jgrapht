@@ -57,15 +57,14 @@ import org.jgrapht.generate.*;
  * @since Sep 13, 2004
  */
 public class PartiteRandomGraphGenerator<V, E>
-    implements GraphGenerator<V, E, Object []>
+    implements GraphGenerator<V, E, Object[]>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private final int [] numVertices;
     private final int numEdges;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new PartiteRandomGraphGenerator for a bipartite graph.
@@ -90,9 +89,9 @@ public class PartiteRandomGraphGenerator<V, E>
         }
 
         final int [] numVertices = {
-                numVertices1,
-                numVertices2
-            };
+            numVertices1,
+            numVertices2
+        };
         this.numVertices = numVertices;
         this.numEdges = numEdges;
     }
@@ -102,7 +101,7 @@ public class PartiteRandomGraphGenerator<V, E>
      *
      * @param numVertices number of vertices in the k partitions
      * @param numEdges number of edges to be generated between any two
-     *                 partitions
+     * partitions
      *
      * @throws IllegalArgumentException
      */
@@ -129,7 +128,7 @@ public class PartiteRandomGraphGenerator<V, E>
         this.numEdges = numEdges;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * TODO hb 30-nov-05: document me
@@ -143,9 +142,9 @@ public class PartiteRandomGraphGenerator<V, E>
     public void generateGraph(
         Graph<V, E> target,
         VertexFactory<V> vertexFactory,
-        Map<String, Object []> resultMap)
+        Map<String, Object[]> resultMap)
     {
-        Object [][] vertices = new Object [numVertices.length][];
+        Object [][] vertices = new Object[numVertices.length][];
 
         for (int i = 0; i < numVertices.length; i++) {
             vertices[i] =
@@ -168,3 +167,5 @@ public class PartiteRandomGraphGenerator<V, E>
         }
     }
 }
+
+// End PartiteRandomGraphGenerator.java

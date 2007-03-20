@@ -49,12 +49,11 @@ import org.jgrapht.util.*;
 public class CompoundPermutationIterTest
     extends TestCase
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     private CompoundPermutationIter complexPerm;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Asserts that the number of permutations is the same as getMax. It also
@@ -69,7 +68,8 @@ public class CompoundPermutationIterTest
         // timer.start();
 
         this.complexPerm =
-            new CompoundPermutationIter(new int [] {
+            new CompoundPermutationIter(
+                new int[] {
                     1,
                     1,
                     1,
@@ -99,7 +99,8 @@ public class CompoundPermutationIterTest
 
         // timer.start();
         this.complexPerm =
-            new CompoundPermutationIter(new int [] {
+            new CompoundPermutationIter(
+                new int[] {
                     5,
                     4,
                     3,
@@ -127,3 +128,5 @@ public class CompoundPermutationIterTest
         // timer.stopAndReport();
     }
 }
+
+// End CompoundPermutationIterTest.java

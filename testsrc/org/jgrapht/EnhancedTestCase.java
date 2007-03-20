@@ -51,8 +51,7 @@ import junit.framework.*;
 public class EnhancedTestCase
     extends TestCase
 {
-
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * @see TestCase#TestCase()
@@ -70,7 +69,7 @@ public class EnhancedTestCase
         super(name);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * It means: it's wrong that we got here.
@@ -88,3 +87,5 @@ public class EnhancedTestCase
         assertTrue(true);
     }
 }
+
+// End EnhancedTestCase.java

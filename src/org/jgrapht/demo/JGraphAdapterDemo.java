@@ -65,19 +65,18 @@ import org.jgrapht.graph.DefaultEdge;
 public class JGraphAdapterDemo
     extends JApplet
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3256444702936019250L;
     private static final Color DEFAULT_BG_COLOR = Color.decode("#FAFBFF");
     private static final Dimension DEFAULT_SIZE = new Dimension(530, 320);
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     //
     private JGraphModelAdapter jgAdapter;
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * An alternative starting point for this demo, to also allow running this
@@ -183,7 +182,7 @@ public class JGraphAdapterDemo
         jgAdapter.edit(cellAttr, null, null, null);
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * a listenable directed multigraph that allows loops and parallel edges.
@@ -200,3 +199,5 @@ public class JGraphAdapterDemo
         }
     }
 }
+
+// End JGraphAdapterDemo.java

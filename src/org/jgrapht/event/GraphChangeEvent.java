@@ -52,19 +52,18 @@ import java.util.*;
 public class GraphChangeEvent
     extends EventObject
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3834592106026382391L;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The type of graph change this event indicates.
      */
     protected int type;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new graph change event.
@@ -78,7 +77,7 @@ public class GraphChangeEvent
         this.type = type;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the event type.
@@ -90,3 +89,5 @@ public class GraphChangeEvent
         return type;
     }
 }
+
+// End GraphChangeEvent.java

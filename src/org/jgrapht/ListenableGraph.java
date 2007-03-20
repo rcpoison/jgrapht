@@ -55,8 +55,7 @@ import org.jgrapht.event.*;
 public interface ListenableGraph<V, E>
     extends Graph<V, E>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Adds the specified graph listener to this graph, if not already present.
@@ -87,3 +86,5 @@ public interface ListenableGraph<V, E>
      */
     public void removeVertexSetListener(VertexSetListener<V> l);
 }
+
+// End ListenableGraph.java

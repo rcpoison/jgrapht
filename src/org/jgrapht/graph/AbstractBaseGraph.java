@@ -69,14 +69,15 @@ import org.jgrapht.util.*;
  */
 public abstract class AbstractBaseGraph<V, E>
     extends AbstractGraph<V, E>
-    implements Graph<V, E>, Cloneable, Serializable
+    implements Graph<V, E>,
+        Cloneable,
+        Serializable
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String LOOPS_NOT_ALLOWED = "loops not allowed";
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     boolean allowingLoops;
 
@@ -90,7 +91,7 @@ public abstract class AbstractBaseGraph<V, E>
 
     private transient TypeUtil<V> vertexTypeDecl = null;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new pseudograph. The pseudograph can either be directed or
@@ -101,7 +102,7 @@ public abstract class AbstractBaseGraph<V, E>
      * @param allowLoops whether to allow edges that are self-loops or not.
      *
      * @throws NullPointerException if the specified edge factory is <code>
-     *                              null</code>.
+     * null</code>.
      */
     public AbstractBaseGraph(
         EdgeFactory<V, E> ef,
@@ -122,7 +123,7 @@ public abstract class AbstractBaseGraph<V, E>
         this.edgeSetFactory = new ArrayListFactory<V, E>();
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see Graph#getAllEdges(Object, Object)
@@ -178,7 +179,7 @@ public abstract class AbstractBaseGraph<V, E>
      * java.util.ArrayList} with capacity 1.
      *
      * @param edgeSetFactory factory to use for subsequently created edge sets
-     *                       (this call has no effect on existing edge sets)
+     * (this call has no effect on existing edge sets)
      */
     public void setEdgeSetFactory(EdgeSetFactory<V, E> edgeSetFactory)
     {
@@ -194,7 +195,8 @@ public abstract class AbstractBaseGraph<V, E>
         assertVertexExist(targetVertex);
 
         if (!allowingMultipleEdges
-            && containsEdge(sourceVertex, targetVertex)) {
+            && containsEdge(sourceVertex, targetVertex))
+        {
             return null;
         }
 
@@ -233,7 +235,8 @@ public abstract class AbstractBaseGraph<V, E>
         assertVertexExist(targetVertex);
 
         if (!allowingMultipleEdges
-            && containsEdge(sourceVertex, targetVertex)) {
+            && containsEdge(sourceVertex, targetVertex))
+        {
             return false;
         }
 
@@ -287,10 +290,9 @@ public abstract class AbstractBaseGraph<V, E>
      */
     public V getEdgeSource(E e)
     {
-        return
-            TypeUtil.uncheckedCast(
-                getIntrusiveEdge(e).source,
-                vertexTypeDecl);
+        return TypeUtil.uncheckedCast(
+            getIntrusiveEdge(e).source,
+            vertexTypeDecl);
     }
 
     /**
@@ -298,10 +300,9 @@ public abstract class AbstractBaseGraph<V, E>
      */
     public V getEdgeTarget(E e)
     {
-        return
-            TypeUtil.uncheckedCast(
-                getIntrusiveEdge(e).target,
-                vertexTypeDecl);
+        return TypeUtil.uncheckedCast(
+            getIntrusiveEdge(e).target,
+            vertexTypeDecl);
     }
 
     private IntrusiveEdge getIntrusiveEdge(E e)
@@ -314,8 +315,8 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     /**
-     * Returns a shallow copy of this graph instance.  Neither edges nor
-     * vertices are cloned.
+     * Returns a shallow copy of this graph instance. Neither edges nor vertices
+     * are cloned.
      *
      * @return a shallow copy of this set.
      *
@@ -523,7 +524,7 @@ public abstract class AbstractBaseGraph<V, E>
         }
     }
 
-    //~ Inner Classes ---------------------------------------------------------
+    //~ Inner Classes ----------------------------------------------------------
 
     /**
      * .
@@ -630,7 +631,8 @@ public abstract class AbstractBaseGraph<V, E>
     }
 
     private static class ArrayListFactory<VV, EE>
-        implements EdgeSetFactory<VV, EE>, Serializable
+        implements EdgeSetFactory<VV, EE>,
+            Serializable
     {
         private static final long serialVersionUID = 5936902837403445985L;
 
@@ -663,8 +665,7 @@ public abstract class AbstractBaseGraph<V, E>
         private transient Set<EE> unmodifiableIncoming = null;
         private transient Set<EE> unmodifiableOutgoing = null;
 
-        DirectedEdgeContainer(
-            EdgeSetFactory<VV, EE> edgeSetFactory,
+        DirectedEdgeContainer(EdgeSetFactory<VV, EE> edgeSetFactory,
             VV vertex)
         {
             incoming = edgeSetFactory.createEdgeSet(vertex);
@@ -775,7 +776,8 @@ public abstract class AbstractBaseGraph<V, E>
             Set<E> edges = null;
 
             if (containsVertex(sourceVertex)
-                && containsVertex(targetVertex)) {
+                && containsVertex(targetVertex))
+            {
                 edges = new ArrayUnenforcedSet<E>();
 
                 DirectedEdgeContainer<V, E> ec = getEdgeContainer(sourceVertex);
@@ -800,7 +802,8 @@ public abstract class AbstractBaseGraph<V, E>
         public E getEdge(V sourceVertex, V targetVertex)
         {
             if (containsVertex(sourceVertex)
-                && containsVertex(targetVertex)) {
+                && containsVertex(targetVertex))
+            {
                 DirectedEdgeContainer<V, E> ec = getEdgeContainer(sourceVertex);
 
                 Iterator<E> iter = ec.outgoing.iterator();
@@ -1035,7 +1038,8 @@ public abstract class AbstractBaseGraph<V, E>
             Set<E> edges = null;
 
             if (containsVertex(sourceVertex)
-                && containsVertex(targetVertex)) {
+                && containsVertex(targetVertex))
+            {
                 edges = new ArrayUnenforcedSet<E>();
 
                 Iterator<E> iter =
@@ -1067,7 +1071,8 @@ public abstract class AbstractBaseGraph<V, E>
         public E getEdge(V sourceVertex, V targetVertex)
         {
             if (containsVertex(sourceVertex)
-                && containsVertex(targetVertex)) {
+                && containsVertex(targetVertex))
+            {
                 Iterator<E> iter =
                     getEdgeContainer(sourceVertex).vertexEdges.iterator();
 
@@ -1200,8 +1205,8 @@ public abstract class AbstractBaseGraph<V, E>
 
             if (ec == null) {
                 ec = new UndirectedEdgeContainer<V, E>(
-                        edgeSetFactory,
-                        vertex);
+                    edgeSetFactory,
+                    vertex);
                 vertexMapUndirected.put(vertex, ec);
             }
 
@@ -1209,3 +1214,5 @@ public abstract class AbstractBaseGraph<V, E>
         }
     }
 }
+
+// End AbstractBaseGraph.java

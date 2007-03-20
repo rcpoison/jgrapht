@@ -52,12 +52,11 @@ public class SimpleDirectedGraph<V, E>
     extends AbstractBaseGraph<V, E>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 4049358608472879671L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new simple directed graph.
@@ -79,3 +78,5 @@ public class SimpleDirectedGraph<V, E>
         super(ef, false, false);
     }
 }
+
+// End SimpleDirectedGraph.java

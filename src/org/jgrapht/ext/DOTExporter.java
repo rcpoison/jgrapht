@@ -33,90 +33,110 @@
 package org.jgrapht.ext;
 
 import java.io.*;
+
 import org.jgrapht.*;
 
 
-/** Exports a graph into a DOT file.
+/**
+ * Exports a graph into a DOT file.
  *
- * <p>For a description of the format see 
- * <a href="http://en.wikipedia.org/wiki/DOT_language">http://en.wikipedia.org/wiki/DOT_language</a>.</p>
- * 
+ * <p>For a description of the format see <a
+ * href="http://en.wikipedia.org/wiki/DOT_language">
+ * http://en.wikipedia.org/wiki/DOT_language</a>.</p>
+ *
  * @author Trevor Harmon
  */
 public class DOTExporter<V, E>
 {
+    //~ Instance fields --------------------------------------------------------
+
     private VertexNameProvider<V> vertexIDProvider;
     private VertexNameProvider<V> vertexLabelProvider;
     private EdgeNameProvider<E> edgeLabelProvider;
-    
-    /** Constructs a new DOTExporter object with an integer name provider for
-     *  the vertex IDs and null providers for the vertex and edge labels.
+
+    //~ Constructors -----------------------------------------------------------
+
+    /**
+     * Constructs a new DOTExporter object with an integer name provider for the
+     * vertex IDs and null providers for the vertex and edge labels.
      */
     public DOTExporter()
     {
         this(new IntegerNameProvider<V>(), null, null);
     }
-    
-    /** Constructs a new DOTExporter object with the given ID and label providers.
+
+    /**
+     * Constructs a new DOTExporter object with the given ID and label
+     * providers.
      *
-     *  @param vertexIDProvider for generating vertex IDs. Must not be null.
-     *  @param vertexLabelProvider for generating vertex labels. If null, vertex labels will not be written to the file.
-     *  @param edgeLabelProvider for generating edge labels. If null, edge labels will not be written to the file.
+     * @param vertexIDProvider for generating vertex IDs. Must not be null.
+     * @param vertexLabelProvider for generating vertex labels. If null, vertex
+     * labels will not be written to the file.
+     * @param edgeLabelProvider for generating edge labels. If null, edge labels
+     * will not be written to the file.
      */
-    public DOTExporter(VertexNameProvider<V> vertexIDProvider, VertexNameProvider<V> vertexLabelProvider, EdgeNameProvider<E> edgeLabelProvider)
+    public DOTExporter(
+        VertexNameProvider<V> vertexIDProvider,
+        VertexNameProvider<V> vertexLabelProvider,
+        EdgeNameProvider<E> edgeLabelProvider)
     {
         this.vertexIDProvider = vertexIDProvider;
         this.vertexLabelProvider = vertexLabelProvider;
         this.edgeLabelProvider = edgeLabelProvider;
     }
-    
-    /** Exports a graph into a plain text file in DOT format. 
+
+    //~ Methods ----------------------------------------------------------------
+
+    /**
+     * Exports a graph into a plain text file in DOT format.
      *
-     *  @param writer the writer to which the graph to be exported
-     *  @param g the graph to be exported
+     * @param writer the writer to which the graph to be exported
+     * @param g the graph to be exported
      */
-    public void export(Writer writer, Graph<V,E> g)
+    public void export(Writer writer, Graph<V, E> g)
     {
         PrintWriter out = new PrintWriter(writer);
         String indent = "  ";
         String connector;
-        
-        if (g instanceof DirectedGraph)
-        {
-    		out.println("digraph G {");
-    		connector = " -> ";
+
+        if (g instanceof DirectedGraph) {
+            out.println("digraph G {");
+            connector = " -> ";
+        } else {
+            out.println("graph G {");
+            connector = " -- ";
         }
-        else
-        {
-    		out.println("graph G {");
-    		connector = " -- ";
-    	}
 
-		for (V v : g.vertexSet())
-		{
-		    out.print(indent + vertexIDProvider.getVertexName(v));
-		    
-		    if (vertexLabelProvider != null)
-		        out.print(" [label = \"" + vertexLabelProvider.getVertexName(v) + "\"]");
-		    
+        for (V v : g.vertexSet()) {
+            out.print(indent + vertexIDProvider.getVertexName(v));
+
+            if (vertexLabelProvider != null) {
+                out.print(
+                    " [label = \"" + vertexLabelProvider.getVertexName(v)
+                    + "\"]");
+            }
+
             out.println(";");
-		}
+        }
 
-        for (E e : g.edgeSet())
-		{
-		    String source = vertexIDProvider.getVertexName(g.getEdgeSource(e));
-		    String target = vertexIDProvider.getVertexName(g.getEdgeTarget(e));
+        for (E e : g.edgeSet()) {
+            String source = vertexIDProvider.getVertexName(g.getEdgeSource(e));
+            String target = vertexIDProvider.getVertexName(g.getEdgeTarget(e));
 
-			out.print(indent + source + connector + target);
-			
-			if (edgeLabelProvider != null)
-                out.print(" [label = \"" + edgeLabelProvider.getEdgeName(e) + "\"]");
-                
+            out.print(indent + source + connector + target);
+
+            if (edgeLabelProvider != null) {
+                out.print(
+                    " [label = \"" + edgeLabelProvider.getEdgeName(e) + "\"]");
+            }
+
             out.println(";");
-		}
+        }
 
-		out.println("}");
-		
-		out.flush();
+        out.println("}");
+
+        out.flush();
     }
 }
+
+// End DOTExporter.java

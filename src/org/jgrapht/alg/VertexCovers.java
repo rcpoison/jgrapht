@@ -62,8 +62,7 @@ import org.jgrapht.graph.*;
  */
 public abstract class VertexCovers
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Finds a 2-approximation for a minimal vertex cover of the specified
@@ -79,7 +78,7 @@ public abstract class VertexCovers
      * @param g the graph for which vertex cover approximation is to be found.
      *
      * @return a set of vertices which is a vertex cover for the specified
-     *         graph.
+     * graph.
      */
     public static <V, E> Set<V> find2ApproximationCover(Graph<V, E> g)
     {
@@ -87,8 +86,11 @@ public abstract class VertexCovers
         Set<V> cover = new HashSet<V>();
 
         // G'=(V',E') <-- G(V,E)
-        Subgraph<V, E, Graph<V,E>> sg = new Subgraph<V, E, Graph<V,E>>(
-            g, null, null);
+        Subgraph<V, E, Graph<V, E>> sg =
+            new Subgraph<V, E, Graph<V, E>>(
+                g,
+                null,
+                null);
 
         // while E' is non-empty
         while (sg.edgeSet().size() > 0) {
@@ -122,7 +124,7 @@ public abstract class VertexCovers
      * @param g the graph for which vertex cover approximation is to be found.
      *
      * @return a set of vertices which is a vertex cover for the specified
-     *         graph.
+     * graph.
      */
     public static <V, E> Set<V> findGreedyCover(UndirectedGraph<V, E> g)
     {
@@ -151,3 +153,5 @@ public abstract class VertexCovers
         return cover;
     }
 }
+
+// End $file.name$

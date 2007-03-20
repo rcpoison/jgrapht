@@ -56,8 +56,7 @@ import org.jgrapht.graph.*;
 public class IgnoreDirectionTest
     extends AbstractGraphIteratorTest
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     String getExpectedStr1()
     {
@@ -89,3 +88,5 @@ public class IgnoreDirectionTest
         return i;
     }
 }
+
+// End IgnoreDirectionTest.java

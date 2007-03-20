@@ -55,8 +55,7 @@ import org.jgrapht.*;
 public class VertexDegreeComparator<V, E>
     implements java.util.Comparator<V>
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The graph that contains the vertices to be compared.
@@ -69,7 +68,7 @@ public class VertexDegreeComparator<V, E>
      */
     private boolean ascendingOrder;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a comparator for comparing the degrees of vertices in the
@@ -89,8 +88,8 @@ public class VertexDegreeComparator<V, E>
      *
      * @param g graph with respect to which the degree is calculated.
      * @param ascendingOrder true - compares in ascending order of degrees
-     *                       (lowest first), false - compares in descending
-     *                       order of degrees (highest first).
+     * (lowest first), false - compares in descending order of degrees (highest
+     * first).
      */
     public VertexDegreeComparator(
         UndirectedGraph<V, E> g,
@@ -100,7 +99,7 @@ public class VertexDegreeComparator<V, E>
         this.ascendingOrder = ascendingOrder;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Compare the degrees of <code>v1</code> and <code>v2</code>, taking into
@@ -110,23 +109,26 @@ public class VertexDegreeComparator<V, E>
      * @param v2 the second vertex to be compared.
      *
      * @return -1 if <code>v1</code> comes before <code>v2</code>, +1 if <code>
-     *         v1</code> comes after <code>v2</code>, 0 if equal.
+     * v1</code> comes after <code>v2</code>, 0 if equal.
      */
     public int compare(V v1, V v2)
     {
         int degree1 = graph.degreeOf(v1);
         int degree2 = graph.degreeOf(v2);
 
-        if (
-            ((degree1 < degree2) && ascendingOrder)
-            || ((degree1 > degree2) && !ascendingOrder)) {
+        if (((degree1 < degree2) && ascendingOrder)
+            || ((degree1 > degree2) && !ascendingOrder))
+        {
             return -1;
         } else if (
             ((degree1 > degree2) && ascendingOrder)
-            || ((degree1 < degree2) && !ascendingOrder)) {
+            || ((degree1 < degree2) && !ascendingOrder))
+        {
             return 1;
         } else {
             return 0;
         }
     }
 }
+
+// End VertexDegreeComparator.java

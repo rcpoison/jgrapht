@@ -54,8 +54,7 @@ import org.jgrapht.graph.*;
 public class TopologicalOrderIteratorTest
     extends EnhancedTestCase
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * .
@@ -66,7 +65,7 @@ public class TopologicalOrderIteratorTest
             new DefaultDirectedGraph<String, DefaultEdge>(
                 DefaultEdge.class);
 
-        String [] v = new String [9];
+        String [] v = new String[9];
 
         v[0] = "preheat oven";
         v[1] = "sift dry ingredients";
@@ -114,9 +113,8 @@ public class TopologicalOrderIteratorTest
         // Test with a reversed view
         DirectedGraph<String, DefaultEdge> reversed =
             new EdgeReversedGraph<String, DefaultEdge>(graph);
-        
-        iter =
-            new TopologicalOrderIterator<String, DefaultEdge>(reversed);
+
+        iter = new TopologicalOrderIterator<String, DefaultEdge>(reversed);
         i = v.length - 1;
 
         while (iter.hasNext()) {

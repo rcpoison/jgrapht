@@ -52,22 +52,23 @@ public class UnmodifiableDirectedGraph<V, E>
     extends UnmodifiableGraph<V, E>
     implements DirectedGraph<V, E>
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3978701783725913906L;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new unmodifiable directed graph based on the specified backing
      * graph.
      *
      * @param g the backing graph on which an unmodifiable graph is to be
-     *          created.
+     * created.
      */
     public UnmodifiableDirectedGraph(DirectedGraph<V, E> g)
     {
         super(g);
     }
 }
+
+// End UnmodifiableDirectedGraph.java

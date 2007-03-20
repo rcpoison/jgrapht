@@ -50,8 +50,7 @@ import org.jgrapht.experimental.equivalence.*;
 public class OddEvenGroupComparator
     implements EquivalenceComparator<Integer, Object>
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     public boolean equivalenceCompare(
         Integer arg1,
@@ -81,3 +80,5 @@ public class OddEvenGroupComparator
         return int1 % 2;
     }
 }
+
+// End OddEvenGroupComparator.java

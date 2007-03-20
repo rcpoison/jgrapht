@@ -47,7 +47,7 @@ import java.util.*;
 /**
  * A listener that is notified when the graph's vertex set changes. It should be
  * used when <i>only</i> notifications on vertex-set changes are of interest. If
- * all graph  notifications are of interest better use <code>
+ * all graph notifications are of interest better use <code>
  * GraphListener</code>.
  *
  * @author Barak Naveh
@@ -57,8 +57,7 @@ import java.util.*;
 public interface VertexSetListener<V>
     extends EventListener
 {
-
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Notifies that a vertex has been added to the graph.
@@ -74,3 +73,5 @@ public interface VertexSetListener<V>
      */
     public void vertexRemoved(GraphVertexChangeEvent<V> e);
 }
+
+// End VertexSetListener.java

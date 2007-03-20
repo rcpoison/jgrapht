@@ -45,7 +45,7 @@ import org.jgrapht.util.*;
 /**
  * For permutation like this:
  * <li>1,2 are the same eq.group (numbers)
- * <li>a,b  are og the same eq.group (letters)
+ * <li>a,b are og the same eq.group (letters)
  * <li>'$' is of its own eq. group (signs) Let the order of the group be
  * (arbitrary): signs,numbers,letters (note that for performance reasons, this
  * arbitrary order is the worst! see Performance section below)
@@ -98,10 +98,10 @@ import org.jgrapht.util.*;
  * @since May 30, 2005
  */
 public class CompoundPermutationIter
-    implements ArrayPermutationsIter, Iterator
+    implements ArrayPermutationsIter,
+        Iterator
 {
-
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     IntegerPermutationIter [] permArray;
 
@@ -118,7 +118,7 @@ public class CompoundPermutationIter
 
     private int iterCounter = 0;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * For the class example, use [1,2,2]. order matters! (performance-wise too)
@@ -130,7 +130,7 @@ public class CompoundPermutationIter
         init(equalityGroupsSizesArray);
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Creates an IntegerPermutationIter class per equalityGroup with different
@@ -141,18 +141,19 @@ public class CompoundPermutationIter
     private void init(int [] equalityGroupsSizesArray)
     {
         this.permArray =
-            new IntegerPermutationIter [equalityGroupsSizesArray.length];
+            new IntegerPermutationIter[equalityGroupsSizesArray.length];
 
         int counter = 0;
         this.max = 1; // each time , multiply by factorail(eqGroupSize)
         for (
             int eqGroup = 0;
             eqGroup < equalityGroupsSizesArray.length;
-            eqGroup++) {
+            eqGroup++)
+        {
             // create an array of eq.group size filled with values
             // of counter, counter+1, ... counter+size-1
             int currGroupSize = equalityGroupsSizesArray[eqGroup];
-            int [] currArray = new int [currGroupSize];
+            int [] currArray = new int[currGroupSize];
             for (int i = 0; i < currGroupSize; i++) {
                 currArray[i] = counter;
                 counter++;
@@ -228,12 +229,13 @@ public class CompoundPermutationIter
      */
     public int [] getPermAsArray()
     {
-        int [] resultArray = new int [this.totalPermArraySize];
+        int [] resultArray = new int[this.totalPermArraySize];
         int counter = 0;
         for (
             int groupIndex = 0;
             groupIndex < this.permArray.length;
-            groupIndex++) {
+            groupIndex++)
+        {
             int [] currPermArray = this.permArray[groupIndex].getCurrent();
             System.arraycopy(
                 currPermArray,
@@ -301,3 +303,5 @@ public class CompoundPermutationIter
         throw new UnsupportedOperationException();
     }
 }
+
+// End CompoundPermutationIter.java

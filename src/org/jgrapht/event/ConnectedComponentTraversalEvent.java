@@ -52,8 +52,7 @@ import java.util.*;
 public class ConnectedComponentTraversalEvent
     extends EventObject
 {
-
-    //~ Static fields/initializers --------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = 3834311717709822262L;
 
@@ -67,14 +66,14 @@ public class ConnectedComponentTraversalEvent
      */
     public static final int CONNECTED_COMPONENT_FINISHED = 32;
 
-    //~ Instance fields -------------------------------------------------------
+    //~ Instance fields --------------------------------------------------------
 
     /**
      * The type of this event.
      */
     private int type;
 
-    //~ Constructors ----------------------------------------------------------
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new ConnectedComponentTraversalEvent.
@@ -88,7 +87,7 @@ public class ConnectedComponentTraversalEvent
         this.type = type;
     }
 
-    //~ Methods ---------------------------------------------------------------
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Returns the event type.
@@ -100,3 +99,5 @@ public class ConnectedComponentTraversalEvent
         return type;
     }
 }
+
+// End ConnectedComponentTraversalEvent.java
