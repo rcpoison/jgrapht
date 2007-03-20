@@ -363,7 +363,6 @@
       <fileset dir="${basedir}">
         <include name="src/**/*.java"/>
         <include name="testsrc/**/*.java"/>
-        <exclude name="testsrc/**/IsomorphismInspectorTest.java"/>
       </fileset>
     </jalopy>
   </target>

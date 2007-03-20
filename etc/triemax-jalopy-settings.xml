@@ -344,7 +344,7 @@
     <indentation>
      <continuation>
       <parameter>false</parameter>
-      <return>false</return>
+      <return>true</return>
       <block>false</block>
       <operator>false</operator>
      </continuation>
