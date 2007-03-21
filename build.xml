@@ -53,7 +53,7 @@
 
 <!--
 /**
- * An ANT build file for JGraphT (use Ant 1.6.0 and above).
+ * An ant build file for JGraphT (use Ant 1.6.0 and above).
  * Before running this script, make sure that the libraries used by JGraphT are
  * found under ./lib directory. This script will create directories ./build 
  * and ./testbuild for generated classfiles. These can be removed at any time 
@@ -77,9 +77,11 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.7.1alpha" />
+    value="0.7.2alpha" />
   
   <!-- SVN tags and their respective version names -->
+  <property name="ver_0_7_1.name"       
+    value="0.7.1" />
   <property name="ver_0_7_0.name"       
     value="0.7.0" />
   <property name="ver_0_6_0.name"       
