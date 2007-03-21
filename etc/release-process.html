@@ -167,11 +167,11 @@ code coverage.
 
 <li>Commit all work to SVN.
 
-<li>Add a SVN tag using the convention: ver_x_y_z (e.g., the tag ver_0_5_1
-denotes Version 0.5.1).  The command for this is something like
-svn copy https://svn.sourceforge.net/svnroot/jgrapht/trunk \
-         https://svn.sourceforge.net/svnroot/jgrapht/tags/ver_0_7_0 \
-         -m "Tag for the 0.7.0 release of JGraphT"
+<li>Add a SVN tag using the convention: ver_x_y_z (e.g., the tag ver_0_7_1
+denotes Version 0.7.1).  The command for this is something like
+<b>svn copy https://svn.sourceforge.net/svnroot/jgrapht/trunk 
+         https://svn.sourceforge.net/svnroot/jgrapht/tags/ver_0_7_1 
+         -m "Tag for the 0.7.1 release of JGraphT"</b>
 
 <li>
 At this stage, the release is complete in SVN and only a distribution
@@ -188,10 +188,10 @@ etc/build.properties.template.
 You just need to invoke:
 
 <pre><code>
-      ant -Dsvntag=ver_0_5_1 release
+      ant -Dsvntag=ver_0_7_1 release
 </code></pre>
 
-It will checkout from SVN the tagged version 0.5.1, and build a
+It will checkout from SVN the tagged version 0.7.1, and build a
 distribution for it.  This will fail unless you have set up your build
 to include the retroweaver-based backport.
 
