@@ -589,6 +589,7 @@
     <fail unless="retroweaver.dir"/>
     <fail unless="retroweaver.ver"/>
     <fail unless="jre1.4.dir"/>
+    <antcall target="checkout"/>
     <ant dir="${checkout.dir}" antfile="${build.file.name}" 
       target="all" inheritall="false" inheritrefs="false">
       <property name="svntag" value="${svntag}"/>
