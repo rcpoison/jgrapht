@@ -75,6 +75,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(VertexCoversTest.class));
         suite.addTest(new TestSuite(CycleDetectorTest.class));
         suite.addTest(new TestSuite(BronKerboschCliqueFinderTest.class));
+        suite.addTest(new TestSuite(TransitiveClosureTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
 
         // $JUnit-END$
