@@ -95,8 +95,8 @@ public class EquivalenceSetCreator<E, C>
             // arrayList.add( eSet ); } }
             //
             //
-            // now we got all the eq. groups  in an array list. we need to sort
-            // // them EquivalenceSet [] resultArray = new EquivalenceSet
+            // now we got all the eq. groups  in an array list. we need to sort //
+            // them EquivalenceSet [] resultArray = new EquivalenceSet
             // [arrayList.size()]; arrayList.toArray(resultArray);
             // Arrays.sort(resultArray, groupSizeComparator); return
             // resultArray;

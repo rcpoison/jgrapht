@@ -417,14 +417,11 @@ public class IsomorphismInspectorTest
         }
 
         // first assert all are isomorphic (if vertexChecker is not used)
-        assertIsomorphic(
-            new Graph[] { graphsArray[0], graphsArray[1] },
+        assertIsomorphic(new Graph[] { graphsArray[0], graphsArray[1] },
             true);
-        assertIsomorphic(
-            new Graph[] { graphsArray[0], graphsArray[2] },
+        assertIsomorphic(new Graph[] { graphsArray[0], graphsArray[2] },
             true);
-        assertIsomorphic(
-            new Graph[] { graphsArray[1], graphsArray[2] },
+        assertIsomorphic(new Graph[] { graphsArray[1], graphsArray[2] },
             true);
 
         // create a functor according to odd even

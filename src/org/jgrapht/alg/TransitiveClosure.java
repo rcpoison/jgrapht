@@ -37,9 +37,10 @@
  */
 package org.jgrapht.alg;
 
-import java.util.HashSet;
-import java.util.Set;
-import org.jgrapht.graph.SimpleDirectedGraph;
+import java.util.*;
+
+import org.jgrapht.graph.*;
+
 
 /**
  * Constructs the transitive closure of the input graph.
@@ -49,41 +50,50 @@ import org.jgrapht.graph.SimpleDirectedGraph;
  */
 public class TransitiveClosure
 {
+    //~ Static fields/initializers ---------------------------------------------
+
     /**
      * Singleton instance.
      */
     public static final TransitiveClosure INSTANCE = new TransitiveClosure();
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * Private Constructor.
      */
-    private TransitiveClosure() {}
+    private TransitiveClosure()
+    {
+    }
+
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Computes the transitive closure of the given graph.
      *
      * @param graph - Graph to compute transitive closure for.
      */
-    public <V, E> void closeSimpleDirectedGraph(
-            SimpleDirectedGraph<V, E> graph) {
+    public <V, E> void closeSimpleDirectedGraph(SimpleDirectedGraph<V, E> graph)
+    {
         Set<V> vertexSet = graph.vertexSet();
 
         Set<V> newEdgeTargets = new HashSet<V>();
 
-        // At every iteration of the outer loop, we add a path of length 1 between nodes that
-        // originally had a path of length 2. In the worst case, we need to make floor(log |V|) + 1
-        // iterations. We stop earlier if there is no change to the output graph.
+        // At every iteration of the outer loop, we add a path of length 1
+        // between nodes that originally had a path of length 2. In the worst
+        // case, we need to make floor(log |V|) + 1 iterations. We stop earlier
+        // if there is no change to the output graph.
 
         int bound = computeBinaryLog(vertexSet.size());
         boolean done = false;
-        for(int i = 0; !done && i < bound; ++i) {
+        for (int i = 0; !done && (i < bound); ++i) {
             done = true;
-            for(V v1 : vertexSet) {
+            for (V v1 : vertexSet) {
                 newEdgeTargets.clear();
 
-                for(E v1OutEdge : graph.outgoingEdgesOf(v1)) {
+                for (E v1OutEdge : graph.outgoingEdgesOf(v1)) {
                     V v2 = graph.getEdgeTarget(v1OutEdge);
-                    for(E v2OutEdge : graph.outgoingEdgesOf(v2)) {
+                    for (E v2OutEdge : graph.outgoingEdgesOf(v2)) {
                         V v3 = graph.getEdgeTarget(v2OutEdge);
 
                         if (v1.equals(v3)) {
@@ -101,7 +111,7 @@ public class TransitiveClosure
                     }
                 }
 
-                for(V v3 : newEdgeTargets) {
+                for (V v3 : newEdgeTargets) {
                     graph.addEdge(v1, v3);
                 }
             }
@@ -111,11 +121,12 @@ public class TransitiveClosure
     /**
      * Computes floor(log_2(n)) + 1
      */
-    private int computeBinaryLog(int n) {
+    private int computeBinaryLog(int n)
+    {
         assert n >= 0;
 
         int result = 0;
-        while(n > 0) {
+        while (n > 0) {
             n >>= 1;
             ++result;
         }
@@ -123,3 +134,5 @@ public class TransitiveClosure
         return result;
     }
 }
+
+// End TransitiveClosure.java

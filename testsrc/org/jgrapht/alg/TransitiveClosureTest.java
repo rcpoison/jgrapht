@@ -37,61 +37,84 @@
  */
 package org.jgrapht.alg;
 
-import junit.framework.TestCase;
-import org.jgrapht.VertexFactory;
-import org.jgrapht.generate.LinearGraphGenerator;
-import org.jgrapht.generate.RingGraphGenerator;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
+import junit.framework.*;
+
+import org.jgrapht.*;
+import org.jgrapht.generate.*;
+import org.jgrapht.graph.*;
+
 
 /**
  */
-public class TransitiveClosureTest extends TestCase {
-    public void testLinearGraph() {
-        SimpleDirectedGraph<Integer, DefaultEdge> graph = new SimpleDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+public class TransitiveClosureTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
+
+    public void testLinearGraph()
+    {
+        SimpleDirectedGraph<Integer, DefaultEdge> graph =
+            new SimpleDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
 
         int N = 10;
-        LinearGraphGenerator<Integer, DefaultEdge> gen = new LinearGraphGenerator<Integer, DefaultEdge>(N);
+        LinearGraphGenerator<Integer, DefaultEdge> gen =
+            new LinearGraphGenerator<Integer, DefaultEdge>(N);
 
-        VertexFactory<Integer> vf = new VertexFactory<Integer>() {
-            private int m_index = 0;
+        VertexFactory<Integer> vf =
+            new VertexFactory<Integer>() {
+                private int m_index = 0;
 
-            public Integer createVertex() {
-                return Integer.valueOf(m_index++);
-            }
-        };
+                public Integer createVertex()
+                {
+                    return Integer.valueOf(m_index++);
+                }
+            };
         gen.generateGraph(graph, vf, null);
         TransitiveClosure.INSTANCE.closeSimpleDirectedGraph(graph);
 
-        assertEquals(true, graph.edgeSet().size() == (N * (N - 1)) / 2);
-        for(int i = 0; i < N; ++i) {
-            for(int j = i + 1; j < N; ++j) {
-                assertEquals(true, graph.getEdge(Integer.valueOf(i), Integer.valueOf(j)) != null);
+        assertEquals(true, graph.edgeSet().size() == ((N * (N - 1)) / 2));
+        for (int i = 0; i < N; ++i) {
+            for (int j = i + 1; j < N; ++j) {
+                assertEquals(
+                    true,
+                    graph.getEdge(Integer.valueOf(i), Integer.valueOf(j))
+                    != null);
             }
         }
     }
 
-    public void testRingGraph() {
-        SimpleDirectedGraph<Integer, DefaultEdge> graph = new SimpleDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
+    public void testRingGraph()
+    {
+        SimpleDirectedGraph<Integer, DefaultEdge> graph =
+            new SimpleDirectedGraph<Integer, DefaultEdge>(DefaultEdge.class);
 
         int N = 10;
-        RingGraphGenerator<Integer, DefaultEdge> gen = new RingGraphGenerator<Integer, DefaultEdge>(N);
+        RingGraphGenerator<Integer, DefaultEdge> gen =
+            new RingGraphGenerator<Integer, DefaultEdge>(N);
 
-        VertexFactory<Integer> vf = new VertexFactory<Integer>() {
-            private int m_index = 0;
+        VertexFactory<Integer> vf =
+            new VertexFactory<Integer>() {
+                private int m_index = 0;
 
-            public Integer createVertex() {
-                return Integer.valueOf(m_index++);
-            }
-        };
+                public Integer createVertex()
+                {
+                    return Integer.valueOf(m_index++);
+                }
+            };
         gen.generateGraph(graph, vf, null);
         TransitiveClosure.INSTANCE.closeSimpleDirectedGraph(graph);
 
-        assertEquals(true, graph.edgeSet().size() == N * (N - 1));
-        for(int i = 0; i < N; ++i) {
-            for(int j = 0; j < N; ++j) {
-                assertEquals(true, i == j || graph.getEdge(Integer.valueOf(i), Integer.valueOf(j)) != null);
+        assertEquals(true, graph.edgeSet().size() == (N * (N - 1)));
+        for (int i = 0; i < N; ++i) {
+            for (int j = 0; j < N; ++j) {
+                assertEquals(
+                    true,
+                    (i == j)
+                    || (graph.getEdge(Integer.valueOf(i), Integer.valueOf(j))
+                        != null));
             }
         }
     }
 }
+
+// End $file.name$
