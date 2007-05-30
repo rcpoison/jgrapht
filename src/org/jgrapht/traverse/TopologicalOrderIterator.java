@@ -104,7 +104,8 @@ public class TopologicalOrderIterator<V, E>
      *
      * @param dg the directed graph to be iterated.
      * @param queue queue to use for tie-break in case of partial order (e.g. a
-     * PriorityQueue can be used to break ties according to vertex priority)
+     * PriorityQueue can be used to break ties according to vertex priority);
+     * must be initially empty
      */
     public TopologicalOrderIterator(DirectedGraph<V, E> dg, Queue<V> queue)
     {
@@ -121,6 +122,8 @@ public class TopologicalOrderIterator<V, E>
         this(dg, initialize(dg, queue, inDegreeMap));
         this.queue = queue;
         this.inDegreeMap = inDegreeMap;
+        
+        assert(queue.isEmpty());
     }
 
     // NOTE: This is intentionally private, because starting the sort "in the
