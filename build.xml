@@ -379,7 +379,7 @@
 
   <!-- Test the retrowoven JRE 1.4 backport                              -->
   <target name="test.retro" if="jre1.4.dir"
-    description="Tests the JRE 1.4 backport.">
+    description="Tests the JRE 1.4 backport." depends="init">
     <runTests jvm="${jre1.4.dir}/bin/java" 
       classpath.refid="test.retro.classpath" />
   </target>
