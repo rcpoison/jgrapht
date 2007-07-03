@@ -64,8 +64,11 @@ import org.jgrapht.util.*;
  *
  * <p>For this iterator to work correctly the graph must be acyclic, and must
  * not be modified during iteration. Currently there are no means to ensure
- * that, nor to fail-fast; the results of cyclic input or concurrent
- * modifications are undefined.</p>
+ * that, nor to fail-fast; the results with cyclic input (including self-loops)
+ * or concurrent modifications are undefined.  To precheck a graph
+ * for cycles, consider using {@link org.jgrapht.alg.CycleDetector}
+ * or {@link org.jgrapht.alg.StrongConnectivityInspector}.
+ * </p>
  *
  * @author Marden Neubert
  * @since Dec 18, 2004
