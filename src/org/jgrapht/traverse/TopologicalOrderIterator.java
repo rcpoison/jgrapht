@@ -48,10 +48,10 @@ import org.jgrapht.util.*;
 
 
 /**
- * Implements topological order traversal for a directed graph. A topological
- * sort is a permutation <tt>p</tt> of the vertices of a graph such that an edge
- * <tt>(i,j)</tt> implies that <tt>i</tt> appears before <tt>j</tt> in <tt>
- * p</tt> (Skiena 1990, p. 208). See also <a
+ * Implements topological order traversal for a directed acyclic graph. A
+ * topological sort is a permutation <tt>p</tt> of the vertices of a graph such
+ * that an edge <tt>(i,j)</tt> implies that <tt>i</tt> appears before
+ * <tt>j</tt> in <tt> p</tt> (Skiena 1990, p. 208). See also <a
  * href="http://mathworld.wolfram.com/TopologicalSort.html">
  * http://mathworld.wolfram.com/TopologicalSort.html</a>.
  *
@@ -62,9 +62,10 @@ import org.jgrapht.util.*;
  * href="http://www.brpreiss.com/books/opus5/">
  * http://www.brpreiss.com/books/opus5/</a></p>
  *
- * <p>For this iterator to work correctly the graph must not be modified during
- * iteration. Currently there are no means to ensure that, nor to fail-fast. The
- * results of such modifications are undefined.</p>
+ * <p>For this iterator to work correctly the graph must be acyclic, and must
+ * not be modified during iteration. Currently there are no means to ensure
+ * that, nor to fail-fast; the results of cyclic input or concurrent
+ * modifications are undefined.</p>
  *
  * @author Marden Neubert
  * @since Dec 18, 2004
