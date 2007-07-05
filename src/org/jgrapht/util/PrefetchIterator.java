@@ -56,11 +56,11 @@ import java.util.*;
  *
  * <pre><code>
     //This class supllies enumeration of integer till 100.
-    public class iteratorExample implements Enumeration{
+    public class IteratorExample implements Enumeration{
     private int counter=0;
     private PrefetchIterator nextSupplier;
 
-        iteratorExample()
+        IteratorExample()
         {
             nextSupplier = new PrefetchIterator(new PrefetchIterator.NextElementFunctor(){
 

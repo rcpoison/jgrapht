@@ -76,6 +76,10 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(CycleDetectorTest.class));
         suite.addTest(new TestSuite(BronKerboschCliqueFinderTest.class));
         suite.addTest(new TestSuite(TransitiveClosureTest.class));
+        suite.addTest(new TestSuite(BiconnectivityInspectorTest.class));
+        suite.addTest(new TestSuite(BlockCutpointGraphTest.class));
+        suite.addTest(new TestSuite(KShortestPathCostTest.class));
+        suite.addTest(new TestSuite(KShortestPathKValuesTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
 
         // $JUnit-END$

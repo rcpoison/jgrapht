@@ -49,7 +49,7 @@ import org.jgrapht.*;
 
 
 /**
- * An EdgeFactory for producing edges by using a class as a factory.
+ * An {@link EdgeFactory} for producing edges by using a class as a factory.
  *
  * @author Barak Naveh
  * @since Jul 14, 2003

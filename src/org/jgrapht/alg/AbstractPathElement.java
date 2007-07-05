@@ -55,6 +55,9 @@ import org.jgrapht.*;
  * <p>NOTE jvs 14-Jan-2006: This is currently an internal data structure for use
  * in algorithms. If we want to promote it to public, we should first clean it
  * up and move it to the parent package, making a Path a first-class concept.
+ *
+ * @author Guillaume Boulmier
+ * @since July 5, 2007
  */
 abstract class AbstractPathElement<V, E>
 {
