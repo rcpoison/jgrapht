@@ -135,4 +135,4 @@ public class BiconnectivityInspector<V, E>
     }
 }
 
-// End $file.name$
+// End BiconnectivityInspector.java

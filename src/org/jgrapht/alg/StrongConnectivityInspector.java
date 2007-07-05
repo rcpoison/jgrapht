@@ -330,4 +330,4 @@ public class StrongConnectivityInspector<V, E>
     }
 }
 
-// End $file.name$
+// End StrongConnectivityInspector.java

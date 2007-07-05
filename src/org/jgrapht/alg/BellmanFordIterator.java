@@ -436,4 +436,4 @@ class BellmanFordIterator<V, E>
     }
 }
 
-// End $file.name$
+// End BellmanFordIterator.java

@@ -1141,4 +1141,4 @@ public class JGraphModelAdapter<V, E>
     }
 }
 
-// End $file.name$
+// End JGraphModelAdapter.java

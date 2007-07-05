@@ -182,4 +182,4 @@ public class GraphReader<V, E>
     }
 }
 
-// End $file.name$
+// End GraphReader.java

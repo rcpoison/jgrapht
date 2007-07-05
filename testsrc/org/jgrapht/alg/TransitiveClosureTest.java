@@ -117,4 +117,4 @@ public class TransitiveClosureTest
     }
 }
 
-// End $file.name$
+// End TransitiveClosureTest.java

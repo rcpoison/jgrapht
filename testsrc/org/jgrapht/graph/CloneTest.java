@@ -92,4 +92,4 @@ public class CloneTest
     }
 }
 
-// End $file.name$
+// End CloneTest.java

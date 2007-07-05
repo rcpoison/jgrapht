@@ -101,4 +101,4 @@ public class BiconnectivityInspectorTest
     }
 }
 
-// End $file.name$
+// End BiconnectivityInspectorTest.java

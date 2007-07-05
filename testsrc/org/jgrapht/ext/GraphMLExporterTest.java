@@ -103,4 +103,4 @@ public class GraphMLExporterTest
     }
 }
 
-// End $file.name$
+// End GraphMLExporterTest.java

@@ -187,4 +187,4 @@ public class AsUndirectedGraphTest
     }
 }
 
-// End $file.name$
+// End AsUndirectedGraphTest.java

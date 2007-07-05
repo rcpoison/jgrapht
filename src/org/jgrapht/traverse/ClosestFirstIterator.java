@@ -339,4 +339,4 @@ public class ClosestFirstIterator<V, E>
     }
 }
 
-// End $file.name$
+// End ClosestFirstIterator.java

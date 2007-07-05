@@ -149,7 +149,7 @@ final class RankingPathElementList<V, E>
             vIndex++)
         {
             RankingPathElement<V, E> prevPathElement = elementList.get(vIndex);
-            if (isAlreadyImprovedBythisEdge(edge, prevPathElement)
+            if (isAlreadyImprovedByThisEdge(edge, prevPathElement)
                 || containsTargetPreviously(prevPathElement))
             {
                 // checks if path is simple.
@@ -273,7 +273,7 @@ final class RankingPathElementList<V, E>
         return false;
     }
 
-    private boolean isAlreadyImprovedBythisEdge(
+    private boolean isAlreadyImprovedByThisEdge(
         E edge,
         RankingPathElement<V, E> prevPathElement)
     {

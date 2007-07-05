@@ -492,4 +492,4 @@ public class SimpleDirectedGraphTest
     }
 }
 
-// End $file.name$
+// End SimpleDirectedGraphTest.java

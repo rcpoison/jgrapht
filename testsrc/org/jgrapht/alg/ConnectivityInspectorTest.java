@@ -374,4 +374,4 @@ public class ConnectivityInspectorTest
     }
 }
 
-// End $file.name$
+// End ConnectivityInspectorTest.java

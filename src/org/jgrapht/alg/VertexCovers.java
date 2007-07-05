@@ -154,4 +154,4 @@ public abstract class VertexCovers
     }
 }
 
-// End $file.name$
+// End VertexCovers.java

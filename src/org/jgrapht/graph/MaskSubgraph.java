@@ -296,4 +296,4 @@ public class MaskSubgraph<V, E>
     }
 }
 
-// End $file.name$
+// End MaskSubgraph.java
