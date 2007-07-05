@@ -140,8 +140,8 @@ public class Subgraph<V, E, G extends Graph<V, E>>
      * @param vertexSubset vertices to include in the subgraph. If <code>
      * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     * null</code> then all the edges whose vertices found in the graph
-     * are included.
+     * null</code> then all the edges whose vertices found in the graph are
+     * included.
      */
     public Subgraph(G base, Set<V> vertexSubset, Set<E> edgeSubset)
     {

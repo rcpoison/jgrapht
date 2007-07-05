@@ -40,11 +40,10 @@
  */
 package org.jgrapht.alg;
 
-import java.util.AbstractList;
-import java.util.ArrayList;
+import java.util.*;
 
-import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
+import org.jgrapht.*;
+
 
 /**
  * List of paths <code>AbstractPathElement</code> with same target vertex.
@@ -52,10 +51,14 @@ import org.jgrapht.Graphs;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> extends AbstractList<T> implements
-        Cloneable {
+abstract class AbstractPathElementList<V,
+    E, T extends AbstractPathElement<V, E>>
+    extends AbstractList<T>
+    implements Cloneable
+{
+    //~ Instance fields --------------------------------------------------------
 
-    protected Graph<V,E> graph;
+    protected Graph<V, E> graph;
 
     /**
      * Max number of stored paths.
@@ -72,18 +75,23 @@ abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> e
      */
     protected V vertex;
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * Creates a list with an empty path. The list size is 1.
-     * 
-     * @param maxSize
-     *            maximum number of paths the list is able to store.
-     * @throws NullPointerException
-     *             if the specified path-element is <code>null</code>.
-     * @throws IllegalArgumentException
-     *             if <code>maxSize</code> is negative or 0.
+     *
+     * @param maxSize maximum number of paths the list is able to store.
+     *
+     * @throws NullPointerException if the specified path-element is <code>
+     * null</code>.
+     * @throws IllegalArgumentException if <code>maxSize</code> is negative or
+     * 0.
      */
-    protected AbstractPathElementList(Graph<V,E> graph, int maxSize,
-            T pathElement) {
+    protected AbstractPathElementList(
+        Graph<V, E> graph,
+        int maxSize,
+        T pathElement)
+    {
         if (maxSize <= 0) {
             throw new IllegalArgumentException("maxSize is negative or 0");
         }
@@ -101,21 +109,22 @@ abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> e
     /**
      * Creates paths obtained by concatenating the specified edge to the
      * specified paths.
-     * 
-     * @param maxSize
-     *            maximum number of paths the list is able to store.
-     * @param elementList
-     *            paths, list of <code>AbstractPathElement</code>.
-     * @param edge
-     *            edge reaching the end vertex of the created paths.
-     * @throws NullPointerException
-     *             if the specified prevPathElementList or edge is
-     *             <code>null</code>.
-     * @throws IllegalArgumentException
-     *             if <code>maxSize</code> is negative or 0.
+     *
+     * @param maxSize maximum number of paths the list is able to store.
+     * @param elementList paths, list of <code>AbstractPathElement</code>.
+     * @param edge edge reaching the end vertex of the created paths.
+     *
+     * @throws NullPointerException if the specified prevPathElementList or edge
+     * is <code>null</code>.
+     * @throws IllegalArgumentException if <code>maxSize</code> is negative or
+     * 0.
      */
-    protected AbstractPathElementList(Graph<V,E> graph, int maxSize,
-            AbstractPathElementList<V,E,T> elementList, E edge) {
+    protected AbstractPathElementList(
+        Graph<V, E> graph,
+        int maxSize,
+        AbstractPathElementList<V, E, T> elementList,
+        E edge)
+    {
         if (maxSize <= 0) {
             throw new IllegalArgumentException("maxSize is negative or 0");
         }
@@ -128,8 +137,8 @@ abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> e
 
         this.graph = graph;
         this.maxSize = maxSize;
-        this.vertex = Graphs.getOppositeVertex(graph, edge, elementList
-                .getVertex());
+        this.vertex =
+            Graphs.getOppositeVertex(graph, edge, elementList.getVertex());
     }
 
     /**
@@ -137,7 +146,7 @@ abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> e
      *
      * @param original source to copy from
      */
-    protected AbstractPathElementList(AbstractPathElementList<V,E,T> original)
+    protected AbstractPathElementList(AbstractPathElementList<V, E, T> original)
     {
         this.graph = original.graph;
         this.maxSize = original.maxSize;
@@ -145,27 +154,32 @@ abstract class AbstractPathElementList<V,E,T extends AbstractPathElement<V,E>> e
         this.vertex = original.vertex;
     }
 
+    //~ Methods ----------------------------------------------------------------
+
     /**
      * Returns path <code>AbstractPathElement</code> stored at the specified
      * index.
-     * 
      */
-    public T get(int index) {
+    public T get(int index)
+    {
         return this.pathElements.get(index);
     }
 
     /**
      * Returns target vertex.
      */
-    public V getVertex() {
+    public V getVertex()
+    {
         return this.vertex;
     }
 
     /**
      * Returns the number of paths stored in the list.
      */
-    public int size() {
+    public int size()
+    {
         return this.pathElements.size();
     }
-
 }
+
+// End AbstractPathElementList.java

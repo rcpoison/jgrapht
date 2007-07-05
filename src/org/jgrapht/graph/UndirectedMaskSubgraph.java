@@ -38,7 +38,8 @@
  */
 package org.jgrapht.graph;
 
-import org.jgrapht.UndirectedGraph;
+import org.jgrapht.*;
+
 
 /**
  * An undirected graph that is a {@link MaskSubgraph} on another graph.
@@ -46,10 +47,18 @@ import org.jgrapht.UndirectedGraph;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class UndirectedMaskSubgraph<V, E> extends MaskSubgraph<V, E> implements
-        UndirectedGraph<V, E> {
+public class UndirectedMaskSubgraph<V, E>
+    extends MaskSubgraph<V, E>
+    implements UndirectedGraph<V, E>
+{
+    //~ Constructors -----------------------------------------------------------
 
-    public UndirectedMaskSubgraph(UndirectedGraph<V, E> base, MaskFunctor<V,E> mask) {
+    public UndirectedMaskSubgraph(
+        UndirectedGraph<V, E> base,
+        MaskFunctor<V, E> mask)
+    {
         super(base, mask);
     }
 }
+
+// End UndirectedMaskSubgraph.java

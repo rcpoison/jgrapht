@@ -38,28 +38,36 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.*;
+
 
 /**
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class NotBiconnectedGraph extends SimpleGraph {
+public class NotBiconnectedGraph
+    extends SimpleGraph
+{
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
-     * 
      */
     private static final long serialVersionUID = 6518961051694377584L;
 
-    public NotBiconnectedGraph() {
+    //~ Constructors -----------------------------------------------------------
+
+    public NotBiconnectedGraph()
+    {
         super(DefaultEdge.class);
 
         addVertices();
         addEdges();
     }
 
-    private void addEdges() {
+    //~ Methods ----------------------------------------------------------------
+
+    private void addEdges()
+    {
         addEdge("0", "2");
         addEdge("0", "3");
         addEdge("3", "1");
@@ -68,7 +76,8 @@ public class NotBiconnectedGraph extends SimpleGraph {
         addEdge("5", "3");
     }
 
-    private void addVertices() {
+    private void addVertices()
+    {
         addVertex("0");
         addVertex("1");
         addVertex("2");
@@ -76,5 +85,6 @@ public class NotBiconnectedGraph extends SimpleGraph {
         addVertex("4");
         addVertex("5");
     }
-
 }
+
+// End NotBiconnectedGraph.java

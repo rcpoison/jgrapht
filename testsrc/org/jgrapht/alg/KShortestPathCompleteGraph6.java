@@ -38,19 +38,23 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.graph.*;
+
 
 /**
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class KShortestPathCompleteGraph6 extends SimpleWeightedGraph {
+public class KShortestPathCompleteGraph6
+    extends SimpleWeightedGraph
+{
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
-     * 
      */
     private static final long serialVersionUID = 6310990195071210970L;
+
+    //~ Instance fields --------------------------------------------------------
 
     public Object e12;
 
@@ -82,14 +86,20 @@ public class KShortestPathCompleteGraph6 extends SimpleWeightedGraph {
 
     private Object eS5;
 
-    public KShortestPathCompleteGraph6() {
+    //~ Constructors -----------------------------------------------------------
+
+    public KShortestPathCompleteGraph6()
+    {
         super(DefaultWeightedEdge.class);
 
         addVertices();
         addEdges();
     }
 
-    private void addEdges() {
+    //~ Methods ----------------------------------------------------------------
+
+    private void addEdges()
+    {
         this.eS1 = this.addEdge("vS", "v1");
         this.eS2 = this.addEdge("vS", "v2");
         this.eS3 = this.addEdge("vS", "v3");
@@ -131,7 +141,8 @@ public class KShortestPathCompleteGraph6 extends SimpleWeightedGraph {
         setEdgeWeight(this.e45, 1.0);
     }
 
-    private void addVertices() {
+    private void addVertices()
+    {
         addVertex("vS");
         addVertex("v1");
         addVertex("v2");
@@ -139,5 +150,6 @@ public class KShortestPathCompleteGraph6 extends SimpleWeightedGraph {
         addVertex("v4");
         addVertex("v5");
     }
-
 }
+
+// End KShortestPathCompleteGraph6.java

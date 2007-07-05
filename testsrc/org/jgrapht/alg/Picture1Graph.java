@@ -38,8 +38,8 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.graph.*;
+
 
 /**
  * <img src="./Picture1.jpg">
@@ -47,12 +47,16 @@ import org.jgrapht.graph.SimpleDirectedWeightedGraph;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class Picture1Graph extends SimpleDirectedWeightedGraph {
+public class Picture1Graph
+    extends SimpleDirectedWeightedGraph
+{
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
-     * 
      */
     private static final long serialVersionUID = 5587737522611531029L;
+
+    //~ Instance fields --------------------------------------------------------
 
     public Object e15;
 
@@ -80,17 +84,23 @@ public class Picture1Graph extends SimpleDirectedWeightedGraph {
 
     public Object eS7;
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * <img src="./Picture1.jpg">
      */
-    public Picture1Graph() {
+    public Picture1Graph()
+    {
         super(DefaultWeightedEdge.class);
 
         addVertices();
         addEdges();
     }
 
-    private void addEdges() {
+    //~ Methods ----------------------------------------------------------------
+
+    private void addEdges()
+    {
         this.eS1 = this.addEdge("vS", "v1");
         this.eS2 = this.addEdge("vS", "v2");
         this.eS3 = this.addEdge("vS", "v3");
@@ -120,7 +130,8 @@ public class Picture1Graph extends SimpleDirectedWeightedGraph {
         setEdgeWeight(this.e67, 5.0);
     }
 
-    private void addVertices() {
+    private void addVertices()
+    {
         addVertex("vS");
         addVertex("v1");
         addVertex("v2");
@@ -130,5 +141,6 @@ public class Picture1Graph extends SimpleDirectedWeightedGraph {
         addVertex("v6");
         addVertex("v7");
     }
-
 }
+
+// End Picture1Graph.java

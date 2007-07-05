@@ -50,8 +50,8 @@ import org.jgrapht.util.*;
 /**
  * Implements topological order traversal for a directed acyclic graph. A
  * topological sort is a permutation <tt>p</tt> of the vertices of a graph such
- * that an edge <tt>(i,j)</tt> implies that <tt>i</tt> appears before
- * <tt>j</tt> in <tt> p</tt> (Skiena 1990, p. 208). See also <a
+ * that an edge <tt>(i,j)</tt> implies that <tt>i</tt> appears before <tt>j</tt>
+ * in <tt>p</tt> (Skiena 1990, p. 208). See also <a
  * href="http://mathworld.wolfram.com/TopologicalSort.html">
  * http://mathworld.wolfram.com/TopologicalSort.html</a>.
  *
@@ -65,10 +65,9 @@ import org.jgrapht.util.*;
  * <p>For this iterator to work correctly the graph must be acyclic, and must
  * not be modified during iteration. Currently there are no means to ensure
  * that, nor to fail-fast; the results with cyclic input (including self-loops)
- * or concurrent modifications are undefined.  To precheck a graph
- * for cycles, consider using {@link org.jgrapht.alg.CycleDetector}
- * or {@link org.jgrapht.alg.StrongConnectivityInspector}.
- * </p>
+ * or concurrent modifications are undefined. To precheck a graph for cycles,
+ * consider using {@link org.jgrapht.alg.CycleDetector} or {@link
+ * org.jgrapht.alg.StrongConnectivityInspector}.</p>
  *
  * @author Marden Neubert
  * @since Dec 18, 2004
@@ -126,8 +125,8 @@ public class TopologicalOrderIterator<V, E>
         this(dg, initialize(dg, queue, inDegreeMap));
         this.queue = queue;
         this.inDegreeMap = inDegreeMap;
-        
-        assert(queue.isEmpty());
+
+        assert (queue.isEmpty());
     }
 
     // NOTE: This is intentionally private, because starting the sort "in the

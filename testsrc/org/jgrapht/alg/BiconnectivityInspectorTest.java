@@ -38,19 +38,24 @@
  */
 package org.jgrapht.alg;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.generate.LinearGraphGenerator;
+import org.jgrapht.*;
+import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
+
 
 /**
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class BiconnectivityInspectorTest extends TestCase {
+public class BiconnectivityInspectorTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
 
-    public void testBiconnected() {
+    public void testBiconnected()
+    {
         BiconnectedGraph graph = new BiconnectedGraph();
 
         BiconnectivityInspector inspector = new BiconnectivityInspector(graph);
@@ -60,26 +65,33 @@ public class BiconnectivityInspectorTest extends TestCase {
         assertEquals(1, inspector.getBiconnectedVertexComponents().size());
     }
 
-    public void testLinearGraph() {
+    public void testLinearGraph()
+    {
         testLinearGraph(3);
         testLinearGraph(5);
     }
 
-    public void testLinearGraph(int nbVertices) {
+    public void testLinearGraph(int nbVertices)
+    {
         UndirectedGraph graph = new SimpleGraph(DefaultEdge.class);
 
         LinearGraphGenerator generator = new LinearGraphGenerator(nbVertices);
-        generator.generateGraph(graph, new ClassBasedVertexFactory<Object>(
-                Object.class), null);
+        generator.generateGraph(
+            graph,
+            new ClassBasedVertexFactory<Object>(
+                Object.class),
+            null);
 
         BiconnectivityInspector inspector = new BiconnectivityInspector(graph);
 
         assertEquals(nbVertices - 2, inspector.getCutpoints().size());
-        assertEquals(nbVertices - 1, inspector.getBiconnectedVertexComponents()
-                .size());
+        assertEquals(
+            nbVertices - 1,
+            inspector.getBiconnectedVertexComponents().size());
     }
 
-    public void testNotBiconnected() {
+    public void testNotBiconnected()
+    {
         NotBiconnectedGraph graph = new NotBiconnectedGraph();
 
         BiconnectivityInspector inspector = new BiconnectivityInspector(graph);
@@ -87,5 +99,6 @@ public class BiconnectivityInspectorTest extends TestCase {
         assertEquals(2, inspector.getCutpoints().size());
         assertEquals(3, inspector.getBiconnectedVertexComponents().size());
     }
-
 }
+
+// End $file.name$

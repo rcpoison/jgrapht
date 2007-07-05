@@ -38,7 +38,8 @@
  */
 package org.jgrapht.graph;
 
-import org.jgrapht.VertexFactory;
+import org.jgrapht.*;
+
 
 /**
  * A {@link VertexFactory} for producing vertices by using a class as a factory.
@@ -46,18 +47,27 @@ import org.jgrapht.VertexFactory;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class ClassBasedVertexFactory<V> implements VertexFactory<V> {
+public class ClassBasedVertexFactory<V>
+    implements VertexFactory<V>
+{
+    //~ Instance fields --------------------------------------------------------
 
     private final Class<? extends V> vertexClass;
 
-    public ClassBasedVertexFactory(Class<? extends V> vertexClass) {
+    //~ Constructors -----------------------------------------------------------
+
+    public ClassBasedVertexFactory(Class<? extends V> vertexClass)
+    {
         this.vertexClass = vertexClass;
     }
+
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * @see VertexFactory#createVertex()
      */
-    public V createVertex() {
+    public V createVertex()
+    {
         try {
             return this.vertexClass.newInstance();
         } catch (Exception e) {
@@ -65,3 +75,5 @@ public class ClassBasedVertexFactory<V> implements VertexFactory<V> {
         }
     }
 }
+
+// End ClassBasedVertexFactory.java

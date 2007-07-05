@@ -38,7 +38,8 @@
  */
 package org.jgrapht.graph;
 
-import org.jgrapht.DirectedGraph;
+import org.jgrapht.*;
+
 
 /**
  * A directed graph that is a {@link MaskSubgraph} on another graph.
@@ -46,10 +47,18 @@ import org.jgrapht.DirectedGraph;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class DirectedMaskSubgraph<V, E> extends MaskSubgraph<V, E> implements
-        DirectedGraph<V, E> {
+public class DirectedMaskSubgraph<V, E>
+    extends MaskSubgraph<V, E>
+    implements DirectedGraph<V, E>
+{
+    //~ Constructors -----------------------------------------------------------
 
-    public DirectedMaskSubgraph(DirectedGraph<V, E> base, MaskFunctor<V,E> mask) {
+    public DirectedMaskSubgraph(
+        DirectedGraph<V, E> base,
+        MaskFunctor<V, E> mask)
+    {
         super(base, mask);
     }
 }
+
+// End DirectedMaskSubgraph.java

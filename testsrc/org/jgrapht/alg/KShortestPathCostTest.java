@@ -38,24 +38,26 @@
  */
 package org.jgrapht.alg;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.Graph;
+import org.jgrapht.*;
 
-import sun.security.provider.certpath.Vertex;
+import sun.security.provider.certpath.*;
+
 
 /**
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class KShortestPathCostTest extends TestCase {
+public class KShortestPathCostTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
 
-    public void testKShortestPathCompleteGraph4() {
-
+    public void testKShortestPathCompleteGraph4()
+    {
         int nbPaths = 5;
 
         KShortestPathCompleteGraph4 graph = new KShortestPathCompleteGraph4();
@@ -63,34 +65,40 @@ public class KShortestPathCostTest extends TestCase {
         KShortestPaths pathFinder = new KShortestPaths(graph, "vS", nbPaths);
         List pathElements = pathFinder.getPathElements("v3");
         assertEquals(5, pathElements.size(), 0);
-        RankingPathElement pathElement = (RankingPathElement) pathElements
-                .get(0);
+        RankingPathElement pathElement =
+            (RankingPathElement) pathElements.get(0);
         assertEquals(2, pathElement.getWeight(), 0);
 
-        assertEquals(Arrays.asList(new Object[] { graph.eS1, graph.e13 }),
-                pathElement.createEdgeListPath());
+        assertEquals(
+            Arrays.asList(new Object[] { graph.eS1, graph.e13 }),
+            pathElement.createEdgeListPath());
     }
 
-    public void testKShortestPathCosts(Graph graph) {
-
+    public void testKShortestPathCosts(Graph graph)
+    {
         int maxSize = 20;
 
-        for (Iterator sourceIterator = graph.vertexSet().iterator(); sourceIterator
-                .hasNext();) {
+        for (
+            Iterator sourceIterator = graph.vertexSet().iterator();
+            sourceIterator.hasNext();)
+        {
             Vertex sourceVertex = (Vertex) sourceIterator.next();
 
-            for (Iterator targetIterator = graph.vertexSet().iterator(); targetIterator
-                    .hasNext();) {
+            for (
+                Iterator targetIterator = graph.vertexSet().iterator();
+                targetIterator.hasNext();)
+            {
                 Vertex targetVertex = (Vertex) targetIterator.next();
 
                 if (targetVertex != sourceVertex) {
-                    KShortestPaths pathFinder = new KShortestPaths(graph,
+                    KShortestPaths pathFinder =
+                        new KShortestPaths(graph,
                             sourceVertex, maxSize);
 
-                    List pathElements = pathFinder
-                            .getPathElements(targetVertex);
-                    RankingPathElement pathElement = (RankingPathElement) pathElements
-                            .get(0);
+                    List pathElements =
+                        pathFinder.getPathElements(targetVertex);
+                    RankingPathElement pathElement =
+                        (RankingPathElement) pathElements.get(0);
                     double lastCost = pathElement.getWeight();
                     for (int i = 0; i < pathElements.size(); i++) {
                         pathElement = (RankingPathElement) pathElements.get(i);
@@ -104,26 +112,37 @@ public class KShortestPathCostTest extends TestCase {
         }
     }
 
-    public void testPicture1Graph() {
-
+    public void testPicture1Graph()
+    {
         Picture1Graph picture1Graph = new Picture1Graph();
 
         int maxSize = 10;
 
-        KShortestPaths pathFinder = new KShortestPaths(picture1Graph, "vS",
+        KShortestPaths pathFinder =
+            new KShortestPaths(picture1Graph, "vS",
                 maxSize);
 
         assertEquals(2, pathFinder.getPathElements("v5").size());
 
         List pathElements = pathFinder.getPathElements("v5");
-        RankingPathElement pathElement = (RankingPathElement) pathElements
-                .get(0);
-        assertEquals(Arrays.asList(new Object[] { picture1Graph.eS1,
-                picture1Graph.e15 }), pathElement.createEdgeListPath());
+        RankingPathElement pathElement =
+            (RankingPathElement) pathElements.get(0);
+        assertEquals(
+            Arrays.asList(
+                new Object[] {
+                    picture1Graph.eS1,
+                    picture1Graph.e15
+                }),
+            pathElement.createEdgeListPath());
 
         pathElement = (RankingPathElement) pathElements.get(1);
-        assertEquals(Arrays.asList(new Object[] { picture1Graph.eS2,
-                picture1Graph.e25 }), pathElement.createEdgeListPath());
+        assertEquals(
+            Arrays.asList(
+                new Object[] {
+                    picture1Graph.eS2,
+                    picture1Graph.e25
+                }),
+            pathElement.createEdgeListPath());
 
         pathElements = pathFinder.getPathElements("v7");
         pathElement = (RankingPathElement) pathElements.get(0);
@@ -136,5 +155,6 @@ public class KShortestPathCostTest extends TestCase {
             lastCost = cost;
         }
     }
-
 }
+
+// End $file.name$

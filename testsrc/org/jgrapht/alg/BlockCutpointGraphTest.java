@@ -38,84 +38,105 @@
  */
 package org.jgrapht.alg;
 
-import java.util.Iterator;
+import java.util.*;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.generate.LinearGraphGenerator;
+import org.jgrapht.*;
+import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
+
 
 /**
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class BlockCutpointGraphTest extends TestCase {
+public class BlockCutpointGraphTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
 
-    public void testBiconnected() {
+    public void testBiconnected()
+    {
         BiconnectedGraph graph = new BiconnectedGraph();
 
         BlockCutpointGraph blockCutpointGraph = new BlockCutpointGraph(graph);
         testGetBlock(blockCutpointGraph);
 
         assertEquals(0, blockCutpointGraph.getCutpoints().size());
-        int nbBiconnectedComponents = blockCutpointGraph.vertexSet().size()
-                - blockCutpointGraph.getCutpoints().size();
+        int nbBiconnectedComponents =
+            blockCutpointGraph.vertexSet().size()
+            - blockCutpointGraph.getCutpoints().size();
         assertEquals(1, nbBiconnectedComponents);
     }
 
-    public void testGetBlock(BlockCutpointGraph blockCutpointGraph) {
-        for (Iterator iter = blockCutpointGraph.vertexSet().iterator(); iter
-                .hasNext();) {
+    public void testGetBlock(BlockCutpointGraph blockCutpointGraph)
+    {
+        for (
+            Iterator iter = blockCutpointGraph.vertexSet().iterator();
+            iter.hasNext();)
+        {
             UndirectedGraph component = (UndirectedGraph) iter.next();
             if (!component.edgeSet().isEmpty()) {
-                for (Iterator iterator = component.vertexSet().iterator(); iterator
-                        .hasNext();) {
+                for (
+                    Iterator iterator = component.vertexSet().iterator();
+                    iterator.hasNext();)
+                {
                     Object vertex = iterator.next();
                     if (!blockCutpointGraph.getCutpoints().contains(vertex)) {
-                        assertEquals(component, blockCutpointGraph
-                                .getBlock(vertex));
+                        assertEquals(
+                            component,
+                            blockCutpointGraph.getBlock(vertex));
                     }
                 }
             } else {
-                assertTrue(blockCutpointGraph.getCutpoints().contains(
+                assertTrue(
+                    blockCutpointGraph.getCutpoints().contains(
                         component.vertexSet().iterator().next()));
             }
-
         }
     }
 
-    public void testLinearGraph() {
+    public void testLinearGraph()
+    {
         testLinearGraph(3);
         testLinearGraph(5);
     }
 
-    public void testLinearGraph(int nbVertices) {
+    public void testLinearGraph(int nbVertices)
+    {
         UndirectedGraph graph = new SimpleGraph(DefaultEdge.class);
 
         LinearGraphGenerator generator = new LinearGraphGenerator(nbVertices);
-        generator.generateGraph(graph, new ClassBasedVertexFactory<Object>(
-                Object.class), null);
+        generator.generateGraph(
+            graph,
+            new ClassBasedVertexFactory<Object>(
+                Object.class),
+            null);
 
         BlockCutpointGraph blockCutpointGraph = new BlockCutpointGraph(graph);
         testGetBlock(blockCutpointGraph);
 
         assertEquals(nbVertices - 2, blockCutpointGraph.getCutpoints().size());
-        int nbBiconnectedComponents = blockCutpointGraph.vertexSet().size()
-                - blockCutpointGraph.getCutpoints().size();
+        int nbBiconnectedComponents =
+            blockCutpointGraph.vertexSet().size()
+            - blockCutpointGraph.getCutpoints().size();
         assertEquals(nbVertices - 1, nbBiconnectedComponents);
     }
 
-    public void testNotBiconnected() {
+    public void testNotBiconnected()
+    {
         UndirectedGraph graph = new NotBiconnectedGraph();
 
         BlockCutpointGraph blockCutpointGraph = new BlockCutpointGraph(graph);
         testGetBlock(blockCutpointGraph);
 
         assertEquals(2, blockCutpointGraph.getCutpoints().size());
-        int nbBiconnectedComponents = blockCutpointGraph.vertexSet().size()
-                - blockCutpointGraph.getCutpoints().size();
+        int nbBiconnectedComponents =
+            blockCutpointGraph.vertexSet().size()
+            - blockCutpointGraph.getCutpoints().size();
         assertEquals(3, nbBiconnectedComponents);
     }
-
 }
+
+// End $file.name$

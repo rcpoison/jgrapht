@@ -38,72 +38,54 @@
  */
 package org.jgrapht.graph;
 
-import java.util.AbstractSet;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 
-import org.jgrapht.Graph;
+import org.jgrapht.*;
 import org.jgrapht.util.*;
-import org.jgrapht.util.PrefetchIterator.NextElementFunctor;
+import org.jgrapht.util.PrefetchIterator.*;
+
 
 /**
  * Helper for {@link MaskSubgraph}.
- * 
+ *
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-class MaskEdgeSet<V,E> extends AbstractSet<E> {
-
-    private class MaskEdgeSetNextElementFunctor implements NextElementFunctor<E> {
-
-        private Iterator<E> iter;
-
-        public MaskEdgeSetNextElementFunctor() {
-            this.iter = MaskEdgeSet.this.edgeSet.iterator();
-        }
-
-        public E nextElement() throws NoSuchElementException {
-            E edge = this.iter.next();
-            while (isMasked(edge)) {
-                edge = this.iter.next();
-            }
-            return edge;
-        }
-
-        private boolean isMasked(E edge) {
-            return MaskEdgeSet.this.mask.isEdgeMasked(edge)
-                    || MaskEdgeSet.this.mask
-                            .isVertexMasked(MaskEdgeSet.this.graph
-                                    .getEdgeSource(edge))
-                    || MaskEdgeSet.this.mask
-                            .isVertexMasked(MaskEdgeSet.this.graph
-                                    .getEdgeTarget(edge));
-        }
-
-    }
+class MaskEdgeSet<V, E>
+    extends AbstractSet<E>
+{
+    //~ Instance fields --------------------------------------------------------
 
     private Set<E> edgeSet;
 
-    private Graph<V,E> graph;
+    private Graph<V, E> graph;
 
-    private MaskFunctor<V,E> mask;
+    private MaskFunctor<V, E> mask;
 
     private transient TypeUtil<E> edgeTypeDecl = null;
-    
+
     private int size;
 
-    public MaskEdgeSet(Graph<V,E> graph, Set<E> edgeSet, MaskFunctor<V,E> mask) {
+    //~ Constructors -----------------------------------------------------------
+
+    public MaskEdgeSet(
+        Graph<V, E> graph,
+        Set<E> edgeSet,
+        MaskFunctor<V, E> mask)
+    {
         this.graph = graph;
         this.edgeSet = edgeSet;
         this.mask = mask;
         this.size = -1;
     }
 
+    //~ Methods ----------------------------------------------------------------
+
     /**
      * @see java.util.Collection#contains(java.lang.Object)
      */
-    public boolean contains(Object o) {
+    public boolean contains(Object o)
+    {
         return this.edgeSet.contains(o)
             && !this.mask.isEdgeMasked(TypeUtil.uncheckedCast(o, edgeTypeDecl));
     }
@@ -111,14 +93,16 @@ class MaskEdgeSet<V,E> extends AbstractSet<E> {
     /**
      * @see java.util.Set#iterator()
      */
-    public Iterator<E> iterator() {
+    public Iterator<E> iterator()
+    {
         return new PrefetchIterator<E>(new MaskEdgeSetNextElementFunctor());
     }
 
     /**
      * @see java.util.Set#size()
      */
-    public int size() {
+    public int size()
+    {
         if (this.size == -1) {
             this.size = 0;
             for (Iterator iter = iterator(); iter.hasNext();) {
@@ -129,4 +113,37 @@ class MaskEdgeSet<V,E> extends AbstractSet<E> {
         return this.size;
     }
 
+    //~ Inner Classes ----------------------------------------------------------
+
+    private class MaskEdgeSetNextElementFunctor
+        implements NextElementFunctor<E>
+    {
+        private Iterator<E> iter;
+
+        public MaskEdgeSetNextElementFunctor()
+        {
+            this.iter = MaskEdgeSet.this.edgeSet.iterator();
+        }
+
+        public E nextElement()
+            throws NoSuchElementException
+        {
+            E edge = this.iter.next();
+            while (isMasked(edge)) {
+                edge = this.iter.next();
+            }
+            return edge;
+        }
+
+        private boolean isMasked(E edge)
+        {
+            return MaskEdgeSet.this.mask.isEdgeMasked(edge)
+                || MaskEdgeSet.this.mask.isVertexMasked(
+                    MaskEdgeSet.this.graph.getEdgeSource(edge))
+                || MaskEdgeSet.this.mask.isVertexMasked(
+                    MaskEdgeSet.this.graph.getEdgeTarget(edge));
+        }
+    }
 }
+
+// End MaskEdgeSet.java
