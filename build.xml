@@ -607,7 +607,7 @@
     <echo level="info">Checking out files of SVN tag: ${svntag}</echo>
     
     <property name="project.svnroot" 
-      value="https://svn.sourceforge.net/svnroot/jgrapht" />
+      value="https://jgrapht.svn.sourceforge.net/svnroot/jgrapht" />
     <delete dir="${checkout.dir}" />
     <mkdir  dir="${checkout.dir}" />
     <svn username="guest" password="" javahl="false">

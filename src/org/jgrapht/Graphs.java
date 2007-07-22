@@ -184,7 +184,7 @@ public abstract class Graphs
      * changed as a result of this operation.
      */
     public static <V, E> boolean addGraph(
-        Graph<V, E> destination,
+        Graph<? super V, ? super E> destination,
         Graph<V, E> source)
     {
         boolean modified = addAllVertices(destination, source.vertexSet());
@@ -208,7 +208,7 @@ public abstract class Graphs
      * @see EdgeReversedGraph
      */
     public static <V, E> void addGraphReversed(
-        DirectedGraph<V, E> destination,
+        DirectedGraph<? super V, ? super E> destination,
         DirectedGraph<V, E> source)
     {
         addAllVertices(destination, source.vertexSet());
@@ -234,7 +234,7 @@ public abstract class Graphs
      * @return <tt>true</tt> if this graph changed as a result of the call
      */
     public static <V, E> boolean addAllEdges(
-        Graph<V, E> destination,
+        Graph<? super V, ? super E> destination,
         Graph<V, E> source,
         Collection<? extends E> edges)
     {
@@ -269,7 +269,7 @@ public abstract class Graphs
      * @see Graph#addVertex(Object)
      */
     public static <V, E> boolean addAllVertices(
-        Graph<V, E> destination,
+        Graph<? super V, ? super E> destination,
         Collection<? extends V> vertices)
     {
         boolean modified = false;
