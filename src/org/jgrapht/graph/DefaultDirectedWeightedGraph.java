@@ -49,9 +49,6 @@ import org.jgrapht.*;
  * graph in which multiple edges between any two vertices are <i>not</i>
  * permitted, but loops are. The graph has weights on its edges.
  *
- * <p>prefixed 'Default' to avoid name collision with the DirectedWeightedGraph
- * interface.</p>
- *
  * @see DefaultDirectedGraph
  */
 public class DefaultDirectedWeightedGraph<V, E>
