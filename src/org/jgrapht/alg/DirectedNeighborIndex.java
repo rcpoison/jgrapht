@@ -154,8 +154,22 @@ public class DirectedNeighborIndex<V, E>
         E edge = e.getEdge();
         V source = graph.getEdgeSource(edge);
         V target = graph.getEdgeTarget(edge);
-        getSuccessors(source).addNeighbor(target);
-        getPredecessors(target).addNeighbor(source);
+
+        // if a map does not already contain an entry,
+        // then skip addNeighbor, since instantiating the map
+        // will take care of processing the edge (which has already
+        // been added)
+        
+        if (successorMap.containsKey(source)) {
+            getSuccessors(source).addNeighbor(target);
+        } else {
+            getSuccessors(source);
+        }
+        if (predecessorMap.containsKey(target)) {
+            getPredecessors(target).addNeighbor(source);
+        } else {
+            getPredecessors(target);
+        }
     }
 
     /**

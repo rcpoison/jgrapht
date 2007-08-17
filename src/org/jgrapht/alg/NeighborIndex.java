@@ -125,8 +125,22 @@ public class NeighborIndex<V, E>
         E edge = e.getEdge();
         V source = graph.getEdgeSource(edge);
         V target = graph.getEdgeTarget(edge);
-        getNeighbors(source).addNeighbor(target);
-        getNeighbors(target).addNeighbor(source);
+        
+        // if a map does not already contain an entry,
+        // then skip addNeighbor, since instantiating the map
+        // will take care of processing the edge (which has already
+        // been added)
+        
+        if (neighborMap.containsKey(source)) {
+            getNeighbors(source).addNeighbor(target);
+        } else {
+            getNeighbors(source);
+        }
+        if (neighborMap.containsKey(target)) {
+            getNeighbors(target).addNeighbor(source);
+        } else {
+            getNeighbors(target);
+        }
     }
 
     /**

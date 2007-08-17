@@ -75,25 +75,32 @@ public class NeighborIndexTest
             new NeighborIndex<String, DefaultEdge>(g);
         g.addGraphListener(index);
 
-        Set neighbors = index.neighborsOf(V1);
+        Set neighbors1 = index.neighborsOf(V1);
 
-        assertEquals(1, neighbors.size());
-        assertEquals(true, neighbors.contains(V2));
+        assertEquals(1, neighbors1.size());
+        assertEquals(true, neighbors1.contains(V2));
 
         g.addVertex(V3);
         g.addEdge(V3, V1);
 
-        assertEquals(2, neighbors.size());
-        assertEquals(true, neighbors.contains(V3));
+        Set neighbors3 = index.neighborsOf(V3);
+        
+        assertEquals(2, neighbors1.size());
+        assertEquals(true, neighbors1.contains(V3));
+
+        assertEquals(1, neighbors3.size());
+        assertEquals(true, neighbors3.contains(V1));
 
         g.removeEdge(V3, V1);
 
-        assertEquals(1, neighbors.size());
-        assertEquals(false, neighbors.contains(V3));
+        assertEquals(1, neighbors1.size());
+        assertEquals(false, neighbors1.contains(V3));
 
+        assertEquals(0, neighbors3.size());
+        
         g.removeVertex(V2);
 
-        assertEquals(0, neighbors.size());
+        assertEquals(0, neighbors1.size());
     }
 
     public void testDirectedNeighborSet()
@@ -120,12 +127,18 @@ public class NeighborIndexTest
         g.addVertex(V3);
         g.addEdge(V3, V1);
 
+        Set q = index.successorsOf(V3);
+        
         assertEquals(1, p.size());
         assertEquals(1, s.size());
         assertEquals(true, p.contains(V3));
 
+        assertEquals(1, q.size());
+        assertEquals(true, q.contains(V1));
+        
         g.removeEdge(V3, V1);
 
+        assertEquals(0, q.size());
         assertEquals(0, p.size());
 
         g.removeVertex(V2);
