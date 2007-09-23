@@ -80,6 +80,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(BlockCutpointGraphTest.class));
         suite.addTest(new TestSuite(KShortestPathCostTest.class));
         suite.addTest(new TestSuite(KShortestPathKValuesTest.class));
+        suite.addTest(new TestSuite(KSPExampleTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
 
         // $JUnit-END$

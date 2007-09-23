@@ -30,7 +30,7 @@
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi
  *
- * $Id$
+ * $Id:$
  *
  * Changes
  * -------
@@ -44,122 +44,122 @@ import java.util.*;
 
 import org.jgrapht.*;
 
-
 /**
  * The algorithm determines the k shortest simple paths in increasing order of
  * weight. Weights could be negative (but no negative cycle is allowed), paths
  * could be constrained by a maximum number of edges.
- *
+ * 
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
-public class KShortestPaths<V, E>
-{
-    //~ Instance fields --------------------------------------------------------
+public class KShortestPaths<V, E> {
+    // ~ Instance fields
+    // --------------------------------------------------------
 
     /**
      * Graph on which shortest paths are searched.
      */
     private Graph<V, E> graph;
 
-    private KShortestPathsIterator<V, E> iter;
-
     private int nMaxHops;
 
     private int nPaths;
 
-    private int passNumber;
-
     private V startVertex;
 
-    //~ Constructors -----------------------------------------------------------
+    // ~ Constructors
+    // -----------------------------------------------------------
 
     /**
      * Creates an object to compute ranking shortest paths between the start
-     * vertex and others vertices. Running time = O(k*m*n) where m is the number
-     * of edges.
-     *
+     * vertex and others vertices.
+     * 
      * @param graph
      * @param startVertex
-     * @param k number of paths to be computed.
+     * @param k
+     *            number of paths to be computed.
      */
-    public KShortestPaths(Graph<V, E> graph, V startVertex, int k)
-    {
+    public KShortestPaths(Graph<V, E> graph, V startVertex, int k) {
         this(graph, startVertex, k, graph.vertexSet().size() - 1);
     }
 
     /**
      * Creates an object to calculate ranking shortest paths between the start
      * vertex and others vertices.
-     *
-     * @param graph graph on which shortest paths are searched.
-     * @param startVertex start vertex of the calculated paths.
-     * @param nPaths number of ranking paths between the start vertex and an end
-     * vertex.
-     * @param nMaxHops maximum number of edges of the calculated paths.
-     *
-     * @throws NullPointerException if the specified graph or startVertex is
-     * <code>null</code>.
-     * @throws IllegalArgumentException if nPaths is negative or 0.
-     * @throws IllegalArgumentException if nMaxHops is negative or 0.
+     * 
+     * @param graph
+     *            graph on which shortest paths are searched.
+     * @param startVertex
+     *            start vertex of the calculated paths.
+     * @param nPaths
+     *            number of ranking paths between the start vertex and an end
+     *            vertex.
+     * @param nMaxHops
+     *            maximum number of edges of the calculated paths.
+     * 
+     * @throws NullPointerException
+     *             if the specified graph or startVertex is <code>null</code>.
+     * @throws IllegalArgumentException
+     *             if nPaths is negative or 0.
+     * @throws IllegalArgumentException
+     *             if nMaxHops is negative or 0.
      */
-    public KShortestPaths(
-        Graph<V, E> graph,
-        V startVertex,
-        int nPaths,
-        int nMaxHops)
-    {
+    public KShortestPaths(Graph<V, E> graph, V startVertex, int nPaths,
+            int nMaxHops) {
         assertKShortestPathsFinder(graph, startVertex, nPaths, nMaxHops);
 
         this.graph = graph;
         this.startVertex = startVertex;
         this.nPaths = nPaths;
         this.nMaxHops = nMaxHops;
-
-        this.passNumber = 1;
     }
 
-    //~ Methods ----------------------------------------------------------------
+    // ~ Methods
+    // ----------------------------------------------------------------
 
     /**
      * Returns the k shortest simple paths in increasing order of weight.
-     * Running time : XXX.
-     *
-     * @param endVertex target vertex of the calculated paths.
-     *
-     * @return list of <code>RankingPathElement</code>, or <code>null</code> of
-     * no path exists between the start vertex and the end vertex.
+     * 
+     * Running time : O(k*m*n) where m is the number of edges.
+     * 
+     * @param endVertex
+     *            target vertex of the calculated paths.
+     * 
+     * @return list of <code>RankingPathElement</code>, or <code>null</code>
+     *         of no path exists between the start vertex and the end vertex.
      */
-    public List<RankingPathElement<V, E>> getPathElements(V endVertex)
-    {
+    public List<RankingPathElement<V, E>> getPathElements(V endVertex) {
         assertGetPaths(endVertex);
 
-        lazyCalculate();
+        KShortestPathsIterator<V, E> iter = new KShortestPathsIterator<V, E>(
+                this.graph, this.startVertex, endVertex, this.nPaths);
 
-        return this.iter.getPathElements(endVertex);
+        // at the i-th pass the shortest paths with less (or equal) than i edges
+        // are calculated.
+        for (int passNumber = 1; (passNumber <= this.nMaxHops)
+                && iter.hasNext(); passNumber++) {
+            iter.next();
+        }
+
+        return iter.getPathElements(endVertex);
     }
 
-    private void assertGetPaths(V endVertex)
-    {
+    private void assertGetPaths(V endVertex) {
         if (endVertex == null) {
             throw new NullPointerException("endVertex is null");
         }
         if (endVertex.equals(this.startVertex)) {
             throw new IllegalArgumentException(
-                "The end vertex is the same as the start vertex!");
+                    "The end vertex is the same as the start vertex!");
         }
         if (!this.graph.vertexSet().contains(endVertex)) {
             throw new IllegalArgumentException(
-                "Graph must contain the end vertex!");
+                    "Graph must contain the end vertex!");
         }
     }
 
-    private void assertKShortestPathsFinder(
-        Graph<V, E> graph,
-        V startVertex,
-        int nPaths,
-        int nMaxHops)
-    {
+    private void assertKShortestPathsFinder(Graph<V, E> graph, V startVertex,
+            int nPaths, int nMaxHops) {
         if (graph == null) {
             throw new NullPointerException("graph is null");
         }
@@ -171,29 +171,6 @@ public class KShortestPaths<V, E>
         }
         if (nMaxHops <= 0) {
             throw new NullPointerException("nMaxHops is negative or 0");
-        }
-    }
-
-    /**
-     */
-    private void lazyCalculate()
-    {
-        if (this.iter == null) {
-            this.iter =
-                new KShortestPathsIterator<V, E>(
-                    this.graph,
-                    this.startVertex,
-                    this.nPaths);
-        }
-
-        // at the i-th pass the shortest paths with less (or equal) than i edges
-        // are calculated.
-        for (
-            ;
-            (this.passNumber <= this.nMaxHops) && this.iter.hasNext();
-            this.passNumber++)
-        {
-            this.iter.next();
         }
     }
 }
