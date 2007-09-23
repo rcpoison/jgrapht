@@ -52,6 +52,10 @@ import org.jgrapht.*;
  */
 public class BellmanFordShortestPath<V, E>
 {
+    //~ Static fields/initializers ---------------------------------------------
+
+    private static final double DEFAULT_EPSILON = 0.000000001;
+
     //~ Instance fields --------------------------------------------------------
 
     /**
@@ -73,6 +77,8 @@ public class BellmanFordShortestPath<V, E>
 
     private int passNumber;
 
+    private double epsilon;
+    
     //~ Constructors -----------------------------------------------------------
 
     /**
@@ -100,11 +106,29 @@ public class BellmanFordShortestPath<V, E>
         V startVertex,
         int nMaxHops)
     {
+        this(graph, startVertex, nMaxHops, DEFAULT_EPSILON);
+    }
+    
+    /**
+     * Creates an object to calculate shortest paths between the start vertex
+     * and others vertices using the Bellman-Ford algorithm.
+     *
+     * @param graph
+     * @param startVertex
+     * @param nMaxHops maximum number of edges of the calculated paths.
+     * @param epsilon tolerance factor.
+     */
+    public BellmanFordShortestPath(
+        Graph<V, E> graph,
+        V startVertex,
+        int nMaxHops,
+        double epsilon)
+    {
         this.startVertex = startVertex;
         this.nMaxHops = nMaxHops;
         this.graph = graph;
-
         this.passNumber = 1;
+        this.epsilon = epsilon;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -175,7 +199,8 @@ public class BellmanFordShortestPath<V, E>
     {
         if (this.iter == null) {
             this.iter =
-                new BellmanFordIterator<V, E>(this.graph, this.startVertex);
+                new BellmanFordIterator<V, E>(
+                    this.graph, this.startVertex, epsilon);
         }
 
         // at the i-th pass the shortest paths with less (or equal) than i edges

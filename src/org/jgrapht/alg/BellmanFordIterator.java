@@ -89,18 +89,23 @@ class BellmanFordIterator<V, E>
      */
     private Map<V, BellmanFordPathElement<V, E>> vertexData;
 
+    private double epsilon;
+    
     //~ Constructors -----------------------------------------------------------
 
     /**
      * @param graph
      * @param startVertex start vertex.
+     * @param epsilon tolerance factor.
      */
-    protected BellmanFordIterator(Graph<V, E> graph, V startVertex)
+    protected BellmanFordIterator(Graph<V, E> graph, V startVertex,
+        double epsilon)
     {
         assertBellmanFordIterator(graph, startVertex);
 
         this.graph = graph;
         this.startVertex = startVertex;
+        this.epsilon = epsilon;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -359,7 +364,8 @@ class BellmanFordIterator<V, E>
                 graph,
                 prevPathElement,
                 edge,
-                cost);
+                cost,
+                epsilon);
 
         return data;
     }
@@ -368,7 +374,8 @@ class BellmanFordIterator<V, E>
     {
         BellmanFordPathElement<V, E> data =
             new BellmanFordPathElement<V, E>(
-                this.startVertex);
+                this.startVertex,
+                epsilon);
 
         // first the only vertex considered as improved is the start vertex.
         this.prevImprovedVertices.add(this.startVertex);

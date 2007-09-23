@@ -50,13 +50,10 @@ import org.jgrapht.*;
 final class BellmanFordPathElement<V, E>
     extends AbstractPathElement<V, E>
 {
-    //~ Static fields/initializers ---------------------------------------------
-
-    private static final double epsilon = 0.000000001;
-
     //~ Instance fields --------------------------------------------------------
 
     private double cost = 0;
+    private double epsilon;
 
     //~ Constructors -----------------------------------------------------------
 
@@ -66,16 +63,19 @@ final class BellmanFordPathElement<V, E>
      * @param pathElement
      * @param edge edge reaching the end vertex of the path element created.
      * @param cost total cost of the created path element.
+     * @param epsilon tolerance factor.
      */
     protected BellmanFordPathElement(
         Graph<V, E> graph,
         BellmanFordPathElement<V, E> pathElement,
         E edge,
-        double cost)
+        double cost,
+        double epsilon)
     {
         super(graph, pathElement, edge);
 
         this.cost = cost;
+        this.epsilon = epsilon;
     }
 
     /**
@@ -87,18 +87,21 @@ final class BellmanFordPathElement<V, E>
     {
         super(original);
         this.cost = original.cost;
+        this.epsilon = original.epsilon;
     }
 
     /**
      * Creates an empty path element.
      *
      * @param vertex end vertex of the path element.
+     * @param epsilon tolerance factor.
      */
-    protected BellmanFordPathElement(V vertex)
+    protected BellmanFordPathElement(V vertex, double epsilon)
     {
         super(vertex);
 
         this.cost = 0;
+        this.epsilon = epsilon;
     }
 
     //~ Methods ----------------------------------------------------------------
