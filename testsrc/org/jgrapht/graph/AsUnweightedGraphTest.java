@@ -50,12 +50,14 @@ import org.jgrapht.*;
 public class AsUnweightedGraphTest
     extends EnhancedTestCase
 {
-    //~ Instance fields --------------------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final String v1 = "v1";
     private static final String v2 = "v2";
     private static final String v3 = "v3";
-    
+
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * @see junit.framework.TestCase#TestCase(java.lang.String)
      */
@@ -75,7 +77,7 @@ public class AsUnweightedGraphTest
             new DefaultDirectedWeightedGraph<String, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
         constructWeighted(directed);
-        
+
         AsUnweightedDirectedGraph<String, DefaultWeightedEdge> unweighted =
             new AsUnweightedDirectedGraph<String, DefaultWeightedEdge>(
                 directed);
@@ -91,7 +93,7 @@ public class AsUnweightedGraphTest
             new SimpleWeightedGraph<String, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
         constructWeighted(undirected);
-        
+
         AsUnweightedGraph<String, DefaultWeightedEdge> unweighted =
             new AsUnweightedGraph<String, DefaultWeightedEdge>(
                 undirected);
@@ -99,7 +101,7 @@ public class AsUnweightedGraphTest
     }
 
     private void constructWeighted(
-        WeightedGraph<String,DefaultWeightedEdge> weighted)
+        WeightedGraph<String, DefaultWeightedEdge> weighted)
     {
         weighted.addVertex(v1);
         weighted.addVertex(v2);
@@ -112,8 +114,8 @@ public class AsUnweightedGraphTest
     }
 
     private void checkView(
-        WeightedGraph<String,DefaultWeightedEdge> weighted,
-        Graph<String,DefaultWeightedEdge> unweighted)
+        WeightedGraph<String, DefaultWeightedEdge> weighted,
+        Graph<String, DefaultWeightedEdge> unweighted)
     {
         assertEquals(
             WeightedGraph.DEFAULT_EDGE_WEIGHT,

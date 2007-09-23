@@ -26,29 +26,30 @@
  * ----------------------
  * (C) Copyright 2007-2007, by Lucas J. Scharenbroich and Contributors.
  *
- * Original Author:  Lucas J. Scharenbroich 
+ * Original Author:  Lucas J. Scharenbroich
  * Contributor(s):   John V. Sichi
 *
  * $Id$
- * 
+ *
  * Changes
  * -------
  * 7-Sep-2007 : Initial revision (LJS);
- * 
+ *
  */
 package org.jgrapht.graph;
 
 import java.io.*;
+
 import org.jgrapht.*;
+
 
 /**
  * An unweighted view of the backing weighted graph specified in the
  * constructor. This graph allows modules to apply algorithms designed for
- * unweighted graphs to a weighted graph by simply ignoring edge weights. 
- * 
- * Query operations on this graph "read through" to the backing graph. Vertex 
- * addition/removal and edge addition/removal are all supported (and
- * immediately reflected in the backing graph).
+ * unweighted graphs to a weighted graph by simply ignoring edge weights. Query
+ * operations on this graph "read through" to the backing graph. Vertex
+ * addition/removal and edge addition/removal are all supported (and immediately
+ * reflected in the backing graph).
  *
  * <p>Note that edges returned by this graph's accessors are really just the
  * edges of the underlying directed graph.</p>
@@ -62,22 +63,23 @@ import org.jgrapht.*;
  * @since Sep 7, 2007
  */
 
-public class AsUnweightedGraph<V, E> 
+public class AsUnweightedGraph<V, E>
     extends GraphDelegator<V, E>
     implements Serializable
 {
-    //~ Constructors -----------------------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
-     * 
      */
     private static final long serialVersionUID = 7175505077601824663L;
+
+    //~ Constructors -----------------------------------------------------------
 
     /**
      * Constructor for AsUnweightedGraph.
      *
-     * @param g the backing graph over which an unweighted view is to
-     * be created.
+     * @param g the backing graph over which an unweighted view is to be
+     * created.
      */
     public AsUnweightedGraph(Graph<V, E> g)
     {

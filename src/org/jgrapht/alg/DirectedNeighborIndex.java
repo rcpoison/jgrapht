@@ -159,7 +159,7 @@ public class DirectedNeighborIndex<V, E>
         // then skip addNeighbor, since instantiating the map
         // will take care of processing the edge (which has already
         // been added)
-        
+
         if (successorMap.containsKey(source)) {
             getSuccessors(source).addNeighbor(target);
         } else {

@@ -76,8 +76,7 @@ public class MaskSubgraph<V, E>
     /**
      * Creates a new induced subgraph. Running-time = O(1).
      *
-     * @param base  the base (backing) graph on which the subgraph will be
-     * based.
+     * @param base the base (backing) graph on which the subgraph will be based.
      * @param mask vertices and edges to exclude in the subgraph. If a
      * vertex/edge is masked, it is as if it is not in the subgraph.
      */
