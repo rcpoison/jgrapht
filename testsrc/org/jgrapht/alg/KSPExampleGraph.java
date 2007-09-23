@@ -49,6 +49,11 @@ public class KSPExampleGraph
 {
     //~ Instance fields --------------------------------------------------------
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1850978181764235655L;
+
     public Object edgeAD;
 
     public Object edgeBT;
