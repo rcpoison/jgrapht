@@ -38,13 +38,18 @@
  */
 package org.jgrapht.alg;
 
-import junit.framework.TestCase;
+import junit.framework.*;
 
-import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.graph.*;
 
-public class KSPExampleTest extends TestCase {
 
-    public void testFourReturnedPathsJGraphT() {
+public class KSPExampleTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
+
+    public void testFourReturnedPathsJGraphT()
+    {
         SimpleWeightedGraph graph = new KSPExampleGraph();
 
         Object sourceVertex = "S";
@@ -54,7 +59,8 @@ public class KSPExampleTest extends TestCase {
         assertEquals(3, ksp.getPathElements(targetVertex).size());
     }
 
-    public void testThreeReturnedPathsJGraphT() {
+    public void testThreeReturnedPathsJGraphT()
+    {
         SimpleWeightedGraph graph = new KSPExampleGraph();
 
         Object sourceVertex = "S";
@@ -65,8 +71,8 @@ public class KSPExampleTest extends TestCase {
         assertEquals(nbPaths, ksp.getPathElements(targetVertex).size());
     }
 
-    public void testTwoReturnedPathsJGraphT() {
-
+    public void testTwoReturnedPathsJGraphT()
+    {
         SimpleWeightedGraph graph = new KSPExampleGraph();
 
         Object sourceVertex = "S";
@@ -76,5 +82,6 @@ public class KSPExampleTest extends TestCase {
         Object targetVertex = "T";
         assertEquals(nbPaths, ksp.getPathElements(targetVertex).size());
     }
-
 }
+
+// End $file.name$

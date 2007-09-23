@@ -78,7 +78,7 @@ public class BellmanFordShortestPath<V, E>
     private int passNumber;
 
     private double epsilon;
-    
+
     //~ Constructors -----------------------------------------------------------
 
     /**
@@ -108,7 +108,7 @@ public class BellmanFordShortestPath<V, E>
     {
         this(graph, startVertex, nMaxHops, DEFAULT_EPSILON);
     }
-    
+
     /**
      * Creates an object to calculate shortest paths between the start vertex
      * and others vertices using the Bellman-Ford algorithm.
@@ -200,7 +200,9 @@ public class BellmanFordShortestPath<V, E>
         if (this.iter == null) {
             this.iter =
                 new BellmanFordIterator<V, E>(
-                    this.graph, this.startVertex, epsilon);
+                    this.graph,
+                    this.startVertex,
+                    epsilon);
         }
 
         // at the i-th pass the shortest paths with less (or equal) than i edges

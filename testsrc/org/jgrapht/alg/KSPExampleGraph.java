@@ -38,13 +38,16 @@
  */
 package org.jgrapht.alg;
 
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.SimpleWeightedGraph;
+import org.jgrapht.graph.*;
+
 
 /**
  * <img src="./KSPExample.png">
  */
-public class KSPExampleGraph extends SimpleWeightedGraph {
+public class KSPExampleGraph
+    extends SimpleWeightedGraph
+{
+    //~ Instance fields --------------------------------------------------------
 
     public Object edgeAD;
 
@@ -62,17 +65,23 @@ public class KSPExampleGraph extends SimpleWeightedGraph {
 
     public Object edgeST;
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * <img src="./Picture1.jpg">
      */
-    public KSPExampleGraph() {
+    public KSPExampleGraph()
+    {
         super(DefaultWeightedEdge.class);
 
         addVertices();
         addEdges();
     }
 
-    private void addEdges() {
+    //~ Methods ----------------------------------------------------------------
+
+    private void addEdges()
+    {
         this.edgeST = this.addEdge("S", "T");
         this.edgeSA = this.addEdge("S", "A");
         this.edgeAD = this.addEdge("A", "D");
@@ -92,7 +101,8 @@ public class KSPExampleGraph extends SimpleWeightedGraph {
         setEdgeWeight(this.edgeBT, 1);
     }
 
-    private void addVertices() {
+    private void addVertices()
+    {
         addVertex("S");
         addVertex("T");
         addVertex("A");
@@ -101,7 +111,6 @@ public class KSPExampleGraph extends SimpleWeightedGraph {
         addVertex("D");
         addVertex("E");
     }
-
 }
 
 // End KSPExampleGraph.java

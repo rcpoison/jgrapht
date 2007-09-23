@@ -90,7 +90,7 @@ class BellmanFordIterator<V, E>
     private Map<V, BellmanFordPathElement<V, E>> vertexData;
 
     private double epsilon;
-    
+
     //~ Constructors -----------------------------------------------------------
 
     /**
@@ -98,7 +98,9 @@ class BellmanFordIterator<V, E>
      * @param startVertex start vertex.
      * @param epsilon tolerance factor.
      */
-    protected BellmanFordIterator(Graph<V, E> graph, V startVertex,
+    protected BellmanFordIterator(
+        Graph<V, E> graph,
+        V startVertex,
         double epsilon)
     {
         assertBellmanFordIterator(graph, startVertex);
