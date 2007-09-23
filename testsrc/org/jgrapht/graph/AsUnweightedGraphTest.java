@@ -23,7 +23,7 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* --------------------------
- * AsUndirectedGraphTest.java
+ * AsUnweightedGraphTest.java
  * --------------------------
  * (C) Copyright 2007-2007, by John V. Sichi and Contributors.
  *
@@ -88,7 +88,7 @@ public class AsUnweightedGraphTest
     public void testUndirected()
     {
         WeightedGraph<String, DefaultWeightedEdge> undirected =
-            new WeightedPseudograph<String, DefaultWeightedEdge>(
+            new SimpleWeightedGraph<String, DefaultWeightedEdge>(
                 DefaultWeightedEdge.class);
         constructWeighted(undirected);
         
@@ -138,4 +138,4 @@ public class AsUnweightedGraphTest
     }
 }
 
-// End AsUndirectedGraphTest.java
+// End AsUnweightedGraphTest.java
