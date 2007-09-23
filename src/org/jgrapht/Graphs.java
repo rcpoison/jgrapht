@@ -357,12 +357,12 @@ public abstract class Graphs
     /**
      * Returns an undirected view of the specified graph. If the specified graph
      * is directed, returns an undirected view of it. If the specified graph is
-     * undirected, just returns it.
+     * already undirected, just returns it.
      *
-     * @param g the graph for which an undirected view to be returned.
+     * @param g the graph for which an undirected view is to be returned.
      *
      * @return an undirected view of the specified graph, if it is directed, or
-     * or the specified graph itself if it is undirected.
+     * or the specified graph itself if it is already undirected.
      *
      * @throws IllegalArgumentException if the graph is neither DirectedGraph
      * nor UndirectedGraph.
