@@ -95,8 +95,8 @@ public class KShortestPaths<V, E>
      *
      * @param graph graph on which shortest paths are searched.
      * @param startVertex start vertex of the calculated paths.
-     * @param nPaths  number of ranking paths between the start vertex and an
-     * end vertex.
+     * @param nPaths number of ranking paths between the start vertex and an end
+     * vertex.
      * @param nMaxHops maximum number of edges of the calculated paths.
      *
      * @throws NullPointerException if the specified graph or startVertex is

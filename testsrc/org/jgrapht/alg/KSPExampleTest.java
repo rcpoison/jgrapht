@@ -43,6 +43,7 @@ import junit.framework.*;
 import org.jgrapht.graph.*;
 
 
+@SuppressWarnings("unchecked")
 public class KSPExampleTest
     extends TestCase
 {

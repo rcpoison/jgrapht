@@ -44,15 +44,17 @@ import org.jgrapht.graph.*;
 /**
  * <img src="./KSPExample.png">
  */
+@SuppressWarnings("unchecked")
 public class KSPExampleGraph
     extends SimpleWeightedGraph
 {
-    //~ Instance fields --------------------------------------------------------
+    //~ Static fields/initializers ---------------------------------------------
 
     /**
-     * 
      */
     private static final long serialVersionUID = -1850978181764235655L;
+
+    //~ Instance fields --------------------------------------------------------
 
     public Object edgeAD;
 

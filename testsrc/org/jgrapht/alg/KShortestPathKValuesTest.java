@@ -49,6 +49,7 @@ import org.jgrapht.*;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
+@SuppressWarnings("unchecked")
 public class KShortestPathKValuesTest
     extends TestCase
 {

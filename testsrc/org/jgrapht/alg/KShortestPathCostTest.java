@@ -51,6 +51,7 @@ import sun.security.provider.certpath.*;
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
+@SuppressWarnings("unchecked")
 public class KShortestPathCostTest
     extends TestCase
 {
