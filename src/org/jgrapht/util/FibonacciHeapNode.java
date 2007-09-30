@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (barak_naveh@users.sourceforge.net)
  *
- * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2007, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* --------------------------
  * FibonnaciHeapNode.java
  * --------------------------
- * (C) Copyright 1999-2006, by Nathan Fiedler and Contributors.
+ * (C) Copyright 1999-2007, by Nathan Fiedler and Contributors.
  *
  * Original Author:  Nathan Fiedler
  * Contributor(s):   John V. Sichi
