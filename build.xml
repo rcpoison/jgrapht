@@ -47,6 +47,7 @@
  * 23-Apr-2006 : Renamed package to org.jgrapht (JVS);
  * 25-Jun-2006 : Fold experimental into main build (JVS);
  * 01-Jul-2006 : Remove checkstyle, switch from CVS to SVN (JVS);
+ * 29-Sep-2007 : Dropped support for retroweaver in 0.7.2 release (JVS);
  *
  */
 -->
@@ -138,8 +139,6 @@
     <!-- File names -->
     <property name="project.jar.name"    
       value="${project.name}-jdk1.5.jar" />
-    <property name="retro.jar.name"      
-      value="${project.name}-jdk1.4.jar" />
     <property name="project.tar.name"    
       value="${project.prefix}.tar" />
     <property name="project.tar.gz.name" 
@@ -162,8 +161,6 @@
     <!-- Files -->
     <property name="project.jar"      
       value="${basedir}/${project.jar.name}" />
-    <property name="retro.jar"        
-      value="${basedir}/${retro.jar.name}" />
     <property name="project.tar"      
       value="${basedir}/${project.tar.name}" />
     <property name="project.tar.gz"   
@@ -215,16 +212,6 @@
       <pathelement location="${testbuild.dir}"/>
     </path>
     <property name="test.classpath" refid="test.classpath"/>
-
-    <!-- Classpath for running tests with retro runtime support. -->
-    <path id="test.retro.classpath">
-      <pathelement path="${test.classpath}"/>
-      <pathelement 
-        location="${retroweaver.dir}/release/retroweaver-rt-${retroweaver.ver}.jar"/>
-      <pathelement 
-        location="${retroweaver.dir}/lib/backport-util-concurrent.jar"/>
-    </path>
-    <property name="test.retro.classpath" refid="test.retro.classpath"/>
   </target>
 
 
@@ -286,25 +273,6 @@
       </manifest> 
     </jar>
   </target>
-
-  <!-- Generate the retrowoven runtime jar -->
-  <target name="jar.retro" depends="compile">
-    <jar jarfile="${retro.jar}" basedir="${build.dir}">
-      <manifest>
-        <attribute name="Main-Class" 
-          value="org.jgrapht.demo.JGraphAdapterDemo"/>
-        <attribute name="Class-Path" 
-          value="lib/${jgraph.jar.name}"/>
-        <attribute name="Specification-Title" 
-          value="${project.name}"/>
-        <attribute name="Specification-Version" 
-          value="${project.version}"/>
-        <attribute name="Implementation-Version" 
-          value="${project.version}-jdk1.4"/>
-      </manifest> 
-    </jar>
-  </target>
-
 
   <!-- Build all JUnit tests -->
   <target name="test.compile" depends="compile"
@@ -371,38 +339,6 @@
     </jalopy>
   </target>
 
-  <!-- Build and test the retrowoven JRE 1.4 backport                    -->
-  <target name="backport" if="retroweaver.dir"
-    description="Builds and tests the JRE 1.4 backport.">
-    <antcall target="retroweave"/>
-    <antcall target="jar.retro"/>
-    <antcall target="test.retro"/>
-  </target>
-
-  <!-- Test the retrowoven JRE 1.4 backport                              -->
-  <target name="test.retro" if="jre1.4.dir"
-    description="Tests the JRE 1.4 backport." depends="init">
-    <runTests jvm="${jre1.4.dir}/bin/java" 
-      classpath.refid="test.retro.classpath" />
-  </target>
-
-  <!-- Run retroweaver on compiled classes                               -->
-  <!-- NOTE:  requires manual installation of dist in retroweaver.dir   -->
-  <target name="retroweave" depends="init" 
-    description="Retroweaves for backward compatibility with JRE 1.4.">
-    <fail unless="retroweaver.dir"/>
-    <taskdef name="retroweaver"
-      classname="net.sourceforge.retroweaver.ant.RetroWeaverTask">
-      <classpath>
-        <fileset dir="${retroweaver.dir}/lib" includes="**/*"/>
-        <pathelement 
-          location="${retroweaver.dir}/release/retroweaver-all-${retroweaver.ver}.jar"/>
-      </classpath>
-    </taskdef>
-    <retroweaver srcdir="${build.dir}"/>
-    <retroweaver srcdir="${testbuild.dir}"/>
-  </target>
-
   <!-- Generate the JGraphT JavaDoc HTML pages -->
   <target name="javadoc" depends="init" description="Creates the Javadocs.">
     <delete dir="${javadoc.dir}" />
@@ -423,8 +359,6 @@
   <!-- Prepares a distribution directory of JGraphT -->
   <target name="prepare.distribution" depends="jar,javadoc">
     
-    <antcall target="backport" />
-
     <!-- make a temporary distribution directory -->
     <mkdir dir="${distrib.dir}" />
 
@@ -437,8 +371,6 @@
 
     <!-- add runtime jar file -->
     <copy file="${project.jar}" tofile="${distrib.dir}/${project.jar.name}" />
-    <copy file="${retro.jar}" tofile="${distrib.dir}/${retro.jar.name}" 
-      failonerror="false" />
     
     <!-- add source files -->
     <copy todir="${distrib.dir}/src">
@@ -531,7 +463,6 @@
     <delete dir="${testbuild.dir}" />
     <delete dir="${javadoc.dir}" />
     <delete file="${project.jar}" />
-    <delete file="${retro.jar}" />
     <delete file="${project.zip}" />
     <delete file="${project.tar.gz}" />
   </target>
@@ -545,7 +476,6 @@
     <delete dir="${distrib.dir}" />
     <delete dir="${javadoc.dir}" />
     <delete file="${project.jar}" />
-    <delete file="${retro.jar}" />
   </target>
 
 
@@ -588,16 +518,10 @@
     
     <echo>Starting release build at ${checkout.dir}/${build.file.name}</echo>
 
-    <fail unless="retroweaver.dir"/>
-    <fail unless="retroweaver.ver"/>
-    <fail unless="jre1.4.dir"/>
     <antcall target="checkout"/>
     <ant dir="${checkout.dir}" antfile="${build.file.name}" 
       target="all" inheritall="false" inheritrefs="false">
       <property name="svntag" value="${svntag}"/>
-      <property name="retroweaver.dir" value="${retroweaver.dir}"/>
-      <property name="retroweaver.ver" value="${retroweaver.ver}"/>
-      <property name="jre1.4.dir" value="${jre1.4.dir}"/>
     </ant>
   </target>
 

@@ -49,26 +49,5 @@
 # with customizability.)
 
 # ~~~~~~~~~~~~~~~~~
-# Backport settings
-# ~~~~~~~~~~~~~~~~~
-
-# Location of Retroweaver distribution.  Uncomment retroweaver.dir
-# to enable a retrowoven JRE 1.4 backport as part of the build.
-# ~~~~~~~
-# retroweaver.dir=/path/to/distribution/of/retroweaver
-
-# Version of Retroweaver distribution.  You must uncomment retroweaver.dir
-# and set it if you uncomment retroweaver.dir.
-# ~~~~~~~
-# retroweaver.ver=x.y.z
-
-# Location of JRE 1.4 installation.  Uncomment jre1.4.dir to enable
-# a test of the backport as part of the build.  The test will execute
-# against JRE 1.4, failing if any dependencies on JRE 1.5 have
-# crept into the library.
-# ~~~~~~~
-# jre1.4.dir=/path/to/jre1.4
-
-# ~~~~~~~~~~~~~~~~~
 # End build.properties
 # ~~~~~~~~~~~~~~~~~

@@ -178,12 +178,6 @@ At this stage, the release is complete in SVN and only a distribution
 is needed to be built.  The distribution is built from SVN to ensure
 that whatever gets released is reproducible later.
 
-<li>To build the release, you need to have extra software installed to
-create and test the JRE 1.4 backport.  In particular, you need JRE 1.4
-and <a href="http://retroweaver.sf.net">Retroweaver</a>.  To tell the
-build where these are installed, follow the instructions in
-etc/build.properties.template.
-
 <li>The ant build.xml has a hack that allows specifying a SVN tag.
 You just need to invoke:
 
@@ -192,8 +186,7 @@ You just need to invoke:
 </code></pre>
 
 It will checkout from SVN the tagged version 0.7.1, and build a
-distribution for it.  This will fail unless you have set up your build
-to include the retroweaver-based backport.
+distribution for it.
 
 <li>Upload the release to SF and add it using the File Release System.
 
