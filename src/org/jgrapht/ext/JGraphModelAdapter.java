@@ -685,12 +685,16 @@ public class JGraphModelAdapter<V, E>
             (DefaultGraphCell) vertexToCell.remove(jtVertex);
         cellToVertex.remove(vertexCell);
 
-        internalRemoveCell(vertexCell);
-
-        // FIXME: Why remove childAt(0)? Explain if correct, otherwise fix.
-        if (vertexCell.getChildCount() > 0) {
-            remove(new Object[] { vertexCell.getChildAt(0) });
+        List<Object> ports = new ArrayList<Object>();
+        
+        for (Object child : vertexCell.getChildren()) {
+            if(this.isPort(child)) {
+                ports.add(child);
+            }
         }
+        this.remove(ports.toArray());
+        
+        internalRemoveCell(vertexCell);
     }
 
     /**
