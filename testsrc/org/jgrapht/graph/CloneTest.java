@@ -90,6 +90,49 @@ public class CloneTest
         assertNotNull(g2.removeEdge("2", "3"));
         assertTrue(g2.edgeSet().isEmpty());
     }
+
+    /**
+     * Tests usage of {@link ParanoidGraph} for detecting broken vertex
+     * implementations.
+     */
+    public void testParanoidGraph()
+    {
+        BrokenVertex v1 = new BrokenVertex(1);
+        BrokenVertex v2 = new BrokenVertex(2);
+        BrokenVertex v3 = new BrokenVertex(1);
+
+        SimpleGraph<BrokenVertex, DefaultEdge> g =
+            new SimpleGraph<BrokenVertex, DefaultEdge>(DefaultEdge.class);
+        ParanoidGraph<BrokenVertex, DefaultEdge> pg =
+            new ParanoidGraph<BrokenVertex, DefaultEdge>(g);
+        pg.addVertex(v1);
+        pg.addVertex(v2);
+        try {
+            pg.addVertex(v3);
+            // should not get here
+            assertFalse();
+        } catch (IllegalArgumentException ex) {
+            // expected, swallow
+        }
+    }
+
+    private class BrokenVertex 
+    {
+        private int x;
+        
+        BrokenVertex(int x)
+        {
+            this.x = x;
+        }
+        
+        public boolean equals(Object other)
+        {
+            if (!(other instanceof BrokenVertex)) {
+                return false;
+            }
+            return x == ((BrokenVertex) other).x;
+        }
+    }
 }
 
 // End CloneTest.java
