@@ -45,10 +45,13 @@ import java.util.*;
 
 /**
  * ParanoidGraph provides a way to verify that objects added to
- * a graph obey the standard equals/hashCode contract.
+ * a graph obey the standard equals/hashCode contract.  It can
+ * be used to wrap an underlying graph to be verified.  Note that
+ * the verification is very expensive, so ParanoidGraph should only
+ * be used during debugging.
  *
  * @author John Sichi
- * @version $Id:$
+ * @version $Id$
  */
 public class ParanoidGraph<V,E> extends GraphDelegator<V,E>
 {
