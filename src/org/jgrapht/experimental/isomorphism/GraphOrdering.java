@@ -176,7 +176,7 @@ public class GraphOrdering<V, E>
             Integer index = this.mapVertexToOrder.get(currVertex);
             vertexArray[index.intValue()] = currVertex;
         }
-        sb.append(ArrayUtil.toString(vertexArray));
+        sb.append(Arrays.toString(vertexArray));
         sb.append("labelsOrder=").append(this.labelsEdgesSet.toString());
         return sb.toString();
     }

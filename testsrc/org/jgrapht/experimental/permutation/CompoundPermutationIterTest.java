@@ -41,6 +41,7 @@ import junit.framework.*;
 
 import org.jgrapht.util.*;
 
+import java.util.*;
 
 /**
  * @author Assaf
@@ -87,7 +88,7 @@ public class CompoundPermutationIterTest
             int [] resultArray = this.complexPerm.getNext();
 
             if (false) {
-                System.out.println(ArrayUtil.toString(resultArray));
+                System.out.println(Arrays.toString(resultArray));
             }
             counter++;
         }
@@ -118,7 +119,7 @@ public class CompoundPermutationIterTest
             int [] resultArray = this.complexPerm.getNext();
 
             if (false) {
-                System.out.println(ArrayUtil.toString(resultArray));
+                System.out.println(Arrays.toString(resultArray));
             }
             counter++;
         }
