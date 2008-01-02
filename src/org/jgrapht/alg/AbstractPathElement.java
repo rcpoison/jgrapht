@@ -52,9 +52,9 @@ import org.jgrapht.*;
  * In this case the path has no previous path element.<br>
  * .
  *
- * <p>NOTE jvs 14-Jan-2006: This is currently an internal data structure for use
- * in algorithms. If we want to promote it to public, we should first clean it
- * up and move it to the parent package, making a Path a first-class concept.
+ * <p>NOTE jvs 1-Jan-2008: This is an internal data structure for use
+ * in algorithms.  For returning paths to callers, use the public
+ * {@link GraphPath} interface instead.
  *
  * @author Guillaume Boulmier
  * @since July 5, 2007
