@@ -57,7 +57,7 @@ public class KSPExampleTest
         KShortestPaths ksp = new KShortestPaths(graph, sourceVertex, 4);
 
         Object targetVertex = "T";
-        assertEquals(3, ksp.getPathElements(targetVertex).size());
+        assertEquals(3, ksp.getPaths(targetVertex).size());
     }
 
     public void testThreeReturnedPathsJGraphT()
@@ -69,7 +69,7 @@ public class KSPExampleTest
         KShortestPaths ksp = new KShortestPaths(graph, sourceVertex, nbPaths);
 
         Object targetVertex = "T";
-        assertEquals(nbPaths, ksp.getPathElements(targetVertex).size());
+        assertEquals(nbPaths, ksp.getPaths(targetVertex).size());
     }
 
     public void testTwoReturnedPathsJGraphT()
@@ -81,7 +81,7 @@ public class KSPExampleTest
         KShortestPaths ksp = new KShortestPaths(graph, sourceVertex, nbPaths);
 
         Object targetVertex = "T";
-        assertEquals(nbPaths, ksp.getPathElements(targetVertex).size());
+        assertEquals(nbPaths, ksp.getPaths(targetVertex).size());
     }
 }
 

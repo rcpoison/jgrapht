@@ -129,10 +129,10 @@ public class KShortestPaths<V, E>
      *
      * @param endVertex target vertex of the calculated paths.
      *
-     * @return list of <code>RankingPathElement</code>, or <code>null</code> of
+     * @return list of paths, or <code>null</code> if
      * no path exists between the start vertex and the end vertex.
      */
-    public List<RankingPathElement<V, E>> getPathElements(V endVertex)
+    public List<GraphPath<V, E>> getPaths(V endVertex)
     {
         assertGetPaths(endVertex);
 
@@ -154,7 +154,19 @@ public class KShortestPaths<V, E>
             iter.next();
         }
 
-        return iter.getPathElements(endVertex);
+        List<RankingPathElement<V, E>> list = iter.getPathElements(endVertex);
+
+        if (list == null) {
+            return null;
+        }
+
+        List<GraphPath<V, E>> pathList = new ArrayList<GraphPath<V, E>>();
+
+        for (RankingPathElement<V, E> element : list) {
+            pathList.add(new PathWrapper(element));
+        }
+
+        return pathList;
     }
 
     private void assertGetPaths(V endVertex)
@@ -189,6 +201,51 @@ public class KShortestPaths<V, E>
         }
         if (nMaxHops <= 0) {
             throw new NullPointerException("nMaxHops is negative or 0");
+        }
+    }
+
+    private class PathWrapper implements GraphPath<V,E>
+    {
+        private RankingPathElement<V,E> rankingPathElement;
+
+        private List<E> edgeList;
+        
+        PathWrapper(RankingPathElement<V,E> rankingPathElement)
+        {
+            this.rankingPathElement = rankingPathElement;
+        }
+
+        // implement GraphPath
+        public Graph<V,E> getGraph()
+        {
+            return graph;
+        }
+        
+        // implement GraphPath
+        public V getStartVertex()
+        {
+            return startVertex;
+        }
+        
+        // implement GraphPath
+        public V getEndVertex()
+        {
+            return rankingPathElement.getVertex();
+        }
+        
+        // implement GraphPath
+        public List<E> getEdgeList()
+        {
+            if (edgeList == null) {
+                edgeList = rankingPathElement.createEdgeListPath();
+            }
+            return edgeList;
+        }
+        
+        // implement GraphPath
+        public double getWeight()
+        {
+            return rankingPathElement.getWeight();
         }
     }
 }

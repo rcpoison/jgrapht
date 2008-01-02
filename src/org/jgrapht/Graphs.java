@@ -417,6 +417,26 @@ public abstract class Graphs
             throw new IllegalArgumentException("no such vertex");
         }
     }
+
+    /**
+     * Gets the list of vertices visited by a path.
+     *
+     * @param path path of interest
+     *
+     * @return corresponding vertex list
+     */
+    public static <V, E> List<V> getPathVertexList(GraphPath<V, E> path)
+    {
+        Graph<V, E> g = path.getGraph();
+        List<V> list = new ArrayList<V>();
+        V v = path.getStartVertex();
+        list.add(v);
+        for (E e : path.getEdgeList()) {
+            v = getOppositeVertex(g, e, v);
+            list.add(v);
+        }
+        return list;
+    }
 }
 
 // End Graphs.java

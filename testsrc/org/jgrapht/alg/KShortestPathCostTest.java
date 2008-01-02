@@ -64,15 +64,15 @@ public class KShortestPathCostTest
         KShortestPathCompleteGraph4 graph = new KShortestPathCompleteGraph4();
 
         KShortestPaths pathFinder = new KShortestPaths(graph, "vS", nbPaths);
-        List pathElements = pathFinder.getPathElements("v3");
+        List pathElements = pathFinder.getPaths("v3");
         assertEquals(5, pathElements.size(), 0);
-        RankingPathElement pathElement =
-            (RankingPathElement) pathElements.get(0);
+        GraphPath pathElement =
+            (GraphPath) pathElements.get(0);
         assertEquals(2, pathElement.getWeight(), 0);
 
         assertEquals(
             Arrays.asList(new Object[] { graph.eS1, graph.e13 }),
-            pathElement.createEdgeListPath());
+            pathElement.getEdgeList());
     }
 
     public void testKShortestPathCosts(Graph graph)
@@ -97,12 +97,12 @@ public class KShortestPathCostTest
                             sourceVertex, maxSize);
 
                     List pathElements =
-                        pathFinder.getPathElements(targetVertex);
-                    RankingPathElement pathElement =
-                        (RankingPathElement) pathElements.get(0);
+                        pathFinder.getPaths(targetVertex);
+                    GraphPath pathElement =
+                        (GraphPath) pathElements.get(0);
                     double lastCost = pathElement.getWeight();
                     for (int i = 0; i < pathElements.size(); i++) {
-                        pathElement = (RankingPathElement) pathElements.get(i);
+                        pathElement = (GraphPath) pathElements.get(i);
                         double cost = pathElement.getWeight();
                         assertTrue(lastCost <= cost);
                         lastCost = cost;
@@ -123,33 +123,53 @@ public class KShortestPathCostTest
             new KShortestPaths(picture1Graph, "vS",
                 maxSize);
 
-        assertEquals(2, pathFinder.getPathElements("v5").size());
+        assertEquals(2, pathFinder.getPaths("v5").size());
 
-        List pathElements = pathFinder.getPathElements("v5");
-        RankingPathElement pathElement =
-            (RankingPathElement) pathElements.get(0);
+        List pathElements = pathFinder.getPaths("v5");
+        GraphPath pathElement =
+            (GraphPath) pathElements.get(0);
         assertEquals(
             Arrays.asList(
                 new Object[] {
                     picture1Graph.eS1,
                     picture1Graph.e15
                 }),
-            pathElement.createEdgeListPath());
+            pathElement.getEdgeList());
 
-        pathElement = (RankingPathElement) pathElements.get(1);
+        List vertices = Graphs.getPathVertexList(pathElement);
+        assertEquals(
+            Arrays.asList(
+                new Object [] {
+                    "vS",
+                    "v1",
+                    "v5"
+                }),
+            vertices);
+
+        pathElement = (GraphPath) pathElements.get(1);
         assertEquals(
             Arrays.asList(
                 new Object[] {
                     picture1Graph.eS2,
                     picture1Graph.e25
                 }),
-            pathElement.createEdgeListPath());
+            pathElement.getEdgeList());
 
-        pathElements = pathFinder.getPathElements("v7");
-        pathElement = (RankingPathElement) pathElements.get(0);
+        vertices = Graphs.getPathVertexList(pathElement);
+        assertEquals(
+            Arrays.asList(
+                new Object [] {
+                    "vS",
+                    "v2",
+                    "v5"
+                }),
+            vertices);
+
+        pathElements = pathFinder.getPaths("v7");
+        pathElement = (GraphPath) pathElements.get(0);
         double lastCost = pathElement.getWeight();
         for (int i = 0; i < pathElements.size(); i++) {
-            pathElement = (RankingPathElement) pathElements.get(i);
+            pathElement = (GraphPath) pathElements.get(i);
             double cost = pathElement.getWeight();
 
             assertTrue(lastCost <= cost);

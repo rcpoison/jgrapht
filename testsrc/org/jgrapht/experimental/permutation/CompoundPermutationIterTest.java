@@ -39,8 +39,6 @@ package org.jgrapht.experimental.permutation;
 
 import junit.framework.*;
 
-import org.jgrapht.util.*;
-
 import java.util.*;
 
 /**

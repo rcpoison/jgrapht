@@ -39,8 +39,6 @@ package org.jgrapht.experimental.permutation;
 
 import java.util.*;
 
-import org.jgrapht.util.*;
-
 
 /**
  * Given a container with elements (Collection,Enumeration,array) defines a

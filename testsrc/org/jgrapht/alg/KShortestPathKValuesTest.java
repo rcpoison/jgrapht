@@ -95,11 +95,11 @@ public class KShortestPathKValuesTest
         {
             KShortestPaths finder = new KShortestPaths(graph, "vS", maxSize);
 
-            assertEquals(finder.getPathElements("v1").size(), maxSize);
-            assertEquals(finder.getPathElements("v2").size(), maxSize);
-            assertEquals(finder.getPathElements("v3").size(), maxSize);
-            assertEquals(finder.getPathElements("v4").size(), maxSize);
-            assertEquals(finder.getPathElements("v5").size(), maxSize);
+            assertEquals(finder.getPaths("v1").size(), maxSize);
+            assertEquals(finder.getPaths("v2").size(), maxSize);
+            assertEquals(finder.getPaths("v3").size(), maxSize);
+            assertEquals(finder.getPaths("v4").size(), maxSize);
+            assertEquals(finder.getPaths("v5").size(), maxSize);
         }
     }
 
@@ -150,7 +150,7 @@ public class KShortestPathKValuesTest
                 Object targetVertex = targetIterator.next();
                 if (targetVertex != sourceVertex) {
                     assertEquals(
-                        finder.getPathElements(targetVertex).size(),
+                        finder.getPaths(targetVertex).size(),
                         nbpaths);
                 }
             }

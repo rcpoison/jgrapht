@@ -40,7 +40,6 @@ package org.jgrapht.experimental.isomorphism;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 
 
 /**
