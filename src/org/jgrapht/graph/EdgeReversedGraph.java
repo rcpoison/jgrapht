@@ -93,6 +93,14 @@ public class EdgeReversedGraph<V, E>
     }
 
     /**
+     * @see Graph#getAllEdges(Object, Object)
+     */
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex)
+    {
+        return super.getAllEdges(targetVertex, sourceVertex);
+    }
+    
+    /**
      * @see Graph#addEdge(Object, Object)
      */
     public E addEdge(V sourceVertex, V targetVertex)

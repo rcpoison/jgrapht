@@ -431,6 +431,13 @@ public class SimpleDirectedGraphTest
         assertFalse(r.containsEdge(v1, v2));
         assertNull(r.getEdge(v1, v2));
 
+        Set<DefaultEdge> s = r.getAllEdges(v1, v2);
+        assertEquals(0, s.size());
+
+        s = r.getAllEdges(v2, v1);
+        assertEquals(1, s.size());
+        assertSame(e, s.iterator().next());
+
         assertEquals(1, r.inDegreeOf(v1));
         assertEquals(0, r.inDegreeOf(v2));
         assertEquals(0, r.outDegreeOf(v1));
