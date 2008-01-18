@@ -99,6 +99,7 @@ public class BellmanFordShortestPathTest
                 V3,
                 1);
         assertNull(path.getPathEdgeList(V5));
+        assertEquals(Double.POSITIVE_INFINITY, path.getCost(V5));
     }
 
     protected List findPathBetween(

@@ -141,11 +141,18 @@ public class BellmanFordShortestPath<V, E>
      */
     public double getCost(V endVertex)
     {
-        lazyCalculate();
-
         assertGetPath(endVertex);
 
-        return this.iter.getPathElement(endVertex).getCost();
+        lazyCalculate();
+
+        BellmanFordPathElement<V, E> pathElement =
+            this.iter.getPathElement(endVertex);
+
+        if (pathElement == null) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        return pathElement.getCost();
     }
 
     /**
@@ -160,11 +167,14 @@ public class BellmanFordShortestPath<V, E>
 
         lazyCalculate();
 
-        if (this.iter.getPathElement(endVertex) == null) {
+        BellmanFordPathElement<V, E> pathElement =
+            this.iter.getPathElement(endVertex);
+
+        if (pathElement == null) {
             return null;
         }
 
-        return createPath(endVertex);
+        return pathElement.createEdgeListPath();
     }
 
     private void assertGetPath(V endVertex)
@@ -178,21 +188,6 @@ public class BellmanFordShortestPath<V, E>
             throw new IllegalArgumentException(
                 "Graph must contain the end vertex!");
         }
-    }
-
-    /**
-     * Complexity = O(length of path)
-     *
-     * @param endVertex end vertex.
-     *
-     * @return list of <code>Edge</code>.
-     */
-    private List<E> createPath(V endVertex)
-    {
-        AbstractPathElement<V, E> pathElement =
-            this.iter.getPathElement(endVertex);
-
-        return pathElement.createEdgeListPath();
     }
 
     private void lazyCalculate()
