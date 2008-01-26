@@ -126,7 +126,8 @@ public class TopologicalOrderIterator<V, E>
         this.queue = queue;
         this.inDegreeMap = inDegreeMap;
 
-        assert (queue.isEmpty());
+        // empty queue would indicate presence of cycles (no roots found)
+        assert (!queue.isEmpty());
     }
 
     // NOTE: This is intentionally private, because starting the sort "in the

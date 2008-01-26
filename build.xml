@@ -302,6 +302,7 @@
       <junit printsummary="no" fork="yes" jvm="@{jvm}"
         haltonerror="true" haltonfailure="true">
         <classpath refid="@{classpath.refid}"/>
+        <jvmarg line="-ea -esa" />
         <formatter type="brief" usefile="no" />
         <batchtest>
           <fileset dir="${testsrc.dir}">
