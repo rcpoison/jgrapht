@@ -129,8 +129,8 @@ public class KShortestPaths<V, E>
      *
      * @param endVertex target vertex of the calculated paths.
      *
-     * @return list of paths, or <code>null</code> if
-     * no path exists between the start vertex and the end vertex.
+     * @return list of paths, or <code>null</code> if no path exists between the
+     * start vertex and the end vertex.
      */
     public List<GraphPath<V, E>> getPaths(V endVertex)
     {
@@ -204,35 +204,38 @@ public class KShortestPaths<V, E>
         }
     }
 
-    private class PathWrapper implements GraphPath<V,E>
+    //~ Inner Classes ----------------------------------------------------------
+
+    private class PathWrapper
+        implements GraphPath<V, E>
     {
-        private RankingPathElement<V,E> rankingPathElement;
+        private RankingPathElement<V, E> rankingPathElement;
 
         private List<E> edgeList;
-        
-        PathWrapper(RankingPathElement<V,E> rankingPathElement)
+
+        PathWrapper(RankingPathElement<V, E> rankingPathElement)
         {
             this.rankingPathElement = rankingPathElement;
         }
 
         // implement GraphPath
-        public Graph<V,E> getGraph()
+        public Graph<V, E> getGraph()
         {
             return graph;
         }
-        
+
         // implement GraphPath
         public V getStartVertex()
         {
             return startVertex;
         }
-        
+
         // implement GraphPath
         public V getEndVertex()
         {
             return rankingPathElement.getVertex();
         }
-        
+
         // implement GraphPath
         public List<E> getEdgeList()
         {
@@ -241,7 +244,7 @@ public class KShortestPaths<V, E>
             }
             return edgeList;
         }
-        
+
         // implement GraphPath
         public double getWeight()
         {

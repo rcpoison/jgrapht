@@ -66,8 +66,7 @@ public class KShortestPathCostTest
         KShortestPaths pathFinder = new KShortestPaths(graph, "vS", nbPaths);
         List pathElements = pathFinder.getPaths("v3");
         assertEquals(5, pathElements.size(), 0);
-        GraphPath pathElement =
-            (GraphPath) pathElements.get(0);
+        GraphPath pathElement = (GraphPath) pathElements.get(0);
         assertEquals(2, pathElement.getWeight(), 0);
 
         assertEquals(
@@ -96,10 +95,8 @@ public class KShortestPathCostTest
                         new KShortestPaths(graph,
                             sourceVertex, maxSize);
 
-                    List pathElements =
-                        pathFinder.getPaths(targetVertex);
-                    GraphPath pathElement =
-                        (GraphPath) pathElements.get(0);
+                    List pathElements = pathFinder.getPaths(targetVertex);
+                    GraphPath pathElement = (GraphPath) pathElements.get(0);
                     double lastCost = pathElement.getWeight();
                     for (int i = 0; i < pathElements.size(); i++) {
                         pathElement = (GraphPath) pathElements.get(i);
@@ -126,8 +123,7 @@ public class KShortestPathCostTest
         assertEquals(2, pathFinder.getPaths("v5").size());
 
         List pathElements = pathFinder.getPaths("v5");
-        GraphPath pathElement =
-            (GraphPath) pathElements.get(0);
+        GraphPath pathElement = (GraphPath) pathElements.get(0);
         assertEquals(
             Arrays.asList(
                 new Object[] {
@@ -139,7 +135,7 @@ public class KShortestPathCostTest
         List vertices = Graphs.getPathVertexList(pathElement);
         assertEquals(
             Arrays.asList(
-                new Object [] {
+                new Object[] {
                     "vS",
                     "v1",
                     "v5"
@@ -158,7 +154,7 @@ public class KShortestPathCostTest
         vertices = Graphs.getPathVertexList(pathElement);
         assertEquals(
             Arrays.asList(
-                new Object [] {
+                new Object[] {
                     "vS",
                     "v2",
                     "v5"

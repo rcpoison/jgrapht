@@ -109,6 +109,7 @@ public class CloneTest
         pg.addVertex(v2);
         try {
             pg.addVertex(v3);
+
             // should not get here
             assertFalse();
         } catch (IllegalArgumentException ex) {
@@ -116,15 +117,17 @@ public class CloneTest
         }
     }
 
-    private class BrokenVertex 
+    //~ Inner Classes ----------------------------------------------------------
+
+    private class BrokenVertex
     {
         private int x;
-        
+
         BrokenVertex(int x)
         {
             this.x = x;
         }
-        
+
         public boolean equals(Object other)
         {
             if (!(other instanceof BrokenVertex)) {

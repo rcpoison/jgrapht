@@ -52,9 +52,9 @@ import org.jgrapht.*;
  * In this case the path has no previous path element.<br>
  * .
  *
- * <p>NOTE jvs 1-Jan-2008: This is an internal data structure for use
- * in algorithms.  For returning paths to callers, use the public
- * {@link GraphPath} interface instead.
+ * <p>NOTE jvs 1-Jan-2008: This is an internal data structure for use in
+ * algorithms. For returning paths to callers, use the public {@link GraphPath}
+ * interface instead.
  *
  * @author Guillaume Boulmier
  * @since July 5, 2007

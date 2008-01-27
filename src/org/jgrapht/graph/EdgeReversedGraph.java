@@ -99,7 +99,7 @@ public class EdgeReversedGraph<V, E>
     {
         return super.getAllEdges(targetVertex, sourceVertex);
     }
-    
+
     /**
      * @see Graph#addEdge(Object, Object)
      */

@@ -686,14 +686,14 @@ public class JGraphModelAdapter<V, E>
         cellToVertex.remove(vertexCell);
 
         List<Object> ports = new ArrayList<Object>();
-        
+
         for (Object child : vertexCell.getChildren()) {
-            if(this.isPort(child)) {
+            if (this.isPort(child)) {
                 ports.add(child);
             }
         }
         this.remove(ports.toArray());
-        
+
         internalRemoveCell(vertexCell);
     }
 

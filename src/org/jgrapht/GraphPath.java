@@ -41,26 +41,28 @@ package org.jgrapht;
 
 import java.util.*;
 
+
 /**
- * A GraphPath represents a <a
- * href="http://mathworld.wolfram.com/Path.html">path</a> in a {@link Graph}.
- * Note that a path is defined primarily in terms of edges (rather than
- * vertices) so that multiple edges between the same pair of vertices can be
- * discriminated.
+ * A GraphPath represents a <a href="http://mathworld.wolfram.com/Path.html">
+ * path</a> in a {@link Graph}. Note that a path is defined primarily in terms
+ * of edges (rather than vertices) so that multiple edges between the same pair
+ * of vertices can be discriminated.
  *
  * @author John Sichi
  * @since Jan 1, 2008
  */
 public interface GraphPath<V, E>
 {
+    //~ Methods ----------------------------------------------------------------
+
     /**
-     * Returns the graph over which this path is defined.  The path may also be
+     * Returns the graph over which this path is defined. The path may also be
      * valid with respect to other graphs.
      *
      * @return the containing graph
      */
-    public Graph<V,E> getGraph();
-    
+    public Graph<V, E> getGraph();
+
     /**
      * Returns the start vertex in the path.
      *
@@ -76,16 +78,14 @@ public interface GraphPath<V, E>
     public V getEndVertex();
 
     /**
-     * Returns the edges making up the path.  The first edge in this path is
-     * incident to the start vertex.  The last edge is incident to the end
-     * vertex.  The vertices along the path can be obtained by traversing from
+     * Returns the edges making up the path. The first edge in this path is
+     * incident to the start vertex. The last edge is incident to the end
+     * vertex. The vertices along the path can be obtained by traversing from
      * the start vertex, finding its opposite across the first edge, and then
      * doing the same successively across subsequent edges; {@link
      * Graphs#getPathVertexList} provides a convenience method for this.
      *
-     *<p>
-     *
-     * Whether or not the returned edge list is modifiable depends on the
+     * <p>Whether or not the returned edge list is modifiable depends on the
      * path implementation.
      *
      * @return list of edges traversed by the path
@@ -93,10 +93,9 @@ public interface GraphPath<V, E>
     public List<E> getEdgeList();
 
     /**
-     * Returns the weight assigned to the path.  Typically, this will be the
-     * sum of the weights of the edge list entries (as defined by the
-     * containing graph), but some path implementations may use other
-     * definitions.
+     * Returns the weight assigned to the path. Typically, this will be the sum
+     * of the weights of the edge list entries (as defined by the containing
+     * graph), but some path implementations may use other definitions.
      *
      * @return the weight of the path
      */
