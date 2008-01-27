@@ -47,6 +47,7 @@
  * 03-Jul-2006 : Version 0.7.0 notes (JVS);
  * 20-Mar-2007 : Version 0.7.1 notes (JVS);
  * 29-Sep-2007 : Version 0.7.2 notes (JVS);
+ * 27-Jan-2008 : Version 0.7.3 notes (JVS);
  *
  */
 -->
@@ -141,7 +142,7 @@
 
 <body>
   <h1><font size="2"><br></font><font size="7"><font color=
-  "#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>  0.7.2<br>
+  "#CC3399">J</font>Graph<font color="#FFCC00">T</font></font>  0.7.3<br>
   <font size="3"> </font></h1> 
 
   <p>Released: September, 2007</p>
@@ -349,13 +350,16 @@
   <p>Changes to JGraphT in each version:</p>
 
   <ul>
-    <li><b>version 0.7.3</b> (not yet released): Patch to
+    <li><b>version 0.7.3</b> (Jan-2008): Patch to
     JGraphModelAdapter.removeVertex provided by Hookahey.  Added
     ParanoidGraph.  Removed obsolete ArrayUtil (spotted by Boente).
     Added GraphPath, and used it to fix mistake in 0.7.2
-    (k-shortest-paths was returning a private data structure).  Fixed
+    (k-shortest-paths was returning a private data structure,
+    as discovered by numerous users).  Fixed
     EdgeReversedGraph.getAllEdges (spotted by
-    neumanns@users.sf.net).</li>
+    neumanns@users.sf.net).  Fixed incorrect assertion in
+    TopologicalOrderIterator constructor.  Enabled assertions
+    in JUnit tests.  Fixed NPE in BellmanFordShortestPath.getCost.</li>
 
     <li><b>version 0.7.2</b> (Sept-2007): Added
     TransitiveClosure, contributed by Vinayak Borkar.  Added

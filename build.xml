@@ -78,11 +78,11 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.7.3alpha" />
+    value="0.7.3" />
   
   <!-- SVN tags and their respective version names -->
   <property name="ver_0_7_3.name"       
-    value="0.7.2" />
+    value="0.7.3" />
   <property name="ver_0_7_2.name"       
     value="0.7.2" />
   <property name="ver_0_7_1.name"       
