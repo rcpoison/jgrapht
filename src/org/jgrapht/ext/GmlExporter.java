@@ -68,6 +68,8 @@ public class GmlExporter<V, E>
     private static final String tab1 = "\t";
     private static final String tab2 = "\t\t";
 
+    // TODO jvs 27-Jan-2008:  convert these to enum
+
     /**
      * Option to export no vertex or edge labels.
      */

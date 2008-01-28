@@ -75,7 +75,7 @@ public class RandomGraphGenerator<V, E>
 
     public RandomGraphGenerator(int aNumOfVertexes, int aNumOfEdges)
     {
-        if ((numOfVertexes < 0) || (numOfEdges < 0)) {
+        if ((aNumOfVertexes < 0) || (aNumOfEdges < 0)) {
             throw new IllegalArgumentException("must be non-negative");
         }
         this.numOfVertexes = aNumOfVertexes;

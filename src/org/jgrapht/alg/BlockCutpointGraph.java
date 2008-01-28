@@ -301,7 +301,7 @@ public class BlockCutpointGraph<V, E>
 
     private void setNumOrder(V vertex, int numOrder)
     {
-        this.vertex2numOrder.put(vertex, new Integer(numOrder));
+        this.vertex2numOrder.put(vertex, Integer.valueOf(numOrder));
     }
 
     //~ Inner Classes ----------------------------------------------------------

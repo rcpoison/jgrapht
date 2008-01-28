@@ -263,7 +263,7 @@ public class ModifiableInteger
      */
     public Integer toInteger()
     {
-        return new Integer(this.value);
+        return Integer.valueOf(this.value);
     }
 
     /**
