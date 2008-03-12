@@ -78,7 +78,7 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.7.4alpha-local" />
+    value="0.7.4alpha" />
   
   <!-- SVN tags and their respective version names -->
   <property name="ver_0_7_3.name"       
