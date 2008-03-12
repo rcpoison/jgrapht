@@ -134,8 +134,8 @@ public class DirectedNeighborIndex<V, E>
      * vertex. If the graph is a multigraph, vertices may appear more than once
      * in the returned list. Because a list of successors can not be efficiently
      * maintained, it is reconstructed on every invocation by duplicating
-     * entries in the neighbor set. It is thus more effecient to use {@link
-     * #successorsOf(Object)} unless dupliate neighbors are required.
+     * entries in the neighbor set. It is thus more efficient to use {@link
+     * #successorsOf(Object)} unless duplicate neighbors are required.
      *
      * @param v the vertex whose successors are desired
      *
