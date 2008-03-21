@@ -53,9 +53,15 @@ public class RandomGraphGeneratorTest
 {
     //~ Methods ----------------------------------------------------------------
 
-    public void testGenerateGraph2()
+    public void testGenerateDirectedGraph()
     {
-        Graph [] graphArray = testGenerateDirectedGraph();
+        Graph [] graphArray = new Graph[3];
+        for (int i = 0; i < 3; ++i) {
+            graphArray[i] = new SimpleDirectedGraph<Integer, DefaultEdge>(
+                DefaultEdge.class);
+        }
+
+        generateGraphs(graphArray, 11, 100);
 
         assertTrue(EdgeTopologyCompare.compare(graphArray[0], graphArray[1]));
         // cannot assert false , cause it may be true once in a while (random)
@@ -63,37 +69,46 @@ public class RandomGraphGeneratorTest
         // assertFalse(EdgeTopologyCompare.compare(graphArray[1],graphArray[2]));
     }
 
-    /**
-     * Creates 3 graphs with the same numOfVertex and numOfEdges. The first two
-     * are generated using the same RandomGraphGenerator; the third is generated
-     * using a new instance. The graphs are <code>directedGragh1,
-     * directedGragh2, directedGragh3</code>
-     */
-    private static Graph [] testGenerateDirectedGraph()
+    public void testGenerateListenableUndirectedGraph()
     {
-        final int numOfVertex = 11;
-        final int numOfEdges = 110; // simple undirected max = N(v)x(N(v)-1)
+        Graph [] graphArray = new Graph[3];
+        for (int i = 0; i < 3; ++i) {
+            graphArray[i] = new ListenableUndirectedGraph<Integer, DefaultEdge>(
+                DefaultEdge.class);
+        }
+
+        generateGraphs(graphArray, 11, 50);
+
+        assertTrue(EdgeTopologyCompare.compare(graphArray[0], graphArray[1]));
+    }
+
+    /**
+     * Generates 3 graphs with the same numOfVertex and numOfEdges. The first
+     * two are generated using the same RandomGraphGenerator; the third is
+     * generated using a new instance.
+     *
+     * @param graphs array of graphs to generate
+     *
+     * @param numOfVertex number of vertices to generate per graph
+     *
+     * @param numOfEdges number of edges to generate per graph
+     */
+    private static void generateGraphs(
+        Graph [] graphs, int numOfVertex, int numOfEdges)
+    {
         RandomGraphGenerator<Integer, DefaultEdge> randomGen =
             new RandomGraphGenerator<Integer, DefaultEdge>(
                 numOfVertex,
                 numOfEdges);
 
-        Graph<Integer, DefaultEdge> directedGragh1 =
-            new SimpleDirectedGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
-
         randomGen.generateGraph(
-            directedGragh1,
+            graphs[0],
             new IntegerVertexFactory(),
             null);
 
         // use the same randomGen
-        Graph<Integer, DefaultEdge> directedGragh2 =
-            new SimpleDirectedGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
-
         randomGen.generateGraph(
-            directedGragh2,
+            graphs[1],
             new IntegerVertexFactory(),
             null);
 
@@ -103,20 +118,10 @@ public class RandomGraphGeneratorTest
                 numOfVertex,
                 numOfEdges);
 
-        Graph<Integer, DefaultEdge> directedGragh3 =
-            new SimpleDirectedGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
-
         newRandomGen.generateGraph(
-            directedGragh3,
+            graphs[2],
             new IntegerVertexFactory(),
             null);
-
-        return new Graph[] {
-                directedGragh1,
-                directedGragh2,
-                directedGragh3
-            };
     }
 }
 

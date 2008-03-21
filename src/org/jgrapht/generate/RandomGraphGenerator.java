@@ -247,7 +247,7 @@ public class RandomGraphGenerator<V, E>
             int edgesCounter = 0;
             while (edgesCounter < numberOfEdges) {
                 // randomizer.nextInt(int n) return a number between zero
-                // (includsive) and n(exclusive)
+                // (inclusive) and n(exclusive)
                 VV startVertex =
                     orderToVertexMap.get(
                         Integer.valueOf(randomizer.nextInt(numOfVertexes)));
@@ -361,15 +361,11 @@ public class RandomGraphGenerator<V, E>
                 maxAllowedEdges = numOfVertexes * (numOfVertexes - 1);
             } else if (targetGraph instanceof DefaultDirectedGraph) {
                 maxAllowedEdges = numOfVertexes * numOfVertexes;
-            } else if (
-                (targetGraph instanceof Multigraph)
-                || (targetGraph instanceof Pseudograph)
-                || (targetGraph instanceof DirectedMultigraph))
-            {
-                maxAllowedEdges = -1; // infinite
             } else {
-                throw new ClassCastException(
-                    "cannot find the appropriate graph type");
+                // This may be overly liberal in the case of something
+                // like a simple graph which has been wrapped with
+                // a graph adapter or view.
+                maxAllowedEdges = -1; // infinite
             }
             return maxAllowedEdges;
         }
