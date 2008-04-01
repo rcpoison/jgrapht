@@ -148,15 +148,13 @@ public class StrongConnectivityInspector<V, E>
             while (iter.hasNext()) {
                 VertexData<V> data = iter.next();
 
-                if (!data.discovered) {
+                if (!data.isDiscovered()) {
                     dfsVisit(graph, data, null);
                 }
             }
 
-            // calculate inverse graph (i.e. every edge is reversed)
-            DirectedGraph<V, E> inverseGraph =
-                new DefaultDirectedGraph<V, E>(graph.getEdgeFactory());
-            Graphs.addGraphReversed(inverseGraph, graph);
+            // 'create' inverse graph (i.e. every edge is reversed)
+            DirectedGraph<V, E> inverseGraph = new EdgeReversedGraph<V, E>(graph);
 
             // get ready for next dfs round
             resetVertexData();
@@ -169,7 +167,7 @@ public class StrongConnectivityInspector<V, E>
             while (iter.hasNext()) {
                 VertexData<V> data = iter.next();
 
-                if (!data.discovered) {
+                if (!data.isDiscovered()) {
                     // new strongly connected set
                     Set<V> set = new HashSet<V>();
                     stronglyConnectedSets.add(set);
@@ -256,8 +254,8 @@ public class StrongConnectivityInspector<V, E>
         while (!stack.isEmpty()) {
             VertexData<V> data = stack.pop();
 
-            if (!data.discovered) {
-                data.discovered = true;
+            if (!data.isDiscovered()) {
+                data.setDiscovered(true);
 
                 if (vertices != null) {
                     vertices.add(data.vertex);
@@ -275,12 +273,12 @@ public class StrongConnectivityInspector<V, E>
                         vertexToVertexData.get(
                             visitedGraph.getEdgeTarget(edge));
 
-                    if (!targetData.discovered) {
+                    if (!targetData.isDiscovered()) {
                         // the "recursion"
                         stack.push(targetData);
                     }
                 }
-            } else if (data.finished) {
+            } else if (data.isFinished()) {
                 if (vertices == null) {
                     orderedVertices.addFirst(data.finishedData);
                 }
@@ -297,8 +295,8 @@ public class StrongConnectivityInspector<V, E>
 
         while (iter.hasNext()) {
             VertexData<V> data = iter.next();
-            data.discovered = false;
-            data.finished = false;
+            data.setDiscovered(false);
+            data.setFinished(false);
         }
     }
 
@@ -313,8 +311,7 @@ public class StrongConnectivityInspector<V, E>
         // I added finishedData to clean up the generics warnings
         private final VertexData<V> finishedData;
         private final V vertex;
-        private boolean discovered;
-        private boolean finished;
+        private byte bitfield;
 
         private VertexData(
             VertexData<V> finishedData,
@@ -324,9 +321,45 @@ public class StrongConnectivityInspector<V, E>
         {
             this.finishedData = finishedData;
             this.vertex = vertex;
-            this.discovered = discovered;
-            this.finished = finished;
+            this.bitfield = 0;
+            setDiscovered(discovered);
+            setFinished(finished);
         }
+
+        private boolean isDiscovered()
+        {
+            if ((bitfield & 1) == 1) {
+                return true;
+            }
+            return false;
+        }
+
+        private boolean isFinished()
+        {
+            if ((bitfield & 2) == 2) {
+                return true;
+            }
+            return false;
+        }
+
+        private void setDiscovered(boolean discovered)
+        {
+            if (discovered) {
+                bitfield |= 1;
+            } else {
+                bitfield &= ~1;
+            }
+        }
+
+        private void setFinished(boolean finished)
+        {
+            if (finished) {
+                bitfield |= 2;
+            } else {
+                bitfield &= ~2;
+            }
+        }
+
     }
 }
 
