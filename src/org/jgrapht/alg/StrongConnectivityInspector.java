@@ -142,12 +142,7 @@ public class StrongConnectivityInspector<V, E>
 
             // perform the first round of DFS, result is an ordering
             // of the vertices by decreasing finishing time
-            Iterator<VertexData<V>> iter =
-                vertexToVertexData.values().iterator();
-
-            while (iter.hasNext()) {
-                VertexData<V> data = iter.next();
-
+            for (VertexData<V> data : vertexToVertexData.values()) {
                 if (!data.isDiscovered()) {
                     dfsVisit(graph, data, null);
                 }
@@ -162,11 +157,7 @@ public class StrongConnectivityInspector<V, E>
             // second dfs round: vertices are considered in decreasing
             // finishing time order; every tree found is a strongly
             // connected set
-            iter = orderedVertices.iterator();
-
-            while (iter.hasNext()) {
-                VertexData<V> data = iter.next();
-
+            for (VertexData<V> data : orderedVertices) {
                 if (!data.isDiscovered()) {
                     // new strongly connected set
                     Set<V> set = new HashSet<V>();
@@ -203,13 +194,11 @@ public class StrongConnectivityInspector<V, E>
             stronglyConnectedSubgraphs =
                 new Vector<DirectedSubgraph<V, E>>(sets.size());
 
-            Iterator<Set<V>> iter = sets.iterator();
-
-            while (iter.hasNext()) {
+            for (Set<V> set : sets) {
                 stronglyConnectedSubgraphs.add(
                     new DirectedSubgraph<V, E>(
                         graph,
-                        iter.next(),
+                        set,
                         null));
             }
         }
@@ -227,10 +216,7 @@ public class StrongConnectivityInspector<V, E>
         vertexToVertexData =
             new HashMap<V, VertexData<V>>(graph.vertexSet().size());
 
-        Iterator<V> iter = graph.vertexSet().iterator();
-
-        while (iter.hasNext()) {
-            V vertex = iter.next();
+        for (V vertex : graph.vertexSet()) {
             vertexToVertexData.put(
                 vertex,
                 new VertexData<V>(null, vertex, false, false));
@@ -264,11 +250,7 @@ public class StrongConnectivityInspector<V, E>
                 stack.push(new VertexData<V>(data, null, true, true));
 
                 // follow all edges
-                Iterator<? extends E> iter =
-                    visitedGraph.outgoingEdgesOf(data.vertex).iterator();
-
-                while (iter.hasNext()) {
-                    E edge = iter.next();
+                for (E edge : visitedGraph.outgoingEdgesOf(data.vertex)) {
                     VertexData<V> targetData =
                         vertexToVertexData.get(
                             visitedGraph.getEdgeTarget(edge));
@@ -291,10 +273,7 @@ public class StrongConnectivityInspector<V, E>
      */
     private void resetVertexData()
     {
-        Iterator<VertexData<V>> iter = vertexToVertexData.values().iterator();
-
-        while (iter.hasNext()) {
-            VertexData<V> data = iter.next();
+        for (VertexData<V> data : vertexToVertexData.values()) {
             data.setDiscovered(false);
             data.setFinished(false);
         }
@@ -307,7 +286,6 @@ public class StrongConnectivityInspector<V, E>
      */
     private static final class VertexData<V>
     {
-        // TODO jvs 24-June-2006:  more compact representation;
         // I added finishedData to clean up the generics warnings
         private final VertexData<V> finishedData;
         private final V vertex;
