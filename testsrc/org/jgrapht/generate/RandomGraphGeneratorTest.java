@@ -37,6 +37,8 @@
  */
 package org.jgrapht.generate;
 
+import java.util.*;
+
 import junit.framework.*;
 
 import org.jgrapht.*;
@@ -55,33 +57,37 @@ public class RandomGraphGeneratorTest
 
     public void testGenerateDirectedGraph()
     {
-        Graph [] graphArray = new Graph[3];
+        List<Graph<Integer, DefaultEdge>> graphArray =
+            new ArrayList<Graph<Integer, DefaultEdge>>();
         for (int i = 0; i < 3; ++i) {
-            graphArray[i] =
+            graphArray.add(
                 new SimpleDirectedGraph<Integer, DefaultEdge>(
-                    DefaultEdge.class);
+                    DefaultEdge.class));
         }
 
         generateGraphs(graphArray, 11, 100);
 
-        assertTrue(EdgeTopologyCompare.compare(graphArray[0], graphArray[1]));
+        assertTrue(
+            EdgeTopologyCompare.compare(graphArray.get(0), graphArray.get(1)));
         // cannot assert false , cause it may be true once in a while (random)
         // but it generally should work.
-        // assertFalse(EdgeTopologyCompare.compare(graphArray[1],graphArray[2]));
+        // assertFalse(EdgeTopologyCompare.compare(graphArray.get(1),graphArray.get(2)));
     }
 
     public void testGenerateListenableUndirectedGraph()
     {
-        Graph [] graphArray = new Graph[3];
+        List<Graph<Integer, DefaultEdge>> graphArray =
+            new ArrayList<Graph<Integer, DefaultEdge>>();
         for (int i = 0; i < 3; ++i) {
-            graphArray[i] =
+            graphArray.add(
                 new ListenableUndirectedGraph<Integer, DefaultEdge>(
-                    DefaultEdge.class);
+                    DefaultEdge.class));
         }
 
         generateGraphs(graphArray, 11, 50);
 
-        assertTrue(EdgeTopologyCompare.compare(graphArray[0], graphArray[1]));
+        assertTrue(
+            EdgeTopologyCompare.compare(graphArray.get(0), graphArray.get(1)));
     }
 
     /**
@@ -94,7 +100,7 @@ public class RandomGraphGeneratorTest
      * @param numOfEdges number of edges to generate per graph
      */
     private static void generateGraphs(
-        Graph [] graphs,
+        List<Graph<Integer, DefaultEdge>> graphs,
         int numOfVertex,
         int numOfEdges)
     {
@@ -104,13 +110,13 @@ public class RandomGraphGeneratorTest
                 numOfEdges);
 
         randomGen.generateGraph(
-            graphs[0],
+            graphs.get(0),
             new IntegerVertexFactory(),
             null);
 
         // use the same randomGen
         randomGen.generateGraph(
-            graphs[1],
+            graphs.get(1),
             new IntegerVertexFactory(),
             null);
 
@@ -121,7 +127,7 @@ public class RandomGraphGeneratorTest
                 numOfEdges);
 
         newRandomGen.generateGraph(
-            graphs[2],
+            graphs.get(2),
             new IntegerVertexFactory(),
             null);
     }

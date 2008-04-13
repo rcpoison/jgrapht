@@ -177,7 +177,7 @@ public class GraphGeneratorTest
             new CompleteGraphGenerator<Object, DefaultEdge>(10);
         completeGenerator.generateGraph(
             completeGraph,
-            new ClassBasedVertexFactory(Object.class),
+            new ClassBasedVertexFactory<Object>(Object.class),
             null);
 
         // complete graph with 10 vertices has 10*(10-1)/2 = 45 edges

@@ -38,8 +38,6 @@
  */
 package org.jgrapht.demo;
 
-import java.io.*;
-
 import java.util.*;
 
 import org.jgrapht.*;
