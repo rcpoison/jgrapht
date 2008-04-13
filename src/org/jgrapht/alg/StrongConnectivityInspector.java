@@ -149,7 +149,8 @@ public class StrongConnectivityInspector<V, E>
             }
 
             // 'create' inverse graph (i.e. every edge is reversed)
-            DirectedGraph<V, E> inverseGraph = new EdgeReversedGraph<V, E>(graph);
+            DirectedGraph<V, E> inverseGraph =
+                new EdgeReversedGraph<V, E>(graph);
 
             // get ready for next dfs round
             resetVertexData();
@@ -337,7 +338,6 @@ public class StrongConnectivityInspector<V, E>
                 bitfield &= ~2;
             }
         }
-
     }
 }
 

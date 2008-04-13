@@ -57,8 +57,9 @@ public class RandomGraphGeneratorTest
     {
         Graph [] graphArray = new Graph[3];
         for (int i = 0; i < 3; ++i) {
-            graphArray[i] = new SimpleDirectedGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
+            graphArray[i] =
+                new SimpleDirectedGraph<Integer, DefaultEdge>(
+                    DefaultEdge.class);
         }
 
         generateGraphs(graphArray, 11, 100);
@@ -73,8 +74,9 @@ public class RandomGraphGeneratorTest
     {
         Graph [] graphArray = new Graph[3];
         for (int i = 0; i < 3; ++i) {
-            graphArray[i] = new ListenableUndirectedGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
+            graphArray[i] =
+                new ListenableUndirectedGraph<Integer, DefaultEdge>(
+                    DefaultEdge.class);
         }
 
         generateGraphs(graphArray, 11, 50);
@@ -88,13 +90,13 @@ public class RandomGraphGeneratorTest
      * generated using a new instance.
      *
      * @param graphs array of graphs to generate
-     *
      * @param numOfVertex number of vertices to generate per graph
-     *
      * @param numOfEdges number of edges to generate per graph
      */
     private static void generateGraphs(
-        Graph [] graphs, int numOfVertex, int numOfEdges)
+        Graph [] graphs,
+        int numOfVertex,
+        int numOfEdges)
     {
         RandomGraphGenerator<Integer, DefaultEdge> randomGen =
             new RandomGraphGenerator<Integer, DefaultEdge>(

@@ -166,6 +166,24 @@ public class GraphGeneratorTest
         assertTrue(resultMap.isEmpty());
     }
 
+    /**
+     * .
+     */
+    public void testCompleteGraphGenerator()
+    {
+        Graph<Object, DefaultEdge> completeGraph =
+            new SimpleGraph<Object, DefaultEdge>(DefaultEdge.class);
+        CompleteGraphGenerator<Object, DefaultEdge> completeGenerator =
+            new CompleteGraphGenerator<Object, DefaultEdge>(10);
+        completeGenerator.generateGraph(
+            completeGraph,
+            new ClassBasedVertexFactory(Object.class),
+            null);
+
+        // complete graph with 10 vertices has 10*(10-1)/2 = 45 edges
+        assertEquals(45, completeGraph.edgeSet().size());
+    }
+
     // TODO:  testWheelGraphGenerator
 }
 
