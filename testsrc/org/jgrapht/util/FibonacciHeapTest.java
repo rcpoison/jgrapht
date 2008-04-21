@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2007, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -23,43 +23,40 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -----------------
- * AllUtilTests.java
+ * FibonacciHeapTest.java
  * -----------------
- * (C) Copyright 2005-2007, by Assaf Lehr and Contributors.
+ * (C) Copyright 2008-2008, by John V. Sichi and Contributors.
  *
- * Original Author:  Assaf Lehr
+ * Original Author:  John V. Sichi
  * Contributor(s):   -
  *
  * $Id$
  *
  * Changes
  * -------
+ * 20-Apr-2008 : Initial revision (JVS);
  */
 package org.jgrapht.util;
 
 import junit.framework.*;
 
-import org.jgrapht.experimental.equivalence.*;
-import org.jgrapht.experimental.permutation.*;
-
-
-public class AllUtilTests
+public class FibonacciHeapTest
+    extends TestCase
 {
-    //~ Methods ----------------------------------------------------------------
-
-    public static Test suite()
+    // in honor of sf.net bug #1845376
+    public void testAddRemoveOne()
     {
-        TestSuite suite = new TestSuite("Test for org.jgrapht.util");
-
-        // $JUnit-BEGIN$
-        suite.addTestSuite(FibonacciHeapTest.class);
-        suite.addTestSuite(PrefetchIteratorTest.class);
-        suite.addTestSuite(CompoundPermutationIterTest.class);
-        suite.addTestSuite(EquivalenceGroupCreatorTest.class);
-
-        // $JUnit-END$
-        return suite;
+        String s = "A";
+        FibonacciHeapNode<String> n =
+            new FibonacciHeapNode<String>(s, 1.0);
+        FibonacciHeap<String> h = new FibonacciHeap<String>();
+        assertTrue(h.isEmpty());
+        h.insert(n, n.getKey());
+        assertFalse(h.isEmpty());
+        FibonacciHeapNode<String> n2 = h.removeMin();
+        assertEquals(s, n2.getData());
+        assertTrue(h.isEmpty());
     }
 }
 
-// End AllUtilTests.java
+// End FibonacciHeapTest.java
