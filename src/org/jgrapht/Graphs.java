@@ -305,15 +305,15 @@ public abstract class Graphs
     }
 
     /**
-     * Returns a list of vertices that are the predecessors of a specified
-     * vertex. If the graph is a multigraph, vertices may appear more than once
-     * in the returned list.
+     * Returns a list of vertices that are the direct predecessors of a
+     * specified vertex. If the graph is a multigraph, vertices may appear more
+     * than once in the returned list.
      *
      * @param g the graph to look for predecessors in.
      * @param vertex the vertex to get the predecessors of.
      *
-     * @return a list of the vertices that are the predecessors of the specified
-     * vertex.
+     * @return a list of the vertices that are the direct predecessors of the
+     * specified vertex.
      */
     public static <V, E> List<V> predecessorListOf(
         DirectedGraph<V, E> g,
@@ -330,15 +330,15 @@ public abstract class Graphs
     }
 
     /**
-     * Returns a list of vertices that are the successors of a specified vertex.
-     * If the graph is a multigraph vertices may appear more than once in the
-     * returned list.
+     * Returns a list of vertices that are the direct successors of a specified
+     * vertex.  If the graph is a multigraph vertices may appear more than once
+     * in the returned list.
      *
      * @param g the graph to look for successors in.
      * @param vertex the vertex to get the successors of.
      *
-     * @return a list of the vertices that are the successors of the specified
-     * vertex.
+     * @return a list of the vertices that are the direct successors of the
+     * specified vertex.
      */
     public static <V, E> List<V> successorListOf(
         DirectedGraph<V, E> g,
