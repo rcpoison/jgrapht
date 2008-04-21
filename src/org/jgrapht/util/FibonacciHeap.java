@@ -90,6 +90,9 @@ public class FibonacciHeap<T>
      */
     private int nNodes;
 
+    private static final double oneOverLogPhi =
+        1.0 / Math.log((1.0+Math.sqrt(5.0))/2.0);
+
     //~ Constructors -----------------------------------------------------------
 
     /**
@@ -425,15 +428,11 @@ public class FibonacciHeap<T>
 
     // cascadingCut
 
-    /**
-     * Consolidates the trees in the heap by joining trees of equal degree until
-     * there are no more trees of equal degree in the root list.
-     *
-     * <p>Running time: O(log n) amortized</p>
-     */
     protected void consolidate()
     {
-        int arraySize = nNodes + 1;
+        int arraySize =
+            ((int) Math.floor(Math.log(nNodes) * oneOverLogPhi)) + 1;
+
         List<FibonacciHeapNode<T>> array =
             new ArrayList<FibonacciHeapNode<T>>(arraySize);
 
@@ -463,10 +462,14 @@ public class FibonacciHeap<T>
             FibonacciHeapNode<T> next = x.right;
 
             // ..and see if there's another of the same degree.
-            while (array.get(d) != null) {
-                // There is, make one of the nodes a child of the other.
+            for (;;) {
                 FibonacciHeapNode<T> y = array.get(d);
+                if (y == null) {
+                    // Nope.
+                    break;
+                }
 
+                // There is, make one of the nodes a child of the other.
                 // Do this based on the key value.
                 if (x.key > y.key) {
                     FibonacciHeapNode<T> temp = y;
@@ -496,26 +499,28 @@ public class FibonacciHeap<T>
         minNode = null;
 
         for (int i = 0; i < arraySize; i++) {
-            if (array.get(i) != null) {
-                // We've got a live one, add it to root list.
-                if (minNode != null) {
-                    // First remove node from root list.
-                    array.get(i).left.right = array.get(i).right;
-                    array.get(i).right.left = array.get(i).left;
+            FibonacciHeapNode<T> y = array.get(i);
+            if (y == null) {
+                continue;
+            }
+            // We've got a live one, add it to root list.
+            if (minNode != null) {
+                // First remove node from root list.
+                y.left.right = y.right;
+                y.right.left = y.left;
 
-                    // Now add to root list, again.
-                    array.get(i).left = minNode;
-                    array.get(i).right = minNode.right;
-                    minNode.right = array.get(i);
-                    array.get(i).right.left = array.get(i);
+                // Now add to root list, again.
+                y.left = minNode;
+                y.right = minNode.right;
+                minNode.right = y;
+                y.right.left = y;
 
-                    // Check if this is a new min.
-                    if (array.get(i).key < minNode.key) {
-                        minNode = array.get(i);
-                    }
-                } else {
-                    minNode = array.get(i);
+                // Check if this is a new min.
+                if (y.key < minNode.key) {
+                    minNode = y;
                 }
+            } else {
+                minNode = y;
             }
         }
     }

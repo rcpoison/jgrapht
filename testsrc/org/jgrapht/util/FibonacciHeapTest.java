@@ -40,6 +40,8 @@ package org.jgrapht.util;
 
 import junit.framework.*;
 
+import java.util.*;
+
 public class FibonacciHeapTest
     extends TestCase
 {
@@ -56,6 +58,34 @@ public class FibonacciHeapTest
         FibonacciHeapNode<String> n2 = h.removeMin();
         assertEquals(s, n2.getData());
         assertTrue(h.isEmpty());
+    }
+
+    public void testGrowReplaceShrink()
+    {
+        Random r = new Random();
+        int k = 10000;
+        String s = "A";
+        double t = 0;
+        FibonacciHeap<String> h = new FibonacciHeap<String>();
+        for (int i = 0; i < k*3; ++i) {
+            // during first two-thirds, insert
+            if (i < k*2) {
+                double d = r.nextDouble();
+                t += d;
+                FibonacciHeapNode<String> n =
+                    new FibonacciHeapNode<String>(s, d);
+                h.insert(n, n.getKey());
+            }
+            // during last two-thirds, delete (so during middle
+            // third, we'll do both insert and delete, interleaved)
+            if (i >= k) {
+                FibonacciHeapNode<String> n2 = h.removeMin();
+                t -= n2.getKey();
+            }
+        }
+        assertTrue(h.isEmpty());
+        // tally should come back down to zero, or thereabouts (due to roundoff)
+        assertEquals(0.0, t, 0.00001);
     }
 }
 
