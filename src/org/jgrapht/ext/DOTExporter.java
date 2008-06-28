@@ -158,6 +158,10 @@ public class DOTExporter<V, E>
      */
     private String getVertexID(V v)
     {
+        // TODO jvs 28-Jun-2008:  possible optimizations here are
+        // (a) only validate once per vertex
+        // (b) compile regex patterns
+        
         // use the associated id provider for an ID of the given vertex
         String idCandidate = vertexIDProvider.getVertexName(v);
 
