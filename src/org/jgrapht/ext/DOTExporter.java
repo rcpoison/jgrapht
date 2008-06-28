@@ -108,7 +108,7 @@ public class DOTExporter<V, E>
         }
 
         for (V v : g.vertexSet()) {
-            out.print(indent + vertexIDProvider.getVertexName(v));
+            out.print(indent + getVertexID(v));
 
             if (vertexLabelProvider != null) {
                 out.print(
@@ -120,8 +120,8 @@ public class DOTExporter<V, E>
         }
 
         for (E e : g.edgeSet()) {
-            String source = vertexIDProvider.getVertexName(g.getEdgeSource(e));
-            String target = vertexIDProvider.getVertexName(g.getEdgeTarget(e));
+            String source = getVertexID(g.getEdgeSource(e));
+            String target = getVertexID(g.getEdgeTarget(e));
 
             out.print(indent + source + connector + target);
 
@@ -136,6 +136,45 @@ public class DOTExporter<V, E>
         out.println("}");
 
         out.flush();
+    }
+
+    /**
+     * Return a valid vertex ID (with respect to the .dot language definition as
+     * described in http://www.graphviz.org/doc/info/lang.html Quoted from above
+     * mentioned source: An ID is valid if it meets one of the following
+     * criteria:
+     *
+     * <ul>
+     * <li>any string of alphabetic characters, underscores or digits, not
+     * beginning with a digit;
+     * <li>a number [-]?(.[0-9]+ | [0-9]+(.[0-9]*)? );
+     * <li>any double-quoted string ("...") possibly containing escaped quotes
+     * (\");
+     * <li>an HTML string (<...>).
+     * </ul>
+     *
+     * @throws RuntimeException if the given <code>vertexIDProvider</code>
+     * didn't generate a valid vertex ID.
+     */
+    private String getVertexID(V v)
+    {
+        // use the associated id provider for an ID of the given vertex
+        String idCandidate = vertexIDProvider.getVertexName(v);
+
+        // now test that this is a valid ID
+        boolean isAlphaDig = idCandidate.matches("[a-zA-Z]+([\\w_]*)?");
+        boolean isDoubleQuoted = idCandidate.matches("\".*\"");
+        boolean isDotNumber =
+            idCandidate.matches("[-]?([.][0-9]+|[0-9]+([.][0-9]*)?)");
+        boolean isHTML = idCandidate.matches("<.*>");
+
+        if (isAlphaDig || isDotNumber || isDoubleQuoted || isHTML) {
+            return idCandidate;
+        }
+
+        throw new RuntimeException(
+            "Generated id '" + idCandidate + "'for vertex '" + v
+            + "' is not valid with respect to the .dot language");
     }
 }
 

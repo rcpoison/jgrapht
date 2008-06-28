@@ -34,6 +34,8 @@ package org.jgrapht.ext;
 
 import java.io.*;
 
+import java.util.*;
+
 import junit.framework.*;
 
 import org.jgrapht.*;
@@ -85,6 +87,49 @@ public class DOTExporterTest
         StringWriter w = new StringWriter();
         exporter.export(w, g);
         assertEquals(UNDIRECTED, w.toString());
+    }
+
+    public void testValidNodeIDs()
+    {
+        DOTExporter<String, DefaultEdge> exporter =
+            new DOTExporter<String, DefaultEdge>(
+                new StringNameProvider<String>(),
+                null,
+                null);
+
+        List<String> validVertices =
+            Arrays.asList(
+                "-9.78",
+                "-.5",
+                "12",
+                "a",
+                "12",
+                "abc_78",
+                "\"--34asdf\"");
+        for (String vertex : validVertices) {
+            Graph<String, DefaultEdge> graph =
+                new DefaultDirectedGraph<String, DefaultEdge>(
+                    DefaultEdge.class);
+            graph.addVertex(vertex);
+
+            exporter.export(new StringWriter(), graph);
+        }
+
+        List<String> invalidVertices =
+            Arrays.asList("2test", "--4", "foo-bar", "", "t:32");
+        for (String vertex : invalidVertices) {
+            Graph<String, DefaultEdge> graph =
+                new DefaultDirectedGraph<String, DefaultEdge>(
+                    DefaultEdge.class);
+            graph.addVertex(vertex);
+
+            try {
+                exporter.export(new StringWriter(), graph);
+                Assert.fail(vertex);
+            } catch (RuntimeException re) {
+                // this is a negative test so exception is expected
+            }
+        }
     }
 }
 

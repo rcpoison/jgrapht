@@ -78,6 +78,11 @@ import java.util.*;
  */
 public class FibonacciHeap<T>
 {
+    //~ Static fields/initializers ---------------------------------------------
+
+    private static final double oneOverLogPhi =
+        1.0 / Math.log((1.0 + Math.sqrt(5.0)) / 2.0);
+
     //~ Instance fields --------------------------------------------------------
 
     /**
@@ -89,9 +94,6 @@ public class FibonacciHeap<T>
      * Number of nodes in the heap.
      */
     private int nNodes;
-
-    private static final double oneOverLogPhi =
-        1.0 / Math.log((1.0+Math.sqrt(5.0))/2.0);
 
     //~ Constructors -----------------------------------------------------------
 
@@ -503,6 +505,7 @@ public class FibonacciHeap<T>
             if (y == null) {
                 continue;
             }
+
             // We've got a live one, add it to root list.
             if (minNode != null) {
                 // First remove node from root list.

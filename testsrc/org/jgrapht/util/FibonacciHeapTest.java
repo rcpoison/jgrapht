@@ -38,19 +38,21 @@
  */
 package org.jgrapht.util;
 
+import java.util.*;
+
 import junit.framework.*;
 
-import java.util.*;
 
 public class FibonacciHeapTest
     extends TestCase
 {
+    //~ Methods ----------------------------------------------------------------
+
     // in honor of sf.net bug #1845376
     public void testAddRemoveOne()
     {
         String s = "A";
-        FibonacciHeapNode<String> n =
-            new FibonacciHeapNode<String>(s, 1.0);
+        FibonacciHeapNode<String> n = new FibonacciHeapNode<String>(s, 1.0);
         FibonacciHeap<String> h = new FibonacciHeap<String>();
         assertTrue(h.isEmpty());
         h.insert(n, n.getKey());
@@ -67,15 +69,16 @@ public class FibonacciHeapTest
         String s = "A";
         double t = 0;
         FibonacciHeap<String> h = new FibonacciHeap<String>();
-        for (int i = 0; i < k*3; ++i) {
+        for (int i = 0; i < (k * 3); ++i) {
             // during first two-thirds, insert
-            if (i < k*2) {
+            if (i < (k * 2)) {
                 double d = r.nextDouble();
                 t += d;
                 FibonacciHeapNode<String> n =
                     new FibonacciHeapNode<String>(s, d);
                 h.insert(n, n.getKey());
             }
+
             // during last two-thirds, delete (so during middle
             // third, we'll do both insert and delete, interleaved)
             if (i >= k) {
@@ -84,6 +87,7 @@ public class FibonacciHeapTest
             }
         }
         assertTrue(h.isEmpty());
+
         // tally should come back down to zero, or thereabouts (due to roundoff)
         assertEquals(0.0, t, 0.00001);
     }

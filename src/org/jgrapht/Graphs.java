@@ -331,7 +331,7 @@ public abstract class Graphs
 
     /**
      * Returns a list of vertices that are the direct successors of a specified
-     * vertex.  If the graph is a multigraph vertices may appear more than once
+     * vertex. If the graph is a multigraph vertices may appear more than once
      * in the returned list.
      *
      * @param g the graph to look for successors in.
