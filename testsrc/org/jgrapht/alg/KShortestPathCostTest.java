@@ -82,13 +82,13 @@ public class KShortestPathCostTest
             Iterator sourceIterator = graph.vertexSet().iterator();
             sourceIterator.hasNext();)
         {
-            Vertex sourceVertex = (Vertex) sourceIterator.next();
+            Object sourceVertex = sourceIterator.next();
 
             for (
                 Iterator targetIterator = graph.vertexSet().iterator();
                 targetIterator.hasNext();)
             {
-                Vertex targetVertex = (Vertex) targetIterator.next();
+                Object targetVertex = targetIterator.next();
 
                 if (targetVertex != sourceVertex) {
                     KShortestPaths pathFinder =
