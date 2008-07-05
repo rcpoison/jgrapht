@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JGraphT Plug-in
+Bundle-SymbolicName: org.jgrapht;singleton:=true
+Bundle-Version: 0.7.4.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ClassPath: .,
+ lib/xmlunit1.0.jar,
+ lib/jgraph.jar,
+ lib/TGGraphLayout.jar
+Export-Package: org.jgrapht,
+ org.jgrapht.alg,
+ org.jgrapht.alg.util,
+ org.jgrapht.demo,
+ org.jgrapht.event,
+ org.jgrapht.experimental,
+ org.jgrapht.experimental.alg,
+ org.jgrapht.experimental.alg.color,
+ org.jgrapht.experimental.equivalence,
+ org.jgrapht.experimental.isomorphism,
+ org.jgrapht.experimental.isomorphism.comparators,
+ org.jgrapht.experimental.permutation,
+ org.jgrapht.experimental.touchgraph,
+ org.jgrapht.ext,
+ org.jgrapht.generate,
+ org.jgrapht.graph,
+ org.jgrapht.traverse,
+ org.jgrapht.util
+Bundle-Vendor: Barak Naveh, John V. Sichi and contributors (see http://sourceforge.net/projects/jgrapht/)
