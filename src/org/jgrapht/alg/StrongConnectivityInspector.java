@@ -25,7 +25,7 @@
 /* --------------------------
  * StrongConnectivityInspector.java
  * --------------------------
- * (C) Copyright 2005-2007, by Christian Soltenborn and Contributors.
+ * (C) Copyright 2005-2008, by Christian Soltenborn and Contributors.
  *
  * Original Author:  Christian Soltenborn
  *
