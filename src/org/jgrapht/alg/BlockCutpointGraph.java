@@ -171,7 +171,7 @@ public class BlockCutpointGraph<V, E>
     }
 
     /**
-     * Renvoie <code>true</code> if the vertex is a cutpoint, <code>false</code>
+     * Returns <code>true</code> if the vertex is a cutpoint, <code>false</code>
      * otherwise.
      *
      * @param vertex vertex in the initial graph.
