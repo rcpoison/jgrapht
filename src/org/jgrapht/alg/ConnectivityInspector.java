@@ -205,7 +205,7 @@ public class ConnectivityInspector<V, E>
          * TODO: Ignoring edge direction for directed graph may be
          * confusing. For directed graphs, consider Dijkstra's algorithm.
          */
-        Set sourceSet = connectedSetOf(sourceVertex);
+        Set<V> sourceSet = connectedSetOf(sourceVertex);
 
         return sourceSet.contains(targetVertex);
     }
@@ -239,7 +239,7 @@ public class ConnectivityInspector<V, E>
         if (connectedSets == null) {
             connectedSets = new ArrayList<Set<V>>();
 
-            Set vertexSet = graph.vertexSet();
+            Set<V> vertexSet = graph.vertexSet();
 
             if (vertexSet.size() > 0) {
                 BreadthFirstIterator<V, E> i =
