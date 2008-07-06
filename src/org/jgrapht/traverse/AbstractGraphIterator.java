@@ -149,7 +149,7 @@ public abstract class AbstractGraphIterator<V, E>
         int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = traversalListeners.get(i);
+            TraversalListener<V, E> l = traversalListeners.get(i);
             l.connectedComponentFinished(e);
         }
     }
@@ -166,7 +166,7 @@ public abstract class AbstractGraphIterator<V, E>
         int len = traversalListeners.size();
 
         for (int i = 0; i < len; i++) {
-            TraversalListener l = traversalListeners.get(i);
+            TraversalListener<V, E> l = traversalListeners.get(i);
             l.connectedComponentStarted(e);
         }
     }
