@@ -44,8 +44,6 @@ import junit.framework.*;
 
 import org.jgrapht.*;
 
-import sun.security.provider.certpath.*;
-
 
 /**
  * @author Guillaume Boulmier
