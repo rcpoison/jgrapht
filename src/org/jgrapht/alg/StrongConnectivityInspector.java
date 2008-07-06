@@ -34,6 +34,8 @@
  * Changes
  * -------
  * 2-Feb-2005 : Initial revision (CS);
+ * 5-Feb-2007 : fixed NullPointerException (CS);
+ * 1-Apr-2008 : Reduced memory consumption (CS);
  *
  */
 package org.jgrapht.alg;
