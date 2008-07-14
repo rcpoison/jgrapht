@@ -122,6 +122,19 @@ public class TopologicalOrderIteratorTest
             --i;
         }
     }
+
+    /**
+     * .
+     */
+    public void testEmptyGraph()
+    {
+        DirectedGraph<String, DefaultEdge> graph =
+            new DefaultDirectedGraph<String, DefaultEdge>(
+                DefaultEdge.class);
+        Iterator<String> iter =
+            new TopologicalOrderIterator<String, DefaultEdge>(graph);
+        assertFalse(iter.hasNext());
+    }
 }
 
 // End TopologicalOrderIteratorTest.java
