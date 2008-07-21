@@ -27,3 +27,4 @@ Export-Package: org.jgrapht,
  org.jgrapht.traverse,
  org.jgrapht.util
 Bundle-Vendor: Barak Naveh, John V. Sichi and contributors (see http://sourceforge.net/projects/jgrapht/)
+Require-Bundle: org.junit;bundle-version="3.8.2"
