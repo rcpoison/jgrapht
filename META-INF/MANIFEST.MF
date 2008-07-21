@@ -7,7 +7,8 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ClassPath: .,
  lib/xmlunit1.0.jar,
  lib/jgraph.jar,
- lib/TGGraphLayout.jar
+ lib/TGGraphLayout.jar,
+ lib/junit.jar
 Export-Package: org.jgrapht,
  org.jgrapht.alg,
  org.jgrapht.alg.util,
@@ -27,4 +28,3 @@ Export-Package: org.jgrapht,
  org.jgrapht.traverse,
  org.jgrapht.util
 Bundle-Vendor: Barak Naveh, John V. Sichi and contributors (see http://sourceforge.net/projects/jgrapht/)
-Require-Bundle: org.junit;bundle-version="3.8.2"
