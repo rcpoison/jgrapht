@@ -45,6 +45,7 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.*;
+import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.*;
 
 
@@ -182,6 +183,41 @@ public class GraphGeneratorTest
 
         // complete graph with 10 vertices has 10*(10-1)/2 = 45 edges
         assertEquals(45, completeGraph.edgeSet().size());
+    }
+    
+    /**
+     * .
+     */
+    public void testScaleFreeGraphGenerator()
+    {
+    	DirectedGraph<Object, DefaultEdge> graph = new DefaultDirectedGraph<Object, DefaultEdge>(DefaultEdge.class);
+    	ScaleFreeGraphGenerator<Object, DefaultEdge> generator = new ScaleFreeGraphGenerator<Object, DefaultEdge>(500);
+    	generator.generateGraph(graph, vertexFactory, null);
+    	ConnectivityInspector<Object, DefaultEdge> inspector = new ConnectivityInspector<Object, DefaultEdge>(graph);
+    	assertTrue("generated graph is not connected", inspector.isGraphConnected());
+
+    	try
+    	{
+            generator = new ScaleFreeGraphGenerator<Object, DefaultEdge>(-50);
+            fail("IllegalArgumentException expected");
+    	}
+    	catch (IllegalArgumentException e)
+    	{
+    	}
+
+    	try
+    	{
+            generator = new ScaleFreeGraphGenerator<Object, DefaultEdge>(-50, 31337);
+            fail("IllegalArgumentException expected");
+    	}
+    	catch (IllegalArgumentException e)
+    	{
+    	}
+
+    	generator = new ScaleFreeGraphGenerator<Object, DefaultEdge>(0);
+    	DirectedGraph<Object, DefaultEdge> empty = new DefaultDirectedGraph<Object, DefaultEdge>(DefaultEdge.class);
+    	generator.generateGraph(empty, vertexFactory, null);
+    	assertTrue("non-empty graph generated", empty.vertexSet().size() == 0);
     }
 
     // TODO:  testWheelGraphGenerator
