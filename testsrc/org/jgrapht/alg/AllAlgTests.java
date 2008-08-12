@@ -82,6 +82,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(KShortestPathKValuesTest.class));
         suite.addTest(new TestSuite(KSPExampleTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
+        suite.addTest(new TestSuite(EdmondsKarpMaximumFlowTest.class));
 
         // $JUnit-END$
         return suite;
