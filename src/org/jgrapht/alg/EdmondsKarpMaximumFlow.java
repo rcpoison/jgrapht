@@ -153,7 +153,7 @@ public final class EdmondsKarpMaximumFlow<V, E>
 		{
 			for (Arc currentArc: nodes.get(i).outgoingArcs)
 			{
-				currentArc.flow = 0;
+				currentArc.flow = 0.0;
 			}
 		}
 		maximumFlowValue = 0.0;
@@ -242,6 +242,10 @@ public final class EdmondsKarpMaximumFlow<V, E>
 	 */
 	public Map<E, Double> getMaximumFlow()
 	{
+		if (maximumFlow == null)
+		{
+			return null;
+		}
 		return Collections.unmodifiableMap(maximumFlow);
 	}
 	
