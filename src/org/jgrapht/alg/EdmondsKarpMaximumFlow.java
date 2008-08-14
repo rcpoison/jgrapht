@@ -120,7 +120,7 @@ public final class EdmondsKarpMaximumFlow<V, E>
         for (E e : network.edgeSet()) {
             if (network.getEdgeWeight(e) < -epsilon) {
                 throw new IllegalArgumentException(
-                    "capacities must be non-negative");
+                    "invalid capacity (must be non-negative)");
             }
         }
 
@@ -274,7 +274,7 @@ public final class EdmondsKarpMaximumFlow<V, E>
      * calculateMaximumFlow</tt> call, or <tt>null</tt>, if there was no <tt>
      * calculateMaximumFlow</tt> calls.
      *
-     * @return read-only mapping from edges to doubles - flow values
+     * @return <i>read-only</i> mapping from edges to doubles - flow values
      */
     public Map<E, Double> getMaximumFlow()
     {
