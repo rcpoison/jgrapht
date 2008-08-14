@@ -63,11 +63,9 @@ public class ScaleFreeGraphGenerator<V, E>
     //~ Constructors -----------------------------------------------------------
 
     /**
-     * Constructs a new <code>ScaleFreeGraphGenerator</code>.
+     * Constructs a new <tt>ScaleFreeGraphGenerator</tt>.
      *
      * @param size number of vertices to be generated
-     *
-     * @throws IllegalArgumentException if <code>size</code> is negative
      */
     public ScaleFreeGraphGenerator(
         int size)
@@ -82,13 +80,11 @@ public class ScaleFreeGraphGenerator<V, E>
     }
 
     /**
-     * Constructs a new <code>ScaleFreeGraphGenerator</code> using fixed <code>
-     * seed</code> for the random generator.
+     * Constructs a new <tt>ScaleFreeGraphGenerator</tt> using fixed <tt>
+     * seed</tt> for the random generator.
      *
      * @param size number of vertices to be generated
      * @param seed initial seed for the random generator
-     *
-     * @throws IllegalArgumentException if <code>size</code> is negative
      */
     public ScaleFreeGraphGenerator(
         int size,
@@ -106,9 +102,9 @@ public class ScaleFreeGraphGenerator<V, E>
     //~ Methods ----------------------------------------------------------------
 
     /**
-     * Generates scale-free network with <code>size</code> passed to the
+     * Generates scale-free network with <tt>size</tt> passed to the
      * constructor. Each call of this method produces identical output (but if
-     * <code>target</code> is an undirected graph, the directions of edges will
+     * <tt>target</tt> is an undirected graph, the directions of edges will
      * be lost).
      *
      * @param target receives the generated edges and vertices; if this is
