@@ -201,7 +201,7 @@ public final class EdmondsKarpMaximumFlow<V, E>
         maximumFlowValue = 0.0;
         for (;;) {
             breadthFirstSearch();
-            if (!nodes.get(currentSink).was) {
+            if (!nodes.get(currentSink).visited) {
                 maximumFlow = new HashMap<E, Double>();
                 for (int i = 0; i < numNodes; i++) {
                     for (Arc currentArc : nodes.get(i).outgoingArcs) {
@@ -221,18 +221,18 @@ public final class EdmondsKarpMaximumFlow<V, E>
     private void breadthFirstSearch()
     {
         for (int i = 0; i < numNodes; i++) {
-            nodes.get(i).was = false;
+            nodes.get(i).visited = false;
         }
         Queue<Integer> queue = new LinkedList<Integer>();
         queue.offer(currentSource);
-        nodes.get(currentSource).was = true;
+        nodes.get(currentSource).visited = true;
         nodes.get(currentSource).flowAmount = Double.POSITIVE_INFINITY;
         while (queue.size() != 0) {
             int currentNode = queue.poll();
             for (Arc currentArc : nodes.get(currentNode).outgoingArcs) {
                 if ((currentArc.flow + epsilon) < currentArc.capacity) {
-                    if (!nodes.get(currentArc.head).was) {
-                        nodes.get(currentArc.head).was = true;
+                    if (!nodes.get(currentArc.head).visited) {
+                        nodes.get(currentArc.head).visited = true;
                         nodes.get(currentArc.head).flowAmount =
                             Math.min(
                                 nodes.get(currentNode).flowAmount,
@@ -321,7 +321,7 @@ public final class EdmondsKarpMaximumFlow<V, E>
         List<Arc> outgoingArcs = new ArrayList<Arc>(); // list of outgoing arcs
                                                        // in the residual
                                                        // network
-        boolean was; // this mark is used during BFS to mark visited nodes
+        boolean visited; // this mark is used during BFS to mark visited nodes
         Arc lastArc; // last arc in the shortest path
         double flowAmount; // amount of flow, we are able to push here
 
