@@ -23,18 +23,18 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* -------------------
- * LinearGraphGenerator.java
+ * GraphReader.java
  * -------------------
- * (C) Copyright 2003-2007, by John V. Sichi and Contributors.
+ * (C) Copyright 2003-2007, by Barak Naveh and Contributors.
  *
- * Original Author:  John V. Sichi
+ * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id: LinearGraphGenerator.java 504 2006-07-03 02:37:26Z perfecthash $
+ * $Id: GraphReader.java 504 2006-07-03 02:37:26Z perfecthash $
  *
  * Changes
  * -------
- * 16-Sep-2003 : Initial revision (JVS);
+ * 16-Sep-2003 : Initial revision (BN);
  *
  */
 package org.jgrapht.experimental;
@@ -48,13 +48,6 @@ import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 
 
-/**
- * Generates a linear graph of any size. For a directed graph, the edges are
- * oriented from START_VERTEX to END_VERTEX.
- *
- * @author John V. Sichi
- * @since Sep 16, 2003
- */
 public class GraphReader<V, E>
     implements GraphGenerator<V, E, V>
 {
@@ -71,11 +64,7 @@ public class GraphReader<V, E>
     //~ Constructors -----------------------------------------------------------
 
     /**
-     * Construct a new LinearGraphGenerator.
-     *
-     * @param size number of vertices to be generated
-     *
-     * @throws IllegalArgumentException if the specified size is negative.
+     * Construct a new GraphReader.
      */
     public GraphReader(String file)
         throws IOException

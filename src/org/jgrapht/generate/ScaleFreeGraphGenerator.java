@@ -104,8 +104,8 @@ public class ScaleFreeGraphGenerator<V, E>
     /**
      * Generates scale-free network with <tt>size</tt> passed to the
      * constructor. Each call of this method produces identical output (but if
-     * <tt>target</tt> is an undirected graph, the directions of edges will
-     * be lost).
+     * <tt>target</tt> is an undirected graph, the directions of edges will be
+     * lost).
      *
      * @param target receives the generated edges and vertices; if this is
      * non-empty on entry, the result will be a disconnected graph since

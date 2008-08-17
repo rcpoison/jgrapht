@@ -67,8 +67,8 @@ public class UndirectedSubgraph<V, E>
      * @param vertexSubset vertices to include in the subgraph. If <code>
      * null</code> then all vertices are included.
      * @param edgeSubset edges to in include in the subgraph. If <code>
-     * null</code> then all the edges whose vertices found in the graph are
-     * included.
+     * null</code> then all the edges whose vertices found in the graph
+     * are included.
      */
     public UndirectedSubgraph(
         UndirectedGraph<V, E> base,
