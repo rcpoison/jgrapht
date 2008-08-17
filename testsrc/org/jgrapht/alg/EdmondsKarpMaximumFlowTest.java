@@ -252,4 +252,4 @@ public final class EdmondsKarpMaximumFlowTest
     }
 }
 
-// End $file.name$
+// End EdmondsKarpMaximumFlowTest.java
