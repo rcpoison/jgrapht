@@ -48,7 +48,7 @@ import org.jgrapht.util.*;
 /**
  * Maintains a cache of each vertex's neighbors. While lists of neighbors can be
  * obtained from {@link Graphs}, they are re-calculated at each invocation by
- * walking a vertex's incident edges, Which becomes inordinately expensive when
+ * walking a vertex's incident edges, which becomes inordinately expensive when
  * performed often.
  *
  * <p>Edge direction is ignored when evaluating neighbors; to take edge
