@@ -303,10 +303,6 @@ public class DirectedAcyclicGraphTest
      */
     public void _testPerformanceVersusStaticChecking()
     {
-        if (true) {
-            return;
-        }
-
         int trialsPerConfiguration = 10;
         int maxVertices = 1024;
         int maxConnectednessFactor = 4;
@@ -419,6 +415,7 @@ public class DirectedAcyclicGraphTest
                 long arrayDagTime = 0;
                 long arrayListDagTime = 0;
                 long hashSetDagTime = 0;
+                long bitSetDagTime = 0;
 
                 for (int seed = 0; seed < trialsPerConfiguration; seed++) { // test with random graph configurations
                     setUpWithSeed(
@@ -440,6 +437,11 @@ public class DirectedAcyclicGraphTest
                         new DirectedAcyclicGraph<Long, DefaultEdge>(
                             DefaultEdge.class,
                             new DirectedAcyclicGraph.VisitedHashSetImpl(),
+                            null);
+                    DirectedAcyclicGraph<Long, DefaultEdge> bitSetDag =
+                        new DirectedAcyclicGraph<Long, DefaultEdge>(
+                            DefaultEdge.class,
+                            new DirectedAcyclicGraph.VisitedBitSetImpl(),
                             null);
 
                     long arrayStart = System.nanoTime();
@@ -498,6 +500,25 @@ public class DirectedAcyclicGraphTest
                     }
 
                     hashSetDagTime += System.nanoTime() - hashSetStart;
+                    
+                    long bitSetStart = System.nanoTime();
+
+                    for (Long vertex : sourceGraph.vertexSet()) {
+                        bitSetDag.addVertex(vertex);
+                    }
+
+                    for (DefaultEdge edge : sourceGraph.edgeSet()) {
+                        Long edgeSource = sourceGraph.getEdgeSource(edge);
+                        Long edgeTarget = sourceGraph.getEdgeTarget(edge);
+
+                        try {
+                            bitSetDag.addDagEdge(edgeSource, edgeTarget);
+                        } catch (DirectedAcyclicGraph.CycleFoundException e) {
+                            // okay
+                        }
+                    }
+
+                    bitSetDagTime += System.nanoTime() - bitSetStart;
                 }
 
                 System.out.println(
@@ -510,6 +531,8 @@ public class DirectedAcyclicGraphTest
                     "total ArrayList time   =  " + arrayListDagTime + " ns");
                 System.out.println(
                     "total HashSet time     =  " + hashSetDagTime + " ns");
+                System.out.println(
+                    "total BitSet time     =  " + bitSetDagTime + " ns");
                 System.out.println();
             }
         }

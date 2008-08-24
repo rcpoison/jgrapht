@@ -28,13 +28,14 @@
  * (C) Copyright 2008-2008, by Peter Giles and Contributors.
  *
  * Original Author:  Peter Giles
- * Contributor(s):   -
+ * Contributor(s):   John V. Sichi
  *
  * $Id$
  *
  * Changes
  * -------
  * 17-Mar-2008 : Initial revision (PG);
+ * 23-Aug-2008 : Added VisitedBitSetImpl and made it the default (JVS);
  *
  */
 package org.jgrapht.experimental.dag;
@@ -93,7 +94,7 @@ public class DirectedAcyclicGraph<V, E>
     /**
      * Pluggable VisitedFactory implementation
      */
-    private VisitedFactory visitedFactory = new VisitedHashSetImpl();
+    private VisitedFactory visitedFactory = new VisitedBitSetImpl();
 
     /**
      * Pluggable TopoOrderMappingFactory implementation
@@ -862,6 +863,63 @@ public class DirectedAcyclicGraph<V, E>
     }
 
     /**
+     * This implementation is close to the performance of VisitedArrayListImpl,
+     * with 1/8 the memory usage.
+     *
+     * @author perfecthash
+     */
+    public static class VisitedBitSetImpl
+        implements Visited,
+            VisitedFactory
+    {
+        /**
+         */
+        private static final long serialVersionUID = 1L;
+
+        private final BitSet visited = new BitSet();
+
+        private Region affectedRegion;
+
+        public Visited getInstance(Region affectedRegion)
+        {
+            this.affectedRegion = affectedRegion;
+
+            return this;
+        }
+
+        public void setVisited(int index)
+        {
+            visited.set(translateIndex(index), true);
+        }
+
+        public boolean getVisited(int index)
+        {
+            return visited.get(translateIndex(index));
+        }
+
+        public void clearVisited(int index)
+            throws UnsupportedOperationException
+        {
+            visited.clear(translateIndex(index));
+        }
+
+        /**
+         * We translate the topological index to an ArrayList index. We have to
+         * do this because topological indices can be negative, and we want to
+         * do it because we can make better use of space by only needing an
+         * ArrayList of size |AR|.
+         *
+         * @param unscaledIndex
+         *
+         * @return the ArrayList index
+         */
+        private int translateIndex(int index)
+        {
+            return index - affectedRegion.start;
+        }
+    }
+    
+    /**
      * This implementation seems to offer the best performance in most cases. It
      * grows the internal ArrayList as needed to be as large as |AR|, so it will
      * be more memory intensive than the HashSet implementation, and unlike the
@@ -906,27 +964,15 @@ public class DirectedAcyclicGraph<V, E>
         {
             Boolean result = null;
 
-            // NOTE: the commented out try / catch block can be useful for
-            // debugging try {
             result = visited.get(translateIndex(index));
 
-            // } catch (IndexOutOfBoundsException e) {
-            // log.warn("checking visited out of the region boundaries", e); //
-            // nope, it's not visited result = Boolean.FALSE; }
             return result;
         }
 
         public void clearVisited(int index)
             throws UnsupportedOperationException
         {
-            // NOTE: the commented out try / catch block can be useful for
-            // debugging try {
             visited.set(translateIndex(index), Boolean.FALSE);
-            //          } catch (IndexOutOfBoundsException e) {
-            //              log.warn("clearing visited out of the region
-            // boundaries", e);
-            //              // this shouldn't happen, but it isn't a problem
-            //          }
         }
 
         /**
