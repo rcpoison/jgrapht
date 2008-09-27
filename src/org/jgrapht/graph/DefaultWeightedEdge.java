@@ -59,6 +59,17 @@ public class DefaultWeightedEdge
     //~ Instance fields --------------------------------------------------------
 
     double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
+
+    /**
+     * Retrieves the weight of this edge.  This is protected, for use
+     * by subclasses only (e.g. for implementing toString).
+     *
+     * @return weight of this edge
+     */
+    protected double getWeight()
+    {
+        return weight;
+    }
 }
 
 // End DefaultWeightedEdge.java
