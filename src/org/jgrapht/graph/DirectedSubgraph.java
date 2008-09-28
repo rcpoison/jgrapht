@@ -91,7 +91,7 @@ public class DirectedSubgraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex)) {
+        for (E e : getBase().incomingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -108,10 +108,8 @@ public class DirectedSubgraph<V, E>
         assertVertexExist(vertex);
 
         Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<E> baseEdges =
-            ((DirectedGraph<V, E>) getBase()).incomingEdgesOf(vertex);
 
-        for (E e : baseEdges) {
+        for (E e : getBase().incomingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 edges.add(e);
             }
@@ -129,7 +127,7 @@ public class DirectedSubgraph<V, E>
 
         int degree = 0;
 
-        for (E e : ((DirectedGraph<V, E>) getBase()).outgoingEdgesOf(vertex)) {
+        for (E e : getBase().outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 degree++;
             }
@@ -146,10 +144,8 @@ public class DirectedSubgraph<V, E>
         assertVertexExist(vertex);
 
         Set<E> edges = new ArrayUnenforcedSet<E>();
-        Set<? extends E> baseEdges =
-            ((DirectedGraph<V, E>) getBase()).outgoingEdgesOf(vertex);
 
-        for (E e : baseEdges) {
+        for (E e : getBase().outgoingEdgesOf(vertex)) {
             if (containsEdge(e)) {
                 edges.add(e);
             }

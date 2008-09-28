@@ -30,6 +30,8 @@
  * Original Author:  Liviu Rau
  * Contributor(s):   Barak Naveh
  *                   Christian Hammer
+ *                   Welson Sun
+ *                   Ross Judson
  *
  * $Id$
  *
@@ -40,6 +42,8 @@
  * 06-Aug-2003 : Extracted common logic to TraverseUtils.XXFirstIterator (BN);
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
  * 04-May-2004 : Made generic (CH)
+ * 27-Aug-2006 : Added WHITE/GRAY/BLACK to fix bug reported by Welson Sun (JVS)
+ * 28-Sep-2008 : Optimized using ArrayDeque per suggestion from Ross (JVS)
  *
  */
 package org.jgrapht.traverse;
@@ -47,6 +51,7 @@ package org.jgrapht.traverse;
 import java.util.*;
 
 import org.jgrapht.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -68,9 +73,19 @@ public class DepthFirstIterator<V, E>
      * LIFO stack of vertices which have been encountered but not yet visited
      * (WHITE). This stack also contains <em>sentinel</em> entries representing
      * vertices which have been visited but are still GRAY. A sentinel entry is
-     * a sequence (v, null), whereas a non-sentinel entry is just (v).
+     * a sequence (v, SENTINEL), whereas a non-sentinel entry is just (v).
      */
-    private List<V> stack = new ArrayList<V>();
+    private Deque<Object> stack = new ArrayDeque<Object>();
+
+    /**
+     * Sentinel object.  Unfortunately, we can't use null, because
+     * ArrayDeque won't accept those.  And we don't want to rely
+     * on the caller to provide a sentinel object for us.  So we
+     * have to play typecasting games.
+     */
+    private static final Object SENTINEL = new Object();
+
+    private transient TypeUtil<V> vertexTypeDecl = null;
 
     //~ Constructors -----------------------------------------------------------
 
@@ -110,7 +125,7 @@ public class DepthFirstIterator<V, E>
             if (stack.isEmpty()) {
                 return true;
             }
-            if (peekStack() != null) {
+            if (stack.getLast() != SENTINEL) {
                 // Found a non-sentinel.
                 return false;
             }
@@ -119,7 +134,7 @@ public class DepthFirstIterator<V, E>
             // and then loop to check the rest of the stack.
 
             // Pop null we peeked at above.
-            popStack();
+            stack.removeLast();
 
             // This will pop corresponding vertex to be recorded as finished.
             recordFinish();
@@ -132,7 +147,7 @@ public class DepthFirstIterator<V, E>
     protected void encounterVertex(V vertex, E edge)
     {
         putSeenData(vertex, VisitColor.WHITE);
-        stack.add(vertex);
+        stack.addLast(vertex);
     }
 
     /**
@@ -147,13 +162,15 @@ public class DepthFirstIterator<V, E>
             // and therefore just a sentinel).
             return;
         }
-        int i = stack.indexOf(vertex);
 
         // Since we've encountered it before, and it's still WHITE, it
-        // *must* be on the stack.
-        assert (i > -1);
-        stack.remove(i);
-        stack.add(vertex);
+        // *must* be on the stack.  Use removeLastOccurrence on the
+        // assumption that for typical topologies and traversals,
+        // it's likely to be nearer the top of the stack than
+        // the bottom of the stack.
+        boolean found = stack.removeLastOccurrence(vertex);
+        assert(found);
+        stack.addLast(vertex);
     }
 
     /**
@@ -163,38 +180,29 @@ public class DepthFirstIterator<V, E>
     {
         V v;
         for (;;) {
-            v = popStack();
-            if (v == null) {
+            Object o = stack.removeLast();
+            if (o == SENTINEL) {
                 // This is a finish-time sentinel we previously pushed.
                 recordFinish();
                 // Now carry on with another pop until we find a non-sentinel
             } else {
                 // Got a real vertex to start working on
+                v = TypeUtil.uncheckedCast(o, vertexTypeDecl);
                 break;
             }
         }
 
         // Push a sentinel for v onto the stack so that we'll know
         // when we're done with it.
-        stack.add(v);
-        stack.add(null);
+        stack.addLast(v);
+        stack.addLast(SENTINEL);
         putSeenData(v, VisitColor.GRAY);
         return v;
     }
 
-    private V popStack()
-    {
-        return stack.remove(stack.size() - 1);
-    }
-
-    private V peekStack()
-    {
-        return stack.get(stack.size() - 1);
-    }
-
     private void recordFinish()
     {
-        V v = popStack();
+        V v = TypeUtil.uncheckedCast(stack.removeLast(), vertexTypeDecl);
         putSeenData(v, VisitColor.BLACK);
         finishVertex(v);
     }

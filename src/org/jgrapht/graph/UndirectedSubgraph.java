@@ -87,8 +87,6 @@ public class UndirectedSubgraph<V, E>
     {
         assertVertexExist(vertex);
 
-        ((UndirectedGraph<V, E>) getBase()).degreeOf(vertex);
-
         int degree = 0;
 
         for (E e : getBase().edgesOf(vertex)) {

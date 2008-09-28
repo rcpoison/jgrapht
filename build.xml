@@ -48,6 +48,7 @@
  * 25-Jun-2006 : Fold experimental into main build (JVS);
  * 01-Jul-2006 : Remove checkstyle, switch from CVS to SVN (JVS);
  * 29-Sep-2007 : Dropped support for retroweaver in 0.7.2 release (JVS);
+ * 28-Sep-2008 : Moved to JDK 1.6 for 0.8.0 release (JVS);
  *
  */
 -->
@@ -78,7 +79,7 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.7.4alpha" />
+    value="0.8.0alpha" />
   
   <!-- SVN tags and their respective version names -->
   <property name="ver_0_7_3.name"       
@@ -140,7 +141,7 @@
 
     <!-- File names -->
     <property name="project.jar.name"    
-      value="${project.name}-jdk1.5.jar" />
+      value="${project.name}-jdk1.6.jar" />
     <property name="project.tar.name"    
       value="${project.prefix}.tar" />
     <property name="project.tar.gz.name" 
@@ -229,11 +230,11 @@
     <mkdir dir="${build.dir}" />
 
     <!-- compile the source -->
-    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.6">
       <classpath refid="build.classpath" />
       <include name="org/jgrapht/util/TypeUtil.java"/>
     </javac>
-    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.6">
       <compilerarg line="-Xlint:all" />
       <classpath refid="build.classpath" />
       <include name="**/*.java"/>
@@ -242,7 +243,7 @@
       <exclude name="org/jgrapht/ext/JGraphModelAdapter.java"/>
       <exclude name="org/jgrapht/demo/JGraphAdapterDemo.java"/>
     </javac>
-    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.5">
+    <javac srcdir="${src.dir}" destdir="${build.dir}" source="1.6">
       <classpath refid="build.classpath" />
       <include name="**/*.java"/>
     </javac>
@@ -271,7 +272,7 @@
         <attribute name="Specification-Version" 
           value="${project.version}"/>
         <attribute name="Implementation-Version" 
-          value="${project.version}-jdk1.5"/>
+          value="${project.version}-jdk1.6"/>
       </manifest> 
     </jar>
   </target>
@@ -282,7 +283,7 @@
     <!-- create a test build directory -->
     <mkdir dir="${testbuild.dir}" />
 
-    <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.5"
+    <javac srcdir="${testsrc.dir}" destdir="${testbuild.dir}" source="1.6"
       debug="on">
       <classpath refid="testbuild.classpath" />
       <include name="org/jgrapht/**"/>
@@ -346,7 +347,7 @@
   <target name="javadoc" depends="init" description="Creates the Javadocs.">
     <delete dir="${javadoc.dir}" />
     <mkdir dir="${javadoc.dir}" />
-    <javadoc destdir="${javadoc.dir}" source="1.5" failonerror="true"
+    <javadoc destdir="${javadoc.dir}" source="1.6" failonerror="true"
       access="protected" 
       windowtitle="JGraphT : a free Java graph library"
       overview="${src.dir}/overview.html">

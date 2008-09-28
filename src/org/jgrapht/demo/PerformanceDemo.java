@@ -133,7 +133,7 @@ public final class PerformanceDemo
         System.out.println(
             "\n"
             + "Paused: graph is still in memory (to check mem consumption).");
-        System.out.print("press any key to free memory and finish...");
+        System.out.print("press enter to free memory and finish...");
 
         try {
             System.in.read();

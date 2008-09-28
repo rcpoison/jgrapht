@@ -30,6 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   Liviu Rau
  *                   Christian Hammer
+ *                   Ross Judson
  *
  * $Id$
  *
@@ -38,6 +39,7 @@
  * 24-Jul-2003 : Initial revision (BN);
  * 06-Aug-2003 : Extracted common logic to TraverseUtils.XXFirstIterator (BN);
  * 31-Jan-2004 : Reparented and changed interface to parent class (BN);
+ * 28-Sep-2008 : Optimized using ArrayDeque per suggestion from Ross (JVS)
  *
  */
 package org.jgrapht.traverse;
@@ -61,12 +63,7 @@ public class BreadthFirstIterator<V, E>
 {
     //~ Instance fields --------------------------------------------------------
 
-    /**
-     * <b>Note to users:</b> this queue implementation is a bit lame in terms of
-     * GC efficiency. If you need it to be improved either let us know or use
-     * the source...
-     */
-    private LinkedList<V> queue = new LinkedList<V>();
+    private Deque<V> queue = new ArrayDeque<V>();
 
     //~ Constructors -----------------------------------------------------------
 
