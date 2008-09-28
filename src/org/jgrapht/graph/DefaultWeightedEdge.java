@@ -60,9 +60,11 @@ public class DefaultWeightedEdge
 
     double weight = WeightedGraph.DEFAULT_EDGE_WEIGHT;
 
+    //~ Methods ----------------------------------------------------------------
+
     /**
-     * Retrieves the weight of this edge.  This is protected, for use
-     * by subclasses only (e.g. for implementing toString).
+     * Retrieves the weight of this edge. This is protected, for use by
+     * subclasses only (e.g. for implementing toString).
      *
      * @return weight of this edge
      */

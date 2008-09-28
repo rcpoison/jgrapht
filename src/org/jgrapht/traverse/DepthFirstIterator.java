@@ -67,6 +67,15 @@ import org.jgrapht.util.*;
 public class DepthFirstIterator<V, E>
     extends CrossComponentIterator<V, E, CrossComponentIterator.VisitColor>
 {
+    //~ Static fields/initializers ---------------------------------------------
+
+    /**
+     * Sentinel object. Unfortunately, we can't use null, because ArrayDeque
+     * won't accept those. And we don't want to rely on the caller to provide a
+     * sentinel object for us. So we have to play typecasting games.
+     */
+    private static final Object SENTINEL = new Object();
+
     //~ Instance fields --------------------------------------------------------
 
     /**
@@ -76,14 +85,6 @@ public class DepthFirstIterator<V, E>
      * a sequence (v, SENTINEL), whereas a non-sentinel entry is just (v).
      */
     private Deque<Object> stack = new ArrayDeque<Object>();
-
-    /**
-     * Sentinel object.  Unfortunately, we can't use null, because
-     * ArrayDeque won't accept those.  And we don't want to rely
-     * on the caller to provide a sentinel object for us.  So we
-     * have to play typecasting games.
-     */
-    private static final Object SENTINEL = new Object();
 
     private transient TypeUtil<V> vertexTypeDecl = null;
 
@@ -169,7 +170,7 @@ public class DepthFirstIterator<V, E>
         // it's likely to be nearer the top of the stack than
         // the bottom of the stack.
         boolean found = stack.removeLastOccurrence(vertex);
-        assert(found);
+        assert (found);
         stack.addLast(vertex);
     }
 

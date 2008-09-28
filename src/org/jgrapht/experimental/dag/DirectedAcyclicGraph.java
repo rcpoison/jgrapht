@@ -918,7 +918,7 @@ public class DirectedAcyclicGraph<V, E>
             return index - affectedRegion.start;
         }
     }
-    
+
     /**
      * This implementation seems to offer the best performance in most cases. It
      * grows the internal ArrayList as needed to be as large as |AR|, so it will
@@ -1173,8 +1173,9 @@ public class DirectedAcyclicGraph<V, E>
 
             V vertexToRemove = null;
             if (null
-                != (vertexToRemove = topoOrderMap.getVertex(
-                        currentTopoIndex)))
+                != (vertexToRemove =
+                        topoOrderMap.getVertex(
+                            currentTopoIndex)))
             {
                 topoOrderMap.removeVertex(vertexToRemove);
             } else {

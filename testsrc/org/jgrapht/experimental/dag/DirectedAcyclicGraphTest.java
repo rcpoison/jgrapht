@@ -496,7 +496,7 @@ public class DirectedAcyclicGraphTest
                     }
 
                     hashSetDagTime += System.nanoTime() - hashSetStart;
-                    
+
                     long bitSetStart = System.nanoTime();
 
                     for (Long vertex : sourceGraph.vertexSet()) {
