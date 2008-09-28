@@ -86,7 +86,6 @@ public class DirectedAcyclicGraphTest
             sourceGraph,
             new LongVertexFactory(),
             null);
-        //      System.out.println(sourceGraph.toString());
     }
 
     /**
@@ -239,12 +238,10 @@ public class DirectedAcyclicGraphTest
         // should when an iterator is all used up
 
         for (int i = 0; i < vertexCount; i++) {
-            // assertTrue(dagIter.hasNext());
-            Long val = dagIter.next();
-            /*
-            System.out.println(val); // scroll through all vertices
-            */
+            assertTrue(dagIter.hasNext());
+            dagIter.next();
         }
+        assertFalse(dagIter.hasNext());
 
         try {
             dagIter.next();
@@ -341,8 +338,7 @@ public class DirectedAcyclicGraphTest
                         Long edgeSource = sourceGraph.getEdgeSource(edge);
                         Long edgeTarget = sourceGraph.getEdgeTarget(edge);
 
-                        DefaultEdge dagEdge =
-                            dag.addEdge(edgeSource, edgeTarget);
+                        dag.addEdge(edgeSource, edgeTarget);
                     }
 
                     dynamicDagTime += System.nanoTime() - dynamicOpStart;
@@ -597,7 +593,7 @@ public class DirectedAcyclicGraphTest
                         vertices.get(fromVertexId),
                         vertices.get(toVertexId));
                 } catch (IllegalArgumentException e) {
-                    // okay, that's fine System.out.println("Omitting cycle");
+                    // okay, that's fine; omit cycle
                 }
             }
         }
