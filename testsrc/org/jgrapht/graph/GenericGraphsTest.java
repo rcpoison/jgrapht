@@ -131,7 +131,7 @@ public class GenericGraphsTest
         g.addEdge("a", "b");
         CustomEdge custom = g.getEdge("a", "b");
         String s = custom.toString();
-        assertEquals("Alissa P. Hacker", s);
+        assertEquals("Alissa P. Hacker approves the edge from a to b", s);
     }
 
     /**
@@ -155,7 +155,8 @@ public class GenericGraphsTest
 
         public String toString()
         {
-            return "Alissa P. Hacker";
+            return "Alissa P. Hacker approves the edge from " + getSource()
+                + " to " + getTarget();
         }
     }
 
