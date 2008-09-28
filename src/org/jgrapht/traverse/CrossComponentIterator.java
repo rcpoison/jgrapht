@@ -194,7 +194,9 @@ public abstract class CrossComponentIterator<V, E, D>
         if (isConnectedComponentExhausted()) {
             if (state == CCS_WITHIN_COMPONENT) {
                 state = CCS_AFTER_COMPONENT;
-                fireConnectedComponentFinished(ccFinishedEvent);
+                if (nListeners != 0) {
+                    fireConnectedComponentFinished(ccFinishedEvent);
+                }
             }
 
             if (isCrossComponentTraversal()) {
@@ -230,11 +232,15 @@ public abstract class CrossComponentIterator<V, E, D>
         if (hasNext()) {
             if (state == CCS_BEFORE_COMPONENT) {
                 state = CCS_WITHIN_COMPONENT;
-                fireConnectedComponentStarted(ccStartedEvent);
+                if (nListeners != 0) {
+                    fireConnectedComponentStarted(ccStartedEvent);
+                }
             }
 
             V nextVertex = provideNextVertex();
-            fireVertexTraversed(createVertexTraversalEvent(nextVertex));
+            if (nListeners != 0) {
+                fireVertexTraversed(createVertexTraversalEvent(nextVertex));
+            }
 
             addUnseenChildrenOf(nextVertex);
 
@@ -330,7 +336,9 @@ public abstract class CrossComponentIterator<V, E, D>
      */
     protected void finishVertex(V vertex)
     {
-        fireVertexFinished(createVertexTraversalEvent(vertex));
+        if (nListeners != 0) {
+            fireVertexFinished(createVertexTraversalEvent(vertex));
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -353,7 +361,9 @@ public abstract class CrossComponentIterator<V, E, D>
     private void addUnseenChildrenOf(V vertex)
     {
         for (E edge : specifics.edgesOf(vertex)) {
-            fireEdgeTraversed(createEdgeTraversalEvent(edge));
+            if (nListeners != 0) {
+                fireEdgeTraversed(createEdgeTraversalEvent(edge));
+            }
 
             V oppositeV = Graphs.getOppositeVertex(graph, edge, vertex);
 
