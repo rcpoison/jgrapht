@@ -91,7 +91,7 @@ public class BlockCutpointGraph<V, E>
 
     private int numOrder;
 
-    private Stack<BCGEdge> stack = new Stack<BCGEdge>();
+    private Deque<BCGEdge> stack = new ArrayDeque<BCGEdge>();
 
     private Map<V, Set<UndirectedGraph<V, E>>> vertex2biconnectedSubgraphs =
         new HashMap<V, Set<UndirectedGraph<V, E>>>();
@@ -191,7 +191,7 @@ public class BlockCutpointGraph<V, E>
 
         Set<V> vertexComponent = new HashSet<V>();
         Set<BCGEdge> edgeComponent = new HashSet<BCGEdge>();
-        BCGEdge edge = this.stack.pop();
+        BCGEdge edge = this.stack.removeLast();
         while (
             (getNumOrder(edge.getSource()) >= getNumOrder(n))
             && !this.stack.isEmpty())
@@ -201,7 +201,7 @@ public class BlockCutpointGraph<V, E>
             vertexComponent.add(edge.getSource());
             vertexComponent.add(edge.getTarget());
 
-            edge = this.stack.pop();
+            edge = this.stack.removeLast();
         }
         edgeComponent.add(edge);
         // edgeComponent is an equivalence class.
@@ -241,7 +241,7 @@ public class BlockCutpointGraph<V, E>
                 BCGEdge dfsEdge = new BCGEdge(s, n);
                 this.dfsTree.addEdge(s, n, dfsEdge);
 
-                this.stack.push(dfsEdge);
+                this.stack.add(dfsEdge);
 
                 // minimum of the traverse orders of the "attach points" of
                 // the vertex n.
@@ -254,7 +254,7 @@ public class BlockCutpointGraph<V, E>
                 }
             } else if ((getNumOrder(n) < getNumOrder(s)) && !n.equals(father)) {
                 BCGEdge backwardEdge = new BCGEdge(s, n);
-                this.stack.push(backwardEdge);
+                this.stack.add(backwardEdge);
 
                 // n is an "attach point" of s. {s->n} is a backward edge.
                 minS = Math.min(getNumOrder(n), minS);

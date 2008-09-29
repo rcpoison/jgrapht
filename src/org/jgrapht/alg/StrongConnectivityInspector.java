@@ -237,11 +237,11 @@ public class StrongConnectivityInspector<V, E>
         VertexData<V> vertexData,
         Set<V> vertices)
     {
-        Stack<VertexData<V>> stack = new Stack<VertexData<V>>();
-        stack.push(vertexData);
+        Deque<VertexData<V>> stack = new ArrayDeque<VertexData<V>>();
+        stack.add(vertexData);
 
         while (!stack.isEmpty()) {
-            VertexData<V> data = stack.pop();
+            VertexData<V> data = stack.removeLast();
 
             if (!data.isDiscovered()) {
                 data.setDiscovered(true);
@@ -250,7 +250,7 @@ public class StrongConnectivityInspector<V, E>
                     vertices.add(data.getVertex());
                 }
 
-                stack.push(new VertexData1<V>(data, true, true));
+                stack.add(new VertexData1<V>(data, true, true));
 
                 // follow all edges
                 for (E edge : visitedGraph.outgoingEdgesOf(data.getVertex())) {
@@ -260,7 +260,7 @@ public class StrongConnectivityInspector<V, E>
 
                     if (!targetData.isDiscovered()) {
                         // the "recursion"
-                        stack.push(targetData);
+                        stack.add(targetData);
                     }
                 }
             } else if (data.isFinished()) {
