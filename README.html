@@ -9,7 +9,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -48,6 +48,7 @@
  * 20-Mar-2007 : Version 0.7.1 notes (JVS);
  * 29-Sep-2007 : Version 0.7.2 notes (JVS);
  * 27-Jan-2008 : Version 0.7.3 notes (JVS);
+ * 28-Sep-2008 : Version 0.8.0 notes (JVS);
  *
  */
 -->
@@ -162,7 +163,7 @@
 
   <p>JGraphT is a free Java class library that provides mathematical
   graph-theory objects and algorithms. It runs on Java 2 Platform
-  (requires JDK 1.5 or later).</p>
+  (requires JDK 1.6 or later).</p>
 
   <p>JGraphT is licensed under the terms of the GNU Lesser General Public
   License (LGPL). A copy of the <a href="license-LGPL.txt">license</a> is
@@ -177,9 +178,9 @@
   <table border="1" cellspacing="0" cellpadding="5" style=
   "border-collapse: collapse; margin-left:1em;" bordercolor="#7AA1E6" bgcolor="#FFFFFF">
     <tr>
-      <td valign="top"><b><code>jgrapht-jdk1.5.jar</code></b></td>
+      <td valign="top"><b><code>jgrapht-jdk1.6.jar</code></b></td>
 
-      <td>the compiled JGraphT library for JRE 1.5</td>
+      <td>the compiled JGraphT library for JRE 1.6</td>
     </tr>
 
     <tr>
@@ -286,7 +287,7 @@
   <h2>Dependencies</h2>
 
   <ul>
-    <li>JGraphT requires JDK 1.5 or later to build.<br>
+    <li>JGraphT requires JDK 1.6 or later to build.<br>
     &nbsp;</li>
 
     <li>JUnit is a unit testing framework. You need JUnit only if you want to
@@ -360,20 +361,20 @@
   <p>Changes to JGraphT in each version:</p>
 
   <ul>
-    <li><b>version 0.7.4</b> (under development): fixed
-    problem with RandomGraphGenerator reported by Mario Rossi.
-    Added CompleteGraphGenerator, contributed by Tim Shearouse.
-    Fixed FibonacciHeap performance problem reported by
-    Jason Lenderman.  Made DotExporter reject illegal vertex ID's,
-    contributed by Holger Brandl.  Fixed bogus assertion for 
-    topological sort over empty graph, spotted by Harris Lin.
-    Added scale-free graph generator and EdmondsKarpMaximumFlow, 
-    contributed by Ilya Razenshteyn.  Added DirectedAcyclicGraph,
-    contributed by Peter Giles.  Added protected getWeight accessor
-    to DefaultWeightedEdge, likewise getSource and getTarget
-    on DefaultEdge.  Optimized iterators to skip calling event
-    firing routines when there are no listeners, per suggestion
-    from Ross Judson.</li>
+    <li><b>version 0.8.0</b>: Moved to JDK 1.6.
+    Fixed problem with RandomGraphGenerator reported by Mario Rossi.
+    Added CompleteGraphGenerator, contributed by Tim Shearouse.  Fixed
+    FibonacciHeap performance problem reported by Jason Lenderman.
+    Made DotExporter reject illegal vertex ID's, contributed by Holger
+    Brandl.  Fixed bogus assertion for topological sort over empty
+    graph, spotted by Harris Lin.  Added scale-free graph generator
+    and EdmondsKarpMaximumFlow, contributed by Ilya Razenshteyn.
+    Added DirectedAcyclicGraph, contributed by Peter Giles.  Added
+    protected getWeight accessor to DefaultWeightedEdge, likewise
+    getSource and getTarget on DefaultEdge.  Optimized iterators to
+    skip calling event firing routines when there are no listeners,
+    and used ArrayDeque in a number of places, per suggestion from
+    Ross Judson.</li>
 
     <li><b>version 0.7.3</b> (Jan-2008): Patch to
     JGraphModelAdapter.removeVertex provided by Hookahey.  Added
