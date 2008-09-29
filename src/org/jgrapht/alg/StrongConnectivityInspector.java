@@ -339,10 +339,11 @@ public class StrongConnectivityInspector<V, E>
         abstract V getVertex();
     }
 
-    private static final class VertexData1<V> extends VertexData<V>
+    private static final class VertexData1<V>
+        extends VertexData<V>
     {
         private final VertexData<V> finishedData;
-        
+
         private VertexData1(
             VertexData<V> finishedData,
             boolean discovered,
@@ -362,11 +363,12 @@ public class StrongConnectivityInspector<V, E>
             return null;
         }
     }
-    
-    private static final class VertexData2<V> extends VertexData<V>
+
+    private static final class VertexData2<V>
+        extends VertexData<V>
     {
         private final V vertex;
-        
+
         private VertexData2(
             V vertex,
             boolean discovered,
@@ -386,7 +388,6 @@ public class StrongConnectivityInspector<V, E>
             return vertex;
         }
     }
-    
 }
 
 // End StrongConnectivityInspector.java
