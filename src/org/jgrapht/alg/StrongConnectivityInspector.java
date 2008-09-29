@@ -222,7 +222,7 @@ public class StrongConnectivityInspector<V, E>
         for (V vertex : graph.vertexSet()) {
             vertexToVertexData.put(
                 vertex,
-                new VertexData<V>(null, vertex, false, false));
+                new VertexData2<V>(vertex, false, false));
         }
     }
 
@@ -247,13 +247,13 @@ public class StrongConnectivityInspector<V, E>
                 data.setDiscovered(true);
 
                 if (vertices != null) {
-                    vertices.add(data.vertex);
+                    vertices.add(data.getVertex());
                 }
 
-                stack.push(new VertexData<V>(data, null, true, true));
+                stack.push(new VertexData1<V>(data, true, true));
 
                 // follow all edges
-                for (E edge : visitedGraph.outgoingEdgesOf(data.vertex)) {
+                for (E edge : visitedGraph.outgoingEdgesOf(data.getVertex())) {
                     VertexData<V> targetData =
                         vertexToVertexData.get(
                             visitedGraph.getEdgeTarget(edge));
@@ -265,7 +265,7 @@ public class StrongConnectivityInspector<V, E>
                 }
             } else if (data.isFinished()) {
                 if (vertices == null) {
-                    orderedVertices.addFirst(data.finishedData);
+                    orderedVertices.addFirst(data.getFinishedData());
                 }
             }
         }
@@ -287,21 +287,14 @@ public class StrongConnectivityInspector<V, E>
     /*
      * Lightweight class storing some data for every vertex.
      */
-    private static final class VertexData<V>
+    private static abstract class VertexData<V>
     {
-        // I added finishedData to clean up the generics warnings
-        private final VertexData<V> finishedData;
-        private final V vertex;
         private byte bitfield;
 
         private VertexData(
-            VertexData<V> finishedData,
-            V vertex,
             boolean discovered,
             boolean finished)
         {
-            this.finishedData = finishedData;
-            this.vertex = vertex;
             this.bitfield = 0;
             setDiscovered(discovered);
             setFinished(finished);
@@ -340,7 +333,60 @@ public class StrongConnectivityInspector<V, E>
                 bitfield &= ~2;
             }
         }
+
+        abstract VertexData<V> getFinishedData();
+
+        abstract V getVertex();
     }
+
+    private static final class VertexData1<V> extends VertexData<V>
+    {
+        private final VertexData<V> finishedData;
+        
+        private VertexData1(
+            VertexData<V> finishedData,
+            boolean discovered,
+            boolean finished)
+        {
+            super(discovered, finished);
+            this.finishedData = finishedData;
+        }
+
+        VertexData<V> getFinishedData()
+        {
+            return finishedData;
+        }
+
+        V getVertex()
+        {
+            return null;
+        }
+    }
+    
+    private static final class VertexData2<V> extends VertexData<V>
+    {
+        private final V vertex;
+        
+        private VertexData2(
+            V vertex,
+            boolean discovered,
+            boolean finished)
+        {
+            super(discovered, finished);
+            this.vertex = vertex;
+        }
+
+        VertexData<V> getFinishedData()
+        {
+            return null;
+        }
+
+        V getVertex()
+        {
+            return vertex;
+        }
+    }
+    
 }
 
 // End StrongConnectivityInspector.java
