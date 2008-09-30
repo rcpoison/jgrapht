@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2007, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* -------------------------
  * KShortestPathCompleteGraph4.java
  * -------------------------
- * (C) Copyright 2007-2007, by France Telecom
+ * (C) Copyright 2007-2008, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  *
