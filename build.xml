@@ -337,7 +337,7 @@
       </classpath>
     </taskdef>
     <jalopy force="true" backup="true" convention="${jalopy.settings}"
-      classpathref="test.classpath" history="CRC32">
+      classpathref="test.classpath" history="CRC32" threads="2">
       <fileset dir="${basedir}">
         <include name="src/**/*.java"/>
         <include name="testsrc/**/*.java"/>
