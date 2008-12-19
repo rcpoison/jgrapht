@@ -94,13 +94,48 @@ public class GmlExporter<V, E>
 
     private Integer printLabels = PRINT_NO_LABELS;
 
+    private VertexNameProvider<V> vertexIDProvider;
+    private VertexNameProvider<V> vertexLabelProvider;
+    private EdgeNameProvider<E> edgeIDProvider;
+    private EdgeNameProvider<E> edgeLabelProvider;
+
     //~ Constructors -----------------------------------------------------------
 
     /**
-     * Creates a new GmlExporter object.
+     * Creates a new GmlExporter object with integer name providers for
+     * the vertex and edge IDs and null providers for the vertex and edge
+     * labels.
      */
     public GmlExporter()
     {
+        this(
+            new IntegerNameProvider<V>(),
+            null,
+            new IntegerEdgeNameProvider<E>(),
+            null);
+    }
+
+    /**
+     * Constructs a new GmlExporter object with the given ID and label
+     * providers.
+     *
+     * @param vertexIDProvider for generating vertex IDs. Must not be null.
+     * @param vertexLabelProvider for generating vertex labels. If null, vertex
+     * labels will be generated using the toString() method of the vertex object.
+     * @param edgeIDProvider for generating vertex IDs. Must not be null.
+     * @param edgeLabelProvider for generating edge labels. If null, edge labels
+     * will be generated using the toString() method of the edge object.
+     */
+    public GmlExporter(
+        VertexNameProvider<V> vertexIDProvider,
+        VertexNameProvider<V> vertexLabelProvider,
+        EdgeNameProvider<E> edgeIDProvider,
+        EdgeNameProvider<E> edgeLabelProvider)
+    {
+        this.vertexIDProvider = vertexIDProvider;
+        this.vertexLabelProvider = vertexLabelProvider;
+        this.edgeIDProvider = edgeIDProvider;
+        this.edgeLabelProvider = edgeLabelProvider;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -118,17 +153,20 @@ public class GmlExporter<V, E>
 
     private void exportVertices(
         PrintWriter out,
-        VertexNameProvider<V> nameProvider,
         Graph<V, E> g)
     {
         for (V from : g.vertexSet()) {
             out.println(tab1 + "node");
             out.println(tab1 + "[");
-            out.println(tab2 + "id" + delim + nameProvider.getVertexName(from));
+            out.println(tab2 + "id" + delim + vertexIDProvider.getVertexName(from));
             if ((printLabels == PRINT_VERTEX_LABELS)
                 || (printLabels == PRINT_EDGE_VERTEX_LABELS))
             {
-                out.println(tab2 + "label" + delim + quoted(from.toString()));
+                String label =
+                    vertexLabelProvider == null ?
+                        from.toString() :
+                        vertexLabelProvider.getVertexName(from);
+                out.println(tab2 + "label" + delim + quoted(label));
             }
             out.println(tab1 + "]");
         }
@@ -136,20 +174,25 @@ public class GmlExporter<V, E>
 
     private void exportEdges(
         PrintWriter out,
-        VertexNameProvider<V> nameProvider,
         Graph<V, E> g)
     {
         for (E edge : g.edgeSet()) {
             out.println(tab1 + "edge");
             out.println(tab1 + "[");
-            String s = nameProvider.getVertexName(g.getEdgeSource(edge));
+            String id = edgeIDProvider.getEdgeName(edge);
+            out.println(tab2 + "id" + delim + id);
+            String s = vertexIDProvider.getVertexName(g.getEdgeSource(edge));
             out.println(tab2 + "source" + delim + s);
-            String t = nameProvider.getVertexName(g.getEdgeTarget(edge));
+            String t = vertexIDProvider.getVertexName(g.getEdgeTarget(edge));
             out.println(tab2 + "target" + delim + t);
             if ((printLabels == PRINT_EDGE_LABELS)
                 || (printLabels == PRINT_EDGE_VERTEX_LABELS))
             {
-                out.println(tab2 + "label" + delim + quoted(edge.toString()));
+                String label =
+                    edgeLabelProvider == null ?
+                        edge.toString() :
+                        edgeLabelProvider.getEdgeName(edge);
+                out.println(tab2 + "label" + delim + quoted(label));
             }
             out.println(tab1 + "]");
         }
@@ -159,10 +202,9 @@ public class GmlExporter<V, E>
     {
         PrintWriter out = new PrintWriter(output);
 
-        VertexNameProvider<V> nameProvider = new IntegerNameProvider<V>();
         for (V from : g.vertexSet()) {
             // assign ids in vertex set iteration order
-            nameProvider.getVertexName(from);
+            vertexIDProvider.getVertexName(from);
         }
 
         exportHeader(out);
@@ -174,8 +216,8 @@ public class GmlExporter<V, E>
         } else {
             out.println(tab1 + "directed" + delim + "0");
         }
-        exportVertices(out, nameProvider, g);
-        exportEdges(out, nameProvider, g);
+        exportVertices(out, g);
+        exportEdges(out, g);
         out.println("]");
         out.flush();
     }

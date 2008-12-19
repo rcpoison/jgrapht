@@ -85,11 +85,13 @@ public class GmlExporterTest
         + "\t]" + NL
         + "\tedge" + NL
         + "\t[" + NL
+        + "\t\tid 1" + NL
         + "\t\tsource 1" + NL
         + "\t\ttarget 2" + NL
         + "\t]" + NL
         + "\tedge" + NL
         + "\t[" + NL
+        + "\t\tid 2" + NL
         + "\t\tsource 3" + NL
         + "\t\ttarget 1" + NL
         + "\t]" + NL
