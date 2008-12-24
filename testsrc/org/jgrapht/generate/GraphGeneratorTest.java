@@ -221,6 +221,57 @@ public class GraphGeneratorTest
         assertTrue("non-empty graph generated", empty.vertexSet().size() == 0);
     }
 
+
+	/**
+	 * .
+	 */
+	public void testCompleteBipartiteGraphGenerator() {
+		Graph<Object, DefaultEdge> completeBipartiteGraph = new SimpleGraph<Object, DefaultEdge>(
+				DefaultEdge.class);
+		CompleteBipartiteGraphGenerator<Object, DefaultEdge> completeBipartiteGenerator = new CompleteBipartiteGraphGenerator<Object, DefaultEdge>(
+				10,4);
+		completeBipartiteGenerator.generateGraph(completeBipartiteGraph,
+				new ClassBasedVertexFactory<Object>(Object.class), null);
+
+		// Complete bipartite graph with 10 and 4 vertices should have 14 total vertices and 4*10=40 total edges
+		assertEquals(14, completeBipartiteGraph.vertexSet().size());
+		assertEquals(40, completeBipartiteGraph.edgeSet().size());
+	}
+
+	/**
+	 * .
+	 */
+	public void testHyperCubeGraphGenerator() {
+		Graph<Object, DefaultEdge> hyperCubeGraph = new SimpleGraph<Object, DefaultEdge>(
+				DefaultEdge.class);
+		HyperCubeGraphGenerator<Object, DefaultEdge> hyperCubeGenerator = new HyperCubeGraphGenerator<Object, DefaultEdge>(
+				4);
+		hyperCubeGenerator.generateGraph(hyperCubeGraph,
+				new ClassBasedVertexFactory<Object>(Object.class), null);
+
+		// Hypercube of 4 dimensions should have 2^4=16 vertices and 4*2^(4-1)=32 total edges
+		assertEquals(16, hyperCubeGraph.vertexSet().size());
+		assertEquals(32, hyperCubeGraph.edgeSet().size());
+	}
+
+	/**
+	 * .
+	 */
+	public void testStarGraphGenerator() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		Graph<Object, DefaultEdge> starGraph = new SimpleGraph<Object, DefaultEdge>(
+				DefaultEdge.class);
+		StarGraphGenerator<Object, DefaultEdge> starGenerator = new StarGraphGenerator<Object, DefaultEdge>(
+				10);
+		starGenerator.generateGraph(starGraph,
+				new ClassBasedVertexFactory<Object>(Object.class), map);
+
+		// Star graph of order 10 should have 10 vertices and 9 edges
+		assertEquals(9, starGraph.edgeSet().size());
+		assertEquals(10, starGraph.vertexSet().size());
+		assertTrue(map.get(StarGraphGenerator.CENTER_VERTEX) != null);
+	}
+
     // TODO:  testWheelGraphGenerator
 }
 
