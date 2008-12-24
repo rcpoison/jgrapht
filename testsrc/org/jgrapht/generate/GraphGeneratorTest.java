@@ -229,7 +229,8 @@ public class GraphGeneratorTest
         Graph<Object, DefaultEdge> completeBipartiteGraph =
             new SimpleGraph<Object, DefaultEdge>(
                 DefaultEdge.class);
-        CompleteBipartiteGraphGenerator<Object, DefaultEdge> completeBipartiteGenerator =
+        CompleteBipartiteGraphGenerator<Object, DefaultEdge>
+            completeBipartiteGenerator =
             new CompleteBipartiteGraphGenerator<Object, DefaultEdge>(
                 10,
                 4);

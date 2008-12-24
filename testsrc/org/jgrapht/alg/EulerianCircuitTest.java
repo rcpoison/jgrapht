@@ -95,8 +95,8 @@ public class EulerianCircuitTest
         // There are 10 edges total in this graph, so an Eulerian circuit
         // labeled by vertices should have 11 vertices
         assertEquals(
-            EulerianCircuit.getEulerianCircuitVertices(completeGraph2).size(),
-            11);
+            11,
+            EulerianCircuit.getEulerianCircuitVertices(completeGraph2).size());
     }
 }
 

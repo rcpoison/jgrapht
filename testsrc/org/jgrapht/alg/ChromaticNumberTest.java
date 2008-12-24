@@ -74,10 +74,10 @@ public class ChromaticNumberTest
             new ClassBasedVertexFactory<Object>(Object.class),
             null);
 
-        // A complete graph has a chromatic number equal it it's order
+        // A complete graph has a chromatic number equal to its order
         assertEquals(
-            ChromaticNumber.findGreedyChromaticNumber(completeGraph),
-            7);
+            7,
+            ChromaticNumber.findGreedyChromaticNumber(completeGraph));
 
         UndirectedGraph<Object, DefaultEdge> linearGraph =
             new SimpleGraph<Object, DefaultEdge>(
@@ -92,7 +92,7 @@ public class ChromaticNumberTest
 
         // A linear graph is a tree, and a greedy algorithm for chromatic number
         // can always find a 2-coloring
-        assertEquals(ChromaticNumber.findGreedyChromaticNumber(linearGraph), 2);
+        assertEquals(2, ChromaticNumber.findGreedyChromaticNumber(linearGraph));
     }
 }
 

@@ -46,10 +46,11 @@ import org.jgrapht.graph.*;
 
 
 /**
- * This will check whether a graph is Eulerian (hence it contains an Eulerian
- * circuit). Also, if a graph is Eulerian, then an Eulerian circuit can be
- * found. An Eulerian circuit, is a circuit which traverses each edge exactly
- * once.
+ * This algorithm will check whether a graph is Eulerian (hence it contains an
+ * <a href="http://mathworld.wolfram.com/EulerianCircuit.html">Eulerian
+ * circuit</a>). Also, if a graph is Eulerian, the caller can obtain a list of
+ * vertices making up the Eulerian circuit. An Eulerian circuit is a circuit
+ * which traverses each edge exactly once.
  *
  * @author Andrew Newell
  * @since Dec 21, 2008
@@ -59,7 +60,7 @@ public abstract class EulerianCircuit
     //~ Methods ----------------------------------------------------------------
 
     /**
-     * This method will check whether the graph passes is Eulerian or not
+     * This method will check whether the graph passed in is Eulerian or not.
      *
      * @param g The graph to be checked
      *
@@ -90,8 +91,8 @@ public abstract class EulerianCircuit
      *
      * @param g The graph to find an Eulerian circuit
      *
-     * @return null if no Eulerian circuit exists or a list of vertices
-     * resembling the Eulerian circuit if one does exist
+     * @return null if no Eulerian circuit exists, or a list of vertices
+     * representing the Eulerian circuit if one does exist
      */
     public static <V, E> List<V> getEulerianCircuitVertices(
         UndirectedGraph<V, E> g)
@@ -102,7 +103,7 @@ public abstract class EulerianCircuit
             return null;
         }
 
-        // The circuit will be resembled by a linked list
+        // The circuit will be represented by a linked list
         List<V> path = new LinkedList<V>();
         UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
         path.add(sg.vertexSet().iterator().next());
@@ -114,7 +115,7 @@ public abstract class EulerianCircuit
             V v = null;
 
             // Find a vertex which has an edge that hasn't been traversed yet,
-            // and keep it's index position in the circuit list
+            // and keep its index position in the circuit list
             int index = 0;
             for (Iterator<V> iter = path.iterator(); iter.hasNext(); index++) {
                 v = iter.next();
@@ -123,7 +124,7 @@ public abstract class EulerianCircuit
                 }
             }
 
-            // Finds an arbitrary circuit of the current vertex and appends
+            // Finds an arbitrary circuit of the current vertex and
             // appends this into the circuit list
             while (sg.degreeOf(v) > 0) {
                 for (

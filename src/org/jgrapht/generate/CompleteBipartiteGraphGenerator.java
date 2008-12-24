@@ -47,7 +47,7 @@ import org.jgrapht.*;
 /**
  * Generates a <a
  * href="http://mathworld.wolfram.com/CompleteBipartiteGraph.html">complete
- * bipartite graph</a> of any size. This is a graph with to partition, and two
+ * bipartite graph</a> of any size. This is a graph with two partitions; two
  * vertices will contain an edge if and only if they belong to different
  * partitions.
  *

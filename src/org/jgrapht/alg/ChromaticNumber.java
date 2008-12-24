@@ -47,11 +47,13 @@ import org.jgrapht.graph.*;
 
 
 /**
- * Allows the chromatic number of a graph to be calculated. This is the minimal
- * number of colors needed to color each vertex such that no two adjacent
- * vertices share the same color. This algorithm will not find the true
- * chromatic number, since this is an NP-complete problem. So, a greedy
- * algorithm will find an approximate chromatic number.
+ * Allows the <a
+ * href="http://mathworld.wolfram.com/ChromaticNumber.html">chromatic
+ * number</a> of a graph to be calculated. This is the minimal number of colors
+ * needed to color each vertex such that no two adjacent vertices share the
+ * same color. This algorithm will not find the true chromatic number, since
+ * this is an NP-complete problem. So, a greedy algorithm will find an
+ * approximate chromatic number.
  *
  * @author Andrew Newell
  * @since Dec 21, 2008
@@ -61,7 +63,7 @@ public abstract class ChromaticNumber
     //~ Methods ----------------------------------------------------------------
 
     /**
-     * Finds the amount of colors required for a greedy coloring of the graph.
+     * Finds the number of colors required for a greedy coloring of the graph.
      *
      * @param g an undirected graph to find the chromatic number of
      *
@@ -84,9 +86,9 @@ public abstract class ChromaticNumber
 
         int color;
 
-        // Each will attempted to be color with a single color each iteration,
-        // and these vertices will be removed from the graph at the end of each
-        // iteration
+        // Each vertex will attempted to be colored with a single color each
+        // iteration, and these vertices will be removed from the graph at the
+        // end of each iteration
         for (color = 0; sg.vertexSet().size() > 0; color++) {
             // This set will contain vertices that are colored with the
             // current color of this iteration
