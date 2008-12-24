@@ -83,14 +83,14 @@ public abstract class CrossComponentIterator<V, E, D>
         WHITE,
 
         /**
-         * Vertex has been returned via iterator, but we're
-         * not done with all of its out-edges yet.
+         * Vertex has been returned via iterator, but we're not done with all of
+         * its out-edges yet.
          */
         GRAY,
 
         /**
-         * Vertex has been returned via iterator, and we're
-         * done with all of its out-edges.
+         * Vertex has been returned via iterator, and we're done with all of its
+         * out-edges.
          */
         BLACK
     }

@@ -166,6 +166,7 @@ abstract class AbstractExhaustiveIsomorphismInspector<V, E>
     {
         this.nextSupplier =
             new PrefetchIterator<IsomorphismRelation>(
+
                 // XXX hb 280106: I don't understand this warning, yet :-)
                 new NextFunctor());
 

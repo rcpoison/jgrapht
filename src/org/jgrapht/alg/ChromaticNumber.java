@@ -45,69 +45,83 @@ import org.jgrapht.*;
 import org.jgrapht.alg.util.*;
 import org.jgrapht.graph.*;
 
+
 /**
  * Allows the chromatic number of a graph to be calculated. This is the minimal
  * number of colors needed to color each vertex such that no two adjacent
  * vertices share the same color. This algorithm will not find the true
  * chromatic number, since this is an NP-complete problem. So, a greedy
  * algorithm will find an approximate chromatic number.
- * 
- * 
+ *
  * @author Andrew Newell
  * @since Dec 21, 2008
  */
-public abstract class ChromaticNumber {
+public abstract class ChromaticNumber
+{
+    //~ Methods ----------------------------------------------------------------
 
-	/**
-	 * Finds the amount of colors required for a greedy coloring of the graph.
-	 * 
-	 * @param g
-	 *            an undirected graph to find the chromatic number of
-	 * 
-	 * @return integer the approximate chromatic number from the greedy
-	 *         algorithm
-	 */
-	public static <V, E> int findGreedyChromaticNumber(UndirectedGraph<V, E> g) {
+    /**
+     * Finds the amount of colors required for a greedy coloring of the graph.
+     *
+     * @param g an undirected graph to find the chromatic number of
+     *
+     * @return integer the approximate chromatic number from the greedy
+     * algorithm
+     */
+    public static <V, E> int findGreedyChromaticNumber(UndirectedGraph<V, E> g)
+    {
+        // A copy of the graph is made, so that elements of the graph may be
+        // removed to carry out the algorithm
+        UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
 
-		// A copy of the graph is made, so that elements of the graph may be removed to carry out the algorithm
-		UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
+        // The Vertices will be sorted in decreasing order by degree, so that
+        // higher degree vertices have priority to be colored first
+        VertexDegreeComparator<V, E> comp =
+            new VertexDegreeComparator<V, E>(sg);
+        List<V> sortedVertices = new LinkedList<V>(sg.vertexSet());
+        Collections.sort(sortedVertices, comp);
+        Collections.reverse(sortedVertices);
 
-		// The Vertices will be sorted in decreasing order by degree, so that higher degree vertices have priority to be colored first
-		VertexDegreeComparator<V, E> comp = new VertexDegreeComparator<V, E>(sg);
-		List<V> sortedVertices = new LinkedList<V>(sg.vertexSet());
-		Collections.sort(sortedVertices, comp);
-		Collections.reverse(sortedVertices);
+        int color;
 
-		int color;
-		
-		// Each will attempted to be color with a single color each iteration, and these vertices will be removed from the graph at the end of each iteration
-		for (color = 0; sg.vertexSet().size() > 0; color++) {
-			
-			// This set will contain vertices that are colored with the current color of this iteration
-			Set<V> currentColor = new HashSet<V>();
-			for (Iterator<V> iter = sortedVertices.iterator(); iter.hasNext();) {
-				V v = iter.next();
-				
-				// Add new vertices to be colored as long as they are not adjacent with any other vertex that has already been colored with the current color
-				boolean flag = true;
-				for (Iterator<V> innerIter = currentColor.iterator(); innerIter
-						.hasNext();) {
-					V temp = innerIter.next();
-					if (sg.containsEdge(temp, v)) {
-						flag = false;
-						break;
-					}
-				}
-				if (flag) {
-					currentColor.add(v);
-				}
-			}
-			
-			// Remove vertices from the graph and then repeat the process for the next iteration
-			sg.removeAllVertices(currentColor);
-		}
-		return color;
-	}
+        // Each will attempted to be color with a single color each iteration,
+        // and these vertices will be removed from the graph at the end of each
+        // iteration
+        for (color = 0; sg.vertexSet().size() > 0; color++) {
+            // This set will contain vertices that are colored with the
+            // current color of this iteration
+            Set<V> currentColor = new HashSet<V>();
+            for (
+                Iterator<V> iter = sortedVertices.iterator();
+                iter.hasNext();)
+            {
+                V v = iter.next();
+
+                // Add new vertices to be colored as long as they are not
+                // adjacent with any other vertex that has already been colored
+                // with the current color
+                boolean flag = true;
+                for (
+                    Iterator<V> innerIter = currentColor.iterator();
+                    innerIter.hasNext();)
+                {
+                    V temp = innerIter.next();
+                    if (sg.containsEdge(temp, v)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    currentColor.add(v);
+                }
+            }
+
+            // Remove vertices from the graph and then repeat the process for
+            // the next iteration
+            sg.removeAllVertices(currentColor);
+        }
+        return color;
+    }
 }
 
 // End ChromaticNumber.java

@@ -44,45 +44,56 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.*;
-import org.jgrapht.alg.ChromaticNumber;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 
+
 /**
  * .
- * 
+ *
  * @author Andrew Newell
  */
-public class ChromaticNumberTest extends TestCase {
+public class ChromaticNumberTest
+    extends TestCase
+{
+    //~ Methods ----------------------------------------------------------------
 
-	/**
-	 * .
-	 */
-	public void testChromaticNumber() {
-		UndirectedGraph<Object, DefaultEdge> completeGraph = new SimpleGraph<Object, DefaultEdge>(
-				DefaultEdge.class);
-		CompleteGraphGenerator<Object, DefaultEdge> completeGenerator = new CompleteGraphGenerator<Object, DefaultEdge>(
-				7);
-		completeGenerator.generateGraph(completeGraph,
-				new ClassBasedVertexFactory<Object>(Object.class), null);
+    /**
+     * .
+     */
+    public void testChromaticNumber()
+    {
+        UndirectedGraph<Object, DefaultEdge> completeGraph =
+            new SimpleGraph<Object, DefaultEdge>(
+                DefaultEdge.class);
+        CompleteGraphGenerator<Object, DefaultEdge> completeGenerator =
+            new CompleteGraphGenerator<Object, DefaultEdge>(
+                7);
+        completeGenerator.generateGraph(
+            completeGraph,
+            new ClassBasedVertexFactory<Object>(Object.class),
+            null);
 
-		// A complete graph has a chromatic number equal it it's order
-		assertEquals(ChromaticNumber.findGreedyChromaticNumber(completeGraph),
-				7);
+        // A complete graph has a chromatic number equal it it's order
+        assertEquals(
+            ChromaticNumber.findGreedyChromaticNumber(completeGraph),
+            7);
 
-		UndirectedGraph<Object, DefaultEdge> linearGraph = new SimpleGraph<Object, DefaultEdge>(
-				DefaultEdge.class);
-		LinearGraphGenerator<Object, DefaultEdge> linearGenerator = new LinearGraphGenerator<Object, DefaultEdge>(
-				50);
-		linearGenerator.generateGraph(linearGraph,
-				new ClassBasedVertexFactory<Object>(Object.class), null);
+        UndirectedGraph<Object, DefaultEdge> linearGraph =
+            new SimpleGraph<Object, DefaultEdge>(
+                DefaultEdge.class);
+        LinearGraphGenerator<Object, DefaultEdge> linearGenerator =
+            new LinearGraphGenerator<Object, DefaultEdge>(
+                50);
+        linearGenerator.generateGraph(
+            linearGraph,
+            new ClassBasedVertexFactory<Object>(Object.class),
+            null);
 
-		// A linear graph is a tree, and a greedy algorithm for chromatic number
-		// can always find a 2-coloring
-		assertEquals(ChromaticNumber.findGreedyChromaticNumber(linearGraph), 2);
-
-	}
-
+        // A linear graph is a tree, and a greedy algorithm for chromatic number
+        // can always find a 2-coloring
+        assertEquals(ChromaticNumber.findGreedyChromaticNumber(linearGraph), 2);
+    }
 }
 
 // End ChromaticNumberTest.java

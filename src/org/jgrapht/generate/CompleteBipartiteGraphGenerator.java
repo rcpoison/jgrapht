@@ -40,12 +40,15 @@
 package org.jgrapht.generate;
 
 import java.util.*;
+
 import org.jgrapht.*;
 
+
 /**
- * Generates a <a href="http://mathworld.wolfram.com/CompleteBipartiteGraph.html>
- * complete bipartite graph</a> of any size. This is a graph with to partition, 
- * and two vertices will contain an edge if and only if they belong to different
+ * Generates a <a
+ * href="http://mathworld.wolfram.com/CompleteBipartiteGraph.html">complete
+ * bipartite graph</a> of any size. This is a graph with to partition, and two
+ * vertices will contain an edge if and only if they belong to different
  * partitions.
  *
  * @author Andrew Newell
@@ -54,43 +57,46 @@ import org.jgrapht.*;
 public class CompleteBipartiteGraphGenerator<V, E>
     implements GraphGenerator<V, E, V>
 {
+    //~ Instance fields --------------------------------------------------------
 
-    private int sizeA,sizeB;
+    private int sizeA, sizeB;
 
     //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a new CompleteBipartiteGraphGenerator object.
      *
-     * @param partitionOne
-     * 				This is the number of vertices in the first partition
-     * @param partitionTwo
-     * 				This is the number of vertices in the second parition
+     * @param partitionOne  This is the number of vertices in the first
+     * partition
+     * @param partitionTwo  This is the number of vertices in the second
+     * parition
      */
-    public CompleteBipartiteGraphGenerator(int partitionOne, int partitionTwo) {
-		if (partitionOne < 0||partitionTwo <0) {
-			throw new IllegalArgumentException("must be non-negative");
-		}
-        this.sizeA=partitionOne;
-        this.sizeB=partitionTwo;
+    public CompleteBipartiteGraphGenerator(int partitionOne, int partitionTwo)
+    {
+        if ((partitionOne < 0) || (partitionTwo < 0)) {
+            throw new IllegalArgumentException("must be non-negative");
+        }
+        this.sizeA = partitionOne;
+        this.sizeB = partitionTwo;
     }
+
+    //~ Methods ----------------------------------------------------------------
 
     /**
      * Construct a complete bipartite graph
-     *
      */
     public void generateGraph(
         Graph<V, E> target,
         final VertexFactory<V> vertexFactory,
         Map<String, V> resultMap)
     {
-        if (sizeA < 1 && sizeB <1) {
+        if ((sizeA < 1) && (sizeB < 1)) {
             return;
         }
-        
+
         //Create vertices in each of the partitions
-        Set<V> a=new HashSet<V>();
-        Set<V> b=new HashSet<V>();
+        Set<V> a = new HashSet<V>();
+        Set<V> b = new HashSet<V>();
         for (int i = 0; i < sizeA; i++) {
             V newVertex = vertexFactory.createVertex();
             target.addVertex(newVertex);
@@ -101,13 +107,13 @@ public class CompleteBipartiteGraphGenerator<V, E>
             target.addVertex(newVertex);
             b.add(newVertex);
         }
-        
+
         //Add an edge for each pair of vertices in different partitions
-        for(Iterator<V> iterA=a.iterator();iterA.hasNext();) {
-        	V v=iterA.next();
-        	for(Iterator<V> iterB=b.iterator();iterB.hasNext();) {
-        		target.addEdge(v,iterB.next());
-        	}
+        for (Iterator<V> iterA = a.iterator(); iterA.hasNext();) {
+            V v = iterA.next();
+            for (Iterator<V> iterB = b.iterator(); iterB.hasNext();) {
+                target.addEdge(v, iterB.next());
+            }
         }
     }
 }

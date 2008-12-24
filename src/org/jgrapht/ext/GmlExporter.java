@@ -102,9 +102,8 @@ public class GmlExporter<V, E>
     //~ Constructors -----------------------------------------------------------
 
     /**
-     * Creates a new GmlExporter object with integer name providers for
-     * the vertex and edge IDs and null providers for the vertex and edge
-     * labels.
+     * Creates a new GmlExporter object with integer name providers for the
+     * vertex and edge IDs and null providers for the vertex and edge labels.
      */
     public GmlExporter()
     {
@@ -121,7 +120,8 @@ public class GmlExporter<V, E>
      *
      * @param vertexIDProvider for generating vertex IDs. Must not be null.
      * @param vertexLabelProvider for generating vertex labels. If null, vertex
-     * labels will be generated using the toString() method of the vertex object.
+     * labels will be generated using the toString() method of the vertex
+     * object.
      * @param edgeIDProvider for generating vertex IDs. Must not be null.
      * @param edgeLabelProvider for generating edge labels. If null, edge labels
      * will be generated using the toString() method of the edge object.
@@ -158,14 +158,14 @@ public class GmlExporter<V, E>
         for (V from : g.vertexSet()) {
             out.println(tab1 + "node");
             out.println(tab1 + "[");
-            out.println(tab2 + "id" + delim + vertexIDProvider.getVertexName(from));
+            out.println(
+                tab2 + "id" + delim + vertexIDProvider.getVertexName(from));
             if ((printLabels == PRINT_VERTEX_LABELS)
                 || (printLabels == PRINT_EDGE_VERTEX_LABELS))
             {
                 String label =
-                    vertexLabelProvider == null ?
-                        from.toString() :
-                        vertexLabelProvider.getVertexName(from);
+                    (vertexLabelProvider == null) ? from.toString()
+                    : vertexLabelProvider.getVertexName(from);
                 out.println(tab2 + "label" + delim + quoted(label));
             }
             out.println(tab1 + "]");
@@ -189,9 +189,8 @@ public class GmlExporter<V, E>
                 || (printLabels == PRINT_EDGE_VERTEX_LABELS))
             {
                 String label =
-                    edgeLabelProvider == null ?
-                        edge.toString() :
-                        edgeLabelProvider.getEdgeName(edge);
+                    (edgeLabelProvider == null) ? edge.toString()
+                    : edgeLabelProvider.getEdgeName(edge);
                 out.println(tab2 + "label" + delim + quoted(label));
             }
             out.println(tab1 + "]");

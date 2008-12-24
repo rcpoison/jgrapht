@@ -43,65 +43,76 @@ import java.util.*;
 
 import org.jgrapht.*;
 
-	/**
-	 * Generates a <a href="http://mathworld.wolfram.com/HypercubeGraph.html">hyper
-	 * cube graph</a> of any size. This is a graph that can be represented by bit
-	 * strings, so for an n-dimensial hypercube each vertex resembles an n-length
-	 * bit string. Then, two vertices are adjacent if and only if their bitstring
-	 * differ by exactly one element.
-	 * 
-	 * @author Andrew Newell
-	 * @since Dec 21, 2008
-	 */
-public class HyperCubeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
 
-	private int dim;
+/**
+ * Generates a <a href="http://mathworld.wolfram.com/HypercubeGraph.html">hyper
+ * cube graph</a> of any size. This is a graph that can be represented by bit
+ * strings, so for an n-dimensial hypercube each vertex resembles an n-length
+ * bit string. Then, two vertices are adjacent if and only if their bitstring
+ * differ by exactly one element.
+ *
+ * @author Andrew Newell
+ * @since Dec 21, 2008
+ */
+public class HyperCubeGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
+{
+    //~ Instance fields --------------------------------------------------------
 
-	/**
-	 * Creates a new HyperCubeGraphGenerator object.
-	 * 
-	 * @param dim
-	 * 				This is the dimension of the hypercube.
-	 */
-	public HyperCubeGraphGenerator(int dim) {
-		this.dim = dim;
-	}
+    private int dim;
 
-	/**
-	 * This will generate the hypercube graph
-	 */
-	public void generateGraph(Graph<V, E> target,
-			final VertexFactory<V> vertexFactory, Map<String, V> resultMap) {
-		
-		//Vertices are created, and they are included in the resultmap as their bitstring representation
-		int order = (int) Math.pow(2, dim);
-		LinkedList<V> vertices = new LinkedList<V>();
-		for (int i = 0; i < order; i++) {
-			V newVertex = vertexFactory.createVertex();
-			target.addVertex(newVertex);
-			vertices.add(newVertex);
-			if (resultMap != null) {
-				String s = Integer.toBinaryString(i);
-				while (s.length() < dim) {
-					s = "0" + s;
-				}
-				resultMap.put(s, newVertex);
-			}
-		}
-		
-		//Two vertices will have an edge if their bitstrings differ by exactly 1 element
-		for (int i = 0; i < order; i++) {
-			for (int j = i + 1; j < order; j++) {
-				for (int z = 0; z < dim; z++) {
-					if ((j ^ i) == (1 << z)) {
-						target.addEdge(vertices.get(i), vertices.get(j));
-						break;
-					}
-				}
-			}
-		}
+    //~ Constructors -----------------------------------------------------------
 
-	}
+    /**
+     * Creates a new HyperCubeGraphGenerator object.
+     *
+     * @param dim This is the dimension of the hypercube.
+     */
+    public HyperCubeGraphGenerator(int dim)
+    {
+        this.dim = dim;
+    }
+
+    //~ Methods ----------------------------------------------------------------
+
+    /**
+     * This will generate the hypercube graph
+     */
+    public void generateGraph(
+        Graph<V, E> target,
+        final VertexFactory<V> vertexFactory,
+        Map<String, V> resultMap)
+    {
+        //Vertices are created, and they are included in the resultmap as their
+        //bitstring representation
+        int order = (int) Math.pow(2, dim);
+        LinkedList<V> vertices = new LinkedList<V>();
+        for (int i = 0; i < order; i++) {
+            V newVertex = vertexFactory.createVertex();
+            target.addVertex(newVertex);
+            vertices.add(newVertex);
+            if (resultMap != null) {
+                String s = Integer.toBinaryString(i);
+                while (s.length() < dim) {
+                    s = "0" + s;
+                }
+                resultMap.put(s, newVertex);
+            }
+        }
+
+        //Two vertices will have an edge if their bitstrings differ by exactly
+        //1 element
+        for (int i = 0; i < order; i++) {
+            for (int j = i + 1; j < order; j++) {
+                for (int z = 0; z < dim; z++) {
+                    if ((j ^ i) == (1 << z)) {
+                        target.addEdge(vertices.get(i), vertices.get(j));
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // End HyberCubeGraphGenerator.java

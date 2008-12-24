@@ -43,65 +43,74 @@ import java.util.*;
 
 import org.jgrapht.*;
 
+
 /**
  * Generates a <a href="http://mathworld.wolfram.com/StarGraph.html">star
- * graph</a> of any size. This is a graph where every vertice has exactly
- * one edge with a center vertex.
- * 
+ * graph</a> of any size. This is a graph where every vertice has exactly one
+ * edge with a center vertex.
+ *
  * @author Andrew Newell
  * @since Dec 21, 2008
  */
-public class StarGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
+public class StarGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
+{
+    //~ Static fields/initializers ---------------------------------------------
 
+    public static final String CENTER_VERTEX = "Center Vertex";
 
-	private int order;
-	public static final String CENTER_VERTEX="Center Vertex";
+    //~ Instance fields --------------------------------------------------------
 
+    private int order;
 
-	/**
-	 * Creates a new StarGraphGenerator object.
-	 * 
-	 * @param order
-	 *            number of total vertices including the center vertex
-	 */
-	public StarGraphGenerator(int order) {
-		this.order=order;
-	}
+    //~ Constructors -----------------------------------------------------------
 
+    /**
+     * Creates a new StarGraphGenerator object.
+     *
+     * @param order number of total vertices including the center vertex
+     */
+    public StarGraphGenerator(int order)
+    {
+        this.order = order;
+    }
 
-	/**
-	 * Generates a star graph with the designated order from the constructor
-	 * 
-	 */
-	public void generateGraph(Graph<V, E> target,
-			final VertexFactory<V> vertexFactory, Map<String, V> resultMap) {
-		if(order<1) {
-			return;
-		}
-		
-		//Create center vertex
-		V centerVertex=vertexFactory.createVertex();
-		target.addVertex(centerVertex);
-		if(resultMap!=null) {
-			resultMap.put(CENTER_VERTEX,centerVertex);
-		}
-		
-		//Create other vertices
-		for (int i = 0; i < order-1; i++) {
-			V newVertex = vertexFactory.createVertex();
-			target.addVertex(newVertex);
-		}
-		
-		//Add one edge between the center vertex and every other vertex
-		Iterator<V> iter=target.vertexSet().iterator();
-		while(iter.hasNext()) {
-			V v=iter.next();
-			if(v!=centerVertex) {
-				target.addEdge(v,centerVertex);
-			}
-		}
+    //~ Methods ----------------------------------------------------------------
 
-	}
+    /**
+     * Generates a star graph with the designated order from the constructor
+     */
+    public void generateGraph(
+        Graph<V, E> target,
+        final VertexFactory<V> vertexFactory,
+        Map<String, V> resultMap)
+    {
+        if (order < 1) {
+            return;
+        }
+
+        //Create center vertex
+        V centerVertex = vertexFactory.createVertex();
+        target.addVertex(centerVertex);
+        if (resultMap != null) {
+            resultMap.put(CENTER_VERTEX, centerVertex);
+        }
+
+        //Create other vertices
+        for (int i = 0; i < (order - 1); i++) {
+            V newVertex = vertexFactory.createVertex();
+            target.addVertex(newVertex);
+        }
+
+        //Add one edge between the center vertex and every other vertex
+        Iterator<V> iter = target.vertexSet().iterator();
+        while (iter.hasNext()) {
+            V v = iter.next();
+            if (v != centerVertex) {
+                target.addEdge(v, centerVertex);
+            }
+        }
+    }
 }
 
 // End StarGraphGenerator.java
