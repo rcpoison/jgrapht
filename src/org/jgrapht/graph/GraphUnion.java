@@ -1,14 +1,15 @@
 package org.jgrapht.graph;
 
-import org.jgrapht.*;
+import org.jgrapht.EdgeFactory;
+import org.jgrapht.Graph;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 public class GraphUnion<V, E, G extends Graph<V, E>>
         extends AbstractGraph<V, E>
-        implements Serializable
-{
+        implements Serializable {
 
     private static final String READ_ONLY = "union of graphs is read-only";
 
@@ -117,8 +118,7 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     public double getEdgeWeight(E e) {
         if (g1.containsEdge(e)) {
             return g1.getEdgeWeight(e);
-        }
-        else {
+        } else {
             return g2.getEdgeWeight(e);
         }
     }
