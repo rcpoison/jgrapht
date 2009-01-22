@@ -12,8 +12,8 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
 
     private static final String READ_ONLY = "union of graphs is read-only";
 
-    private Graph<V, E> g1;
-    private Graph<V, E> g2;
+    private G g1;
+    private G g2;
 
     public GraphUnion(G g1, G g2) {
         if (g1 == null) {
@@ -121,5 +121,13 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         else {
             return g2.getEdgeWeight(e);
         }
+    }
+
+    public G getG1() {
+        return g1;
+    }
+
+    public G getG2() {
+        return g2;
     }
 }
