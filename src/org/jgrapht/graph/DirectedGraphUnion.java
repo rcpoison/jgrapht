@@ -1,6 +1,7 @@
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
+import org.jgrapht.util.*;
 
 import java.util.*;
 
@@ -8,6 +9,10 @@ public class DirectedGraphUnion<V, E>
         extends GraphUnion<V, E, DirectedGraph<V, E>>
         implements DirectedGraph<V, E> {
 
+    DirectedGraphUnion(DirectedGraph<V, E> g1, DirectedGraph<V, E> g2, BinaryOperator<Double> operator) {
+        super(g1, g2, operator);
+    }
+    
     DirectedGraphUnion(DirectedGraph<V, E> g1, DirectedGraph<V, E> g2) {
         super(g1, g2);
     }

@@ -1,6 +1,7 @@
 package org.jgrapht.graph;
 
 import org.jgrapht.*;
+import org.jgrapht.util.*;
 
 import java.io.*;
 import java.util.*;
@@ -9,12 +10,43 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         extends AbstractGraph<V, E>
         implements Serializable {
 
+    public static final BinaryOperator<Double> SUM = new BinaryOperator<Double>() {
+        public Double operate(Double a, Double b) {
+            return a + b;
+        }
+    };
+
+    public static final BinaryOperator<Double> MAX = new BinaryOperator<Double>() {
+        public Double operate(Double a, Double b) {
+            return Math.max(a, b);
+        }
+    };
+
+    public static final BinaryOperator<Double> MIN = new BinaryOperator<Double>() {
+        public Double operate(Double a, Double b) {
+            return Math.min(a, b);
+        }
+    };
+
+    public static final BinaryOperator<Double> USE_G1 = new BinaryOperator<Double>() {
+        public Double operate(Double a, Double b) {
+            return a;
+        }
+    };
+
+    public static final BinaryOperator<Double> USE_G2 = new BinaryOperator<Double>() {
+        public Double operate(Double a, Double b) {
+            return b;
+        }
+    };
+
     private static final String READ_ONLY = "union of graphs is read-only";
 
     private G g1;
     private G g2;
+    private BinaryOperator<Double> operator;
 
-    public GraphUnion(G g1, G g2) {
+    public GraphUnion(G g1, G g2, BinaryOperator<Double> operator) {
         if (g1 == null) {
             throw new NullPointerException("g1 is null");
         }
@@ -26,6 +58,11 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         }
         this.g1 = g1;
         this.g2 = g2;
+        this.operator = operator;
+    }
+
+    public GraphUnion(G g1, G g2) {
+        this(g1, g2, SUM);
     }
 
     public Set<E> getAllEdges(V sourceVertex, V targetVertex) {
@@ -132,6 +169,15 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     public double getEdgeWeight(E e) {
+        if (g1.containsEdge(e) && g2.containsEdge(e)) {
+            return operator.operate(g1.getEdgeWeight(e), g2.getEdgeWeight(e));
+        }
+        if (g1.containsEdge(e)) {
+            return g1.getEdgeWeight(e);
+        }
+        if (g2.containsEdge(e)) {
+            return g2.getEdgeWeight(e);
+        }
         throw new UnsupportedOperationException("not implemented yet");
     }
 
