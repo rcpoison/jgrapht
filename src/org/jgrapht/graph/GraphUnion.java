@@ -43,7 +43,10 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         if (g1.containsEdge(sourceVertex, targetVertex)) {
             return g1.getEdge(sourceVertex, targetVertex);
         }
-        return g2.getEdge(sourceVertex, targetVertex);
+        if (g2.containsEdge(sourceVertex, targetVertex)) {
+            return g2.getEdge(sourceVertex, targetVertex);
+        }
+        return null;
     }
 
     public EdgeFactory<V, E> getEdgeFactory() {
