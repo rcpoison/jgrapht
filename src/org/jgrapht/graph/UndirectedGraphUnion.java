@@ -13,7 +13,7 @@ public class UndirectedGraphUnion<V, E>
     }
 
     public int degreeOf(V vertex) {
-        Set<E> r = edgesOf(vertex);
-        return r.size();
+        Set<E> res = edgesOf(vertex);
+        return res.size();
     }
 }

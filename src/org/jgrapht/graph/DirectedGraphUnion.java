@@ -13,34 +13,34 @@ public class DirectedGraphUnion<V, E>
     }
 
     public int inDegreeOf(V vertex) {
-        Set<E> r = incomingEdgesOf(vertex);
-        return r.size();
+        Set<E> res = incomingEdgesOf(vertex);
+        return res.size();
     }
 
     public Set<E> incomingEdgesOf(V vertex) {
-        Set<E> r = new HashSet<E>();
+        Set<E> res = new HashSet<E>();
         if (getG1().containsVertex(vertex)) {
-            r.addAll(getG1().incomingEdgesOf(vertex));
+            res.addAll(getG1().incomingEdgesOf(vertex));
         }
         if (getG2().containsVertex(vertex)) {
-            r.addAll(getG2().incomingEdgesOf(vertex));
+            res.addAll(getG2().incomingEdgesOf(vertex));
         }
-        return Collections.unmodifiableSet(r);
+        return Collections.unmodifiableSet(res);
     }
 
     public int outDegreeOf(V vertex) {
-        Set<E> r = outgoingEdgesOf(vertex);
-        return r.size();
+        Set<E> res = outgoingEdgesOf(vertex);
+        return res.size();
     }
 
     public Set<E> outgoingEdgesOf(V vertex) {
-        Set<E> r = new HashSet<E>();
+        Set<E> res = new HashSet<E>();
         if (getG1().containsVertex(vertex)) {
-            r.addAll(getG1().outgoingEdgesOf(vertex));
+            res.addAll(getG1().outgoingEdgesOf(vertex));
         }
         if (getG2().containsVertex(vertex)) {
-            r.addAll(getG2().outgoingEdgesOf(vertex));
+            res.addAll(getG2().outgoingEdgesOf(vertex));
         }
-        return Collections.unmodifiableSet(r);
+        return Collections.unmodifiableSet(res);
     }
 }

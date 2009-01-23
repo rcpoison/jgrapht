@@ -40,13 +40,14 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     public E getEdge(V sourceVertex, V targetVertex) {
-        if (g1.containsEdge(sourceVertex, targetVertex)) {
-            return g1.getEdge(sourceVertex, targetVertex);
+        E res = null;
+        if (g1.containsVertex(sourceVertex) && g1.containsVertex(targetVertex)) {
+            res = g1.getEdge(sourceVertex, targetVertex);
         }
-        if (g2.containsEdge(sourceVertex, targetVertex)) {
-            return g2.getEdge(sourceVertex, targetVertex);
+        if (res == null && g2.containsVertex(sourceVertex) && g2.containsVertex(targetVertex)) {
+            res = g2.getEdge(sourceVertex, targetVertex);
         }
-        return null;
+        return res;
     }
 
     public EdgeFactory<V, E> getEdgeFactory() {
