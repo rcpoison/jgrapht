@@ -178,6 +178,7 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         if (g2.containsEdge(e)) {
             return g2.getEdgeWeight(e);
         }
+        // TODO what should I do then?
         throw new UnsupportedOperationException("not implemented yet");
     }
 
