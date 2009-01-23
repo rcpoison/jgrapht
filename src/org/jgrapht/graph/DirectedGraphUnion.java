@@ -14,9 +14,6 @@ public class DirectedGraphUnion<V, E>
 
     public int inDegreeOf(V vertex) {
         Set<E> r = incomingEdgesOf(vertex);
-        if (r == null) {
-            return 0;
-        }
         return r.size();
     }
 
@@ -29,9 +26,6 @@ public class DirectedGraphUnion<V, E>
 
     public int outDegreeOf(V vertex) {
         Set<E> r = outgoingEdgesOf(vertex);
-        if (r == null) {
-            return 0;
-        }
         return r.size();
     }
 
