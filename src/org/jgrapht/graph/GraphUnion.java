@@ -1,11 +1,9 @@
 package org.jgrapht.graph;
 
-import org.jgrapht.EdgeFactory;
-import org.jgrapht.Graph;
+import org.jgrapht.*;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.*;
+import java.util.*;
 
 public class GraphUnion<V, E, G extends Graph<V, E>>
         extends AbstractGraph<V, E>
@@ -31,10 +29,10 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     public Set<E> getAllEdges(V sourceVertex, V targetVertex) {
-        HashSet<E> res = new HashSet<E>();
+        Set<E> res = new HashSet<E>();
         res.addAll(g1.getAllEdges(sourceVertex, targetVertex));
         res.addAll(g2.getAllEdges(sourceVertex, targetVertex));
-        return res;
+        return Collections.unmodifiableSet(res);
     }
 
     public E getEdge(V sourceVertex, V targetVertex) {
@@ -69,17 +67,17 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     public Set<E> edgeSet() {
-        HashSet<E> res = new HashSet<E>();
+        Set<E> res = new HashSet<E>();
         res.addAll(g1.edgeSet());
         res.addAll(g2.edgeSet());
-        return res;
+        return Collections.unmodifiableSet(res);
     }
 
     public Set<E> edgesOf(V vertex) {
-        HashSet<E> res = new HashSet<E>();
+        Set<E> res = new HashSet<E>();
         res.addAll(g1.edgesOf(vertex));
         res.addAll(g2.edgesOf(vertex));
-        return res;
+        return Collections.unmodifiableSet(res);
     }
 
     public E removeEdge(V sourceVertex, V targetVertex) {
@@ -95,10 +93,10 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     public Set<V> vertexSet() {
-        HashSet<V> res = new HashSet<V>();
+        Set<V> res = new HashSet<V>();
         res.addAll(g1.vertexSet());
         res.addAll(g2.vertexSet());
-        return res;
+        return Collections.unmodifiableSet(res);
     }
 
     public V getEdgeSource(E e) {

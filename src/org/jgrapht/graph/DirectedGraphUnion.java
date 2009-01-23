@@ -21,10 +21,10 @@ public class DirectedGraphUnion<V, E>
     }
 
     public Set<E> incomingEdgesOf(V vertex) {
-        HashSet<E> r = new HashSet<E>();
+        Set<E> r = new HashSet<E>();
         r.addAll(getG1().incomingEdgesOf(vertex));
         r.addAll(getG2().incomingEdgesOf(vertex));
-        return r;
+        return Collections.unmodifiableSet(r);
     }
 
     public int outDegreeOf(V vertex) {
@@ -36,9 +36,9 @@ public class DirectedGraphUnion<V, E>
     }
 
     public Set<E> outgoingEdgesOf(V vertex) {
-        HashSet<E> r = new HashSet<E>();
+        Set<E> r = new HashSet<E>();
         r.addAll(getG1().outgoingEdgesOf(vertex));
         r.addAll(getG2().outgoingEdgesOf(vertex));
-        return r;
+        return Collections.unmodifiableSet(r);
     }
 }
