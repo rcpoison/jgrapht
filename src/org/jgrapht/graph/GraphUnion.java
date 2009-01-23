@@ -30,8 +30,12 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
 
     public Set<E> getAllEdges(V sourceVertex, V targetVertex) {
         Set<E> res = new HashSet<E>();
-        res.addAll(g1.getAllEdges(sourceVertex, targetVertex));
-        res.addAll(g2.getAllEdges(sourceVertex, targetVertex));
+        if (g1.containsVertex(sourceVertex) && g1.containsVertex(targetVertex)) {
+            res.addAll(g1.getAllEdges(sourceVertex, targetVertex));
+        }
+        if (g2.containsVertex(sourceVertex) && g2.containsVertex(targetVertex)) {
+            res.addAll(g2.getAllEdges(sourceVertex, targetVertex));
+        }
         return Collections.unmodifiableSet(res);
     }
 
@@ -75,8 +79,12 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
 
     public Set<E> edgesOf(V vertex) {
         Set<E> res = new HashSet<E>();
-        res.addAll(g1.edgesOf(vertex));
-        res.addAll(g2.edgesOf(vertex));
+        if (g1.containsVertex(vertex)) {
+            res.addAll(g1.edgesOf(vertex));
+        }
+        if (g2.containsVertex(vertex)) {
+            res.addAll(g2.edgesOf(vertex));
+        }
         return Collections.unmodifiableSet(res);
     }
 
@@ -103,22 +111,24 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         if (g1.containsEdge(e)) {
             return g1.getEdgeSource(e);
         }
-        return g2.getEdgeSource(e);
+        if (g2.containsEdge(e)) {
+            return g2.getEdgeSource(e);
+        }
+        return null;
     }
 
     public V getEdgeTarget(E e) {
         if (g1.containsEdge(e)) {
             return g1.getEdgeTarget(e);
         }
-        return g2.getEdgeTarget(e);
+        if (g2.containsEdge(e)) {
+            return g2.getEdgeTarget(e);
+        }
+        return null;
     }
 
     public double getEdgeWeight(E e) {
-        if (g1.containsEdge(e)) {
-            return g1.getEdgeWeight(e);
-        } else {
-            return g2.getEdgeWeight(e);
-        }
+        throw new UnsupportedOperationException("not implemented yet");
     }
 
     public G getG1() {
