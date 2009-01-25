@@ -9,7 +9,7 @@ public class DirectedGraphUnion<V, E>
         extends GraphUnion<V, E, DirectedGraph<V, E>>
         implements DirectedGraph<V, E> {
 
-    DirectedGraphUnion(DirectedGraph<V, E> g1, DirectedGraph<V, E> g2, BinaryOperator<Double> operator) {
+    DirectedGraphUnion(DirectedGraph<V, E> g1, DirectedGraph<V, E> g2, WeightCombiner operator) {
         super(g1, g2, operator);
     }
     

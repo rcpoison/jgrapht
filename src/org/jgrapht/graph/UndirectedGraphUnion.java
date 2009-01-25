@@ -9,7 +9,7 @@ public class UndirectedGraphUnion<V, E>
         extends GraphUnion<V, E, UndirectedGraph<V, E>>
         implements UndirectedGraph<V, E> {
 
-    UndirectedGraphUnion(UndirectedGraph<V, E> g1, UndirectedGraphUnion<V, E> g2, BinaryOperator<Double> operator) {
+    UndirectedGraphUnion(UndirectedGraph<V, E> g1, UndirectedGraphUnion<V, E> g2, WeightCombiner operator) {
         super(g1, g2, operator);
     }
     
