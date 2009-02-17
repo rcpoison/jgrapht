@@ -85,6 +85,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(EdmondsKarpMaximumFlowTest.class));
         suite.addTest(new TestSuite(ChromaticNumberTest.class));
         suite.addTest(new TestSuite(EulerianCircuitTest.class));
+        suite.addTest(new TestSuite(HamiltonianCycleTest.class));
 
         // $JUnit-END$
         return suite;
