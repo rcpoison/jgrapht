@@ -22,6 +22,21 @@
  * Inc.,
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
+/* ----------------
+ * HamiltonianCycleTest.java
+ * ----------------
+ * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ *
+ * Original Author:  Andrew Newell
+ * Contributor(s):   -
+ *
+ * $Id$
+ *
+ * Changes
+ * -------
+ * 17-Feb-2008 : Initial revision (AN);
+ *
+ */
 
 package org.jgrapht.alg;
 
@@ -52,17 +67,16 @@ public class HamiltonianCycleTest extends TestCase {
 		completeGraphGenerator.generateGraph(completeGraph,
 				new ClassBasedVertexFactory<Object>(Object.class), null);
 
-		assertTrue(HamiltonianCycle.getApproximateOptimal(
-				completeGraph).size() == 6);
+		assertTrue(HamiltonianCycle.getApproximateOptimal(completeGraph).size() == 6);
 
 		List<Object> vertices = new LinkedList<Object>(completeGraph
 				.vertexSet());
 		completeGraph.removeEdge(completeGraph.getEdge(vertices.get(0),
 				vertices.get(1)));
 
-		assertTrue(HamiltonianCycle
-				.getApproximateOptimal(completeGraph) == null);
+		assertTrue(HamiltonianCycle.getApproximateOptimal(completeGraph) == null);
 
 	}
 }
 
+//End HamiltonianCycleTest.java
