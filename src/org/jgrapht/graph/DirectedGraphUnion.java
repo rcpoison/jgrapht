@@ -9,6 +9,8 @@ public class DirectedGraphUnion<V, E>
         extends GraphUnion<V, E, DirectedGraph<V, E>>
         implements DirectedGraph<V, E> {
 
+    private static final long serialVersionUID = -740199233080172450L;
+
     DirectedGraphUnion(DirectedGraph<V, E> g1, DirectedGraph<V, E> g2, WeightCombiner operator) {
         super(g1, g2, operator);
     }

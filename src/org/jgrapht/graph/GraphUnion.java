@@ -6,9 +6,22 @@ import org.jgrapht.util.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * <p>Read-only union of two graphs: G<sub>1</sub> and G<sub>2</sub>. If
+ * G<sub>1</sub> = (V<sub>1</sub>, E<sub>1</sub>) and
+ * G<sub>2</sub> = (V<sub>2</sub>, E<sub>2</sub>) then their union
+ * G = (V, E), where V is the union of V<sub>1</sub> and V<sub>2</sub>,
+ * and E is the union of E<sub>1</sub> and E<sub>1</sub>.</p>
+ *
+ * <p><tt>GraphUnion</tt> implements <tt>Graph</tt> interface.
+ * <tt>GraphUnion</tt> uses <tt>WeightCombiner</tt> to choose policy for
+ * calculating edge weight.</p>
+ */
 public class GraphUnion<V, E, G extends Graph<V, E>>
         extends AbstractGraph<V, E>
         implements Serializable {
+
+    private static final long serialVersionUID = -740199233080172450L;
 
     private static final String READ_ONLY = "union of graphs is read-only";
 
@@ -57,18 +70,30 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         return res;
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public EdgeFactory<V, E> getEdgeFactory() {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */    
     public E addEdge(V sourceVertex, V targetVertex) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public boolean addEdge(V sourceVertex, V targetVertex, E e) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public boolean addVertex(V v) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
@@ -99,14 +124,23 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         return Collections.unmodifiableSet(res);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public E removeEdge(V sourceVertex, V targetVertex) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public boolean removeEdge(E e) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
+    /**
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     */
     public boolean removeVertex(V v) {
         throw new UnsupportedOperationException(READ_ONLY);
     }
@@ -148,14 +182,19 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         if (g2.containsEdge(e)) {
             return g2.getEdgeWeight(e);
         }
-        // TODO what should I do then?
-        throw new UnsupportedOperationException("not implemented yet");
+        throw new IllegalArgumentException("no such edge in the union");
     }
 
+    /**
+     * @return G<sub>1</sub>
+     */
     public G getG1() {
         return g1;
     }
 
+    /**
+     * @return G<sub>2</sub>
+     */
     public G getG2() {
         return g2;
     }
