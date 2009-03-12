@@ -1110,7 +1110,7 @@ public abstract class AbstractBaseGraph<V, E>
 
             getEdgeContainer(source).addEdge(e);
 
-            if (source != target) {
+            if (!source.equals(target)) {
                 getEdgeContainer(target).addEdge(e);
             }
         }
@@ -1189,7 +1189,7 @@ public abstract class AbstractBaseGraph<V, E>
 
             getEdgeContainer(source).removeEdge(e);
 
-            if (source != target) {
+            if (!source.equals(target)) {
                 getEdgeContainer(target).removeEdge(e);
             }
         }

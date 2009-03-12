@@ -134,6 +134,18 @@ public class GenericGraphsTest
         assertEquals("Alissa P. Hacker approves the edge from a to b", s);
     }
 
+    public void testEqualButNotSameVertex()
+    {
+        EquivVertex v1 = new EquivVertex();
+        EquivVertex v2 = new EquivVertex();
+        EquivGraph g = new EquivGraph();
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addEdge(v1,v2, new DefaultEdge());
+        assertEquals(2, g.degreeOf(v1));
+        assertEquals(2, g.degreeOf(v2));
+    }
+
     /**
      * .
      */
@@ -157,6 +169,33 @@ public class GenericGraphsTest
         {
             return "Alissa P. Hacker approves the edge from " + getSource()
                 + " to " + getTarget();
+        }
+    }
+
+    public static class EquivVertex
+    {
+        public boolean equals(Object o)
+        {
+            return true;
+        }
+
+        public int hashCode()
+        {
+            return 1;
+        }
+    }
+
+    public static class EquivGraph
+        extends AbstractBaseGraph<EquivVertex,DefaultEdge>
+        implements UndirectedGraph<EquivVertex,DefaultEdge>
+    {
+        public EquivGraph()
+        {
+            super(
+                new ClassBasedEdgeFactory<EquivVertex,DefaultEdge>(
+                    DefaultEdge.class),
+                true,
+                true);
         }
     }
 
