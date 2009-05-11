@@ -63,6 +63,12 @@ public class KShortestPathCostTest
 
         KShortestPaths pathFinder = new KShortestPaths(graph, "vS", nbPaths);
         List pathElements = pathFinder.getPaths("v3");
+
+        assertEquals("[[(vS : v1), (v1 : v3)], [(vS : v2), (v2 : v3)],"
+            + " [(vS : v2), (v1 : v2), (v1 : v3)], "
+            + "[(vS : v1), (v1 : v2), (v2 : v3)], "
+            + "[(vS : v3)]]", pathElements.toString());
+        
         assertEquals(5, pathElements.size(), 0);
         GraphPath pathElement = (GraphPath) pathElements.get(0);
         assertEquals(2, pathElement.getWeight(), 0);

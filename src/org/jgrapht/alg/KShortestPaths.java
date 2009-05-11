@@ -250,6 +250,12 @@ public class KShortestPaths<V, E>
         {
             return rankingPathElement.getWeight();
         }
+
+        // override Object
+        public String toString()
+        {
+            return getEdgeList().toString();
+        }
     }
 }
 
