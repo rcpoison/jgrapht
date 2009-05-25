@@ -77,7 +77,8 @@ public class HamiltonianCycleTest
             null);
 
         assertTrue(
-            HamiltonianCycle.getApproximateOptimal(completeGraph).size() == 6);
+            HamiltonianCycle.getApproximateOptimalForCompleteGraph(
+                completeGraph).size() == 6);
 
         List<Object> vertices =
             new LinkedList<Object>(completeGraph.vertexSet());
@@ -86,7 +87,8 @@ public class HamiltonianCycleTest
                 vertices.get(1)));
 
         assertTrue(
-            HamiltonianCycle.getApproximateOptimal(completeGraph) == null);
+            HamiltonianCycle.getApproximateOptimalForCompleteGraph(
+                completeGraph) == null);
     }
 }
 
