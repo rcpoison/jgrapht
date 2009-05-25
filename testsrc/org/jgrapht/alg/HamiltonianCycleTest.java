@@ -37,46 +37,57 @@
  * 17-Feb-2008 : Initial revision (AN);
  *
  */
-
 package org.jgrapht.alg;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
-import junit.framework.TestCase;
-import org.jgrapht.graph.*;
+import junit.framework.*;
+
 import org.jgrapht.generate.*;
+import org.jgrapht.graph.*;
+
 
 /**
  * .
- * 
+ *
  * @author Andrew Newell
  */
-public class HamiltonianCycleTest extends TestCase {
-	// ~ Methods
-	// ----------------------------------------------------------------
+public class HamiltonianCycleTest
+    extends TestCase
+{
+    // ~ Methods
+    // ----------------------------------------------------------------
 
-	/**
-	 * .
-	 */
-	public void testHamiltonianCycle() {
-		SimpleWeightedGraph<Object, DefaultWeightedEdge> completeGraph = new SimpleWeightedGraph<Object, DefaultWeightedEdge>(
-				DefaultWeightedEdge.class);
-		CompleteGraphGenerator<Object, DefaultWeightedEdge> completeGraphGenerator = new CompleteGraphGenerator<Object, DefaultWeightedEdge>(
-				6);
-		completeGraphGenerator.generateGraph(completeGraph,
-				new ClassBasedVertexFactory<Object>(Object.class), null);
+    //~ Methods ----------------------------------------------------------------
 
-		assertTrue(HamiltonianCycle.getApproximateOptimal(completeGraph).size() == 6);
+    /**
+     * .
+     */
+    public void testHamiltonianCycle()
+    {
+        SimpleWeightedGraph<Object, DefaultWeightedEdge> completeGraph =
+            new SimpleWeightedGraph<Object, DefaultWeightedEdge>(
+                DefaultWeightedEdge.class);
+        CompleteGraphGenerator<Object, DefaultWeightedEdge> completeGraphGenerator =
+            new CompleteGraphGenerator<Object, DefaultWeightedEdge>(
+                6);
+        completeGraphGenerator.generateGraph(
+            completeGraph,
+            new ClassBasedVertexFactory<Object>(Object.class),
+            null);
 
-		List<Object> vertices = new LinkedList<Object>(completeGraph
-				.vertexSet());
-		completeGraph.removeEdge(completeGraph.getEdge(vertices.get(0),
-				vertices.get(1)));
+        assertTrue(
+            HamiltonianCycle.getApproximateOptimal(completeGraph).size() == 6);
 
-		assertTrue(HamiltonianCycle.getApproximateOptimal(completeGraph) == null);
+        List<Object> vertices =
+            new LinkedList<Object>(completeGraph.vertexSet());
+        completeGraph.removeEdge(
+            completeGraph.getEdge(vertices.get(0),
+                vertices.get(1)));
 
-	}
+        assertTrue(
+            HamiltonianCycle.getApproximateOptimal(completeGraph) == null);
+    }
 }
 
-//End HamiltonianCycleTest.java
+// End HamiltonianCycleTest.java

@@ -141,7 +141,7 @@ public class GenericGraphsTest
         EquivGraph g = new EquivGraph();
         g.addVertex(v1);
         g.addVertex(v2);
-        g.addEdge(v1,v2, new DefaultEdge());
+        g.addEdge(v1, v2, new DefaultEdge());
         assertEquals(2, g.degreeOf(v1));
         assertEquals(2, g.degreeOf(v2));
     }
@@ -186,13 +186,13 @@ public class GenericGraphsTest
     }
 
     public static class EquivGraph
-        extends AbstractBaseGraph<EquivVertex,DefaultEdge>
-        implements UndirectedGraph<EquivVertex,DefaultEdge>
+        extends AbstractBaseGraph<EquivVertex, DefaultEdge>
+        implements UndirectedGraph<EquivVertex, DefaultEdge>
     {
         public EquivGraph()
         {
             super(
-                new ClassBasedEdgeFactory<EquivVertex,DefaultEdge>(
+                new ClassBasedEdgeFactory<EquivVertex, DefaultEdge>(
                     DefaultEdge.class),
                 true,
                 true);

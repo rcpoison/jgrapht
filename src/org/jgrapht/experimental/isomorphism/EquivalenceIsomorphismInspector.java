@@ -251,7 +251,7 @@ class EquivalenceIsomorphismInspector<V, E>
                 while (
                     (targetEqGroup.size() == sourceSize)
                     && (targetEqGroup.hashCode() == sourceHashCode)
-                    && (currTargetIndex < targetArray.length - 1))
+                    && (currTargetIndex < (targetArray.length - 1)))
                 {
                     currTargetIndex++;
                     targetEqGroup = targetArray[currTargetIndex];

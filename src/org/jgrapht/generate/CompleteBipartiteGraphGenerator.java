@@ -66,10 +66,8 @@ public class CompleteBipartiteGraphGenerator<V, E>
     /**
      * Creates a new CompleteBipartiteGraphGenerator object.
      *
-     * @param partitionOne  This is the number of vertices in the first
-     * partition
-     * @param partitionTwo  This is the number of vertices in the second
-     * parition
+     * @param partitionOne This is the number of vertices in the first partition
+     * @param partitionTwo This is the number of vertices in the second parition
      */
     public CompleteBipartiteGraphGenerator(int partitionOne, int partitionTwo)
     {

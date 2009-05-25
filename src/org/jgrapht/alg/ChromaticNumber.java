@@ -47,12 +47,11 @@ import org.jgrapht.graph.*;
 
 
 /**
- * Allows the <a
- * href="http://mathworld.wolfram.com/ChromaticNumber.html">chromatic
- * number</a> of a graph to be calculated. This is the minimal number of colors
- * needed to color each vertex such that no two adjacent vertices share the
- * same color. This algorithm will not find the true chromatic number, since
- * this is an NP-complete problem. So, a greedy algorithm will find an
+ * Allows the <a href="http://mathworld.wolfram.com/ChromaticNumber.html">
+ * chromatic number</a> of a graph to be calculated. This is the minimal number
+ * of colors needed to color each vertex such that no two adjacent vertices
+ * share the same color. This algorithm will not find the true chromatic number,
+ * since this is an NP-complete problem. So, a greedy algorithm will find an
  * approximate chromatic number.
  *
  * @author Andrew Newell

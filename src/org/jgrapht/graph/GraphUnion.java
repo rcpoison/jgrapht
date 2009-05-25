@@ -1,35 +1,44 @@
 package org.jgrapht.graph;
 
+import java.io.*;
+
+import java.util.*;
+
 import org.jgrapht.*;
 import org.jgrapht.util.*;
 
-import java.io.*;
-import java.util.*;
 
 /**
  * <p>Read-only union of two graphs: G<sub>1</sub> and G<sub>2</sub>. If
- * G<sub>1</sub> = (V<sub>1</sub>, E<sub>1</sub>) and
- * G<sub>2</sub> = (V<sub>2</sub>, E<sub>2</sub>) then their union
- * G = (V, E), where V is the union of V<sub>1</sub> and V<sub>2</sub>,
- * and E is the union of E<sub>1</sub> and E<sub>1</sub>.</p>
+ * G<sub>1</sub> = (V<sub>1</sub>, E<sub>1</sub>) and G<sub>2</sub> =
+ * (V<sub>2</sub>, E<sub>2</sub>) then their union G = (V, E), where V is the
+ * union of V<sub>1</sub> and V<sub>2</sub>, and E is the union of E<sub>1</sub>
+ * and E<sub>1</sub>.</p>
  *
- * <p><tt>GraphUnion</tt> implements <tt>Graph</tt> interface.
- * <tt>GraphUnion</tt> uses <tt>WeightCombiner</tt> to choose policy for
- * calculating edge weight.</p>
+ * <p><tt>GraphUnion</tt> implements <tt>Graph</tt> interface. <tt>
+ * GraphUnion</tt> uses <tt>WeightCombiner</tt> to choose policy for calculating
+ * edge weight.</p>
  */
 public class GraphUnion<V, E, G extends Graph<V, E>>
-        extends AbstractGraph<V, E>
-        implements Serializable {
+    extends AbstractGraph<V, E>
+    implements Serializable
+{
+    //~ Static fields/initializers ---------------------------------------------
 
     private static final long serialVersionUID = -740199233080172450L;
 
     private static final String READ_ONLY = "union of graphs is read-only";
 
+    //~ Instance fields --------------------------------------------------------
+
     private G g1;
     private G g2;
     private WeightCombiner operator;
 
-    public GraphUnion(G g1, G g2, WeightCombiner operator) {
+    //~ Constructors -----------------------------------------------------------
+
+    public GraphUnion(G g1, G g2, WeightCombiner operator)
+    {
         if (g1 == null) {
             throw new NullPointerException("g1 is null");
         }
@@ -44,76 +53,102 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         this.operator = operator;
     }
 
-    public GraphUnion(G g1, G g2) {
+    public GraphUnion(G g1, G g2)
+    {
         this(g1, g2, WeightCombiner.SUM);
     }
 
-    public Set<E> getAllEdges(V sourceVertex, V targetVertex) {
+    //~ Methods ----------------------------------------------------------------
+
+    public Set<E> getAllEdges(V sourceVertex, V targetVertex)
+    {
         Set<E> res = new HashSet<E>();
-        if (g1.containsVertex(sourceVertex) && g1.containsVertex(targetVertex)) {
+        if (g1.containsVertex(sourceVertex)
+            && g1.containsVertex(targetVertex))
+        {
             res.addAll(g1.getAllEdges(sourceVertex, targetVertex));
         }
-        if (g2.containsVertex(sourceVertex) && g2.containsVertex(targetVertex)) {
+        if (g2.containsVertex(sourceVertex)
+            && g2.containsVertex(targetVertex))
+        {
             res.addAll(g2.getAllEdges(sourceVertex, targetVertex));
         }
         return Collections.unmodifiableSet(res);
     }
 
-    public E getEdge(V sourceVertex, V targetVertex) {
+    public E getEdge(V sourceVertex, V targetVertex)
+    {
         E res = null;
-        if (g1.containsVertex(sourceVertex) && g1.containsVertex(targetVertex)) {
+        if (g1.containsVertex(sourceVertex)
+            && g1.containsVertex(targetVertex))
+        {
             res = g1.getEdge(sourceVertex, targetVertex);
         }
-        if (res == null && g2.containsVertex(sourceVertex) && g2.containsVertex(targetVertex)) {
+        if ((res == null)
+            && g2.containsVertex(sourceVertex)
+            && g2.containsVertex(targetVertex))
+        {
             res = g2.getEdge(sourceVertex, targetVertex);
         }
         return res;
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public EdgeFactory<V, E> getEdgeFactory() {
+    public EdgeFactory<V, E> getEdgeFactory()
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
-     */    
-    public E addEdge(V sourceVertex, V targetVertex) {
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
+     */
+    public E addEdge(V sourceVertex, V targetVertex)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public boolean addEdge(V sourceVertex, V targetVertex, E e) {
+    public boolean addEdge(V sourceVertex, V targetVertex, E e)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public boolean addVertex(V v) {
+    public boolean addVertex(V v)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
-    public boolean containsEdge(E e) {
+    public boolean containsEdge(E e)
+    {
         return g1.containsEdge(e) || g2.containsEdge(e);
     }
 
-    public boolean containsVertex(V v) {
+    public boolean containsVertex(V v)
+    {
         return g1.containsVertex(v) || g2.containsVertex(v);
     }
 
-    public Set<E> edgeSet() {
+    public Set<E> edgeSet()
+    {
         Set<E> res = new HashSet<E>();
         res.addAll(g1.edgeSet());
         res.addAll(g2.edgeSet());
         return Collections.unmodifiableSet(res);
     }
 
-    public Set<E> edgesOf(V vertex) {
+    public Set<E> edgesOf(V vertex)
+    {
         Set<E> res = new HashSet<E>();
         if (g1.containsVertex(vertex)) {
             res.addAll(g1.edgesOf(vertex));
@@ -125,34 +160,42 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public E removeEdge(V sourceVertex, V targetVertex) {
+    public E removeEdge(V sourceVertex, V targetVertex)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public boolean removeEdge(E e) {
+    public boolean removeEdge(E e)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
     /**
-     * Throws <tt>UnsupportedOperationException</tt>, because <tt>GraphUnion</tt> is read-only.
+     * Throws <tt>UnsupportedOperationException</tt>, because <tt>
+     * GraphUnion</tt> is read-only.
      */
-    public boolean removeVertex(V v) {
+    public boolean removeVertex(V v)
+    {
         throw new UnsupportedOperationException(READ_ONLY);
     }
 
-    public Set<V> vertexSet() {
+    public Set<V> vertexSet()
+    {
         Set<V> res = new HashSet<V>();
         res.addAll(g1.vertexSet());
         res.addAll(g2.vertexSet());
         return Collections.unmodifiableSet(res);
     }
 
-    public V getEdgeSource(E e) {
+    public V getEdgeSource(E e)
+    {
         if (g1.containsEdge(e)) {
             return g1.getEdgeSource(e);
         }
@@ -162,7 +205,8 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         return null;
     }
 
-    public V getEdgeTarget(E e) {
+    public V getEdgeTarget(E e)
+    {
         if (g1.containsEdge(e)) {
             return g1.getEdgeTarget(e);
         }
@@ -172,7 +216,8 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
         return null;
     }
 
-    public double getEdgeWeight(E e) {
+    public double getEdgeWeight(E e)
+    {
         if (g1.containsEdge(e) && g2.containsEdge(e)) {
             return operator.combine(g1.getEdgeWeight(e), g2.getEdgeWeight(e));
         }
@@ -188,14 +233,18 @@ public class GraphUnion<V, E, G extends Graph<V, E>>
     /**
      * @return G<sub>1</sub>
      */
-    public G getG1() {
+    public G getG1()
+    {
         return g1;
     }
 
     /**
      * @return G<sub>2</sub>
      */
-    public G getG2() {
+    public G getG2()
+    {
         return g2;
     }
 }
+
+// End $file.name$
