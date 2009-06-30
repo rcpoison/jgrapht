@@ -46,65 +46,83 @@ import org.jgrapht.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 
+
 /**
  * @author Tom Larkworthy
  * @version $Id$
  */
-public class FloydWarshallShortestPathsTest extends TestCase
+public class FloydWarshallShortestPathsTest
+    extends TestCase
 {
-    public void testCompareWithDijkstra() {
-		
-        RandomGraphGenerator<Integer, DefaultWeightedEdge> gen = 
+    //~ Methods ----------------------------------------------------------------
+
+    public void testCompareWithDijkstra()
+    {
+        RandomGraphGenerator<Integer, DefaultWeightedEdge> gen =
             new RandomGraphGenerator<Integer, DefaultWeightedEdge>(
-                10,15);
-        VertexFactory<Integer> f = new VertexFactory<Integer>(){
-            int gid;
-            public Integer createVertex() {
-                return gid++;
-            }
-        }; 
-		
-		
-        for(int i=0;i<10;i++){
-            SimpleDirectedGraph<Integer, DefaultWeightedEdge> directed = 
+                10,
+                15);
+        VertexFactory<Integer> f =
+            new VertexFactory<Integer>() {
+                int gid;
+
+                public Integer createVertex()
+                {
+                    return gid++;
+                }
+            };
+
+        for (int i = 0; i < 10; i++) {
+            SimpleDirectedGraph<Integer, DefaultWeightedEdge> directed =
                 new SimpleDirectedGraph<Integer, DefaultWeightedEdge>(
                     DefaultWeightedEdge.class);
-		
-            gen.generateGraph(directed, f, new HashMap<String,Integer>());
-		
+
+            gen.generateGraph(directed, f, new HashMap<String, Integer>());
+
             // setup our shortest path measurer
             FloydWarshallShortestPaths<Integer, DefaultWeightedEdge> fw =
-                new FloydWarshallShortestPaths<Integer, DefaultWeightedEdge>(directed);
-			
-			
-            for(Integer v1:directed.vertexSet()){
-                for(Integer v2:directed.vertexSet()){
-				
-                    double fwSp = fw.shortestDistance(v1,v2);
-                    double dijSp = new DijkstraShortestPath<Integer, DefaultWeightedEdge>(directed, v1, v2).getPathLength(); 
-                    assertTrue(Math.abs(dijSp - fwSp) <.01 || (Double.isInfinite(fwSp)&&Double.isInfinite(dijSp)));
+                new FloydWarshallShortestPaths<Integer, DefaultWeightedEdge>(
+                    directed);
+
+            for (Integer v1 : directed.vertexSet()) {
+                for (Integer v2 : directed.vertexSet()) {
+                    double fwSp = fw.shortestDistance(v1, v2);
+                    double dijSp =
+                        new DijkstraShortestPath<Integer, DefaultWeightedEdge>(
+                            directed,
+                            v1,
+                            v2).getPathLength();
+                    assertTrue(
+                        (Math.abs(dijSp - fwSp) < .01)
+                        || (Double.isInfinite(fwSp)
+                            && Double.isInfinite(dijSp)));
                 }
             }
-			
-            SimpleGraph<Integer, DefaultWeightedEdge> undirected = 
+
+            SimpleGraph<Integer, DefaultWeightedEdge> undirected =
                 new SimpleGraph<Integer, DefaultWeightedEdge>(
                     DefaultWeightedEdge.class);
-			
-            gen.generateGraph(undirected, f, new HashMap<String,Integer>());
-			
+
+            gen.generateGraph(undirected, f, new HashMap<String, Integer>());
+
             // setup our shortest path measurer
-            fw = new FloydWarshallShortestPaths<Integer, DefaultWeightedEdge>(undirected);
-			
-			
-            for(Integer v1:undirected.vertexSet()){
-                for(Integer v2:undirected.vertexSet()){
-				
-                    double fwSp = fw.shortestDistance(v1,v2);
-                    double dijSp = new DijkstraShortestPath<Integer, DefaultWeightedEdge>(undirected, v1, v2).getPathLength(); 
-                    assertTrue(Math.abs(dijSp - fwSp) <.01 || (Double.isInfinite(fwSp)&&Double.isInfinite(dijSp)));
+            fw = new FloydWarshallShortestPaths<Integer, DefaultWeightedEdge>(
+                undirected);
+
+            for (Integer v1 : undirected.vertexSet()) {
+                for (Integer v2 : undirected.vertexSet()) {
+                    double fwSp = fw.shortestDistance(v1, v2);
+                    double dijSp =
+                        new DijkstraShortestPath<Integer, DefaultWeightedEdge>(
+                            undirected,
+                            v1,
+                            v2).getPathLength();
+                    assertTrue(
+                        (Math.abs(dijSp - fwSp) < .01)
+                        || (Double.isInfinite(fwSp)
+                            && Double.isInfinite(dijSp)));
                 }
             }
-			
         }
     }
 }
