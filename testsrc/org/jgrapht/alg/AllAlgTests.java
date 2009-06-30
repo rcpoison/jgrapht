@@ -72,6 +72,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(ConnectivityInspectorTest.class));
         suite.addTest(new TestSuite(DijkstraShortestPathTest.class));
         suite.addTest(new TestSuite(BellmanFordShortestPathTest.class));
+        suite.addTest(new TestSuite(FloydWarshallShortestPathsTest.class));
         suite.addTest(new TestSuite(VertexCoversTest.class));
         suite.addTest(new TestSuite(CycleDetectorTest.class));
         suite.addTest(new TestSuite(BronKerboschCliqueFinderTest.class));
