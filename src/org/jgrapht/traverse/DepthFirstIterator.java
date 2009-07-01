@@ -74,15 +74,12 @@ public class DepthFirstIterator<V, E>
      * won't accept those. And we don't want to rely on the caller to provide a
      * sentinel object for us. So we have to play typecasting games.
      */
-    private static final Object SENTINEL = new Object();
+    protected static final Object SENTINEL = new Object();
 
     //~ Instance fields --------------------------------------------------------
 
     /**
-     * LIFO stack of vertices which have been encountered but not yet visited
-     * (WHITE). This stack also contains <em>sentinel</em> entries representing
-     * vertices which have been visited but are still GRAY. A sentinel entry is
-     * a sequence (v, SENTINEL), whereas a non-sentinel entry is just (v).
+     * @see #getStack
      */
     private Deque<Object> stack = new ArrayDeque<Object>();
 
@@ -206,6 +203,20 @@ public class DepthFirstIterator<V, E>
         V v = TypeUtil.uncheckedCast(stack.removeLast(), vertexTypeDecl);
         putSeenData(v, VisitColor.BLACK);
         finishVertex(v);
+    }
+
+    /**
+     * Retrieves the LIFO stack of vertices which have been encountered but not
+     * yet visited (WHITE). This stack also contains <em>sentinel</em> entries
+     * representing vertices which have been visited but are still GRAY. A
+     * sentinel entry is a sequence (v, SENTINEL), whereas a non-sentinel entry
+     * is just (v).
+     *
+     * @return stack
+     */
+    protected Deque<Object> getStack()
+    {
+        return stack;
     }
 }
 
