@@ -74,7 +74,7 @@ public class DepthFirstIterator<V, E>
      * won't accept those. And we don't want to rely on the caller to provide a
      * sentinel object for us. So we have to play typecasting games.
      */
-    protected static final Object SENTINEL = new Object();
+    public static final Object SENTINEL = new Object();
 
     //~ Instance fields --------------------------------------------------------
 
@@ -214,7 +214,7 @@ public class DepthFirstIterator<V, E>
      *
      * @return stack
      */
-    protected Deque<Object> getStack()
+    public Deque<Object> getStack()
     {
         return stack;
     }
