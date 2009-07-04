@@ -38,9 +38,10 @@
  */
 package org.jgrapht.graph;
 
+import java.util.*;
+
 import org.jgrapht.*;
 
-import java.util.*;
 
 /**
  * GraphPathImpl is a default implementation of {@link GraphPath}.
@@ -48,8 +49,11 @@ import java.util.*;
  * @author John Sichi
  * @version $Id$
  */
-public class GraphPathImpl<V, E> implements GraphPath<V, E>
+public class GraphPathImpl<V, E>
+    implements GraphPath<V, E>
 {
+    //~ Instance fields --------------------------------------------------------
+
     private Graph<V, E> graph;
 
     private List<E> edgeList;
@@ -59,6 +63,8 @@ public class GraphPathImpl<V, E> implements GraphPath<V, E>
     private V endVertex;
 
     private double weight;
+
+    //~ Constructors -----------------------------------------------------------
 
     public GraphPathImpl(
         Graph<V, E> graph,
@@ -73,6 +79,8 @@ public class GraphPathImpl<V, E> implements GraphPath<V, E>
         this.edgeList = edgeList;
         this.weight = weight;
     }
+
+    //~ Methods ----------------------------------------------------------------
 
     // implement GraphPath
     public Graph<V, E> getGraph()

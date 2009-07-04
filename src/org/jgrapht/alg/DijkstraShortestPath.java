@@ -205,12 +205,13 @@ public final class DijkstraShortestPath<V, E>
 
         Collections.reverse(edgeList);
         double pathLength = iter.getShortestPathLength(endVertex);
-        path = new GraphPathImpl<V, E>(
-            graph,
-            startVertex,
-            endVertex,
-            edgeList,
-            pathLength);
+        path =
+            new GraphPathImpl<V, E>(
+                graph,
+                startVertex,
+                endVertex,
+                edgeList,
+                pathLength);
     }
 }
 
