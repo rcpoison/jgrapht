@@ -44,6 +44,7 @@ package org.jgrapht.alg;
 import java.util.*;
 
 import org.jgrapht.*;
+import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
 
 
@@ -59,8 +60,7 @@ public final class DijkstraShortestPath<V, E>
 {
     //~ Instance fields --------------------------------------------------------
 
-    private List<E> edgeList;
-    private double pathLength;
+    private GraphPath<V, E> path;
 
     //~ Constructors -----------------------------------------------------------
 
@@ -109,15 +109,12 @@ public final class DijkstraShortestPath<V, E>
             V vertex = iter.next();
 
             if (vertex.equals(endVertex)) {
-                createEdgeList(graph, iter, endVertex);
-                pathLength = iter.getShortestPathLength(endVertex);
-
+                createEdgeList(graph, iter, startVertex, endVertex);
                 return;
             }
         }
 
-        edgeList = null;
-        pathLength = Double.POSITIVE_INFINITY;
+        path = null;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -129,7 +126,21 @@ public final class DijkstraShortestPath<V, E>
      */
     public List<E> getPathEdgeList()
     {
-        return edgeList;
+        if (path == null) {
+            return null;
+        } else {
+            return path.getEdgeList();
+        }
+    }
+
+    /**
+     * Return the path found.
+     *
+     * @return path representation, or null if no path exists
+     */
+    public GraphPath<V, E> getPath()
+    {
+        return path;
     }
 
     /**
@@ -139,7 +150,11 @@ public final class DijkstraShortestPath<V, E>
      */
     public double getPathLength()
     {
-        return pathLength;
+        if (path == null) {
+            return Double.POSITIVE_INFINITY;
+        } else {
+            return path.getWeight();
+        }
     }
 
     /**
@@ -170,22 +185,32 @@ public final class DijkstraShortestPath<V, E>
     private void createEdgeList(
         Graph<V, E> graph,
         ClosestFirstIterator<V, E> iter,
+        V startVertex,
         V endVertex)
     {
-        edgeList = new ArrayList<E>();
+        List<E> edgeList = new ArrayList<E>();
+
+        V v = endVertex;
 
         while (true) {
-            E edge = iter.getSpanningTreeEdge(endVertex);
+            E edge = iter.getSpanningTreeEdge(v);
 
             if (edge == null) {
                 break;
             }
 
             edgeList.add(edge);
-            endVertex = Graphs.getOppositeVertex(graph, edge, endVertex);
+            v = Graphs.getOppositeVertex(graph, edge, v);
         }
 
         Collections.reverse(edgeList);
+        double pathLength = iter.getShortestPathLength(endVertex);
+        path = new GraphPathImpl<V, E>(
+            graph,
+            startVertex,
+            endVertex,
+            edgeList,
+            pathLength);
     }
 }
 
