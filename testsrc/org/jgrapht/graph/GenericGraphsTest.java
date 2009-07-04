@@ -189,6 +189,11 @@ public class GenericGraphsTest
         extends AbstractBaseGraph<EquivVertex, DefaultEdge>
         implements UndirectedGraph<EquivVertex, DefaultEdge>
     {
+        /**
+         * 
+         */
+        private static final long serialVersionUID = 8647217182401022498L;
+
         public EquivGraph()
         {
             super(
