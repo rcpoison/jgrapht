@@ -50,6 +50,14 @@ import org.jgrapht.*;
  * weight. Weights could be negative (but no negative cycle is allowed), paths
  * could be constrained by a maximum number of edges.
  *
+ *<p>
+ *
+ * The algorithm is a variant of the Bellman-Ford algorithm but instead of only
+ * storing the best path it stores the "k" best paths at each pass, yielding
+ * a complexity of O(k*m*n) where m is the number of edges and n is the
+ * number of vertices.
+ * 
+ *
  * @author Guillaume Boulmier
  * @since July 5, 2007
  */
@@ -125,7 +133,6 @@ public class KShortestPaths<V, E>
 
     /**
      * Returns the k shortest simple paths in increasing order of weight.
-     * Running time : O(k*m*n) where m is the number of edges.
      *
      * @param endVertex target vertex of the calculated paths.
      *
