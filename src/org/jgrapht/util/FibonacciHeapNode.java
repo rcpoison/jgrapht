@@ -110,14 +110,12 @@ public class FibonacciHeapNode<T>
      * a circular doubly-linked list.
      *
      * @param data data for this node
-     * @param key initial key for node
      */
-    public FibonacciHeapNode(T data, double key)
+    public FibonacciHeapNode(T data)
     {
         right = this;
         left = this;
         this.data = data;
-        this.key = key;
     }
 
     //~ Methods ----------------------------------------------------------------

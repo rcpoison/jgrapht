@@ -52,10 +52,10 @@ public class FibonacciHeapTest
     public void testAddRemoveOne()
     {
         String s = "A";
-        FibonacciHeapNode<String> n = new FibonacciHeapNode<String>(s, 1.0);
+        FibonacciHeapNode<String> n = new FibonacciHeapNode<String>(s);
         FibonacciHeap<String> h = new FibonacciHeap<String>();
         assertTrue(h.isEmpty());
-        h.insert(n, n.getKey());
+        h.insert(n, 1.0);
         assertFalse(h.isEmpty());
         FibonacciHeapNode<String> n2 = h.removeMin();
         assertEquals(s, n2.getData());
@@ -75,8 +75,8 @@ public class FibonacciHeapTest
                 double d = r.nextDouble();
                 t += d;
                 FibonacciHeapNode<String> n =
-                    new FibonacciHeapNode<String>(s, d);
-                h.insert(n, n.getKey());
+                    new FibonacciHeapNode<String>(s);
+                h.insert(n, d);
             }
 
             // during last two-thirds, delete (so during middle

@@ -205,9 +205,15 @@ public class ClosestFirstIterator<V, E>
      */
     protected void encounterVertex(V vertex, E edge)
     {
+        double shortestPathLength;
+        if (edge == null) {
+            shortestPathLength = 0;
+        } else {
+            shortestPathLength = calculatePathLength(vertex, edge);
+        }
         FibonacciHeapNode<QueueEntry<V, E>> node = createSeenData(vertex, edge);
         putSeenData(vertex, node);
-        heap.insert(node, node.getKey());
+        heap.insert(node, shortestPathLength);
     }
 
     /**
@@ -294,21 +300,11 @@ public class ClosestFirstIterator<V, E>
         V vertex,
         E edge)
     {
-        double shortestPathLength;
-
-        if (edge == null) {
-            shortestPathLength = 0;
-        } else {
-            shortestPathLength = calculatePathLength(vertex, edge);
-        }
-
         QueueEntry<V, E> entry = new QueueEntry<V, E>();
         entry.vertex = vertex;
         entry.spanningTreeEdge = edge;
 
-        return new FibonacciHeapNode<QueueEntry<V, E>>(
-            entry,
-            shortestPathLength);
+        return new FibonacciHeapNode<QueueEntry<V, E>>(entry);
     }
 
     //~ Inner Classes ----------------------------------------------------------
