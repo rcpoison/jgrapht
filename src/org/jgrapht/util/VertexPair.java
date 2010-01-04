@@ -39,70 +39,91 @@
 package org.jgrapht.util;
 
 /**
- * Representation of a pair of vertices; to be replaced by Pair<V,V>
- * if Sun ever gets around to adding Pair to java.util.
+ * Representation of a pair of vertices; to be replaced by Pair<V,V> if Sun ever
+ * gets around to adding Pair to java.util.
  *
  * @author Soren <soren@tanesha.net>
  */
 public class VertexPair<V>
 {
+    //~ Instance fields --------------------------------------------------------
+
     private V n1;
     private V n2;
 
-    public VertexPair(V n1, V n2) {
+    //~ Constructors -----------------------------------------------------------
+
+    public VertexPair(V n1, V n2)
+    {
         this.n1 = n1;
         this.n2 = n2;
     }
 
-    public V getFirst() {
+    //~ Methods ----------------------------------------------------------------
+
+    public V getFirst()
+    {
         return n1;
     }
 
-    public V getSecond() {
+    public V getSecond()
+    {
         return n2;
     }
 
     /**
      * Assess if this pair contains the vertex.
+     *
      * @param v The vertex in question
+     *
      * @return true if contains, false otherwise
      */
-    public boolean hasVertex(V v) {
+    public boolean hasVertex(V v)
+    {
         return v.equals(n1) || v.equals(n2);
     }
 
-    public V getOther(V one) {
-        if (one.equals(n1))
+    public V getOther(V one)
+    {
+        if (one.equals(n1)) {
             return n2;
-        else if (one.equals(n2))
+        } else if (one.equals(n2)) {
             return n1;
-        else
+        } else {
             return null;
+        }
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString()
+    {
         return n1 + "," + n2;
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    @Override public boolean equals(Object o)
+    {
+        if (this == o) {
+            return true;
+        }
+        if ((o == null) || (getClass() != o.getClass())) {
+            return false;
+        }
 
         VertexPair that = (VertexPair) o;
 
-        if (n1 != null ? !n1.equals(that.n1) : that.n1 != null) return false;
-        if (n2 != null ? !n2.equals(that.n2) : that.n2 != null) return false;
+        if ((n1 != null) ? (!n1.equals(that.n1)) : (that.n1 != null)) {
+            return false;
+        }
+        if ((n2 != null) ? (!n2.equals(that.n2)) : (that.n2 != null)) {
+            return false;
+        }
 
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        int result = n1 != null ? n1.hashCode() : 0;
-        result = 31 * result + (n2 != null ? n2.hashCode() : 0);
+    @Override public int hashCode()
+    {
+        int result = (n1 != null) ? n1.hashCode() : 0;
+        result = (31 * result) + ((n2 != null) ? n2.hashCode() : 0);
         return result;
     }
 }

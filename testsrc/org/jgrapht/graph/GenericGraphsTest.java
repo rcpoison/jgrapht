@@ -190,7 +190,6 @@ public class GenericGraphsTest
         implements UndirectedGraph<EquivVertex, DefaultEdge>
     {
         /**
-         * 
          */
         private static final long serialVersionUID = 8647217182401022498L;
 

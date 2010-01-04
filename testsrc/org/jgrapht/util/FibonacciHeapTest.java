@@ -74,8 +74,7 @@ public class FibonacciHeapTest
             if (i < (k * 2)) {
                 double d = r.nextDouble();
                 t += d;
-                FibonacciHeapNode<String> n =
-                    new FibonacciHeapNode<String>(s);
+                FibonacciHeapNode<String> n = new FibonacciHeapNode<String>(s);
                 h.insert(n, d);
             }
 

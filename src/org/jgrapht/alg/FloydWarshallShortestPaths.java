@@ -43,8 +43,8 @@ package org.jgrapht.alg;
 import java.util.*;
 
 import org.jgrapht.*;
-import org.jgrapht.util.*;
 import org.jgrapht.graph.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -57,43 +57,54 @@ import org.jgrapht.graph.*;
  */
 public class FloydWarshallShortestPaths<V, E>
 {
+    //~ Instance fields --------------------------------------------------------
+
     private Graph<V, E> graph;
     private List<V> vertices;
     private int countShortestPaths = 0;
     private double diameter = 0.0;
-    private double[][] d = null;
-    private int[][] backtrace = null;
-    private Map<VertexPair<V>, GraphPath<V,E>> paths = null;
+    private double [][] d = null;
+    private int [][] backtrace = null;
+    private Map<VertexPair<V>, GraphPath<V, E>> paths = null;
 
-    public FloydWarshallShortestPaths(Graph<V, E> graph) {
+    //~ Constructors -----------------------------------------------------------
+
+    public FloydWarshallShortestPaths(Graph<V, E> graph)
+    {
         this.graph = graph;
         this.vertices = new ArrayList<V>(graph.vertexSet());
     }
 
-    protected Graph<V, E> getGraph() {
+    //~ Methods ----------------------------------------------------------------
+
+    protected Graph<V, E> getGraph()
+    {
         return graph;
     }
 
-    public int shortestPathsCount() {
+    public int shortestPathsCount()
+    {
         return countShortestPaths;
     }
 
     /**
      * Calculates all shortest paths.
      */
-    private void lazyCalculate() {
-
+    private void lazyCalculate()
+    {
         int n = vertices.size();
 
         // init the backtrace matrix
         backtrace = new int[n][n];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             Arrays.fill(backtrace[i], -1);
+        }
 
         // initialize matrix, 0
         d = new double[n][n];
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; i++) {
             Arrays.fill(d[i], Double.POSITIVE_INFINITY);
+        }
 
         // initialize matrix, 1
         for (int i = 0; i < n; i++) {
@@ -123,7 +134,7 @@ public class FloydWarshallShortestPaths<V, E>
                     if (ik_kj < d[i][j]) {
                         d[i][j] = ik_kj;
                         backtrace[i][j] = k;
-                        diameter = diameter > d[i][j] ? diameter : d[i][j];
+                        diameter = (diameter > d[i][j]) ? diameter : d[i][j];
                     }
                 }
             }
@@ -132,50 +143,56 @@ public class FloydWarshallShortestPaths<V, E>
 
     /**
      * Get the length of a shortest path.
+     *
      * @param a
      * @param b
+     *
      * @return
      */
-    public double shortestDistance(V a, V b) {
-
+    public double shortestDistance(V a, V b)
+    {
         // lazy
-        if (d == null)
+        if (d == null) {
             lazyCalculate();
+        }
 
         return d[vertices.indexOf(a)][vertices.indexOf(b)];
     }
 
-    public double getDiameter() {
+    public double getDiameter()
+    {
         return diameter;
     }
 
-    private void shortestPathRecur(List<E> edges, int v_a, int v_b) {
+    private void shortestPathRecur(List<E> edges, int v_a, int v_b)
+    {
         int k = backtrace[v_a][v_b];
         if (k == -1) {
             E edge = graph.getEdge(vertices.get(v_a), vertices.get(v_b));
-            if (edge != null)
+            if (edge != null) {
                 edges.add(edge);
-        }
-        else {
+            }
+        } else {
             shortestPathRecur(edges, v_a, k);
             shortestPathRecur(edges, k, v_b);
         }
     }
 
     /**
-     * Get the shortest path between two vertices.
+     * Get the shortest path between two vertices. Note: The paths are
+     * calculated using a recursive algorithm. It *will* give problems on paths
+     * longer than the heap allows.
      *
-     * Note: The paths are calculated using a recursive algorithm. It *will* give problems on paths longer than
-     * the heap allows.
-     * 
      * @param a From vertice
      * @param b To vertice
+     *
      * @return the path
      */
-    public GraphPath<V, E> shortestPath(V a, V b) {
-
-        if (d == null)
+    public GraphPath<V, E> shortestPath(V a, V b)
+    {
+        if (d == null) {
             lazyCalculatePaths();
+        }
 
         int v_a = vertices.indexOf(a);
         int v_b = vertices.indexOf(b);
@@ -184,40 +201,44 @@ public class FloydWarshallShortestPaths<V, E>
         shortestPathRecur(edges, v_a, v_b);
 
         // no path, return null
-        if (edges.size() < 1)
+        if (edges.size() < 1) {
             return null;
+        }
 
-        GraphPathImpl<V, E> path = new GraphPathImpl<V, E>(graph, a, b, edges, edges.size());
+        GraphPathImpl<V, E> path =
+            new GraphPathImpl<V, E>(graph, a, b, edges, edges.size());
 
         return path;
     }
 
     /**
      * Calculate the shortest paths (not done per default)
+     *
      * @return the number of shortest paths.
      */
-    public int lazyCalculatePaths() {
-
+    public int lazyCalculatePaths()
+    {
         // already we have calculated it once.
         if (paths != null) {
             return countShortestPaths;
         }
 
         // we don't have shortest paths.. lazyCalculate it.
-        if (d == null)
+        if (d == null) {
             lazyCalculate();
+        }
 
-        Map<VertexPair<V>, GraphPath<V, E>> sps = new HashMap<VertexPair<V>, GraphPath<V, E>>();
+        Map<VertexPair<V>, GraphPath<V, E>> sps =
+            new HashMap<VertexPair<V>, GraphPath<V, E>>();
         int n = vertices.size();
 
         countShortestPaths = 0;
         for (int i = 0; i < n; i++) {
-
             for (int j = 0; j < n; j++) {
-
                 // don't count this.
-                if (i == j)
+                if (i == j) {
                     continue;
+                }
 
                 V v_i = vertices.get(i);
                 V v_j = vertices.get(j);
@@ -238,12 +259,16 @@ public class FloydWarshallShortestPaths<V, E>
 
     /**
      * Get shortest paths from a vertex to all other vertices in the graph.
+     *
      * @param v the originating vertex
+     *
      * @return List of paths
      */
-    public List<GraphPath<V, E>> getShortestPaths(V v) {
-        if (v == null)
+    public List<GraphPath<V, E>> getShortestPaths(V v)
+    {
+        if (v == null) {
             return null;
+        }
 
         List<GraphPath<V, E>> found = new ArrayList<GraphPath<V, E>>();
         for (VertexPair<V> pair : paths.keySet()) {
