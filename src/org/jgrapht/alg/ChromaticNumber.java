@@ -28,7 +28,7 @@
  * (C) Copyright 2008-2008, by Andrew Newell and Contributors.
  *
  * Original Author:  Andrew Newell
- * Contributor(s):   -
+ * Contributor(s):   gpaschos@netscape.net
  *
  * $Id$
  *
@@ -114,6 +114,7 @@ public abstract class ChromaticNumber
                 }
                 if (flag) {
                     currentColor.add(v);
+                    iter.remove();
                 }
             }
 
