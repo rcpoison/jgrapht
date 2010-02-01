@@ -61,7 +61,7 @@ public class FloydWarshallShortestPaths<V, E>
 
     private Graph<V, E> graph;
     private List<V> vertices;
-    private int countShortestPaths = 0;
+    private int nShortestPaths = 0;
     private double diameter = 0.0;
     private double [][] d = null;
     private int [][] backtrace = null;
@@ -77,21 +77,34 @@ public class FloydWarshallShortestPaths<V, E>
 
     //~ Methods ----------------------------------------------------------------
 
-    protected Graph<V, E> getGraph()
+    /**
+     * @return the graph on which this algorithm operates
+     */
+    public Graph<V, E> getGraph()
     {
         return graph;
     }
 
-    public int shortestPathsCount()
+    /**
+     * @return total number of shortest paths 
+     */
+    public int getShortestPathsCount()
     {
-        return countShortestPaths;
+        lazyCalculatePaths();
+        return nShortestPaths;
     }
 
     /**
-     * Calculates all shortest paths.
+     * Calculates the matrix of all shortest paths, along with the diameter,
+     * but does not populate the paths map.
      */
-    private void lazyCalculate()
+    private void lazyCalculateMatrix()
     {
+        if (d != null) {
+            // already done
+            return;
+        }
+
         int n = vertices.size();
 
         // init the backtrace matrix
@@ -151,16 +164,19 @@ public class FloydWarshallShortestPaths<V, E>
      */
     public double shortestDistance(V a, V b)
     {
-        // lazy
-        if (d == null) {
-            lazyCalculate();
-        }
+        lazyCalculateMatrix();
 
         return d[vertices.indexOf(a)][vertices.indexOf(b)];
     }
 
+
+    /**
+     * @return the diameter (longest of all the shortest paths) computed for
+     * the graph
+     */
     public double getDiameter()
     {
+        lazyCalculateMatrix();
         return diameter;
     }
 
@@ -181,19 +197,21 @@ public class FloydWarshallShortestPaths<V, E>
     /**
      * Get the shortest path between two vertices. Note: The paths are
      * calculated using a recursive algorithm. It *will* give problems on paths
-     * longer than the heap allows.
+     * longer than the stack allows.
      *
      * @param a From vertice
      * @param b To vertice
      *
-     * @return the path
+     * @return the path, or null if none found
      */
-    public GraphPath<V, E> shortestPath(V a, V b)
+    public GraphPath<V, E> getShortestPath(V a, V b)
     {
-        if (d == null) {
-            lazyCalculatePaths();
-        }
-
+        lazyCalculatePaths();
+        return getShortestPathImpl(a, b);
+    }
+    
+    private GraphPath<V, E> getShortestPathImpl(V a, V b)
+    {
         int v_a = vertices.indexOf(a);
         int v_b = vertices.indexOf(b);
 
@@ -213,26 +231,21 @@ public class FloydWarshallShortestPaths<V, E>
 
     /**
      * Calculate the shortest paths (not done per default)
-     *
-     * @return the number of shortest paths.
      */
-    public int lazyCalculatePaths()
+    private void lazyCalculatePaths()
     {
         // already we have calculated it once.
         if (paths != null) {
-            return countShortestPaths;
+            return;
         }
 
-        // we don't have shortest paths.. lazyCalculate it.
-        if (d == null) {
-            lazyCalculate();
-        }
+        lazyCalculateMatrix();
 
         Map<VertexPair<V>, GraphPath<V, E>> sps =
             new HashMap<VertexPair<V>, GraphPath<V, E>>();
         int n = vertices.size();
 
-        countShortestPaths = 0;
+        nShortestPaths = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 // don't count this.
@@ -243,18 +256,17 @@ public class FloydWarshallShortestPaths<V, E>
                 V v_i = vertices.get(i);
                 V v_j = vertices.get(j);
 
-                GraphPath<V, E> path = shortestPath(v_i, v_j);
+                GraphPath<V, E> path = getShortestPathImpl(v_i, v_j);
 
                 // we got a path
                 if (path != null) {
                     sps.put(new VertexPair<V>(v_i, v_j), path);
-                    countShortestPaths++;
+                    nShortestPaths++;
                 }
             }
         }
 
         this.paths = sps;
-        return countShortestPaths;
     }
 
     /**
@@ -266,10 +278,7 @@ public class FloydWarshallShortestPaths<V, E>
      */
     public List<GraphPath<V, E>> getShortestPaths(V v)
     {
-        if (v == null) {
-            return null;
-        }
-
+        lazyCalculatePaths();
         List<GraphPath<V, E>> found = new ArrayList<GraphPath<V, E>>();
         for (VertexPair<V> pair : paths.keySet()) {
             if (pair.hasVertex(v)) {
