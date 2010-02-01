@@ -39,14 +39,16 @@
  */
 package org.jgrapht.alg;
 
-import java.util.*;
 import java.net.*;
+
+import java.util.*;
 
 import junit.framework.*;
 
 import org.jgrapht.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
+
 
 /**
  * @author Tom Larkworthy
@@ -155,9 +157,9 @@ public class FloydWarshallShortestPathsTest
     public void testDiameter()
     {
         UndirectedGraph<String, DefaultEdge> stringGraph = createStringGraph();
-    	FloydWarshallShortestPaths<String, DefaultEdge> testFWPath =
+        FloydWarshallShortestPaths<String, DefaultEdge> testFWPath =
             new FloydWarshallShortestPaths<String, DefaultEdge>(stringGraph);
-    	double diameter = testFWPath.getDiameter();
+        double diameter = testFWPath.getDiameter();
         assertEquals(2.0, diameter);
     }
 }

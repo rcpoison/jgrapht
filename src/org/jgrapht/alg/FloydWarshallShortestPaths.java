@@ -86,7 +86,7 @@ public class FloydWarshallShortestPaths<V, E>
     }
 
     /**
-     * @return total number of shortest paths 
+     * @return total number of shortest paths
      */
     public int getShortestPathsCount()
     {
@@ -95,8 +95,8 @@ public class FloydWarshallShortestPaths<V, E>
     }
 
     /**
-     * Calculates the matrix of all shortest paths, along with the diameter,
-     * but does not populate the paths map.
+     * Calculates the matrix of all shortest paths, along with the diameter, but
+     * does not populate the paths map.
      */
     private void lazyCalculateMatrix()
     {
@@ -169,10 +169,9 @@ public class FloydWarshallShortestPaths<V, E>
         return d[vertices.indexOf(a)][vertices.indexOf(b)];
     }
 
-
     /**
-     * @return the diameter (longest of all the shortest paths) computed for
-     * the graph
+     * @return the diameter (longest of all the shortest paths) computed for the
+     * graph
      */
     public double getDiameter()
     {
@@ -209,7 +208,7 @@ public class FloydWarshallShortestPaths<V, E>
         lazyCalculatePaths();
         return getShortestPathImpl(a, b);
     }
-    
+
     private GraphPath<V, E> getShortestPathImpl(V a, V b)
     {
         int v_a = vertices.indexOf(a);
