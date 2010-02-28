@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,35 +25,31 @@
 /* ----------------
  * AllAlgTests.java
  * ----------------
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2010-2010, by Tom Conerly and Contributors.
  *
- * Original Author:  Barak Naveh
- * Contributor(s):   -
- *
- * $Id$
+ * Original Author:  Tom Conerly
+ * Contributor(s):   
  *
  * Changes
  * -------
- * 24-Jul-2003 : Initial revision (BN);
+ * 2-Feb-2010 : Initial revision (TC);
  *
  */
-package org.jgrapht.alg;
+package org.jgrapht.alg.util;
 
 import junit.framework.*;
-
-import org.jgrapht.experimental.isomorphism.*;
 
 
 /**
  * A TestSuite for all tests in this package.
  *
- * @author Barak Naveh
+ * @author Tom Conerly
  */
-public final class AllAlgTests
+public final class AllAlgUtilTests
 {
     //~ Constructors -----------------------------------------------------------
 
-    private AllAlgTests()
+    private AllAlgUtilTests()
     {
     } // ensure non-instantiability.
 
@@ -69,28 +65,11 @@ public final class AllAlgTests
         TestSuite suite = new TestSuite();
 
         // $JUnit-BEGIN$
-        suite.addTest(new TestSuite(ConnectivityInspectorTest.class));
-        suite.addTest(new TestSuite(DijkstraShortestPathTest.class));
-        suite.addTest(new TestSuite(BellmanFordShortestPathTest.class));
-        suite.addTest(new TestSuite(FloydWarshallShortestPathsTest.class));
-        suite.addTest(new TestSuite(VertexCoversTest.class));
-        suite.addTest(new TestSuite(CycleDetectorTest.class));
-        suite.addTest(new TestSuite(BronKerboschCliqueFinderTest.class));
-        suite.addTest(new TestSuite(TransitiveClosureTest.class));
-        suite.addTest(new TestSuite(BiconnectivityInspectorTest.class));
-        suite.addTest(new TestSuite(BlockCutpointGraphTest.class));
-        suite.addTest(new TestSuite(KShortestPathCostTest.class));
-        suite.addTest(new TestSuite(KShortestPathKValuesTest.class));
-        suite.addTest(new TestSuite(KSPExampleTest.class));
-        suite.addTestSuite(IsomorphismInspectorTest.class);
-        suite.addTest(new TestSuite(EdmondsKarpMaximumFlowTest.class));
-        suite.addTest(new TestSuite(ChromaticNumberTest.class));
-        suite.addTest(new TestSuite(EulerianCircuitTest.class));
-        suite.addTest(new TestSuite(HamiltonianCycleTest.class));
-        suite.addTest(new TestSuite(KruskalMinimumSpanningTreeTest.class));
+        suite.addTest(new TestSuite(UnionFindTest.class));
+
         // $JUnit-END$
         return suite;
     }
 }
 
-// End AllAlgTests.java
+// End AllAlgUtilTests.java

@@ -44,6 +44,7 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.alg.*;
+import org.jgrapht.alg.util.*;
 import org.jgrapht.generate.*;
 import org.jgrapht.graph.*;
 import org.jgrapht.traverse.*;
@@ -76,6 +77,7 @@ public final class AllTests
             new ExpandableTestSuite("All tests of JGraphT");
 
         suite.addTestSuit((TestSuite) AllAlgTests.suite());
+        suite.addTestSuit((TestSuite) AllAlgUtilTests.suite());
         suite.addTestSuit((TestSuite) AllGenerateTests.suite());
         suite.addTestSuit((TestSuite) AllGraphTests.suite());
         suite.addTestSuit((TestSuite) AllTraverseTests.suite());
