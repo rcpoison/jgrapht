@@ -157,10 +157,10 @@ public class FloydWarshallShortestPaths<V, E>
     /**
      * Get the length of a shortest path.
      *
-     * @param a
-     * @param b
+     * @param a first vertex
+     * @param b second vertex
      *
-     * @return
+     * @return shortest distance between a and b
      */
     public double shortestDistance(V a, V b)
     {

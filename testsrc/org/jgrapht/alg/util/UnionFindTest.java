@@ -48,7 +48,7 @@ import junit.framework.*;
  * @author Tom Conerly
  */
 public class UnionFindTest
-extends TestCase
+    extends TestCase
 {
     //~ Methods ----------------------------------------------------------------
 
@@ -58,82 +58,80 @@ extends TestCase
     public void testUnionFind()
     {
         TreeSet<String> set = new TreeSet<String>();
-        String[] strs = {"aaa","bbb","ccc","ddd","eee"};
+        String [] strs = { "aaa", "bbb", "ccc", "ddd", "eee" };
         ArrayList<ArrayList<String>> sets = new ArrayList<ArrayList<String>>();
-        for(String str:strs)
-        {
+        for (String str : strs) {
             set.add(str);
             sets.add(new ArrayList<String>());
-            sets.get(sets.size()-1).add(str);
-        }        
+            sets.get(sets.size() - 1).add(str);
+        }
         UnionFind<String> uf = new UnionFind<String>(set);
-        testIdentical(strs,sets,uf);
-        
+        testIdentical(strs, sets, uf);
+
         uf.union(strs[0], strs[1]);
-        union(sets,strs[0],strs[1]);
-        testIdentical(strs,sets,uf);
-        
+        union(sets, strs[0], strs[1]);
+        testIdentical(strs, sets, uf);
+
         uf.union(strs[2], strs[3]);
-        union(sets,strs[2],strs[3]);
-        testIdentical(strs,sets,uf);
-        
+        union(sets, strs[2], strs[3]);
+        testIdentical(strs, sets, uf);
+
         uf.union(strs[2], strs[4]);
-        union(sets,strs[2],strs[4]);
-        testIdentical(strs,sets,uf);
-        
+        union(sets, strs[2], strs[4]);
+        testIdentical(strs, sets, uf);
+
         uf.union(strs[2], strs[4]);
-        union(sets,strs[2],strs[4]);
-        testIdentical(strs,sets,uf);
-        
+        union(sets, strs[2], strs[4]);
+        testIdentical(strs, sets, uf);
+
         uf.union(strs[0], strs[4]);
-        union(sets,strs[0],strs[4]);
-        testIdentical(strs,sets,uf);
-        
+        union(sets, strs[0], strs[4]);
+        testIdentical(strs, sets, uf);
     }
 
     private void union(ArrayList<ArrayList<String>> sets, String a, String b)
     {
         ArrayList<String> toAdd = new ArrayList<String>();
-        for(int i = 0; i < sets.size();i++)
-        {
-            if(sets.get(i).contains(a))
-            {
+        for (int i = 0; i < sets.size(); i++) {
+            if (sets.get(i).contains(a)) {
                 toAdd.addAll(sets.get(i));
                 sets.remove(i);
                 break;
             }
         }
-        for(int i = 0; i < sets.size();i++)
-        {
-            if(sets.get(i).contains(b))
-            {
+        for (int i = 0; i < sets.size(); i++) {
+            if (sets.get(i).contains(b)) {
                 toAdd.addAll(sets.get(i));
                 sets.remove(i);
                 break;
             }
-        }       
-        sets.add(toAdd);        
-    }
-    private boolean same(ArrayList<ArrayList<String>> sets, String a, String b)
-    {
-        for(ArrayList<String> set:sets)
-            if(set.contains(a) && set.contains(b))
-                return true;
-        return false;
-    }
-    private void testIdentical(String[] universe,ArrayList<ArrayList<String>> sets, UnionFind<String> uf)
-    {
-        for(String a:universe)
-        {
-            for(String b:universe)
-            {
-                boolean same1 = uf.find(a).equals(uf.find(b));
-                boolean same2 = same(sets,a,b);
-                assertEquals(same1,same2);
-            }
-        }        
+        }
+        sets.add(toAdd);
     }
 
+    private boolean same(ArrayList<ArrayList<String>> sets, String a, String b)
+    {
+        for (ArrayList<String> set : sets) {
+            if (set.contains(a) && set.contains(b)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void testIdentical(
+        String [] universe,
+        ArrayList<ArrayList<String>> sets,
+        UnionFind<String> uf)
+    {
+        for (String a : universe) {
+            for (String b : universe) {
+                boolean same1 = uf.find(a).equals(uf.find(b));
+                boolean same2 = same(sets, a, b);
+                assertEquals(same1, same2);
+            }
+        }
+    }
 }
 
 // End UnionFindTest.java

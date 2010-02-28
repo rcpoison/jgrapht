@@ -28,7 +28,7 @@
  * (C) Copyright 2010-2010, by Tom Conerly and Contributors.
  *
  * Original Author:  Tom Conerly
- * Contributor(s):   
+ * Contributor(s):
  *
  * Changes
  * -------

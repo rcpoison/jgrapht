@@ -140,8 +140,8 @@ public class RandomGraphGenerator<V, E>
 
         if (target.vertexSet().size() != numOfVertexes) {
             throw new IllegalArgumentException(
-                "Vertex factory did not produce " + numOfVertexes +
-                " distinct vertices.");
+                "Vertex factory did not produce " + numOfVertexes
+                + " distinct vertices.");
         }
 
         // use specific type of edge factory, depending of the graph type

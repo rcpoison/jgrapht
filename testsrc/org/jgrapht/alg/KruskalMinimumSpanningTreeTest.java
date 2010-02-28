@@ -39,13 +39,14 @@ package org.jgrapht.alg;
 
 import java.util.*;
 
+import junit.framework.*;
+
 import org.jgrapht.*;
 import org.jgrapht.graph.*;
 
-import junit.framework.*;
 
 public class KruskalMinimumSpanningTreeTest
-extends TestCase
+    extends TestCase
 {
     //~ Static fields/initializers ---------------------------------------------
 
@@ -71,17 +72,19 @@ extends TestCase
      */
     public void testMinimumSpanningTree()
     {
-        Graph<String,DefaultWeightedEdge> graph = createWeighted();
-        
-        KruskalMinimumSpanningTree<String, DefaultWeightedEdge> mst = new KruskalMinimumSpanningTree<String, DefaultWeightedEdge>(graph);
-        
-        assertEquals(15.0,mst.getSpanningTreeCost());
-        
+        Graph<String, DefaultWeightedEdge> graph = createWeighted();
+
+        KruskalMinimumSpanningTree<String, DefaultWeightedEdge> mst =
+            new KruskalMinimumSpanningTree<String, DefaultWeightedEdge>(graph);
+
+        assertEquals(15.0, mst.getSpanningTreeCost());
+
         Set<DefaultWeightedEdge> edges = mst.getEdgeSet();
-        for(DefaultWeightedEdge edge:edges)
-        {
-            assertTrue(edge.equals(e12) || edge.equals(e13) || edge.equals(e24) || edge.equals(e45));
-        }        
+        for (DefaultWeightedEdge edge : edges) {
+            assertTrue(
+                edge.equals(e12) || edge.equals(e13) || edge.equals(e24)
+                || edge.equals(e45));
+        }
     }
 
     protected Graph<String, DefaultWeightedEdge> createWeighted()
