@@ -138,6 +138,12 @@ public class RandomGraphGenerator<V, E>
             orderToVertexMap.put(Integer.valueOf(i), currVertex);
         }
 
+        if (target.vertexSet().size() != numOfVertexes) {
+            throw new IllegalArgumentException(
+                "Vertex factory did not produce " + numOfVertexes +
+                " distinct vertices.");
+        }
+
         // use specific type of edge factory, depending of the graph type
         // and edge density
         EdgeTopologyFactory<V, E> edgesFactory =

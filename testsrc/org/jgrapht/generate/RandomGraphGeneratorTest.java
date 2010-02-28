@@ -90,6 +90,25 @@ public class RandomGraphGeneratorTest
             EdgeTopologyCompare.compare(graphArray.get(0), graphArray.get(1)));
     }
 
+    public void testBadVertexFactory()
+    {
+        RandomGraphGenerator<String, DefaultEdge> randomGen =
+            new RandomGraphGenerator<String, DefaultEdge>(
+                10,
+                3);
+        Graph<String, DefaultEdge> graph =
+            new SimpleDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        try {
+            randomGen.generateGraph(
+                graph,
+                new ClassBasedVertexFactory<String>(String.class),
+                null);
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException ex) {
+            // expected
+        }
+    }
+
     /**
      * Generates 3 graphs with the same numOfVertex and numOfEdges. The first
      * two are generated using the same RandomGraphGenerator; the third is
