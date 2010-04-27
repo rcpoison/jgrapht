@@ -53,12 +53,12 @@ import java.util.*;
  * @author Tom Conerly
  * @since Feb 10, 2010
  */
-public class UnionFind<V>
+public class UnionFind<T>
 {
     //~ Instance fields --------------------------------------------------------
 
-    private Map<V, V> parentMap;
-    private Map<V, Integer> rankMap;
+    private Map<T, T> parentMap;
+    private Map<T, Integer> rankMap;
 
     //~ Constructors -----------------------------------------------------------
 
@@ -66,11 +66,11 @@ public class UnionFind<V>
      * Creates a UnionFind instance with all of the elements of elements in
      * seperate sets.
      */
-    public UnionFind(Set<V> elements)
+    public UnionFind(Set<T> elements)
     {
-        parentMap = new HashMap<V, V>();
-        rankMap = new HashMap<V, Integer>();
-        for (V element : elements) {
+        parentMap = new HashMap<T, T>();
+        rankMap = new HashMap<T, Integer>();
+        for (T element : elements) {
             parentMap.put(element, element);
             rankMap.put(element, 0);
         }
@@ -83,10 +83,26 @@ public class UnionFind<V>
      *
      * @param element The element to add.
      */
-    public void addElement(V element)
+    public void addElement(T element)
     {
         parentMap.put(element, element);
         rankMap.put(element, 0);
+    }
+
+    /**
+     * @return map from element to parent element
+     */
+    protected Map<T, T> getParentMap()
+    {
+        return parentMap;
+    }
+
+    /**
+     * @return map from element to rank
+     */
+    protected Map<T, Integer> getRankMap()
+    {
+        return rankMap;
     }
 
     /**
@@ -96,19 +112,19 @@ public class UnionFind<V>
      *
      * @return The element representing the set the element is in.
      */
-    public V find(V element)
+    public T find(T element)
     {
         if (!parentMap.containsKey(element)) {
             throw new IllegalArgumentException(
                 "elements must be contained in given set");
         }
 
-        V parent = parentMap.get(element);
+        T parent = parentMap.get(element);
         if (parent.equals(element)) {
             return element;
         }
 
-        V newParent = find(parent);
+        T newParent = find(parent);
         parentMap.put(element, newParent);
         return newParent;
     }
@@ -119,7 +135,7 @@ public class UnionFind<V>
      * @param element1 The first element to union.
      * @param element2 The second element to union.
      */
-    public void union(V element1, V element2)
+    public void union(T element1, T element2)
     {
         if (!parentMap.containsKey(element1)
             || !parentMap.containsKey(element2))
@@ -128,8 +144,8 @@ public class UnionFind<V>
                 "elements must be contained in given set");
         }
 
-        V parent1 = find(element1);
-        V parent2 = find(element2);
+        T parent1 = find(element1);
+        T parent2 = find(element2);
 
         //check if the elements are already in the same set
         if (parent1.equals(parent2)) {
