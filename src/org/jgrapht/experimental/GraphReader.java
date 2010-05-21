@@ -45,71 +45,86 @@ import java.util.*;
 
 import org.jgrapht.*;
 import org.jgrapht.generate.*;
-import org.jgrapht.graph.*;
 
 
 public class GraphReader<V, E>
     implements GraphGenerator<V, E, V>
 {
-    //~ Instance fields --------------------------------------------------------
-
     // ~ Static fields/initializers --------------------------------------------
 
     // ~ Instance fields -------------------------------------------------------
 
     private final BufferedReader _in;
+    private final boolean _isWeighted;
+    private final double _defaultWeight;
 
     // ~ Constructors ----------------------------------------------------------
-
-    //~ Constructors -----------------------------------------------------------
 
     /**
      * Construct a new GraphReader.
      */
-    public GraphReader(String file)
+    private GraphReader(Reader input, boolean isWeighted, double defaultWeight)
         throws IOException
     {
-        _in = new BufferedReader(new FileReader(file));
+        if (input instanceof BufferedReader) {
+            _in = (BufferedReader)input;
+        } else {
+            _in = new BufferedReader(input);
+        }
+        _isWeighted = isWeighted;
+        _defaultWeight = defaultWeight;
     }
 
-    //~ Methods ----------------------------------------------------------------
+    /**
+     * Construct a new GraphReader.
+     */
+    public GraphReader(Reader input)
+        throws IOException
+    {
+        this(input, false, 1);
+    }
+
+    /**
+     * Construct a new GraphReader.
+     */
+    public GraphReader(Reader input, double defaultWeight)
+        throws IOException
+    {
+        this(input, true, defaultWeight);
+    }
 
     // ~ Methods ---------------------------------------------------------------
 
-    private List<String> split(String src)
+    private String[] split(final String src)
     {
-        final List<String> l = new ArrayList<String>();
-        final StringTokenizer tok = new StringTokenizer(src);
-        while (tok.hasMoreTokens()) {
-            l.add(tok.nextToken());
+        if (src == null) {
+            return null;
         }
-        return l;
+        return src.split("\\s+");
     }
 
-    private List<String> skipComments()
+    private String[] skipComments()
     {
+        String[] cols = null;
         try {
-            if (_in.ready()) {
-                List<String> cols = split(_in.readLine());
-                while (
-                    cols.isEmpty()
-                    || cols.get(0).equals("c")
-                    || cols.get(0).startsWith("%"))
-                {
-                    cols = split(_in.readLine());
-                }
-                return cols;
+            cols = split(_in.readLine());
+            while (cols != null &&
+                (cols.length == 0
+                || cols[0].equals("c")
+                || cols[0].startsWith("%")))
+            {
+                cols = split(_in.readLine());
             }
         } catch (IOException e) {
         }
-        return null;
+        return cols;
     }
 
     private int readNodeCount()
     {
-        List<String> cols = skipComments();
-        if (cols.get(0).equals("p")) {
-            return Integer.parseInt(cols.get(1));
+        final String[] cols = skipComments();
+        if (cols[0].equals("p")) {
+            return Integer.parseInt(cols[1]);
         }
         return -1;
     }
@@ -132,41 +147,21 @@ public class GraphReader<V, E>
             target.addVertex(newVertex);
             resultMap.put(Integer.toString(i + 1), newVertex);
         }
-        List<String> cols = skipComments();
+        String[] cols = skipComments();
         while (cols != null) {
-            if (cols.get(0).equals("e")) {
-                target.addEdge(
-                    resultMap.get(cols.get(1)),
-                    resultMap.get(cols.get(2)));
+            if (cols[0].equals("e")) {
+                E edge = target.addEdge(
+                    resultMap.get(cols[1]),
+                    resultMap.get(cols[2]));
+                if (_isWeighted && edge != null) {
+                    double weight = _defaultWeight;
+                    if (cols.length > 3) {
+                        weight = Double.parseDouble(cols[3]);
+                    }
+                    ((WeightedGraph<V,E>)target).setEdgeWeight(edge, weight);
+                }
             }
             cols = skipComments();
-        }
-    }
-
-    public static void main(String [] args)
-        throws Exception
-    {
-        GraphReader<Integer, DefaultEdge> reader =
-            new GraphReader<Integer, DefaultEdge>(
-                args[0]);
-        Graph<Integer, DefaultEdge> g =
-            new SimpleGraph<Integer, DefaultEdge>(
-                DefaultEdge.class);
-        VertexFactory<Integer> vf = new IntVertexFactory();
-        reader.generateGraph(g, vf, null);
-        System.out.println(g);
-    }
-
-    //~ Inner Classes ----------------------------------------------------------
-
-    private static final class IntVertexFactory
-        implements VertexFactory<Integer>
-    {
-        int last = 0;
-
-        public Integer createVertex()
-        {
-            return last++;
         }
     }
 }
