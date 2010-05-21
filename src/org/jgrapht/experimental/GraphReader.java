@@ -30,7 +30,7 @@
  * Original Author:  Barak Naveh
  * Contributor(s):   -
  *
- * $Id: GraphReader.java 504 2006-07-03 02:37:26Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------

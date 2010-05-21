@@ -30,7 +30,7 @@
  * Original Author:  Michael Behrisch
  * Contributor(s):   -
  *
- * $Id: ChromaticNumberTest.java 652 2008-12-24 21:26:17Z perfecthash $
+ * $Id$
  *
  * Changes
  * -------
