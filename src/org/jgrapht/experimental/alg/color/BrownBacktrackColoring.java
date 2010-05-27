@@ -87,8 +87,10 @@ public class BrownBacktrackColoring<V, E>
             _allowedColors[i] = new BitSet(1);
         }
         recursiveColor(1);
-        for (int i = 0; i < _vertices.size(); i++) {
-            additionalData.put(_vertices.get(i), _color[i]);
+        if (additionalData != null) {
+            for (int i = 0; i < _vertices.size(); i++) {
+                additionalData.put(_vertices.get(i), _color[i]);
+            }
         }
         return _chi;
     }

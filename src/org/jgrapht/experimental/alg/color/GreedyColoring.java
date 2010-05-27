@@ -57,10 +57,7 @@ public class GreedyColoring<V, E>
                     usedColors.set(color[nb]);
                 }
             }
-            color[v] = 1;
-            while (usedColors.get(color[v])) {
-                color[v]++;
-            }
+            color[v] = usedColors.nextClearBit(1);
             if (color[v] > maxColor) {
                 maxColor = color[v];
             }
@@ -68,34 +65,33 @@ public class GreedyColoring<V, E>
         return maxColor;
     }
 
-    @SuppressWarnings("unchecked")
     int [] smallestDegreeLastOrder()
     {
         final int [] order = new int[_neighbors.length];
         final int [] degree = new int[_neighbors.length];
-        final List [] buckets = new List[_neighbors.length];
+        final List<List<Integer>> buckets = new ArrayList<List<Integer>>(_neighbors.length);
         int index = _neighbors.length - 1;
 
         for (int i = 0; i < _neighbors.length; i++) {
-            buckets[i] = new ArrayList<Integer>();
+            buckets.add(new ArrayList<Integer>());
             degree[i] = _neighbors[i].length;
         }
         for (int i = 0; i < _neighbors.length; i++) {
-            buckets[degree[i]].add(i);
+            buckets.get(degree[i]).add(i);
         }
         for (int i = 0; i < _neighbors.length; i++) {
-            while (buckets[i].size() > 0) {
-                final int s = buckets[i].size() - 1;
-                final int vertex = (Integer) buckets[i].get(s);
-                buckets[i].remove(s);
+            while (buckets.get(i).size() > 0) {
+                final int s = buckets.get(i).size() - 1;
+                final int vertex = (Integer) buckets.get(i).get(s);
+                buckets.get(i).remove(s);
                 degree[vertex] = -1;
                 order[index--] = vertex;
                 for (int j = 0; j < _neighbors[vertex].length; j++) {
                     final int nb = _neighbors[vertex][j];
                     if (degree[nb] >= 0) {
-                        buckets[degree[nb]].remove(new Integer(nb));
+                        buckets.get(degree[nb]).remove(new Integer(nb));
                         degree[nb]--;
-                        buckets[degree[nb]].add(nb);
+                        buckets.get(degree[nb]).add(nb);
                         if (degree[nb] < i) {
                             i = degree[nb];
                         }
@@ -108,10 +104,6 @@ public class GreedyColoring<V, E>
 
     int [] largestSaturationFirstOrder()
     {
-        final int [] order = new int[_neighbors.length]; // could be removed
-                                                         // since buckets
-                                                         // contains order
-                                                         // reversed
         final int [] satur = new int[_neighbors.length];
         final int [] buckets = new int[_neighbors.length];
         final int [] cumBucketSize = new int[_neighbors.length];
@@ -134,7 +126,7 @@ public class GreedyColoring<V, E>
             final int v = buckets[cumBucketSize[maxSat] - 1];
             cumBucketSize[maxSat]--;
             satur[v] = -1;
-            order[index++] = v;
+            index++;
             for (int j = 0; j < _neighbors[v].length; j++) {
                 final int nb = (int) _neighbors[v][j];
                 final int bi = bucketIndex[nb];

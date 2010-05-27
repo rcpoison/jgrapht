@@ -30,11 +30,10 @@ public abstract class IntArrayGraphAlgorithm<V, E>
         _vertices = new ArrayList<V>(numVertices);
         _neighbors = new int[numVertices][];
         _vertexToPos = new HashMap<V, Integer>(numVertices);
-        int index = 0;
         for (V vertex : g.vertexSet()) {
+            _neighbors[_vertices.size()] = new int[g.edgesOf(vertex).size()];
+            _vertexToPos.put(vertex, _vertices.size());
             _vertices.add(vertex);
-            _neighbors[index++] = new int[g.edgesOf(vertex).size()];
-            _vertexToPos.put(vertex, index);
         }
         for (int i = 0; i < numVertices; i++) {
             int nbIndex = 0;
