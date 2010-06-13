@@ -23,39 +23,42 @@
  * 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
  */
 /* ------------------
- * VertexNameProvider.java
+ * ComponentAttributeProvider.java
  * ------------------
- * (C) Copyright 2005-2008, by Avner Linder and Contributors.
+ * (C) Copyright 2010-2010, by John Sichi and Contributors.
  *
- * Original Author:  Avner Linder
+ * Original Author:  John Sichi
  *
  * $Id$
  *
  * Changes
  * -------
- * 27-May-2004 : Initial Version (AL);
- * 13-Dec-2005 : Split out of VisioExporter (CF);
+ * 12-Jun-2010 : Initial Version (JVS);
  *
  */
 package org.jgrapht.ext;
 
-/**
- * Assigns a display name for each of the graph vertices.
- */
-public interface VertexNameProvider<V>
-{
-    //~ Methods ----------------------------------------------------------------
+import java.util.*;
 
+/**
+ * Provides display attributes for vertices and/or edges in a graph.
+ *
+ * @author John Sichi
+ * @version $Id$
+ */
+public interface ComponentAttributeProvider<T>
+{
     /**
-     * Returns a unique name for a vertex. This is useful when exporting a a
-     * graph, as it ensures that all vertices are assigned simple, consistent
-     * names.
+     * Returns a set of attribute key/value pairs for a vertex or edge.
+     * If order is important in the output, be sure to
+     * use an order-deterministic map implementation.
      *
-     * @param vertex the vertex to be named
+     * @param component vertex or edge for which attributes are to be obtained
      *
-     * @return the name of the vertex
+     * @return key/value pairs, or null if no attributes should be
+     * supplied
      */
-    public String getVertexName(V vertex);
+    public Map<String, String> getComponentAttributes(T component);
 }
 
-// End VertexNameProvider.java
+// End ComponentAttributeProvider.java

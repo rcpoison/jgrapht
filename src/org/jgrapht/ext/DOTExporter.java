@@ -33,6 +33,7 @@
 package org.jgrapht.ext;
 
 import java.io.*;
+import java.util.*;
 
 import org.jgrapht.*;
 
@@ -53,6 +54,8 @@ public class DOTExporter<V, E>
     private VertexNameProvider<V> vertexIDProvider;
     private VertexNameProvider<V> vertexLabelProvider;
     private EdgeNameProvider<E> edgeLabelProvider;
+    private ComponentAttributeProvider<V> vertexAttributeProvider;
+    private ComponentAttributeProvider<E> edgeAttributeProvider;
 
     //~ Constructors -----------------------------------------------------------
 
@@ -80,9 +83,40 @@ public class DOTExporter<V, E>
         VertexNameProvider<V> vertexLabelProvider,
         EdgeNameProvider<E> edgeLabelProvider)
     {
+        this(
+            vertexIDProvider, vertexLabelProvider, edgeLabelProvider,
+            null, null);
+    }
+
+    /**
+     * Constructs a new DOTExporter object with the given ID, label,
+     * and attribute providers.  Note that if a label provider
+     * conflicts with a label-supplying attribute provider, the
+     * label provider is given precedence.
+     *
+     * @param vertexIDProvider for generating vertex IDs. Must not be null.
+     * @param vertexLabelProvider for generating vertex labels. If null, vertex
+     * labels will not be written to the file (unless an attribute provider
+     * is supplied which also supplies labels).
+     * @param edgeLabelProvider for generating edge labels. If null, edge labels
+     * will not be written to the file.
+     * @param vertexAttributeProvider for generating vertex attributes.
+     * If null, vertex attributes will not be written to the file.
+     * @param edgeAttributeProvider for generating edge attributes. If null,
+     * edge attributes will not be written to the file.
+     */
+    public DOTExporter(
+        VertexNameProvider<V> vertexIDProvider,
+        VertexNameProvider<V> vertexLabelProvider,
+        EdgeNameProvider<E> edgeLabelProvider,
+        ComponentAttributeProvider<V> vertexAttributeProvider,
+        ComponentAttributeProvider<E> edgeAttributeProvider)
+    {
         this.vertexIDProvider = vertexIDProvider;
         this.vertexLabelProvider = vertexLabelProvider;
         this.edgeLabelProvider = edgeLabelProvider;
+        this.vertexAttributeProvider = vertexAttributeProvider;
+        this.edgeAttributeProvider = edgeAttributeProvider;
     }
 
     //~ Methods ----------------------------------------------------------------
@@ -110,11 +144,15 @@ public class DOTExporter<V, E>
         for (V v : g.vertexSet()) {
             out.print(indent + getVertexID(v));
 
+            String labelName = null;
             if (vertexLabelProvider != null) {
-                out.print(
-                    " [label = \"" + vertexLabelProvider.getVertexName(v)
-                    + "\"]");
+                labelName = vertexLabelProvider.getVertexName(v);
             }
+            Map<String, String> attributes = null;
+            if (vertexAttributeProvider != null) {
+                attributes = vertexAttributeProvider.getComponentAttributes(v);
+            }
+            renderAttributes(out, labelName, attributes);
 
             out.println(";");
         }
@@ -125,10 +163,15 @@ public class DOTExporter<V, E>
 
             out.print(indent + source + connector + target);
 
+            String labelName = null;
             if (edgeLabelProvider != null) {
-                out.print(
-                    " [label = \"" + edgeLabelProvider.getEdgeName(e) + "\"]");
+                labelName = edgeLabelProvider.getEdgeName(e);
             }
+            Map<String, String> attributes = null;
+            if (edgeAttributeProvider != null) {
+                attributes = edgeAttributeProvider.getComponentAttributes(e);
+            }
+            renderAttributes(out, labelName, attributes);
 
             out.println(";");
         }
@@ -136,6 +179,31 @@ public class DOTExporter<V, E>
         out.println("}");
 
         out.flush();
+    }
+
+    private void renderAttributes(
+        PrintWriter out,
+        String labelName, Map<String, String> attributes)
+    {
+        if ((labelName == null) && (attributes == null)) {
+            return;
+        }
+        out.print(" [ ");
+        if (labelName == null) {
+            labelName = attributes.get("label");
+        }
+        if (labelName != null) {
+            out.print("label=\"" + labelName + "\" ");
+        }
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
+            String name = entry.getKey();
+            if (name.equals("label")) {
+                // already handled by special case above
+                continue;
+            }
+            out.print(name + "=\"" + entry.getValue() + "\" ");
+        }
+        out.print("]");
     }
 
     /**

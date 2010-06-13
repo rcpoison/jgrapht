@@ -62,15 +62,12 @@ public class DOTExporterTest
 
     private static final String UNDIRECTED =
         "graph G {" + NL
-        + "  1;" + NL
-        + "  2;" + NL
+        + "  1 [ label=\"a\" ];" + NL
+        + "  2 [ x=\"y\" ];" + NL
         + "  3;" + NL
         + "  1 -- 2;" + NL
         + "  3 -- 1;" + NL
         + "}" + NL;
-
-    private static final DOTExporter<String, DefaultEdge> exporter =
-        new DOTExporter<String, DefaultEdge>();
 
     //~ Methods ----------------------------------------------------------------
 
@@ -85,6 +82,30 @@ public class DOTExporterTest
         g.addEdge(V3, V1);
 
         StringWriter w = new StringWriter();
+        ComponentAttributeProvider<String> vertexAttributeProvider =
+            new ComponentAttributeProvider<String>() 
+            {
+                public Map<String, String> getComponentAttributes(String v)
+                {
+                    Map<String, String> map =
+                        new LinkedHashMap<String, String>();
+                    if (v.equals(V1)) {
+                        map.put("label", "a");
+                    } else if (v.equals(V2)) {
+                        map.put("x", "y");
+                    } else {
+                        map = null;
+                    }
+                    return map;
+                }
+            };
+        DOTExporter<String, DefaultEdge> exporter =
+            new DOTExporter<String, DefaultEdge>(
+                new IntegerNameProvider<String>(),
+                null,
+                null,
+                vertexAttributeProvider,
+                null);
         exporter.export(w, g);
         assertEquals(UNDIRECTED, w.toString());
     }
