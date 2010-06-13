@@ -69,7 +69,8 @@ public class GreedyColoring<V, E>
     {
         final int [] order = new int[_neighbors.length];
         final int [] degree = new int[_neighbors.length];
-        final List<List<Integer>> buckets = new ArrayList<List<Integer>>(_neighbors.length);
+        final List<List<Integer>> buckets =
+            new ArrayList<List<Integer>>(_neighbors.length);
         int index = _neighbors.length - 1;
 
         for (int i = 0; i < _neighbors.length; i++) {

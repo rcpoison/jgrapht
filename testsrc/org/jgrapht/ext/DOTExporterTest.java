@@ -83,8 +83,7 @@ public class DOTExporterTest
 
         StringWriter w = new StringWriter();
         ComponentAttributeProvider<String> vertexAttributeProvider =
-            new ComponentAttributeProvider<String>() 
-            {
+            new ComponentAttributeProvider<String>() {
                 public Map<String, String> getComponentAttributes(String v)
                 {
                     Map<String, String> map =
@@ -99,6 +98,7 @@ public class DOTExporterTest
                     return map;
                 }
             };
+
         DOTExporter<String, DefaultEdge> exporter =
             new DOTExporter<String, DefaultEdge>(
                 new IntegerNameProvider<String>(),

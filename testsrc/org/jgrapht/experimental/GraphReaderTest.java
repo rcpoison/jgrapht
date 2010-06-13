@@ -55,9 +55,11 @@ import org.jgrapht.graph.*;
 public class GraphReaderTest
     extends TestCase
 {
+    //~ Instance fields --------------------------------------------------------
+
     String _unweighted = "p 3\ne 1 2\ne 1 3\n";
     String _weighted = "p 3\ne 1 2 .5\ne 1 3 7\n";
-    
+
     //~ Methods ----------------------------------------------------------------
 
     /**
@@ -67,8 +69,9 @@ public class GraphReaderTest
     {
         GraphReader<Integer, DefaultEdge> reader;
         try {
-            reader = new GraphReader<Integer, DefaultEdge>(
-                new StringReader(_unweighted));
+            reader =
+                new GraphReader<Integer, DefaultEdge>(
+                    new StringReader(_unweighted));
             Graph<Integer, DefaultEdge> g =
                 new SimpleGraph<Integer, DefaultEdge>(
                     DefaultEdge.class);
@@ -95,7 +98,8 @@ public class GraphReaderTest
         try {
             GraphReader<Integer, DefaultWeightedEdge> reader =
                 new GraphReader<Integer, DefaultWeightedEdge>(
-                    new StringReader(_weighted), 1);
+                    new StringReader(_weighted),
+                    1);
             Graph<Integer, DefaultWeightedEdge> g =
                 new SimpleWeightedGraph<Integer, DefaultWeightedEdge>(
                     DefaultWeightedEdge.class);

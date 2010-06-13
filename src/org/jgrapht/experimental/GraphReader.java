@@ -52,6 +52,8 @@ public class GraphReader<V, E>
 {
     // ~ Static fields/initializers --------------------------------------------
 
+    //~ Instance fields --------------------------------------------------------
+
     // ~ Instance fields -------------------------------------------------------
 
     private final BufferedReader _in;
@@ -60,6 +62,8 @@ public class GraphReader<V, E>
 
     // ~ Constructors ----------------------------------------------------------
 
+    //~ Constructors -----------------------------------------------------------
+
     /**
      * Construct a new GraphReader.
      */
@@ -67,7 +71,7 @@ public class GraphReader<V, E>
         throws IOException
     {
         if (input instanceof BufferedReader) {
-            _in = (BufferedReader)input;
+            _in = (BufferedReader) input;
         } else {
             _in = new BufferedReader(input);
         }
@@ -93,9 +97,11 @@ public class GraphReader<V, E>
         this(input, true, defaultWeight);
     }
 
+    //~ Methods ----------------------------------------------------------------
+
     // ~ Methods ---------------------------------------------------------------
 
-    private String[] split(final String src)
+    private String [] split(final String src)
     {
         if (src == null) {
             return null;
@@ -103,15 +109,16 @@ public class GraphReader<V, E>
         return src.split("\\s+");
     }
 
-    private String[] skipComments()
+    private String [] skipComments()
     {
-        String[] cols = null;
+        String [] cols = null;
         try {
             cols = split(_in.readLine());
-            while (cols != null &&
-                (cols.length == 0
-                || cols[0].equals("c")
-                || cols[0].startsWith("%")))
+            while (
+                (cols != null)
+                && ((cols.length == 0)
+                    || cols[0].equals("c")
+                    || cols[0].startsWith("%")))
             {
                 cols = split(_in.readLine());
             }
@@ -122,7 +129,7 @@ public class GraphReader<V, E>
 
     private int readNodeCount()
     {
-        final String[] cols = skipComments();
+        final String [] cols = skipComments();
         if (cols[0].equals("p")) {
             return Integer.parseInt(cols[1]);
         }
@@ -147,18 +154,19 @@ public class GraphReader<V, E>
             target.addVertex(newVertex);
             resultMap.put(Integer.toString(i + 1), newVertex);
         }
-        String[] cols = skipComments();
+        String [] cols = skipComments();
         while (cols != null) {
             if (cols[0].equals("e")) {
-                E edge = target.addEdge(
-                    resultMap.get(cols[1]),
-                    resultMap.get(cols[2]));
-                if (_isWeighted && edge != null) {
+                E edge =
+                    target.addEdge(
+                        resultMap.get(cols[1]),
+                        resultMap.get(cols[2]));
+                if (_isWeighted && (edge != null)) {
                     double weight = _defaultWeight;
                     if (cols.length > 3) {
                         weight = Double.parseDouble(cols[3]);
                     }
-                    ((WeightedGraph<V,E>)target).setEdgeWeight(edge, weight);
+                    ((WeightedGraph<V, E>) target).setEdgeWeight(edge, weight);
                 }
             }
             cols = skipComments();

@@ -33,6 +33,7 @@
 package org.jgrapht.ext;
 
 import java.io.*;
+
 import java.util.*;
 
 import org.jgrapht.*;
@@ -84,24 +85,27 @@ public class DOTExporter<V, E>
         EdgeNameProvider<E> edgeLabelProvider)
     {
         this(
-            vertexIDProvider, vertexLabelProvider, edgeLabelProvider,
-            null, null);
+            vertexIDProvider,
+            vertexLabelProvider,
+            edgeLabelProvider,
+            null,
+            null);
     }
 
     /**
-     * Constructs a new DOTExporter object with the given ID, label,
-     * and attribute providers.  Note that if a label provider
-     * conflicts with a label-supplying attribute provider, the
-     * label provider is given precedence.
+     * Constructs a new DOTExporter object with the given ID, label, and
+     * attribute providers. Note that if a label provider conflicts with a
+     * label-supplying attribute provider, the label provider is given
+     * precedence.
      *
      * @param vertexIDProvider for generating vertex IDs. Must not be null.
      * @param vertexLabelProvider for generating vertex labels. If null, vertex
-     * labels will not be written to the file (unless an attribute provider
-     * is supplied which also supplies labels).
+     * labels will not be written to the file (unless an attribute provider is
+     * supplied which also supplies labels).
      * @param edgeLabelProvider for generating edge labels. If null, edge labels
      * will not be written to the file.
-     * @param vertexAttributeProvider for generating vertex attributes.
-     * If null, vertex attributes will not be written to the file.
+     * @param vertexAttributeProvider for generating vertex attributes. If null,
+     * vertex attributes will not be written to the file.
      * @param edgeAttributeProvider for generating edge attributes. If null,
      * edge attributes will not be written to the file.
      */
@@ -183,7 +187,8 @@ public class DOTExporter<V, E>
 
     private void renderAttributes(
         PrintWriter out,
-        String labelName, Map<String, String> attributes)
+        String labelName,
+        Map<String, String> attributes)
     {
         if ((labelName == null) && (attributes == null)) {
             return;

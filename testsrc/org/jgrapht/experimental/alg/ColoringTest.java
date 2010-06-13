@@ -55,7 +55,6 @@ import org.jgrapht.graph.*;
 public class ColoringTest
     extends TestCase
 {
-
     //~ Methods ----------------------------------------------------------------
 
     /**
@@ -73,7 +72,8 @@ public class ColoringTest
             completeGraph,
             new ClassBasedVertexFactory<Object>(Object.class),
             null);
-        GreedyColoring<Object, DefaultEdge> colorer = new GreedyColoring<Object, DefaultEdge>(completeGraph);
+        GreedyColoring<Object, DefaultEdge> colorer =
+            new GreedyColoring<Object, DefaultEdge>(completeGraph);
         assertEquals(new Integer(6), colorer.getUpperBound(null));
     }
 
@@ -92,7 +92,8 @@ public class ColoringTest
             completeGraph,
             new ClassBasedVertexFactory<Object>(Object.class),
             null);
-        BrownBacktrackColoring<Object, DefaultEdge> colorer = new BrownBacktrackColoring<Object, DefaultEdge>(completeGraph);
+        BrownBacktrackColoring<Object, DefaultEdge> colorer =
+            new BrownBacktrackColoring<Object, DefaultEdge>(completeGraph);
         assertEquals(new Integer(6), colorer.getResult(null));
     }
 }
