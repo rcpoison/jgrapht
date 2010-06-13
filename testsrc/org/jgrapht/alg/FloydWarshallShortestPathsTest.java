@@ -39,8 +39,6 @@
  */
 package org.jgrapht.alg;
 
-import java.net.*;
-
 import java.util.*;
 
 import junit.framework.*;
