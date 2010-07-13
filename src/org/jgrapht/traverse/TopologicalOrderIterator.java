@@ -126,11 +126,9 @@ public class TopologicalOrderIterator<V, E>
         this.queue = queue;
         this.inDegreeMap = inDegreeMap;
 
-        if (!dg.vertexSet().isEmpty()) {
-            // empty queue for non-empty graph would indicate presence of
-            // cycles (no roots found)
-            assert (!queue.isEmpty());
-        }
+        // empty queue for non-empty graph would indicate presence of
+        // cycles (no roots found)
+        assert dg.vertexSet().isEmpty() || !queue.isEmpty();
     }
 
     // NOTE: This is intentionally private, because starting the sort "in the
