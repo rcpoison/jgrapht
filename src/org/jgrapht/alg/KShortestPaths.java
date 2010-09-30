@@ -47,8 +47,9 @@ import org.jgrapht.*;
 
 /**
  * The algorithm determines the k shortest simple paths in increasing order of
- * weight. Weights could be negative (but no negative cycle is allowed), paths
- * could be constrained by a maximum number of edges.
+ * weight. Weights can be negative (but no negative cycle is allowed),
+ * and paths can be constrained by a maximum number of edges.  This
+ * algorithm should not be used with multigraphs.
  *
  * <p>The algorithm is a variant of the Bellman-Ford algorithm but instead of
  * only storing the best path it stores the "k" best paths at each pass,
