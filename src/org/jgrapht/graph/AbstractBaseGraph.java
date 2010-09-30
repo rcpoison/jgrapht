@@ -499,7 +499,7 @@ public abstract class AbstractBaseGraph<V, E>
     public double getEdgeWeight(E e)
     {
         if (e instanceof DefaultWeightedEdge) {
-            return ((DefaultWeightedEdge) e).weight;
+            return ((DefaultWeightedEdge) e).getWeight();
         } else {
             return WeightedGraph.DEFAULT_EDGE_WEIGHT;
         }
