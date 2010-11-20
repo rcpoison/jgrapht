@@ -66,10 +66,14 @@ import java.util.*;
  * edges represent the relationships between them. Vertex and edge instances may
  * be shared by more than one graph.</p>
  *
- * Through generics, a graph can be typed to specific classes for vertices
+ * <p>Through generics, a graph can be typed to specific classes for vertices
  * <code>V</code> and edges <code>E&lt;T&gt;</code>. Such a graph can contain
  * vertices of type <code>V</code> and all sub-types and Edges of type <code>
- * E</code> and all sub-types.
+ * E</code> and all sub-types.</p>
+ *
+ * <p>For guidelines on vertex and edge classes, see <a
+ * href="http://pub.eigenbase.org/wiki/JGraphT:EqualsAndHashCode">this wiki
+ * page</a>.
  *
  * @author Barak Naveh
  * @since Jul 14, 2003
