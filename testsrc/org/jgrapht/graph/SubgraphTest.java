@@ -170,7 +170,7 @@ public class SubgraphTest
         return g;
     }
 
-    public void testInducedSubgraphUnderlyingEdgeAddition() 
+    public void testInducedSubgraphUnderlyingEdgeAddition()
     {
         ListenableGraph<Object, DefaultEdge> baseGraph =
             new ListenableUndirectedGraph<Object, DefaultEdge>(
@@ -180,11 +180,13 @@ public class SubgraphTest
         baseGraph.addVertex(v2);
 
         Set<Object> initialVertexes = new LinkedHashSet<Object>();
-        initialVertexes.add(v1);		
-        Subgraph<Object, DefaultEdge, ListenableGraph<Object, DefaultEdge>>
-            subgraph = new Subgraph<Object, DefaultEdge,
-            ListenableGraph<Object,DefaultEdge>>(
-                baseGraph, initialVertexes, null);
+        initialVertexes.add(v1);
+        Subgraph<Object, DefaultEdge, ListenableGraph<Object, DefaultEdge>> subgraph =
+            new Subgraph<Object,
+                DefaultEdge, ListenableGraph<Object, DefaultEdge>>(
+                baseGraph,
+                initialVertexes,
+                null);
         baseGraph.addEdge(v1, v2);
 
         assertFalse(subgraph.containsEdge(v1, v2));

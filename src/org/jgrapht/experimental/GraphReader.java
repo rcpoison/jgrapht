@@ -50,9 +50,15 @@ import org.jgrapht.generate.*;
 public class GraphReader<V, E>
     implements GraphGenerator<V, E, V>
 {
+    //~ Instance fields --------------------------------------------------------
+
     // ~ Static fields/initializers --------------------------------------------
 
+    // ~ Instance fields -------------------------------------------------------
+
     //~ Instance fields --------------------------------------------------------
+
+    // ~ Static fields/initializers --------------------------------------------
 
     // ~ Instance fields -------------------------------------------------------
 

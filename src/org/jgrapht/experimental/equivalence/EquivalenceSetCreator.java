@@ -84,19 +84,20 @@ public class EquivalenceSetCreator<E, C>
             // ArrayList<EquivalenceSet<? super EE,? super CC>> arrayList = new
             // ArrayList<EquivalenceSet<? super EE,? super CC>>();
             //
-            // HashMap<Integer,List<EquivalenceSet<? super EE,? super CC>>> map =
-            // createEqualityGroupMap(aElementsArray, aEqComparator, aContext);
-            // // each of the map values is a list with one or more groups in
-            // it. // Object[] array = map.values().toArray(); // for (int i =
-            // 0; i < array.length; i++) // { // List list = (List)array[i];
+            // HashMap<Integer,List<EquivalenceSet<? super EE,? super CC>>> map
+            // = createEqualityGroupMap(aElementsArray, aEqComparator,
+            // aContext); // each of the map values is a list with one or
+            // more groups in it. // Object[] array = map.values().toArray();
+            // // for (int i = 0; i < array.length; i++) // { // List list =
+            // (List)array[i];
             //
-            // for (List<EquivalenceSet<? super EE,? super CC>> list : map.values()
-            // ) { for (EquivalenceSet<? super EE,? super CC> eSet : list ) {
-            // arrayList.add( eSet ); } }
+            // for (List<EquivalenceSet<? super EE,? super CC>> list :
+            // map.values() ) { for (EquivalenceSet<? super EE,? super CC>
+            // eSet : list ) { arrayList.add( eSet ); } }
             //
             //
-            // now we got all the eq. groups  in an array list. we need to sort //
-            // them EquivalenceSet [] resultArray = new EquivalenceSet
+            // now we got all the eq. groups  in an array list. we need to sort
+            // // them EquivalenceSet [] resultArray = new EquivalenceSet
             // [arrayList.size()]; arrayList.toArray(resultArray);
             // Arrays.sort(resultArray, groupSizeComparator); return
             // resultArray;

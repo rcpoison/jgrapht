@@ -54,10 +54,10 @@ import org.jgrapht.*;
 class KShortestPathsIterator<V, E>
     implements Iterator<Set<V>>
 {
+    //~ Instance fields --------------------------------------------------------
+
     // ~ Instance fields
     // --------------------------------------------------------
-
-    //~ Instance fields --------------------------------------------------------
 
     /**
      * End vertex.
