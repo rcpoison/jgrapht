@@ -132,7 +132,7 @@ public class GraphOrdering<V, E>
             LabelsEdge lablesEdge = new LabelsEdge(sourceLabel, targetLabel);
             this.labelsEdgesSet.add(lablesEdge);
 
-            if (g instanceof UndirectedGraph) {
+            if (g instanceof UndirectedGraph<?,?>) {
                 LabelsEdge oppositeEdge =
                     new LabelsEdge(targetLabel, sourceLabel);
                 this.labelsEdgesSet.add(oppositeEdge);

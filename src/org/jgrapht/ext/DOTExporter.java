@@ -137,7 +137,7 @@ public class DOTExporter<V, E>
         String indent = "  ";
         String connector;
 
-        if (g instanceof DirectedGraph) {
+        if (g instanceof DirectedGraph<?, ?>) {
             out.println("digraph G {");
             connector = " -> ";
         } else {

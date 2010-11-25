@@ -64,7 +64,7 @@ package org.jgrapht.util;
  */
 public class ModifiableInteger
     extends Number
-    implements Comparable
+    implements Comparable<ModifiableInteger>
 {
     //~ Static fields/initializers ---------------------------------------------
 
@@ -164,30 +164,6 @@ public class ModifiableInteger
         int anotherVal = anotherInteger.value;
 
         return (thisVal < anotherVal) ? -1 : ((thisVal == anotherVal) ? 0 : 1);
-    }
-
-    /**
-     * Compares this <code>ModifiableInteger</code> object to another object. If
-     * the object is an <code>ModifiableInteger</code>, this function behaves
-     * like <code>compareTo(Integer)</code>. Otherwise, it throws a <code>
-     * ClassCastException</code> (as <code>ModifiableInteger</code> objects are
-     * only comparable to other <code>ModifiableInteger</code> objects).
-     *
-     * @param o the <code>Object</code> to be compared.
-     *
-     * @return the value <code>0</code> if the argument is a <code>
-     * ModifiableInteger</code> numerically equal to this <code>
-     * ModifiableInteger</code>; a value less than <code>0</code> if the
-     * argument is a <code>ModifiableInteger</code> numerically greater than
-     * this <code>ModifiableInteger</code>; and a value greater than <code>
-     * 0</code> if the argument is a <code>ModifiableInteger</code> numerically
-     * less than this <code>ModifiableInteger</code>.
-     *
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
-    public int compareTo(Object o)
-    {
-        return compareTo((ModifiableInteger) o);
     }
 
     /**

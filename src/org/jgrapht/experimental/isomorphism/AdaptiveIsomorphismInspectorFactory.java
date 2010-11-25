@@ -84,8 +84,8 @@ public class AdaptiveIsomorphismInspectorFactory
     public static <V, E> GraphIsomorphismInspector createIsomorphismInspector(
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
-        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
+        EquivalenceComparator<V, Graph<V, E>> vertexChecker,
+        EquivalenceComparator<E, Graph<V, E>> edgeChecker)
     {
         int graphType = checkGraphsType(graph1, graph2);
         return createAppropriateConcreteInspector(
@@ -127,8 +127,8 @@ public class AdaptiveIsomorphismInspectorFactory
         int type,
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
-        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
+        EquivalenceComparator<V, Graph<V, E>> vertexChecker,
+        EquivalenceComparator<E, Graph<V, E>> edgeChecker)
     {
         return createAppropriateConcreteInspector(
             type,
@@ -179,8 +179,8 @@ public class AdaptiveIsomorphismInspectorFactory
         int graphType,
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
-        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
+        EquivalenceComparator<V, Graph<V, E>> vertexChecker,
+        EquivalenceComparator<E, Graph<V, E>> edgeChecker)
     {
         assertUnsupportedGraphTypes(graph1);
         assertUnsupportedGraphTypes(graph2);
@@ -219,9 +219,9 @@ public class AdaptiveIsomorphismInspectorFactory
     protected static void assertUnsupportedGraphTypes(Graph g)
         throws IllegalArgumentException
     {
-        if ((g instanceof Multigraph)
-            || (g instanceof DirectedMultigraph)
-            || (g instanceof Pseudograph))
+        if ((g instanceof Multigraph<?,?>)
+            || (g instanceof DirectedMultigraph<?,?>)
+            || (g instanceof Pseudograph<?,?>))
         {
             throw new IllegalArgumentException(
                 "graph type not supported for the graph" + g);
@@ -243,8 +243,8 @@ public class AdaptiveIsomorphismInspectorFactory
     createTopologicalExhaustiveInspector(
         Graph<V, E> graph1,
         Graph<V, E> graph2,
-        EquivalenceComparator<? super V, ? super Graph<V, E>> vertexChecker,
-        EquivalenceComparator<? super E, ? super Graph<V, E>> edgeChecker)
+        EquivalenceComparator<V, Graph<V, E>> vertexChecker,
+        EquivalenceComparator<E, Graph<V, E>> edgeChecker)
     {
         VertexDegreeEquivalenceComparator<V, E> degreeComparator =
             new VertexDegreeEquivalenceComparator<V, E>();

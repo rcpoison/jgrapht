@@ -203,7 +203,7 @@ class BellmanFordIterator<V, E>
      */
     protected void assertValidEdge(E edge)
     {
-        if (this.graph instanceof UndirectedGraph) {
+        if (this.graph instanceof UndirectedGraph<?,?>) {
             if (graph.getEdgeWeight(edge) < 0) {
                 throw new IllegalArgumentException(NEGATIVE_UNDIRECTED_EDGE);
             }
@@ -250,7 +250,7 @@ class BellmanFordIterator<V, E>
      */
     protected Iterator<E> edgesOfIterator(V vertex)
     {
-        if (this.graph instanceof DirectedGraph) {
+        if (this.graph instanceof DirectedGraph<?,?>) {
             return ((DirectedGraph<V, E>) this.graph).outgoingEdgesOf(vertex)
                 .iterator();
         } else {

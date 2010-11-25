@@ -134,7 +134,7 @@ public class FloydWarshallShortestPaths<V, E>
             int v_2 = vertices.indexOf(v2);
 
             d[v_1][v_2] = graph.getEdgeWeight(edge);
-            if (!(graph instanceof DirectedGraph)) {
+            if (!(graph instanceof DirectedGraph<?, ?>)) {
                 d[v_2][v_1] = graph.getEdgeWeight(edge);
             }
         }

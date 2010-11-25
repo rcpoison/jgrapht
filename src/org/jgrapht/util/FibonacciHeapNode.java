@@ -145,50 +145,7 @@ public class FibonacciHeapNode<T>
      */
     public String toString()
     {
-        if (true) {
-            return Double.toString(key);
-        } else {
-            StringBuffer buf = new StringBuffer();
-            buf.append("Node=[parent = ");
-
-            if (parent != null) {
-                buf.append(Double.toString(parent.key));
-            } else {
-                buf.append("---");
-            }
-
-            buf.append(", key = ");
-            buf.append(Double.toString(key));
-            buf.append(", degree = ");
-            buf.append(Integer.toString(degree));
-            buf.append(", right = ");
-
-            if (right != null) {
-                buf.append(Double.toString(right.key));
-            } else {
-                buf.append("---");
-            }
-
-            buf.append(", left = ");
-
-            if (left != null) {
-                buf.append(Double.toString(left.key));
-            } else {
-                buf.append("---");
-            }
-
-            buf.append(", child = ");
-
-            if (child != null) {
-                buf.append(Double.toString(child.key));
-            } else {
-                buf.append("---");
-            }
-
-            buf.append(']');
-
-            return buf.toString();
-        }
+        return Double.toString(key);
     }
 
     // toString

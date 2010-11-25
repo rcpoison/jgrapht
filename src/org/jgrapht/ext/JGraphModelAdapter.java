@@ -285,7 +285,7 @@ public class JGraphModelAdapter<V, E>
     {
         AttributeMap map = new AttributeMap();
 
-        if (jGraphTGraph instanceof DirectedGraph) {
+        if (jGraphTGraph instanceof DirectedGraph<?,?>) {
             GraphConstants.setLineEnd(map, GraphConstants.ARROW_TECHNICAL);
             GraphConstants.setEndFill(map, true);
             GraphConstants.setEndSize(map, 10);

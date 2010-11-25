@@ -516,9 +516,9 @@ public abstract class AbstractBaseGraph<V, E>
 
     private Specifics createSpecifics()
     {
-        if (this instanceof DirectedGraph) {
+        if (this instanceof DirectedGraph<?,?>) {
             return new DirectedSpecifics();
-        } else if (this instanceof UndirectedGraph) {
+        } else if (this instanceof UndirectedGraph<?,?>) {
             return new UndirectedSpecifics();
         } else {
             throw new IllegalArgumentException(

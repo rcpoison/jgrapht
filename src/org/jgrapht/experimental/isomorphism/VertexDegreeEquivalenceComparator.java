@@ -121,12 +121,12 @@ public class VertexDegreeEquivalenceComparator<V, E>
     {
         int inVertexDegree = 0;
         int outVertexDegree = 0;
-        if (aContextGraph instanceof UndirectedGraph) {
+        if (aContextGraph instanceof UndirectedGraph<?,?>) {
             UndirectedGraph<V, E> undirectedGraph =
                 (UndirectedGraph<V, E>) aContextGraph;
             inVertexDegree = undirectedGraph.degreeOf(vertex);
             outVertexDegree = inVertexDegree; // it is UNdirected
-        } else if (aContextGraph instanceof DirectedGraph) {
+        } else if (aContextGraph instanceof DirectedGraph<?,?>) {
             DirectedGraph<V, E> directedGraph =
                 (DirectedGraph<V, E>) aContextGraph;
             inVertexDegree = directedGraph.inDegreeOf(vertex);

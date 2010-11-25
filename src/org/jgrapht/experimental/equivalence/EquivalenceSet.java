@@ -75,15 +75,6 @@ public class EquivalenceSet<E, C>
     //~ Constructors -----------------------------------------------------------
 
     /**
-     * Private constructor. An empty group cannot be created as a group does not
-     * have meaning without an element, because the equal and hashcode methods
-     * cannot work.
-     */
-    private EquivalenceSet()
-    {
-    }
-
-    /**
      * Constructs a new EquivalenceSet, filled with the aElement parameter and a
      * reference to the comparator which is used.
      */

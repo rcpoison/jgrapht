@@ -157,7 +157,7 @@ class EquivalenceIsomorphismInspector<V, E>
 
         // 3//
         boolean reorderSuccess =
-            reorderTargetArrayToMatchSourceOrder(eqGroupArray1, eqGroupArray2); // 2 is the taget
+            reorderTargetArrayToMatchSourceOrder(eqGroupArray1, eqGroupArray2); // 2 is the target
         if (!reorderSuccess) {
             // if reordering fail , no match can be done
             return null;

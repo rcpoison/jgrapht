@@ -130,7 +130,7 @@ public abstract class AbstractGraph<V, E>
         return toStringFromSets(
             vertexSet(),
             edgeSet(),
-            (this instanceof DirectedGraph));
+            (this instanceof DirectedGraph<?,?>));
     }
 
     /**

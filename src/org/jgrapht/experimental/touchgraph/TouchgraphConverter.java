@@ -81,7 +81,6 @@ public class TouchgraphConverter<V, E>
      *
      * @throws TGException
      */
-    @SuppressWarnings("unchecked")
     public Node convertToTouchGraph(
         Graph<V, E> graph,
         TGPanel tgPanel,

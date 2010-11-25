@@ -173,7 +173,7 @@ public class GraphMLExporter<V, E>
             "",
             "edgedefault",
             "CDATA",
-            (g instanceof DirectedGraph) ? "directed" : "undirected");
+            (g instanceof DirectedGraph<?, ?>) ? "directed" : "undirected");
         handler.startElement("", "", "graph", attr);
 
         // Add all the vertices as <node> elements...
