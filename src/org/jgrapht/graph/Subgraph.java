@@ -153,7 +153,7 @@ public class Subgraph<V, E, G extends Graph<V, E>>
             isInduced = true;
         }
 
-        if (base instanceof ListenableGraph) {
+        if (base instanceof ListenableGraph<?,?>) {
             ((ListenableGraph<V, E>) base).addGraphListener(
                 new BaseGraphListener());
         }

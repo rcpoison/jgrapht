@@ -111,7 +111,7 @@ public final class PerformanceDemo
         time = System.currentTimeMillis();
 
         for (
-            Iterator i = new BreadthFirstIterator<Object, DefaultEdge>(g);
+            Iterator<Object> i = new BreadthFirstIterator<Object, DefaultEdge>(g);
             i.hasNext();)
         {
             i.next();
@@ -122,7 +122,7 @@ public final class PerformanceDemo
         time = System.currentTimeMillis();
 
         for (
-            Iterator i = new DepthFirstIterator<Object, DefaultEdge>(g);
+            Iterator<Object> i = new DepthFirstIterator<Object, DefaultEdge>(g);
             i.hasNext();)
         {
             i.next();

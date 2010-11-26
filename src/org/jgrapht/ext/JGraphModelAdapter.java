@@ -250,7 +250,7 @@ public class JGraphModelAdapter<V, E>
         setDefaultEdgeAttributes(defaultEdgeAttributes);
         this.cellFactory = cellFactory;
 
-        if (jGraphTGraph instanceof ListenableGraph) {
+        if (jGraphTGraph instanceof ListenableGraph<?,?>) {
             ListenableGraph<V, E> g = (ListenableGraph<V, E>) jGraphTGraph;
             g.addGraphListener(new JGraphTListener());
         }
@@ -1084,11 +1084,6 @@ public class JGraphModelAdapter<V, E>
         ShieldedGraph(Graph<V, E> graph)
         {
             this.graph = graph;
-        }
-
-        EdgeFactory<V, E> getEdgeFactory()
-        {
-            return graph.getEdgeFactory();
         }
 
         E addEdge(V jtSource, V jtTarget)
