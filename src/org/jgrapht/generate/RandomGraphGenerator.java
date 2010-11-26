@@ -361,11 +361,11 @@ public class RandomGraphGenerator<V, E>
         public int getMaxEdgesForVertexNum(Graph<VV, EE> targetGraph)
         {
             int maxAllowedEdges = 0;
-            if (targetGraph instanceof SimpleGraph<?,?>) {
+            if (targetGraph instanceof SimpleGraph<?, ?>) {
                 maxAllowedEdges = numOfVertexes * (numOfVertexes - 1) / 2;
-            } else if (targetGraph instanceof SimpleDirectedGraph<?,?>) {
+            } else if (targetGraph instanceof SimpleDirectedGraph<?, ?>) {
                 maxAllowedEdges = numOfVertexes * (numOfVertexes - 1);
-            } else if (targetGraph instanceof DefaultDirectedGraph<?,?>) {
+            } else if (targetGraph instanceof DefaultDirectedGraph<?, ?>) {
                 maxAllowedEdges = numOfVertexes * numOfVertexes;
             } else {
                 // This may be overly liberal in the case of something

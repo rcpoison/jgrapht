@@ -39,8 +39,8 @@
 package org.jgrapht.util;
 
 /**
- * TypeUtil isolates type-unsafety so that code which uses it for
- * legitimate reasons can stay warning-free.
+ * TypeUtil isolates type-unsafety so that code which uses it for legitimate
+ * reasons can stay warning-free.
  *
  * @author John V. Sichi
  */

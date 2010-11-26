@@ -106,7 +106,7 @@ public class AsWeightedGraph<V, E>
 
         // Remember whether the backing graph implements the WeightedGraph
         // interface
-        this.isWeightedGraph = (g instanceof WeightedGraph<?,?>);
+        this.isWeightedGraph = (g instanceof WeightedGraph<?, ?>);
     }
 
     //~ Methods ----------------------------------------------------------------

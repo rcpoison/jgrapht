@@ -121,7 +121,7 @@ public class DefaultListenableGraph<V, E>
         reuseableVertexEvent = new FlyweightVertexEvent<V>(this, -1, null);
 
         // the following restriction could be probably relaxed in the future.
-        if (g instanceof ListenableGraph<?,?>) {
+        if (g instanceof ListenableGraph<?, ?>) {
             throw new IllegalArgumentException(
                 "base graph cannot be listenable");
         }

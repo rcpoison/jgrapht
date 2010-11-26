@@ -219,9 +219,9 @@ public class AdaptiveIsomorphismInspectorFactory
     protected static void assertUnsupportedGraphTypes(Graph g)
         throws IllegalArgumentException
     {
-        if ((g instanceof Multigraph<?,?>)
-            || (g instanceof DirectedMultigraph<?,?>)
-            || (g instanceof Pseudograph<?,?>))
+        if ((g instanceof Multigraph<?, ?>)
+            || (g instanceof DirectedMultigraph<?, ?>)
+            || (g instanceof Pseudograph<?, ?>))
         {
             throw new IllegalArgumentException(
                 "graph type not supported for the graph" + g);

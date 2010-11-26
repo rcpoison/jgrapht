@@ -99,7 +99,7 @@ public class VertexPair<V>
         return n1 + "," + n2;
     }
 
-	@Override public boolean equals(Object o)
+    @Override public boolean equals(Object o)
     {
         if (this == o) {
             return true;

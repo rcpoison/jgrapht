@@ -259,7 +259,7 @@ class KShortestPathsIterator<V, E>
      */
     private Set<E> edgesOf(V vertex)
     {
-        if (this.graph instanceof DirectedGraph<?,?>) {
+        if (this.graph instanceof DirectedGraph<?, ?>) {
             return ((DirectedGraph<V, E>) this.graph).outgoingEdgesOf(vertex);
         } else {
             return this.graph.edgesOf(vertex);

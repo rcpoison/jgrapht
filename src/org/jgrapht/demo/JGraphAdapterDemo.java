@@ -74,7 +74,7 @@ public class JGraphAdapterDemo
     //~ Instance fields --------------------------------------------------------
 
     //
-    private JGraphModelAdapter<String,DefaultEdge> jgAdapter;
+    private JGraphModelAdapter<String, DefaultEdge> jgAdapter;
 
     //~ Methods ----------------------------------------------------------------
 
