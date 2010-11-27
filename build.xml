@@ -79,7 +79,7 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.8.2alpha" />
+    value="0.8.2-SNAPSHOT" />
   
   <!-- SVN tags and their respective version names -->
   <property name="ver_0_8_1.name"       
@@ -554,6 +554,16 @@
   <!-- Outputs an error message if SVN tag is unspecified -->
   <target name="svntag.missing" unless="svntag">
     <echo level="error">Variable $${svntag} must be specified for selected target.</echo>
+  </target>
+
+  <target name="maven.pom" depends="init">
+    <copy file="etc/pom.xml.template" tofile="pom.xml" overwrite="true">
+      <filterchain>
+        <tokenfilter>
+          <replacestring from="@VERSION@" to="${latest.version.name}"/>
+        </tokenfilter>
+      </filterchain>
+    </copy>
   </target>
 
 </project>

@@ -2,10 +2,24 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.jgrapht</groupId>
+    <groupId>net.sf.jgrapht</groupId>
     <artifactId>jgrapht</artifactId>
-    <version>0.8.2-SNAPSHOT</version>
+    <packaging>jar</packaging>
     <name>JGraphT</name>
+    <version>@VERSION@</version>
+    <description>A Java class library for graph-theory data structures
+    and algorithms.</description>
+    <url>http://www.jgrapht.org</url>
+    <licenses>
+      <license>
+        <name>GNU Lesser General Public License Version 2.1, February 1999</name>
+        <url>http://jgrapht.sourceforge.net/LGPL.html</url>
+        <distribution>repo</distribution>
+      </license>
+    </licenses>
+    <scm>
+      <url>http://jgrapht.svn.sourceforge.net/svnroot/jgrapht</url>
+    </scm>
 
     <properties>
         <!-- The compiler version to use. -->
