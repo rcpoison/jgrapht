@@ -6,7 +6,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* ~~~~~~~~~
  * build.xml
  * ~~~~~~~~~
- * (C) Copyright 2003-2006, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * Original Author:  Barak Naveh
  * Contributor(s):   John V. Sichi
@@ -79,9 +79,11 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.8.2-SNAPSHOT" />
+    value="0.8.2" />
   
   <!-- SVN tags and their respective version names -->
+  <property name="ver_0_8_2.name"       
+    value="0.8.2" />
   <property name="ver_0_8_1.name"       
     value="0.8.1" />
   <property name="ver_0_8_0.name"       
