@@ -115,7 +115,7 @@ public class DOTExporterTest
         DOTExporter<String, DefaultEdge> exporter =
             new DOTExporter<String, DefaultEdge>(
                 new StringNameProvider<String>(),
-                null,
+                new StringNameProvider<String>(),
                 null);
 
         List<String> validVertices =
