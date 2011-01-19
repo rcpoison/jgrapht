@@ -39,91 +39,107 @@
  */
 package org.jgrapht.generate;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-import org.jgrapht.Graph;
-import org.jgrapht.VertexFactory;
+import org.jgrapht.*;
+
 
 /**
- * 
- * Generates a bidirectional <a href="http://mathworld.wolfram.com/GridGraph.html">grid
- * graph</a> of any size. A grid graph is a two dimensional graph whose vertices correspond to the points
- * in the plane with integer coordinates, x-coordinates being in the range 0,..., n, y-coordinates being
- *  in the range 1,...m, and two vertices are connected by an edge whenever the corresponding points are
- *  at distance 1. Vertices are created from left to right and from top to bottom.
- * 
+ * Generates a bidirectional <a
+ * href="http://mathworld.wolfram.com/GridGraph.html">grid graph</a> of any
+ * size. A grid graph is a two dimensional graph whose vertices correspond to
+ * the points in the plane with integer coordinates, x-coordinates being in the
+ * range 0,..., n, y-coordinates being in the range 1,...m, and two vertices are
+ * connected by an edge whenever the corresponding points are at distance 1.
+ * Vertices are created from left to right and from top to bottom.
+ *
  * @author Assaf Mizrachi
  * @since Dec 29, 2010
- *
  */
-public class GridGraphGenerator<V, E> implements GraphGenerator<V, E, V>{
+public class GridGraphGenerator<V, E>
+    implements GraphGenerator<V, E, V>
+{
+    //~ Static fields/initializers ---------------------------------------------
 
-	//~ Static fields/initializers ---------------------------------------------
     /**
      * Role for the vertices at the corners.
      */
     public static final String CORNER_VERTEX = "Corner Vertex";
-    
-	 //~ Instance fields --------------------------------------------------------
-	private int rows;
-	
-	private int cols;
-	
-	
-	//~ Constructors -----------------------------------------------------------
-	/**
-	 * Creates a new GridGraphGenerator object with rows x cols dimension.
-	 * 
-	 * @param rows the number of rows
-	 * @param cols the number of columns
-	 */
-	public GridGraphGenerator(int rows, int cols) {
-		if (rows < 2) {
-			throw new IllegalArgumentException("illegal number of rows (" + rows + "). there must be at least two.");
-		}		
-		if (cols < 2) {
-			throw new IllegalArgumentException("illegal number of columns (" + cols + "). there must be at least two.");
-		}
-		this.rows = rows;
-		this.cols = cols;
-	}
 
-	/**
+    //~ Instance fields --------------------------------------------------------
+
+    private int rows;
+
+    private int cols;
+
+    //~ Constructors -----------------------------------------------------------
+
+    /**
+     * Creates a new GridGraphGenerator object with rows x cols dimension.
+     *
+     * @param rows the number of rows
+     * @param cols the number of columns
+     */
+    public GridGraphGenerator(int rows, int cols)
+    {
+        if (rows < 2) {
+            throw new IllegalArgumentException(
+                "illegal number of rows (" + rows
+                + "). there must be at least two.");
+        }
+        if (cols < 2) {
+            throw new IllegalArgumentException(
+                "illegal number of columns (" + cols
+                + "). there must be at least two.");
+        }
+        this.rows = rows;
+        this.cols = cols;
+    }
+
+    //~ Methods ----------------------------------------------------------------
+
+    /**
      * {@inheritDoc}
      */
-	@Override
-	public void generateGraph(Graph<V, E> target,
-			VertexFactory<V> vertexFactory, Map<String, V> resultMap) {
-		
-		Map<String, V> map = new TreeMap<String, V>();
-		
-		//Adding all vertices to the set
-		int cornerCtr = 0;
-		for (int i = 0; i < rows * cols; i++) {
-			V vertex = vertexFactory.createVertex();
-			target.addVertex(vertex);
-			map.put(String.valueOf(i + 1), vertex);
+    @Override public void generateGraph(
+        Graph<V, E> target,
+        VertexFactory<V> vertexFactory,
+        Map<String, V> resultMap)
+    {
+        Map<String, V> map = new TreeMap<String, V>();
 
-			boolean isCorner = i == 0 || i == cols - 1 || i == cols * (rows - 1) || i == rows * cols - 1;
-			if (isCorner && resultMap != null) {
-				resultMap.put(CORNER_VERTEX + ' ' + ++cornerCtr, vertex);
-			}
-		}
-		
-		//Iterating twice over the key set, for undirected graph edges are added from upper vertices to lower,
-		// and from left to right. the second addEdge call will return nothing; it will not add a the edge
-		//at the opposite direction. For directed graph, edges in opposite direction are also added.
-		for (String i : map.keySet()) {
-			for (String j : map.keySet()) {
-				if ((Integer.valueOf(i) % cols > 0 && 
-						Integer.valueOf(i) + 1 == Integer.valueOf(j))
-						|| (Integer.valueOf(i) + cols == Integer.valueOf(j))) {
-					target.addEdge(map.get(i), map.get(j));
-					target.addEdge(map.get(j), map.get(i));					
-				}							
-			}
-		}		
-	}
+        //Adding all vertices to the set
+        int cornerCtr = 0;
+        for (int i = 0; i < (rows * cols); i++) {
+            V vertex = vertexFactory.createVertex();
+            target.addVertex(vertex);
+            map.put(String.valueOf(i + 1), vertex);
+
+            boolean isCorner =
+                (i == 0) || (i == (cols - 1)) || (i == (cols * (rows - 1)))
+                || (i == ((rows * cols) - 1));
+            if (isCorner && (resultMap != null)) {
+                resultMap.put(CORNER_VERTEX + ' ' + ++cornerCtr, vertex);
+            }
+        }
+
+        //Iterating twice over the key set, for undirected graph edges are added
+        //from upper vertices to lower, and from left to right. the second
+        //addEdge call will return nothing; it will not add a the edge at the
+        //opposite direction. For directed graph, edges in opposite direction
+        //are also added.
+        for (String i : map.keySet()) {
+            for (String j : map.keySet()) {
+                if ((((Integer.valueOf(i) % cols) > 0)
+                        && ((Integer.valueOf(i) + 1) == Integer.valueOf(j)))
+                    || ((Integer.valueOf(i) + cols) == Integer.valueOf(j)))
+                {
+                    target.addEdge(map.get(i), map.get(j));
+                    target.addEdge(map.get(j), map.get(i));
+                }
+            }
+        }
+    }
 }
 
+// End GridGraphGenerator.java
