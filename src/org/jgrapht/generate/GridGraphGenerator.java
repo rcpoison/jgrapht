@@ -131,7 +131,7 @@ public class GridGraphGenerator<V, E>
         for (int i : map.keySet()) {
             for (int j : map.keySet()) {
                 if ((((i % cols) > 0)
-                        && (i + 1 == Integer.valueOf(j)))
+                        && ((i + 1) == Integer.valueOf(j)))
                     || ((i + cols) == j))
                 {
                     target.addEdge(map.get(i), map.get(j));
