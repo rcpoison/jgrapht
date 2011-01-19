@@ -106,14 +106,14 @@ public class GridGraphGenerator<V, E>
         VertexFactory<V> vertexFactory,
         Map<String, V> resultMap)
     {
-        Map<String, V> map = new TreeMap<String, V>();
+        Map<Integer, V> map = new TreeMap<Integer, V>();
 
-        //Adding all vertices to the set
+        // Adding all vertices to the set
         int cornerCtr = 0;
         for (int i = 0; i < (rows * cols); i++) {
             V vertex = vertexFactory.createVertex();
             target.addVertex(vertex);
-            map.put(String.valueOf(i + 1), vertex);
+            map.put(i + 1, vertex);
 
             boolean isCorner =
                 (i == 0) || (i == (cols - 1)) || (i == (cols * (rows - 1)))
@@ -123,16 +123,16 @@ public class GridGraphGenerator<V, E>
             }
         }
 
-        //Iterating twice over the key set, for undirected graph edges are added
-        //from upper vertices to lower, and from left to right. the second
-        //addEdge call will return nothing; it will not add a the edge at the
-        //opposite direction. For directed graph, edges in opposite direction
-        //are also added.
-        for (String i : map.keySet()) {
-            for (String j : map.keySet()) {
-                if ((((Integer.valueOf(i) % cols) > 0)
-                        && ((Integer.valueOf(i) + 1) == Integer.valueOf(j)))
-                    || ((Integer.valueOf(i) + cols) == Integer.valueOf(j)))
+        // Iterating twice over the key set, for undirected graph edges are
+        // added from upper vertices to lower, and from left to right. The
+        // second addEdge call will return nothing; it will not add a the edge
+        // at the opposite direction. For directed graph, edges in opposite
+        // direction are also added.
+        for (int i : map.keySet()) {
+            for (int j : map.keySet()) {
+                if ((((i % cols) > 0)
+                        && (i + 1 == Integer.valueOf(j)))
+                    || ((i + cols) == j))
                 {
                     target.addEdge(map.get(i), map.get(j));
                     target.addEdge(map.get(j), map.get(i));

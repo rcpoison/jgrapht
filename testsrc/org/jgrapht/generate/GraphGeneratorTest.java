@@ -349,7 +349,7 @@ public class GraphGeneratorTest
         Graph<String, String> gridGraph,
         Map<String, String> resultMap)
     {
-        //graph structure validations
+        // graph structure validations
         int expectedVerticeNum = rows * cols;
         assertEquals(
             "number of vertices is wrong (" + gridGraph
@@ -412,7 +412,7 @@ public class GraphGeneratorTest
             expInnerVertices,
             innerVertices);
 
-        //result map validations
+        // result map validations
         Set<String> keys = resultMap.keySet();
         assertEquals(
             "result map contains should contains exactly 4 corner verices",
