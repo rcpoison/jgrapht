@@ -28,7 +28,7 @@
  * (C) Copyright 2008-2008, by Andrew Newell and Contributors.
  *
  * Original Author:  Andrew Newell
- * Contributor(s):   gpaschos@netscape.net
+ * Contributor(s):   gpaschos@netscape.net, harshalv@telenav.com
  *
  * $Id$
  *
@@ -71,6 +71,19 @@ public abstract class ChromaticNumber
      */
     public static <V, E> int findGreedyChromaticNumber(UndirectedGraph<V, E> g)
     {
+        Map<Integer,Set<V>> coloredGroups =
+            findGreedyColoredGroups(g);
+        return coloredGroups.keySet().size();
+    }
+
+    /**
+     * Finds a greedy coloring of the graph.
+     *
+     * @param g an undirected graph for which to find the coloring
+     */
+    public static <V,E> Map<Integer, Set<V>> findGreedyColoredGroups(
+        UndirectedGraph<V,E> g)
+    {
         // A copy of the graph is made, so that elements of the graph may be
         // removed to carry out the algorithm
         UndirectedGraph<V, E> sg = new UndirectedSubgraph<V, E>(g, null, null);
@@ -85,7 +98,10 @@ public abstract class ChromaticNumber
 
         int color;
 
-        // Each vertex will attempted to be colored with a single color each
+        // create a map which will hold color as key and Set<V> as value
+        Map<Integer, Set<V>> coloredGroups = new HashMap<Integer, Set<V>>();
+        
+        // We'll attempt to color each vertex with a single color each
         // iteration, and these vertices will be removed from the graph at the
         // end of each iteration
         for (color = 0; sg.vertexSet().size() > 0; color++) {
@@ -118,11 +134,14 @@ public abstract class ChromaticNumber
                 }
             }
 
+            // Add all these vertices as a group for this color
+            coloredGroups.put(color, currentColor);
+
             // Remove vertices from the graph and then repeat the process for
             // the next iteration
             sg.removeAllVertices(currentColor);
         }
-        return color;
+        return coloredGroups;
     }
 }
 

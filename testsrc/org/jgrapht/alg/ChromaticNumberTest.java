@@ -39,6 +39,8 @@
  */
 package org.jgrapht.alg;
 
+import java.util.*;
+
 import junit.framework.*;
 
 import org.jgrapht.*;
@@ -76,6 +78,11 @@ public class ChromaticNumberTest
         assertEquals(
             7,
             ChromaticNumber.findGreedyChromaticNumber(completeGraph));
+        Map<Integer, Set<Object>> coloring =
+            ChromaticNumber.findGreedyColoredGroups(completeGraph);
+        assertEquals(
+            7,
+            coloring.keySet().size());
 
         UndirectedGraph<Object, DefaultEdge> linearGraph =
             new SimpleGraph<Object, DefaultEdge>(
