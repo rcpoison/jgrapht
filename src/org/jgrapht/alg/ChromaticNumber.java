@@ -71,8 +71,7 @@ public abstract class ChromaticNumber
      */
     public static <V, E> int findGreedyChromaticNumber(UndirectedGraph<V, E> g)
     {
-        Map<Integer,Set<V>> coloredGroups =
-            findGreedyColoredGroups(g);
+        Map<Integer, Set<V>> coloredGroups = findGreedyColoredGroups(g);
         return coloredGroups.keySet().size();
     }
 
@@ -81,8 +80,8 @@ public abstract class ChromaticNumber
      *
      * @param g an undirected graph for which to find the coloring
      */
-    public static <V,E> Map<Integer, Set<V>> findGreedyColoredGroups(
-        UndirectedGraph<V,E> g)
+    public static <V, E> Map<Integer, Set<V>> findGreedyColoredGroups(
+        UndirectedGraph<V, E> g)
     {
         // A copy of the graph is made, so that elements of the graph may be
         // removed to carry out the algorithm
@@ -100,7 +99,7 @@ public abstract class ChromaticNumber
 
         // create a map which will hold color as key and Set<V> as value
         Map<Integer, Set<V>> coloredGroups = new HashMap<Integer, Set<V>>();
-        
+
         // We'll attempt to color each vertex with a single color each
         // iteration, and these vertices will be removed from the graph at the
         // end of each iteration
