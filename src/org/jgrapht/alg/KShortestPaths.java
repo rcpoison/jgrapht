@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* -------------------------
  * KShortestPaths.java
  * -------------------------
- * (C) Copyright 2007-2008, by France Telecom
+ * (C) Copyright 2007-2010, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi
@@ -36,6 +36,7 @@
  * -------
  * 05-Jun-2007 : Initial revision (GB);
  * 05-Jul-2007 : Added support for generics (JVS);
+ * 06-Dec-2010 : Bugfixes (GB);
  *
  */
 package org.jgrapht.alg;
@@ -48,13 +49,12 @@ import org.jgrapht.*;
 /**
  * The algorithm determines the k shortest simple paths in increasing order of
  * weight. Weights can be negative (but no negative cycle is allowed), and paths
- * can be constrained by a maximum number of edges. This algorithm should not be
- * used with multigraphs.
+ * can be constrained by a maximum number of edges.  Multigraphs are allowed.
  *
  * <p>The algorithm is a variant of the Bellman-Ford algorithm but instead of
  * only storing the best path it stores the "k" best paths at each pass,
- * yielding a complexity of O(k*m*n) where m is the number of edges and n is the
- * number of vertices.
+ * yielding a complexity of O(k*n*(m^2)) where m is the number of edges and
+ * n is the number of vertices.
  *
  * @author Guillaume Boulmier
  * @since July 5, 2007
@@ -62,9 +62,6 @@ import org.jgrapht.*;
 public class KShortestPaths<V, E>
 {
     //~ Instance fields --------------------------------------------------------
-
-    // ~ Instance fields
-    // --------------------------------------------------------
 
     /**
      * Graph on which shortest paths are searched.
@@ -78,9 +75,6 @@ public class KShortestPaths<V, E>
     private V startVertex;
 
     //~ Constructors -----------------------------------------------------------
-
-    // ~ Constructors
-    // -----------------------------------------------------------
 
     /**
      * Creates an object to compute ranking shortest paths between the start
@@ -125,9 +119,6 @@ public class KShortestPaths<V, E>
     }
 
     //~ Methods ----------------------------------------------------------------
-
-    // ~ Methods
-    // ----------------------------------------------------------------
 
     /**
      * Returns the k shortest simple paths in increasing order of weight.

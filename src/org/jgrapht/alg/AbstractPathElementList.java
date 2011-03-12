@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* -------------------------
  * AbstractPathElementList.java
  * -------------------------
- * (C) Copyright 2007-2008, by France Telecom
+ * (C) Copyright 2007-2010, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi
@@ -36,6 +36,7 @@
  * -------
  * 05-Jun-2007 : Initial revision (GB);
  * 05-Jul-2007 : Added support for generics (JVS);
+ * 06-Dec-2010 : Bugfixes (GB);
  *
  */
 package org.jgrapht.alg;
@@ -54,7 +55,6 @@ import org.jgrapht.*;
 abstract class AbstractPathElementList<V,
     E, T extends AbstractPathElement<V, E>>
     extends AbstractList<T>
-    implements Cloneable
 {
     //~ Instance fields --------------------------------------------------------
 
@@ -76,35 +76,6 @@ abstract class AbstractPathElementList<V,
     protected V vertex;
 
     //~ Constructors -----------------------------------------------------------
-
-    /**
-     * Creates a list with an empty path. The list size is 1.
-     *
-     * @param maxSize maximum number of paths the list is able to store.
-     *
-     * @throws NullPointerException if the specified path-element is <code>
-     * null</code>.
-     * @throws IllegalArgumentException if <code>maxSize</code> is negative or
-     * 0.
-     */
-    protected AbstractPathElementList(
-        Graph<V, E> graph,
-        int maxSize,
-        T pathElement)
-    {
-        if (maxSize <= 0) {
-            throw new IllegalArgumentException("maxSize is negative or 0");
-        }
-        if (pathElement == null) {
-            throw new NullPointerException("pathElement is null");
-        }
-
-        this.graph = graph;
-        this.maxSize = maxSize;
-        this.vertex = pathElement.getVertex();
-
-        this.pathElements.add(pathElement);
-    }
 
     /**
      * Creates paths obtained by concatenating the specified edge to the
@@ -142,16 +113,56 @@ abstract class AbstractPathElementList<V,
     }
 
     /**
-     * Copy constructor.
+     * Creates a list with an empty path. The list size is 1.
      *
-     * @param original source to copy from
+     * @param maxSize maximum number of paths the list is able to store.
+     *
+     * @throws NullPointerException if the specified path-element is <code>
+     * null</code>.
+     * @throws IllegalArgumentException if <code>maxSize</code> is negative or
+     * 0.
+     * @throws IllegalArgumentException if <code>pathElement</code> is not
+     * empty.
      */
-    protected AbstractPathElementList(AbstractPathElementList<V, E, T> original)
+    protected AbstractPathElementList(
+        Graph<V, E> graph,
+        int maxSize,
+        T pathElement)
     {
-        this.graph = original.graph;
-        this.maxSize = original.maxSize;
-        this.pathElements.addAll(original.pathElements);
-        this.vertex = original.vertex;
+        if (maxSize <= 0) {
+            throw new IllegalArgumentException("maxSize is negative or 0");
+        }
+        if (pathElement == null) {
+            throw new NullPointerException("pathElement is null");
+        }
+        if (pathElement.getPrevEdge() != null) {
+            throw new IllegalArgumentException("path must be empty");
+        }
+
+        this.graph = graph;
+        this.maxSize = maxSize;
+        this.vertex = pathElement.getVertex();
+
+        this.pathElements.add(pathElement);
+    }
+
+    /**
+     * Creates an empty list. The list size is 0.
+     *
+     * @param maxSize maximum number of paths the list is able to store.
+     *
+     * @throws IllegalArgumentException if <code>maxSize</code> is negative or
+     * 0.
+     */
+    protected AbstractPathElementList(Graph<V, E> graph, int maxSize, V vertex)
+    {
+        if (maxSize <= 0) {
+            throw new IllegalArgumentException("maxSize is negative or 0");
+        }
+
+        this.graph = graph;
+        this.maxSize = maxSize;
+        this.vertex = vertex;
     }
 
     //~ Methods ----------------------------------------------------------------

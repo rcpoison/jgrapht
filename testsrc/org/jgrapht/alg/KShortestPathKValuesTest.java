@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* -------------------------
  * KShortestPathKValuesTest.java
  * -------------------------
- * (C) Copyright 2007-2008, by France Telecom
+ * (C) Copyright 2007-2010, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  *
@@ -34,6 +34,7 @@
  * Changes
  * -------
  * 05-Jun-2007 : Initial revision (GB);
+ * 06-Dec-2010 : Bugfixes (GB);
  *
  */
 package org.jgrapht.alg;
@@ -43,6 +44,7 @@ import java.util.*;
 import junit.framework.*;
 
 import org.jgrapht.*;
+import org.jgrapht.util.*;
 
 
 /**
@@ -56,35 +58,21 @@ public class KShortestPathKValuesTest
     //~ Methods ----------------------------------------------------------------
 
     /**
-     * @param n
-     *
-     * @return n!.
-     */
-    public static int factorial(int n)
-    {
-        int factorial = 1;
-        for (int i = 1; i <= n; i++) {
-            factorial *= i;
-        }
-        return factorial;
-    }
-
-    /**
      * @param k
      * @param n
      *
      * @return A(n,k).
      */
-    public static int permutation(int n, int k)
+    public static long permutation(int n, int k)
     {
         if (k <= n) {
-            return factorial(n) / factorial(n - k);
+            return MathUtil.factorial(n) / MathUtil.factorial(n - k);
         } else {
             return 0;
         }
     }
 
-    public void testMaxSizeValue()
+    public void testMaxSizeValueCompleteGraph6()
     {
         KShortestPathCompleteGraph6 graph = new KShortestPathCompleteGraph6();
 
@@ -107,29 +95,37 @@ public class KShortestPathKValuesTest
     {
         KShortestPathCompleteGraph4 kSPCompleteGraph4 =
             new KShortestPathCompleteGraph4();
-        verifyNbPathsForAllVertices(kSPCompleteGraph4);
+        verifyNbPathsForAllPairsOfVertices(kSPCompleteGraph4);
 
         KShortestPathCompleteGraph5 kSPCompleteGraph5 =
             new KShortestPathCompleteGraph5();
-        verifyNbPathsForAllVertices(kSPCompleteGraph5);
+        verifyNbPathsForAllPairsOfVertices(kSPCompleteGraph5);
 
         KShortestPathCompleteGraph6 kSPCompleteGraph6 =
             new KShortestPathCompleteGraph6();
-        verifyNbPathsForAllVertices(kSPCompleteGraph6);
+        verifyNbPathsForAllPairsOfVertices(kSPCompleteGraph6);
     }
 
-    private int calculateNbElementaryPathsForCompleteGraph(int n)
+    /**
+     * Compute the total number of paths between every pair of vertices in a
+     * complete graph with <code>n</code> vertices.
+     *
+     * @param n
+     *
+     * @return
+     */
+    private long calculateNbElementaryPathsForCompleteGraph(int n)
     {
-        int nbPaths = 0;
+        long nbPaths = 0;
         for (int k = 1; k <= (n - 1); k++) {
             nbPaths = nbPaths + permutation(n - 2, k - 1);
         }
         return nbPaths;
     }
 
-    private void verifyNbPathsForAllVertices(Graph graph)
+    private void verifyNbPathsForAllPairsOfVertices(Graph graph)
     {
-        int nbpaths =
+        long nbPaths =
             calculateNbElementaryPathsForCompleteGraph(
                 graph.vertexSet().size());
         int maxSize = Integer.MAX_VALUE;
@@ -149,9 +145,7 @@ public class KShortestPathKValuesTest
             {
                 Object targetVertex = targetIterator.next();
                 if (targetVertex != sourceVertex) {
-                    assertEquals(
-                        finder.getPaths(targetVertex).size(),
-                        nbpaths);
+                    assertEquals(finder.getPaths(targetVertex).size(), nbPaths);
                 }
             }
         }

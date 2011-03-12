@@ -5,7 +5,7 @@
  * Project Info:  http://jgrapht.sourceforge.net/
  * Project Creator:  Barak Naveh (http://sourceforge.net/users/barak_naveh)
  *
- * (C) Copyright 2003-2008, by Barak Naveh and Contributors.
+ * (C) Copyright 2003-2010, by Barak Naveh and Contributors.
  *
  * This library is free software; you can redistribute it and/or modify it
  * under the terms of the GNU Lesser General Public License as published by
@@ -25,7 +25,7 @@
 /* -------------------------
  * RankingPathElementList.java
  * -------------------------
- * (C) Copyright 2007-2008, by France Telecom
+ * (C) Copyright 2007-2010, by France Telecom
  *
  * Original Author:  Guillaume Boulmier and Contributors.
  * Contributor(s):   John V. Sichi
@@ -36,6 +36,7 @@
  * -------
  * 05-Jun-2007 : Initial revision (GB);
  * 05-Jul-2007 : Added support for generics (JVS);
+ * 06-Dec-2010 : Bugfixes (GB);
  *
  */
 package org.jgrapht.alg;
@@ -43,6 +44,7 @@ package org.jgrapht.alg;
 import java.util.*;
 
 import org.jgrapht.*;
+import org.jgrapht.graph.*;
 
 
 /**
@@ -54,13 +56,22 @@ import org.jgrapht.*;
 final class RankingPathElementList<V, E>
     extends AbstractPathElementList<V, E, RankingPathElement<V, E>>
 {
+    //~ Instance fields --------------------------------------------------------
+
+    /**
+     * Vertex that paths of the list must not disconnect.
+     */
+    private V guardVertexToNotDisconnect = null;
+
+    private Map<RankingPathElement<V, E>, Boolean> path2disconnect =
+        new HashMap<RankingPathElement<V, E>, Boolean>();
+
     //~ Constructors -----------------------------------------------------------
 
     /**
      * Creates a list with an empty path. The list size is 1.
      *
      * @param maxSize max number of paths the list is able to store.
-     * @param maxSize maximum number of paths the list is able to store.
      */
     RankingPathElementList(
         Graph<V, E> graph,
@@ -85,12 +96,39 @@ final class RankingPathElementList<V, E>
         RankingPathElementList<V, E> elementList,
         E edge)
     {
+        this(graph, maxSize, elementList, edge, null);
+
+        assert (!this.pathElements.isEmpty());
+    }
+
+    /**
+     * Creates paths obtained by concatenating the specified edge to the
+     * specified paths.
+     *
+     * @param prevPathElementList paths, list of <code>
+     * RankingPathElement</code>.
+     * @param edge edge reaching the end vertex of the created paths.
+     * @param maxSize maximum number of paths the list is able to store.
+     */
+    RankingPathElementList(
+        Graph<V, E> graph,
+        int maxSize,
+        RankingPathElementList<V, E> elementList,
+        E edge,
+        V guardVertexToNotDisconnect)
+    {
         super(graph, maxSize, elementList, edge);
+        this.guardVertexToNotDisconnect = guardVertexToNotDisconnect;
 
         // loop over the path elements in increasing order of weight.
         for (int i = 0; i < elementList.size(); i++) {
             RankingPathElement<V, E> prevPathElement = elementList.get(i);
-            if (this.pathElements.size() <= (this.maxSize - 1)) {
+
+            if (isNotValidPath(prevPathElement, edge)) {
+                continue;
+            }
+
+            if (size() < this.maxSize) {
                 double weight = calculatePathWeight(prevPathElement, edge);
                 RankingPathElement<V, E> newPathElement =
                     new RankingPathElement<V, E>(
@@ -103,26 +141,38 @@ final class RankingPathElementList<V, E>
                 this.pathElements.add(newPathElement);
             }
         }
-
-        assert (!this.pathElements.isEmpty());
     }
 
     /**
-     * Copy constructor.
+     * Creates an empty list. The list size is 0.
      *
-     * @param original source to copy from
+     * @param maxSize max number of paths the list is able to store.
      */
-    protected RankingPathElementList(RankingPathElementList<V, E> original)
+    RankingPathElementList(Graph<V, E> graph, int maxSize, V vertex)
     {
-        super(original);
+        super(graph, maxSize, vertex);
     }
 
     //~ Methods ----------------------------------------------------------------
 
     /**
-     * Adds paths in the list at vertex y. Candidate paths are obtained by
+     * <p>Adds paths in the list at vertex y. Candidate paths are obtained by
      * concatenating the specified edge (v->y) to the paths <code>
-     * elementList</code> at vertex v.
+     * elementList</code> at vertex v.</p>
+     *
+     * Complexity =
+     *
+     * <ul>
+     * <li>w/o guard-vertex: O(<code>k*np</code>) where <code>k</code> is the
+     * max size limit of the list and <code>np</code> is the maximum number of
+     * vertices in the paths stored in the list</li>
+     * <li>with guard-vertex: O(<code>k*(m+n)</code>) where <code>k</code> is
+     * the max size limit of the list, <code>m</code> is the number of edges of
+     * the graph and <code>n</code> is the number of vertices of the graph,
+     * O(<code>m+n</code>) being the complexity of the <code>
+     * ConnectivityInspector</code> to check whether a path exists towards the
+     * guard-vertex</li>
+     * </ul>
      *
      * @param elementList list of paths at vertex v.
      * @param edge edge (v->y).
@@ -149,60 +199,69 @@ final class RankingPathElementList<V, E>
             vIndex++)
         {
             RankingPathElement<V, E> prevPathElement = elementList.get(vIndex);
-            if (isAlreadyImprovedByThisEdge(edge, prevPathElement)
-                || containsTargetPreviously(prevPathElement))
-            {
-                // checks if path is simple.
+
+            if (isNotValidPath(prevPathElement, edge)) {
+                // checks if path is simple and if guard-vertex is not
+                // disconnected.
                 continue;
             }
-            double weight = calculatePathWeight(prevPathElement, edge);
+            double newPathWeight = calculatePathWeight(prevPathElement, edge);
+            RankingPathElement<V, E> newPathElement =
+                new RankingPathElement<V, E>(
+                    this.graph,
+                    prevPathElement,
+                    edge,
+                    newPathWeight);
 
-            // loop over the paths elements of the list at vertex y from yIndex
-            // to the end.
+            // loop over the paths of the list at vertex y from yIndex to the
+            // end.
+            RankingPathElement<V, E> yPathElement = null;
             for (; yIndex < size(); yIndex++) {
-                RankingPathElement<V, E> yPathElement = get(yIndex);
-                RankingPathElement<V, E> newPathElement =
-                    new RankingPathElement<V, E>(
-                        this.graph,
-                        prevPathElement,
-                        edge,
-                        weight);
+                yPathElement = get(yIndex);
 
-                if (weight < yPathElement.getWeight()) {
+                // case when the new path is shorter than the path Py stored at
+                // index y
+                if (newPathWeight < yPathElement.getWeight()) {
                     this.pathElements.add(yIndex, newPathElement);
+                    pathAdded = true;
+
+                    // ensures max size limit is not exceeded.
                     if (size() > this.maxSize) {
                         this.pathElements.remove(this.maxSize);
                     }
-                    pathAdded = true;
                     break;
                 }
-                if (weight == yPathElement.getWeight()) {
-                    // checks if newPathElement is not already in the list.
-                    if (isAlreadyAdded(newPathElement)) {
-                        break;
-                    }
 
-                    if (size() <= (this.maxSize - 1)) {
-                        this.pathElements.add(yIndex + 1, newPathElement);
-                        if (size() > this.maxSize) {
-                            this.pathElements.remove(this.maxSize);
-                        }
-                        pathAdded = true;
-                        break;
+                // case when the new path is of the same length as the path Py
+                // stored at index y
+                if (newPathWeight == yPathElement.getWeight()) {
+                    this.pathElements.add(yIndex + 1, newPathElement);
+                    pathAdded = true;
+
+                    // ensures max size limit is not exceeded.
+                    if (size() > this.maxSize) {
+                        this.pathElements.remove(this.maxSize);
                     }
+                    break;
                 }
+            }
 
-                if ((weight > yPathElement.getWeight())
-                    && (yIndex == (size() - 1)))
-                {
-                    if (size() <= (this.maxSize - 1)) {
-                        this.pathElements.add(newPathElement);
-                        pathAdded = true;
-                        break;
-                    }
+            // case when the new path is longer than the longest path in the
+            // list (Py stored at the last index y)
+            if (newPathWeight > yPathElement.getWeight()) {
+                // ensures max size limit is not exceeded.
+                if (size() < this.maxSize) {
+                    // the new path is inserted at the end of the list.
+                    this.pathElements.add(newPathElement);
+                    pathAdded = true;
+                } else {
+                    // max size limit is reached -> end of the loop over the
+                    // paths elements of the list at vertex v.
+                    break;
                 }
             }
         }
+
         return pathAdded;
     }
 
@@ -240,76 +299,135 @@ final class RankingPathElementList<V, E>
     }
 
     /**
-     * Ensures that paths of the list are simple.
+     * Ensures that paths of the list do not disconnect the guard-vertex.
      *
-     * @param pathElement
-     *
-     * @return <code>true</code> if the vertex specified at constructor is
-     * already in the specified path element, <code>false</code> otherwise.
+     * @return <code>true</code> if the specified path element disconnects the
+     * guard-vertex, <code>false</code> otherwise.
      */
-    private boolean containsTargetPreviously(
-        RankingPathElement<V, E> pathElement)
-    {
-        RankingPathElement<V, E> tempPathElement = pathElement;
-        while (tempPathElement.getPrevEdge() != null) {
-            if (tempPathElement.getVertex() == this.vertex) {
-                return true;
-            } else {
-                tempPathElement = tempPathElement.getPrevPathElement();
-            }
-        }
-        return false;
-    }
-
-    private boolean isAlreadyAdded(RankingPathElement<V, E> pathElement)
-    {
-        for (int i = 0; i <= (size() - 1); i++) {
-            RankingPathElement<V, E> yPathElement = get(i);
-            RankingPathElement<V, E> pathElementToTest = pathElement;
-            if (!isDifferent(yPathElement, pathElementToTest)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isAlreadyImprovedByThisEdge(
-        E edge,
+    private boolean isGuardVertexDisconnected(
         RankingPathElement<V, E> prevPathElement)
     {
-        RankingPathElement<V, E> pathElementToTest = prevPathElement;
-        while (pathElementToTest.getPrevEdge() != null) {
-            if (pathElementToTest.getPrevEdge() == edge) {
-                return true;
-            }
-            pathElementToTest = pathElementToTest.getPrevPathElement();
+        if (this.guardVertexToNotDisconnect == null) {
+            return false;
         }
+
+        if (this.path2disconnect.containsKey(prevPathElement)) {
+            return this.path2disconnect.get(prevPathElement);
+        }
+
+        ConnectivityInspector<V, E> connectivityInspector;
+        MaskFunctor<V, E> connectivityMask;
+
+        if (this.graph instanceof DirectedGraph<?, ?>) {
+            connectivityMask = new PathMask<V, E>(prevPathElement);
+            DirectedMaskSubgraph<V, E> connectivityGraph =
+                new DirectedMaskSubgraph<V, E>(
+                    (DirectedGraph<V, E>) this.graph,
+                    connectivityMask);
+            connectivityInspector =
+                new ConnectivityInspector<V, E>(
+                    connectivityGraph);
+        } else {
+            connectivityMask = new PathMask<V, E>(prevPathElement);
+            UndirectedMaskSubgraph<V, E> connectivityGraph =
+                new UndirectedMaskSubgraph<V, E>(
+                    (UndirectedGraph<V, E>) this.graph,
+                    connectivityMask);
+            connectivityInspector =
+                new ConnectivityInspector<V, E>(
+                    connectivityGraph);
+        }
+
+        if (connectivityMask.isVertexMasked(this.guardVertexToNotDisconnect)) {
+            // the guard-vertex was already in the path element -> invalid path
+            this.path2disconnect.put(prevPathElement, true);
+            return true;
+        }
+
+        if (!connectivityInspector.pathExists(
+                this.vertex,
+                this.guardVertexToNotDisconnect))
+        {
+            this.path2disconnect.put(prevPathElement, true);
+            return true;
+        }
+
+        this.path2disconnect.put(prevPathElement, false);
         return false;
+    }
+
+    private boolean isNotValidPath(
+        RankingPathElement<V, E> prevPathElement,
+        E edge)
+    {
+        return !isSimplePath(prevPathElement, edge)
+            || isGuardVertexDisconnected(prevPathElement);
     }
 
     /**
-     * @param yPathElement
-     * @param pathElementToTest
+     * Ensures that paths of the list are simple (check that the vertex was not
+     * already in the path element).
      *
-     * @return <code>false</code> if the two paths are equal, <code>true</code>
-     * otherwise.
+     * @param prevPathElement
+     * @param edge
+     *
+     * @return <code>true</code> if the resulting path (obtained by
+     * concatenating the specified edge to the specified path) is simple, <code>
+     * false</code> otherwise.
      */
-    private boolean isDifferent(
-        RankingPathElement<V, E> yPathElement,
-        RankingPathElement<V, E> pathElementToTest)
+    private boolean isSimplePath(
+        RankingPathElement<V, E> prevPathElement,
+        E edge)
     {
-        while (
-            ((yPathElement.getPrevEdge() != null)
-                || (pathElementToTest.getPrevEdge() != null)))
-        {
-            if (yPathElement.getPrevEdge() != pathElementToTest.getPrevEdge()) {
-                return true;
+        RankingPathElement<V, E> pathElementToTest = prevPathElement;
+        while (pathElementToTest.getPrevEdge() != null) {
+            if (pathElementToTest.getVertex() == this.vertex) {
+                return false;
             } else {
-                yPathElement = yPathElement.getPrevPathElement();
                 pathElementToTest = pathElementToTest.getPrevPathElement();
             }
         }
-        return false;
+
+        return true;
+    }
+
+    private static class PathMask<V, E>
+        implements MaskFunctor<V, E>
+    {
+        private Set<E> maskedEdges;
+
+        private Set<V> maskedVertices;
+
+        /**
+         * Creates a mask for all the edges and the vertices of the path
+         * (including the 2 extremity vertices).
+         *
+         * @param pathElement
+         */
+        PathMask(RankingPathElement<V, E> pathElement)
+        {
+            this.maskedEdges = new HashSet<E>();
+            this.maskedVertices = new HashSet<V>();
+
+            while (pathElement.getPrevEdge() != null) {
+                this.maskedEdges.add(pathElement.getPrevEdge());
+                this.maskedVertices.add(pathElement.getVertex());
+                pathElement = pathElement.getPrevPathElement();
+            }
+            this.maskedVertices.add(pathElement.getVertex());
+        }
+
+        // implement MaskFunctor
+        public boolean isEdgeMasked(E edge)
+        {
+            return this.maskedEdges.contains(edge);
+        }
+
+        // implement MaskFunctor
+        public boolean isVertexMasked(V vertex)
+        {
+            return this.maskedVertices.contains(vertex);
+        }
     }
 }
 

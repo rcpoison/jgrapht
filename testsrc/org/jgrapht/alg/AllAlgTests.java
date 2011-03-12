@@ -82,6 +82,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(KShortestPathCostTest.class));
         suite.addTest(new TestSuite(KShortestPathKValuesTest.class));
         suite.addTest(new TestSuite(KSPExampleTest.class));
+        suite.addTest(new TestSuite(KSPDiscardsValidPathsTest.class));
         suite.addTestSuite(IsomorphismInspectorTest.class);
         suite.addTest(new TestSuite(EdmondsKarpMaximumFlowTest.class));
         suite.addTest(new TestSuite(ChromaticNumberTest.class));
