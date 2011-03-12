@@ -103,10 +103,9 @@ public class KSPDiscardsValidPathsTest
     }
 
     /**
-     * JUnit test for the bug reported by Bruno Maoili.
-     * Example with a connected graph but not 2-connected. With a graph not
-     * 2-connected, the start vertex and the end vertex can be disconnected by 1
-     * path.
+     * JUnit test for the bug reported by Bruno Maoili. Example with a connected
+     * graph but not 2-connected. With a graph not 2-connected, the start vertex
+     * and the end vertex can be disconnected by 1 path.
      */
     public void testBrunoMaoili()
     {

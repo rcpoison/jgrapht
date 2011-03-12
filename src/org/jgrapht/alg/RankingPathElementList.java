@@ -391,6 +391,8 @@ final class RankingPathElementList<V, E>
         return true;
     }
 
+    //~ Inner Classes ----------------------------------------------------------
+
     private static class PathMask<V, E>
         implements MaskFunctor<V, E>
     {
