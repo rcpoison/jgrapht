@@ -222,7 +222,7 @@ public class CycleDetector<V, E>
                 // For rooted detection, the path must either
                 // double back to the root, or to a node of a cycle
                 // which has already been detected.
-                if (vertex == root) {
+                if (vertex.equals(root)) {
                     i = 0;
                 } else if ((cycleSet != null) && cycleSet.contains(vertex)) {
                     i = 0;

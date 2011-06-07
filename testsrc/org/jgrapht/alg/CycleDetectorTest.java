@@ -193,6 +193,41 @@ public class CycleDetectorTest
             assertEquals(emptySet, detector.findCyclesContainingVertex(v));
         }
     }
+
+    public void testVertexEquals()
+    {
+
+        DefaultDirectedGraph<String, DefaultEdge> graph = new DefaultDirectedGraph<String, DefaultEdge>(DefaultEdge.class);
+        assertEquals(0, graph.edgeSet().size());
+
+        String vertexA = "A";
+        String vertexB = "B";
+        String vertexC = new StringBuffer("A").toString();
+
+        assertNotSame(vertexA, vertexC);
+
+        graph.addVertex(vertexA);
+        graph.addVertex(vertexB);
+
+        graph.addEdge(vertexA, vertexB);
+        graph.addEdge(vertexB, vertexC);
+
+        assertEquals(2, graph.edgeSet().size());
+        assertEquals(2, graph.vertexSet().size());
+
+        CycleDetector<String, DefaultEdge> cycleDetector = new CycleDetector<String, DefaultEdge>(graph);
+        Set<String> cycleVertices = cycleDetector.findCycles();
+
+        boolean foundCycle = cycleDetector.detectCyclesContainingVertex(vertexA);
+        boolean foundVertex = graph.containsVertex(vertexA);
+
+        Set<String> subCycle = cycleDetector.findCyclesContainingVertex(vertexA);
+
+        assertEquals(2, cycleVertices.size());
+        assertEquals(2, subCycle.size());       // fails with zero items
+        assertTrue(foundCycle);                 // fails with no cycle found which includes vertexA
+        assertTrue(foundVertex);
+    }
 }
 
 // End CycleDetectorTest.java
