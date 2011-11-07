@@ -39,71 +39,90 @@
 package org.jgrapht.alg;
 
 import java.util.*;
-import org.jgrapht.graph.*;
 
 import junit.framework.*;
 
+import org.jgrapht.graph.*;
+
+
 /**
- *
  * @author Robby McKilliam
  */
-public class StoerWagnerMinimumCutTest extends TestCase {
-    
+public class StoerWagnerMinimumCutTest
+    extends TestCase
+{
+    //~ Instance fields --------------------------------------------------------
+
     private String v1 = "v1";
     private String v2 = "v2";
     private String v3 = "v3";
     private String v4 = "v4";
-    
-    public StoerWagnerMinimumCutTest() {
+
+    //~ Constructors -----------------------------------------------------------
+
+    public StoerWagnerMinimumCutTest()
+    {
+    }
+
+    //~ Methods ----------------------------------------------------------------
+
+    /**
+     * Test of mergeVertices method, of class StoerWagnerMinimumCut.
+     */
+    public void testMinCut14()
+    {
+        SimpleWeightedGraph<String, DefaultWeightedEdge> g =
+            new SimpleWeightedGraph<String, DefaultWeightedEdge>(
+                DefaultWeightedEdge.class);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+
+        DefaultWeightedEdge e;
+        e = g.addEdge(v1, v2);
+        g.setEdgeWeight(e, 3.0);
+        e = g.addEdge(v1, v3);
+        g.setEdgeWeight(e, 2.0);
+        e = g.addEdge(v1, v4);
+        g.setEdgeWeight(e, 4.0);
+        e = g.addEdge(v2, v3);
+        g.setEdgeWeight(e, 1.0);
+        e = g.addEdge(v3, v4);
+        g.setEdgeWeight(e, 1.0);
+
+        StoerWagnerMinimumCut<String, DefaultWeightedEdge> mincut =
+            new StoerWagnerMinimumCut<String, DefaultWeightedEdge>(g);
+
+        assertEquals(4.0, mincut.bestcutweight, 0.000001);
     }
 
     /**
      * Test of mergeVertices method, of class StoerWagnerMinimumCut.
      */
-    public void testMinCut14() {
-        SimpleWeightedGraph<String, DefaultWeightedEdge> g = new
-                SimpleWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
+    public void testMinCutDisconnected()
+    {
+        SimpleWeightedGraph<String, DefaultWeightedEdge> g =
+            new SimpleWeightedGraph<String, DefaultWeightedEdge>(
+                DefaultWeightedEdge.class);
         g.addVertex(v1);
         g.addVertex(v2);
         g.addVertex(v3);
         g.addVertex(v4);
-        
+
         DefaultWeightedEdge e;
-        e = g.addEdge(v1, v2); g.setEdgeWeight(e, 3.0);         
-        e = g.addEdge(v1, v3); g.setEdgeWeight(e, 2.0);
-        e = g.addEdge(v1, v4); g.setEdgeWeight(e, 4.0);
-        e = g.addEdge(v2, v3); g.setEdgeWeight(e, 1.0);
-        e = g.addEdge(v3, v4); g.setEdgeWeight(e, 1.0);
-        
-        StoerWagnerMinimumCut<String, DefaultWeightedEdge> mincut = 
-                new StoerWagnerMinimumCut<String, DefaultWeightedEdge>(g);
-      
-        assertEquals(4.0, mincut.bestcutweight, 0.000001);
-        
-    }
-    
-    /**
-     * Test of mergeVertices method, of class StoerWagnerMinimumCut.
-     */
-    public void testMinCutDisconnected() {
-        SimpleWeightedGraph<String, DefaultWeightedEdge> g = new
-                SimpleWeightedGraph<String, DefaultWeightedEdge>(DefaultWeightedEdge.class);
-        g.addVertex(v1);
-        g.addVertex(v2);
-        g.addVertex(v3);
-        g.addVertex(v4);
-        
-        DefaultWeightedEdge e;
-        e = g.addEdge(v1, v2); g.setEdgeWeight(e, 3.0);         
-        e = g.addEdge(v1, v3); g.setEdgeWeight(e, 2.0);
-        e = g.addEdge(v2, v3); g.setEdgeWeight(e, 1.0);
-        
-        StoerWagnerMinimumCut<String, DefaultWeightedEdge> mincut = 
-                new StoerWagnerMinimumCut<String, DefaultWeightedEdge>(g);
-      
+        e = g.addEdge(v1, v2);
+        g.setEdgeWeight(e, 3.0);
+        e = g.addEdge(v1, v3);
+        g.setEdgeWeight(e, 2.0);
+        e = g.addEdge(v2, v3);
+        g.setEdgeWeight(e, 1.0);
+
+        StoerWagnerMinimumCut<String, DefaultWeightedEdge> mincut =
+            new StoerWagnerMinimumCut<String, DefaultWeightedEdge>(g);
+
         assertEquals(0.0, mincut.bestcutweight, 0.000001);
     }
-    
 }
 
 // End StoerWagnerMinimumCutTest.java
