@@ -89,6 +89,7 @@ public final class AllAlgTests
         suite.addTest(new TestSuite(EulerianCircuitTest.class));
         suite.addTest(new TestSuite(HamiltonianCycleTest.class));
         suite.addTest(new TestSuite(KruskalMinimumSpanningTreeTest.class));
+        suite.addTest(new TestSuite(StoerWagnerMinimumCutTest.class));
 
         // $JUnit-END$
         return suite;
