@@ -246,13 +246,13 @@ public class FloydWarshallShortestPaths<V, E>
 
         nShortestPaths = 0;
         for (int i = 0; i < n; i++) {
+	    V v_i = vertices.get(i);
             for (int j = 0; j < n; j++) {
                 // don't count this.
                 if (i == j) {
                     continue;
                 }
 
-                V v_i = vertices.get(i);
                 V v_j = vertices.get(j);
 
                 GraphPath<V, E> path = getShortestPathImpl(v_i, v_j);
@@ -279,8 +279,10 @@ public class FloydWarshallShortestPaths<V, E>
     {
         lazyCalculatePaths();
         List<GraphPath<V, E>> found = new ArrayList<GraphPath<V, E>>();
+	// TODO:  two-level map for paths so that we don't have to
+	// iterate over all paths here!
         for (VertexPair<V> pair : paths.keySet()) {
-            if (pair.hasVertex(v)) {
+            if (pair.getFirst().equals(v)) {
                 found.add(paths.get(pair));
             }
         }
