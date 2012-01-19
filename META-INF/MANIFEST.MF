@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: JGraphT Plugin
 Bundle-SymbolicName: org.jgrapht;singleton:=true
-Bundle-Version: 0.8.3.dev
+Bundle-Version: 0.8.3
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: .,
  lib/xmlunit1.0.jar,

@@ -79,9 +79,11 @@
   <property file="etc/build.properties"/>
 
   <property name="latest.version.name"  
-    value="0.8.3-SNAPSHOT" />
+    value="0.8.3" />
   
   <!-- SVN tags and their respective version names -->
+  <property name="ver_0_8_3.name"       
+    value="0.8.3" />
   <property name="ver_0_8_2.name"       
     value="0.8.2" />
   <property name="ver_0_8_1.name"       
