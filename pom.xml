@@ -150,7 +150,14 @@
 		<module>jgrapht-core</module>
 		<module>jgrapht-ext</module>
 		<module>jgrapht-demo</module>
-		<!--<module>jgrapht-touchgraph</module>-->
 	</modules>
 	
+	<profiles>
+		<profile>
+			<id>touchgraph</id>
+			<modules>
+				<module>jgrapht-touchgraph</module>
+			</modules>
+		</profile>
+	</profiles>
 </project>
