@@ -45,7 +45,6 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jgrapht-ext</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 </project>

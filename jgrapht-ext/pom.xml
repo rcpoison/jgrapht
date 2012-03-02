@@ -33,12 +33,19 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>jgrapht-core</artifactId>
-			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>jgraph</groupId>
 			<artifactId>jgraph</artifactId>
 			<version>5.13.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>xmlunit</groupId>
+			<artifactId>xmlunit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
 		</dependency>
 	</dependencies>
 </project>
