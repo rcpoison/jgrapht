@@ -35,5 +35,20 @@
 			<artifactId>jgrapht-ext</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.touchgraph</groupId>
+			<artifactId>TGGraphLayout</artifactId>
+			<version>UNKNOWN</version>
+		</dependency>
 	</dependencies>
+	<repositories>
+		<repository>
+			<!-- These dependencies are not available in any known maven
+				repository, and have been placed in the source tree directly.
+				This makes this module (jgrapht-touchgraph) unsuitable for
+				submission to central. -->
+			<id>3rd-party-dependencies</id>
+			<url>file:${basedir}/3rdparty</url>
+		</repository>
+	</repositories>
 </project>
