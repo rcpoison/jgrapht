@@ -12,6 +12,22 @@
 			<useProjectArtifact>false</useProjectArtifact>
 			<outputDirectory>/lib</outputDirectory>
 			<scope>runtime</scope>
+			
+			<excludes>
+				<exclude>net.sf.jgrapht:jgrapht-ext:*:combined</exclude>
+			</excludes>
+		</dependencySet>
+		
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>/lib</outputDirectory>
+			<scope>runtime</scope>
+			
+			<outputFileNameMapping>jgrapht-${artifact.version}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+			
+			<includes>
+				<include>net.sf.jgrapht:jgrapht-ext:*:combined</include>
+			</includes>
 		</dependencySet>
 	</dependencySets>
 	
