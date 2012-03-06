@@ -9,4 +9,10 @@
 	</parent>
 	<artifactId>jgrapht-core</artifactId>
 	<name>JGraphT - Core</name>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+	</dependencies>
 </project>
