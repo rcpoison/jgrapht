@@ -1,0 +1,44 @@
+<assembly
+	xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+	
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>/lib</outputDirectory>
+			<scope>runtime</scope>
+			
+			<excludes>
+				<exclude>net.sf.jgrapht:jgrapht-ext:*:combined</exclude>
+			</excludes>
+		</dependencySet>
+		
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>/lib</outputDirectory>
+			<scope>runtime</scope>
+			
+			<outputFileNameMapping>jgrapht-${artifact.version}${dashClassifier?}.${artifact.extension}</outputFileNameMapping>
+			
+			<includes>
+				<include>net.sf.jgrapht:jgrapht-ext:*:combined</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+	
+	<files>
+		<file>
+			<source>${basedir}/../README.html</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
+			<source>${basedir}/../license-LGPL.txt</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+	</files>
+</assembly>
