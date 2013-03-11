@@ -365,6 +365,14 @@ public abstract class CrossComponentIterator<V, E, D>
                 fireEdgeTraversed(createEdgeTraversalEvent(edge));
             }
 
+            if(edge instanceof Deactivateable)
+            {
+            	Deactivateable deactivateableEdge = (Deactivateable)edge;
+            	
+            	if(!deactivateableEdge.isActive())
+            		continue;
+            }
+            
             V oppositeV = Graphs.getOppositeVertex(graph, edge, vertex);
 
             if (isSeenVertex(oppositeV)) {
